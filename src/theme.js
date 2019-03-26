@@ -1,11 +1,13 @@
 const theme = {
-  bgColor: '#1b242b', // default bg
-  bgColorPrimary: '#2d3c47', // main
+  // Color
+  bgColor: '#2d3c47', // default bg
+  bgColorPrimary: '#1b242b', // main
   bgColorSecondary: '#ffffff', // 
   color: 'white', // for normal text
   colorPrimary: '#f68e56', // for main text
-  colorSecondary: '#ffd35c', // for second main text
+  colorSecondary: '#9b9ea1', // for second main text
   errorTextColor: '#e8666d',
+  borderColor: '#9b9ea1',
   // #7fc88e  high
   // #ffd35c   yellow 
   // #1b242b  bg_highlight (dark blue)
@@ -14,12 +16,13 @@ const theme = {
   // #3f586b  grey blue
   // #9b9ea1 light grey
   
-  
+  // Layout
   // spacingXS: '10px',
   // spacingS: '15px',
   spacingM: '20px',
   spacingL: '30px',
   spacingXL: '60px',
+  headerWidth: '50px',
 
   fontSizeXS: '10px',
   fontSizeS: '12px',
