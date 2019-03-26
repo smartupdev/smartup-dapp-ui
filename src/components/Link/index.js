@@ -1,6 +1,7 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
 import theme from '../../theme'
+import { Link as RouterLink } from "react-router-dom";
 
 import Image from '../Icon'
 
@@ -30,8 +31,10 @@ const Line = styled.div`
     width: 5px;
     background-color: ${theme.colorPrimary}
 `
-export default ({ icon, fixed, selected }) => 
-  <Link fixed={fixed} selected={selected}>
-    { selected && <Line /> }
-    <Image source={icon} />
-  </Link>
+export default ({ icon, fixed, selected, href }) => 
+  <RouterLink to={href}>
+    <Link fixed={fixed} selected={selected}>
+      { selected && <Line /> }
+      <Image source={icon} />
+    </Link>
+  </RouterLink>
