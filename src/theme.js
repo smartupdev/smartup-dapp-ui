@@ -8,6 +8,8 @@ const theme = {
   colorSecondary: '#9b9ea1', // for second main text
   errorTextColor: '#e8666d',
   borderColor: '#9b9ea1',
+
+  white: '#ffffff',
   // #7fc88e  high
   // #ffd35c   yellow 
   // #1b242b  bg_highlight (dark blue)
@@ -22,13 +24,17 @@ const theme = {
   spacingM: '20px',
   spacingL: '30px',
   spacingXL: '60px',
-  headerWidth: '50px',
 
+  headerWidth: '60px',
+
+  // Size
   fontSizeXS: '10px',
   fontSizeS: '12px',
   fontSizeM: '14px',
   fontSizeL: '16px',
   fontSizeXL: '20px',
+
+  iconSizeM: '30px'
 }
 
 export default theme
