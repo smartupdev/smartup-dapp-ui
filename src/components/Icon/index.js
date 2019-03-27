@@ -1,10 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
-import theme from '../../theme'
 
 const Img = styled.img`
-  height: ${theme.iconSizeM};
-  width: ${theme.iconSizeM};
+  height: ${p => p.theme.iconSizeM};
+  width: ${p => p.theme.iconSizeM};
 `
 export default ({ source }) => 
   // Source

@@ -1,17 +1,16 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
-import theme from '../../theme';
 
 export const Text = styled.p`
   margin: 0;
   padding: 0;
   font-family: 'Quicksand', sans-serif;
-  font-size: ${theme.fontSizeM};
-  ${props => props.XS && css`font-size: ${theme.fontSizeXS}`}
-  ${props => props.S && css`font-size: ${theme.fontSizeS}`}
-  ${props => props.M && css`font-size: ${theme.fontSizeM}`}
-  ${props => props.L && css`font-size: ${theme.fontSizeL}`}
-  ${props => props.XL && css`font-size: ${theme.fontSizeXL}`}
+  font-size: ${p => p.theme.fontSizeM};
+  ${props => props.XS && css`font-size: ${p => p.theme.fontSizeXS}`}
+  ${props => props.S && css`font-size: ${p => p.theme.fontSizeS}`}
+  ${props => props.M && css`font-size: ${p => p.theme.fontSizeM}`}
+  ${props => props.L && css`font-size: ${p => p.theme.fontSizeL}`}
+  ${props => props.XL && css`font-size: ${p => p.theme.fontSizeXL}`}
 `
 
 export const Header = styled(Text)`

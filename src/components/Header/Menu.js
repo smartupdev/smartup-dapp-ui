@@ -1,15 +1,14 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
-import theme from '../../theme'
 import Image from '../Icon'
 import { Col } from '../Layout'
 
 const Link = styled(Col)`
-  width: ${theme.headerWidth};
-  height: ${theme.headerWidth};
+  width: ${p => p.theme.headerWidth};
+  height: ${p => p.theme.headerWidth};
   position: relative;
-  ${props => props.fixed && css`background: ${theme.white}`};
-  ${props => props.selected && css`background: ${theme.bgColor}`};
+  ${props => props.fixed && css`background: ${p => p.theme.white}`};
+  ${props => props.selected && css`background: ${p => p.theme.bgColor}`};
 `
 const Line = styled.div`
     position: absolute;
@@ -17,7 +16,7 @@ const Line = styled.div`
     top: 0;
     bottom: 0;
     width: 5px;
-    background-color: ${theme.colorPrimary}
+    background-color: ${p => p.theme.colorPrimary}
 `
 
 export default ({ icon, fixed, selected }) => 

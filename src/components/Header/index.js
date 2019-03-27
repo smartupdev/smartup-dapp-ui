@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-import theme from '../../theme'
 // import Link from '../Link'
 import { Link, Route } from "react-router-dom";
 import Menu from './Menu'
@@ -8,9 +7,9 @@ import Menu from './Menu'
 import Icon0 from '../../images/icon.svg'
 
 const Header = styled.header`
-  background-color: ${theme.bgColorDark};
-  color: ${theme.colorSecondary};
-  width: ${theme.headerWidth};
+  background-color: ${p => p.theme.bgColorDark};
+  color: ${p => p.theme.colorSecondary};
+  width: ${p => p.theme.headerWidth};
   display: flex;
   flex-direction: column;
 `
