@@ -12,5 +12,5 @@ const Panel = styled.div`
 
 export default () => 
   <Panel>
-    I am panel
+    Panel
   </Panel>

@@ -1,13 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
-
-const Main = styled.div`
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-`
+import { Col } from '../Layout'
 
 export default ({ children }) => 
-  <Main>
+  <Col flex={1}>
     {children}
-  </Main>
+  </Col>
