@@ -20,7 +20,7 @@ const App = () => {
     <Router>
       <Container>
         <Header routes={routes} />
-        <Hr />
+        <Hr vertical />
         <Main>
           {
             routes.map(route =>
@@ -28,7 +28,7 @@ const App = () => {
             )
           }
         </Main>
-        <Hr />
+        <Hr vertical />
         <Panel />
       </Container>
 

@@ -8,7 +8,7 @@ import Menu from './Menu'
 import Icon0 from '../../images/icon.svg'
 
 const Header = styled.header`
-  background-color: ${theme.bgColorPrimary};
+  background-color: ${theme.bgColorDark};
   color: ${theme.colorSecondary};
   width: ${theme.headerWidth};
   display: flex;

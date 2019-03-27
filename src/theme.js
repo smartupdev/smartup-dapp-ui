@@ -1,8 +1,9 @@
 const theme = {
   // Color
   bgColor: '#2d3c47', // default bg
-  bgColorPrimary: '#1b242b', // main
-  bgColorSecondary: '#ffffff', // 
+  bgColorDark: '#1b242b', // 
+  bgColorLight: '#3f586b', // 
+  
   color: 'white', // for normal text
   colorPrimary: '#f68e56', // for main text
   colorSecondary: '#9b9ea1', // for second main text
@@ -19,13 +20,14 @@ const theme = {
   // #9b9ea1 light grey
   
   // Layout
-  // spacingXS: '10px',
-  // spacingS: '15px',
+  spacingXS: '10px',
+  spacingS: '16px',
   spacingM: '20px',
   spacingL: '30px',
   spacingXL: '60px',
 
   headerWidth: '60px',
+  tabWidth: '100px',
 
   // Size
   fontSizeXS: '10px',
