@@ -1,5 +1,7 @@
 import React, {useContext} from 'react'
 
+import styled, { css } from 'styled-components'
+
 // import { useStateValue, StateContext } from '../../store';
 
 export const Text2 = () => {
