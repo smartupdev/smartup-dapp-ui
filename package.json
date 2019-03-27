@@ -25,5 +25,13 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "react-router-dom": "^5.0.0",
+    "react-router-redux": "^4.0.8",
+    "redux-devtools-extension": "^2.13.8",
+    "redux-logger": "^3.0.6",
+    "superagent": "^4.1.0",
+    "superagent-promise": "^1.1.0"
+  }
 }
