@@ -17,5 +17,5 @@ const Col = styled(Flex)`
 `
 
 export {
-  Row, Col
+  Row, Col, Flex
 }

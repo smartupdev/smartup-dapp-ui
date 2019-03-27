@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import theme from '../../theme'
 // import Link from '../Link'
-import { Link } from "react-router-dom";
+import { Link, Route } from "react-router-dom";
 import Menu from './Menu'
 
 import Icon0 from '../../images/icon.svg'
@@ -19,10 +19,17 @@ export default ({ routes }) =>
   <Header>
     <Menu icon={Icon0} fixed />
     {
-      routes.map( (LIST, i) =>
-        <Link key={i} to={LIST.path}>
-          <Menu selected={!i} icon={LIST.icon} />
-        </Link>
+      routes.map( ({path, icon}, i) =>
+        <Route
+          key={i} 
+          path={path}
+          exact={true}
+          children={({ match }) => (
+            <Link to={path}>
+              <Menu selected={match} icon={icon} />
+            </Link>
+          )}
+        />
       )
     }
   </Header>
