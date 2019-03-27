@@ -1,11 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
 import theme from '../../theme'
-import Link from '../Link'
+// import Link from '../Link'
+import { Link, Route } from "react-router-dom";
+import Menu from './Menu'
 
 import Icon0 from '../../images/icon.svg'
-
-import routes from '../../routes'
 
 const Header = styled.header`
   background-color: ${theme.bgColorPrimary};
@@ -15,12 +15,21 @@ const Header = styled.header`
   flex-direction: column;
 `
 
-export default () => 
+export default ({ routes }) => 
   <Header>
-    <Link icon={Icon0} fixed />
+    <Menu icon={Icon0} fixed />
     {
-      routes.map( (LIST, i) =>
-        <Link key={i} selected={!i} icon={LIST.icon} href={LIST.path} />
+      routes.map( ({path, icon}, i) =>
+        <Route
+          key={i} 
+          path={path}
+          exact={true}
+          children={({ match }) => (
+            <Link to={path}>
+              <Menu selected={match} icon={icon} />
+            </Link>
+          )}
+        />
       )
     }
   </Header>
