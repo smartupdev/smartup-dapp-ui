@@ -1,3 +1,5 @@
+export const currentLang = 'en' // TODO
+
 function name(en, tc, sc) {
   return {
     en,

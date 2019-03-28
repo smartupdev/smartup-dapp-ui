@@ -7,7 +7,6 @@ import Panel from '../../components/Panel'
 import Main from '../../components/Main'
 import Hr from '../../components/Hr'
 import { Row } from '../../components/Layout'
-import { useTheme } from '../../components/Theme'
 import styled from 'styled-components'
 
 const Container = styled(Row)`

@@ -17,7 +17,7 @@ const Tab = styled(Row)`
 `
 
 // tabs: [ { <label: string>, <value>, <dot: bool> } ]
-export default ({ activeTab, tabs, onClick, fullWidth }) =>
+export default ({ activeTab, tabs, fullWidth, onClick }) =>
   <>
   <Hr />
   <Row>
