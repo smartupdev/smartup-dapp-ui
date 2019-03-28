@@ -12,22 +12,9 @@ export const Text = styled.p`
   ${props => props.L && css`font-size: ${p => p.theme.fontSizeL}`}
   ${props => props.XL && css`font-size: ${p => p.theme.fontSizeXL}`}
 
+  ${p => p.wordSpaceL && css`letter-spacing: ${p => p.theme.fontSpacingL}`}
+
   ${p => p.spaceH && css`padding-right: ${p.spaceH}; padding-left: ${p.spaceH}`}
-`
-
-export const Header = styled(Text)`
-  
-`
-export const Title = styled(Text)`
-
-`
-export const P = styled(Text)`
-
-`
-export const H1 = styled(Text)`
-
-`
-export const Note = styled(Text)`
-
+  ${p => p.note && css`color: ${p => p.theme.colorSecondary}`}
 `
 export default Text

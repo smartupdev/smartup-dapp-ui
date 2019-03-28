@@ -14,6 +14,7 @@ const Tab = styled(Row)`
   cursor: pointer;
   border-top: 1px;
   border-bottom: 1px;
+  color: ${p => p.theme.colorSecondary};
   ${p => p.type === TYPE.border && css`
     border-right: solid 1px ${p => p.theme.borderColor};
     border-left: 0px;

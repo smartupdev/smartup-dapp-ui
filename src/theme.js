@@ -6,7 +6,9 @@ const theme = {
   
   color: 'white', // for normal text
   colorPrimary: '#f68e56', // for main text, orange
-  colorSecondary: '#3F586B', // for second main text, dark green
+  colorDark: '#3F586B', // for second main text, dark green
+  colorSecondary: '#A6A8A9', // for third main text, gray
+
   errorTextColor: '#e8666d',
   borderColor: '#9b9ea1',
 
@@ -36,7 +38,14 @@ const theme = {
   fontSizeL: '16px',
   fontSizeXL: '20px',
 
-  iconSizeM: '30px'
+  fontSpacingL: '6px',
+
+  iconSizeM: '30px',
+
+  imageSizeXS: '30px',
+  imageSizeS: '50px',
+  imageSizeM: '100px',
+  imageSizeL: '200px'
 }
 
 export default theme
