@@ -6,7 +6,7 @@ const theme = {
   
   color: 'white', // for normal text
   colorPrimary: '#f68e56', // for main text, orange
-  colorSecondary: '#9b9ea1', // for second main text
+  colorSecondary: '#3F586B', // for second main text, dark green
   errorTextColor: '#e8666d',
   borderColor: '#9b9ea1',
 

@@ -22,7 +22,7 @@ const FILTERS = [
   { label: lang.home.tab.rich[currentLang], value: 'rich' },
 ]
 
-const colWidth = '100px'
+const colWidth = '130px'
 
 const TableName = [
   { label: '', value: 'icon', sortable: false, layoutStyle: { width: theme.iconSizeM } },
@@ -50,7 +50,7 @@ export default () =>
         <Text>Search</Text>
       </Row>
     </Top>
-    <Table onClickHeader={console.debug} model={TableName} values={markets} sortBy='price' orderby='desc' />
+    <Table onClickHeader={console.debug} model={TableName} values={markets} sortBy='price' orderBy='desc' />
 
     {/* <Col> */}
     {/* <Row> */}
