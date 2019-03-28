@@ -1,11 +1,11 @@
 // import React from 'react'
 import styled, { css } from 'styled-components'
-import theme from '../../theme'
 
 const Flex = styled.div`
   display: flex;
   position: relative;
   ${props => typeof props.flex === 'number' && css`flex: ${props.flex}`}
+  ${props => props.width && css`width: ${props.width}; min-width: ${props.width}`}
 `
 
 const Row = styled(Flex)`
