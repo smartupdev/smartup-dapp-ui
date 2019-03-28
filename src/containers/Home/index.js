@@ -1,11 +1,19 @@
 import React from 'react'
+import styled, { css } from 'styled-components'
 import Tab from '../../components/Tab'
 import Table from '../../components/Table'
+import Text from '../../components/Text'
 import { Row, Col } from '../../components/Layout'
 import lang, { currentLang } from '../../lang'
 import theme from '../../theme'
 
 import FakeIcon from '../../images/035-sun.svg'
+
+const Top = styled(Row)`
+  padding: 0 ${p => p.theme.spacingXS}
+  background-color: ${p => p.theme.bgColorLight}
+`
+
 const FILTERS = [
   { label: lang.home.tab.all[currentLang], value: null },
   { label: lang.home.tab.hot[currentLang], value: 'hot' },
@@ -34,8 +42,14 @@ const markets = [
 ]
 
 export default () => 
-  <>
-    <Tab activeTab={null} tabs={FILTERS} onClick={console.debug} />
+  <Col>
+    <Top flex={1} spaceBetween>
+      <Tab activeTab={null} tabs={FILTERS} onClick={console.debug} type='simple' />
+      <Row centerVertical>
+        <Text spaceH={theme.spacingS}>225 RESULTS</Text>
+        <Text>Search</Text>
+      </Row>
+    </Top>
     <Table onClickHeader={console.debug} model={TableName} values={markets} sortBy='price' orderby='desc' />
 
     {/* <Col> */}
@@ -62,4 +76,4 @@ export default () =>
       )
     }
     </Col> */}
-  </>
+  </Col>

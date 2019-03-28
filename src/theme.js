@@ -2,10 +2,10 @@ const theme = {
   // Color
   bgColor: '#2d3c47', // default bg
   bgColorDark: '#1b242b', // 
-  bgColorLight: '#3f586b', // 
+  bgColorLight: '#364855', // 
   
   color: 'white', // for normal text
-  colorPrimary: '#f68e56', // for main text
+  colorPrimary: '#f68e56', // for main text, orange
   colorSecondary: '#9b9ea1', // for second main text
   errorTextColor: '#e8666d',
   borderColor: '#9b9ea1',
@@ -27,7 +27,7 @@ const theme = {
   spacingXL: '60px',
 
   headerWidth: '60px',
-  tabWidth: '100px',
+  // tabWidth: '100px',
 
   // Size
   fontSizeXS: '10px',

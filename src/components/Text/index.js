@@ -11,6 +11,8 @@ export const Text = styled.p`
   ${props => props.M && css`font-size: ${p => p.theme.fontSizeM}`}
   ${props => props.L && css`font-size: ${p => p.theme.fontSizeL}`}
   ${props => props.XL && css`font-size: ${p => p.theme.fontSizeXL}`}
+
+  ${p => p.spaceH && css`padding-right: ${p.spaceH}; padding-left: ${p.spaceH}`}
 `
 
 export const Header = styled(Text)`
