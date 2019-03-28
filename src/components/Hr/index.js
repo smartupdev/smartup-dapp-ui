@@ -1,11 +1,8 @@
-import React from 'react'
-import styled from 'styled-components'
-import theme from '../../theme'
+import styled, { css } from 'styled-components'
 
-const Hr = styled.div`
+export default styled.div`
   min-width: 1px;
   min-height: 1px;
-  background-color: ${theme.borderColor};
+  ${props => props.vertical ? css`width: auto` : css`width: 100%`}
+  background-color: ${p => p.theme.borderColor}
 `
-
-export default () => <Hr />

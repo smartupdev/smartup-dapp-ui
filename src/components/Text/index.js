@@ -1,40 +1,31 @@
-import React, {useContext} from 'react'
-
+import React from 'react'
 import styled, { css } from 'styled-components'
 
-// import { useStateValue, StateContext } from '../../store';
+export const Text = styled.p`
+  margin: 0;
+  padding: 0;
+  font-family: 'Quicksand', sans-serif;
+  font-size: ${p => p.theme.fontSizeM};
+  ${props => props.XS && css`font-size: ${p => p.theme.fontSizeXS}`}
+  ${props => props.S && css`font-size: ${p => p.theme.fontSizeS}`}
+  ${props => props.M && css`font-size: ${p => p.theme.fontSizeM}`}
+  ${props => props.L && css`font-size: ${p => p.theme.fontSizeL}`}
+  ${props => props.XL && css`font-size: ${p => p.theme.fontSizeXL}`}
+`
 
-export const Text2 = () => {
-  console.log('Text2')
-  return (
-    <div>I am text2</div>
-  )
-}
+export const Header = styled(Text)`
+  
+`
+export const Title = styled(Text)`
 
+`
+export const P = styled(Text)`
 
-export const Text = () => {
-  // const [s, dispatch] = useStateValue()
-  // console.log(s,'Text')
-  // const theme = s.theme
-  return (
-    <div style={{ 
-      // color: theme.primary
-     }}>I am text</div>
-  )
-}
+`
+export const H1 = styled(Text)`
 
-export const ThemedButton = () => {
-  // const [{ theme }, dispatch] = useStateValue()
-  console.log('Button')
-  return (
-    <button
-      // style={{ backgroundColor: theme.primary }}
-      // onClick={() => dispatch({
-      //   type: 'changeTheme',
-      //   newTheme: 'blue'
-      // })}
-    >
-      Make me blue!
-    </button>
-  );
-}
+`
+export const Note = styled(Text)`
+
+`
+export default Text
