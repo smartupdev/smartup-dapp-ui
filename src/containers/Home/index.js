@@ -2,10 +2,12 @@ import React from 'react'
 import styled, { css } from 'styled-components'
 import Tab from '../../components/Tab'
 import Table from '../../components/Table'
+import Icon from '../../components/Icon'
 import Text from '../../components/Text'
 import { Row, Col } from '../../components/Layout'
 import lang, { currentLang } from '../../lang'
 import theme from '../../theme'
+import { toPrice } from '../../lib/util/format'
 
 import FakeIcon from '../../images/035-sun.svg'
 
@@ -24,14 +26,20 @@ const FILTERS = [
 
 const colWidth = '130px'
 
+const _Icon = ({ value }) => <Icon source={value} />
+const _Text = ({ value }) => <Text>{value}</Text>
+const _Percent = ({ value }) => <Text>{value * 100 + '%'}</Text>
+const _Price = ({ value }) => <Text>{toPrice(value)}</Text>
+const _PriceShort = ({ value }) => <Text>{toPrice(value, 0)}</Text>
+
 const TableName = [
-  { label: '', value: 'icon', sortable: false, layoutStyle: { width: theme.iconSizeM } },
-  { label: lang.home.table.name[currentLang], value: 'name', sortable: true, layoutStyle: { flex: 1, width: colWidth } },
-  { label: lang.home.table.change[currentLang], value: 'changeAvg24h', sortable: true, layoutStyle: { width: colWidth } },
-  { label: lang.home.table.price[currentLang], value: 'price', sortable: true, layoutStyle: { width: colWidth } },
-  { label: lang.home.table.volume[currentLang], value: 'volumeAvg24h', sortable: true, layoutStyle: { width: colWidth } },
-  { label: lang.home.table.cap[currentLang], value: 'pool', sortable: true, layoutStyle: { width: colWidth } },
-  { label: lang.home.table.graph[currentLang], value: 'priceIn7d', sortable: false, layoutStyle: { width: '200px' } },
+  { label: '', value: 'icon', sortable: false, layoutStyle: { width: `calc( ${theme.iconSizeM} + 15px )` }, component: _Icon },
+  { label: lang.home.table.name[currentLang], value: 'name', sortable: true, layoutStyle: { flex: 1, width: colWidth }, component: _Text },
+  { label: lang.home.table.change[currentLang], value: 'changeAvg24h', sortable: true, layoutStyle: { width: colWidth }, component: _Percent },
+  { label: lang.home.table.price[currentLang], value: 'price', sortable: true, layoutStyle: { width: colWidth }, component: _Price },
+  { label: lang.home.table.volume[currentLang], value: 'volumeAvg24h', sortable: true, layoutStyle: { width: colWidth }, component: _PriceShort },
+  { label: lang.home.table.cap[currentLang], value: 'pool', sortable: true, layoutStyle: { width: colWidth }, component: _PriceShort },
+  { label: lang.home.table.graph[currentLang], value: 'priceIn7d', sortable: false, layoutStyle: { width: '200px' }, component: Text },
   { label: '', value: 'action', sortable: false, layoutStyle: { width: theme.iconSizeM } },
 ]
 
