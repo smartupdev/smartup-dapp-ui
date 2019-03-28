@@ -11,11 +11,11 @@ import theme from './theme'
 
 
 const Index = () =>
-  <Router>
-    <ThemeProvider defaultTheme={theme}>
-      <App />
-    </ThemeProvider>
-  </Router>
-
+    <Provider store={store}>
+      <Router>
+        <ThemeProvider defaultTheme={theme}>
+          <App />
+        </ThemeProvider>
+      </Router>
+    </Provider>
 ReactDOM.render(<Index />, document.getElementById('root'));
-
