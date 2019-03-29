@@ -12,7 +12,7 @@ const SVG = styled.svg`
 const Polyline = styled.polyline`
   stroke: ${p => p.theme.colorPrimary};
   fill: none;
-  stroke-width: 3;
+  stroke-width: 1;
 `
 
 export default ({ value }) => {
