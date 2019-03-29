@@ -36,7 +36,7 @@ const FILTERS = [
 const colWidth = '130px'
 
 const _Icon = ({ value }) => <Image source={value} S />
-const More = () => <Icon source={FakeArrow} />
+const More = ({ isExpanded }) => <Icon source={FakeArrow} reverse={isExpanded} />
 const _Name = ({ value, record }) => 
   <Col>
     <Text>{value}</Text>

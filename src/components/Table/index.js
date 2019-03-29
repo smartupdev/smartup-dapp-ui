@@ -61,7 +61,7 @@ export default ({ model, values, sortBy, orderBy, onClickHeader, onClick, expand
                 {
                   model.map( ({ value: key, component: Component = Text, layoutStyle }, j) =>
                     <TD key={j} {...layoutStyle} borderTop centerVertical onClick={() => onClick(record, key, index)}>
-                      <Component record={record} value={record[key]} index={index} />
+                      <Component record={record} value={record[key]} index={index} isExpanded={isExpanded} />
                     </TD>
                   )
                 }
