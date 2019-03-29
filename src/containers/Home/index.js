@@ -9,7 +9,7 @@ import Button from '../../components/Button'
 import { Row, Col } from '../../components/Layout'
 import lang, { currentLang } from '../../lang'
 import theme from '../../theme'
-import { toPrice } from '../../lib/util/format'
+import { toPrice, toDate } from '../../lib/util'
 
 import CommentIcon from '../../images/018-planet-earth-2.svg'
 import SubIcon from '../../images/019-jupiter.svg'
@@ -40,7 +40,7 @@ const More = () => <Icon source={FakeArrow} />
 const _Name = ({ value, record }) => 
   <Col>
     <Text>{value}</Text>
-    <Text note S>{record.createdDateTime}</Text> {/* { TODO } */}
+    <Text note S>{toDate(record.createdDateTime)}</Text> {/* { TODO } */}
   </Col>
 const _Percent = ({ value }) => <Text>{value * 100 + '%'}</Text>
 const _Price = ({ value }) => <Text price>{toPrice(value)}</Text>
@@ -93,8 +93,8 @@ export default () => {
       <Top flex={1} spaceBetween>
         <Tab activeTab={null} tabs={FILTERS} onClick={console.debug} type='simple' />
         <Row centerVertical>
-          <Text spaceH={theme.spacingS}>225 RESULTS</Text>
-          <Text>Search</Text>
+          <Text spaceH={theme.spacingS} S>225 RESULTS</Text>
+          <Text S>Search</Text>
         </Row>
       </Top>
       <Table 

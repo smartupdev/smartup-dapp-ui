@@ -21,6 +21,10 @@ const TD = styled(Col)`
   ${p => p.highlight && css`color: ${p => p.theme.colorPrimary}`}
 `
 
+const TableTitle = styled(Row)`
+  padding-left: ${p => p.theme.spacingXS}
+  padding-right: ${p => p.theme.spacingXS}
+`
 const TableRecord = styled(Col)`
   ${p => p.isExpanded && css`background-color: ${p => p.theme.bgColorDark}`}
   border-top: 1px solid ${p => p.theme.borderColor}
@@ -39,7 +43,7 @@ const TableRecord = styled(Col)`
 export default ({ model, values, sortBy, orderBy, onClickHeader, onClick, expandedRecords, expandCompoent }) => {
   return (
     <Table>
-      <Row>
+      <TableTitle>
       {
         model.map( ({ value, label, layoutStyle }, index) => 
           <TD key={value} {...layoutStyle} header centerVertical highlight={value === sortBy} onClick={() => onClickHeader(value, index)}>
@@ -47,7 +51,7 @@ export default ({ model, values, sortBy, orderBy, onClickHeader, onClick, expand
           </TD>
         )
       }
-      </Row>
+      </TableTitle>
       {
         values.map( (record, index) => {
           const isExpanded = expandedRecords.includes(record.id)
