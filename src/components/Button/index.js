@@ -10,6 +10,7 @@ const Button = styled.button`
   border-radius: ${p => p.theme.borderRadius}
   padding: ${p => p.theme.spacingXXS} ${p => p.theme.spacingXS}
   display: flex;
+  cursor: pointer;
   ${p => p.primary && css`background-color: ${p.theme.colorPrimary}; color: ${p.theme.colorDark}`}  
 `
 
