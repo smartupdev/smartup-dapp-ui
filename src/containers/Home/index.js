@@ -99,14 +99,16 @@ const markets = [
 ]
 
 export default () => {
-  const [expandedRecords, setExpandedRecords] = useState([])
+  const [expandedRecords, setExpandedRecords] = useState([]) // TODO
+  const [activeTab, setActiveTab] = useState(null) // TODO
+  const onClickFilter = (value, index) => setActiveTab(value)
   const onClickRecord = ({ record: {id}, isExpanded }) => setExpandedRecords(
     isExpanded ? expandedRecords.filter(r => r !== id) : [...expandedRecords, id]
   )
   return (
     <Col>
       <Top flex={1} spaceBetween>
-        <Tab activeTab={null} tabs={FILTERS} onClick={console.debug} type='simple' />
+        <Tab activeTab={activeTab} tabs={FILTERS} onClick={onClickFilter} type='simple' />
         <Row centerVertical>
           <Text spaceH={theme.spacingS} S>225 RESULTS</Text>
           <Text S>Search</Text>
