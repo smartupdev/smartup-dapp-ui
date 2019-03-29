@@ -5,15 +5,18 @@ import Image from '../../components/Image'
 import Button from '../../components/Button'
 import Text from '../../components/Text'
 import Tab from '../../components/Tab'
+import Portfolio from './Portfolio'
+import Notification from './Notification'
+import Setting from './Setting'
 import { Col, Row } from '../../components/Layout'
 import lang, { currentLang } from '../../lang'
 
 import LoginIcon from '../../images/menu1.svg'
 
 const TABS = [
-  { label: lang.panel.tab.portfilio[currentLang], value: 'portfilio' },
-  { label: lang.panel.tab.notification[currentLang], value: 'notification', dot: true },
-  { label: lang.panel.tab.setting[currentLang], value: 'setting' },
+  { label: lang.panel.tab.portfilio[currentLang], value: 'portfilio', component: Portfolio },
+  { label: lang.panel.tab.notification[currentLang], value: 'notification', dot: true, component: Notification },
+  { label: lang.panel.tab.setting[currentLang], value: 'setting', component: Setting },
 ]
 
 const Top = styled(Row)`
@@ -27,7 +30,7 @@ export default () => {
   return (
     <Col width='300px' center={!loggedIn} centerVertical={!loggedIn}>
       {loggedIn ?
-      <Col>
+      <>
         <Top centerVertical spaceBetween>
           <Row centerVertical>
             <Image source={LoginIcon} rightText />
@@ -39,7 +42,10 @@ export default () => {
           </Col>
         </Top>
         <Tab tabs={TABS} activeTab={activeTab} onClick={onClickTab} />
-      </Col>
+        {
+          TABS.find(t => t.value === activeTab).component()
+        }
+      </>
       :
       <Col center>
         <Image source={LoginIcon} />
