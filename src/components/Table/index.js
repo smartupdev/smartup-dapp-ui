@@ -23,13 +23,13 @@ const TD = styled(Col)`
 
 const TableTitle = styled(Row)`
   padding-left: ${p => p.theme.spacingXS}
-  padding-right: ${p => p.theme.spacingXS}
+  padding-right: ${p => p.theme.spacingS}
 `
 const TableRecord = styled(Col)`
   ${p => p.isExpanded && css`background-color: ${p => p.theme.bgColorDark}`}
   border-top: 1px solid ${p => p.theme.borderColor}
   padding-left: ${p => p.theme.spacingXS}
-  padding-right: ${p => p.theme.spacingXS}
+  padding-right: ${p => p.theme.spacingS}
 `
 
 // model: Array { label, value, layoutStyle, component<record, value, id> }

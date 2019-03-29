@@ -51,7 +51,7 @@ const ExpandCompoent = ({ record }) =>
     <Col spacingLeft={theme.spacingXS} spacingRight={theme.spacingL}>
       <Image source={record.image} long />
     </Col>
-    <Col spaceBetween flex={1} spacingRight={theme.spacingXS}>
+    <Col spaceBetween flex={1}>
       <Row spaceBetween> 
         <Col>
           <Text XL wordSpaceL>{record.name}</Text>
@@ -78,7 +78,7 @@ const TableName = [
   { label: lang.home.table.volume[currentLang], value: 'volumeAvg24h', sortable: true, layoutStyle: { width: colWidth }, component: _Volume },
   { label: lang.home.table.cap[currentLang], value: 'pool', sortable: true, layoutStyle: { width: colWidth }, component: _Cap },
   { label: lang.home.table.graph[currentLang], value: 'priceIn7d', sortable: false, layoutStyle: { width: '200px' }, component: Text },
-  { label: '', value: 'action', sortable: false, layoutStyle: { width: `calc( ${theme.iconSizeM} + 15px )` }, component: More },
+  { label: '', value: 'action', sortable: false, layoutStyle: { width: `calc( ${theme.iconSizeM} + 15px )`, end: true }, component: More },
 ]
 
 const markets = [

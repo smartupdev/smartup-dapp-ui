@@ -20,6 +20,7 @@ const Row = styled(Flex)`
 
 const Col = styled(Flex)`
   flex-direction: column;
+  ${props => props.end && css`align-items: flex-end`};
   ${props => props.center && css`align-items: center`};
   ${props => props.centerVertical && css`justify-content: center`};
   ${p => p.spaceBetween && css`justify-content: space-between`};
