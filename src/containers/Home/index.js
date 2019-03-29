@@ -6,6 +6,7 @@ import Icon from '../../components/Icon'
 import Image from '../../components/Image'
 import Text from '../../components/Text'
 import Button from '../../components/Button'
+import SimpleLineChart from '../../components/SimpleLineChart'
 import { Row, Col } from '../../components/Layout'
 import lang, { currentLang } from '../../lang'
 import theme from '../../theme'
@@ -75,7 +76,7 @@ const TableName = [
   { label: lang.home.table.price[currentLang], value: 'price', sortable: true, layoutStyle: { width: colWidth }, component: _Price },
   { label: lang.home.table.volume[currentLang], value: 'volumeAvg24h', sortable: true, layoutStyle: { width: colWidth }, component: _Volume },
   { label: lang.home.table.cap[currentLang], value: 'pool', sortable: true, layoutStyle: { width: colWidth }, component: _Cap },
-  { label: lang.home.table.graph[currentLang], value: 'priceIn7d', sortable: false, layoutStyle: { width: '200px' }, component: Text },
+  { label: lang.home.table.graph[currentLang], value: 'priceIn7d', sortable: false, layoutStyle: { width: '200px', center: true }, component: SimpleLineChart },
   { label: '', value: 'action', sortable: false, layoutStyle: { width: `calc( ${theme.iconSizeM} + 15px )`, right: true }, component: More },
 ]
 
