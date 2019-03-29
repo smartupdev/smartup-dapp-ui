@@ -11,6 +11,7 @@ const ORDER_BY = {
 
 const Table = styled(Col)`
   background-color: ${p => p.theme.bgColor}
+  ${p => p.minWidth && css`min-width: ${p.minWidth}`}
 `
 
 const TD = styled(Col)`
@@ -40,9 +41,9 @@ const TableRecord = styled(Col)`
 // onClick: (<recond>, index) => function
 // expandedRecords: Array <id>
 
-export default ({ model, values, sortBy, orderBy, onClickHeader, onClick, expandedRecords, expandCompoent }) => {
+export default ({ model, values, sortBy, orderBy, onClickHeader, onClick, expandedRecords, expandCompoent, minWidth }) => {
   return (
-    <Table>
+    <Table minWidth={minWidth}>
       <TableTitle>
       {
         model.map( ({ value, label, layoutStyle }, index) => 

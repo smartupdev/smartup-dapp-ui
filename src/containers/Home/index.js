@@ -109,6 +109,7 @@ export default () => {
         </Row>
       </Top>
       <Table 
+        minWidth={'1000px'}
         onClickHeader={console.debug} 
         onClick={console.debug}
         model={TableName} 
