@@ -61,10 +61,8 @@ const ExpandCompoent = ({ record }) =>
       </Row>
       <Row centerVertical spaceBetween>
         <Row>
-          <Image source={CommentIcon} XS rightText />
-          <Text inlineSpace>{record.numberOfComments}</Text>
-          <Image source={SubIcon} XS rightText />
-          <Text inlineSpace>{record.numberOfSub}</Text>
+          <Button label={record.numberOfComments} icon={CommentIcon} />
+          <Button label={record.numberOfSub} icon={SubIcon} />
         </Row>
         <Button primary label={lang.trade[currentLang]} icon={TradeIcon} />
       </Row>

@@ -6,10 +6,11 @@ import Image from '../Image'
 const Button = styled.button`
   background-color: transparent
   border: 0;
+  color: ${p => p.theme.white}
   border-radius: ${p => p.theme.borderRadius}
   padding: ${p => p.theme.spacingXXS} ${p => p.theme.spacingXS}
   display: flex;
-  ${p => p.primary && css`background-color: ${p.theme.colorPrimary}`}  
+  ${p => p.primary && css`background-color: ${p.theme.colorPrimary}; color: ${p.theme.colorDark}`}  
 `
 
 export default ({ label, icon, ...rest }) => {
