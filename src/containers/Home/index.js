@@ -50,7 +50,7 @@ const _Cap = ({ value }) => <Text>{toPrice(value, 0)}</Text>
 const ExpandCompoent = ({ record }) => 
   <Row spacingBottom={theme.spacingS} spacingTop={theme.spacingS}>
     <Col spacingLeft={theme.spacingXS} spacingRight={theme.spacingL}>
-      <Image source={record.image} long />
+      <Image source={record.image} photo />
     </Col>
     <Col spaceBetween flex={1}>
       <Row spaceBetween> 

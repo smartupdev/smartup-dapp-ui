@@ -26,7 +26,7 @@ export default () => {
       </Col>
       :
       <Col center>
-        <Image source={LoginIcon} S />
+        <Image source={LoginIcon} />
         <Button primary outline verticalMargin label={lang.panel.connectButton[currentLang]} onClick={() => login(true)} />
         <Text note>MetaMask</Text>
       </Col>

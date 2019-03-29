@@ -48,8 +48,11 @@ const theme = {
 
   imageSizeXS: '18px',
   imageSizeS: '30px',
-  imageSizeM: '100px',
-  imageSizeL: '200px'
+  imageSizeM: '40px',
+  imageSizeL: '200px',
+
+  photoSizeWM: '200px',
+  photoSizeHM: '100px',
 }
 
 export default theme

@@ -14,9 +14,9 @@ const Image =  styled.img`
     height: ${p => p.theme.imageSizeS};
     width: ${p => p.theme.imageSizeS};
   `}
-  ${p => p.long && css`
-    height: ${p => p.theme.imageSizeM};
-    width: ${p => `calc( ${p.theme.imageSizeM} * 2 )`};
+  ${p => p.photo && css`
+    height: ${p => p.theme.photoSizeHM};
+    width: ${p => p.theme.photoSizeWM};
   `}
 `
 
