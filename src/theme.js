@@ -10,7 +10,8 @@ const theme = {
   colorSecondary: '#A6A8A9', // for third main text, gray
 
   errorTextColor: '#e8666d',
-  borderColor: '#9b9ea1',
+  // borderColor: '#9b9ea1',
+  borderColor: '#556672',
 
   white: '#ffffff',
   // #7fc88e  high

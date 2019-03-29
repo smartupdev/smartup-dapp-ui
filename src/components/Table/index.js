@@ -14,7 +14,7 @@ const Table = styled(Col)`
 `
 
 const TD = styled(Col)`
-  ${p => p.header && css`color: ${p => p.theme.colorSecondary}`}
+  ${p => p.header && css`color: ${p => p.theme.colorDark}`}
   ${p => p.onClick && css`cursor: pointer`}
   padding-bottom: ${p => p.theme.spacingXS}
   padding-top: ${p => p.theme.spacingXS}
