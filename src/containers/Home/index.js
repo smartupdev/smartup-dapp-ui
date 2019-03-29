@@ -43,8 +43,9 @@ const _Name = ({ value, record }) =>
     <Text note S>{record.createdDateTime}</Text> {/* { TODO } */}
   </Col>
 const _Percent = ({ value }) => <Text>{value * 100 + '%'}</Text>
-const _Price = ({ value }) => <Text>{toPrice(value)}</Text>
-const _PriceShort = ({ value }) => <Text>{toPrice(value, 0)}</Text>
+const _Price = ({ value }) => <Text price>{toPrice(value)}</Text>
+const _Volume = ({ value }) => <Text primary>{toPrice(value, 0)}</Text>
+const _Cap = ({ value }) => <Text>{toPrice(value, 0)}</Text>
 const ExpandCompoent = ({ record }) => 
   <Row spacingBottom={theme.spacingS} spacingTop={theme.spacingS}>
     <Col spacingLeft={theme.spacingXS} spacingRight={theme.spacingL}>
@@ -74,8 +75,8 @@ const TableName = [
   { label: lang.home.table.name[currentLang], value: 'name', sortable: true, layoutStyle: { flex: 1, width: colWidth }, component: _Name },
   { label: lang.home.table.change[currentLang], value: 'changeAvg24h', sortable: true, layoutStyle: { width: colWidth }, component: _Percent },
   { label: lang.home.table.price[currentLang], value: 'price', sortable: true, layoutStyle: { width: colWidth }, component: _Price },
-  { label: lang.home.table.volume[currentLang], value: 'volumeAvg24h', sortable: true, layoutStyle: { width: colWidth }, component: _PriceShort },
-  { label: lang.home.table.cap[currentLang], value: 'pool', sortable: true, layoutStyle: { width: colWidth }, component: _PriceShort },
+  { label: lang.home.table.volume[currentLang], value: 'volumeAvg24h', sortable: true, layoutStyle: { width: colWidth }, component: _Volume },
+  { label: lang.home.table.cap[currentLang], value: 'pool', sortable: true, layoutStyle: { width: colWidth }, component: _Cap },
   { label: lang.home.table.graph[currentLang], value: 'priceIn7d', sortable: false, layoutStyle: { width: '200px' }, component: Text },
   { label: '', value: 'action', sortable: false, layoutStyle: { width: `calc( ${theme.iconSizeM} + 15px )` }, component: More },
 ]

@@ -17,5 +17,7 @@ export const Text = styled.p`
   ${p => p.spaceH && css`padding-right: ${p.spaceH}; padding-left: ${p.spaceH}`}
   ${p => p.inlineSpace && css`padding-right: ${p => p.theme.fontSizeS};`}
   ${p => p.note && css`color: ${p => p.theme.colorSecondary}`}
+  ${p => p.price && css`color: ${p => p.theme.colorPrice}`}
+  ${p => p.primary && css`color: ${p => p.theme.colorPrimary}`}
 `
 export default Text

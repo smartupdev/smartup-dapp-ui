@@ -8,7 +8,8 @@ const theme = {
   colorPrimary: '#f68e56', // for main text, orange
   colorDark: '#3F586B', // for second main text, dark green
   colorSecondary: '#A6A8A9', // for third main text, gray
-
+  colorPrice: '#ffd35c',
+  
   errorTextColor: '#e8666d',
   // borderColor: '#9b9ea1',
   borderColor: '#556672',
