@@ -12,6 +12,7 @@ const theme = {
   errorTextColor: '#e8666d',
   // borderColor: '#9b9ea1',
   borderColor: '#556672',
+  borderRadius: '6px',
 
   white: '#ffffff',
   // #7fc88e  high
@@ -23,6 +24,7 @@ const theme = {
   // #9b9ea1 light grey
   
   // Layout
+  spacingXXS: '6px',
   spacingXS: '10px',
   spacingS: '16px',
   spacingM: '20px',
@@ -33,7 +35,7 @@ const theme = {
   // tabWidth: '100px',
 
   // Size
-  fontSizeXS: '10px',
+  fontSizeXS: '6px',
   fontSizeS: '12px',
   fontSizeM: '14px',
   fontSizeL: '16px',
@@ -43,8 +45,8 @@ const theme = {
 
   iconSizeM: '30px',
 
-  imageSizeXS: '30px',
-  imageSizeS: '50px',
+  imageSizeXS: '18px',
+  imageSizeS: '30px',
   imageSizeM: '100px',
   imageSizeL: '200px'
 }

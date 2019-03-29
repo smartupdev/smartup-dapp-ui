@@ -18,9 +18,14 @@ const TD = styled(Col)`
   ${p => p.onClick && css`cursor: pointer`}
   padding-bottom: ${p => p.theme.spacingXS}
   padding-top: ${p => p.theme.spacingXS}
-  background-color: ${p => p.theme.bgColor}
   ${p => p.highlight && css`color: ${p => p.theme.colorPrimary}`}
-  ${p => p.borderTop && css`border-top: 1px solid ${p => p.theme.borderColor}`}
+`
+
+const TableRecord = styled(Col)`
+  ${p => p.isExpanded && css`background-color: ${p => p.theme.bgColorDark}`}
+  border-top: 1px solid ${p => p.theme.borderColor}
+  padding-left: ${p => p.theme.spacingXS}
+  padding-right: ${p => p.theme.spacingXS}
 `
 
 // model: Array { label, value, layoutStyle, component<record, value, id> }
@@ -44,22 +49,25 @@ export default ({ model, values, sortBy, orderBy, onClickHeader, onClick, expand
       }
       </Row>
       {
-        values.map( (record, index) => 
-          <Col key={record.id}>
-            <Row>
+        values.map( (record, index) => {
+          const isExpanded = expandedRecords.includes(record.id)
+          return (
+            <TableRecord key={record.id} isExpanded={isExpanded}>
+              <Row>
+                {
+                  model.map( ({ value: key, component: Component = Text, layoutStyle }, j) =>
+                    <TD key={j} {...layoutStyle} borderTop centerVertical onClick={() => onClick(record, key, index)}>
+                      <Component record={record} value={record[key]} index={index} />
+                    </TD>
+                  )
+                }
+              </Row>
               {
-                model.map( ({ value: key, component: Component = Text, layoutStyle }, j) =>
-                  <TD key={j} {...layoutStyle} borderTop centerVertical onClick={() => onClick(record, key, index)}>
-                    <Component record={record} value={record[key]} index={index} />
-                  </TD>
-                )
+                isExpanded && expandCompoent({record})
               }
-            </Row>
-            {
-              expandedRecords.includes(record.id) && expandCompoent({record})
-            }
-          </Col>
-        )
+            </TableRecord>
+          )
+        })
       }
       <Hr />
     </Table>

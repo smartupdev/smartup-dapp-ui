@@ -15,6 +15,7 @@ export const Text = styled.p`
   ${p => p.wordSpaceL && css`letter-spacing: ${p => p.theme.fontSpacingL}`}
 
   ${p => p.spaceH && css`padding-right: ${p.spaceH}; padding-left: ${p.spaceH}`}
+  ${p => p.inlineSpace && css`padding-right: ${p => p.theme.fontSizeS};`}
   ${p => p.note && css`color: ${p => p.theme.colorSecondary}`}
 `
 export default Text

@@ -9,6 +9,7 @@ const Flex = styled.div`
   ${props => props.spacingLeft && css`padding-left: ${props.spacingLeft}`}
   ${props => props.spacingRight && css`padding-right: ${props.spacingRight}`}
   ${props => props.spacingBottom && css`padding-bottom: ${props.spacingBottom}`}
+  ${props => props.spacingTop && css`padding-top: ${props.spacingTop}`}
 `
 
 const Row = styled(Flex)`
@@ -21,7 +22,8 @@ const Col = styled(Flex)`
   flex-direction: column;
   ${props => props.centerVertical && css`justify-content: center`}
   ${props => props.center && css`align-items: center`}
-`
+  ${p => p.spaceBetween && css`justify-content: space-between`}
+  `
 
 export {
   Row, Col, Flex

@@ -11,6 +11,7 @@ function name(en, tc, sc) {
 export default {
   result: name('RESULTS'),
   search: name('Search'),
+  trade: name('Trade'),
   home: {
     tab: {
       all: name('All'),

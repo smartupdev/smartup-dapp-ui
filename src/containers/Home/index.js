@@ -5,10 +5,16 @@ import Table from '../../components/Table'
 import Icon from '../../components/Icon'
 import Image from '../../components/Image'
 import Text from '../../components/Text'
+import Button from '../../components/Button'
 import { Row, Col } from '../../components/Layout'
 import lang, { currentLang } from '../../lang'
 import theme from '../../theme'
 import { toPrice } from '../../lib/util/format'
+
+import CommentIcon from '../../images/018-planet-earth-2.svg'
+import SubIcon from '../../images/019-jupiter.svg'
+import TradeIcon from '../../images/042-wind.svg'
+import BookmarkIcon from '../../images/033-star.svg'
 
 import FakeIcon from '../../images/035-sun.svg'
 import FakeImage from '../../images/037-ufo.svg'
@@ -29,7 +35,7 @@ const FILTERS = [
 
 const colWidth = '130px'
 
-const _Icon = ({ value }) => <Image source={value} XS />
+const _Icon = ({ value }) => <Image source={value} S />
 const More = () => <Icon source={FakeArrow} />
 const _Name = ({ value, record }) => 
   <Col>
@@ -40,16 +46,26 @@ const _Percent = ({ value }) => <Text>{value * 100 + '%'}</Text>
 const _Price = ({ value }) => <Text>{toPrice(value)}</Text>
 const _PriceShort = ({ value }) => <Text>{toPrice(value, 0)}</Text>
 const ExpandCompoent = ({ record }) => 
-  <Row spacingBottom={theme.spacingS}>
+  <Row spacingBottom={theme.spacingS} spacingTop={theme.spacingS}>
     <Col spacingLeft={theme.spacingXS} spacingRight={theme.spacingL}>
       <Image source={record.image} long />
     </Col>
-    <Col>
-      <Text XL wordSpaceL>{record.name}</Text>
-      <Text note>{record.overview}</Text>
-      <Row>
-        <Text>{record.numberOfComments}</Text>
-        <Text>{record.numberOfSub}</Text>
+    <Col spaceBetween flex={1} spacingRight={theme.spacingXS}>
+      <Row spaceBetween> 
+        <Col>
+          <Text XL wordSpaceL>{record.name}</Text>
+          <Text note>{record.overview}</Text>
+        </Col>
+        <Image source={BookmarkIcon} S />
+      </Row>
+      <Row centerVertical spaceBetween>
+        <Row>
+          <Image source={CommentIcon} XS rightText />
+          <Text inlineSpace>{record.numberOfComments}</Text>
+          <Image source={SubIcon} XS rightText />
+          <Text inlineSpace>{record.numberOfSub}</Text>
+        </Row>
+        <Button primary label={lang.trade[currentLang]} icon={TradeIcon} />
       </Row>
     </Col>
   </Row>
@@ -70,23 +86,26 @@ const markets = [
   { id: '3', icon: FakeIcon, name: 'DUBLER STUDIO KIT', createdDateTime: 1553740797139, changeAvg24h: 0.18, price: 59.37, volumeAvg24h: 29002872, pool: 2682237283, priceIn7d: [ 40, 50, 45, 60, 57, 66, 70 ], overview: 'Let’s explain what is going on here.', image: FakeImage, numberOfComments: 2000, numberOfSub: 1000 },
 ]
 
-export default () => 
-  <Col>
-    <Top flex={1} spaceBetween>
-      <Tab activeTab={null} tabs={FILTERS} onClick={console.debug} type='simple' />
-      <Row centerVertical>
-        <Text spaceH={theme.spacingS}>225 RESULTS</Text>
-        <Text>Search</Text>
-      </Row>
-    </Top>
-    <Table 
-      onClickHeader={console.debug} 
-      onClick={console.debug}
-      model={TableName} 
-      values={markets} 
-      sortBy='price' 
-      orderBy='desc'
-      expandedRecords={['1', '3']}
-      expandCompoent={ExpandCompoent}
-      />
-  </Col>
+export default () => {
+  return (
+    <Col>
+      <Top flex={1} spaceBetween>
+        <Tab activeTab={null} tabs={FILTERS} onClick={console.debug} type='simple' />
+        <Row centerVertical>
+          <Text spaceH={theme.spacingS}>225 RESULTS</Text>
+          <Text>Search</Text>
+        </Row>
+      </Top>
+      <Table 
+        onClickHeader={console.debug} 
+        onClick={console.debug}
+        model={TableName} 
+        values={markets} 
+        sortBy='price' 
+        orderBy='desc'
+        expandedRecords={['1', '3']}
+        expandCompoent={ExpandCompoent}
+        />
+    </Col>
+  )  
+}

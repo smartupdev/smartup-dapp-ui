@@ -2,9 +2,10 @@ import React from 'react'
 import styled, { css } from 'styled-components'
 
 const Image =  styled.img`
-  background-color: tomato
+  # background-color: tomato
   height: ${p => p.theme.imageSizeM};
   width: ${p => p.theme.imageSizeM};
+  ${p => p.rightText && css`margin-right: ${p.theme.fontSizeXS}`};
   ${p => p.XS && css`
     height: ${p => p.theme.imageSizeXS};
     width: ${p => p.theme.imageSizeXS};
