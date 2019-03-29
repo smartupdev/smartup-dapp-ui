@@ -11,6 +11,8 @@ export const Text = styled.p`
   ${props => props.L && css`font-size: ${p => p.theme.fontSizeL}`}
   ${props => props.XL && css`font-size: ${p => p.theme.fontSizeXL}`}
 
+  ${p => p.right && css`text-align: right`};
+
   ${p => p.wordSpaceL && css`letter-spacing: ${p => p.theme.fontSpacingL}`}
 
   ${p => p.spaceH && css`padding-right: ${p.spaceH}; padding-left: ${p.spaceH}`}
