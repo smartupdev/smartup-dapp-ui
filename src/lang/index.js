@@ -35,6 +35,7 @@ export default {
       notification: name('Notifications'),
       setting: name('Settings')
     },
+    connectButton: name('Connect'),
     term: name('Terms of Service')
   }
 }

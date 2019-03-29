@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import Tab from '../../components/Tab'
 import Table from '../../components/Table'
@@ -99,6 +99,10 @@ const markets = [
 ]
 
 export default () => {
+  const [expandedRecords, setExpandedRecords] = useState([])
+  const onClickRecord = ({ record: {id}, isExpanded }) => setExpandedRecords(
+    isExpanded ? expandedRecords.filter(r => r !== id) : [...expandedRecords, id]
+  )
   return (
     <Col>
       <Top flex={1} spaceBetween>
@@ -111,12 +115,12 @@ export default () => {
       <Table 
         minWidth={'1000px'}
         onClickHeader={console.debug} 
-        onClick={console.debug}
+        onClick={onClickRecord}
         model={TableName} 
         values={markets} 
         sortBy='price' 
         orderBy='desc'
-        expandedRecords={['1', '3']}
+        expandedRecords={expandedRecords}
         expandCompoent={ExpandCompoent}
         />
     </Col>
