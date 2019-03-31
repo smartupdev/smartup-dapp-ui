@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import Tab from '../../components/Tab'
 import Table from '../../components/Table'
@@ -6,6 +6,7 @@ import Icon from '../../components/Icon'
 import Image from '../../components/Image'
 import Text from '../../components/Text'
 import Button from '../../components/Button'
+import SimpleLineChart from '../../components/SimpleLineChart'
 import { Row, Col } from '../../components/Layout'
 import lang, { currentLang } from '../../lang'
 import theme from '../../theme'
@@ -34,6 +35,24 @@ const FILTERS = [
   { label: lang.home.tab.rich[currentLang], value: 'rich' },
 ]
 
+// const markets = [
+//   { id: '1', icon: FakeIcon, name: 'SMART', createdDateTime: 1553740797139, changeAvg24h: 0.18, price: 59.37, volumeAvg24h: 29002872, pool: 2682237283, priceIn7d: [ 40, 50, 45, 60, 57, 66, 70 ], overview: 'Your musical ideas into reality, using the one instrument you’ve been practising since birth— the voice.', image: FakeImage, numberOfComments: 2000, numberOfSub: 1000 },
+//   { id: '2', icon: FakeIcon, name: 'SMART', createdDateTime: 1553740797139, changeAvg24h: 0.18, price: 59.37, volumeAvg24h: 29002872, pool: 2682237283, priceIn7d: [ 40, 50, 45, 60, 57, 66, 70 ], overview: 'Let’s explain what is going on here.', image: FakeImage, numberOfComments: 2000, numberOfSub: 1000 },
+//   { id: '3', icon: FakeIcon, name: 'DUBLER STUDIO KIT', createdDateTime: 1553740797139, changeAvg24h: 0.18, price: 59.37, volumeAvg24h: 29002872, pool: 2682237283, priceIn7d: [ 40, 50, 45, 60, 57, 66, 70 ], overview: 'Let’s explain what is going on here.', image: FakeImage, numberOfComments: 2000, numberOfSub: 1000 },
+//   { id: '4', icon: FakeIcon, name: 'SMART', createdDateTime: 1553740797139, changeAvg24h: 0.18, price: 59.37, volumeAvg24h: 29002872, pool: 2682237283, priceIn7d: [ 40, 50, 45, 60, 57, 66, 70 ], overview: 'Let’s explain what is going on here.', image: FakeImage, numberOfComments: 2000, numberOfSub: 1000 },
+//   { id: '5', icon: FakeIcon, name: 'SMART', createdDateTime: 1553740797139, changeAvg24h: 0.18, price: 59.37, volumeAvg24h: 29002872, pool: 2682237283, priceIn7d: [ 40, 50, 45, 60, 57, 66, 70 ], overview: 'Let’s explain what is going on here.', image: FakeImage, numberOfComments: 2000, numberOfSub: 1000 },
+//   { id: '6', icon: FakeIcon, name: 'SMART', createdDateTime: 1553740797139, changeAvg24h: 0.18, price: 59.37, volumeAvg24h: 29002872, pool: 2682237283, priceIn7d: [ 40, 50, 45, 60, 57, 66, 70 ], overview: 'Let’s explain what is going on here.', image: FakeImage, numberOfComments: 2000, numberOfSub: 1000 },
+//   { id: '7', icon: FakeIcon, name: 'SMART', createdDateTime: 1553740797139, changeAvg24h: 0.18, price: 59.37, volumeAvg24h: 29002872, pool: 2682237283, priceIn7d: [ 40, 50, 45, 60, 57, 66, 70 ], overview: 'Let’s explain what is going on here.', image: FakeImage, numberOfComments: 2000, numberOfSub: 1000 },
+//   { id: '8', icon: FakeIcon, name: 'SMART', createdDateTime: 1553740797139, changeAvg24h: 0.18, price: 59.37, volumeAvg24h: 29002872, pool: 2682237283, priceIn7d: [ 40, 50, 45, 60, 57, 66, 70 ], overview: 'Let’s explain what is going on here.', image: FakeImage, numberOfComments: 2000, numberOfSub: 1000 },
+//   { id: '9', icon: FakeIcon, name: 'SMART', createdDateTime: 1553740797139, changeAvg24h: 0.18, price: 59.37, volumeAvg24h: 29002872, pool: 2682237283, priceIn7d: [ 40, 50, 45, 60, 57, 66, 70 ], overview: 'Let’s explain what is going on here.', image: FakeImage, numberOfComments: 2000, numberOfSub: 1000 },
+//   { id: '10', icon: FakeIcon, name: 'SMART', createdDateTime: 1553740797139, changeAvg24h: 0.18, price: 59.37, volumeAvg24h: 29002872, pool: 2682237283, priceIn7d: [ 40, 50, 45, 60, 57, 66, 70 ], overview: 'Let’s explain what is going on here.', image: FakeImage, numberOfComments: 2000, numberOfSub: 1000 },
+//   { id: '11', icon: FakeIcon, name: 'SMART', createdDateTime: 1553740797139, changeAvg24h: 0.18, price: 59.37, volumeAvg24h: 29002872, pool: 2682237283, priceIn7d: [ 40, 50, 45, 60, 57, 66, 70 ], overview: 'Let’s explain what is going on here.', image: FakeImage, numberOfComments: 2000, numberOfSub: 1000 },
+//   { id: '12', icon: FakeIcon, name: 'SMART', createdDateTime: 1553740797139, changeAvg24h: 0.18, price: 59.37, volumeAvg24h: 29002872, pool: 2682237283, priceIn7d: [ 40, 50, 45, 60, 57, 66, 70 ], overview: 'Let’s explain what is going on here.', image: FakeImage, numberOfComments: 2000, numberOfSub: 1000 },
+//   { id: '13', icon: FakeIcon, name: 'SMART', createdDateTime: 1553740797139, changeAvg24h: 0.18, price: 59.37, volumeAvg24h: 29002872, pool: 2682237283, priceIn7d: [ 40, 50, 45, 60, 57, 66, 70 ], overview: 'Let’s explain what is going on here.', image: FakeImage, numberOfComments: 2000, numberOfSub: 1000 },
+//   { id: '14', icon: FakeIcon, name: 'SMART', createdDateTime: 1553740797139, changeAvg24h: 0.18, price: 59.37, volumeAvg24h: 29002872, pool: 2682237283, priceIn7d: [ 40, 50, 45, 60, 57, 66, 70 ], overview: 'Let’s explain what is going on here.', image: FakeImage, numberOfComments: 2000, numberOfSub: 1000 },
+//   { id: '15', icon: FakeIcon, name: 'SMART', createdDateTime: 1553740797139, changeAvg24h: 0.18, price: 59.37, volumeAvg24h: 29002872, pool: 2682237283, priceIn7d: [ 40, 50, 45, 60, 57, 66, 70 ], overview: 'Let’s explain what is going on here.', image: FakeImage, numberOfComments: 2000, numberOfSub: 1000 },
+// ];
+
 const colWidth = '130px'
 
 const _Icon = ({ value }) => <Image source={value} S />
@@ -50,7 +69,7 @@ const _Cap = ({ value }) => <Text>{toPrice(value, 0)}</Text>
 const ExpandCompoent = ({ record }) => 
   <Row spacingBottom={theme.spacingS} spacingTop={theme.spacingS}>
     <Col spacingLeft={theme.spacingXS} spacingRight={theme.spacingL}>
-      <Image source={record.image} long />
+      <Image source={record.image} photo />
     </Col>
     <Col spaceBetween flex={1}>
       <Row spaceBetween> 
@@ -76,32 +95,49 @@ const TableName = [
   { label: lang.home.table.price[currentLang], value: 'price', sortable: true, layoutStyle: { width: colWidth }, component: _Price },
   { label: lang.home.table.volume[currentLang], value: 'volumeAvg24h', sortable: true, layoutStyle: { width: colWidth }, component: _Volume },
   { label: lang.home.table.cap[currentLang], value: 'pool', sortable: true, layoutStyle: { width: colWidth }, component: _Cap },
-  { label: lang.home.table.graph[currentLang], value: 'priceIn7d', sortable: false, layoutStyle: { width: '200px' }, component: Text },
+  { label: lang.home.table.graph[currentLang], value: 'priceIn7d', sortable: false, layoutStyle: { width: '200px', center: true }, component: SimpleLineChart },
   { label: '', value: 'action', sortable: false, layoutStyle: { width: `calc( ${theme.iconSizeM} + 15px )`, right: true }, component: More },
 ]
 
 class Home extends React.Component {
+
+  constructor(props){
+    super(props);
+    this.state = {
+      expandedRecords:[],
+      activeTab:null,
+    }
+  }
+
+  setActiveTab = (value)=>{this.setState({activeTab:value})}
+  setExpandedRecords = (value)=> this.setState({expandedRecords:value})
+  onClickFilter = (value, index) => this.setActiveTab(value)
+  onClickRecord = ({ record: {id}, isExpanded }) => this.setExpandedRecords(
+    isExpanded ? this.state.expandedRecords.filter(r => r !== id) : [...this.state.expandedRecords, id]
+  )
+
   render(){
     return (
       <Col>
-        <Top flex={1} spaceBetween>
-          <Tab activeTab={null} tabs={FILTERS} onClick={console.debug} type='simple' />
-          <Row centerVertical>
-            <Text spaceH={theme.spacingS} S>225 RESULTS</Text>
-            <Text S>Search</Text>
-          </Row>
-        </Top>
-        <Table 
-          onClickHeader={console.debug} 
-          onClick={console.debug}
-          model={TableName} 
-          values={this.props.markets} 
-          sortBy='price' 
-          orderBy='desc'
-          expandedRecords={['1', '3']}
-          expandCompoent={ExpandCompoent}
-          />
-      </Col>
+      <Top flex={1} spaceBetween>
+        <Tab activeTab={this.state.activeTab} tabs={FILTERS} onClick={this.onClickFilter} type='simple' />
+        <Row centerVertical>
+          <Text spaceH={theme.spacingS} S>225 RESULTS</Text>
+          <Text S>Search</Text>
+        </Row>
+      </Top>
+      <Table 
+        minWidth={'1000px'}
+        onClickHeader={console.debug} 
+        onClick={this.onClickRecord}
+        model={TableName} 
+        values={this.props.markets} 
+        sortBy='price' 
+        orderBy='desc'
+        expandedRecords={this.state.expandedRecords}
+        expandCompoent={ExpandCompoent}
+        />
+    </Col>
     )  
   }
 }
@@ -111,3 +147,33 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps,{})(Home);
+// export default () => {
+//   const [expandedRecords, setExpandedRecords] = useState([]) // TODO
+//   const [activeTab, setActiveTab] = useState(null) // TODO
+//   const onClickFilter = (value, index) => setActiveTab(value)
+//   const onClickRecord = ({ record: {id}, isExpanded }) => setExpandedRecords(
+//     isExpanded ? expandedRecords.filter(r => r !== id) : [...expandedRecords, id]
+//   )
+//   return (
+//     <Col>
+//       <Top flex={1} spaceBetween>
+//         <Tab activeTab={activeTab} tabs={FILTERS} onClick={onClickFilter} type='simple' />
+//         <Row centerVertical>
+//           <Text spaceH={theme.spacingS} S>225 RESULTS</Text>
+//           <Text S>Search</Text>
+//         </Row>
+//       </Top>
+//       <Table 
+//         minWidth={'1000px'}
+//         onClickHeader={console.debug} 
+//         onClick={onClickRecord}
+//         model={TableName} 
+//         values={markets} 
+//         sortBy='price' 
+//         orderBy='desc'
+//         expandedRecords={expandedRecords}
+//         expandCompoent={ExpandCompoent}
+//         />
+//     </Col>
+//   )  
+// }

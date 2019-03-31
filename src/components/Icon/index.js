@@ -4,6 +4,7 @@ import styled, {css} from 'styled-components'
 const Img = styled.img`
   height: ${p => p.theme.iconSizeM};
   width: ${p => p.theme.iconSizeM};
+  transition: transform .3s ease-in-out;
   ${p => p.reverse && css`transform: rotate(180deg)`};
 `
 export default ({ source, ...rest }) => 

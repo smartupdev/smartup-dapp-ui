@@ -26,15 +26,25 @@ const Tab = styled(Row)`
     ${p => p.activeTab && css`color: ${p => p.theme.colorPrimary}; border-bottom: solid ${p => p.theme.colorPrimary}`}
   `}
 `
+const Dot = styled.div`
+  position: absolute;
+  right: 5px; 
+  top: 5px;
+  width: 8px;
+  height: 8px;
+  background-color: #7FC88E;
+  border-radius: 8px;
+`
 // tabs: [ { <label: string>, <value>, <dot: bool> } ]
 // type: border || simple
 export default ({ activeTab, tabs, fullWidth, onClick, type = TYPE.border }) =>
   <>
   {type === TYPE.border  && <Hr />}
   <Row>
-    {tabs.map( ({ label, value }, index) =>
+    {tabs.map( ({ label, value, dot }, index) =>
       <Tab key={value} first={!index} center activeTab={activeTab === value} type={type} flex={fullWidth && 1} onClick={() => onClick(value, index)}>
         <Text S>{label}</Text>
+        { dot && <Dot /> }
       </Tab>
     )}
   </Row>

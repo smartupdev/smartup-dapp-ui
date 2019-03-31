@@ -10,7 +10,8 @@ const ORDER_BY = {
 }
 
 const Table = styled(Col)`
-  background-color: ${p => p.theme.bgColor}
+  background-color: ${p => p.theme.bgColor};
+  ${p => p.minWidth && css`min-width: ${p.minWidth}`};
 `
 
 const TD = styled(Col)`
@@ -32,6 +33,16 @@ const TableRecord = styled(Col)`
   padding-right: ${p => p.theme.spacingS}
 `
 
+const Expanded = styled(Col)`
+  max-height: 0;
+  transition: max-height 0.15s ease-out;
+  overflow: hidden;
+  ${p => p.hidden && css`
+    max-height: 400px;
+    transition: max-height 0.25s ease-in;
+  `}
+`
+
 // model: Array { label, value, layoutStyle, component<record, value, id> }
 // values: Array { id }
 // orderBy: asc, desc, null => showing arrow only
@@ -40,9 +51,9 @@ const TableRecord = styled(Col)`
 // onClick: (<recond>, index) => function
 // expandedRecords: Array <id>
 
-export default ({ model, values, sortBy, orderBy, onClickHeader, onClick, expandedRecords, expandCompoent }) => {
+export default ({ model, values, sortBy, orderBy, onClickHeader, onClick, expandedRecords, expandCompoent, minWidth }) => {
   return (
-    <Table>
+    <Table minWidth={minWidth}>
       <TableTitle>
       {
         model.map( ({ value, label, layoutStyle }, index) => 
@@ -60,14 +71,16 @@ export default ({ model, values, sortBy, orderBy, onClickHeader, onClick, expand
               <Row>
                 {
                   model.map( ({ value: key, component: Component = Text, layoutStyle }, j) =>
-                    <TD key={j} {...layoutStyle} borderTop centerVertical onClick={() => onClick(record, key, index)}>
+                    <TD key={j} {...layoutStyle} borderTop centerVertical onClick={() => onClick({record, key, index, isExpanded})}>
                       <Component record={record} value={record[key]} index={index} isExpanded={isExpanded} />
                     </TD>
                   )
                 }
               </Row>
               {
-                isExpanded && expandCompoent({record})
+                <Expanded hidden={isExpanded}>
+                  {expandCompoent({record})}
+                </Expanded>
               }
             </TableRecord>
           )
