@@ -46,7 +46,7 @@ export default {
       volumn: name('Volume (%)')
     },
     global: name('Global market info'),
-    sUTInv: name('Total SMARTUP invested'),
+    sutInv: name('Total SMARTUP invested'),
     mktNumber: name ('Total number of markets'),
     disNumber: name('Total number of ongoing discussion'),
     bookmark: name('Bookmark')
