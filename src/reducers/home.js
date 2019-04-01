@@ -22,6 +22,8 @@ const markets = [
 
 export const initialState = {
     markets:markets,
+    expandedRecords:[],
+    activeTab: null,
 }
 
 export default (state = initialState, action) => {
