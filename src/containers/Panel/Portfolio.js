@@ -10,6 +10,8 @@ import Text from '../../components/Text'
 import { Row, Col } from '../../components/Layout'
 import lang, { currentLang } from '../../lang'
 import theme from '../../theme';
+import ethIcon from '../../images/eth.png';
+import smartupIcon from '../../images/smartup.png';
 const portfilioText = lang.panel.portfilio
 
 const InfoBlock = styled(Col)`
@@ -45,6 +47,13 @@ const TableName = [
 export default ({ expandedWallet, setExpandedWallet, expandedMarket, setExpandedMarket, expandedBookmark, setExpandedBookmark }) => {
   return (
     <Col>
+      <Col center>
+        <Col>
+          <Row><Image XS source={ethIcon} /> 79 ETH</Row>
+          <Row><Image XS source={smartupIcon} />792,323SmartUp</Row>
+        </Col>
+      </Col>
+      <Hr />
       <Panel
         dark={expandedWallet}
         expanded={expandedWallet}

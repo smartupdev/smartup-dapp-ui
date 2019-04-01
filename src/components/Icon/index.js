@@ -33,7 +33,8 @@ export const SVG = styled.svg`
       p.theme.imageSizeM
     }
   `}
-
+  transition: transform .3s ease-in-out;
+  ${p => p.reverse && css`transform: rotate(180deg)`};
 `
 
 export { default as Menu1 } from './Menu1' 
