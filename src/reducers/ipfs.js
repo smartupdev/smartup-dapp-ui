@@ -1,6 +1,6 @@
 import {
     IPFS_POST_STRING, IPFS_GET_FILE,IPFS_POST_FILE,
-} from '../constants/actionTypes';
+} from '../actions/actionTypes';
 export const initialState = {
     postStringHash: null,
     fileContent: null,

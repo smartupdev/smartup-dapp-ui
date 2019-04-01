@@ -48,8 +48,8 @@ const theme = {
 
   imageSizeXS: '18px',
   imageSizeS: '30px',
-  imageSizeM: '40px',
-  imageSizeL: '200px',
+  imageSizeM: '35px',
+  imageSizeL: '45px',
 
   photoSizeWM: '200px',
   photoSizeHM: '100px',

@@ -14,6 +14,10 @@ const Image =  styled.img`
     height: ${p => p.theme.imageSizeS};
     width: ${p => p.theme.imageSizeS};
   `}
+  ${p => p.L && css`
+    height: ${p => p.theme.imageSizeL};
+    width: ${p => p.theme.imageSizeL};
+  `}
   ${p => p.photo && css`
     height: ${p => p.theme.photoSizeHM};
     width: ${p => p.theme.photoSizeWM};

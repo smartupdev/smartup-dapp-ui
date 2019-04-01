@@ -1,6 +1,6 @@
 import {
     BIGCHAIN_GET, BIGCHAIN_PUT,BIGCHAIN_SEARCH,BIGCHAIN_OWNER_SEARCH,
-} from '../constants/actionTypes';
+} from './actionTypes';
 const driver = require('bigchaindb-driver');
 const connUrl = 'https://test.bigchaindb.com/api/v1/';
 

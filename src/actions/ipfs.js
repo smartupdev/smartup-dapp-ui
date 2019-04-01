@@ -1,6 +1,6 @@
 import {
     IPFS_POST_STRING, IPFS_GET_FILE,IPFS_POST_FILE,
-} from '../constants/actionTypes';
+} from './actionTypes';
 import ipfsClient from 'ipfs-http-client';
 import blobinfo from 'blobinfo';
 import toBuffer from 'blob-to-buffer';

@@ -35,24 +35,6 @@ const FILTERS = [
   { label: lang.home.tab.rich[currentLang], value: 'rich' },
 ]
 
-// const markets = [
-//   { id: '1', icon: FakeIcon, name: 'SMART', createdDateTime: 1553740797139, changeAvg24h: 0.18, price: 59.37, volumeAvg24h: 29002872, pool: 2682237283, priceIn7d: [ 40, 50, 45, 60, 57, 66, 70 ], overview: 'Your musical ideas into reality, using the one instrument you’ve been practising since birth— the voice.', image: FakeImage, numberOfComments: 2000, numberOfSub: 1000 },
-//   { id: '2', icon: FakeIcon, name: 'SMART', createdDateTime: 1553740797139, changeAvg24h: 0.18, price: 59.37, volumeAvg24h: 29002872, pool: 2682237283, priceIn7d: [ 40, 50, 45, 60, 57, 66, 70 ], overview: 'Let’s explain what is going on here.', image: FakeImage, numberOfComments: 2000, numberOfSub: 1000 },
-//   { id: '3', icon: FakeIcon, name: 'DUBLER STUDIO KIT', createdDateTime: 1553740797139, changeAvg24h: 0.18, price: 59.37, volumeAvg24h: 29002872, pool: 2682237283, priceIn7d: [ 40, 50, 45, 60, 57, 66, 70 ], overview: 'Let’s explain what is going on here.', image: FakeImage, numberOfComments: 2000, numberOfSub: 1000 },
-//   { id: '4', icon: FakeIcon, name: 'SMART', createdDateTime: 1553740797139, changeAvg24h: 0.18, price: 59.37, volumeAvg24h: 29002872, pool: 2682237283, priceIn7d: [ 40, 50, 45, 60, 57, 66, 70 ], overview: 'Let’s explain what is going on here.', image: FakeImage, numberOfComments: 2000, numberOfSub: 1000 },
-//   { id: '5', icon: FakeIcon, name: 'SMART', createdDateTime: 1553740797139, changeAvg24h: 0.18, price: 59.37, volumeAvg24h: 29002872, pool: 2682237283, priceIn7d: [ 40, 50, 45, 60, 57, 66, 70 ], overview: 'Let’s explain what is going on here.', image: FakeImage, numberOfComments: 2000, numberOfSub: 1000 },
-//   { id: '6', icon: FakeIcon, name: 'SMART', createdDateTime: 1553740797139, changeAvg24h: 0.18, price: 59.37, volumeAvg24h: 29002872, pool: 2682237283, priceIn7d: [ 40, 50, 45, 60, 57, 66, 70 ], overview: 'Let’s explain what is going on here.', image: FakeImage, numberOfComments: 2000, numberOfSub: 1000 },
-//   { id: '7', icon: FakeIcon, name: 'SMART', createdDateTime: 1553740797139, changeAvg24h: 0.18, price: 59.37, volumeAvg24h: 29002872, pool: 2682237283, priceIn7d: [ 40, 50, 45, 60, 57, 66, 70 ], overview: 'Let’s explain what is going on here.', image: FakeImage, numberOfComments: 2000, numberOfSub: 1000 },
-//   { id: '8', icon: FakeIcon, name: 'SMART', createdDateTime: 1553740797139, changeAvg24h: 0.18, price: 59.37, volumeAvg24h: 29002872, pool: 2682237283, priceIn7d: [ 40, 50, 45, 60, 57, 66, 70 ], overview: 'Let’s explain what is going on here.', image: FakeImage, numberOfComments: 2000, numberOfSub: 1000 },
-//   { id: '9', icon: FakeIcon, name: 'SMART', createdDateTime: 1553740797139, changeAvg24h: 0.18, price: 59.37, volumeAvg24h: 29002872, pool: 2682237283, priceIn7d: [ 40, 50, 45, 60, 57, 66, 70 ], overview: 'Let’s explain what is going on here.', image: FakeImage, numberOfComments: 2000, numberOfSub: 1000 },
-//   { id: '10', icon: FakeIcon, name: 'SMART', createdDateTime: 1553740797139, changeAvg24h: 0.18, price: 59.37, volumeAvg24h: 29002872, pool: 2682237283, priceIn7d: [ 40, 50, 45, 60, 57, 66, 70 ], overview: 'Let’s explain what is going on here.', image: FakeImage, numberOfComments: 2000, numberOfSub: 1000 },
-//   { id: '11', icon: FakeIcon, name: 'SMART', createdDateTime: 1553740797139, changeAvg24h: 0.18, price: 59.37, volumeAvg24h: 29002872, pool: 2682237283, priceIn7d: [ 40, 50, 45, 60, 57, 66, 70 ], overview: 'Let’s explain what is going on here.', image: FakeImage, numberOfComments: 2000, numberOfSub: 1000 },
-//   { id: '12', icon: FakeIcon, name: 'SMART', createdDateTime: 1553740797139, changeAvg24h: 0.18, price: 59.37, volumeAvg24h: 29002872, pool: 2682237283, priceIn7d: [ 40, 50, 45, 60, 57, 66, 70 ], overview: 'Let’s explain what is going on here.', image: FakeImage, numberOfComments: 2000, numberOfSub: 1000 },
-//   { id: '13', icon: FakeIcon, name: 'SMART', createdDateTime: 1553740797139, changeAvg24h: 0.18, price: 59.37, volumeAvg24h: 29002872, pool: 2682237283, priceIn7d: [ 40, 50, 45, 60, 57, 66, 70 ], overview: 'Let’s explain what is going on here.', image: FakeImage, numberOfComments: 2000, numberOfSub: 1000 },
-//   { id: '14', icon: FakeIcon, name: 'SMART', createdDateTime: 1553740797139, changeAvg24h: 0.18, price: 59.37, volumeAvg24h: 29002872, pool: 2682237283, priceIn7d: [ 40, 50, 45, 60, 57, 66, 70 ], overview: 'Let’s explain what is going on here.', image: FakeImage, numberOfComments: 2000, numberOfSub: 1000 },
-//   { id: '15', icon: FakeIcon, name: 'SMART', createdDateTime: 1553740797139, changeAvg24h: 0.18, price: 59.37, volumeAvg24h: 29002872, pool: 2682237283, priceIn7d: [ 40, 50, 45, 60, 57, 66, 70 ], overview: 'Let’s explain what is going on here.', image: FakeImage, numberOfComments: 2000, numberOfSub: 1000 },
-// ];
-
 const colWidth = '130px'
 
 const _Icon = ({ value }) => <Image source={value} S />
@@ -99,28 +81,17 @@ const TableName = [
   { label: '', value: 'action', sortable: false, layoutStyle: { width: `calc( ${theme.iconSizeM} + 15px )`, right: true }, component: More },
 ]
 
-class Home extends React.Component {
-
-  constructor(props){
-    super(props);
-    this.state = {
-      expandedRecords:[],
-      activeTab:null,
-    }
-  }
-
-  setActiveTab = (value)=>{this.setState({activeTab:value})}
-  setExpandedRecords = (value)=> this.setState({expandedRecords:value})
-  onClickFilter = (value, index) => this.setActiveTab(value)
-  onClickRecord = ({ record: {id}, isExpanded }) => this.setExpandedRecords(
-    isExpanded ? this.state.expandedRecords.filter(r => r !== id) : [...this.state.expandedRecords, id]
+const Home = ({ markets }) => {
+  const [expandedRecords, setExpandedRecords] = useState([]) // TODO
+  const [activeTab, setActiveTab] = useState(null) // TODO
+  const onClickFilter = (value, index) => setActiveTab(value)
+  const onClickRecord = ({ record: {id}, isExpanded }) => setExpandedRecords(
+    isExpanded ? expandedRecords.filter(r => r !== id) : [...expandedRecords, id]
   )
-
-  render(){
-    return (
-      <Col>
+  return (
+    <Col>
       <Top flex={1} spaceBetween>
-        <Tab activeTab={this.state.activeTab} tabs={FILTERS} onClick={this.onClickFilter} type='simple' />
+        <Tab activeTab={activeTab} tabs={FILTERS} onClick={onClickFilter} type='simple' />
         <Row centerVertical>
           <Text spaceH={theme.spacingS} S>225 RESULTS</Text>
           <Text S>Search</Text>
@@ -129,17 +100,16 @@ class Home extends React.Component {
       <Table 
         minWidth={'1000px'}
         onClickHeader={console.debug} 
-        onClick={this.onClickRecord}
+        onClick={onClickRecord}
         model={TableName} 
-        values={this.props.markets} 
+        values={markets} 
         sortBy='price' 
         orderBy='desc'
-        expandedRecords={this.state.expandedRecords}
+        expandedRecords={expandedRecords}
         expandCompoent={ExpandCompoent}
         />
     </Col>
-    )  
-  }
+  )  
 }
 
 const mapStateToProps = state => ({
@@ -147,33 +117,3 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps,{})(Home);
-// export default () => {
-//   const [expandedRecords, setExpandedRecords] = useState([]) // TODO
-//   const [activeTab, setActiveTab] = useState(null) // TODO
-//   const onClickFilter = (value, index) => setActiveTab(value)
-//   const onClickRecord = ({ record: {id}, isExpanded }) => setExpandedRecords(
-//     isExpanded ? expandedRecords.filter(r => r !== id) : [...expandedRecords, id]
-//   )
-//   return (
-//     <Col>
-//       <Top flex={1} spaceBetween>
-//         <Tab activeTab={activeTab} tabs={FILTERS} onClick={onClickFilter} type='simple' />
-//         <Row centerVertical>
-//           <Text spaceH={theme.spacingS} S>225 RESULTS</Text>
-//           <Text S>Search</Text>
-//         </Row>
-//       </Top>
-//       <Table 
-//         minWidth={'1000px'}
-//         onClickHeader={console.debug} 
-//         onClick={onClickRecord}
-//         model={TableName} 
-//         values={markets} 
-//         sortBy='price' 
-//         orderBy='desc'
-//         expandedRecords={expandedRecords}
-//         expandCompoent={ExpandCompoent}
-//         />
-//     </Col>
-//   )  
-// }

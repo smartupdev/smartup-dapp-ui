@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { Link, Route } from "react-router-dom";
 import Menu from './Menu'
 
-import Icon0 from '../../images/icon.svg'
+import Logo from '../../images/logo.png'
 
 const Header = styled.header`
   background-color: ${p => p.theme.bgColorDark};
@@ -16,7 +16,7 @@ const Header = styled.header`
 
 export default ({ routes }) => 
   <Header>
-    <Menu icon={Icon0} fixed />
+    <Menu image={Logo} fixed />
     {
       routes.map( ({path, icon}, i) =>
         <Route

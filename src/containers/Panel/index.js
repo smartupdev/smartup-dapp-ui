@@ -2,12 +2,14 @@ import React, { useState } from 'react'
 
 import styled from 'styled-components'
 import Image from '../../components/Image'
+import { People } from '../../components/Icon'
 import Button from '../../components/Button'
 import Text from '../../components/Text'
 import Tab from '../../components/Tab'
 import Portfolio from './Portfolio'
 import Notification from './Notification'
 import Setting from './Setting'
+import theme from '../../theme'
 import { Col, Row } from '../../components/Layout'
 import lang, { currentLang } from '../../lang'
 
@@ -24,7 +26,7 @@ const Top = styled(Row)`
 `
 
 export default () => {
-  const [loggedIn, login] = useState(true)
+  const [loggedIn, login] = useState(false)
   const [activeTab, setActiveTab] = useState('portfilio')
   const onClickTab = (value) => setActiveTab(value)
   return (
@@ -48,7 +50,7 @@ export default () => {
       </>
       :
       <Col center>
-        <Image source={LoginIcon} />
+        <People L round color={theme.white} round />
         <Button primary outline verticalMargin label={lang.panel.connectButton[currentLang]} onClick={() => login(true)} />
         <Text note>MetaMask</Text>
       </Col>
