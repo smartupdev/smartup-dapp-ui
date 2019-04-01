@@ -1,6 +1,7 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
-import Image from '../Icon'
+import Image from '../Image'
+import theme from '../../theme'
 import { Col } from '../Layout'
 
 const Link = styled(Col)`
@@ -9,6 +10,10 @@ const Link = styled(Col)`
   position: relative;
   ${props => props.fixed && css`background: ${p => p.theme.white}`};
   ${props => props.selected && css`background: ${p => p.theme.bgColor}`};
+  :hover svg {
+    fill: ${p => p.theme.colorPrimary}
+  }
+
 `
 const Line = styled.div`
     position: absolute;
@@ -19,8 +24,9 @@ const Line = styled.div`
     background-color: ${p => p.theme.colorPrimary}
 `
 
-export default ({ icon, fixed, selected }) => 
+export default ({ icon: Icon, image, fixed, selected }) => 
   <Link fixed={fixed} selected={selected} center centerVertical>
     { selected && <Line /> }
-    <Image source={icon} />
+    { Icon && <Icon color={theme.colorSecondary} S /> }
+    { image && <Image M source={image} /> }
   </Link>
