@@ -46,4 +46,7 @@ export { default as BookmarkedOutline } from './BookmarkedOutline'
 export { default as Comment } from './Comment' 
 export { default as Draft } from './Draft' 
 export { default as Search } from './Search' 
+export { default as Close } from './Close' 
+export { default as More } from './More' 
+export { default as Trade } from './Trade' 
 
