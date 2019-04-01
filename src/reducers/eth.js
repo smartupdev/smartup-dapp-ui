@@ -9,7 +9,7 @@ import {
     DISPUTE_MARKET_DISSOLVE, PROPOSED_DO_PROPOSED, PROPOSED_CURRENT_AMOUNT,
     PROPOSED_AMOUNT, PROPOSED_VOTING_PERIOND, PROPOSED_DO_VOTE,
     PROPOSED_JURORS,PROPOSED_VOTES,PROPOSED_VOTE_DONE
-} from '../constants/actionTypes';
+} from '../actions/actionTypes';
 
 export const initialState = {
     sutBalance: null,

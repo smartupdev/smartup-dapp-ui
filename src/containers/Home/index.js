@@ -18,8 +18,6 @@ import SubIcon from '../../images/019-jupiter.svg'
 import TradeIcon from '../../images/042-wind.svg'
 import BookmarkIcon from '../../images/033-star.svg'
 
-import FakeIcon from '../../images/035-sun.svg'
-import FakeImage from '../../images/037-ufo.svg'
 import FakeArrow from '../../images/039-umbrella-1.svg'
 
 const Top = styled(Row)`
