@@ -1,4 +1,11 @@
+//Home
 export const HOME_PAGE_LOADED = 'HOME_PAGE_LOADED';
+export const SET_EXPANDED_RECORDS = 'SET_EXPANDED_RECORDS';
+export const SET_ACTIVE_TAB = 'SET_ACTIVE_TAB';
+export const GET_TOTAL_RESULT = 'GET_TOTAL_RESULT';
+export const TABLE_HEADER_CLICK = 'TABLE_HEADER_CLICK';
+
+
 export const ASYNC_START = 'ASYNC_START';
 export const ASYNC_END = 'ASYNC_END';
 export const LOGIN = 'LOGIN';

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import Tab from '../../components/Tab'
 import Table from '../../components/Table'
@@ -12,6 +12,7 @@ import lang, { currentLang } from '../../lang'
 import theme from '../../theme'
 import { toPrice, toDate } from '../../lib/util'
 import { connect } from 'react-redux'
+import { setExpandedRecords,setActiveTab,onTableHeaderClick } from '../../actions/home'
 
 import CommentIcon from '../../images/018-planet-earth-2.svg'
 import SubIcon from '../../images/019-jupiter.svg'
@@ -79,30 +80,25 @@ const TableName = [
   { label: '', value: 'action', sortable: false, layoutStyle: { width: `calc( ${theme.iconSizeM} + 15px )`, right: true }, component: More },
 ]
 
-const Home = ({ markets }) => {
-  const [expandedRecords, setExpandedRecords] = useState([]) // TODO
-  const [activeTab, setActiveTab] = useState(null) // TODO
-  const onClickFilter = (value, index) => setActiveTab(value)
-  const onClickRecord = ({ record: {id}, isExpanded }) => setExpandedRecords(
-    isExpanded ? expandedRecords.filter(r => r !== id) : [...expandedRecords, id]
-  )
+const Home = ({ markets,expandedRecords,activeTab,totalResults,sortBy,orderBy,
+  setExpandedRecords,setActiveTab,onTableHeaderClick }) => {
   return (
     <Col>
       <Top flex={1} spaceBetween>
-        <Tab activeTab={activeTab} tabs={FILTERS} onClick={onClickFilter} type='simple' />
+        <Tab activeTab={activeTab} tabs={FILTERS} onClick={setActiveTab} type='simple' />
         <Row centerVertical>
-          <Text spaceH={theme.spacingS} S>225 RESULTS</Text>
+          <Text spaceH={theme.spacingS} S>{totalResults} RESULTS</Text>
           <Text S>Search</Text>
         </Row>
       </Top>
       <Table 
         minWidth={'1000px'}
-        onClickHeader={console.debug} 
-        onClick={onClickRecord}
+        onClickHeader={onTableHeaderClick}
+        onClick={setExpandedRecords}
         model={TableName} 
         values={markets} 
-        sortBy='price' 
-        orderBy='desc'
+        sortBy={sortBy} 
+        orderBy={orderBy}
         expandedRecords={expandedRecords}
         expandCompoent={ExpandCompoent}
         />
@@ -111,7 +107,17 @@ const Home = ({ markets }) => {
 }
 
 const mapStateToProps = state => ({
-  markets: state.home.markets
+  markets: state.home.markets,
+  expandedRecords: state.home.expandedRecords,
+  activeTab:state.home.activeTab,
+  totalResults:state.home.totalResults,
+  sortBy: state.home.sortBy,
+  orderBy: state.home.orderBy,
 });
+const mapDispatchToProps = {
+  setExpandedRecords,
+  setActiveTab,
+  onTableHeaderClick,
+}
 
-export default connect(mapStateToProps,{})(Home);
+export default connect(mapStateToProps,mapDispatchToProps)(Home);
