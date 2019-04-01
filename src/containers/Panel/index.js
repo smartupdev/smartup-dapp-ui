@@ -16,7 +16,10 @@ import lang, { currentLang } from '../../lang'
 import LoginIcon from '../../images/menu1.svg'
 
 const TABS = [
-  { label: lang.panel.tab.portfilio[currentLang], value: 'portfilio', component: Portfolio },
+  { label: lang.panel.tab.portfilio[currentLang], value: 'portfilio', component: 
+    ({expandedWallet, setExpandedWallet, expandedMarket, setExpandedMarket, expandedBookmark, setExpandedBookmark}) => 
+    <Portfolio {...{expandedWallet, setExpandedWallet, expandedMarket, setExpandedMarket, expandedBookmark, setExpandedBookmark}} /> 
+  },
   { label: lang.panel.tab.notification[currentLang], value: 'notification', dot: true, component: Notification },
   { label: lang.panel.tab.setting[currentLang], value: 'setting', component: Setting },
 ]
@@ -26,8 +29,11 @@ const Top = styled(Row)`
 `
 
 export default () => {
-  const [loggedIn, login] = useState(false)
+  const [loggedIn, login] = useState(true)
   const [activeTab, setActiveTab] = useState('portfilio')
+  const [expandedWallet, setExpandedWallet] = useState(true)
+  const [expandedMarket, setExpandedMarket] = useState(true)
+  const [expandedBookmark, setExpandedBookmark] = useState(true)
   const onClickTab = (value) => setActiveTab(value)
   return (
     <Col width='300px' center={!loggedIn} centerVertical={!loggedIn}>
@@ -45,7 +51,9 @@ export default () => {
         </Top>
         <Tab tabs={TABS} activeTab={activeTab} onClick={onClickTab} />
         {
-          TABS.find(t => t.value === activeTab).component()
+          TABS.find(t => t.value === activeTab).component({
+            expandedWallet, setExpandedWallet, expandedMarket, setExpandedMarket, expandedBookmark, setExpandedBookmark
+          })
         }
       </>
       :
