@@ -1,4 +1,4 @@
-import { MATEMASK_STATUS, MATEMASK_LOGIN,MATEMASK_ETH_BALANCE,MATEMASK_ETH_TRANSACTION } from '../constants/actionTypes';
+import { MATEMASK_STATUS, MATEMASK_LOGIN,MATEMASK_ETH_BALANCE,MATEMASK_ETH_TRANSACTION } from './actionTypes';
 
 //是否安装MateMask插件
 export function isSupportMateMask(){

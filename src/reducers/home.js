@@ -1,4 +1,4 @@
-import { HOME_PAGE_LOADED } from '../constants/actionTypes';
+import { HOME_PAGE_LOADED } from '../actions/actionTypes';
 import FakeIcon from '../images/035-sun.svg'
 import FakeImage from '../images/037-ufo.svg'
 

@@ -3,7 +3,7 @@ import {
     ETH_SET_MARKET_ADDRESS, ETH_GET_CT_BALANCE, ETH_IS_TRADE_ENABLE,
     ETH_GET_MARKET_CREATOR, ETH_GET_Total_SUT, ETH_BID_QUOTE,
     ETH_ASK_QUOTE,
-} from '../constants/actionTypes';
+} from '../actions/actionTypes';
 
 export const initialState = {
     sutBalance: null,

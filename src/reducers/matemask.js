@@ -1,4 +1,4 @@
-import { MATEMASK_STATUS, MATEMASK_LOGIN, MATEMASK_ETH_BALANCE, MATEMASK_ETH_TRANSACTION } from '../constants/actionTypes';
+import { MATEMASK_STATUS, MATEMASK_LOGIN, MATEMASK_ETH_BALANCE, MATEMASK_ETH_TRANSACTION } from '../actions/actionTypes';
 
 export const initialState = {
   isSupport: true,

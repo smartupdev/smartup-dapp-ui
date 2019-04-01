@@ -1,6 +1,6 @@
 import {
     BIGCHAIN_GET, BIGCHAIN_PUT,BIGCHAIN_SEARCH,BIGCHAIN_OWNER_SEARCH,
-} from '../constants/actionTypes';
+} from '../actions/actionTypes';
 export const initialState = {
     getResult: null,
     searchResult: null,
