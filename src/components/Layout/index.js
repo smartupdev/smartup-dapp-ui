@@ -4,6 +4,7 @@ import styled, { css } from 'styled-components'
 const Flex = styled.div`
   display: flex;
   position: relative;
+  ${p => p.onClick && css`cursor: pointer`}
   ${props => typeof props.flex === 'number' && css`flex: ${props.flex}`};
   ${props => props.width && css`width: ${props.width}; min-width: ${props.width}`};
   ${props => props.spacingLeft && css`padding-left: ${props.spacingLeft}`};

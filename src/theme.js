@@ -15,6 +15,9 @@ const theme = {
   borderColor: '#556672',
   borderRadius: '6px',
 
+  green: '#7FC88E',
+  red: '#E8666D',
+
   white: '#ffffff',
   // #7fc88e  high
   // #ffd35c   yellow 
@@ -43,6 +46,7 @@ const theme = {
   fontSizeXL: '20px',
 
   fontSpacingL: '6px',
+  fontSpacingM: '4px',
 
   iconSizeM: '30px',
 
