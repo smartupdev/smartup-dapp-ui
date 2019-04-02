@@ -17,7 +17,8 @@ const Row = styled(Flex)`
   ${props => props.center && css`justify-content: center`};
   ${props => props.centerVertical && css`align-items: center`};
   ${p => p.spaceBetween && css`justify-content: space-between`};
-`
+  ${props => props.bottom && css`align-items: flex-end`};
+  `
 
 const Col = styled(Flex)`
   flex-direction: column;

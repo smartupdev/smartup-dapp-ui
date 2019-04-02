@@ -48,9 +48,17 @@ export default ({ expandedWallet, setExpandedWallet, expandedMarket, setExpanded
   return (
     <Col>
       <Col center>
-        <Col>
-          <Row><Image XS source={ethIcon} /> 79 ETH</Row>
-          <Row><Image XS source={smartupIcon} />792,323SmartUp</Row>
+        <Col spacingTop={theme.spacingXS} spacingBottom={theme.spacingXS}>
+          <Row bottom spacingBottom={theme.spacingXS}>
+            <Image XS rightText source={ethIcon} />
+            <Text L>79</Text>
+            <Text S>ETH</Text>
+          </Row>
+          <Row bottom>
+            <Image XS rightText source={smartupIcon} />
+            <Text L>792,323</Text>
+            <Text S>SmartUp</Text>
+          </Row>
         </Col>
       </Col>
       <Hr />
@@ -59,7 +67,7 @@ export default ({ expandedWallet, setExpandedWallet, expandedMarket, setExpanded
         expanded={expandedWallet}
         onClick={()=>setExpandedWallet(!expandedWallet)} 
         header={portfilioText.wallet.title[currentLang]} 
-        body={<Table S model={TableName} values={walletList} />} 
+        body={<Table S noBorderCol model={TableName} values={walletList} />} 
         />
       <Panel
         expanded={expandedMarket}

@@ -25,8 +25,8 @@ const TableTitle = styled(Row)`
   padding-right: ${p => p.theme.spacingS}
 `
 const TableRecord = styled(Col)`
-  ${p => p.isExpanded && css`background-color: ${p => p.theme.bgColorDark}`}
-  border-top: 1px solid ${p => p.theme.borderColor}
+  ${p => p.isExpanded && css`background-color: ${p.theme.bgColorDark}`}
+  ${p => p.hasBorder && css`border-top: 1px solid ${p.theme.borderColor}`}
   padding-left: ${p => p.theme.spacingXS}
   padding-right: ${p => p.theme.spacingS}
 `
@@ -48,14 +48,15 @@ const Expanded = styled(Col)`
 // onClickHeader: (<model.value>, index) => function
 // onClick: (<recond>, index) => function
 // expandedRecords: Array <id>
-
-export default ({ model, values, sortBy, orderBy, onClickHeader, onClick, expandedRecords = [], expandCompoent, minWidth, S }) => {
+// S for small font size
+// noBorderCol is for no border in column
+export default ({ model, values, sortBy, orderBy, onClickHeader, onClick, expandedRecords = [], expandCompoent, minWidth, S, noBorderCol }) => {
   return (
     <Table minWidth={minWidth}>
       <TableTitle>
       {
-        model.map( ({ value, label, layoutStyle = { flex: 1 } }, index) => 
-          <TD key={value} {...layoutStyle} header centerVertical highlight={value === sortBy} onClick={onClickHeader && (() => onClickHeader(value, index))}>
+        model.map( ({ value, label, layoutStyle = { flex: 1 }, sortable }, index) => 
+          <TD key={value} {...layoutStyle} header centerVertical highlight={value === sortBy} onClick={sortable && onClickHeader && (() => onClickHeader(value, index))}>
             <Text S={S}>{label}{value === sortBy ? orderBy === ORDER_BY.asc ? ' ↑' : orderBy === ORDER_BY.desc && ' ↓' : ''}</Text>
           </TD>
         )
@@ -65,7 +66,7 @@ export default ({ model, values, sortBy, orderBy, onClickHeader, onClick, expand
         values.map( (record, index) => {
           const isExpanded = expandedRecords.includes(record.id)
           return (
-            <TableRecord key={record.id} isExpanded={isExpanded}>
+            <TableRecord key={record.id} isExpanded={isExpanded} hasBorder={!index || !noBorderCol}>
               <Row>
                 {
                   model.map( ({ value: key, component: Component, layoutStyle = { flex: 1 } }, j) =>
