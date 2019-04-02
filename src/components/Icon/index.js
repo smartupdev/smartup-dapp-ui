@@ -11,6 +11,7 @@ export default ({ source, ...rest }) =>
   <Img src={source} {...rest} />
 
 export const SVG = styled.svg`
+  display: block;
   width: ${p => 
     p.XS ? p.theme.imageSizeXS :
     p.S ? p.theme.imageSizeS :
@@ -35,6 +36,8 @@ export const SVG = styled.svg`
   `}
   transition: transform .3s ease-in-out;
   ${p => p.reverse && css`transform: rotate(180deg)`};
+  ${p => p.rightText && css`margin-right: ${p.theme.fontSizeXS}`};
+  ${p => p.onClick && css`cursor: pointer;`}
 `
 
 export { default as Menu1 } from './Menu1' 

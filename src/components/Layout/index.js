@@ -19,12 +19,13 @@ const Row = styled(Flex)`
   ${p => p.spaceBetween && css`justify-content: space-between`};
   ${props => props.bottom && css`align-items: flex-end`};
   `
-
-const Col = styled(Flex)`
+  
+  const Col = styled(Flex)`
   flex-direction: column;
   ${props => props.right && css`align-items: flex-end`};
   ${props => props.center && css`align-items: center`};
   ${props => props.centerVertical && css`justify-content: center`};
+  ${props => props.bottom && css`justify-content: flex-end`};
   ${p => p.spaceBetween && css`justify-content: space-between`};
   `
 

@@ -21,14 +21,14 @@ const TD = styled(Col)`
 `
 
 const TableTitle = styled(Row)`
-  padding-left: ${p => p.theme.spacingXS}
-  padding-right: ${p => p.theme.spacingS}
+  padding-left: ${p => p.S ? 0 : p.theme.spacingXS}
+  padding-right: ${p => p.S ? 0 : p.theme.spacingS}
 `
 const TableRecord = styled(Col)`
   ${p => p.isExpanded && css`background-color: ${p.theme.bgColorDark}`}
   ${p => p.hasBorder && css`border-top: 1px solid ${p.theme.borderColor}`}
-  padding-left: ${p => p.theme.spacingXS}
-  padding-right: ${p => p.theme.spacingS}
+  padding-left: ${p => p.S ? 0 : p.theme.spacingXS}
+  padding-right: ${p => p.S ? 0 : p.theme.spacingS}
 `
 
 const Expanded = styled(Col)`
@@ -53,10 +53,10 @@ const Expanded = styled(Col)`
 export default ({ model, values, sortBy, orderBy, onClickHeader, onClick, expandedRecords = [], expandCompoent, minWidth, S, noBorderCol }) => {
   return (
     <Table minWidth={minWidth}>
-      <TableTitle>
+      <TableTitle S={S}>
       {
         model.map( ({ value, label, layoutStyle = { flex: 1 }, sortable }, index) => 
-          <TD key={value} {...layoutStyle} header centerVertical highlight={value === sortBy} onClick={sortable && onClickHeader && (() => onClickHeader(value, index))}>
+          <TD key={value} {...layoutStyle} header centerVertical highlight={value === sortBy} onClick={sortable && onClickHeader ? (() => onClickHeader(value, index)) : null}>
             <Text S={S}>{label}{value === sortBy ? orderBy === ORDER_BY.asc ? ' ↑' : orderBy === ORDER_BY.desc && ' ↓' : ''}</Text>
           </TD>
         )
@@ -66,7 +66,7 @@ export default ({ model, values, sortBy, orderBy, onClickHeader, onClick, expand
         values.map( (record, index) => {
           const isExpanded = expandedRecords.includes(record.id)
           return (
-            <TableRecord key={record.id} isExpanded={isExpanded} hasBorder={!index || !noBorderCol}>
+            <TableRecord key={record.id} isExpanded={isExpanded} hasBorder={!index || !noBorderCol} S={S}>
               <Row>
                 {
                   model.map( ({ value: key, component: Component, layoutStyle = { flex: 1 } }, j) =>
@@ -90,7 +90,6 @@ export default ({ model, values, sortBy, orderBy, onClickHeader, onClick, expand
           )
         })
       }
-      <Hr />
     </Table>
   )
 }

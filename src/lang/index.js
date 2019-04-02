@@ -22,7 +22,7 @@ export default {
     },
     table: {
       name: name('NAME'),
-      change: name('23H CHANGE'),
+      change: name('24H CHANGE'),
       price: name('LAST PRICE'),
       volume: name('24H VOLUME'),
       cap: name('FUNDING CAP'),

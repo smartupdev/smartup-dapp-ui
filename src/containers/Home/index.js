@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import Tab from '../../components/Tab'
 import Table from '../../components/Table'
-import Icon from '../../components/Icon'
+import Icon, { Comment, Trade, People } from '../../components/Icon'
 import Image from '../../components/Image'
 import Text from '../../components/Text'
 import Button from '../../components/Button'
@@ -62,10 +62,10 @@ const ExpandCompoent = ({ record }) =>
       </Row>
       <Row centerVertical spaceBetween>
         <Row>
-          <Button label={record.numberOfComments} icon={CommentIcon} />
-          <Button label={record.numberOfSub} icon={SubIcon} />
+          <Button label={record.numberOfComments} icon={Comment} />
+          <Button label={record.numberOfSub} icon={People} />
         </Row>
-        <Button primary label={lang.trade[currentLang]} icon={TradeIcon} />
+        <Button primary label={lang.trade[currentLang]} icon={Trade} />
       </Row>
     </Col>
   </Row>
@@ -92,6 +92,7 @@ const Home = ({ markets,expandedRecords,activeTab,totalResults,sortBy,orderBy,
         </Row>
       </Top>
       <Table 
+        S
         minWidth={'1000px'}
         onClickHeader={onTableHeaderClick}
         onClick={setExpandedRecords}

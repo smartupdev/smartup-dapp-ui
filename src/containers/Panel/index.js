@@ -6,6 +6,7 @@ import { People } from '../../components/Icon'
 import Button from '../../components/Button'
 import Text from '../../components/Text'
 import Tab from '../../components/Tab'
+import Hr from '../../components/Hr'
 import Portfolio from './Portfolio'
 import Notification from './Notification'
 import Setting from './Setting'
@@ -28,12 +29,19 @@ const Top = styled(Row)`
   padding: ${p => `${p.theme.spacingS} ${p.theme.spacingM}`};
 `
 
+const Terms = () => 
+  <Col flex={1} bottom center>
+    <Hr />
+    <Text underline S spaceV onClick={() => console.log('Get terms of services')}>Terms of Service</Text>
+  </Col>
+
+
 export default () => {
   const [loggedIn, login] = useState(true)
   const [activeTab, setActiveTab] = useState('portfilio')
   const [expandedWallet, setExpandedWallet] = useState(true)
-  const [expandedMarket, setExpandedMarket] = useState(true)
-  const [expandedBookmark, setExpandedBookmark] = useState(true)
+  const [expandedMarket, setExpandedMarket] = useState(false)
+  const [expandedBookmark, setExpandedBookmark] = useState(false)
   const onClickTab = (value) => setActiveTab(value)
   return (
     <Col width='300px' center={!loggedIn} centerVertical={!loggedIn}>
@@ -55,6 +63,7 @@ export default () => {
             expandedWallet, setExpandedWallet, expandedMarket, setExpandedMarket, expandedBookmark, setExpandedBookmark
           })
         }
+        <Terms />
       </>
       :
       <Col center>
