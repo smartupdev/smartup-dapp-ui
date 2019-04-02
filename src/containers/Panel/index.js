@@ -37,8 +37,8 @@ const Terms = () =>
 
 
 export default () => {
-  const [loggedIn, login] = useState(true)
-  const [activeTab, setActiveTab] = useState('notification')
+  const [loggedIn, login] = useState(false)
+  const [activeTab, setActiveTab] = useState('portfilio')
   const [expandedWallet, setExpandedWallet] = useState(true)
   const [expandedMarket, setExpandedMarket] = useState(false)
   const [expandedBookmark, setExpandedBookmark] = useState(false)
