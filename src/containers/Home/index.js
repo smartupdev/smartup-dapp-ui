@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import Tab from '../../components/Tab'
 import Table from '../../components/Table'
-import Icon from '../../components/Icon'
+import Icon, { Comment, Trade, People, More, Bookmarked, BookmarkedOutline } from '../../components/Icon'
 import Image from '../../components/Image'
 import Text from '../../components/Text'
 import Button from '../../components/Button'
@@ -14,9 +14,6 @@ import { toPrice, toDate } from '../../lib/util'
 import { connect } from 'react-redux'
 import { setExpandedRecords,setActiveTab,onTableHeaderClick } from '../../actions/home'
 
-import CommentIcon from '../../images/018-planet-earth-2.svg'
-import SubIcon from '../../images/019-jupiter.svg'
-import TradeIcon from '../../images/042-wind.svg'
 import BookmarkIcon from '../../images/033-star.svg'
 
 import FakeArrow from '../../images/039-umbrella-1.svg'
@@ -36,8 +33,8 @@ const FILTERS = [
 
 const colWidth = '130px'
 
-const _Icon = ({ value }) => <Image source={value} S />
-const More = ({ isExpanded }) => <Icon source={FakeArrow} reverse={isExpanded} />
+const _Icon = ({ value }) => value ? <Image source={value} /> : <People color={theme.white} round />
+const _More = ({ isExpanded }) => <More reverse={isExpanded} XS color={theme.white} />
 const _Name = ({ value, record }) => 
   <Col>
     <Text>{value}</Text>
@@ -58,14 +55,17 @@ const ExpandCompoent = ({ record }) =>
           <Text XL wordSpaceL>{record.name}</Text>
           <Text note>{record.overview}</Text>
         </Col>
-        <Image source={BookmarkIcon} S />
+        {record.following ? 
+          <Bookmarked S primary onClick={() => console.log(record.id)} /> :
+          <BookmarkedOutline S color={theme.white} onClick={() => console.log(record.id)} />
+        }
       </Row>
       <Row centerVertical spaceBetween>
         <Row>
-          <Button label={record.numberOfComments} icon={CommentIcon} />
-          <Button label={record.numberOfSub} icon={SubIcon} />
+          <Button label={record.numberOfComments} icon={Comment} />
+          <Button label={record.numberOfSub} icon={People} />
         </Row>
-        <Button primary label={lang.trade[currentLang]} icon={TradeIcon} />
+        <Button primary label={lang.trade[currentLang]} icon={Trade} />
       </Row>
     </Col>
   </Row>
@@ -77,7 +77,7 @@ const TableName = [
   { label: lang.home.table.volume[currentLang], value: 'volumeAvg24h', sortable: true, layoutStyle: { width: colWidth }, component: _Volume },
   { label: lang.home.table.cap[currentLang], value: 'pool', sortable: true, layoutStyle: { width: colWidth }, component: _Cap },
   { label: lang.home.table.graph[currentLang], value: 'priceIn7d', sortable: false, layoutStyle: { width: '200px', center: true }, component: SimpleLineChart },
-  { label: '', value: 'action', sortable: false, layoutStyle: { width: `calc( ${theme.iconSizeM} + 15px )`, right: true }, component: More },
+  { label: '', value: 'action', sortable: false, layoutStyle: { width: `calc( ${theme.iconSizeM} + 15px )`, right: true }, component: _More },
 ]
 
 const Home = ({ markets,expandedRecords,activeTab,totalResults,sortBy,orderBy,
@@ -92,6 +92,8 @@ const Home = ({ markets,expandedRecords,activeTab,totalResults,sortBy,orderBy,
         </Row>
       </Top>
       <Table 
+        S
+        inset
         minWidth={'1000px'}
         onClickHeader={onTableHeaderClick}
         onClick={setExpandedRecords}

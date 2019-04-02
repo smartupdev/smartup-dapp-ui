@@ -12,7 +12,9 @@ const Container = styled(Col)`
 const MoreIcon = styled(More)`
   position: absolute;
   right: ${p => p.theme.spacingS};
-  top: ${p => p.theme.spacingXS};
+  margin: auto 0;
+  top: 0;
+  bottom: 0;
 `
 export const Expanded = styled(Col)`
   max-height: 0;
@@ -27,7 +29,7 @@ export const Expanded = styled(Col)`
 export default ({ body, header, expanded, dark, onClick, maxHeight }) => 
   <Container dark={dark}>
     <Row onClick={onClick} center flex={1}>
-      <Text L center spaceV>{header}</Text>
+      <Text M center spaceV wordSpaceS>{header}</Text>
       <MoreIcon color='#ffffff' XS reverse={expanded} />
     </Row>
     <Hr />

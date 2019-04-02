@@ -16,6 +16,7 @@ export const Text = styled.p`
 
   ${p => p.wordSpaceL && css`letter-spacing: ${p => p.theme.fontSpacingL}`}
   ${p => p.wordSpaceM && css`letter-spacing: ${p => p.theme.fontSpacingM}`}
+  ${p => p.wordSpaceS && css`letter-spacing: ${p => p.theme.fontSpacingS}`}
 
   ${p => p.spaceH && css`padding-right: ${p.spaceH}; padding-left: ${p.spaceH}`}
   ${p => p.spaceV && css`padding-top: ${p.theme.spacingXS}; padding-bottom: ${p.theme.spacingXS}`}
@@ -26,6 +27,7 @@ export const Text = styled.p`
   ${p => p.primary && css`color: ${p => p.theme.colorPrimary}`}
   
   ${p => p.bold && css`font-weight: bold`}
+  ${p => p.underline && css`text-decoration: underline;`}
 
   ${p => p.onClick && css`cursor: pointer`}
   `

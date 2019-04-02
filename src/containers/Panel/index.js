@@ -6,6 +6,7 @@ import { People } from '../../components/Icon'
 import Button from '../../components/Button'
 import Text from '../../components/Text'
 import Tab from '../../components/Tab'
+import Hr from '../../components/Hr'
 import Portfolio from './Portfolio'
 import Notification from './Notification'
 import Setting from './Setting'
@@ -28,12 +29,19 @@ const Top = styled(Row)`
   padding: ${p => `${p.theme.spacingS} ${p.theme.spacingM}`};
 `
 
+const Terms = () => 
+  <Col flex={1} bottom center>
+    <Hr />
+    <Text underline S spaceV onClick={() => console.log('Get terms of services')}>Terms of Service</Text>
+  </Col>
+
+
 export default () => {
-  const [loggedIn, login] = useState(true)
+  const [loggedIn, login] = useState(false)
   const [activeTab, setActiveTab] = useState('portfilio')
   const [expandedWallet, setExpandedWallet] = useState(true)
-  const [expandedMarket, setExpandedMarket] = useState(true)
-  const [expandedBookmark, setExpandedBookmark] = useState(true)
+  const [expandedMarket, setExpandedMarket] = useState(false)
+  const [expandedBookmark, setExpandedBookmark] = useState(false)
   const onClickTab = (value) => setActiveTab(value)
   return (
     <Col width='300px' center={!loggedIn} centerVertical={!loggedIn}>
@@ -41,7 +49,7 @@ export default () => {
       <>
         <Top centerVertical spaceBetween>
           <Row centerVertical>
-            <Image source={LoginIcon} rightText />
+            <Image source={LoginIcon} L rightText />
             <Text note>Smart</Text>
           </Row>
           <Col>
@@ -55,10 +63,11 @@ export default () => {
             expandedWallet, setExpandedWallet, expandedMarket, setExpandedMarket, expandedBookmark, setExpandedBookmark
           })
         }
+        <Terms />
       </>
       :
       <Col center>
-        <People L round color={theme.white} round />
+        <People XL round color={theme.white} round />
         <Button primary outline verticalMargin label={lang.panel.connectButton[currentLang]} onClick={() => login(true)} />
         <Text note>MetaMask</Text>
       </Col>
