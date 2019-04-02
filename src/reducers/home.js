@@ -28,8 +28,10 @@ export const initialState = {
     expandedRecords: [],
     activeTab: null,
     totalResults: 255,
-    sortBy: '',
+    sortBy: 'price',
     orderBy: 'desc',
+    networkStatus: null,   //loading,success,error
+    errorInfo: null,       // if networkStatus is error, show errorInfo.
 }
 
 export default (state = initialState, action) => {
@@ -40,10 +42,10 @@ export default (state = initialState, action) => {
                 tags: action.payload[0].tags
             }
         case SET_EXPANDED_RECORDS: {
-            const { record: { id }, isExpanded } = { ...action.recordData };
-            const tempExpandeds = isExpanded ?
-                state.expandedRecords.filter(r => r !== id) : [...state.expandedRecords, id];
-            return Object.assign({}, state, { expandedRecords: tempExpandeds });
+            // const { record: { id }, isExpanded } = { ...action.recordData };
+            // const tempExpandeds = isExpanded ?
+            //     state.expandedRecords.filter(r => r !== id) : [...state.expandedRecords, id];
+            return Object.assign({}, state, { expandedRecords: action.expandedRecords });
         }
         case SET_ACTIVE_TAB: {
             return Object.assign({}, state, {

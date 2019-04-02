@@ -24,7 +24,7 @@ return response;
     return Promise.reject(error.response);
 });
 
-export const Net = async (type, api, params) => {
+export const Net = async (api, params,type = 'post') => {
     if (type === 'post') {
         return new Promise((resolve, reject) => {
             instance.post(api, params)
