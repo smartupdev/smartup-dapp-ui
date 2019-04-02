@@ -18,9 +18,17 @@ const Image =  styled.img`
     height: ${p => p.theme.imageSizeL};
     width: ${p => p.theme.imageSizeL};
   `}
+  ${p => p.XL && css`
+    height: ${p => p.theme.imageSizeXL};
+    width: ${p => p.theme.imageSizeXL};
+  `}
   ${p => p.photo && css`
     height: ${p => p.theme.photoSizeHM};
     width: ${p => p.theme.photoSizeWM};
+  `}
+  ${p => p.size && css`
+    height: ${p => p.size};
+    width: ${p => p.size};
   `}
 `
 

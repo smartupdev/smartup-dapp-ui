@@ -52,9 +52,10 @@ const theme = {
   iconSizeM: '30px',
 
   imageSizeXS: '12px',
-  imageSizeS: '30px',
-  imageSizeM: '35px',
-  imageSizeL: '45px',
+  imageSizeS: '14px',
+  imageSizeM: '30px',
+  imageSizeL: '35px',
+  imageSizeXL: '45px',
 
   photoSizeWM: '200px',
   photoSizeHM: '100px',

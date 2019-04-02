@@ -61,12 +61,12 @@ export default ({ expandedWallet, setExpandedWallet, expandedMarket, setExpanded
       <Col center>
         <Col spacingTop={theme.spacingXS} spacingBottom={theme.spacingXS}>
           <Row bottom spacingBottom={theme.spacingXS}>
-            <Image XS rightText source={ethIcon} />
+            <Image size={theme.fontSizeXL} rightText source={ethIcon} />
             <Text L wordSpaceS>79</Text>
             <Text S>ETH</Text>
           </Row>
           <Row bottom>
-            <Image XS rightText source={smartupIcon} />
+            <Image size={theme.fontSizeXL} rightText source={smartupIcon} />
             <Text L wordSpaceS>792,323</Text>
             <Text S>SmartUp</Text>
           </Row>

@@ -37,7 +37,7 @@ const Terms = () =>
 
 
 export default () => {
-  const [loggedIn, login] = useState(true)
+  const [loggedIn, login] = useState(false)
   const [activeTab, setActiveTab] = useState('portfilio')
   const [expandedWallet, setExpandedWallet] = useState(true)
   const [expandedMarket, setExpandedMarket] = useState(false)
@@ -49,7 +49,7 @@ export default () => {
       <>
         <Top centerVertical spaceBetween>
           <Row centerVertical>
-            <Image source={LoginIcon} rightText />
+            <Image source={LoginIcon} L rightText />
             <Text note>Smart</Text>
           </Row>
           <Col>
@@ -67,7 +67,7 @@ export default () => {
       </>
       :
       <Col center>
-        <People L round color={theme.white} round />
+        <People XL round color={theme.white} round />
         <Button primary outline verticalMargin label={lang.panel.connectButton[currentLang]} onClick={() => login(true)} />
         <Text note>MetaMask</Text>
       </Col>

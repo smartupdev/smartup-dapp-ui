@@ -16,12 +16,14 @@ export const SVG = styled.svg`
     p.XS ? p.theme.imageSizeXS :
     p.S ? p.theme.imageSizeS :
     p.L ? p.theme.imageSizeL :
+    p.XL ? p.theme.imageSizeXL :
     p.theme.imageSizeM
   };
   height: ${p => 
     p.XS ? p.theme.imageSizeXS :
     p.S ? p.theme.imageSizeS :
     p.L ? p.theme.imageSizeL :
+    p.XL ? p.theme.imageSizeXL :
     p.theme.imageSizeM
   };
   fill: ${p => p.color};
@@ -31,10 +33,12 @@ export const SVG = styled.svg`
       p.XS ? p.theme.imageSizeXS :
       p.S ? p.theme.imageSizeS :
       p.L ? p.theme.imageSizeL :
+      p.XL ? p.theme.imageSizeXL :
       p.theme.imageSizeM
     }
   `}
   transition: transform .3s ease-in-out;
+  ${p => p.primary && css`fill: ${p.theme.colorPrimary}`};
   ${p => p.reverse && css`transform: rotate(180deg)`};
   ${p => p.rightText && css`margin-right: ${p.theme.fontSizeXS}`};
   ${p => p.onClick && css`cursor: pointer;`}

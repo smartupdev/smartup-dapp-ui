@@ -27,6 +27,6 @@ const Line = styled.div`
 export default ({ icon: Icon, image, fixed, selected }) => 
   <Link fixed={fixed} selected={selected} center centerVertical>
     { selected && <Line /> }
-    { Icon && <Icon color={theme.colorSecondary} S /> }
-    { image && <Image M source={image} /> }
+    { Icon && <Icon color={theme.colorSecondary} M /> }
+    { image && <Image L source={image} /> }
   </Link>
