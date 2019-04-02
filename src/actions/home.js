@@ -1,6 +1,6 @@
 import {
     SET_EXPANDED_RECORDS, SET_ACTIVE_TAB, GET_TOTAL_RESULT,
-    TABLE_HEADER_CLICK, SEARCH_MARKETS,BOOKMARK_CLICK
+    TABLE_HEADER_CLICK, SEARCH_MARKETS,BOOKMARK_CLICK,
 } from './actionTypes';
 
 import { API_GET_MARKETS, API_SEARCH_MARKETS } from './api';
@@ -11,7 +11,7 @@ export function setExpandedRecords(recordData) {
         const { record: { id }, isExpanded } = recordData;
         const currentExpandeds = getState().home.expandedRecords;
         const tempExpandeds = isExpanded ?
-            currentExpandeds.filter(r => r !== id) : [currentExpandeds, id];
+            currentExpandeds.filter(r => r !== id) : [...currentExpandeds, id];
         dispatch({
             type: SET_EXPANDED_RECORDS,
             expandedRecords: tempExpandeds,
@@ -25,25 +25,33 @@ export function setActiveTab(activeTab) {
         type: value
     };
 
-    return (dispatch, getState) => {
+    return (dispatch,getState)=>{
         dispatch({
             type: SET_ACTIVE_TAB,
             networkStatus: 'loading',
-        });
-        Net(API_GET_MARKETS, params, 'get').then((res) => {
-            dispatch({
-                type: SET_ACTIVE_TAB,
-                networkStatus: 'loading',
-                data: res
-            });
-        }).catch((error) => {
-            dispatch({
-                type: SET_ACTIVE_TAB,
-                networkStatus: 'error',
-                errorInfo: error,
-            });
+            activeTab: activeTab
         });
     }
+
+    // return (dispatch, getState) => {
+    //     dispatch({
+    //         type: SET_ACTIVE_TAB,
+    //         networkStatus: 'loading',
+    //     });
+    //     Net(API_GET_MARKETS, params, 'get').then((res) => {
+    //         dispatch({
+    //             type: SET_ACTIVE_TAB,
+    //             networkStatus: 'loading',
+    //             data: res
+    //         });
+    //     }).catch((error) => {
+    //         dispatch({
+    //             type: SET_ACTIVE_TAB,
+    //             networkStatus: 'error',
+    //             errorInfo: error,
+    //         });
+    //     });
+    // }
 }
 
 export function searchMarkets(keyword) {
@@ -73,31 +81,41 @@ export function searchMarkets(keyword) {
 }
 
 export function bookMarkClick(recordData) {
-    const { record: { id }, isFollowed } = { recordData };
+    const { id,following } = recordData;
     let params = {
         id: id,
-        follow: !isFollowed
+        following: !following
     };
-    return (dispatch, getState) =>{
+    return (dispatch, getState) => {
+        const currentMarkets = getState().home.markets;
+        let market = currentMarkets.find(r => r.id === id);
+        market.following = !following;
+        console.log('------------111',market);
+        console.log('------------222',currentMarkets);
         dispatch({
             type: BOOKMARK_CLICK,
-            networkStatus: 'loading',
-        });
-        Net(API_SEARCH_MARKETS, params, 'get').then((res) => {
-            
-            dispatch({
-                type: BOOKMARK_CLICK,
-                networkStatus: 'loading',
-                data: res
-            });
-        }).catch((error) => {
-            dispatch({
-                type: BOOKMARK_CLICK,
-                networkStatus: 'error',
-                errorInfo: error,
-            });
+            markets: currentMarkets,
         });
     }
+    // return (dispatch, getState) =>{
+    //     dispatch({
+    //         type: BOOKMARK_CLICK,
+    //         networkStatus: 'loading',
+    //     });
+    //     Net(API_SEARCH_MARKETS, params, 'get').then((res) => {
+    //         dispatch({
+    //             type: BOOKMARK_CLICK,
+    //             networkStatus: 'success',
+    //             data: res
+    //         });
+    //     }).catch((error) => {
+    //         dispatch({
+    //             type: BOOKMARK_CLICK,
+    //             networkStatus: 'error',
+    //             errorInfo: error,
+    //         });
+    //     });
+    // }
 }
 
 export function onTableHeaderClick(headerName) {
@@ -106,8 +124,6 @@ export function onTableHeaderClick(headerName) {
         headerName: headerName,
     }
 }
-
-
 
 function getToatalResult(totalResults) {
     //(value,index)
