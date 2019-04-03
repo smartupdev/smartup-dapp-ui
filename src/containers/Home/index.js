@@ -12,7 +12,7 @@ import lang, { currentLang } from '../../lang'
 import theme from '../../theme'
 import { toPrice, toDate } from '../../lib/util'
 import { connect } from 'react-redux'
-import { setExpandedRecords,setActiveTab,onTableHeaderClick } from '../../actions/home'
+import { setExpandedRecords,setActiveTab,onTableHeaderClick,bookMarkClick } from '../../actions/home'
 
 const Top = styled(Row)`
   padding: 0 ${p => p.theme.spacingXS}
@@ -52,7 +52,7 @@ const TableName = [
 ]
 
 const Home = ({ markets,expandedRecords,activeTab,totalResults,sortBy,orderBy,
-  setExpandedRecords,setActiveTab,onTableHeaderClick }) => {
+  setExpandedRecords,setActiveTab,onTableHeaderClick,bookMarkClick }) => {
   return (
     <Col>
       <Top flex={1} spaceBetween>
@@ -74,6 +74,7 @@ const Home = ({ markets,expandedRecords,activeTab,totalResults,sortBy,orderBy,
         orderBy={orderBy}
         expandedRecords={expandedRecords}
         expandCompoent={TableExpand}
+        bookMarkClick={bookMarkClick}
         />
     </Col>
   )  
@@ -91,6 +92,7 @@ const mapDispatchToProps = {
   setExpandedRecords,
   setActiveTab,
   onTableHeaderClick,
+  bookMarkClick,
 }
 
 export default connect(mapStateToProps,mapDispatchToProps)(Home);

@@ -1,7 +1,7 @@
 import theme from './reducers/theme';
 import user from './reducers/user';
 import home from './reducers/home';
-import matemask from './reducers/matemask';
+import panel from './reducers/panel';
 import eth from './reducers/eth';
 import ipfs from './reducers/ipfs';
 import bigchain from './reducers/bigchain';
@@ -12,7 +12,7 @@ export default combineReducers({
     theme,
     user,
     home,
-    matemask,
+    panel,
     eth,
     ipfs,
     bigchain,

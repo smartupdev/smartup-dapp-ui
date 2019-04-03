@@ -55,14 +55,14 @@ const TableName = [
   },
 ]
 
-export default ({ expandedWallet, setExpandedWallet, expandedMarket, setExpandedMarket, expandedBookmark, setExpandedBookmark }) => {
+export default ({ethBalance, expandedWallet, setExpandedWallet, expandedMarket, setExpandedMarket, expandedBookmark, setExpandedBookmark }) => {
   return (
     <Col>
       <Col center>
         <Col spacingTop={theme.spacingXS} spacingBottom={theme.spacingXS}>
           <Row bottom spacingBottom={theme.spacingXS}>
             <Image size={theme.fontSizeXL} rightText source={ethIcon} />
-            <Text L wordSpaceS>79</Text>
+            <Text L wordSpaceS>{ethBalance}</Text>
             <Text S>ETH</Text>
           </Row>
           <Row bottom>

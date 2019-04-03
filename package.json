@@ -18,6 +18,7 @@
     "not op_mini all"
   ],
   "dependencies": {
+    "axios": "^0.18.0",
     "bigchaindb-driver": "^4.1.0",
     "blob-to-buffer": "^1.2.8",
     "blobinfo": "^0.1.2",
