@@ -13,7 +13,7 @@ import lang, { currentLang } from '../../lang'
 import theme from '../../theme';
 import ethIcon from '../../images/eth.png';
 import smartupIcon from '../../images/smartup.png';
-import { Close, Trade } from '../../components/Icon';
+import { Close, Trade, People } from '../../components/Icon';
 const portfilioText = lang.panel.portfilio
 
 const InfoBlock = styled(Col)`
@@ -32,9 +32,9 @@ const BookmarkBlock = styled(Row)`
 `
 
 const walletList = [
-  { id: 245465, icon: CommentIcon, ct: 879.22, volume: 0.009 },
-  { id: 245463, icon: CommentIcon, ct: 39.42, volume: -0.023 },
-  { id: 245464, icon: CommentIcon, ct: 87.22, volume: 0.009 },
+  { id: 245465, ct: 879.22, volume: 0.009 },
+  { id: 245463, ct: 39.42, volume: -0.023 },
+  { id: 245464, ct: 87.22, volume: 0.009 },
   { id: 245462, icon: CommentIcon, ct: 87.22, volume: 0.02313 },
 ]
 
@@ -44,7 +44,7 @@ const bookmarks = [
 ]
 
 const TableName = [
-  { label: '', value: 'icon', layoutStyle: { width: '16px' }, component: ({value}) => <Image XS source={value} /> },
+  { label: '', value: 'icon', layoutStyle: { width: '18px' }, component: ({value}) => value ? <Image XS source={value} /> : <People XS color={theme.white} round /> },
   { label: portfilioText.wallet.id[currentLang], value: 'id', },
   { label: portfilioText.wallet.ct[currentLang], value: 'ct', component: ({value}) => <Text S>{`${value} CT`}</Text> },
   { label: portfilioText.wallet.volume[currentLang], value: 'volume', component: ({value}) => 

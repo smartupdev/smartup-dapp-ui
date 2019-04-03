@@ -3,6 +3,9 @@ function padStart(s, digit = 2) {
 }
 
 const DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+const MIN = 1000 * 60
+const HOUR = MIN * 60
+const DAY = HOUR * 24
 
 const toDateObject = d => typeof d === 'number' ? new Date(d) : d
 
@@ -16,10 +19,20 @@ const getSecond = (d) => padStart(toDateObject(d).getSeconds())
 
 const now = () =>  Date.now()
 
-const toDate = (d = now()) => (d = toDateObject(d)) && `${getYear(d)}-${getMonth(d)}-${getDate(d)}`
-const toDateTime = (d = now()) => (d = toDateObject(d)) && `${toDate(d)} ${getHour(d)}:${getMinute(d)}:${getSecond(d)}`
+const toDate = (d = now()) => `${getYear(d)}-${getMonth(d)}-${getDate(d)}`
+const toDateTime = (d = now()) => `${toDate(d)} ${getHour(d)}:${getMinute(d)}:${getSecond(d)}`
+
+// d is a number
+const toAgo = (date, nowText = 'now', minText = 'm ago', hourText = 'h ago', dayText = 'd ago') => {
+  const timeAgo = Date.now() - date
+  return timeAgo < MIN ? nowText :
+    timeAgo < HOUR ? ~~(timeAgo/MIN) + minText :
+    timeAgo < DAY ? ~~(timeAgo/HOUR) + hourText :
+    ~~(timeAgo/DAY) + dayText
+}
+
 // TODO: addDay, addMonth, addYear
 // TODO: subDay, subMonth, subYear
 export {
-  getYear, getMonth, getDate, getDay, getHour, getMinute, getSecond, now, toDate, toDateTime
+  getYear, getMonth, getDate, getDay, getHour, getMinute, getSecond, now, toDate, toDateTime, toAgo
 }
