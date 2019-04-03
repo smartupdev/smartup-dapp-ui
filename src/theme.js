@@ -14,6 +14,7 @@ const theme = {
   // borderColor: '#9b9ea1',
   borderColor: '#556672',
   borderRadius: '6px',
+  greenDot: '8px',
 
   green: '#7FC88E',
   red: '#E8666D',

@@ -41,6 +41,7 @@ export const SVG = styled.svg`
   ${p => p.primary && css`fill: ${p.theme.colorPrimary}`};
   ${p => p.reverse && css`transform: rotate(180deg)`};
   ${p => p.rightText && css`margin-right: ${p.theme.fontSizeXS}`};
+  ${p => p.leftText && css`margin-left: ${p.theme.fontSizeXS}`};
   ${p => p.onClick && css`cursor: pointer;`}
 `
 

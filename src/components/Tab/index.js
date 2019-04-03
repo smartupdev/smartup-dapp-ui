@@ -30,10 +30,10 @@ const Dot = styled.div`
   position: absolute;
   right: 5px; 
   top: 5px;
-  width: 8px;
-  height: 8px;
+  width: ${p => p.theme.greenDot};
+  height: ${p => p.theme.greenDot};
   background-color: #7FC88E;
-  border-radius: 8px;
+  border-radius: ${p => p.theme.greenDot};
 `
 // tabs: [ { <label: string>, <value>, <dot: bool> } ]
 // type: border || simple
