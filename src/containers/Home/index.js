@@ -1,11 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
+import TableExpand from './TableExpand'
 import Tab from '../../components/Tab'
 import Table from '../../components/Table'
-import Icon, { Comment, Trade, People, More, Bookmarked, BookmarkedOutline } from '../../components/Icon'
+import { People, More } from '../../components/Icon'
 import Image from '../../components/Image'
 import Text from '../../components/Text'
-import Button from '../../components/Button'
 import SimpleLineChart from '../../components/SimpleLineChart'
 import { Row, Col } from '../../components/Layout'
 import lang, { currentLang } from '../../lang'
@@ -13,10 +13,6 @@ import theme from '../../theme'
 import { toPrice, toDate } from '../../lib/util'
 import { connect } from 'react-redux'
 import { setExpandedRecords,setActiveTab,onTableHeaderClick } from '../../actions/home'
-
-import BookmarkIcon from '../../images/033-star.svg'
-
-import FakeArrow from '../../images/039-umbrella-1.svg'
 
 const Top = styled(Row)`
   padding: 0 ${p => p.theme.spacingXS}
@@ -44,31 +40,6 @@ const _Percent = ({ value }) => <Text>{value * 100 + '%'}</Text>
 const _Price = ({ value }) => <Text price>{toPrice(value)}</Text>
 const _Volume = ({ value }) => <Text primary>{toPrice(value, 0)}</Text>
 const _Cap = ({ value }) => <Text>{toPrice(value, 0)}</Text>
-const ExpandCompoent = ({ record }) => 
-  <Row spacingBottom={theme.spacingS} spacingTop={theme.spacingS}>
-    <Col spacingLeft={theme.spacingXS} spacingRight={theme.spacingL}>
-      <Image source={record.image} photo />
-    </Col>
-    <Col spaceBetween flex={1}>
-      <Row spaceBetween> 
-        <Col>
-          <Text XL wordSpaceL>{record.name}</Text>
-          <Text note>{record.overview}</Text>
-        </Col>
-        {record.following ? 
-          <Bookmarked S primary onClick={() => console.log(record.id)} /> :
-          <BookmarkedOutline S color={theme.white} onClick={() => console.log(record.id)} />
-        }
-      </Row>
-      <Row centerVertical spaceBetween>
-        <Row>
-          <Button label={record.numberOfComments} icon={Comment} />
-          <Button label={record.numberOfSub} icon={People} />
-        </Row>
-        <Button primary label={lang.trade[currentLang]} icon={Trade} />
-      </Row>
-    </Col>
-  </Row>
 const TableName = [
   { label: '', value: 'icon', sortable: false, layoutStyle: { width: `calc( ${theme.iconSizeM} + 15px )`, center: true }, component: _Icon },
   { label: lang.home.table.name[currentLang], value: 'name', sortable: true, layoutStyle: { flex: 1, width: colWidth }, component: _Name },
@@ -102,7 +73,7 @@ const Home = ({ markets,expandedRecords,activeTab,totalResults,sortBy,orderBy,
         sortBy={sortBy} 
         orderBy={orderBy}
         expandedRecords={expandedRecords}
-        expandCompoent={ExpandCompoent}
+        expandCompoent={TableExpand}
         />
     </Col>
   )  
