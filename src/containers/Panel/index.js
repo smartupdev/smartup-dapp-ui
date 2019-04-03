@@ -13,13 +13,19 @@ import Setting from './Setting'
 import theme from '../../theme'
 import { Col, Row } from '../../components/Layout'
 import lang, { currentLang } from '../../lang'
+import { connect } from 'react-redux'
+import {
+  loginMetaMask, setActiveTab, setExpandedWallet,
+  setExpandedMarket, setExpandedBookmark,
+} from '../../actions/panel'
 
 import LoginIcon from '../../images/menu1.svg'
 
 const TABS = [
-  { label: lang.panel.tab.portfilio[currentLang], value: 'portfilio', component: 
-    ({expandedWallet, setExpandedWallet, expandedMarket, setExpandedMarket, expandedBookmark, setExpandedBookmark}) => 
-    <Portfolio {...{expandedWallet, setExpandedWallet, expandedMarket, setExpandedMarket, expandedBookmark, setExpandedBookmark}} /> 
+  {
+    label: lang.panel.tab.portfilio[currentLang], value: 'portfilio', component:
+      ({ ethBalance,expandedWallet, setExpandedWallet, expandedMarket, setExpandedMarket, expandedBookmark, setExpandedBookmark }) =>
+        <Portfolio {...{ ethBalance,expandedWallet, setExpandedWallet, expandedMarket, setExpandedMarket, expandedBookmark, setExpandedBookmark }} />
   },
   { label: lang.panel.tab.notification[currentLang], value: 'notification', dot: true, component: Notification },
   { label: lang.panel.tab.setting[currentLang], value: 'setting', component: Setting },
@@ -29,49 +35,67 @@ const Top = styled(Row)`
   padding: ${p => `${p.theme.spacingS} ${p.theme.spacingM}`};
 `
 
-const Terms = () => 
+const Terms = () =>
   <Col flex={1} bottom center>
     <Hr />
     <Text underline S spaceV onClick={() => console.log('Get terms of services')}>Terms of Service</Text>
   </Col>
 
 
-export default () => {
-  const [loggedIn, login] = useState(false)
-  const [activeTab, setActiveTab] = useState('portfilio')
-  const [expandedWallet, setExpandedWallet] = useState(true)
-  const [expandedMarket, setExpandedMarket] = useState(false)
-  const [expandedBookmark, setExpandedBookmark] = useState(false)
-  const onClickTab = (value) => setActiveTab(value)
+const Panel = ({ metaMaskHint, loggedIn, account, ethBalance, activeTab, expandedWallet,
+  expandedMarket, expandedBookmark,
+  setExpandedWallet, setExpandedMarket, setExpandedBookmark, loginMetaMask,
+  setActiveTab }) => {
   return (
     <Col width='300px' center={!loggedIn} centerVertical={!loggedIn}>
       {loggedIn ?
-      <>
-        <Top centerVertical spaceBetween>
-          <Row centerVertical>
-            <Image source={LoginIcon} L rightText />
-            <Text note>Smart</Text>
-          </Row>
-          <Col>
-            <Text S note>0x3dd0b1...5b5fec</Text>
-            <Text right S note>200 honours</Text>
-          </Col>
-        </Top>
-        <Tab tabs={TABS} activeTab={activeTab} onClick={onClickTab} />
-        {
-          TABS.find(t => t.value === activeTab).component({
-            expandedWallet, setExpandedWallet, expandedMarket, setExpandedMarket, expandedBookmark, setExpandedBookmark
-          })
-        }
-        <Terms />
-      </>
-      :
-      <Col center>
-        <People XL round color={theme.white} round />
-        <Button primary outline verticalMargin label={lang.panel.connectButton[currentLang]} onClick={() => login(true)} />
-        <Text note>MetaMask</Text>
-      </Col>
+        <>
+          <Top centerVertical spaceBetween>
+            <Row centerVertical>
+              <Image source={LoginIcon} L rightText />
+              <Text note>Smart</Text>
+            </Row>
+            <Col>
+              <Text S note>{account}</Text>
+              <Text right S note>200 honours</Text>
+            </Col>
+          </Top>
+          <Tab tabs={TABS} activeTab={activeTab} onClick={setActiveTab} />
+          {
+            TABS.find(t => t.value === activeTab).component({
+              ethBalance,
+              expandedWallet, setExpandedWallet, expandedMarket, setExpandedMarket, expandedBookmark, setExpandedBookmark
+            })
+          }
+          <Terms />
+        </>
+        :
+        <Col center>
+          <People XL round color={theme.white} round />
+          <Button primary outline verticalMargin label={lang.panel.connectButton[currentLang]} onClick={loginMetaMask} />
+          <Text note>{metaMaskHint}</Text>
+        </Col>
       }
     </Col>
   )
 }
+
+const mapStateToProps = state => ({
+  metaMaskHint: state.panel.metaMaskHint,
+  loggedIn: state.panel.loggedIn,
+  account: state.panel.account,
+  ethBalance: state.panel.ethBalance,
+  activeTab: state.panel.activeTab,
+  expandedWallet: state.panel.expandedWallet,
+  expandedMarket: state.panel.expandedMarket,
+  expandedBookmark: state.panel.expandedBookmark,
+});
+const mapDispatchToProps = {
+  loginMetaMask,
+  setActiveTab,
+  setExpandedWallet,
+  setExpandedMarket,
+  setExpandedBookmark,
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Panel);
