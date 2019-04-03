@@ -19,8 +19,6 @@ import {
   setExpandedMarket, setExpandedBookmark,
 } from '../../actions/panel'
 
-import LoginIcon from '../../images/menu1.svg'
-
 const TABS = [
   {
     label: lang.panel.tab.portfilio[currentLang], value: 'portfilio', component:
@@ -43,7 +41,7 @@ const Terms = () =>
 
 
 const Panel = ({ metaMaskHint, loggedIn, account, ethBalance, activeTab, expandedWallet,
-  expandedMarket, expandedBookmark,
+  expandedMarket, expandedBookmark,userAvatar,userName,
   setExpandedWallet, setExpandedMarket, setExpandedBookmark, loginMetaMask,
   setActiveTab }) => {
   return (
@@ -52,8 +50,8 @@ const Panel = ({ metaMaskHint, loggedIn, account, ethBalance, activeTab, expande
         <>
           <Top centerVertical spaceBetween>
             <Row centerVertical>
-              <Image source={LoginIcon} L rightText />
-              <Text note>Smart</Text>
+              <Image source={userAvatar} L rightText />
+              <Text note>{userName}</Text>
             </Row>
             <Col>
               <Text S note>{account}</Text>
@@ -89,6 +87,8 @@ const mapStateToProps = state => ({
   expandedWallet: state.panel.expandedWallet,
   expandedMarket: state.panel.expandedMarket,
   expandedBookmark: state.panel.expandedBookmark,
+  userName:state.panel.userName,
+  userAvatar:state.panel.userAvatar,
 });
 const mapDispatchToProps = {
   loginMetaMask,

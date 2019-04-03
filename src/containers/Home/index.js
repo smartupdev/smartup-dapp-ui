@@ -12,7 +12,7 @@ import lang, { currentLang } from '../../lang'
 import theme from '../../theme'
 import { toPrice, toDate } from '../../lib/util'
 import { connect } from 'react-redux'
-import { setExpandedRecords,setActiveTab,onTableHeaderClick } from '../../actions/home'
+import { setExpandedRecords,setActiveTab,onTableHeaderClick,bookMarkClick } from '../../actions/home'
 
 import BookmarkIcon from '../../images/033-star.svg'
 
@@ -44,7 +44,7 @@ const _Percent = ({ value }) => <Text>{value * 100 + '%'}</Text>
 const _Price = ({ value }) => <Text price>{toPrice(value)}</Text>
 const _Volume = ({ value }) => <Text primary>{toPrice(value, 0)}</Text>
 const _Cap = ({ value }) => <Text>{toPrice(value, 0)}</Text>
-const ExpandCompoent = ({ record }) => 
+const ExpandCompoent = ({ record,bookMarkClick }) => 
   <Row spacingBottom={theme.spacingS} spacingTop={theme.spacingS}>
     <Col spacingLeft={theme.spacingXS} spacingRight={theme.spacingL}>
       <Image source={record.image} photo />
@@ -56,8 +56,8 @@ const ExpandCompoent = ({ record }) =>
           <Text note>{record.overview}</Text>
         </Col>
         {record.following ? 
-          <Bookmarked S primary onClick={() => console.log(record.id)} /> :
-          <BookmarkedOutline S color={theme.white} onClick={() => console.log(record.id)} />
+          <Bookmarked S primary onClick={() => bookMarkClick(record)} /> :
+          <BookmarkedOutline S color={theme.white} onClick={() => bookMarkClick(record)} />
         }
       </Row>
       <Row centerVertical spaceBetween>
@@ -81,7 +81,7 @@ const TableName = [
 ]
 
 const Home = ({ markets,expandedRecords,activeTab,totalResults,sortBy,orderBy,
-  setExpandedRecords,setActiveTab,onTableHeaderClick }) => {
+  setExpandedRecords,setActiveTab,onTableHeaderClick,bookMarkClick }) => {
   return (
     <Col>
       <Top flex={1} spaceBetween>
@@ -103,6 +103,7 @@ const Home = ({ markets,expandedRecords,activeTab,totalResults,sortBy,orderBy,
         orderBy={orderBy}
         expandedRecords={expandedRecords}
         expandCompoent={ExpandCompoent}
+        bookMarkClick={bookMarkClick}
         />
     </Col>
   )  
@@ -120,6 +121,7 @@ const mapDispatchToProps = {
   setExpandedRecords,
   setActiveTab,
   onTableHeaderClick,
+  bookMarkClick,
 }
 
 export default connect(mapStateToProps,mapDispatchToProps)(Home);

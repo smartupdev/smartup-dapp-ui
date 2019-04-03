@@ -1,8 +1,7 @@
 import {
-    METAMASK_LOGIN, METAMASK_ETH_BALANCE,
-    METAMASK_ETH_TRANSACTION, PANEL_SET_ACTIVE_TAB,
-    SET_EXPANDED_WALLET, SET_EXPANDED_MARKET,
-    SET_EXPANDED_BOOKMARK
+    METAMASK_LOGIN, METAMASK_ETH_BALANCE,METAMASK_ETH_TRANSACTION, 
+    PANEL_SET_ACTIVE_TAB,SET_EXPANDED_WALLET, SET_EXPANDED_MARKET,
+    SET_EXPANDED_BOOKMARK,SET_USER_AVATAR,SET_USER_NAME,
 } from './actionTypes';
 
 
@@ -31,6 +30,20 @@ export function setExpandedBookmark() {
     }
 }
 
+export function setUserName(userName){
+    return {
+        type: SET_USER_NAME,
+        userName: userName,
+    }
+}
+
+export function setUserAvatar(userAvatar){
+    return {
+        type: SET_USER_AVATAR,
+        userAvatar: userAvatar,
+    }
+}
+
 //Login MetaMask
 export function loginMetaMask() {
     let isSupport = (typeof window.ethereum !== 'undefined'
@@ -47,7 +60,6 @@ export function loginMetaMask() {
                     metaMaskHint: 'MetaMask',
                 });
             }).catch((e) => {
-                console.log('------------', e);
                 dispatch({
                     type: METAMASK_LOGIN,
                     loggedIn: false,

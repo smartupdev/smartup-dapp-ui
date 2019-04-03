@@ -88,13 +88,11 @@ export function bookMarkClick(recordData) {
     };
     return (dispatch, getState) => {
         const currentMarkets = getState().home.markets;
-        let market = currentMarkets.find(r => r.id === id);
-        market.following = !following;
-        console.log('------------111',market);
-        console.log('------------222',currentMarkets);
+        let tempMarkets = currentMarkets.map(market => market.id === id ? {
+            ...market, following: !market.following} : market);
         dispatch({
             type: BOOKMARK_CLICK,
-            markets: currentMarkets,
+            markets: tempMarkets,
         });
     }
     // return (dispatch, getState) =>{
