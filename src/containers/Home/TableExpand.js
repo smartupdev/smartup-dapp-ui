@@ -6,9 +6,12 @@ import Text from '../../components/Text'
 import lang, { currentLang } from '../../lang'
 import Button from '../../components/Button'
 import Image from '../../components/Image'
-import {withRouter} from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { bookMarkClick } from '../../actions/home'
 
-const TableExpand = ({ record, history }) => 
+const TableExpand = ({ record, history, bookMarkClick }) => {
+  return (
   <Row spacingBottom={theme.spacingS} spacingTop={theme.spacingS}>
     <Col spacingLeft={theme.spacingXS} spacingRight={theme.spacingL}>
       <Image source={record.image} photo />
@@ -19,7 +22,7 @@ const TableExpand = ({ record, history }) =>
           <Text XL wordSpaceL>{record.name}</Text>
           <Text note>{record.overview}</Text>
         </Col>
-        <Bookmarked S onClick={() => console.log(record.id)} checked={record.following} /> 
+        <Bookmarked S onClick={() => bookMarkClick(record)} checked={record.following} /> 
       </Row>
       <Row centerVertical spaceBetween>
         <Row>
@@ -30,4 +33,11 @@ const TableExpand = ({ record, history }) =>
       </Row>
     </Col>
   </Row>
-export default withRouter(TableExpand)
+  )
+}
+
+const mapDispatchToProps = {
+  bookMarkClick,
+}
+
+export default connect(null, mapDispatchToProps)(withRouter(TableExpand));
