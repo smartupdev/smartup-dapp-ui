@@ -7,6 +7,7 @@ import { People, More } from '../../components/Icon'
 import Image from '../../components/Image'
 import Text from '../../components/Text'
 import SimpleLineChart from '../../components/SimpleLineChart'
+import Avatar from '../../components/Avatar'
 import { Row, Col } from '../../components/Layout'
 import lang, { currentLang } from '../../lang'
 import theme from '../../theme'
@@ -29,7 +30,7 @@ const FILTERS = [
 
 const colWidth = '130px'
 
-const _Icon = ({ value }) => value ? <Image source={value} /> : <People color={theme.white} round />
+const _Icon = ({ value }) => <Avatar icon={value} />
 const _More = ({ isExpanded }) => <More reverse={isExpanded} XS color={theme.white} />
 const _Name = ({ value, record }) => 
   <Col>

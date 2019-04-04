@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import styled, { css } from 'styled-components'
 
 import CommentIcon from '../../images/018-planet-earth-2.svg'
+import Avatar from '../../components/Avatar'
 import Hr from '../../components/Hr'
 import Panel from '../../components/Panel'
 import Table from '../../components/Table'
@@ -44,7 +45,7 @@ const bookmarks = [
 ]
 
 const TableName = [
-  { label: '', value: 'icon', layoutStyle: { width: '18px' }, component: ({value}) => value ? <Image XS source={value} /> : <People XS color={theme.white} round /> },
+  { label: '', value: 'icon', layoutStyle: { width: '18px' }, component: ({value}) =>  <Avatar XS icon={value} /> },
   { label: portfilioText.wallet.id[currentLang], value: 'id', },
   { label: portfilioText.wallet.ct[currentLang], value: 'ct', component: ({value}) => <Text S>{`${value} CT`}</Text> },
   { label: portfilioText.wallet.volume[currentLang], value: 'volume', component: ({value}) => 

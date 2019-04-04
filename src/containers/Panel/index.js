@@ -58,7 +58,7 @@ const Panel = ({ metaMaskHint, loggedIn, account, ethBalance, activeTab, expande
               <Text right S note>200 honours</Text>
             </Col>
           </Top>
-          <Tab tabs={TABS} activeTab={activeTab} onClick={setActiveTab} />
+          <Tab tabs={TABS} activeTab={activeTab} onClick={setActiveTab} fullWidth />
           {
             TABS.find(t => t.value === activeTab).component({
               ethBalance,

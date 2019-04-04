@@ -11,6 +11,9 @@ export const Text = styled.p`
   ${props => props.L && css`font-size: ${p => p.theme.fontSizeL}`}
   ${props => props.XL && css`font-size: ${p => p.theme.fontSizeXL}`}
 
+  ${p => p.inline && css`display: inline`};
+  ${p => p.lineHeight && css`line-height: 1.5`};
+
   ${p => p.right && css`text-align: right`};
   ${p => p.center && css`text-align: center`};
 
@@ -36,6 +39,24 @@ export const Text = styled.p`
     width: 100%;
   `}
 
+  ${p => p.error && css`
+    color: ${p.theme.red};
+    font-size: ${p.theme.fontSizeXS};
+    position: absolute;
+    bottom: -20px;
+
+    white-space: nowrap; 
+
+    :before {
+      content: "!";
+      font-size: calc( ${p.theme.fontSizeXS} * .8 );
+      border-radius: 8px;
+      border: 1px solid;
+      padding-left: 5px;
+      padding-right: 5px;
+      margin-right: 4px;
+    }    
+  `}
   ${p => p.onClick && css`cursor: pointer`}
   `
 export default Text
