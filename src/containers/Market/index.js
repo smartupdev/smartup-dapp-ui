@@ -14,6 +14,8 @@ import Avatar from '../../components/Avatar'
 import Botton from '../../components/Button'
 import lang, { currentLang } from '../../lang'
 
+import Chart from './Chart'
+
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 
@@ -45,7 +47,7 @@ const Market = ({market}) => {
       </Row>
       <Tab tabs={TABS} activeTab={tab} onClick={(v) => setTab(v)} width='100px' />
       <Col color={theme.bgColorDark}>
-          Graph
+          <Chart />
       </Col>
       <Col>
         <Text L center spaceV>{lang.trading.tradeTitle[currentLang]}</Text>
