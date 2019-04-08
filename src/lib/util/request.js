@@ -1,5 +1,5 @@
 import axios from 'axios';
-const apiBaseUrl = '';
+const apiBaseUrl = 'http://39.105.101.248:86';
 const instance = axios.create({
     baseURL: apiBaseUrl,
     timeout: 20000,

@@ -14,10 +14,6 @@ import { toPrice, toDate } from '../../lib/util'
 import { connect } from 'react-redux'
 import { setExpandedRecords,setActiveTab,onTableHeaderClick,bookMarkClick } from '../../actions/home'
 
-import BookmarkIcon from '../../images/033-star.svg'
-
-import FakeArrow from '../../images/039-umbrella-1.svg'
-
 const Top = styled(Row)`
   padding: 0 ${p => p.theme.spacingXS}
   background-color: ${p => p.theme.bgColorLight}
@@ -110,10 +106,10 @@ const Home = ({ markets,expandedRecords,activeTab,totalResults,sortBy,orderBy,
 }
 
 const mapStateToProps = state => ({
-  markets: state.home.markets,
+  markets: state.market.markets,
+  totalResults:state.market.totalResults,
   expandedRecords: state.home.expandedRecords,
   activeTab:state.home.activeTab,
-  totalResults:state.home.totalResults,
   sortBy: state.home.sortBy,
   orderBy: state.home.orderBy,
 });

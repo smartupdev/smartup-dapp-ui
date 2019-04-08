@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 import styled from 'styled-components'
 import Image from '../../components/Image'
@@ -15,15 +15,17 @@ import { Col, Row } from '../../components/Layout'
 import lang, { currentLang } from '../../lang'
 import { connect } from 'react-redux'
 import {
-  loginMetaMask, setActiveTab, setExpandedWallet,
-  setExpandedMarket, setExpandedBookmark,
+  setActiveTab, setExpandedWallet, setExpandedMarket, setExpandedBookmark,
 } from '../../actions/panel'
+import {
+  loginMetaMask,updateUserName,updateUserAvatar,
+} from '../../actions/user'
 
 const TABS = [
   {
     label: lang.panel.tab.portfilio[currentLang], value: 'portfilio', component:
-      ({ ethBalance,expandedWallet, setExpandedWallet, expandedMarket, setExpandedMarket, expandedBookmark, setExpandedBookmark }) =>
-        <Portfolio {...{ ethBalance,expandedWallet, setExpandedWallet, expandedMarket, setExpandedMarket, expandedBookmark, setExpandedBookmark }} />
+      ({ ethBalance, expandedWallet, setExpandedWallet, expandedMarket, setExpandedMarket, expandedBookmark, setExpandedBookmark }) =>
+        <Portfolio {...{ ethBalance, expandedWallet, setExpandedWallet, expandedMarket, setExpandedMarket, expandedBookmark, setExpandedBookmark }} />
   },
   { label: lang.panel.tab.notification[currentLang], value: 'notification', dot: true, component: Notification },
   { label: lang.panel.tab.setting[currentLang], value: 'setting', component: Setting },
@@ -41,7 +43,7 @@ const Terms = () =>
 
 
 const Panel = ({ metaMaskHint, loggedIn, account, ethBalance, activeTab, expandedWallet,
-  expandedMarket, expandedBookmark,userAvatar,userName,
+  expandedMarket, expandedBookmark, userAvatar, userName,
   setExpandedWallet, setExpandedMarket, setExpandedBookmark, loginMetaMask,
   setActiveTab }) => {
   return (
@@ -79,19 +81,22 @@ const Panel = ({ metaMaskHint, loggedIn, account, ethBalance, activeTab, expande
 }
 
 const mapStateToProps = state => ({
-  metaMaskHint: state.panel.metaMaskHint,
-  loggedIn: state.panel.loggedIn,
-  account: state.panel.account,
-  ethBalance: state.panel.ethBalance,
+  metaMaskHint: state.user.metaMaskHint,
+  loggedIn: state.user.loggedIn,
+  account: state.user.account,
+  ethBalance: state.user.ethBalance,
+  userName: state.user.userName,
+  userAvatar: state.user.userAvatar,
   activeTab: state.panel.activeTab,
   expandedWallet: state.panel.expandedWallet,
   expandedMarket: state.panel.expandedMarket,
   expandedBookmark: state.panel.expandedBookmark,
-  userName:state.panel.userName,
-  userAvatar:state.panel.userAvatar,
 });
+
 const mapDispatchToProps = {
   loginMetaMask,
+  updateUserName,
+  updateUserAvatar,
   setActiveTab,
   setExpandedWallet,
   setExpandedMarket,
