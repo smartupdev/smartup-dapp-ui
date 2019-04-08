@@ -45,6 +45,7 @@ const Flex = styled.div`
 `
 
 const Row = styled(Flex)`
+  ${props => props.right && css`justify-content: flex-end`};
   ${props => props.center && css`justify-content: center`};
   ${props => props.centerVertical && css`align-items: center`};
   ${p => p.spaceBetween && css`justify-content: space-between`};

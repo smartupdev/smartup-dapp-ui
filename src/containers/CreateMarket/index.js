@@ -15,6 +15,7 @@ const options = ['Basic Information', 'Price Equation', 'Deposit']
 export default () => {
   const [activeIndex, setIndex] = useState(0)
   function next() { setIndex(activeIndex+1) }
+  function back() { setIndex(activeIndex-1) }
   const Label = ({ children }) => <Text S spaceV>{children}</Text>
   return (
     <Col>
@@ -37,6 +38,9 @@ export default () => {
             <Label>Market description</Label>
             <Input background L line={3} />
             <Text S right>150 characters to help new members get to know your community.</Text>
+            <Row spacingTopL right>
+              <Button label='Next' primary extended onClick={next} />
+            </Row>
           </>
         :
           activeIndex === 1 ? 
@@ -45,6 +49,10 @@ export default () => {
             <Input background L />
             <Label>Preview price movement</Label>
             <Col>I am a graph</Col>
+            <Row spacingTopL spaceBetween>
+              <Button label='Back' primary extended onClick={back} />
+              <Button label='Next' primary extended onClick={next} />
+            </Row>
           </>
         :
           activeIndex === 2 ? 
@@ -68,9 +76,10 @@ export default () => {
                   <Input background L />
                 </Col>
               </Row>
-              <Col right spacingTopL spacingRightS>
-                <Button label='Create' primary width={'80px'} onClick={next} />
-              </Col>
+              <Row spacingTopL spaceBetween>
+                <Button label='Back' primary extended onClick={back} />
+                <Button label='Create' primary width={'80px'} onClick={next} extended />
+              </Row>
             </Col>
           </>
         :
@@ -85,9 +94,6 @@ export default () => {
           </>
       }
       </Col>
-        <Col right spacingTopL spacingRightS>
-          { activeIndex < options.length -1 && <Button label='Next' primary width={'80px'} onClick={next} /> }
-        </Col>
     </Col>
   )
 }
