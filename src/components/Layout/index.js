@@ -10,6 +10,7 @@ const Flex = styled.div`
 
   ${props => typeof props.flex === 'number' && css`flex: ${props.flex}`};
   ${props => props.width && css`width: ${props.width}; min-width: ${props.width}`};
+  ${props => props.height && css`height: ${props.height}; min-height: ${props.height}`};
   ${props => props.fullHeight && css`height: 100%`};
 
   ${props => props.spacingLeft && css`padding-left: ${props.spacingLeft}`};

@@ -48,13 +48,13 @@ const Dot = styled.div`
 `
 
 export default ({ activeIndex, options, dotSize = '26px', color = theme.colorPrimary, onClick }) =>
-  <Box spacingTopS spacingBottomS onClick={onClick}>
+  <Box spacingTopS spacingBottomS>
     <Row flex={1}>
       <Line numberOfRecord={options.length} /> 
       <Line activeIndex={activeIndex} numberOfRecord={options.length} />
       {
         options.map( (option, index) => 
-          <Item numberOfRecord={options.length} key={index} center centerVertical>
+          <Item numberOfRecord={options.length} key={index} center centerVertical  onClick={() => onClick(index)}>
             <Dot dotSize={dotSize} color={color} activeIndex={activeIndex} index={index} />
           </Item>
         )
