@@ -16,7 +16,8 @@ export const GET_MARKET_CREATED_LIST = 'GET_MARKET_CREATED_LIST';
 export const GET_MARKET_DETAIL = 'GET_MARKET_DETAIL';
 export const CREATE_MARKET = 'CREATE_MARKET';
 export const BOOKMARK_MARKET = 'BOOKMARK_MARKET';
-
+//create market
+export const SET_ACTIVE_INDEX = 'SET_ACTIVE_INDEX';
 //user
 export const ADD_USER = 'ADD_USER';
 export const UPDATE_USER_NAME = 'UPDATE_USER_NAME';

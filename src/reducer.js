@@ -1,7 +1,8 @@
 import theme from './reducers/theme';
 import user from './reducers/user';
 import home from './reducers/home';
-import market from './reducers/market'
+import market from './reducers/market';
+import createMarket from './reducers/createMarket';
 import panel from './reducers/panel';
 import eth from './reducers/eth';
 import ipfs from './reducers/ipfs';
@@ -14,6 +15,7 @@ export default combineReducers({
     user,
     home,
     market,
+    createMarket,
     panel,
     eth,
     ipfs,
