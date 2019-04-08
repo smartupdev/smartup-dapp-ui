@@ -40,7 +40,7 @@ const theme = {
   // tabWidth: '100px',
 
   // Size
-  fontSizeXS: '6px',
+  fontSizeXS: '10px',
   fontSizeS: '12px',
   fontSizeM: '14px',
   fontSizeL: '16px',

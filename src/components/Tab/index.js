@@ -14,11 +14,12 @@ const Tab = styled(Row)`
   cursor: pointer;
   border-top: 1px;
   border-bottom: 1px;
+  background-color: ${p => p.theme.bgColorLight};
   color: ${p => p.theme.colorSecondary};
+  ${p => p.width && css`width: ${p.width}`};
   ${p => p.type === TYPE.border && css`
     border-right: solid 1px ${p => p.theme.borderColor};
     border-left: 0px;
-    flex: 1;
     ${props => props.first && css`border-left: 1px`}
     ${props => props.activeTab && css`background-color: ${p => p.theme.bgColorDark}`}
   `}
@@ -37,12 +38,12 @@ const Dot = styled.div`
 `
 // tabs: [ { <label: string>, <value>, <dot: bool> } ]
 // type: border || simple
-export default ({ activeTab, tabs, fullWidth, onClick, type = TYPE.border }) =>
+export default ({ activeTab, tabs, fullWidth, onClick, width, type = TYPE.border }) =>
   <>
   {type === TYPE.border  && <Hr />}
   <Row>
     {tabs.map( ({ label, value, dot }, index) =>
-      <Tab key={value} first={!index} center activeTab={activeTab === value} type={type} flex={fullWidth && 1} onClick={() => onClick(value, index)}>
+      <Tab key={value} first={!index} center activeTab={activeTab === value} type={type} width={width} flex={fullWidth && 1} onClick={() => onClick(value, index)}>
         <Text S>{label}</Text>
         { dot && <Dot /> }
       </Tab>

@@ -50,7 +50,7 @@ const Expanded = styled(Col)`
 // expandedRecords: Array <id>
 // S for small font size
 // noBorderCol is for no border in column
-export default ({ model, values, sortBy, orderBy, onClickHeader, onClick, expandedRecords = [], expandCompoent,bookMarkClick, minWidth, S, inset, noBorderCol }) => {
+export default ({ model, values, sortBy, orderBy, onClickHeader, onClick, expandedRecords = [], expandCompoent: ExpandCompoent, minWidth, S, inset, noBorderCol }) => {
   return (
     <Table minWidth={minWidth}>
       <TableTitle inset={inset}>
@@ -83,7 +83,7 @@ export default ({ model, values, sortBy, orderBy, onClickHeader, onClick, expand
               </Row>
               {
                 <Expanded isExpanded={isExpanded}>
-                  {expandCompoent && expandCompoent({record,bookMarkClick})}
+                  {ExpandCompoent && <ExpandCompoent record={record} />}
                 </Expanded>
               }
             </TableRecord>

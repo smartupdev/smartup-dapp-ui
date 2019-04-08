@@ -1,18 +1,19 @@
 import React from 'react'
 import styled from 'styled-components'
+import TableExpand from './TableExpand'
 import Tab from '../../components/Tab'
 import Table from '../../components/Table'
-import Icon, { Comment, Trade, People, More, Bookmarked, BookmarkedOutline } from '../../components/Icon'
+import { People, More } from '../../components/Icon'
 import Image from '../../components/Image'
 import Text from '../../components/Text'
-import Button from '../../components/Button'
 import SimpleLineChart from '../../components/SimpleLineChart'
+import Avatar from '../../components/Avatar'
 import { Row, Col } from '../../components/Layout'
 import lang, { currentLang } from '../../lang'
 import theme from '../../theme'
 import { toPrice, toDate } from '../../lib/util'
 import { connect } from 'react-redux'
-import { setExpandedRecords,setActiveTab,onTableHeaderClick,bookMarkClick } from '../../actions/home'
+import { setExpandedRecords,setActiveTab,onTableHeaderClick } from '../../actions/home'
 
 const Top = styled(Row)`
   padding: 0 ${p => p.theme.spacingXS}
@@ -29,7 +30,7 @@ const FILTERS = [
 
 const colWidth = '130px'
 
-const _Icon = ({ value }) => value ? <Image source={value} /> : <People color={theme.white} round />
+const _Icon = ({ value }) => <Avatar icon={value} />
 const _More = ({ isExpanded }) => <More reverse={isExpanded} XS color={theme.white} />
 const _Name = ({ value, record }) => 
   <Col>
@@ -40,31 +41,6 @@ const _Percent = ({ value }) => <Text>{value * 100 + '%'}</Text>
 const _Price = ({ value }) => <Text price>{toPrice(value)}</Text>
 const _Volume = ({ value }) => <Text primary>{toPrice(value, 0)}</Text>
 const _Cap = ({ value }) => <Text>{toPrice(value, 0)}</Text>
-const ExpandCompoent = ({ record,bookMarkClick }) => 
-  <Row spacingBottom={theme.spacingS} spacingTop={theme.spacingS}>
-    <Col spacingLeft={theme.spacingXS} spacingRight={theme.spacingL}>
-      <Image source={record.image} photo />
-    </Col>
-    <Col spaceBetween flex={1}>
-      <Row spaceBetween> 
-        <Col>
-          <Text XL wordSpaceL>{record.name}</Text>
-          <Text note>{record.overview}</Text>
-        </Col>
-        {record.following ? 
-          <Bookmarked S primary onClick={() => bookMarkClick(record)} /> :
-          <BookmarkedOutline S color={theme.white} onClick={() => bookMarkClick(record)} />
-        }
-      </Row>
-      <Row centerVertical spaceBetween>
-        <Row>
-          <Button label={record.numberOfComments} icon={Comment} />
-          <Button label={record.numberOfSub} icon={People} />
-        </Row>
-        <Button primary label={lang.trade[currentLang]} icon={Trade} />
-      </Row>
-    </Col>
-  </Row>
 const TableName = [
   { label: '', value: 'icon', sortable: false, layoutStyle: { width: `calc( ${theme.iconSizeM} + 15px )`, center: true }, component: _Icon },
   { label: lang.home.table.name[currentLang], value: 'name', sortable: true, layoutStyle: { flex: 1, width: colWidth }, component: _Name },
@@ -77,7 +53,7 @@ const TableName = [
 ]
 
 const Home = ({ markets,expandedRecords,activeTab,totalResults,sortBy,orderBy,
-  setExpandedRecords,setActiveTab,onTableHeaderClick,bookMarkClick }) => {
+  setExpandedRecords,setActiveTab,onTableHeaderClick }) => {
   return (
     <Col>
       <Top flex={1} spaceBetween>
@@ -98,8 +74,7 @@ const Home = ({ markets,expandedRecords,activeTab,totalResults,sortBy,orderBy,
         sortBy={sortBy} 
         orderBy={orderBy}
         expandedRecords={expandedRecords}
-        expandCompoent={ExpandCompoent}
-        bookMarkClick={bookMarkClick}
+        expandCompoent={TableExpand}
         />
     </Col>
   )  
@@ -117,7 +92,6 @@ const mapDispatchToProps = {
   setExpandedRecords,
   setActiveTab,
   onTableHeaderClick,
-  bookMarkClick,
-}
+} 
 
-export default connect(mapStateToProps,mapDispatchToProps)(Home);
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
