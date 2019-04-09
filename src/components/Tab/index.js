@@ -21,10 +21,10 @@ const Tab = styled(Row)`
     border-right: solid 1px ${p => p.theme.borderColor};
     border-left: 0px;
     ${props => props.first && css`border-left: 1px`}
-    ${props => props.activeTab && css`background-color: ${p => p.theme.bgColorDark}`}
+    ${props => props.activeIndex && css`background-color: ${p => p.theme.bgColorDark}`}
   `}
   ${p => p.type === TYPE.simple && css`
-    ${p => p.activeTab && css`color: ${p => p.theme.colorPrimary}; border-bottom: solid ${p => p.theme.colorPrimary}`}
+    ${p => p.activeIndex && css`color: ${p => p.theme.colorPrimary}; border-bottom: solid ${p => p.theme.colorPrimary}`}
   `}
 `
 const Dot = styled.div`
@@ -36,14 +36,14 @@ const Dot = styled.div`
   background-color: #7FC88E;
   border-radius: ${p => p.theme.greenDot};
 `
-// tabs: [ { <label: string>, <value>, <dot: bool> } ]
+// tabs: [ { <label: string>, <dot: bool> } ]
 // type: border || simple
-export default ({ activeTab, tabs, fullWidth, onClick, width, type = TYPE.border }) =>
+export default ({ activeIndex, tabs, fullWidth, onClick, width, type = TYPE.border }) =>
   <>
   {type === TYPE.border  && <Hr />}
   <Row>
-    {tabs.map( ({ label, value, dot }, index) =>
-      <Tab key={value} first={!index} center activeTab={activeTab === value} type={type} width={width} flex={fullWidth && 1} onClick={() => onClick(value, index)}>
+    {tabs.map( ({ label, dot }, index) =>
+      <Tab key={index} first={!index} center activeIndex={activeIndex === index} type={type} width={width} flex={fullWidth && 1} onClick={() => onClick(index)}>
         <Text S>{label}</Text>
         { dot && <Dot /> }
       </Tab>

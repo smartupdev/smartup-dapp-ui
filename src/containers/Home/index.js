@@ -13,7 +13,7 @@ import lang, { currentLang } from '../../lang'
 import theme from '../../theme'
 import { toPrice, toDate } from '../../lib/util'
 import { connect } from 'react-redux'
-import { setExpandedRecords,setActiveTab,onTableHeaderClick } from '../../actions/home'
+import { setExpandedRecords, setActiveTab, onTableHeaderClick } from '../../actions/home'
 
 const Top = styled(Row)`
   padding: 0 ${p => p.theme.spacingXS}
@@ -32,7 +32,7 @@ const colWidth = '130px'
 
 const _Icon = ({ value }) => <Avatar icon={value} />
 const _More = ({ isExpanded }) => <More reverse={isExpanded} XS color={theme.white} />
-const _Name = ({ value, record }) => 
+const _Name = ({ value, record }) =>
   <Col>
     <Text>{value}</Text>
     <Text note S>{toDate(record.createdDateTime)}</Text> {/* { TODO } */}
@@ -52,8 +52,8 @@ const TableName = [
   { label: '', value: 'action', sortable: false, layoutStyle: { width: `calc( ${theme.iconSizeM} + 15px )`, right: true }, component: _More },
 ]
 
-const Home = ({ markets,expandedRecords,activeTab,totalResults,sortBy,orderBy,
-  setExpandedRecords,setActiveTab,onTableHeaderClick }) => {
+const Home = ({ markets, expandedRecords, activeTab, totalResults, sortBy, orderBy,
+  setExpandedRecords, setActiveTab, onTableHeaderClick }) => {
   return (
     <Col>
       <Top flex={1} spaceBetween>
@@ -63,28 +63,28 @@ const Home = ({ markets,expandedRecords,activeTab,totalResults,sortBy,orderBy,
           <Text S>Search</Text>
         </Row>
       </Top>
-      <Table 
+      <Table
         S
         inset
         minWidth={'1000px'}
         onClickHeader={onTableHeaderClick}
         onClick={setExpandedRecords}
-        model={TableName} 
-        values={markets} 
-        sortBy={sortBy} 
+        model={TableName}
+        values={markets}
+        sortBy={sortBy}
         orderBy={orderBy}
         expandedRecords={expandedRecords}
         expandCompoent={TableExpand}
-        />
+      />
     </Col>
-  )  
+  )
 }
 
 const mapStateToProps = state => ({
   markets: state.market.markets,
-  totalResults:state.market.totalResults,
+  totalResults: state.market.totalResults,
   expandedRecords: state.home.expandedRecords,
-  activeTab:state.home.activeTab,
+  activeTab: state.home.activeTab,
   sortBy: state.home.sortBy,
   orderBy: state.home.orderBy,
 });
@@ -92,6 +92,6 @@ const mapDispatchToProps = {
   setExpandedRecords,
   setActiveTab,
   onTableHeaderClick,
-} 
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);
