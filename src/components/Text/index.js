@@ -43,9 +43,9 @@ export const Text = styled.p`
     color: ${p.theme.red};
     font-size: ${p.theme.fontSizeXS};
     position: absolute;
-    bottom: -20px;
+    // bottom: -20px;
 
-    white-space: nowrap; 
+    // white-space: nowrap; 
 
     :before {
       content: "!";
