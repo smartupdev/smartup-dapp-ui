@@ -1,11 +1,9 @@
 import {
-  ADD_USER, METAMASK_ETH_BALANCE,UPDATE_USER_NAME,
-  UPDATE_USER_AVATAR,QUERY_USER_INFO
+  ADD_USER,UPDATE_USER_NAME,UPDATE_USER_AVATAR,QUERY_USER_INFO
 } from '../actions/actionTypes';
 import LoginIcon from '../images/menu1.svg';
 
 const ipfsPre = 'https://ipfs.smartup.global/ipfs/';
-
 
 export const initialState = {
   metaMaskHint: 'MetaMask',
@@ -13,7 +11,6 @@ export const initialState = {
   userAvatar: LoginIcon,
   loggedIn: false,
   account: null,
-  ethBalance: null,
   payload: null,
   queryUserInfo: null,
 }
@@ -26,11 +23,6 @@ export default (state = initialState, action) => {
         account: action.account,
         metaMaskHint: action.metaMaskHint,
         payload: action.payload,
-      });
-    }
-    case METAMASK_ETH_BALANCE: {
-      return Object.assign({}, state, {
-        ethBalance: action.ethBalance,
       });
     }
     case UPDATE_USER_NAME: {

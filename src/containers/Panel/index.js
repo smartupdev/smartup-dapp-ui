@@ -17,9 +17,8 @@ import { connect } from 'react-redux'
 import {
   setActiveTab, setExpandedWallet, setExpandedMarket, setExpandedBookmark,
 } from '../../actions/panel'
-import {
-  loginMetaMask,updateUserName,updateUserAvatar,
-} from '../../actions/user'
+import { updateUserName, updateUserAvatar } from '../../actions/user'
+import { loginMetaMask } from '../../actions/metamask'
 
 const TABS = [
   {
@@ -81,10 +80,12 @@ const Panel = ({ metaMaskHint, loggedIn, account, ethBalance, activeTab, expande
 }
 
 const mapStateToProps = state => ({
+  account: state.metamask.account,
+  ethBalance: state.metamask.ethBalance,
+  sutBalance: state.metamask.sutBalance,
+  nttBalance: state.metamask.nttBalance,
+  loggedIn: state.metamask.loggedIn,
   metaMaskHint: state.user.metaMaskHint,
-  loggedIn: state.user.loggedIn,
-  account: state.user.account,
-  ethBalance: state.user.ethBalance,
   userName: state.user.userName,
   userAvatar: state.user.userAvatar,
   activeTab: state.panel.activeTab,

@@ -1,6 +1,5 @@
 import {
-    ADD_USER, METAMASK_ETH_BALANCE,UPDATE_USER_NAME,
-    UPDATE_USER_AVATAR,QUERY_USER_INFO
+    ADD_USER,UPDATE_USER_NAME,UPDATE_USER_AVATAR,QUERY_USER_INFO
 } from './actionTypes';
 import {
     API_USER_ADD, API_USER_EXIST_ADDRESS, API_USER_QUERY, API_USER_UPDATE
@@ -36,7 +35,7 @@ export function loginMetaMask() {
                     address: window.account
                 }
                 Net(API_USER_ADD, params).then((res) => {
-                    getEthBalance(dispatch);
+                    //getEthBalance(dispatch);
                     dispatch({
                         type: ADD_USER,
                         loggedIn: true,
@@ -259,20 +258,5 @@ export function queryUserInfo(account){
             });
         });
     }
-}
-
-//get eth balance
-function getEthBalance(dispatch) {
-    window.web3.eth.getBalance(window.account, (err, balance) => {
-        if (err) {
-            balance = null;
-        } else {
-            balance = window.web3.fromWei(balance, 'ether') + '';
-        }
-        dispatch({
-            type: METAMASK_ETH_BALANCE,
-            ethBalance: balance,
-        });
-    });
 }
 

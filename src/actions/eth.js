@@ -13,6 +13,10 @@ import {
 } from '../constants/actionTypes';
 
 const smartupWeb3 = new Web3(window.web3.currentProvider);
+// ropsten
+const sutContractAddress ='0xf1899c6eb6940021c1ae4e9c3a8e29ee93704b03';
+const smartupContractAddress = '0x437098700e7de348e436b809c74bb2442abd3bd6';
+const nttContractAddress = '0x846ce03199a759a183cccb35146124cd3f120548';
 
 //查询SUT
 export function getSUTBalance(account, to) {
