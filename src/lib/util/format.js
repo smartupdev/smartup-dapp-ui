@@ -2,8 +2,18 @@ const formatter = new Intl.NumberFormat('en-US', {
   style: 'currency',
   currency: 'USD',
 })
+
 function toPrice(number, decimal = 2) {
-  return formatter.format(number).slice(0, decimal === 0 ? -3 : decimal === 1 ? -1 : undefined)
+  return formatter.format(number).slice(0, decimal === 0 ? -3 : decimal === 1 ? -1 : undefined).slice(1)
 }
 
-export {toPrice}
+function toToken(number, decimal = 2) {
+  const int = ~~number
+  const dec = ~~((number - int)*Math.pow(10, decimal))
+  return (
+    formatter.format(int).slice(0, -3) 
+    + (dec ? `.${`${dec}`.padStart(4, 0).slice(0, decimal)}` : '')
+  ).slice(1)
+}
+
+export { toPrice, toToken }

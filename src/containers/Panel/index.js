@@ -39,6 +39,7 @@ const Terms = () =>
 
 
 const Panel = ({ 
+  nttBalance,
   metaMaskHint, loggedIn, account, 
   activeTab, userAvatar, userName, loginMetaMask, 
   setActiveTab }) => {
@@ -55,6 +56,7 @@ const Panel = ({
             <Col>
               <Text S note>{shorten(account)}</Text>
               <Text right S note>200 honours</Text>
+              <Text right S note>{nttBalance} NTT</Text>
             </Col>
           </Top>
           <Tab tabs={TABS} activeTab={activeTab} onClick={setActiveTab} fullWidth />
@@ -76,6 +78,7 @@ const Panel = ({
 }
 
 const mapStateToProps = state => ({
+  nttBalance: state.metamask.nttBalance,
   account: state.metamask.account,
   loggedIn: state.metamask.loggedIn,
   metaMaskHint: state.user.metaMaskHint,

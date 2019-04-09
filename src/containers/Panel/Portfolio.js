@@ -14,6 +14,7 @@ import Text from '../../components/Text'
 import Button from '../../components/Button'
 import { Row, Col } from '../../components/Layout'
 import lang, { currentLang } from '../../lang'
+import { toToken } from '../../lib/util'
 import theme from '../../theme';
 import ethIcon from '../../images/eth.png';
 import smartupIcon from '../../images/smartup.png';
@@ -60,7 +61,7 @@ const TableName = [
 ]
 
 const Portfilio =  ({
-  ethBalance, nttBalance, sutBalance,
+  ethBalance, sutBalance,
   expandedWallet, setExpandedWallet, 
   expandedMarket, setExpandedMarket, 
   expandedBookmark, setExpandedBookmark
@@ -71,18 +72,13 @@ const Portfilio =  ({
         <Col spacingTop={theme.spacingXS} spacingBottom={theme.spacingXS}>
           <Row bottom spacingBottom={theme.spacingXS}>
             <Image size={theme.fontSizeXL} rightText source={ethIcon} />
-            <Text L wordSpaceS>{ethBalance}</Text>
+            <Text L wordSpaceS>{toToken(ethBalance)}</Text>
             <Text S>ETH</Text>
-          </Row>
-          <Row bottom spacingBottom={theme.spacingXS}>
-            <Image size={theme.fontSizeXL} rightText source={smartupIcon} />
-            <Text L wordSpaceS>{sutBalance}</Text>
-            <Text S>SmartUp</Text>
           </Row>
           <Row bottom>
             <Image size={theme.fontSizeXL} rightText source={smartupIcon} />
-            <Text L wordSpaceS>{nttBalance}</Text>
-            <Text S>NTT</Text>
+            <Text L wordSpaceS>{toToken(sutBalance)}</Text>
+            <Text S>SmartUp</Text>
           </Row>
         </Col>
       </Col>
@@ -151,7 +147,6 @@ const Portfilio =  ({
 const mapStateToProps = state => ({
   ethBalance: state.metamask.ethBalance,
   sutBalance: state.metamask.sutBalance,
-  nttBalance: state.metamask.nttBalance,
   expandedWallet: state.panel.expandedWallet,
   expandedMarket: state.panel.expandedMarket,
   expandedBookmark: state.panel.expandedBookmark,
