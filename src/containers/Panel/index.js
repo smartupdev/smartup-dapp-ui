@@ -21,6 +21,8 @@ import {
   loginMetaMask,updateUserName,updateUserAvatar,
 } from '../../actions/user'
 
+const PANEL_WIDTH = 300
+
 const TABS = [
   {
     label: lang.panel.tab.portfilio[currentLang], value: 'portfilio', component:
@@ -47,7 +49,7 @@ const Panel = ({ metaMaskHint, loggedIn, account, ethBalance, activeTab, expande
   setExpandedWallet, setExpandedMarket, setExpandedBookmark, loginMetaMask,
   setActiveTab }) => {
   return (
-    <Col width='300px' center={!loggedIn} centerVertical={!loggedIn}>
+    <Col width={`${PANEL_WIDTH}px`} center={!loggedIn} centerVertical={!loggedIn}>
       {loggedIn ?
         <>
           <Top centerVertical spaceBetween>
@@ -74,6 +76,9 @@ const Panel = ({ metaMaskHint, loggedIn, account, ethBalance, activeTab, expande
           <People XL round color={theme.white} round />
           <Button primary outline verticalMargin label={lang.panel.connectButton[currentLang]} onClick={loginMetaMask} />
           <Text note>{metaMaskHint}</Text>
+          {/* <Row width={`${PANEL_WIDTH*.8}px`} spacingTopXS>
+            <Text error>Please install or enable the MetaMask browser plug-in from Metamask.io</Text>
+          </Row> */}
         </Col>
       }
     </Col>
