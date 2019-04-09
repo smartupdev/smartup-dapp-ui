@@ -67,19 +67,28 @@ function getEthBalance(dispatch) {
                     msg: err
                 },
                 error: true,
-                meta: null
             });
         } else {
-            const ethBalance = window.web3.fromWei(balance, 'ether') + '';
-            console.log('------------eth balance',ethBalance);
-            dispatch({
-                type: METAMASK_ETH_BALANCE_SUCCEEDED,
-                payload: {
-                    ethBalance: ethBalance
-                },
-                error: false,
-                meta: null
-            });
+            try{
+                const ethBalance = window.web3.fromWei(balance, 'ether') + '';
+                console.log('------------eth balance',ethBalance);
+                dispatch({
+                    type: METAMASK_ETH_BALANCE_SUCCEEDED,
+                    payload: {
+                        ethBalance: ethBalance
+                    },
+                    error: false,
+                });
+            }catch(errMsg){
+                dispatch({
+                    type: METAMASK_ETH_BALANCE_FAILED,
+                    payload: {
+                        msg: errMsg
+                    },
+                    error: true,
+                });
+            }
+            
         }
     });
 }
@@ -106,19 +115,27 @@ function getSutBalance(dispatch) {
                     msg: err
                 },
                 error: true,
-                meta: null
             });
         } else {
-            const balance = smartupWeb3.utils.fromWei(ret) + '';
-            console.log('------------ sut balance',balance);
-            dispatch({
-                type: METAMASK_SUT_BALANCE_SUCCEEDED,
-                payload: {
-                    sutBalance: balance
-                },
-                error: false,
-                meta: null
-            });
+            try{
+                const balance = smartupWeb3.utils.fromWei(ret) + '';
+                console.log('------------ sut balance',balance);
+                dispatch({
+                    type: METAMASK_SUT_BALANCE_SUCCEEDED,
+                    payload: {
+                        sutBalance: balance
+                    },
+                    error: false,
+                });
+            }catch(errMsg){
+                dispatch({
+                    type: METAMASK_SUT_BALANCE_FAILED,
+                    payload: {
+                        msg: errMsg
+                    },
+                    error: true,
+                });
+            }
         }
     });
 }
@@ -145,19 +162,28 @@ function getNttBalance(dispatch) {
                     msg: err
                 },
                 error: true,
-                meta: null
             });
         } else {
-            const balance = smartupWeb3.eth.abi.decodeParameter('uint256', ret) + '';
-            console.log('------------ ntt balance',balance);
-            dispatch({
-                type: METAMASK_NTT_BALANCE_SUCCEEDED,
-                payload: {
-                    nttBalance: balance
-                },
-                error: false,
-                meta: null
-            });
+            try{
+                const balance = smartupWeb3.eth.abi.decodeParameter('uint256', ret) + '';
+                console.log('------------ ntt balance',balance);
+                dispatch({
+                    type: METAMASK_NTT_BALANCE_SUCCEEDED,
+                    payload: {
+                        nttBalance: balance
+                    },
+                    error: false,
+                });
+            }catch(errMsg){
+                dispatch({
+                    type: METAMASK_NTT_BALANCE_FAILED,
+                    payload: {
+                        msg: errMsg
+                    },
+                    error: true,
+                });
+            }
+            
         }
     });
 }
