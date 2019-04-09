@@ -13,21 +13,16 @@ import Setting from './Setting'
 import theme from '../../theme'
 import { Col, Row } from '../../components/Layout'
 import lang, { currentLang } from '../../lang'
+import { shorten } from '../../lib/util'
 import { connect } from 'react-redux'
-import {
-  setActiveTab, setExpandedWallet, setExpandedMarket, setExpandedBookmark,
-} from '../../actions/panel'
+import { setActiveTab } from '../../actions/panel'
 import { updateUserName, updateUserAvatar } from '../../actions/user'
 import { loginMetaMask } from '../../actions/metamask'
 
 const PANEL_WIDTH = 300
 
 const TABS = [
-  {
-    label: lang.panel.tab.portfilio[currentLang], value: 'portfilio', component:
-      ({ ethBalance, expandedWallet, setExpandedWallet, expandedMarket, setExpandedMarket, expandedBookmark, setExpandedBookmark }) =>
-        <Portfolio {...{ ethBalance, expandedWallet, setExpandedWallet, expandedMarket, setExpandedMarket, expandedBookmark, setExpandedBookmark }} />
-  },
+  { label: lang.panel.tab.portfilio[currentLang], value: 'portfilio', component: Portfolio },
   { label: lang.panel.tab.notification[currentLang], value: 'notification', dot: true, component: Notification },
   { label: lang.panel.tab.setting[currentLang], value: 'setting', component: Setting },
 ]
@@ -43,10 +38,11 @@ const Terms = () =>
   </Col>
 
 
-const Panel = ({ metaMaskHint, loggedIn, account, ethBalance, activeTab, expandedWallet,
-  expandedMarket, expandedBookmark, userAvatar, userName,
-  setExpandedWallet, setExpandedMarket, setExpandedBookmark, loginMetaMask,
+const Panel = ({ 
+  metaMaskHint, loggedIn, account, 
+  activeTab, userAvatar, userName, loginMetaMask, 
   setActiveTab }) => {
+  const Main = TABS.find(t => t.value === activeTab).component
   return (
     <Col width={`${PANEL_WIDTH}px`} center={!loggedIn} centerVertical={!loggedIn}>
       {loggedIn ?
@@ -57,17 +53,12 @@ const Panel = ({ metaMaskHint, loggedIn, account, ethBalance, activeTab, expande
               <Text note>{userName}</Text>
             </Row>
             <Col>
-              <Text S note>{account}</Text>
+              <Text S note>{shorten(account)}</Text>
               <Text right S note>200 honours</Text>
             </Col>
           </Top>
           <Tab tabs={TABS} activeTab={activeTab} onClick={setActiveTab} fullWidth />
-          {
-            TABS.find(t => t.value === activeTab).component({
-              ethBalance,
-              expandedWallet, setExpandedWallet, expandedMarket, setExpandedMarket, expandedBookmark, setExpandedBookmark
-            })
-          }
+            <Main />
           <Terms />
         </>
         :
@@ -86,17 +77,11 @@ const Panel = ({ metaMaskHint, loggedIn, account, ethBalance, activeTab, expande
 
 const mapStateToProps = state => ({
   account: state.metamask.account,
-  ethBalance: state.metamask.ethBalance,
-  sutBalance: state.metamask.sutBalance,
-  nttBalance: state.metamask.nttBalance,
   loggedIn: state.metamask.loggedIn,
   metaMaskHint: state.user.metaMaskHint,
   userName: state.user.userName,
   userAvatar: state.user.userAvatar,
   activeTab: state.panel.activeTab,
-  expandedWallet: state.panel.expandedWallet,
-  expandedMarket: state.panel.expandedMarket,
-  expandedBookmark: state.panel.expandedBookmark,
 });
 
 const mapDispatchToProps = {
@@ -104,9 +89,6 @@ const mapDispatchToProps = {
   updateUserName,
   updateUserAvatar,
   setActiveTab,
-  setExpandedWallet,
-  setExpandedMarket,
-  setExpandedBookmark,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Panel);

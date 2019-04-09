@@ -1,6 +1,9 @@
 import React, { useState } from 'react'
 import styled, { css } from 'styled-components'
 
+import { connect } from 'react-redux'
+import { setExpandedWallet, setExpandedMarket, setExpandedBookmark } from '../../actions/panel'
+
 import CommentIcon from '../../images/018-planet-earth-2.svg'
 import Avatar from '../../components/Avatar'
 import Hr from '../../components/Hr'
@@ -56,7 +59,12 @@ const TableName = [
   },
 ]
 
-export default ({ethBalance, expandedWallet, setExpandedWallet, expandedMarket, setExpandedMarket, expandedBookmark, setExpandedBookmark }) => {
+const Portfilio =  ({
+  ethBalance, nttBalance, sutBalance,
+  expandedWallet, setExpandedWallet, 
+  expandedMarket, setExpandedMarket, 
+  expandedBookmark, setExpandedBookmark
+ }) => {
   return (
     <Col>
       <Col center>
@@ -66,10 +74,15 @@ export default ({ethBalance, expandedWallet, setExpandedWallet, expandedMarket, 
             <Text L wordSpaceS>{ethBalance}</Text>
             <Text S>ETH</Text>
           </Row>
+          <Row bottom spacingBottom={theme.spacingXS}>
+            <Image size={theme.fontSizeXL} rightText source={smartupIcon} />
+            <Text L wordSpaceS>{sutBalance}</Text>
+            <Text S>SmartUp</Text>
+          </Row>
           <Row bottom>
             <Image size={theme.fontSizeXL} rightText source={smartupIcon} />
-            <Text L wordSpaceS>792,323</Text>
-            <Text S>SmartUp</Text>
+            <Text L wordSpaceS>{nttBalance}</Text>
+            <Text S>NTT</Text>
           </Row>
         </Col>
       </Col>
@@ -134,3 +147,20 @@ export default ({ethBalance, expandedWallet, setExpandedWallet, expandedMarket, 
     </Col>
   )
 }
+
+const mapStateToProps = state => ({
+  ethBalance: state.metamask.ethBalance,
+  sutBalance: state.metamask.sutBalance,
+  nttBalance: state.metamask.nttBalance,
+  expandedWallet: state.panel.expandedWallet,
+  expandedMarket: state.panel.expandedMarket,
+  expandedBookmark: state.panel.expandedBookmark,
+});
+
+const mapDispatchToProps = {
+  setExpandedWallet,
+  setExpandedMarket,
+  setExpandedBookmark,
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Portfilio);

@@ -28,4 +28,6 @@ const upperEach = (s, defaultTxt = null) => s ? s.toLowerCase().replace(/\b(\w)/
  */
 const plural = (count, s, defaultTxt = null, plural) => count ? `${count} ${count === 1 ? s : plural || s + 's'}` : defaultTxt
 
-export { upper, upperAll, upperEach, plural }
+const shorten = (s, start = 8, end = 6) => s.length <= start + end + 3 ? s : `${s.slice(0, start)}...${s.slice(-end)}`
+
+export { upper, upperAll, upperEach, plural, shorten }
