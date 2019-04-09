@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import Text from '../../components/Text'
-import Input from '../../components/Input'
+import Input, { Selector } from '../../components/Input'
 import Hr from '../../components/Hr'
 import Button from '../../components/Button'
 import Image from '../../components/Image'
@@ -14,10 +14,19 @@ import { connect } from 'react-redux';
 import { setActiveIndex } from '../../actions/createMarket'
 
 const options = ['Basic Information', 'Price Equation', 'Deposit']
+const optionsSpeed = ['Slow', 'Standard', 'Fast']
 const CreateMarket = ({activeIndex, setActiveIndex}) => {
   function next() { setActiveIndex(1) }
   function back() { setActiveIndex(-1) }
+  const [nameError, setNameError] = useState(false)
+  const [desError, setDesError] = useState(false)
+  const [equError, setEquError] = useState(false)
+  const [depositError, setDepositError] = useState(false)
+  const [ethError, setEthError] = useState(false)
   const Label = ({ children }) => <Text S spaceV>{children}</Text>
+  const Next = () =>  <Button label='Next' primary extended onClick={next} />
+  const Back = () =>  <Button label='Back' primary extended onClick={back} />
+
   return (
     <Col>
       <Col center spacingBottomXS spacingTopXS>
@@ -40,7 +49,7 @@ const CreateMarket = ({activeIndex, setActiveIndex}) => {
             <Input background L line={3} />
             <Text S right>150 characters to help new members get to know your community.</Text>
             <Row spacingTopL right>
-              <Button label='Next' primary extended onClick={next} />
+              <Next />
             </Row>
           </>
         :
@@ -51,8 +60,8 @@ const CreateMarket = ({activeIndex, setActiveIndex}) => {
             <Label>Preview price movement</Label>
             <Col>I am a graph</Col>
             <Row spacingTopL spaceBetween>
-              <Button label='Back' primary extended onClick={back} />
-              <Button label='Next' primary extended onClick={next} />
+              <Back />
+              <Next />
             </Row>
           </>
         :
@@ -69,6 +78,9 @@ const CreateMarket = ({activeIndex, setActiveIndex}) => {
             <Col spacingTopM>
               <Label>Trading speed</Label>
               <Row centerVertical>
+                <Col flex={1} spacingLeftXS>
+                  <Selector showLabel options={optionsSpeed} selectedIndex={1} onClick={console.log} />
+                </Col>
                 <Col spacingRightXS>
                   <Image source={ethIcon} M />
                 </Col>
@@ -78,8 +90,8 @@ const CreateMarket = ({activeIndex, setActiveIndex}) => {
                 </Col>
               </Row>
               <Row spacingTopL spaceBetween>
-                <Button label='Back' primary extended onClick={back} />
-                <Button label='Create' primary width={'80px'} onClick={next} extended />
+                <Back />
+                <Button label='Create' primary onClick={next} extended />
               </Row>
             </Col>
           </>
