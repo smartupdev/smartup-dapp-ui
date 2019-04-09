@@ -10,12 +10,13 @@ import { Row, Col } from '../../components/Layout'
 import ethIcon from '../../images/eth.png';
 import smartupIcon from '../../images/smartup.png';
 import successImg from '../../images/market_success.png';
+import { connect } from 'react-redux';
+import { setActiveIndex } from '../../actions/createMarket'
 
 const options = ['Basic Information', 'Price Equation', 'Deposit']
-export default () => {
-  const [activeIndex, setIndex] = useState(0)
-  function next() { setIndex(activeIndex+1) }
-  function back() { setIndex(activeIndex-1) }
+const CreateMarket = ({activeIndex, setActiveIndex}) => {
+  function next() { setActiveIndex(1) }
+  function back() { setActiveIndex(-1) }
   const Label = ({ children }) => <Text S spaceV>{children}</Text>
   return (
     <Col>
@@ -25,7 +26,7 @@ export default () => {
       <Hr />
       {
         activeIndex < options.length && 
-        <ProgressBar options={options} activeIndex={activeIndex} onClick={setIndex} />
+        <ProgressBar options={options} activeIndex={activeIndex} onClick={setActiveIndex} />
       }
 
       <Col spacingLeftS spacingRightS>
@@ -97,3 +98,12 @@ export default () => {
     </Col>
   )
 }
+
+const mapStateToProps = state => ({
+  activeIndex: state.createMarket.activeIndex,
+});
+const mapDispatchToProps = {
+  setActiveIndex,
+} 
+
+export default connect(mapStateToProps, mapDispatchToProps)(CreateMarket);

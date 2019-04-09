@@ -97,7 +97,6 @@ export function loginMetaMask() {
 }
 
 //update user name
-// Need to ipfs write???
 export function updateUserName(name) {
     return (dispatch, getState) => {
         dispatch({
@@ -109,53 +108,32 @@ export function updateUserName(name) {
                 code: null,
             },
         });
-
-        //ipfs write
-        const bufferStr = new Buffer(name, 'utf8');
-        client.add(bufferStr, null, function (err, ret) {
-            if (err) {
-                dispatch({
-                    type: UPDATE_USER_NAME,
-                    payload: {
-                        status: 'loading',
-                        obj: null,
-                        msg: err,
-                        code: null,
-                    },
-                });
-            } else {
-                let ipfsHash  = ret[0].hash;
-                console.log('------------ ipfs write', ipfsHash);
-                let params = {
-                    address: window.account,
-                    name: ipfsHash
-                }
-                Net(API_USER_UPDATE, params).then((res) => {
-                    dispatch({
-                        type: UPDATE_USER_NAME,
-                        userName: name,
-                        payload: {
-                            status: 'success',
-                            obj: res.obj,
-                            msg: res.msg,
-                            code: res.code,
-                        },
-                    });
-                }).catch(() => {
-                    dispatch({
-                        type: UPDATE_USER_NAME,
-                        payload: {
-                            status: 'error',
-                            obj: null,
-                            msg: null,
-                            code: null,
-                        },
-                    });
-                });
-            }
+        let params = {
+            address: window.account,
+            name: name
+        }
+        Net(API_USER_UPDATE, params).then((res) => {
+            dispatch({
+                type: UPDATE_USER_NAME,
+                userName: name,
+                payload: {
+                    status: 'success',
+                    obj: res.obj,
+                    msg: res.msg,
+                    code: res.code,
+                },
+            });
+        }).catch(() => {
+            dispatch({
+                type: UPDATE_USER_NAME,
+                payload: {
+                    status: 'error',
+                    obj: null,
+                    msg: null,
+                    code: null,
+                },
+            });
         });
-
-        
     }
 }
 
