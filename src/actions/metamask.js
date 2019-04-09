@@ -1,60 +1,60 @@
 import {
-    LOGIN_METAMASK_REQUESTED, LOGIN_METAMASK_SUCCEEDED, LOGIN_METAMASK_FAILED,
-    METAMASK_ETH_BALANCE_SUCCEEDED, METAMASK_ETH_BALANCE_FAILED,
-    METAMASK_SUT_BALANCE_SUCCEEDED,METAMASK_SUT_BALANCE_FAILED,
-    METAMASK_NTT_BALANCE_SUCCEEDED,METAMASK_NTT_BALANCE_FAILED,
+  LOGIN_METAMASK_REQUESTED, LOGIN_METAMASK_SUCCEEDED, LOGIN_METAMASK_FAILED,
+  METAMASK_ETH_BALANCE_SUCCEEDED, METAMASK_ETH_BALANCE_FAILED,
+  METAMASK_SUT_BALANCE_SUCCEEDED, METAMASK_SUT_BALANCE_FAILED,
+  METAMASK_NTT_BALANCE_SUCCEEDED, METAMASK_NTT_BALANCE_FAILED,
 } from './actionTypes';
 import Web3 from 'web3';
 
-const sutContractAddress ='0xf1899c6eb6940021c1ae4e9c3a8e29ee93704b03';
+const sutContractAddress = '0xf1899c6eb6940021c1ae4e9c3a8e29ee93704b03';
 const nttContractAddress = '0x846ce03199a759a183cccb35146124cd3f120548';
 const smartupWeb3 = new Web3(window.web3.currentProvider);
 
 // login in metamask
 export function loginMetaMask() {
-    let isSupport = (typeof window.ethereum !== 'undefined'&& typeof window.web3 !== 'undefined');
-    if (!!isSupport) {
-        return (dispatch, getState) => {
-            dispatch({
-                type: LOGIN_METAMASK_REQUESTED,
-                payload: {},
-                error: false,
-                meta: null
-            });
-            window.ethereum.enable().then((accounts) => {
-                window.account = window.web3.eth.accounts[0];
-                getEthBalance(dispatch);
-                getSutBalance(dispatch);
-                getNttBalance(dispatch);
-                dispatch({
-                    type: LOGIN_METAMASK_SUCCEEDED,
-                    payload: {
-                        account: accounts[0],
-                    },
-                    error: false,
-                    meta: null
-                });
-            }).catch((errorMsg) => {
-                dispatch({
-                    type: LOGIN_METAMASK_FAILED,
-                    payload: {
-                        msg: errorMsg
-                    },
-                    error: true,
-                    meta: null
-                });
-            });
-        }
-    } else {
-        return {
-            type: LOGIN_METAMASK_FAILED,
-            payload: {
-                msg: 'Please install or enable the MetaMask browser plug-in from Metamask.io (clickable URL)'
-            },
-            error: true,
-            meta: null
-        };
+  let isSupport = (typeof window.ethereum !== 'undefined' && typeof window.web3 !== 'undefined');
+  if (!!isSupport) {
+    return (dispatch, getState) => {
+      dispatch({
+        type: LOGIN_METAMASK_REQUESTED,
+        payload: {},
+        error: false,
+        meta: null
+      });
+      window.ethereum.enable().then((accounts) => {
+        window.account = window.web3.eth.accounts[0];
+        getEthBalance(dispatch);
+        getSutBalance(dispatch);
+        getNttBalance(dispatch);
+        dispatch({
+          type: LOGIN_METAMASK_SUCCEEDED,
+          payload: {
+            account: accounts[0],
+          },
+          error: false,
+          meta: null
+        });
+      }).catch((errorMsg) => {
+        dispatch({
+          type: LOGIN_METAMASK_FAILED,
+          payload: {
+            msg: errorMsg
+          },
+          error: true,
+          meta: null
+        });
+      });
     }
+  } else {
+    return {
+      type: LOGIN_METAMASK_FAILED,
+      payload: {
+        msg: 'Please install or enable the MetaMask browser plug-in from Metamask.io (clickable URL)'
+      },
+      error: true,
+      meta: null
+    };
+  }
 }
 
 //get eth balance
