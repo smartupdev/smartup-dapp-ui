@@ -2,7 +2,7 @@ import {
   SET_EXPANDED_RECORDS, SET_ACTIVE_TAB, TABLE_HEADER_CLICK, SEARCH_MARKETS,
 } from './actionTypes';
 
-import { getMarketList, bookMarkMarket } from './market';
+import { bookMarkMarket } from './market';
 
 export function setExpandedRecords(recordData) {
   return (dispatch, getState) => {
@@ -14,11 +14,6 @@ export function setExpandedRecords(recordData) {
 }
 
 export function setActiveTab(activeTab) {
-  const { value, index } = activeTab;
-  let params = {
-    type: value
-  };
-
   return (dispatch, getState) => {
     dispatch({
       type: SET_ACTIVE_TAB,
@@ -31,10 +26,6 @@ export function setActiveTab(activeTab) {
 }
 
 export function onTableHeaderClick(headerName) {
-
-  let params = {
-
-  };
   return (dispatch, getState) => {
     dispatch({
       type: TABLE_HEADER_CLICK,
@@ -43,9 +34,6 @@ export function onTableHeaderClick(headerName) {
     //notify markets refresh
     //getMarketList(params)(dispatch,getState);
   }
-  return {
-
-  }
 }
 
 export function bookMarkClick(recordData) {
@@ -53,10 +41,6 @@ export function bookMarkClick(recordData) {
 }
 
 export function searchMarkets(keyword) {
-  let params = {
-    keyword: keyword
-  };
-
   return (dispatch, getState) => {
     dispatch({
       type: SEARCH_MARKETS,

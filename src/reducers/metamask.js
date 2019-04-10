@@ -59,21 +59,6 @@ export default (state = initialState, action) => {
         ...state,
         sutBalance: null,
       };
-    case METAMASK_SUT_BALANCE_SUCCEEDED:
-      return {
-        ...state,
-        sutBalance: action.payload.sutBalance,
-      };
-    case METAMASK_SUT_BALANCE_FAILED:
-      return {
-        ...state,
-        sutBalance: null,
-      };
-    case METAMASK_SUT_BALANCE_FAILED:
-      return {
-        ...state,
-        sutBalance: null,
-      };
     case METAMASK_NTT_BALANCE_SUCCEEDED:
       return {
         ...state,

@@ -2,7 +2,6 @@ import React from 'react'
 import styled, { css } from 'styled-components'
 import { Row, Col } from '../Layout'
 import Text from '../Text'
-import Hr from '../Hr'
 
 const ORDER_BY = {
   asc: 'asc',

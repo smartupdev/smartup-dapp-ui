@@ -65,7 +65,7 @@ const Panel = ({
         </>
         :
         <Col center>
-          <People XL round color={theme.white} round />
+          <People XL round color={theme.white} />
           <Button primary outline verticalMargin label={lang.panel.connectButton[currentLang]} onClick={loginMetaMask} />
           <Text note>{metaMaskHint}</Text>
           {/* <Row width={`${PANEL_WIDTH*.8}px`} spacingTopXS>

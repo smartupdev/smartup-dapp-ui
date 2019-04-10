@@ -2,13 +2,13 @@ import {
   ADD_USER, UPDATE_USER_NAME, UPDATE_USER_AVATAR, QUERY_USER_INFO
 } from './actionTypes';
 import {
-  API_USER_ADD, API_USER_EXIST_ADDRESS, API_USER_QUERY, API_USER_UPDATE
+  API_USER_ADD, API_USER_QUERY, API_USER_UPDATE
 } from './api';
 import ipfsClient from 'ipfs-http-client';
 import toBuffer from 'blob-to-buffer';
 import { Net } from '../lib/util/request';
 
-const Buffer = require('buffer/').Buffer;
+// const Buffer = require('buffer/').Buffer;
 const client = ipfsClient('ipfs-api.smartup.global', '80', { protocol: 'http' });
 
 //login metamask and add user to server

@@ -1,4 +1,4 @@
-import React, {Fragment} from 'react'
+import React from 'react'
 import styled, { css } from 'styled-components'
 import Text from '../../components/Text'
 import { Row, Col } from '../../components/Layout'

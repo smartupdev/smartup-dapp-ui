@@ -1,8 +1,8 @@
-import Icon1 from './images/menu1.svg'
+// import Icon1 from './images/menu1.svg'
+// import Icon2 from './images/menu2.svg'
+// import Icon3 from './images/menu3.svg'
+// import Icon4 from './images/menu4.svg'
 import { Menu1, Menu2, Menu3, Menu4 } from './components/Icon/index'
-import Icon2 from './images/menu2.svg'
-import Icon3 from './images/menu3.svg'
-import Icon4 from './images/menu4.svg'
 
 import Home from './containers/Home'
 import CreateMarket from './containers/CreateMarket'

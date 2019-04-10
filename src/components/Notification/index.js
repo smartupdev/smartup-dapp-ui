@@ -2,7 +2,7 @@ import React from 'react'
 import { Row, Col } from '../Layout'
 import Text from '../Text'
 import Image from '../Image'
-import theme from '../../theme'
+// import theme from '../../theme'
 import { toAgo } from '../../lib/util/datatime'
 import styled, { css } from 'styled-components'
 

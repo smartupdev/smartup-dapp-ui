@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import styled from 'styled-components'
+import React from 'react'
+// import styled from 'styled-components'
 import Text from '../../components/Text'
 import Input, { Selector } from '../../components/Input'
 import Hr from '../../components/Hr'
@@ -18,11 +18,11 @@ const optionsSpeed = ['Slow', 'Standard', 'Fast']
 const CreateMarket = ({activeIndex, setActiveIndex}) => {
   function next() { setActiveIndex(1) }
   function back() { setActiveIndex(-1) }
-  const [nameError, setNameError] = useState(false)
-  const [desError, setDesError] = useState(false)
-  const [equError, setEquError] = useState(false)
-  const [depositError, setDepositError] = useState(false)
-  const [ethError, setEthError] = useState(false)
+  // const [nameError, setNameError] = useState(false)
+  // const [desError, setDesError] = useState(false)
+  // const [equError, setEquError] = useState(false)
+  // const [depositError, setDepositError] = useState(false)
+  // const [ethError, setEthError] = useState(false)
   const Label = ({ children }) => <Text S spaceV>{children}</Text>
   const Next = () =>  <Button label='Next' primary extended onClick={next} />
   const Back = () =>  <Button label='Back' primary extended onClick={back} />

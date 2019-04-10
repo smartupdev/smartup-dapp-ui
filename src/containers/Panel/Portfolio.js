@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styled, { css } from 'styled-components'
 
 import { connect } from 'react-redux'
@@ -18,7 +18,7 @@ import { toToken } from '../../lib/util'
 import theme from '../../theme';
 import ethIcon from '../../images/eth.png';
 import smartupIcon from '../../images/smartup.png';
-import { Close, Trade, People } from '../../components/Icon';
+import { Close, Trade } from '../../components/Icon';
 const portfilioText = lang.panel.portfilio
 
 const InfoBlock = styled(Col)`

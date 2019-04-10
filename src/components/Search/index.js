@@ -1,9 +1,9 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Search } from '../../components/Icon'
-import Text from '../../components/Text'
+// import Text from '../../components/Text'
 import Input from '../../components/Input'
-import { Col, Row } from '../../components/Layout'
-import styled, { css } from 'styled-components'
+import { Row } from '../../components/Layout'
+import styled from 'styled-components'
 
 const Container = styled.div`
   position: absolute;

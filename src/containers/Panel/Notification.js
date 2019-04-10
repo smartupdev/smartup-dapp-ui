@@ -1,9 +1,8 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Row, Col } from '../../components/Layout'
 import Notification from '../../components/Notification'
 import Search from '../../components/Search'
 import Hr from '../../components/Hr'
-// import { Menu1, Menu2, Menu3 } from '../../components/Icon'
 import ethIcon from '../../images/eth.png';
 import smartupIcon from '../../images/smartup.png';
 
