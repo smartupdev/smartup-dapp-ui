@@ -21,7 +21,7 @@ const TYPES = {
   },
 }
 
-const typeValueToImage = Object.keys(TYPES).reduce( (p, t) => ({
+const typeValueToImage = Object.keys(TYPES).reduce((p, t) => ({
   ...p,
   [TYPES[t].value]: TYPES[t].image
 }), {})
@@ -39,8 +39,8 @@ export default () => {
         <Search />
       </Row>
       {
-        notificaitons.map( n => 
-          <Notification 
+        notificaitons.map(n =>
+          <Notification
             key={n.id}
             id={n.id}
             onClick={console.debug}
@@ -50,7 +50,7 @@ export default () => {
             content={n.content}
             date={n.createdDateTime}
             unread={n.unread}
-            />
+          />
         )
       }
       <Hr />

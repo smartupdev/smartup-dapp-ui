@@ -2,7 +2,7 @@ import React from 'react'
 import styled, { css } from 'styled-components'
 
 import { connect } from 'react-redux'
-import { setExpandedWallet, setExpandedMarket, setExpandedBookmark } from '../../actions/panel'
+import { toggleExpandedBookmark, toggleExpandedMarket, toggleExpandedWallet } from '../../actions/panel'
 
 import CommentIcon from '../../images/018-planet-earth-2.svg'
 import Avatar from '../../components/Avatar'
@@ -23,7 +23,7 @@ const portfilioText = lang.panel.portfilio
 
 const InfoBlock = styled(Col)`
   margin: 0 ${p => p.theme.spacingS};
-  padding: ${p => `${p.theme.spacingS} ${p.theme.spacingS}` };
+  padding: ${p => `${p.theme.spacingS} ${p.theme.spacingS}`};
   ${p => !p.first &&
     css`border-top: ${p => p.theme.borderColor} solid 1px;`
   }
@@ -49,23 +49,24 @@ const bookmarks = [
 ]
 
 const TableName = [
-  { label: '', value: 'icon', layoutStyle: { width: '18px' }, component: ({value}) =>  <Avatar XS icon={value} /> },
+  { label: '', value: 'icon', layoutStyle: { width: '18px' }, component: ({ value }) => <Avatar XS icon={value} /> },
   { label: portfilioText.wallet.id[currentLang], value: 'id', },
-  { label: portfilioText.wallet.ct[currentLang], value: 'ct', component: ({value}) => <Text S>{`${value} CT`}</Text> },
-  { label: portfilioText.wallet.volume[currentLang], value: 'volume', component: ({value}) => 
-    <Text S style={{ color: value >= 0 ? theme.green : theme.red}}>{`${value < 0 ? '' : '+'}${(value*100).toFixed(2)}%`}</Text> 
+  { label: portfilioText.wallet.ct[currentLang], value: 'ct', component: ({ value }) => <Text S>{`${value} CT`}</Text> },
+  {
+    label: portfilioText.wallet.volume[currentLang], value: 'volume', component: ({ value }) =>
+      <Text S style={{ color: value >= 0 ? theme.green : theme.red }}>{`${value < 0 ? '' : '+'}${(value * 100).toFixed(2)}%`}</Text>
   },
-  { label: '', value: 'action', layoutStyle: { width: '40px' }, component: ({record}) => 
-    <Button icon={Trade} primary light condensed />
+  {
+    label: '', value: 'action', layoutStyle: { width: '40px' }, component: ({ record }) =>
+      <Button icon={Trade} primary light condensed />
   },
 ]
 
-const Portfilio =  ({
+const Portfilio = ({
   ethBalance, sutBalance,
-  expandedWallet, setExpandedWallet, 
-  expandedMarket, setExpandedMarket, 
-  expandedBookmark, setExpandedBookmark
- }) => {
+  expandedWallet, expandedMarket, expandedBookmark,
+  toggleExpandedBookmark, toggleExpandedMarket, toggleExpandedWallet
+}) => {
   return (
     <Col>
       <Col center>
@@ -86,22 +87,22 @@ const Portfilio =  ({
       <Panel
         dark={expandedWallet}
         expanded={expandedWallet}
-        onClick={()=>setExpandedWallet(!expandedWallet)} 
-        header={portfilioText.wallet.title[currentLang]} 
+        onClick={toggleExpandedWallet}
+        header={portfilioText.wallet.title[currentLang]}
         body={
           <>
-          <Col spacingBottom={theme.spacingXS} spacingLeft={theme.spacingS} spacingRight={theme.spacingS}>
-            <Table S noBorderCol model={TableName} values={walletList} />
-          </Col>
-          <Hr />
+            <Col spacingBottom={theme.spacingXS} spacingLeft={theme.spacingS} spacingRight={theme.spacingS}>
+              <Table S noBorderCol model={TableName} values={walletList} />
+            </Col>
+            <Hr />
           </>
-        } 
-        />
+        }
+      />
       <Panel
         expanded={expandedMarket}
         dark={expandedMarket}
-        onClick={()=>setExpandedMarket(!expandedMarket)} 
-        header={portfilioText.marketInfo.title[currentLang]} 
+        onClick={toggleExpandedMarket}
+        header={portfilioText.marketInfo.title[currentLang]}
         body={
           <>
             <Col>
@@ -120,17 +121,17 @@ const Portfilio =  ({
             </Col>
             <Hr />
           </>
-        } 
-        />
+        }
+      />
       <Panel
         expanded={expandedBookmark}
         dark={expandedBookmark}
-        onClick={()=>setExpandedBookmark(!expandedBookmark)} 
-        header={portfilioText.bookmark.title[currentLang]} 
+        onClick={toggleExpandedBookmark}
+        header={portfilioText.bookmark.title[currentLang]}
         body={
           <Col>
             {
-              bookmarks.map( ({name, id}, index) => 
+              bookmarks.map(({ name, id }, index) =>
                 <BookmarkBlock spaceBetween centerVertical key={index}>
                   <Text S>{name}</Text>
                   <Close XS onClick={() => console.log(id)} />
@@ -138,8 +139,8 @@ const Portfilio =  ({
               )
             }
           </Col>
-        } 
-        />
+        }
+      />
     </Col>
   )
 }
@@ -152,10 +153,8 @@ const mapStateToProps = state => ({
   expandedBookmark: state.panel.expandedBookmark,
 });
 
-const mapDispatchToProps = {
-  setExpandedWallet,
-  setExpandedMarket,
-  setExpandedBookmark,
+const mapDispatchToProps = { 
+  toggleExpandedBookmark, toggleExpandedMarket, toggleExpandedWallet
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Portfilio);

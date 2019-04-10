@@ -1,20 +1,27 @@
 import {
   LOGIN_METAMASK_REQUESTED, LOGIN_METAMASK_SUCCEEDED, LOGIN_METAMASK_FAILED,
-  METAMASK_ETH_BALANCE_SUCCEEDED, METAMASK_ETH_BALANCE_FAILED,
-  METAMASK_SUT_BALANCE_SUCCEEDED, METAMASK_SUT_BALANCE_FAILED,
-  METAMASK_NTT_BALANCE_SUCCEEDED, METAMASK_NTT_BALANCE_FAILED,
+  METAMASK_ETH_BALANCE_REQUESTED, METAMASK_ETH_BALANCE_SUCCEEDED, METAMASK_ETH_BALANCE_FAILED,
+  METAMASK_SUT_BALANCE_REQUESTED, METAMASK_SUT_BALANCE_SUCCEEDED, METAMASK_SUT_BALANCE_FAILED,
+  METAMASK_NTT_BALANCE_REQUESTED, METAMASK_NTT_BALANCE_SUCCEEDED, METAMASK_NTT_BALANCE_FAILED,
 } from '../actions/actionTypes';
 
 export const initialState = {
-  account: null,
   ethBalance: null,
-  sutBalance: null,
-  nttBalance: null,
+  gettingEth: false,
+  ethError: null,
 
-  isLogining: false,
+  sutBalance: null,
+  gettingSut: false,
+  sutError: null,
+
+  nttBalance: null,
+  gettingNtt: false,
+  nttError: null,
+
+  account: null,
   loggedIn: false,
-  loginError: false,
-  loginErrorMsg: '',
+  isLoading: false,
+  loginError: null,
 }
 
 export default (state = initialState, action) => {
@@ -22,52 +29,74 @@ export default (state = initialState, action) => {
     case LOGIN_METAMASK_REQUESTED:
       return {
         ...state,
-        isLogining: true,
+        account: initialState.account,
+        loggedIn: initialState.loggedIn,
+        isLoading: true,
       };
     case LOGIN_METAMASK_SUCCEEDED:
       return {
         ...state,
-        account: action.payload.account,
-        isLogining: false,
+        account: action.payload,
         loggedIn: true,
+        isLoading: false,
+        loginError: initialState.loginError
       };
     case LOGIN_METAMASK_FAILED:
       return {
         ...state,
-        isLogining: false,
-        loggedIn: false,
-        loginError: true,
-        loginErrorMsg: action.payload.msg,
+        isLoading: false,
+        loginError: action.payload,
       };
+    case METAMASK_ETH_BALANCE_REQUESTED:
+      return {
+        ...state,
+        gettingEth: true
+      }
     case METAMASK_ETH_BALANCE_SUCCEEDED:
       return {
         ...state,
-        ethBalance: action.payload.ethBalance,
+        gettingEth: false,
+        ethBalance: action.payload,
       };
     case METAMASK_ETH_BALANCE_FAILED:
       return {
         ...state,
-        ethBalance: null,
+        gettingEth: false,
+        ethError: action.payload
       };
+    case METAMASK_SUT_BALANCE_REQUESTED:
+      return {
+        ...state,
+        gettingSut: true
+      }
     case METAMASK_SUT_BALANCE_SUCCEEDED:
       return {
         ...state,
-        sutBalance: action.payload.sutBalance,
+        gettingSut: false,
+        sutBalance: action.payload,
       };
     case METAMASK_SUT_BALANCE_FAILED:
       return {
         ...state,
-        sutBalance: null,
+        gettingSut: false,
+        sutError: action.payload
       };
+    case METAMASK_NTT_BALANCE_REQUESTED:
+      return {
+        ...state,
+        gettingNtt: true
+      }
     case METAMASK_NTT_BALANCE_SUCCEEDED:
       return {
         ...state,
-        nttBalance: action.payload.nttBalance,
+        gettingNtt: false,
+        nttBalance: action.payload,
       };
     case METAMASK_NTT_BALANCE_FAILED:
       return {
         ...state,
-        nttBalance: null,
+        gettingNtt: false,
+        nttError: action.payload,
       };
     default:
       return state;
