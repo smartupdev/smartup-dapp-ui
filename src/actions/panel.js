@@ -1,28 +1,31 @@
 import {
-  PANEL_SET_ACTIVE_TAB, SET_EXPANDED_WALLET, SET_EXPANDED_MARKET, SET_EXPANDED_BOOKMARK
+  PANEL_SET_ACTIVE_TAB, 
+  PANEL_TOGGLE_EXPANDED_BOOKMARK, 
+  PANEL_TOGGLE_EXPANDED_MARKET, 
+  PANEL_TOGGLE_EXPANDED_WALLET
 } from './actionTypes';
 
-export function setActiveTab(activeTab) {
+export function setActiveTab(activeTabIndex) {
   return {
     type: PANEL_SET_ACTIVE_TAB,
-    activeTab: activeTab
+    payload: { activeTabIndex }
   }
 }
 
-export function setExpandedWallet() {
+export function toggleExpandedWallet() {
   return {
-    type: SET_EXPANDED_WALLET,
+    type: PANEL_TOGGLE_EXPANDED_WALLET,
   }
 }
 
-export function setExpandedMarket() {
+export function toggleExpandedMarket() {
   return {
-    type: SET_EXPANDED_MARKET,
+    type: PANEL_TOGGLE_EXPANDED_MARKET,
   }
 }
 
-export function setExpandedBookmark() {
+export function toggleExpandedBookmark() {
   return {
-    type: SET_EXPANDED_BOOKMARK,
+    type: PANEL_TOGGLE_EXPANDED_BOOKMARK,
   }
 }

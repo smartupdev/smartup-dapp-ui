@@ -7,7 +7,7 @@ import {
   API_MARKET_QUERY_BY_TX_HASH, API_MARKET_UPDATE_MARKET_ADDRESS
 } from './api';
 import Web3 from 'web3';
-const smartupWeb3 = new Web3(window.web3.currentProvider);
+const smartupWeb3 = window.web3 && new Web3(window.web3.currentProvider);
 
 //创建市场(from和account相同，有几个参数是什么？？？)
 export function createMarket(account, to, value, name, description) {

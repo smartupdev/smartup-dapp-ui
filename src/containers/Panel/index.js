@@ -22,9 +22,9 @@ import { loginMetaMask } from '../../actions/metamask'
 const PANEL_WIDTH = 300
 
 const TABS = [
-  { label: lang.panel.tab.portfilio[currentLang], value: 'portfilio', component: Portfolio },
-  { label: lang.panel.tab.notification[currentLang], value: 'notification', dot: true, component: Notification },
-  { label: lang.panel.tab.setting[currentLang], value: 'setting', component: Setting },
+  { label: lang.panel.tab.portfilio[currentLang], component: Portfolio },
+  { label: lang.panel.tab.notification[currentLang], dot: true, component: Notification },
+  { label: lang.panel.tab.setting[currentLang], component: Setting },
 ]
 
 const Top = styled(Row)`
@@ -41,9 +41,9 @@ const Terms = () =>
 const Panel = ({ 
   nttBalance,
   metaMaskHint, loggedIn, account, 
-  activeTab, userAvatar, userName, loginMetaMask, 
-  setActiveTab }) => {
-  const Main = TABS.find(t => t.value === activeTab).component
+  userAvatar, userName, loginMetaMask, 
+  setActiveTab, activeTabIndex }) => {
+  const Main = TABS[activeTabIndex].component
   return (
     <Col width={`${PANEL_WIDTH}px`} center={!loggedIn} centerVertical={!loggedIn}>
       {loggedIn ?
@@ -59,7 +59,7 @@ const Panel = ({
               <Text right S note>{nttBalance} NTT</Text>
             </Col>
           </Top>
-          <Tab tabs={TABS} activeTab={activeTab} onClick={setActiveTab} fullWidth />
+          <Tab tabs={TABS} activeIndex={activeTabIndex} onClick={setActiveTab} fullWidth />
             <Main />
           <Terms />
         </>
@@ -84,7 +84,7 @@ const mapStateToProps = state => ({
   metaMaskHint: state.user.metaMaskHint,
   userName: state.user.userName,
   userAvatar: state.user.userAvatar,
-  activeTab: state.panel.activeTab,
+  activeTabIndex: state.panel.activeTabIndex,
 });
 
 const mapDispatchToProps = {
