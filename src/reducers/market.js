@@ -1,5 +1,6 @@
 import {
   GET_MARKET_LIST, GET_MARKET_CREATED_LIST, GET_MARKET_DETAIL, CREATE_MARKET, BOOKMARK_MARKET,
+  CREATE_MARKET_REQUESTED, CREATE_MARKET_SUCCEEDED, CREATE_MARKET_FAILED,
 } from '../actions/actionTypes';
 import FakeIcon from '../images/035-sun.svg'
 import FakeImage from '../images/037-ufo.svg'
@@ -23,6 +24,13 @@ const markets = [
 ];
 
 export const initialState = {
+
+  marketName: null,
+  marketDesc: null,
+  createMarketHash: null,
+  creatingMarket: false,
+  createMarketError: null,
+  
   markets: markets,
   marketCreatedList: null,
   marketDetail: null,
@@ -34,6 +42,25 @@ export const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    case CREATE_MARKET_REQUESTED:
+      return {
+        ...state,
+        creatingMarket: true,
+      };
+    case CREATE_MARKET_SUCCEEDED:
+      return {
+        ...state,
+        createMarketHash: action.payload,
+        creatingMarket: false,
+        createMarketError: initialState.loginError
+      };
+    case CREATE_MARKET_FAILED:
+      return {
+        ...state,
+        creatingMarket: false,
+        createMarketError: action.payload,
+      };
+
     case GET_MARKET_LIST: {
       return Object.assign({}, state, {
         markets: action.payload.obj,

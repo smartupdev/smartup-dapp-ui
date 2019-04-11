@@ -12,10 +12,11 @@ import smartupIcon from '../../images/smartup.png';
 import successImg from '../../images/market_success.png';
 import { connect } from 'react-redux';
 import { setActiveIndex } from '../../actions/createMarket'
+import { createMarket } from '../../actions/market'
 
 const options = ['Basic Information', 'Price Equation', 'Deposit']
 const optionsSpeed = ['Slow', 'Standard', 'Fast']
-const CreateMarket = ({activeIndex, setActiveIndex}) => {
+const CreateMarket = ({activeIndex, setActiveIndex, createMarket}) => {
   function next() { setActiveIndex(1) }
   function back() { setActiveIndex(-1) }
   const [nameError, setNameError] = useState(false)
@@ -102,7 +103,7 @@ const CreateMarket = ({activeIndex, setActiveIndex}) => {
               <Col spacingTopL spacingBottomL>
                 <Text XL wordSpaceL center>MAKRET IS CREATED SUCCESSFULLY!</Text>
               </Col>
-              <Button label='Explore Market' primary onClick={next} extended />
+              <Button label='Explore Market' primary onClick={createMarket} extended />
             </Col>
           </>
       }
@@ -115,7 +116,7 @@ const mapStateToProps = state => ({
   activeIndex: state.createMarket.activeIndex,
 });
 const mapDispatchToProps = {
-  setActiveIndex,
+  setActiveIndex,createMarket,
 } 
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreateMarket);
