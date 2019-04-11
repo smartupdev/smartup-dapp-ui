@@ -1,10 +1,9 @@
 //market-controller
-export const API_MARKET_CREATE = '/api/market/create';
-export const API_MARKET_CREATOR_CREATED = '/api/market/creator/created';
+export const API_USER_MARKET_CREATE = '/api/user/market/create';
+export const API_USER_MARKET_CREATED = '/api/user/market/created';
 export const API_MARKET_LIST = '/api/market/list';
 export const API_MARKET_ONE = '/api/market/one';
 export const API_MARKET_QUERY_BY_TX_HASH = '/api/market/query/by/tx/hash';
-export const API_MARKET_UPDATE_MARKET_ADDRESS = '/api/market/update/market/address';
 //user-controller
 export const API_USER_AUTH = '/api/auth';
 export const API_USER_LOGIN = '/api/login';
