@@ -16,7 +16,7 @@ import lang, { currentLang } from '../../lang'
 import { shorten } from '../../lib/util'
 import { connect } from 'react-redux'
 import { setActiveTab } from '../../actions/panel'
-import { updateUserName, updateUserAvatar,loginMetaMask } from '../../actions/user'
+import { updateUserName, updateUserAvatar, loginMetaMask } from '../../actions/user'
 
 const PANEL_WIDTH = 300
 
@@ -40,13 +40,13 @@ const Terms = () =>
 const Panel = ({ 
   nttBalance,
   metaMaskHint, account, 
-  loginError,
   userAvatar, userName, loginMetaMask, 
+  loggedIn, isLoading, metaMaskEableError, metaMaskSignError,
   setActiveTab, activeTabIndex }) => {
   const Main = TABS[activeTabIndex].component
   return (
-    <Col width={`${PANEL_WIDTH}px`} center={!account} centerVertical={!account}>
-      {account ?
+    <Col width={`${PANEL_WIDTH}px`} center={!loggedIn} centerVertical={!loggedIn}>
+      {loggedIn ?
         <>
           <Top centerVertical spaceBetween>
             <Row centerVertical>
@@ -66,13 +66,16 @@ const Panel = ({
         :
         <Col center>
           <People XL round color={theme.white} />
-          <Button primary outline verticalMargin label={lang.panel.connectButton[currentLang]} onClick={loginMetaMask} />
+          <Button primary outline verticalMargin label={lang.panel.connectButton[currentLang]} onClick={loginMetaMask} disabled={isLoading} />
           <Text note>{metaMaskHint}</Text>
-          { loginError &&
             <Row width={`${PANEL_WIDTH*.8}px`} spacingTopXS>
-              <Text error>Please install or enable the MetaMask browser plug-in from <A XS error href='https://metamask.io/' target="_blank">Metamask.io</A></Text>
+              { metaMaskEableError &&
+                <Text error>Please install or enable the MetaMask browser plug-in from <A XS error href='https://metamask.io/' target="_blank">Metamask.io</A></Text>
+              }
+              { metaMaskSignError &&
+                <Text error>Please sign the message for login purpose.</Text>
+              }
             </Row>
-          }
         </Col>
       }
     </Col>
@@ -87,6 +90,10 @@ const mapStateToProps = state => ({
   userName: state.user.userName,
   userAvatar: state.user.userAvatar,
   activeTabIndex: state.panel.activeTabIndex,
+  loggedIn: state.user.loggedIn,
+  isLoading: state.user.isLoading,
+  metaMaskEableError: state.user.metaMaskEableError,
+  metaMaskSignError: state.user.metaMaskSignError,
 });
 
 const mapDispatchToProps = {
