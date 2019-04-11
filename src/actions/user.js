@@ -107,12 +107,11 @@ function getNttBalance() {
 
 //api-login to get sign code
 function loginSmartUp() {
-  return async (dispatch, getState) => {
-    let address = getState().user.account;
+  return async dispatch => {
     let [error, response] = await dispatch(asyncFunction(
       Net,
       USER_LOGIN_SMARTUP_REQUESTED, USER_LOGIN_SMARTUP_SUCCEEDED, USER_LOGIN_SMARTUP_FAILED,
-      { isWeb3: true, params: { api: API_USER_LOGIN, params: { address } }, responsePayload: reps => reps.obj }
+      { isWeb3: true, params: { api: API_USER_LOGIN, params: { address: getAccount() } }, responsePayload: reps => reps.obj }
     ));
     if (!error) {
       dispatch(getPersonSign(response));
@@ -124,27 +123,19 @@ function loginSmartUp() {
 //The MetaMask Web3 object does not support synchronous methods 
 //like personal_sign without a callback parameter.
 function getPersonSign(msg) {
-  return (dispatch, getState) => {
-    let account = getState().user.account;
-    dispatch({
-      type: USER_PERSON_SIGN_REQUESTED,
-    });
-    window.web3.personal.sign(msg, account, (err, ret) => {
-      if (err) {
-        dispatch({
-          type: USER_PERSON_SIGN_FAILED,
-          payload: err,
-          error: true
-        });
-      } else {
-        window.localStorage.setItem('token', ret);
-        dispatch({
-          type: USER_PERSON_SIGN_SUCCEEDED,
-          payload: ret
-        });
-      }
-    });
-  }
+  return async dispatch => {
+    let [error, response] = await dispatch(
+      callbackFunction(
+        window.web3.personal.sign,
+        USER_PERSON_SIGN_REQUESTED, USER_PERSON_SIGN_SUCCEEDED, USER_PERSON_SIGN_FAILED, 
+        { params: msg, params2: getAccount() }
+     )
+    )
+    if(!error) {
+      window.localStorage.setItem('token', response);
+      console.debug('Saved to token as '+response)
+    }
+  }  
 }
 
 // web3.personal.sign(msg, account, (err, ret) => {
