@@ -16,8 +16,7 @@ import lang, { currentLang } from '../../lang'
 import { shorten } from '../../lib/util'
 import { connect } from 'react-redux'
 import { setActiveTab } from '../../actions/panel'
-import { updateUserName, updateUserAvatar } from '../../actions/user'
-import { loginMetaMask } from '../../actions/metamask'
+import { updateUserName, updateUserAvatar,loginMetaMask } from '../../actions/user'
 
 const PANEL_WIDTH = 300
 
@@ -78,9 +77,9 @@ const Panel = ({
 }
 
 const mapStateToProps = state => ({
-  nttBalance: state.metamask.nttBalance,
-  account: state.metamask.account,
-  loggedIn: state.metamask.loggedIn,
+  nttBalance: state.user.nttBalance,
+  account: state.user.account,
+  loggedIn: state.user.loggedIn,
   metaMaskHint: state.user.metaMaskHint,
   userName: state.user.userName,
   userAvatar: state.user.userAvatar,

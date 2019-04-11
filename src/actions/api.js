@@ -6,9 +6,9 @@ export const API_MARKET_ONE = '/api/market/one';
 export const API_MARKET_QUERY_BY_TX_HASH = '/api/market/query/by/tx/hash';
 export const API_MARKET_UPDATE_MARKET_ADDRESS = '/api/market/update/market/address';
 //user-controller
-export const API_USER_ADD = '/api/user/add';
-export const API_USER_EXIST_ADDRESS = '/api/user/exist/address';
-export const API_USER_QUERY = '/api/user/query';
+export const API_USER_AUTH = '/api/auth';
+export const API_USER_LOGIN = '/api/login';
+export const API_USER_CURRENT = '/api/user/current';
 export const API_USER_UPDATE = '/api/user/update';
 //trade-controller
 export const API_TRADE_BUY_CT = '/api/trade/buy/ct';

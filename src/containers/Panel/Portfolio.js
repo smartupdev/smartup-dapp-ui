@@ -146,8 +146,8 @@ const Portfilio = ({
 }
 
 const mapStateToProps = state => ({
-  ethBalance: state.metamask.ethBalance,
-  sutBalance: state.metamask.sutBalance,
+  ethBalance: state.user.ethBalance,
+  sutBalance: state.user.sutBalance,
   expandedWallet: state.panel.expandedWallet,
   expandedMarket: state.panel.expandedMarket,
   expandedBookmark: state.panel.expandedBookmark,
