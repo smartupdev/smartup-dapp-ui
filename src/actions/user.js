@@ -24,20 +24,33 @@ import { Net } from '../lib/util/request';
 
 const client = ipfsClient('ipfs-api.smartup.global', '80', { protocol: 'http' });
 
+const STORAGE_KEY_TOKEN = 'token'
+const STORAGE_KEY_ACC = 'acc'
+
+export function checkLogin() {
+  return async (dispatch) => {
+    const token = window.localStorage.getItem(STORAGE_KEY_TOKEN)
+    if(token) {
+      await dispatch(loginMetaMask(true))
+      dispatch({
+        type: USER_PERSON_SIGN_SUCCEEDED,
+        payload: token
+      })
+    }
+  }
+}
+
 export function watchMetamask() {
   return (dispatch, getState) => {
     let accountInterval = setInterval(() => {
-      const { account } = getState().user
+      const acc = window.localStorage.getItem(STORAGE_KEY_ACC)
+      // const { account } = getState().user
       const newAccount = getAccount()
-      if (newAccount !== account) {
+      if (acc !== newAccount) {
         dispatch({
           type: METAMASK_SET_ACCOUNT,
           payload: newAccount
         })
-        dispatch(getEthBalance())
-        dispatch(getSutBalance())
-        dispatch(getNttBalance())
-        console.log('change to ' + account)
       }
     }, 1000);
 
@@ -52,15 +65,15 @@ export function enableEthereum() {
   )
 }
 
-export function loginMetaMask() {
+export function loginMetaMask(skipLogin) {
   return async (dispatch) => {
     const [error, response] = await dispatch(enableEthereum())
     if (!error) {
       await Promise.all([
-        // dispatch(getEthBalance()),
-        // dispatch(getSutBalance()),
-        // dispatch(getNttBalance()),
-        dispatch(loginSmartUp()),
+        dispatch(getEthBalance()),
+        dispatch(getSutBalance()),
+        dispatch(getNttBalance()),
+        skipLogin !== true && dispatch(loginSmartUp()),
       ])
     }
   }
@@ -132,7 +145,8 @@ function getPersonSign(msg) {
      )
     )
     if(!error) {
-      window.localStorage.setItem('token', response);
+      window.localStorage.setItem(STORAGE_KEY_TOKEN, response);
+      window.localStorage.setItem(STORAGE_KEY_ACC, getAccount());
       console.debug('Saved to token as '+response)
     }
   }  

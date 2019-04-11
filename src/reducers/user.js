@@ -43,26 +43,28 @@ export default (state = initialState, action) => {
     case METAMASK_SET_ACCOUNT:
       return {
         ...state,
-        account: action.payload
+        account: action.payload,
+        loggedIn: false,
+        isLoading: false,
       }
 
     case LOGIN_METAMASK_REQUESTED:
       return {
         ...state,
+        loggedIn: false,
         isLoading: true,
       };
     case LOGIN_METAMASK_SUCCEEDED:
       return {
         ...state,
-        // account: action.payload,
-        // loggedIn: true,
-        // isLoading: false,
+        account: action.payload,
         metaMaskEableError: initialState.metaMaskEableError
       };
     case LOGIN_METAMASK_FAILED:
       return {
         ...state,
         isLoading: false,
+        loggedIn: false,
         metaMaskEableError: true,
       };
     case USER_PERSON_SIGN_SUCCEEDED: 
@@ -76,6 +78,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         isLoading: false,
+        loggedIn: false,
         metaMaskSignError: true
       }
     case METAMASK_ETH_BALANCE_REQUESTED:
