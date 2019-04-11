@@ -2,7 +2,6 @@ import theme from './reducers/theme';
 import user from './reducers/user';
 import home from './reducers/home';
 import market from './reducers/market';
-import metamask from './reducers/metamask';
 import createMarket from './reducers/createMarket';
 import panel from './reducers/panel';
 import eth from './reducers/eth';
@@ -16,7 +15,6 @@ export default combineReducers({
     user,
     home,
     market,
-    metamask,
     createMarket,
     panel,
     eth,
