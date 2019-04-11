@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import Image from '../../components/Image'
 import { People } from '../../components/Icon'
 import Button from '../../components/Button'
-import Text from '../../components/Text'
+import Text, { A } from '../../components/Text'
 import Tab from '../../components/Tab'
 import Hr from '../../components/Hr'
 import Portfolio from './Portfolio'
@@ -39,13 +39,14 @@ const Terms = () =>
 
 const Panel = ({ 
   nttBalance,
-  metaMaskHint, loggedIn, account, 
+  metaMaskHint, account, 
+  loginError,
   userAvatar, userName, loginMetaMask, 
   setActiveTab, activeTabIndex }) => {
   const Main = TABS[activeTabIndex].component
   return (
-    <Col width={`${PANEL_WIDTH}px`} center={!loggedIn} centerVertical={!loggedIn}>
-      {loggedIn ?
+    <Col width={`${PANEL_WIDTH}px`} center={!account} centerVertical={!account}>
+      {account ?
         <>
           <Top centerVertical spaceBetween>
             <Row centerVertical>
@@ -67,9 +68,11 @@ const Panel = ({
           <People XL round color={theme.white} />
           <Button primary outline verticalMargin label={lang.panel.connectButton[currentLang]} onClick={loginMetaMask} />
           <Text note>{metaMaskHint}</Text>
-          {/* <Row width={`${PANEL_WIDTH*.8}px`} spacingTopXS>
-            <Text error>Please install or enable the MetaMask browser plug-in from Metamask.io</Text>
-          </Row> */}
+          { loginError &&
+            <Row width={`${PANEL_WIDTH*.8}px`} spacingTopXS>
+              <Text error>Please install or enable the MetaMask browser plug-in from <A XS error href='https://metamask.io/' target="_blank">Metamask.io</A></Text>
+            </Row>
+          }
         </Col>
       }
     </Col>
@@ -79,7 +82,7 @@ const Panel = ({
 const mapStateToProps = state => ({
   nttBalance: state.user.nttBalance,
   account: state.user.account,
-  loggedIn: state.user.loggedIn,
+  loginError: state.user.loginError,
   metaMaskHint: state.user.metaMaskHint,
   userName: state.user.userName,
   userAvatar: state.user.userAvatar,

@@ -3,6 +3,7 @@ import {
   METAMASK_ETH_BALANCE_REQUESTED, METAMASK_ETH_BALANCE_SUCCEEDED, METAMASK_ETH_BALANCE_FAILED,
   METAMASK_SUT_BALANCE_REQUESTED, METAMASK_SUT_BALANCE_SUCCEEDED, METAMASK_SUT_BALANCE_FAILED,
   METAMASK_NTT_BALANCE_REQUESTED, METAMASK_NTT_BALANCE_SUCCEEDED, METAMASK_NTT_BALANCE_FAILED,
+  METAMASK_SET_ACCOUNT,
   UPDATE_USER_NAME,UPDATE_USER_AVATAR,QUERY_USER_INFO
 } from '../actions/actionTypes';
 import LoginIcon from '../images/menu1.svg';
@@ -22,8 +23,10 @@ export const initialState = {
   gettingNtt: false,
   nttError: null,
 
-  account: null,
-  loggedIn: false,
+  // metaMaskEnabled: false,
+
+  account: undefined,
+  // loggedIn: false,
   isLoading: false,
   loginError: null,
 
@@ -35,17 +38,23 @@ export const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    case METAMASK_SET_ACCOUNT: 
+      return {
+        ...state,
+        account: action.payload
+      }
+
     case LOGIN_METAMASK_REQUESTED:
       return {
         ...state,
-        account: initialState.account,
-        loggedIn: initialState.loggedIn,
+        // account: initialState.account,
+        // loggedIn: initialState.loggedIn,
         isLoading: true,
       };
     case LOGIN_METAMASK_SUCCEEDED:
       return {
         ...state,
-        account: action.payload,
+        // account: action.payload,
         loggedIn: true,
         isLoading: false,
         loginError: initialState.loginError

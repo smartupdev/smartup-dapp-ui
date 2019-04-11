@@ -6,13 +6,14 @@ import {
   USER_LOGIN_SMARTUP_REQUESTED, USER_LOGIN_SMARTUP_SUCCEEDED, USER_LOGIN_SMARTUP_FAILED,
   USER_PERSON_SIGN_REQUESTED, USER_PERSON_SIGN_SUCCEEDED, USER_PERSON_SIGN_FAILED,
   UPDATE_USER_NAME, UPDATE_USER_AVATAR, QUERY_USER_INFO,
+  METAMASK_SET_ACCOUNT
 } from './actionTypes'
 import {
   asyncFunction, callbackFunction,
   formatToken, formatCredit,
   getBalance, getCredit,
   sutContractAddress, nttContractAddress,
-  smartupWeb3
+  smartupWeb3, getAccount
 } from '../integrator'
 import {
   API_USER_LOGIN, API_USER_CURRENT, API_USER_UPDATE
@@ -23,6 +24,26 @@ import { Net } from '../lib/util/request';
 
 const client = ipfsClient('ipfs-api.smartup.global', '80', { protocol: 'http' });
 
+export function watchMetamask() {
+  return (dispatch, getState) => {
+    let accountInterval = setInterval(() => {
+      const { account } = getState().user
+      const newAccount = getAccount()
+      if (newAccount !== account) {
+        dispatch({
+          type: METAMASK_SET_ACCOUNT,
+          payload: newAccount
+        })
+        dispatch(getEthBalance())
+        dispatch(getSutBalance())
+        dispatch(getNttBalance())
+        console.log('change to ' + account)
+      }
+    }, 1000);
+
+  }
+}
+
 export function enableEthereum() {
   return asyncFunction(
     window.ethereum && window.ethereum.enable,
@@ -32,13 +53,13 @@ export function enableEthereum() {
 }
 
 export function loginMetaMask() {
-  return async (dispatch, getState) => {
+  return async (dispatch) => {
     const [error, response] = await dispatch(enableEthereum())
     if (!error) {
       await Promise.all([
-        dispatch(getEthBalance()),
-        dispatch(getSutBalance()),
-        dispatch(getNttBalance()),
+        // dispatch(getEthBalance()),
+        // dispatch(getSutBalance()),
+        // dispatch(getNttBalance()),
         dispatch(loginSmartUp()),
       ])
     }
@@ -47,47 +68,41 @@ export function loginMetaMask() {
 
 //get eth balance
 function getEthBalance() {
-  return (dispatch, getState) => {
-    return dispatch(callbackFunction(
-      smartupWeb3.eth.getBalance,
-      METAMASK_ETH_BALANCE_REQUESTED, METAMASK_ETH_BALANCE_SUCCEEDED, METAMASK_ETH_BALANCE_FAILED,
-      {
-        isWeb3: true,
-        params: getState().user.account,
-        responsePayload: formatToken
-      }
-    ))
-  }
+  return callbackFunction(
+    smartupWeb3.eth.getBalance,
+    METAMASK_ETH_BALANCE_REQUESTED, METAMASK_ETH_BALANCE_SUCCEEDED, METAMASK_ETH_BALANCE_FAILED,
+    {
+      isWeb3: true,
+      params: getAccount(),
+      responsePayload: formatToken
+    }
+  )
 }
 
 //get sut balance
 function getSutBalance() {
-  return (dispatch, getState) => {
-    return dispatch(callbackFunction(
-      smartupWeb3.eth.call,
-      METAMASK_SUT_BALANCE_REQUESTED, METAMASK_SUT_BALANCE_SUCCEEDED, METAMASK_SUT_BALANCE_FAILED,
-      {
-        isWeb3: true,
-        params: { to: sutContractAddress, data: getBalance(getState().user.account) },
-        responsePayload: formatToken
-      }
-    ))
-  }
+  return callbackFunction(
+    smartupWeb3.eth.call,
+    METAMASK_SUT_BALANCE_REQUESTED, METAMASK_SUT_BALANCE_SUCCEEDED, METAMASK_SUT_BALANCE_FAILED,
+    {
+      isWeb3: true,
+      params: { to: sutContractAddress, data: getBalance(getAccount()) },
+      responsePayload: formatToken
+    }
+  )
 }
 
 //get ntt balance
 function getNttBalance() {
-  return (dispatch, getState) => {
-    return dispatch(callbackFunction(
-      smartupWeb3.eth.call,
-      METAMASK_NTT_BALANCE_REQUESTED, METAMASK_NTT_BALANCE_SUCCEEDED, METAMASK_NTT_BALANCE_FAILED,
-      {
-        isWeb3: true,
-        params: { to: nttContractAddress, data: getCredit(getState().user.account) },
-        responsePayload: formatCredit
-      }
-    ))
-  }
+  return callbackFunction(
+    smartupWeb3.eth.call,
+    METAMASK_NTT_BALANCE_REQUESTED, METAMASK_NTT_BALANCE_SUCCEEDED, METAMASK_NTT_BALANCE_FAILED,
+    {
+      isWeb3: true,
+      params: { to: nttContractAddress, data: getCredit(getAccount()) },
+      responsePayload: formatCredit
+    }
+  )
 }
 
 //api-login to get sign code
