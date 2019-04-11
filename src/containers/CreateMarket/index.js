@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 // import styled from 'styled-components'
 import Text from '../../components/Text'
 import Input, { Selector } from '../../components/Input'
@@ -10,6 +10,8 @@ import { Row, Col } from '../../components/Layout'
 import ethIcon from '../../images/eth.png';
 import smartupIcon from '../../images/smartup.png';
 import successImg from '../../images/market_success.png';
+import Chart from './Chart'
+
 import { connect } from 'react-redux';
 import { setActiveIndex } from '../../actions/createMarket'
 
@@ -27,6 +29,8 @@ const CreateMarket = ({activeIndex, setActiveIndex}) => {
   const Next = () =>  <Button label='Next' primary extended onClick={next} />
   const Back = () =>  <Button label='Back' primary extended onClick={back} />
 
+  const [name, setName] = useState('')
+
   return (
     <Col>
       <Col center spacingBottomXS spacingTopXS>
@@ -43,7 +47,7 @@ const CreateMarket = ({activeIndex, setActiveIndex}) => {
         activeIndex === 0 ? 
           <>
             <Label>Market Name</Label>
-            <Input background XL />
+            <Input background XL value={name} onChange={e => setName(e.target.value)} />
             <Text S right>Capital sensitive, 3-20 characters, community name cannot be changed.</Text>
             <Label>Market description</Label>
             <Input background L line={3} />
@@ -56,9 +60,9 @@ const CreateMarket = ({activeIndex, setActiveIndex}) => {
           activeIndex === 1 ? 
           <>
             <Label>Price equation of the market token</Label>
-            <Input background L />
+            <Input background L disabled value={'f(x) = 0.000074999921875 * ln(x) + 0.000000000015625 * x'} />
             <Label>Preview price movement</Label>
-            <Col>I am a graph</Col>
+            <Col><Chart /></Col>
             <Row spacingTopL spaceBetween>
               <Back />
               <Next />
