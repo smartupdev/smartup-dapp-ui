@@ -38,11 +38,25 @@ const Dot = styled.div`
       position: absolute;
       left: calc( 50% - ${centerDotSize} / 2 );
       top: calc( 50% - ${centerDotSize} / 2 );
-      content: ' ';
       height: ${centerDotSize};
       width: ${centerDotSize};
       border-radius: ${centerDotSize};
-      background-color: ${p.activeIndex < p.index ? p.theme.bgColorLight : p.theme.white};
+      background-color: ${p.theme.bgColorLight};
+      content: ' ';
+      ${p => p.activeIndex >= p.index && css`
+        content: '${p.index + 1}';
+        font-size: 14px;
+        background-color: transparent;
+        left: 4.5px;
+        top: 1px;
+        font-family: 'Quicksand', sans-serif;
+        text-align: center
+        `}
+      ${p => p.activeIndex === p.index && css`
+        left: 8.5px;
+        top: 4px;
+      `}
+      // background-color: ${p.activeIndex < p.index ? p.theme.bgColorLight : ''};
     }
   `}
 `
