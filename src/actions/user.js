@@ -4,7 +4,7 @@ import {
   METAMASK_SUT_BALANCE_REQUESTED, METAMASK_SUT_BALANCE_SUCCEEDED, METAMASK_SUT_BALANCE_FAILED,
   METAMASK_NTT_BALANCE_REQUESTED, METAMASK_NTT_BALANCE_SUCCEEDED, METAMASK_NTT_BALANCE_FAILED,
   USER_LOGIN_SMARTUP_REQUESTED, USER_LOGIN_SMARTUP_SUCCEEDED, USER_LOGIN_SMARTUP_FAILED,
-  USER_PERSON_SIGN_REQUESTED,USER_PERSON_SIGN_SUCCEEDED,USER_PERSON_SIGN_FAILED,
+  USER_PERSON_SIGN_REQUESTED, USER_PERSON_SIGN_SUCCEEDED, USER_PERSON_SIGN_FAILED,
   UPDATE_USER_NAME, UPDATE_USER_AVATAR, QUERY_USER_INFO,
 } from './actionTypes'
 import {
@@ -15,7 +15,7 @@ import {
   smartupWeb3
 } from '../integrator'
 import {
-   API_USER_LOGIN, API_USER_CURRENT, API_USER_UPDATE
+  API_USER_LOGIN, API_USER_CURRENT, API_USER_UPDATE
 } from './api';
 import ipfsClient from 'ipfs-http-client';
 import toBuffer from 'blob-to-buffer';
@@ -97,28 +97,50 @@ function loginSmartUp() {
     let [error, response] = await dispatch(asyncFunction(
       Net,
       USER_LOGIN_SMARTUP_REQUESTED, USER_LOGIN_SMARTUP_SUCCEEDED, USER_LOGIN_SMARTUP_FAILED,
-      { isWeb3: true, params:{api:API_USER_LOGIN, params:{address}}, responsePayload: reps => reps.obj }
+      { isWeb3: true, params: { api: API_USER_LOGIN, params: { address } }, responsePayload: reps => reps.obj }
     ));
-    if(!error){
-      //dispatch(getPersonSign(response));
+    if (!error) {
+      dispatch(getPersonSign(response));
     }
   }
 }
 
 //get person sign
-function getPersonSign(msg){
-  console.log('------------',window.web3.personal.sign);
-  return async (dispatch, getState)=>{
+//The MetaMask Web3 object does not support synchronous methods 
+//like personal_sign without a callback parameter.
+function getPersonSign(msg) {
+  return (dispatch, getState) => {
     let account = getState().user.account;
-    let [error, response] = await dispatch(asyncFunction(
-      window.web3.personal.sign,
-      USER_PERSON_SIGN_REQUESTED, USER_PERSON_SIGN_SUCCEEDED, USER_PERSON_SIGN_FAILED,
-      { isWeb3: true, params:{'nonce':msg, 'public_address':account} }
-    ));
-    console.log('------------sign',error);
-    console.log('------------sign',response);
-  } 
+    dispatch({
+      type: USER_PERSON_SIGN_REQUESTED,
+    });
+    window.web3.personal.sign(msg, account, (err, ret) => {
+      if (err) {
+        dispatch({
+          type: USER_PERSON_SIGN_FAILED,
+          payload: err,
+          error: true
+        });
+      } else {
+        window.localStorage.setItem('token', ret);
+        dispatch({
+          type: USER_PERSON_SIGN_SUCCEEDED,
+          payload: ret
+        });
+      }
+    });
+  }
 }
+
+// web3.personal.sign(msg, account, (err, ret) => {
+//   if (err) {
+//     console.log('err', err)
+//   } else {
+//     console.log('account: ', account)
+//     console.log('msg: ', msg)
+//     console.log('sign: ', ret)
+//   }
+// })
 
 //update user name
 export function updateUserName(name) {

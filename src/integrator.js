@@ -62,7 +62,7 @@ export function asyncFunction(
     dispatch({ type: requestType })
     try {
       if(options.isWeb3 && !checkIsSupportWeb3()) throw new Error('Web3 or ethereum is not supported.')
-      let response = await func(options.params)
+      let response = await func(...[options.params,options.params2])
       response = options.responsePayload ? options.responsePayload(response) : response
       dispatch({
         type: responseType,
@@ -88,7 +88,7 @@ export function callbackFunction(
 ) {
   return async dispatch => {
     const promise = () => new Promise( (resolve, reject) => 
-      func(options.params, (error, response) => {
+      func(...[options.params,options.params2], (error, response) => {
         if(error) reject(error)
         resolve(response)
       })    

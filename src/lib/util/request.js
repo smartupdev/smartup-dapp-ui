@@ -32,6 +32,7 @@ instance.interceptors.response.use((response) => {
 export const Net = async ({api, params, type='post'}) => {
     let storage = window.localStorage;
     let token = storage.getItem('token');
+    console.log('------------ token',token);
     axios.defaults.headers.common['token'] = token;
     if (type === 'post') {
         return new Promise((resolve, reject) => {
