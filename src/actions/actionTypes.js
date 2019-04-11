@@ -39,12 +39,18 @@ export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';
 export const REGISTER = 'REGISTER';
 //market
-export const GET_MARKET_LIST = 'GET_MARKET_LIST';
+export const MARKET_NAME_CHANGE = 'MARKET_NAME_CHANGE';
+export const MARKET_DESC_CHANGE = 'MARKET_DESC_CHANGE';
+export const CREATE_MARKET_REQUESTED = 'CREATE_MARKET_REQUESTED';
+export const CREATE_MARKET_SUCCEEDED = 'CREATE_MARKET_SUCCEEDED';
+export const CREATE_MARKET_FAILED = 'CREATE_MARKET_FAILED';
+
 export const GET_MARKET_CREATED_LIST = 'GET_MARKET_CREATED_LIST';
 export const GET_MARKET_DETAIL = 'GET_MARKET_DETAIL';
+export const GET_MARKET_LIST = 'GET_MARKET_LIST';
 export const CREATE_MARKET = 'CREATE_MARKET';
 export const BOOKMARK_MARKET = 'BOOKMARK_MARKET';
-//create market
+//create market ui
 export const SET_ACTIVE_INDEX = 'SET_ACTIVE_INDEX';
 
 //panel
