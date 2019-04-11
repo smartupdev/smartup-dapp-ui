@@ -60,9 +60,13 @@ const CreateMarket = ({activeIndex, setActiveIndex}) => {
           activeIndex === 1 ? 
           <>
             <Label>Price equation of the market token</Label>
-            <Input background L disabled value={'f(x) = 0.000074999921875 * ln(x) + 0.000000000015625 * x'} />
+            <Col spacingBottomXS>
+              <Input background L disabled value={'f(x) = 0.000074999921875 * ln(x) + 0.000000000015625 * x'} />
+            </Col>
             <Label>Preview price movement</Label>
-            <Col><Chart /></Col>
+            <Col spacingLeftL spacingRightL spacingTopM>
+              <Chart />
+            </Col>
             <Row spacingTopL spaceBetween>
               <Back />
               <Next />
@@ -79,7 +83,7 @@ const CreateMarket = ({activeIndex, setActiveIndex}) => {
               </Col>
               <Text rightText>SmartUp</Text>
             </Row>
-            <Col spacingTopM>
+            {/* <Col spacingTopM>
               <Label>Trading speed</Label>
               <Row centerVertical>
                 <Col flex={1} spacingLeftXS>
@@ -93,11 +97,11 @@ const CreateMarket = ({activeIndex, setActiveIndex}) => {
                   <Input background L />
                 </Col>
               </Row>
-              <Row spacingTopL spaceBetween>
-                <Back />
-                <Button label='Create' primary onClick={next} extended />
-              </Row>
-            </Col>
+            </Col> */}
+            <Row spacingTopL spaceBetween>
+              <Back />
+              <Button label='Create' primary onClick={next} extended />
+            </Row>
           </>
         :
         <>

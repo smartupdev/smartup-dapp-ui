@@ -41,7 +41,8 @@ const getChartConfig = (range, data) => ({
     },
     tooltips: {
       displayColors: false
-    }
+    },
+    maintainAspectRatio: false
   }  
 })
 
@@ -64,7 +65,9 @@ export default class Chart extends Component {
   // }
   render () {
     return (
-      <canvas ref={'chart'}></canvas>
+      <div className="chart-container" style={{position: 'relative', height:'30vh', width:'100%'}}>
+      <canvas style={{height: 200}} ref={'chart'}></canvas>
+      </div>
     );
   }
 }
