@@ -30,10 +30,25 @@ export function createMarket() {
       }
     ));
     if(!error){
-
+      dispatch(createSmartUpMarket(response));
     }
     console.log('------------ error', error);
     console.log('------------ response', response);
+  }
+}
+
+function createSmartUpMarket(txHash){
+  return async (dispatch, getState) => {
+    let name = getState().market.name;
+    let description = getState().market.desc;
+    let [error, response] = await dispatch(asyncFunction(
+      Net,
+      CREATE_MARKET_SMARTUP_REQUESTED, CREATE_MARKET_SMARTUP_SUCCEEDED, CREATE_MARKET_SMARTUP_FAILED,
+      { isWeb3: true, params: { api: API_USER_MARKET_CREATE, params: { txHash,name,description } }, responsePayload: reps => reps.obj }
+    ));
+    console.log('------------ smart up market error',error);
+    console.log('------------ smart up market response',response);
+
   }
 }
 
