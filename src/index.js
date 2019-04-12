@@ -9,7 +9,6 @@ import { BrowserRouter as Router } from "react-router-dom";
 import { ThemeProvider } from './components/Theme'
 import theme from './theme'
 
-
 const Index = () =>
     <Provider store={store}>
       <Router>

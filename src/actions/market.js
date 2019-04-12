@@ -4,18 +4,19 @@ import {
   GET_MARKET_LIST, GET_MARKET_CREATED_LIST, GET_MARKET_DETAIL, CREATE_MARKET, BOOKMARK_MARKET,
 } from './actionTypes';
 import { Net } from '../lib/util/request';
+import fetch from '../lib/util/fetch';
 import {
   API_USER_MARKET_CREATE,API_USER_MARKET_CREATED,API_MARKET_LIST,
   API_MARKET_ONE,API_MARKET_QUERY_BY_TX_HASH,
 } from './api';
 import {
-  asyncFunction,createMarketData,sutContractAddress,smartupWeb3, callbackFunction
+  asyncFunction,createMarketData,sutContractAddress,smartupWeb3, callbackFunction, getAccount
 } from '../integrator'
 
 //创建市场
 export function createMarket() {
   return async (dispatch, getState) => {
-    let address = getState().user.account;
+    let address = getAccount()
     let [error, response] = await dispatch(callbackFunction(
       smartupWeb3.eth.sendTransaction,
       CREATE_MARKET_REQUESTED, CREATE_MARKET_SUCCEEDED, CREATE_MARKET_FAILED,
@@ -39,12 +40,11 @@ export function createMarket() {
 
 function createSmartUpMarket(txHash){
   return async (dispatch, getState) => {
-    let name = getState().market.name;
-    let description = getState().market.desc;
+    const {name, desc: description} = getState().createMarket;
     let [error, response] = await dispatch(asyncFunction(
-      Net,
+      fetch.post,
       CREATE_MARKET_SMARTUP_REQUESTED, CREATE_MARKET_SMARTUP_SUCCEEDED, CREATE_MARKET_SMARTUP_FAILED,
-      { isWeb3: true, params: { api: API_USER_MARKET_CREATE, params: { txHash,name,description } }, responsePayload: reps => reps.obj }
+      { isWeb3: true, params: API_USER_MARKET_CREATE, params2: { txHash,name,description }, responsePayload: reps => reps.obj }
     ));
     console.log('------------ smart up market error',error);
     console.log('------------ smart up market response',response);

@@ -1,4 +1,5 @@
 const apiBaseUrl = 'http://39.105.101.248:86';
+// const apiBaseUrl = 'https://jsonplaceholder.typicode.com';
 const fetchTimeout = 20000
 
 function toParams(params = {}) {
@@ -12,7 +13,7 @@ export default {
     return cmFetch('GET', api + toParams(params))
   },
   post: (api, params) => {
-    return cmFetch('POST', api, params)
+    return cmFetch('POST', api + toParams(params))
   },
   put: (api, params) => {
     return cmFetch('PUT', api, params)
@@ -38,15 +39,20 @@ async function cmFetch(method, api, params) {
 }
 
 function getOptions(method = 'GET', params) {
-  return {
+  const r =  {
     method,
     headers: {
-      'Content-Type': 'application/json; charset=UTF-8',
       'Accept': 'application/json',
-      token: window.localStorage.getItem('token')
+      'Content-Type': 'application/x-www-form-urlencoded',
+      // Origin: 'http://localhost:3000',
+      // baseURL: apiBaseUrl,
+      'token': window.localStorage.getItem('token')
     },
-    // mode: 'cors',
+    mode: 'cors',
+    // credentials: 'include',
     // cache: 'no-cache',
-    body: JSON.stringify(params)
+    // body: JSON.stringify(params)
   }
+  console.log(r)
+  return r
 }
