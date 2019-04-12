@@ -132,7 +132,7 @@ function getNttBalance() {
 }
 
 //api-login to get sign code
-function loginSmartUp(skipLogin) {
+function loginSmartUp() {
   return async dispatch => {
     let [error, response] = await dispatch(asyncFunction(
       Net,
