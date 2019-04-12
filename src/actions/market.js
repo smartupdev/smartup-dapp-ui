@@ -16,7 +16,7 @@ import {
 export function createMarket() {
   return async (dispatch, getState) => {
     let address = getState().user.account;
-    let [err, response] = await dispatch(callbackFunction(
+    let [error, response] = await dispatch(callbackFunction(
       smartupWeb3.eth.sendTransaction,
       CREATE_MARKET_REQUESTED, CREATE_MARKET_SUCCEEDED, CREATE_MARKET_FAILED,
       {
@@ -29,10 +29,10 @@ export function createMarket() {
         }
       }
     ));
-    if(!err){
+    if(!error){
       dispatch(createSmartUpMarket(response));
     }
-    console.log('------------ error', err);
+    console.log('------------ error', error);
     console.log('------------ response', response);
   }
 }

@@ -4,6 +4,14 @@ export const smartupContractAddress = '0x437098700e7de348e436b809c74bb2442abd3bd
 export const sutContractAddress = '0xf1899c6eb6940021c1ae4e9c3a8e29ee93704b03'
 export const nttContractAddress = '0x846ce03199a759a183cccb35146124cd3f120548'
 export const smartupWeb3 = window.web3 && new Web3(window.web3.currentProvider)
+window.sut = smartupWeb3
+
+export const getAccount = () => {
+  if (window.web3) {
+    return window.web3.eth.accounts[0];
+  }
+  return undefined;
+};
 
 export function checkIsSupportWeb3() { 
   return typeof window.ethereum !== 'undefined' && typeof window.web3 !== 'undefined'
@@ -84,14 +92,14 @@ export function asyncFunction(
 export function callbackFunction(
   func,
   requestType, responseType, errorType,
-  options = {} // isWeb3, params, responsePayload
+  options = {} // isWeb3, params, responsePayload, params2
 ) {
   return async dispatch => {
     const promise = () => new Promise( (resolve, reject) => 
-      func(...[options.params,options.params2], (error, response) => {
+      func(...[options.params, options.params2], (error, response) => {
         if(error) reject(error)
         resolve(response)
-      })    
+      })
     )
     return await dispatch(asyncFunction(promise, requestType, responseType, errorType, options))
 

@@ -1,16 +1,33 @@
 import styled, { css } from 'styled-components'
 
-export const Text = styled.p`
-  margin: 0;
-  padding: 0;
-  font-family: 'Quicksand', sans-serif;
+export const fontSizeCss = css`
   font-size: ${p => p.theme.fontSizeM};
   ${props => props.XS && css`font-size: ${p => p.theme.fontSizeXS}`}
   ${props => props.S && css`font-size: ${p => p.theme.fontSizeS}`}
   ${props => props.M && css`font-size: ${p => p.theme.fontSizeM}`}
   ${props => props.L && css`font-size: ${p => p.theme.fontSizeL}`}
   ${props => props.XL && css`font-size: ${p => p.theme.fontSizeXL}`}
+`
 
+export const fontCss = css`
+  font-family: 'Quicksand', sans-serif;
+  ${fontSizeCss}
+`
+
+export const A = styled.a`
+  ${fontCss}
+  ${p => p.error && css`
+    color: ${p.theme.red};
+    :visited { 
+      color: ${p.theme.red};
+    }
+  `}
+`
+
+export const Text = styled.p`
+  margin: 0;
+  padding: 0;
+  ${fontCss}
   ${p => p.inline && css`display: inline`};
   ${p => p.lineHeight && css`line-height: 1.5`};
 

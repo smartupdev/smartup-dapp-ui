@@ -1,13 +1,17 @@
-import React from 'react'
-import { Route } from "react-router-dom";
+import React, { useEffect, useState } from 'react'
+import styled from 'styled-components'
 
+import { Route } from "react-router-dom";
 import routes from '../../routes'
+
 import Header from '../../components/Header'
 import Panel from '../Panel'
 import Main from '../../components/Main'
 import Hr from '../../components/Hr'
 import { Row } from '../../components/Layout'
-import styled from 'styled-components'
+
+import { connect } from 'react-redux';
+import { watchMetamask, checkLogin } from '../../actions/user'
 
 const Container = styled(Row)`
   background-color: ${p => p.theme.bgColor};
@@ -15,7 +19,11 @@ const Container = styled(Row)`
   height: 100vh;
 `
 
-const App = () => {
+const App = ({ watchMetamask, checkLogin }) => {
+  useEffect( () => {
+    watchMetamask()
+    checkLogin()
+  }, [])
   return (
     <Container>
       <Header routes={routes} />
@@ -30,7 +38,13 @@ const App = () => {
       <Hr vertical />
       <Panel />
     </Container>
-  );
+  )
 }
 
-export default App;
+// export default App;
+
+
+const mapDispatchToProps = {
+  watchMetamask, checkLogin
+} 
+export default connect(null, mapDispatchToProps)(App);

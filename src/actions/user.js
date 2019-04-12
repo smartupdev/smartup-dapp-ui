@@ -6,13 +6,14 @@ import {
   USER_LOGIN_SMARTUP_REQUESTED, USER_LOGIN_SMARTUP_SUCCEEDED, USER_LOGIN_SMARTUP_FAILED,
   USER_PERSON_SIGN_REQUESTED, USER_PERSON_SIGN_SUCCEEDED, USER_PERSON_SIGN_FAILED,
   UPDATE_USER_NAME, UPDATE_USER_AVATAR, QUERY_USER_INFO,
+  METAMASK_SET_ACCOUNT
 } from './actionTypes'
 import {
   asyncFunction, callbackFunction,
   formatToken, formatCredit,
   getBalance, getCredit,
   sutContractAddress, nttContractAddress,
-  smartupWeb3
+  smartupWeb3, getAccount
 } from '../integrator'
 import {
   API_USER_LOGIN, API_USER_CURRENT, API_USER_UPDATE
@@ -23,6 +24,39 @@ import { Net } from '../lib/util/request';
 
 const client = ipfsClient('ipfs-api.smartup.global', '80', { protocol: 'http' });
 
+const STORAGE_KEY_TOKEN = 'token'
+const STORAGE_KEY_ACC = 'acc'
+
+export function checkLogin() {
+  return async (dispatch) => {
+    const token = window.localStorage.getItem(STORAGE_KEY_TOKEN)
+    if(token) {
+      await dispatch(loginMetaMask(true))
+      dispatch({
+        type: USER_PERSON_SIGN_SUCCEEDED,
+        payload: token
+      })
+    }
+  }
+}
+
+export function watchMetamask() {
+  return (dispatch, getState) => {
+    let accountInterval = setInterval(() => {
+      const acc = window.localStorage.getItem(STORAGE_KEY_ACC)
+      // const { account } = getState().user
+      const newAccount = getAccount()
+      if (acc !== newAccount) {
+        dispatch({
+          type: METAMASK_SET_ACCOUNT,
+          payload: newAccount
+        })
+      }
+    }, 1000);
+
+  }
+}
+
 export function enableEthereum() {
   return asyncFunction(
     window.ethereum && window.ethereum.enable,
@@ -31,15 +65,15 @@ export function enableEthereum() {
   )
 }
 
-export function loginMetaMask() {
-  return async (dispatch, getState) => {
+export function loginMetaMask(skipLogin) {
+  return async (dispatch) => {
     const [error, response] = await dispatch(enableEthereum())
     if (!error) {
       await Promise.all([
         dispatch(getEthBalance()),
         dispatch(getSutBalance()),
         dispatch(getNttBalance()),
-        dispatch(loginSmartUp()),
+        skipLogin !== true && dispatch(loginSmartUp()),
       ])
     }
   }
@@ -47,57 +81,50 @@ export function loginMetaMask() {
 
 //get eth balance
 function getEthBalance() {
-  return (dispatch, getState) => {
-    return dispatch(callbackFunction(
-      smartupWeb3.eth.getBalance,
-      METAMASK_ETH_BALANCE_REQUESTED, METAMASK_ETH_BALANCE_SUCCEEDED, METAMASK_ETH_BALANCE_FAILED,
-      {
-        isWeb3: true,
-        params: getState().user.account,
-        responsePayload: formatToken
-      }
-    ))
-  }
+  return callbackFunction(
+    smartupWeb3.eth.getBalance,
+    METAMASK_ETH_BALANCE_REQUESTED, METAMASK_ETH_BALANCE_SUCCEEDED, METAMASK_ETH_BALANCE_FAILED,
+    {
+      isWeb3: true,
+      params: getAccount(),
+      responsePayload: formatToken
+    }
+  )
 }
 
 //get sut balance
 function getSutBalance() {
-  return (dispatch, getState) => {
-    return dispatch(callbackFunction(
-      smartupWeb3.eth.call,
-      METAMASK_SUT_BALANCE_REQUESTED, METAMASK_SUT_BALANCE_SUCCEEDED, METAMASK_SUT_BALANCE_FAILED,
-      {
-        isWeb3: true,
-        params: { to: sutContractAddress, data: getBalance(getState().user.account) },
-        responsePayload: formatToken
-      }
-    ))
-  }
+  return callbackFunction(
+    smartupWeb3.eth.call,
+    METAMASK_SUT_BALANCE_REQUESTED, METAMASK_SUT_BALANCE_SUCCEEDED, METAMASK_SUT_BALANCE_FAILED,
+    {
+      isWeb3: true,
+      params: { to: sutContractAddress, data: getBalance(getAccount()) },
+      responsePayload: formatToken
+    }
+  )
 }
 
 //get ntt balance
 function getNttBalance() {
-  return (dispatch, getState) => {
-    return dispatch(callbackFunction(
-      smartupWeb3.eth.call,
-      METAMASK_NTT_BALANCE_REQUESTED, METAMASK_NTT_BALANCE_SUCCEEDED, METAMASK_NTT_BALANCE_FAILED,
-      {
-        isWeb3: true,
-        params: { to: nttContractAddress, data: getCredit(getState().user.account) },
-        responsePayload: formatCredit
-      }
-    ))
-  }
+  return callbackFunction(
+    smartupWeb3.eth.call,
+    METAMASK_NTT_BALANCE_REQUESTED, METAMASK_NTT_BALANCE_SUCCEEDED, METAMASK_NTT_BALANCE_FAILED,
+    {
+      isWeb3: true,
+      params: { to: nttContractAddress, data: getCredit(getAccount()) },
+      responsePayload: formatCredit
+    }
+  )
 }
 
 //api-login to get sign code
 function loginSmartUp() {
-  return async (dispatch, getState) => {
-    let address = getState().user.account;
+  return async dispatch => {
     let [error, response] = await dispatch(asyncFunction(
       Net,
       USER_LOGIN_SMARTUP_REQUESTED, USER_LOGIN_SMARTUP_SUCCEEDED, USER_LOGIN_SMARTUP_FAILED,
-      { isWeb3: true, params: { api: API_USER_LOGIN, params: { address } }, responsePayload: reps => reps.obj }
+      { isWeb3: true, params: { api: API_USER_LOGIN, params: { address: getAccount() } }, responsePayload: reps => reps.obj }
     ));
     if (!error) {
       dispatch(getPersonSign(response));
@@ -109,27 +136,20 @@ function loginSmartUp() {
 //The MetaMask Web3 object does not support synchronous methods 
 //like personal_sign without a callback parameter.
 function getPersonSign(msg) {
-  return (dispatch, getState) => {
-    let account = getState().user.account;
-    dispatch({
-      type: USER_PERSON_SIGN_REQUESTED,
-    });
-    window.web3.personal.sign(msg, account, (err, ret) => {
-      if (err) {
-        dispatch({
-          type: USER_PERSON_SIGN_FAILED,
-          payload: err,
-          error: true
-        });
-      } else {
-        window.localStorage.setItem('token', ret);
-        dispatch({
-          type: USER_PERSON_SIGN_SUCCEEDED,
-          payload: ret
-        });
-      }
-    });
-  }
+  return async dispatch => {
+    let [error, response] = await dispatch(
+      callbackFunction(
+        window.web3.personal.sign,
+        USER_PERSON_SIGN_REQUESTED, USER_PERSON_SIGN_SUCCEEDED, USER_PERSON_SIGN_FAILED, 
+        { params: msg, params2: getAccount() }
+     )
+    )
+    if(!error) {
+      window.localStorage.setItem(STORAGE_KEY_TOKEN, response);
+      window.localStorage.setItem(STORAGE_KEY_ACC, getAccount());
+      console.debug('Saved to token as '+response)
+    }
+  }  
 }
 
 // web3.personal.sign(msg, account, (err, ret) => {

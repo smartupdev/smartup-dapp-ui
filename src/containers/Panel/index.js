@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import Image from '../../components/Image'
 import { People } from '../../components/Icon'
 import Button from '../../components/Button'
-import Text from '../../components/Text'
+import Text, { A } from '../../components/Text'
 import Tab from '../../components/Tab'
 import Hr from '../../components/Hr'
 import Portfolio from './Portfolio'
@@ -16,7 +16,7 @@ import lang, { currentLang } from '../../lang'
 import { shorten } from '../../lib/util'
 import { connect } from 'react-redux'
 import { setActiveTab } from '../../actions/panel'
-import { updateUserName, updateUserAvatar,loginMetaMask } from '../../actions/user'
+import { updateUserName, updateUserAvatar, loginMetaMask } from '../../actions/user'
 
 const PANEL_WIDTH = 300
 
@@ -39,8 +39,9 @@ const Terms = () =>
 
 const Panel = ({ 
   nttBalance,
-  metaMaskHint, loggedIn, account, 
+  metaMaskHint, account, 
   userAvatar, userName, loginMetaMask, 
+  loggedIn, isLoading, metaMaskEableError, metaMaskSignError,
   setActiveTab, activeTabIndex }) => {
   const Main = TABS[activeTabIndex].component
   return (
@@ -65,11 +66,16 @@ const Panel = ({
         :
         <Col center>
           <People XL round color={theme.white} />
-          <Button primary outline verticalMargin label={lang.panel.connectButton[currentLang]} onClick={loginMetaMask} />
+          <Button primary outline verticalMargin label={lang.panel.connectButton[currentLang]} onClick={loginMetaMask} disabled={isLoading} />
           <Text note>{metaMaskHint}</Text>
-          {/* <Row width={`${PANEL_WIDTH*.8}px`} spacingTopXS>
-            <Text error>Please install or enable the MetaMask browser plug-in from Metamask.io</Text>
-          </Row> */}
+            <Row width={`${PANEL_WIDTH*.8}px`} spacingTopXS>
+              { metaMaskEableError &&
+                <Text error>Please install or enable the MetaMask browser plug-in from <A XS error href='https://metamask.io/' target="_blank">Metamask.io</A></Text>
+              }
+              { metaMaskSignError &&
+                <Text error>Please sign the message for login purpose.</Text>
+              }
+            </Row>
         </Col>
       }
     </Col>
@@ -79,11 +85,15 @@ const Panel = ({
 const mapStateToProps = state => ({
   nttBalance: state.user.nttBalance,
   account: state.user.account,
-  loggedIn: state.user.loggedIn,
+  loginError: state.user.loginError,
   metaMaskHint: state.user.metaMaskHint,
   userName: state.user.userName,
   userAvatar: state.user.userAvatar,
   activeTabIndex: state.panel.activeTabIndex,
+  loggedIn: state.user.loggedIn,
+  isLoading: state.user.isLoading,
+  metaMaskEableError: state.user.metaMaskEableError,
+  metaMaskSignError: state.user.metaMaskSignError,
 });
 
 const mapDispatchToProps = {
