@@ -6,11 +6,11 @@ import {
   USER_LOGIN_SMARTUP_REQUESTED, USER_LOGIN_SMARTUP_SUCCEEDED, USER_LOGIN_SMARTUP_FAILED,
   USER_PERSON_SIGN_REQUESTED, USER_PERSON_SIGN_SUCCEEDED, USER_PERSON_SIGN_FAILED,
   UPDATE_USER_NAME, UPDATE_USER_AVATAR, QUERY_USER_INFO,
-  METAMASK_SET_ACCOUNT
+  METAMASK_RESET
 } from './actionTypes'
 import {
-  asyncFunction, callbackFunction,
-  formatToken, formatCredit,
+asyncFunction, callbackFunction,
+formatToken, formatCredit,
   getBalance, getCredit,
   sutContractAddress, nttContractAddress,
   smartupWeb3, getAccount
@@ -27,15 +27,29 @@ const client = ipfsClient('ipfs-api.smartup.global', '80', { protocol: 'http' })
 const STORAGE_KEY_TOKEN = 'token'
 const STORAGE_KEY_ACC = 'acc'
 
+function setStorageToken(token) {
+  window.localStorage.setItem(STORAGE_KEY_TOKEN, token)
+  window.localStorage.setItem(STORAGE_KEY_ACC, getAccount())
+}
+function getStorageToken() {
+  const r = window.localStorage.getItem(STORAGE_KEY_TOKEN)
+  return r === 'undefined' ? undefined : r
+}
+function getStorageAccount() {
+  const r = window.localStorage.getItem(STORAGE_KEY_ACC)
+  return r === 'undefined' ? undefined : r
+}
+
 export function checkLogin() {
-  return async (dispatch) => {
-    const token = window.localStorage.getItem(STORAGE_KEY_TOKEN)
+  return async dispatch => {
+    const token = getStorageToken()
     if(token) {
-      await dispatch(loginMetaMask(true))
-      dispatch({
-        type: USER_PERSON_SIGN_SUCCEEDED,
-        payload: token
-      })
+      const [error, response] = await dispatch(loginMetaMask(true))
+      if(!error) {
+        dispatch({
+          type: USER_PERSON_SIGN_SUCCEEDED
+        })
+      }
     }
   }
 }
@@ -43,14 +57,11 @@ export function checkLogin() {
 export function watchMetamask() {
   return (dispatch, getState) => {
     let accountInterval = setInterval(() => {
-      const acc = window.localStorage.getItem(STORAGE_KEY_ACC)
-      // const { account } = getState().user
+      const acc = getStorageAccount()
       const newAccount = getAccount()
-      if (acc !== newAccount) {
-        dispatch({
-          type: METAMASK_SET_ACCOUNT,
-          payload: newAccount
-        })
+      if (acc != newAccount) {
+        setStorageToken()
+        dispatch({ type: METAMASK_RESET })
       }
     }, 1000);
 
@@ -76,6 +87,7 @@ export function loginMetaMask(skipLogin) {
         skipLogin !== true && dispatch(loginSmartUp()),
       ])
     }
+    return [error, response]
   }
 }
 
@@ -119,7 +131,7 @@ function getNttBalance() {
 }
 
 //api-login to get sign code
-function loginSmartUp() {
+function loginSmartUp(skipLogin) {
   return async dispatch => {
     let [error, response] = await dispatch(asyncFunction(
       Net,
@@ -145,8 +157,7 @@ function getPersonSign(msg) {
      )
     )
     if(!error) {
-      window.localStorage.setItem(STORAGE_KEY_TOKEN, response);
-      window.localStorage.setItem(STORAGE_KEY_ACC, getAccount());
+      setStorageToken(response)
       console.debug('Saved to token as '+response)
     }
   }  
