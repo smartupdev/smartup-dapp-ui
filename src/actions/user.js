@@ -21,7 +21,7 @@ import {
 } from './api';
 import ipfsClient from 'ipfs-http-client';
 import toBuffer from 'blob-to-buffer';
-import { Net } from '../lib/util/request';
+import fetch from '../lib/util/fetch';
 
 const client = ipfsClient('ipfs-api.smartup.global', '80', { protocol: 'http' });
 
@@ -135,9 +135,9 @@ function getNttBalance() {
 function loginSmartUp() {
   return async dispatch => {
     let [error, response] = await dispatch(asyncFunction(
-      Net,
+      fetch.post,
       USER_LOGIN_SMARTUP_REQUESTED, USER_LOGIN_SMARTUP_SUCCEEDED, USER_LOGIN_SMARTUP_FAILED,
-      { isWeb3: true, params: { api: API_USER_LOGIN, params: { address: getAccount() } }, responsePayload: reps => reps.obj }
+      { isWeb3: true, params: API_USER_LOGIN, params2: { address: getAccount() }, responsePayload: reps => reps.obj }
     ));
     if (!error) {
       dispatch(getPersonSign(response));
@@ -148,9 +148,9 @@ function loginSmartUp() {
 function authSmartUp(signature){
   return async dispatch => {
     let [error, response] = await dispatch(asyncFunction(
-      Net,
+      fetch.post,
       USER_AUTH_SMARTUP_REQUESTED, USER_AUTH_SMARTUP_SUCCEEDED, USER_AUTH_SMARTUP_FAILED,
-      { isWeb3: true, params: { api: API_USER_AUTH, params: { address: getAccount(),signature } }, responsePayload: reps => reps.obj.token }
+      { isWeb3: true, params: API_USER_AUTH, params2: { address: getAccount(),signature }, responsePayload: reps => reps.obj.token }
     ));
     if (!error) {
       setStorageToken(response)
