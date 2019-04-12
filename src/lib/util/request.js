@@ -8,9 +8,8 @@ const instance = axios.create({
 });
 
 instance.interceptors.request.use((config) => {
-    config.data = config.data;
     config.headers = {
-        'Content-Type': 'application/x-www-form-urlencoded'
+        'Content-Type': 'application/x-www-form-urlencoded',
     }
     console.log('console log for chrom config', config);
     return config;
