@@ -8,20 +8,23 @@ function toParams(params = {}) {
     , '')
 }
 
-export default {
-  get: (api, params) => {
-    return cmFetch('GET', api + toParams(params))
-  },
-  post: (api, params) => {
-    return cmFetch('POST', api + toParams(params))
-  },
-  put: (api, params) => {
-    return cmFetch('PUT', api, params)
-  },
-  delete: (api, params) => {
-    return cmFetch('DELETE', api, params)
-  }
+export function get(api, params) {
+  return cmFetch('GET', api + toParams(params))
 }
+
+export function post(api, params) {
+  return cmFetch('POST', api + toParams(params))
+}
+
+export function put(api, params) {
+  return cmFetch('PUT', api, params)
+}
+
+export function remove(api, params) {
+  return cmFetch('DELETE', api, params)
+}
+
+export default { get, post, put, remove }
 
 function timeoutWrapper (promise, timeout = fetchTimeout) {
   return Promise.race([
