@@ -27,7 +27,6 @@ export const A = styled.a`
 export const Text = styled.p`
   margin: 0;
   padding: 0;
-  ${fontCss}
   ${p => p.inline && css`display: inline`};
   ${p => p.lineHeight && css`line-height: 1.5`};
 
@@ -59,7 +58,7 @@ export const Text = styled.p`
   ${p => p.error && css`
     color: ${p.theme.red};
     font-size: ${p.theme.fontSizeXS};
-    position: absolute;
+    // position: absolute;
     // bottom: -20px;
 
     // white-space: nowrap; 
@@ -75,5 +74,7 @@ export const Text = styled.p`
     }    
   `}
   ${p => p.onClick && css`cursor: pointer`}
+
+  ${fontCss}
   `
 export default Text

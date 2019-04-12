@@ -13,25 +13,25 @@ import successImg from '../../images/market_success.png';
 import Chart from './Chart'
 
 import { connect } from 'react-redux';
-import { setActiveIndex } from '../../actions/createMarket'
+import { setActiveIndex, onChangeName, onChangeDesc } from '../../actions/createMarket'
 import { createMarket } from '../../actions/market'
 
 const options = ['Basic Information', 'Price Equation', 'Deposit']
 const optionsSpeed = ['Slow', 'Standard', 'Fast']
-const CreateMarket = ({activeIndex, setActiveIndex, createMarket}) => {
-  function next() { setActiveIndex(1) }
-  function back() { setActiveIndex(-1) }
-  // const [nameError, setNameError] = useState(false)
-  // const [desError, setDesError] = useState(false)
-  // const [equError, setEquError] = useState(false)
-  // const [depositError, setDepositError] = useState(false)
-  // const [ethError, setEthError] = useState(false)
+const CreateMarket = ({
+  createMarketState: { activeIndex, name, desc, error }, 
+  setActiveIndex, createMarket, onChangeName, onChangeDesc}) => {
+  function next() { setActiveIndex(activeIndex + 1) }
+  function back() { setActiveIndex(activeIndex - 1) }
   const Label = ({ children }) => <Text S spaceV>{children}</Text>
-  const Next = () =>  <Button label='Next' primary extended onClick={next} />
+  const Next = ({disabled}) =>  <Button label='Next' primary extended onClick={next} disabled={disabled} />
   const Back = () =>  <Button label='Back' primary extended onClick={back} />
-
-  const [name, setName] = useState('')
-
+  const page1Ready = !(error.name || error.desc || !name || !desc)
+  const page2Ready = page1Ready
+  const onChangeProgress = tab => 
+    tab === 0 && setActiveIndex(tab) ||
+    tab === 1 && page1Ready && setActiveIndex(tab) ||
+    tab === 2 && page2Ready && setActiveIndex(tab)
   return (
     <Col>
       <Col center spacingBottomXS spacingTopXS>
@@ -40,7 +40,7 @@ const CreateMarket = ({activeIndex, setActiveIndex, createMarket}) => {
       <Hr />
       {
         activeIndex < options.length && 
-        <ProgressBar options={options} activeIndex={activeIndex} onClick={setActiveIndex} />
+        <ProgressBar options={options} activeIndex={activeIndex} onClick={onChangeProgress} />
       }
 
       <Col spacingLeftS spacingRightS>
@@ -48,13 +48,13 @@ const CreateMarket = ({activeIndex, setActiveIndex, createMarket}) => {
         activeIndex === 0 ? 
           <>
             <Label>Market Name</Label>
-            <Input background XL value={name} onChange={e => setName(e.target.value)} />
-            <Text S right>Capital sensitive, 3-20 characters, community name cannot be changed.</Text>
+            <Input background XL value={name} onChange={e => onChangeName(e.target.value)} />
+            <Text S right error={error.name}>Capital sensitive, 3-20 characters, community name cannot be changed.</Text>
             <Label>Market description</Label>
-            <Input background L line={3} />
-            <Text S right>150 characters to help new members get to know your community.</Text>
+            <Input background L line={3} value={desc} onChange={e => onChangeDesc(e.target.value)} />
+            <Text S right error={error.desc}>150 characters to help new members get to know your community.</Text>
             <Row spacingTopL right>
-              <Next />
+              <Next disabled={!page1Ready} />
             </Row>
           </>
         :
@@ -101,7 +101,7 @@ const CreateMarket = ({activeIndex, setActiveIndex, createMarket}) => {
             </Col> */}
             <Row spacingTopL spaceBetween>
               <Back />
-              <Button label='Create' primary onClick={next} extended />
+              <Button label='Create' primary onClick={createMarket} extended />
             </Row>
           </>
         :
@@ -111,7 +111,7 @@ const CreateMarket = ({activeIndex, setActiveIndex, createMarket}) => {
               <Col spacingTopL spacingBottomL>
                 <Text XL wordSpaceL center>MAKRET IS CREATED SUCCESSFULLY!</Text>
               </Col>
-              <Button label='Explore Market' primary onClick={createMarket} extended />
+              <Button label='Explore Market' primary onClick={console.log} extended />
             </Col>
           </>
       }
@@ -121,10 +121,10 @@ const CreateMarket = ({activeIndex, setActiveIndex, createMarket}) => {
 }
 
 const mapStateToProps = state => ({
-  activeIndex: state.createMarket.activeIndex,
+  createMarketState: state.createMarket,
 });
 const mapDispatchToProps = {
-  setActiveIndex,createMarket,
+  setActiveIndex, createMarket, onChangeName, onChangeDesc
 } 
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreateMarket);

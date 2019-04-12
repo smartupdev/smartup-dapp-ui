@@ -3,7 +3,7 @@ import {
   METAMASK_ETH_BALANCE_REQUESTED, METAMASK_ETH_BALANCE_SUCCEEDED, METAMASK_ETH_BALANCE_FAILED,
   METAMASK_SUT_BALANCE_REQUESTED, METAMASK_SUT_BALANCE_SUCCEEDED, METAMASK_SUT_BALANCE_FAILED,
   METAMASK_NTT_BALANCE_REQUESTED, METAMASK_NTT_BALANCE_SUCCEEDED, METAMASK_NTT_BALANCE_FAILED,
-  METAMASK_SET_ACCOUNT,
+  METAMASK_RESET,
   USER_PERSON_SIGN_REQUESTED, USER_PERSON_SIGN_SUCCEEDED, USER_PERSON_SIGN_FAILED,
   UPDATE_USER_NAME, UPDATE_USER_AVATAR, QUERY_USER_INFO
 } from '../actions/actionTypes';
@@ -40,13 +40,8 @@ export const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case METAMASK_SET_ACCOUNT:
-      return {
-        ...state,
-        account: action.payload,
-        loggedIn: false,
-        isLoading: false,
-      }
+    case METAMASK_RESET:
+      return initialState
 
     case LOGIN_METAMASK_REQUESTED:
       return {
