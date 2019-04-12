@@ -101,7 +101,7 @@ const ConnectMarket = ({ markets, location }) => {
 }
 
 const mapStateToProps = state => ({
-  markets: state.home.markets,
+  markets: state.market.markets,
 });
 
 export default connect(mapStateToProps)(withRouter(ConnectMarket));
