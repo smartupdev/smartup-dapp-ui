@@ -20,6 +20,10 @@ const Button = styled.button`
   ${p => p.primary && css`background-color: ${p.theme.colorPrimary}; color: ${p.theme.colorDark}; fill: ${p.theme.colorDark};`}  
   ${p => p.light && css`color: ${p.theme.white}; fill: ${p.theme.white};`}  
   ${p => p.primary && p.outline && css`background-color: transparent; color: ${p.theme.colorPrimary}; border: 1px solid ${p.theme.colorPrimary}`}  
+  :disabled {
+    cursor: not-allowed;
+    opacity: .5;
+  }
 `
 
 export default ({ label, icon: Icon, primary, light, condensed, extended, outline, verticalMargin, ...rest }) => {
