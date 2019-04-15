@@ -4,9 +4,7 @@ import home from './reducers/home';
 import market from './reducers/market';
 import createMarket from './reducers/createMarket';
 import panel from './reducers/panel';
-import eth from './reducers/eth';
-import ipfs from './reducers/ipfs';
-import bigchain from './reducers/bigchain';
+import marketDetail from './reducers/marketDetail';
 import { combineReducers } from 'redux';
 import { routerReducer } from 'react-router-redux';
 
@@ -16,9 +14,7 @@ export default combineReducers({
     home,
     market,
     createMarket,
+    marketDetail,
     panel,
-    eth,
-    ipfs,
-    bigchain,
     router: routerReducer
 });

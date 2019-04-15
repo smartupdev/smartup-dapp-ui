@@ -10,8 +10,8 @@ export const API_USER_LOGIN = '/api/login';
 export const API_USER_CURRENT = '/api/user/current';
 export const API_USER_UPDATE = '/api/user/update';
 //trade-controller
-export const API_TRADE_BUY_CT = '/api/trade/buy/ct';
-export const API_TRADE_SELL_CT = '/api/trade/sell/ct';
+export const API_USER_TRADE_LIST = '/api/user/trade/list';
+export const API_USER_TRADE_DETAIL = '/api/user/trade/one';
 //post-controller
 export const API_POST_ADD = '/api/post/add';
 export const API_POST_LIST = '/api/post/list';

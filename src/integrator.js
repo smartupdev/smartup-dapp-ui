@@ -13,25 +13,33 @@ export const getAccount = () => {
   return undefined;
 };
 
-export function checkIsSupportWeb3() { 
+export function checkIsSupportWeb3() {
   return typeof window.ethereum !== 'undefined' && typeof window.web3 !== 'undefined'
 }
-export function formatToken(r) { 
+export function formatToken(r) {
   return `${window.web3.fromWei(r)}`
 }
-export function formatCredit(r) { 
+export function formatCredit(r) {
   return `${smartupWeb3.eth.abi.decodeParameter('uint256', r)}`
+}
+
+export function toWei(r) {
+  return `${smartupWeb3.utils.toWei(r)}`
+}
+
+export function encodeParam(r) {
+  return `${smartupWeb3.eth.abi.encodeParameter('uint256', r)}`
 }
 
 export function getBalance(account) {
   return smartupWeb3.eth.abi.encodeFunctionCall({
-   name: 'balanceOf',
-   type: 'function',
-   inputs: [ { type: 'address' } ]
- }, [account]);
+    name: 'balanceOf',
+    type: 'function',
+    inputs: [{ type: 'address' }]
+  }, [account]);
 }
 
-export function createMarketData(){
+export function createMarketData() {
   return smartupWeb3.eth.abi.encodeFunctionCall({
     name: 'approveAndCall',
     type: 'function',
@@ -49,16 +57,76 @@ export function createMarketData(){
         name: '_extraData'
       }
     ]
-  }, [smartupContractAddress, '2500000000000000000000', 
-  '0x0000000000000000000000000000000000000000000000000000000000000001']);
+  }, [smartupContractAddress, '2500000000000000000000',
+      '0x0000000000000000000000000000000000000000000000000000000000000001']);
+}
+
+export function createBidCtData({ marketAddress, encodeCtPrice, encodeCtAmount }) {
+  return smartupWeb3.eth.abi.encodeFunctionCall({
+    name: 'approveAndCall',
+    type: 'function',
+    inputs: [
+      {
+        type: 'address',
+        name: '_spender'
+      },
+      {
+        type: 'uint256',
+        name: '_value'
+      },
+      {
+        type: 'bytes',
+        name: '_extraData'
+      }
+    ]
+  }, [marketAddress, encodeCtPrice, encodeCtAmount]);
+}
+
+export function createBidQuoteData(encodeCtAmount) {
+  return smartupWeb3.eth.abi.encodeFunctionCall({
+    name: 'bidQuote',
+    type: 'function',
+    inputs: [
+        {
+            type: 'uint256',
+            name: 'ctAmount'
+        }
+    ]
+}, [encodeCtAmount]);
+}
+
+export function createAskQuoteData(encodeCtAmount) {
+  return smartupWeb3.eth.abi.encodeFunctionCall({
+    name: 'askQuote',
+    type: 'function',
+    inputs: [
+        {
+            type: 'uint256',
+            name: 'ctAmount'
+        }
+    ]
+}, [encodeCtAmount]);
+}
+
+export function createAskCtData(decodeCtAmount) {
+  return smartupWeb3.eth.abi.encodeFunctionCall({
+    name: 'sell',
+    type: 'function',
+    inputs: [
+        {
+            type: 'uint256',
+            name: 'ctAmount'
+        }
+    ]
+}, [decodeCtAmount]);
 }
 
 export function getCredit(account) {
   return smartupWeb3.eth.abi.encodeFunctionCall({
-   name: 'checkCredit',
-   type: 'function',
-   inputs: [ { type: 'address' } ]
- }, [account]);
+    name: 'checkCredit',
+    type: 'function',
+    inputs: [{ type: 'address' }]
+  }, [account]);
 }
 
 export function asyncFunction(
@@ -69,8 +137,8 @@ export function asyncFunction(
   return async dispatch => {
     dispatch({ type: requestType })
     try {
-      if(options.isWeb3 && !checkIsSupportWeb3()) throw new Error('Web3 or ethereum is not supported.')
-      let response = await func(...[options.params,options.params2])
+      if (options.isWeb3 && !checkIsSupportWeb3()) throw new Error('Web3 or ethereum is not supported.')
+      let response = await func(...[options.params, options.params2])
       response = options.responsePayload ? options.responsePayload(response) : response
       dispatch({
         type: responseType,
@@ -78,7 +146,7 @@ export function asyncFunction(
       })
       return [null, response]
     }
-    catch(error) {
+    catch (error) {
       dispatch({
         type: errorType,
         payload: error,
@@ -95,9 +163,9 @@ export function callbackFunction(
   options = {} // isWeb3, params, responsePayload, params2
 ) {
   return async dispatch => {
-    const promise = () => new Promise( (resolve, reject) => 
+    const promise = () => new Promise((resolve, reject) =>
       func(...[options.params, options.params2], (error, response) => {
-        if(error) reject(error)
+        if (error) reject(error)
         resolve(response)
       })
     )
