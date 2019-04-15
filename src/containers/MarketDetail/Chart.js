@@ -1,5 +1,8 @@
 import React, { Component, useRef, useEffect } from 'react'
+import theme from '../../theme'
+
 import { format } from "d3-format";
+import { timeFormat } from "d3-time-format";
 
 import { ChartCanvas, Chart } from "react-stockcharts";
 import {
@@ -8,18 +11,25 @@ import {
 } from "react-stockcharts/lib/series";
 import { XAxis, YAxis } from "react-stockcharts/lib/axes";
 
+import {
+	CrossHairCursor,
+	MouseCoordinateX,
+	MouseCoordinateY
+} from "react-stockcharts/lib/coordinates";
+
 import { discontinuousTimeScaleProvider } from "react-stockcharts/lib/scale";
 import { fitWidth } from "react-stockcharts/lib/helper";
 import { last } from "react-stockcharts/lib/utils";
 
 import dumpData from './dumpData'
 
+function fill(d) {
+  return d.close > d.open ? theme.red : theme.green
+}
 const candlesAppearance = {
-  wickStroke: "#000000",
-  fill: function fill(d) {
-    return d.close > d.open ? "rgb(217,110,112)" : "rgb(144,197,147)";
-  },
-  stroke: "#000000",
+  wickStroke: "#fff",
+  fill,
+  stroke: 'transparent',
   candleStrokeWidth: 1,
   widthRatio: 0.8,
   opacity: 1,
@@ -46,6 +56,13 @@ class DrawChart extends Component {
     document.body.style.overflow = (style === 'hidden') ? 'auto':'hidden'
   }
 
+  axiaStyle = {
+    fontSize: theme.fontSizeS,
+    fontFamily: theme.fontFamily,
+    tickStroke: '#ffffff',
+    stroke: "#ffffff"
+  }
+
   render() {
     const { 
       type = 'svg', 
@@ -61,16 +78,17 @@ class DrawChart extends Component {
       xAccessor,
       displayXAccessor,
     } = xScaleProvider(initialData);
-
-    const start = xAccessor(last(data));
-    const end = xAccessor(data[Math.max(0, data.length - 100)]);
+    console.log(displayXAccessor)
+    const start = xAccessor(last(data)) + 1;
+    const end = xAccessor(data[Math.max(0, data.length - 30)]);
     const xExtents = [start, end];
+
     return (
       <BlockPageScroll>
       <ChartCanvas 
-        height={400}
-        ratio={ratio}
+        height={350}
         width={width}
+        ratio={ratio}
         margin={{ left: 50, right: 50, top: 10, bottom: 30 }}
         type={type}
         seriesName="MSFT"
@@ -82,14 +100,17 @@ class DrawChart extends Component {
       >
 
         <Chart id={1} yExtents={d => [d.high, d.low]}>
-          <XAxis axisAt="bottom" orient="bottom"/>
-          <YAxis axisAt="right" orient="right" ticks={5} />
+          <XAxis axisAt="bottom" orient="bottom" ticks={10} {...this.axiaStyle} />
+          <YAxis axisAt="right" orient="right" ticks={5} {...this.axiaStyle}  />
+          <MouseCoordinateX at="bottom" orient="bottom" displayFormat={timeFormat("%H:%M")} />
+					<MouseCoordinateY at="right" orient="right" displayFormat={d => d.toFixed(5)} />
           <CandlestickSeries {...candlesAppearance}/>
         </Chart> 
         <Chart id={2} origin={(w, h) => [0, h - 100]} height={100} yExtents={d => d.volume}>
-          <YAxis axisAt="left" orient="left" ticks={5} tickFormat={format(".2s")}/>
-          <BarSeries yAccessor={d => d.volume} fill={"rgb(225,192,105)"} />
+          {/* <YAxis axisAt="left" orient="left" ticks={5} tickFormat={format(".2s")}/> */}
+          <BarSeries yAccessor={d => d.volume} fill={fill} />
         </Chart>
+				<CrossHairCursor />
       </ChartCanvas>
       </BlockPageScroll>
     )

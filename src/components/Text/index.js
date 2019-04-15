@@ -10,7 +10,7 @@ export const fontSizeCss = css`
 `
 
 export const fontCss = css`
-  font-family: 'Quicksand', sans-serif;
+  font-family: ${p => p.theme.fontFamily};
   ${fontSizeCss}
 `
 

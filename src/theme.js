@@ -39,6 +39,8 @@ const theme = {
   headerWidth: '60px',
   // tabWidth: '100px',
 
+  fontFamily: 'Quicksand, sans-serif',
+
   // Size
   fontSizeXS: '10px',
   fontSizeS: '12px',
