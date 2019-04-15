@@ -12,6 +12,7 @@ import smartupIcon from '../../images/smartup.png';
 import successImg from '../../images/market_success.png';
 import Chart from './Chart'
 
+import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux';
 import { setActiveIndex, onChangeName, onChangeDesc, reset } from '../../actions/createMarket'
 import { createMarket } from '../../actions/market'
@@ -19,6 +20,7 @@ import { createMarket } from '../../actions/market'
 const options = ['Basic Information', 'Price Equation', 'Deposit']
 const optionsSpeed = ['Slow', 'Standard', 'Fast']
 const CreateMarket = ({
+  history,
   createMarketState: { activeIndex, name, desc, error }, 
   setActiveIndex, createMarket, onChangeName, onChangeDesc, reset}) => {
 
@@ -117,7 +119,7 @@ const CreateMarket = ({
               <Col spacingTopL spacingBottomL>
                 <Text XL wordSpaceL center>MAKRET IS CREATED SUCCESSFULLY!</Text>
               </Col>
-              <Button label='Explore Market' primary onClick={console.log} extended />
+              <Button label='Explore Market' primary onClick={()=>history.push(`/market?id=99`)} extended />
             </Col>
           </>
       }
@@ -133,4 +135,4 @@ const mapDispatchToProps = {
   setActiveIndex, createMarket, onChangeName, onChangeDesc, reset
 } 
 
-export default connect(mapStateToProps, mapDispatchToProps)(CreateMarket);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(CreateMarket));

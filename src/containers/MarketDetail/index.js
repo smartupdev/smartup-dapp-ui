@@ -12,13 +12,23 @@ import Button from '../../components/Button'
 import Hr from '../../components/Hr'
 import Avatar from '../../components/Avatar'
 import Botton from '../../components/Button'
+
 import lang, { currentLang } from '../../lang'
+import { toToken, toAgo } from '../../lib/util'
 
 import Chart from './Chart'
 
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { setActiveTab, setIsSell } from '../../actions/marketDetail';
+
+const model = [
+  { label: lang.trading.table.buySell[currentLang], value: 'type', layoutStyle: { flex: 1, center: true }, component: ({value}) => <Text red={value === 'SELL'} green={value !== 'SELL'}>{value === 'SELL' ? lang.trading.table.sell[currentLang] : lang.trading.table.buy[currentLang]}</Text> },
+  { label: lang.trading.table.user[currentLang], value: 'username', layoutStyle: { flex: 1, center: true }, component: ({record}) => <Row centerVertical><Avatar icon={record.userIcon}/><Text>{record.username}</Text></Row> },
+  { label: lang.trading.table.time[currentLang], value: 'time', layoutStyle: { flex: 1, center: true }, component: ({value}) => <Text>{toAgo(value)}</Text> },
+  { label: lang.trading.table.avgPrice[currentLang], value: 'avg', layoutStyle: { flex: 1, center: true }, component: ({value}) => <Text>{toToken(value)}</Text> },
+  { label: lang.trading.table.ct[currentLang], value: 'ct', layoutStyle: { flex: 1, center: true }, },
+]
 
 const TABS = [
   { label: lang.marketTab.trade[currentLang], value: 'trading' },
@@ -29,6 +39,7 @@ const TABS = [
 ]
 
 const Market = ({ market, activeTabIndex, isSell, setActiveTab, setIsSell }) => {
+  console.log(market)
   return (
     <Col>
       <Row spaceBetween spacingTopXS spacingBottomXS spacingRightS spacingLeftS color={theme.bgColorLight}>
@@ -96,11 +107,16 @@ const Market = ({ market, activeTabIndex, isSell, setActiveTab, setIsSell }) => 
 
       </Col>
       <Hr />
-      <Col>
+      <Col spacingLeftM spacingRightM>
         <Col spacingBottomS spacingTopS>
           <Text L center>{lang.trading.trans[currentLang]}</Text>
         </Col>
         <Hr />
+        <Table
+          model={model}
+          values={market.transations || []}
+        />
+
       </Col>
     </Col>
   )
