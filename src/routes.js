@@ -11,7 +11,7 @@ import Account from './containers/Account'
 import Dispute from './containers/Dispute'
 
 export default [
-  { id: 'Home', path: '/', component: Home, icon: Menu1, selected: true, includePaths: ['/market'] },
+  { id: 'Home', path: '/', component: Home, icon: Menu1, selected: true, includePaths: ['/market'], exact: true },
   { id: 'CreateMarket', path: '/create_market', component: CreateMarket, icon: Menu2 },
   { id: 'Market', path: '/market', component: Market },
   { id: 'Account', path: '/account', component: Account, icon: Menu3 },

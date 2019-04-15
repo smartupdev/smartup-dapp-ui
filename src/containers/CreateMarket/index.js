@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect } from 'react'
 // import styled from 'styled-components'
 import Text from '../../components/Text'
 import Input, { Selector } from '../../components/Input'
@@ -13,14 +13,15 @@ import successImg from '../../images/market_success.png';
 import Chart from './Chart'
 
 import { connect } from 'react-redux';
-import { setActiveIndex, onChangeName, onChangeDesc } from '../../actions/createMarket'
+import { setActiveIndex, onChangeName, onChangeDesc, reset } from '../../actions/createMarket'
 import { createMarket } from '../../actions/market'
 
 const options = ['Basic Information', 'Price Equation', 'Deposit']
 const optionsSpeed = ['Slow', 'Standard', 'Fast']
 const CreateMarket = ({
   createMarketState: { activeIndex, name, desc, error }, 
-  setActiveIndex, createMarket, onChangeName, onChangeDesc}) => {
+  setActiveIndex, createMarket, onChangeName, onChangeDesc, reset}) => {
+
   function next() { setActiveIndex(activeIndex + 1) }
   function back() { setActiveIndex(activeIndex - 1) }
   const Label = ({ children }) => <Text S spaceV>{children}</Text>
@@ -32,6 +33,11 @@ const CreateMarket = ({
     tab === 0 && setActiveIndex(tab) ||
     tab === 1 && page1Ready && setActiveIndex(tab) ||
     tab === 2 && page2Ready && setActiveIndex(tab)
+  
+  useEffect( () => {
+    return reset
+  }, [])
+  
   return (
     <Col>
       <Col center spacingBottomXS spacingTopXS>
@@ -39,7 +45,7 @@ const CreateMarket = ({
       </Col>
       <Hr />
       {
-        activeIndex < options.length && 
+        activeIndex >= 0 && 
         <ProgressBar options={options} activeIndex={activeIndex} onClick={onChangeProgress} />
       }
 
@@ -80,7 +86,7 @@ const CreateMarket = ({
             <Row centerVertical>
               <Image source={smartupIcon} M />
               <Col flex={1} spacingRightXS spacingLeftXS>
-                <Input background L disabled value={'1000'} />
+                <Input background L disabled value={'2500'} />
               </Col>
               <Text rightText>SmartUp</Text>
             </Row>
@@ -124,7 +130,7 @@ const mapStateToProps = state => ({
   createMarketState: state.createMarket,
 });
 const mapDispatchToProps = {
-  setActiveIndex, createMarket, onChangeName, onChangeDesc
+  setActiveIndex, createMarket, onChangeName, onChangeDesc, reset
 } 
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreateMarket);

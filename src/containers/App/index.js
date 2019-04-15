@@ -30,8 +30,8 @@ const App = ({ watchMetamask, checkLogin }) => {
       <Hr vertical />
       <Main>
         {
-          routes.map(route =>
-            <Route key={route.id} exact path={route.path} component={route.component} />
+          routes.map(({id, path, component, exact}) =>
+            <Route key={id} exact={exact} path={path} component={component} />
           )
         }
       </Main>

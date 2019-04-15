@@ -28,8 +28,7 @@ const TABS = [
   { label: lang.marketTab.flag[currentLang], value: 'flag' },
 ]
 
-const Market = ({ market, activeTab, isSell, setActiveTab, setIsSell }) => {
-  console.log(market)
+const Market = ({ market, activeTabIndex, isSell, setActiveTab, setIsSell }) => {
   return (
     <Col>
       <Row spaceBetween spacingTopXS spacingBottomXS spacingRightS spacingLeftS color={theme.bgColorLight}>
@@ -44,75 +43,90 @@ const Market = ({ market, activeTab, isSell, setActiveTab, setIsSell }) => {
           <Bookmarked S onClick={() => console.log(market.id)} checked={market.following} />
         </Row>
       </Row>
-      <Tab tabs={TABS} activeTab={activeTab} onClick={(v) => setActiveTab(v)} width='100px' />
+      <Tab tabs={TABS} activeIndex={activeTabIndex} onClick={setActiveTab} width='100px' />
       <Col color={theme.bgColorDark}>
         <Chart />
       </Col>
-      <Col>
-        <Text L center spaceV>{lang.trading.tradeTitle[currentLang]}</Text>
-        <Hr inset />
+
+      <Col spacingLeftS spacingRightS spacingBottomS center>
+        <Col spacingBottomS spacingTopS>
+          <Text L center>{lang.trading.tradeTitle[currentLang]}</Text>
+        </Col>
+        <Hr />
+
         <Col spacingTopXS spacingBottomS>
           <Text S center note>{lang.trading.tradeText[currentLang]}</Text>
-          <Text S center note>6,758,643 SMARTUP  = 1 IDEA(832288)</Text>
+          <Text S center note>61.75 SMARTUP  = 1 IDEA(832288)</Text>
         </Col>
-        <Row center spacingBottomXL>
-          <Avatar />
-          <Col>
-            <Text S note>{lang.trading[isSell ? 'tradeReceive' : 'tradePay'][currentLang]}</Text>
-            <Text S>SMARTUP</Text>
-          </Col>
-          <Col spacingLeftS bottom>
-            <Input underline L center size={30} />
-            {
-              <Text error>You need more SmartUp to make this trade.</Text>
-            }
-          </Col>
-          <Col spacingLeftM spacingRightM>
-            <Trade onClick={setIsSell} />
-          </Col>
-          <Avatar icon={market.icon} />
-          <Col>
-            <Text S note>{lang.trading[isSell ? 'tradePay' : 'tradeReceive'][currentLang]}</Text>
-            <Text S>{market.name}</Text>
-          </Col>
-          <Col spacingLeftS bottom>
-            <Input underline L center size={30} />
-          </Col>
-        </Row>
 
-        <Row spacingLeftM spacingRightM spaceBetween>
-          <Row centerVertical>
-            <Checkbox label={<Text S note lineHeight>Agree to&nbsp;</Text>} />
-            <Text S note underline lineHeight onClick={() => console.log('Get T&C')}>{'Teams & Conditions'}</Text>
+        <Col maxWidth='1000px' width='100%'>
+          <Row center spacingBottomL>
+            <Avatar />
+            <Col>
+              <Text S note>{lang.trading[isSell ? 'tradeReceive' : 'tradePay'][currentLang]}</Text>
+              <Text S>SMARTUP</Text>
+            </Col>
+            <Col spacingLeftS spacingTopS flex={1}>
+              <Input underline L center fullWidth />
+              {/* <Text error XS>You need more SmartUp to make this trade.</Text> */}
+            </Col>
+            <Col spacingLeftM spacingRightM>
+              <Trade onClick={setIsSell} leftActive={isSell} rightActive={!isSell} />
+            </Col>
+            <Avatar icon={market.icon} />
+            <Col>
+              <Text S note>{lang.trading[isSell ? 'tradePay' : 'tradeReceive'][currentLang]}</Text>
+              <Text S>{market.name}</Text>
+            </Col>
+            <Col spacingLeftS spacingTopS flex={1}>
+              <Input underline L center fullWidth />
+              {/* <Text error XS>You need more SmartUp to make this trade.</Text> */}
+            </Col>
           </Row>
-          <Botton label='Trade' icon={Trade} primary />
-        </Row>
+
+          <Row spaceBetween>
+            <Row centerVertical>
+              <Checkbox label={<Text S note lineHeight>Agree to&nbsp;</Text>} />
+              <Text S note underline lineHeight onClick={() => console.log('Get T&C')}>{'Teams & Conditions'}</Text>
+            </Row>
+            <Botton label='Trade' icon={Trade} primary />
+          </Row>
+
+        </Col>
+
+      </Col>
+      <Hr />
+      <Col>
+        <Col spacingBottomS spacingTopS>
+          <Text L center>{lang.trading.trans[currentLang]}</Text>
+        </Col>
+        <Hr />
       </Col>
     </Col>
   )
 }
 
-const ConnectMarket = ({ markets, cActiveTab, cIsSell, cSetActiveTab, cSetIsSell, location }) => {
+const ConnectMarket = ({ markets, activeTabIndex, isSell, setActiveTab, setIsSell, location }) => {
   const id = new URLSearchParams(location.search).get('id');
   return (
     <Market
       market={markets.find(m => m.id === id)}
-      activeTab={cActiveTab}
-      isSell={cIsSell}
-      setActiveTab={cSetActiveTab}
-      setIsSell={cSetIsSell} />
+      activeTabIndex={activeTabIndex}
+      isSell={isSell}
+      setActiveTab={setActiveTab}
+      setIsSell={setIsSell} />
   )
 }
 
 const mapStateToProps = state => ({
   markets: state.market.markets,
-  cActiveTab: state.marketDetail.activeTab,
-  cIsSell: state.marketDetail.isSell,
+  activeTabIndex: state.marketDetail.activeTabIndex,
+  isSell: state.marketDetail.isSell,
 });
 
 const mapDispatchToProps = {
-  cSetActiveTab: setActiveTab,
-  cSetIsSell: setIsSell,
+  setIsSell: setIsSell,
+  setActiveTab
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(ConnectMarket));

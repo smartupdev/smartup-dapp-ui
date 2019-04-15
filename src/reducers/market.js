@@ -1,6 +1,6 @@
 import {
   GET_MARKET_LIST, GET_MARKET_CREATED_LIST, GET_MARKET_DETAIL, CREATE_MARKET, BOOKMARK_MARKET,
-  CREATE_MARKET_REQUESTED, CREATE_MARKET_SUCCEEDED, CREATE_MARKET_FAILED,
+  CREATE_MARKET_REQUESTED, CREATE_MARKET_SUCCEEDED, CREATE_MARKET_FAILED, CREATE_MARKET_SMARTUP_SUCCEEDED
 } from '../actions/actionTypes';
 import FakeIcon from '../images/035-sun.svg'
 import FakeImage from '../images/037-ufo.svg'
@@ -98,6 +98,16 @@ export default (state = initialState, action) => {
         markets: tempMarkets,
       })
     }
+    case CREATE_MARKET_SMARTUP_SUCCEEDED: {
+      return {
+        ...state,
+       markets: [
+         ...state.markets,
+         action.payload
+       ] 
+      }
+    }
+
     default:
       return state;
   }

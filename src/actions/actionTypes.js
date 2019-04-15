@@ -66,6 +66,7 @@ export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';
 export const REGISTER = 'REGISTER';
 //market
+export const MARKET_RESET = 'MARKET_RESET';
 export const MARKET_NAME_CHANGE = 'MARKET_NAME_CHANGE';
 export const MARKET_DESC_CHANGE = 'MARKET_DESC_CHANGE';
 export const CREATE_MARKET_REQUESTED = 'CREATE_MARKET_REQUESTED';
@@ -81,9 +82,11 @@ export const GET_MARKET_LIST = 'GET_MARKET_LIST';
 export const CREATE_MARKET = 'CREATE_MARKET';
 export const BOOKMARK_MARKET = 'BOOKMARK_MARKET';
 //create market ui
-export const SET_ACTIVE_INDEX = 'SET_ACTIVE_INDEX';
+export const CREATE_MARKET_SET_TAB = 'CREATE_MARKET_SET_TAB';
 //market detail ui
 export const SET_IS_SELL = 'SET_IS_SELL';
+export const DETAIL_MARKET_SET_TAB = 'DETAIL_MARKET_SET_TAB';
+
 //panel
 export const PANEL_SET_ACTIVE_TAB = 'PANEL_SET_ACTIVE_TAB';
 export const PANEL_TOGGLE_EXPANDED_WALLET = 'PANEL_TOGGLE_EXPANDED_WALLET';

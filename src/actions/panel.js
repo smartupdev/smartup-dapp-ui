@@ -8,7 +8,7 @@ import {
 export function setActiveTab(activeTabIndex) {
   return {
     type: PANEL_SET_ACTIVE_TAB,
-    payload: { activeTabIndex }
+    payload: activeTabIndex
   }
 }
 

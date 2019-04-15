@@ -60,7 +60,7 @@ export function watchMetamask() {
     let accountInterval = setInterval(() => {
       const acc = getStorageAccount()
       const newAccount = getAccount()
-      if (acc != newAccount) {
+      if (acc != newAccount && newAccount) {
         setStorageToken()
         dispatch({ type: METAMASK_RESET })
       }

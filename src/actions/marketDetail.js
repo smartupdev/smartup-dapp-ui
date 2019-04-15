@@ -1,12 +1,12 @@
 import {
-  SET_ACTIVE_TAB, SET_IS_SELL,
+  SET_IS_SELL, DETAIL_MARKET_SET_TAB
 } from './actionTypes';
 
-export function setActiveTab(v) {
-    return ({
-      type: SET_ACTIVE_TAB,
-      payload: v,
-    })
+export function setActiveTab(tabIndex) {
+  return {
+    type: DETAIL_MARKET_SET_TAB,
+    payload: tabIndex
+  }
 }
 
 export function setIsSell() {
