@@ -10,9 +10,21 @@ const Img = styled.img`
 export default ({ source, ...rest }) => 
   <Img src={source} {...rest} />
 
+export const Path = styled.path`
+  ${p => p.active && css`fill: ${p.theme.white};`}
+  ${p => p.passive && css`fill: ${p.theme.colorSecondary};`}
+`
+
 export const SVG = styled.svg`
   display: block;
   width: ${p => 
+    p.XS ? p.theme.imageSizeXS :
+    p.S ? p.theme.imageSizeS :
+    p.L ? p.theme.imageSizeL :
+    p.XL ? p.theme.imageSizeXL :
+    p.theme.imageSizeM
+  };
+  min-width: ${p => 
     p.XS ? p.theme.imageSizeXS :
     p.S ? p.theme.imageSizeS :
     p.L ? p.theme.imageSizeL :

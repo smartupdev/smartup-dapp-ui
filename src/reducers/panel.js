@@ -6,7 +6,6 @@ import {
 } from '../actions/actionTypes';
 
 export const initialState = {
-  txHash: null, // WHAT
   activeTabIndex: 0,
   expandedWallet: true,
   expandedMarket: false,
@@ -18,7 +17,7 @@ export default (state = initialState, action) => {
     case PANEL_SET_ACTIVE_TAB:
       return {
         ...state,
-        activeTabIndex: action.payload.activeTabIndex
+        activeTabIndex: action.payload
       }
     case PANEL_TOGGLE_EXPANDED_WALLET:
       return {

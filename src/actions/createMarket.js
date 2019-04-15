@@ -1,8 +1,8 @@
-import { SET_ACTIVE_INDEX, MARKET_NAME_CHANGE, MARKET_DESC_CHANGE, MARKET_RESET } from './actionTypes';
+import { CREATE_MARKET_SET_TAB, MARKET_NAME_CHANGE, MARKET_DESC_CHANGE, MARKET_RESET } from './actionTypes';
 
 export function setActiveIndex(changeNumber) {
   return ({
-    type: SET_ACTIVE_INDEX,
+    type: CREATE_MARKET_SET_TAB,
     payload: changeNumber,
   })
 }

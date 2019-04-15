@@ -1,16 +1,16 @@
-import { SET_ACTIVE_TAB, SET_IS_SELL, } from '../actions/actionTypes';
+import { DETAIL_MARKET_SET_TAB, SET_IS_SELL, } from '../actions/actionTypes';
 
 export const initialState = {
-  activeTab: 'trading',
+  activeTabIndex: 0,
   isSell: false,
 }
 
 export default (state = initialState, action) => {
     switch (action.type) {
-      case SET_ACTIVE_TAB: {
+      case DETAIL_MARKET_SET_TAB: {
         return {
           ...state,
-          activeTab: action.payload,
+          activeTabIndex: action.payload,
         }
       }
       case SET_IS_SELL: {

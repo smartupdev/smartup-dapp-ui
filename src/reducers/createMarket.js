@@ -1,5 +1,5 @@
 import { 
-  SET_ACTIVE_INDEX, 
+  CREATE_MARKET_SET_TAB, 
   MARKET_NAME_CHANGE, 
   MARKET_DESC_CHANGE, 
   CREATE_MARKET_SMARTUP_SUCCEEDED,
@@ -40,7 +40,7 @@ export default (state = initialState, action) => {
       }
     }
 
-    case SET_ACTIVE_INDEX: {
+    case CREATE_MARKET_SET_TAB: {
       const block = state.error.name || state.error.desc
       return {
         ...state,
