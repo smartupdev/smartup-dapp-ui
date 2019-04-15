@@ -160,8 +160,6 @@ function authSmartUp(signature){
 }
 
 //get person sign
-//The MetaMask Web3 object does not support synchronous methods 
-//like personal_sign without a callback parameter.
 function getPersonSign(msg) {
   return async dispatch => {
     let [error, response] = await dispatch(

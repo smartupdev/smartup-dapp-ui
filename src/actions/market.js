@@ -1,12 +1,12 @@
 import {
   CREATE_MARKET_REQUESTED, CREATE_MARKET_SUCCEEDED, CREATE_MARKET_FAILED,
   CREATE_MARKET_SMARTUP_REQUESTED,CREATE_MARKET_SMARTUP_SUCCEEDED,CREATE_MARKET_SMARTUP_FAILED,
-  GET_MARKET_LIST, GET_MARKET_CREATED_LIST, GET_MARKET_DETAIL, CREATE_MARKET, BOOKMARK_MARKET,
+  GET_MARKET_LIST, GET_MARKET_DETAIL, BOOKMARK_MARKET,
 } from './actionTypes';
 import { Net } from '../lib/util/request';
 import fetch from '../lib/util/fetch';
 import {
-  API_USER_MARKET_CREATE,API_USER_MARKET_CREATED,API_MARKET_LIST,
+  API_USER_MARKET_CREATE,API_MARKET_LIST,
   API_MARKET_ONE,API_MARKET_QUERY_BY_TX_HASH,
 } from './api';
 import {
@@ -59,16 +59,13 @@ export function createMarket() {
 }
 
 function createSmartUpMarket(txHash){
-  return async (dispatch, getState) => {
+  return (dispatch, getState) => {
     const {name, desc: description} = getState().createMarket;
-    let [error, response] = await dispatch(asyncFunction(
+    dispatch(asyncFunction(
       fetch.post,
       CREATE_MARKET_SMARTUP_REQUESTED, CREATE_MARKET_SMARTUP_SUCCEEDED, CREATE_MARKET_SMARTUP_FAILED,
       { isWeb3: true, params: API_USER_MARKET_CREATE, params2: { txHash,name,description }, responsePayload: reps => reps.obj }
     ));
-    console.log('------------ smart up market error',error);
-    console.log('------------ smart up market response',response);
-
   }
 }
 

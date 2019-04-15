@@ -18,6 +18,7 @@ import Chart from './Chart'
 
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
+import { setActiveTab, setIsSell } from '../../actions/marketDetail';
 
 const TABS = [
   { label: lang.marketTab.trade[currentLang], value: 'trading' },
@@ -27,10 +28,8 @@ const TABS = [
   { label: lang.marketTab.flag[currentLang], value: 'flag' },
 ]
 
-const Market = ({market}) => {
+const Market = ({ market, activeTab, isSell, setActiveTab, setIsSell }) => {
   console.log(market)
-  const [tab, setTab] = useState('trading')
-  const [isSell, setIsSell] = useState(false)
   return (
     <Col>
       <Row spaceBetween spacingTopXS spacingBottomXS spacingRightS spacingLeftS color={theme.bgColorLight}>
@@ -41,13 +40,13 @@ const Market = ({market}) => {
         <Row centerVertical>
           <Button label={market.numberOfComments} icon={Comment} />
           <Button label={market.numberOfSub} icon={People} />
-          <Share S color={theme.white} rightText onClick={() => console.log(market.id)} /> 
-          <Bookmarked S onClick={() => console.log(market.id)} checked={market.following} /> 
+          <Share S color={theme.white} rightText onClick={() => console.log(market.id)} />
+          <Bookmarked S onClick={() => console.log(market.id)} checked={market.following} />
         </Row>
       </Row>
-      <Tab tabs={TABS} activeTab={tab} onClick={(v) => setTab(v)} width='100px' />
+      <Tab tabs={TABS} activeTab={activeTab} onClick={(v) => setActiveTab(v)} width='100px' />
       <Col color={theme.bgColorDark}>
-          <Chart />
+        <Chart />
       </Col>
       <Col>
         <Text L center spaceV>{lang.trading.tradeTitle[currentLang]}</Text>
@@ -69,7 +68,7 @@ const Market = ({market}) => {
             }
           </Col>
           <Col spacingLeftM spacingRightM>
-            <Trade onClick={() => setIsSell(!isSell)} />
+            <Trade onClick={setIsSell} />
           </Col>
           <Avatar icon={market.icon} />
           <Col>
@@ -80,7 +79,7 @@ const Market = ({market}) => {
             <Input underline L center size={30} />
           </Col>
         </Row>
-        
+
         <Row spacingLeftM spacingRightM spaceBetween>
           <Row centerVertical>
             <Checkbox label={<Text S note lineHeight>Agree to&nbsp;</Text>} />
@@ -93,15 +92,27 @@ const Market = ({market}) => {
   )
 }
 
-const ConnectMarket = ({ markets, location }) => {
+const ConnectMarket = ({ markets, cActiveTab, cIsSell, cSetActiveTab, cSetIsSell, location }) => {
   const id = new URLSearchParams(location.search).get('id');
   return (
-    <Market market={markets.find(m => m.id === id)} />
+    <Market
+      market={markets.find(m => m.id === id)}
+      activeTab={cActiveTab}
+      isSell={cIsSell}
+      setActiveTab={cSetActiveTab}
+      setIsSell={cSetIsSell} />
   )
 }
 
 const mapStateToProps = state => ({
   markets: state.market.markets,
+  cActiveTab: state.marketDetail.activeTab,
+  cIsSell: state.marketDetail.isSell,
 });
 
-export default connect(mapStateToProps)(withRouter(ConnectMarket));
+const mapDispatchToProps = {
+  cSetActiveTab: setActiveTab,
+  cSetIsSell: setIsSell,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(ConnectMarket));
