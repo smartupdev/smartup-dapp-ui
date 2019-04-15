@@ -14,6 +14,17 @@ import { last } from "react-stockcharts/lib/utils";
 
 import dumpData from './dumpData'
 
+const candlesAppearance = {
+  wickStroke: "#000000",
+  fill: function fill(d) {
+    return d.close > d.open ? "rgb(217,110,112)" : "rgb(144,197,147)";
+  },
+  stroke: "#000000",
+  candleStrokeWidth: 1,
+  widthRatio: 0.8,
+  opacity: 1,
+}
+
 const BlockPageScroll = ({ children }) => {
   const scrollRef = useRef(null)
   useEffect(() => {
@@ -73,11 +84,11 @@ class DrawChart extends Component {
         <Chart id={1} yExtents={d => [d.high, d.low]}>
           <XAxis axisAt="bottom" orient="bottom"/>
           <YAxis axisAt="right" orient="right" ticks={5} />
-          <CandlestickSeries />
-        </Chart>
-        <Chart id={2} yExtents={d => d.volume}>
+          <CandlestickSeries {...candlesAppearance}/>
+        </Chart> 
+        <Chart id={2} origin={(w, h) => [0, h - 100]} height={100} yExtents={d => d.volume}>
           <YAxis axisAt="left" orient="left" ticks={5} tickFormat={format(".2s")}/>
-          <BarSeries yAccessor={d => d.volume} />
+          <BarSeries yAccessor={d => d.volume} fill={"rgb(225,192,105)"} />
         </Chart>
       </ChartCanvas>
       </BlockPageScroll>
