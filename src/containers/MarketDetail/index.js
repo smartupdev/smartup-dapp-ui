@@ -21,8 +21,8 @@ import Chart from './Chart'
 
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
-import { setActiveTab, setIsSell } from '../../actions/marketDetail';
-import { onSell } from '../../actions/trade';
+import { setActiveTab, setIsSell, onChangeCtAmount } from '../../actions/marketDetail';
+import { onTrade, onSell } from '../../actions/trade';
 
 const model = [
   { label: lang.trading.table.buySell[currentLang], value: 'type', layoutStyle: { flex: 1, center: true }, component: ({value}) => <Text red={value === 'SELL'} green={value !== 'SELL'}>{value === 'SELL' ? lang.trading.table.sell[currentLang] : lang.trading.table.buy[currentLang]}</Text> },
@@ -40,8 +40,8 @@ const TABS = [
   { label: lang.marketTab.flag[currentLang], value: 'flag' },
 ]
 
-const Market = ({ market, activeTabIndex, isSell, setActiveTab, setIsSell, onSell }) => {
-  console.log(market)
+const Market = ({ market, activeTabIndex, isSell, ctInputAmount,askQuoteAmount,bidQuoteAmount, setActiveTab, setIsSell, onSell, onChangeCtAmount,onTrade }) => {
+  console.log(market);
   return (
     <Col>
       <Row spaceBetween spacingTopXS spacingBottomXS spacingRightS spacingLeftS color={theme.bgColorLight}>
@@ -119,7 +119,7 @@ const Market = ({ market, activeTabIndex, isSell, setActiveTab, setIsSell, onSel
               <Text S>SMARTUP</Text>
             </Col>
             <Col spacingLeftS spacingTopS flex={1}>
-              <Input underline L center fullWidth />
+              <Input underline L center fullWidth value={ctInputAmount} onChange={e => onChangeCtAmount(e.target.value)}/>
               {/* <Text error XS>You need more SmartUp to make this trade.</Text> */}
             </Col>
             <Col spacingLeftM spacingRightM>
@@ -131,7 +131,7 @@ const Market = ({ market, activeTabIndex, isSell, setActiveTab, setIsSell, onSel
               <Text S>{market.name}</Text>
             </Col>
             <Col spacingLeftS spacingTopS flex={1}>
-              <Input underline L center fullWidth />
+              <Input underline L center fullWidth value={isSell ? askQuoteAmount : bidQuoteAmount}/>
               {/* <Text error XS>You need more SmartUp to make this trade.</Text> */}
             </Col>
           </Row>
@@ -142,6 +142,7 @@ const Market = ({ market, activeTabIndex, isSell, setActiveTab, setIsSell, onSel
               <Text S note underline lineHeight onClick={() => console.log('Get T&C')}>{'Teams & Conditions'}</Text>
             </Row>
             <Botton label='Trade' icon={Trade} primary onClick={() => onSell(market.id, 10)} />
+            {/* <Botton label='Trade' icon={Trade} primary onClick={() => onTrade()}/> */}
           </Row>
 
         </Col>
@@ -163,16 +164,21 @@ const Market = ({ market, activeTabIndex, isSell, setActiveTab, setIsSell, onSel
   )
 }
 
-const ConnectMarket = ({ markets, activeTabIndex, isSell, setActiveTab, setIsSell, onSell, location }) => {
+const ConnectMarket = ({ markets, activeTabIndex, isSell, ctInputAmount, askQuoteAmount,bidQuoteAmount, setActiveTab, setIsSell, onSell, onChangeCtAmount, onTrade, location }) => {
   const id = new URLSearchParams(location.search).get('id');
   return (
     <Market
       market={markets.find(m => m.id === id)}
       activeTabIndex={activeTabIndex}
       isSell={isSell}
+      ctInputAmount={ctInputAmount}
       setActiveTab={setActiveTab}
       setIsSell={setIsSell}
-      onSell={onSell} />
+      onSell={onSell}
+      askQuoteAmount={askQuoteAmount}
+      bidQuoteAmount={bidQuoteAmount}
+      onChangeCtAmount={onChangeCtAmount}
+      onTrade={onTrade} />
   )
 }
 
@@ -180,11 +186,16 @@ const mapStateToProps = state => ({
   markets: state.market.markets,
   activeTabIndex: state.marketDetail.activeTabIndex,
   isSell: state.marketDetail.isSell,
+  ctInputAmount: state.marketDetail.ctInputAmount,
+  bidQuoteAmount: state.trade.bidQuoteAmount,
+  askQuoteAmount: state.trade.askQuoteAmount,
 });
 
 const mapDispatchToProps = {
   setIsSell,
   setActiveTab,
+  onTrade,
+  onChangeCtAmount,
   onSell
 };
 

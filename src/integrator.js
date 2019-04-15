@@ -1,8 +1,8 @@
 import Web3 from 'web3'
 
-export const smartupContractAddress = '0x437098700e7de348e436b809c74bb2442abd3bd6';
+export const smartupContractAddress = '0xaa25a939491b00348f52941669e16ac6d54af245';
 export const sutContractAddress = '0xf1899c6eb6940021c1ae4e9c3a8e29ee93704b03'
-export const nttContractAddress = '0x846ce03199a759a183cccb35146124cd3f120548'
+export const nttContractAddress = '0xaD5703d6e3b66276af1C70656a5d7f9618ED178d'
 export const smartupWeb3 = window.web3 && new Web3(window.web3.currentProvider)
 window.sut = smartupWeb3
 
@@ -29,6 +29,10 @@ export function toWei(r) {
 
 export function encodeParam(r) {
   return `${smartupWeb3.eth.abi.encodeParameter('uint256', r)}`
+}
+
+export function decodeResult(r){
+  return `${smartupWeb3.utils.fromWei(r)}`
 }
 
 export function getBalance(account) {
