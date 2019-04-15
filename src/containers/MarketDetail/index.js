@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
+
 import theme from '../../theme'
 import { Row, Col } from '../../components/Layout'
 import Input, { Checkbox } from '../../components/Input'
@@ -14,7 +15,7 @@ import Avatar from '../../components/Avatar'
 import Botton from '../../components/Button'
 
 import lang, { currentLang } from '../../lang'
-import { toToken, toAgo } from '../../lib/util'
+import { toToken, toAgo, toFullDate } from '../../lib/util'
 
 import Chart from './Chart'
 
@@ -57,9 +58,48 @@ const Market = ({ market, activeTabIndex, isSell, ctInputAmount,askQuoteAmount,b
         </Row>
       </Row>
       <Tab tabs={TABS} activeIndex={activeTabIndex} onClick={setActiveTab} width='100px' />
-      <Col color={theme.bgColorDark}>
-        <Chart />
-      </Col>
+      <Row color={theme.bgColorDark} spacingLeftL spacingRightL spacingBottomL spacingTopL>
+        <Col flex={1}>
+          <Chart />
+        </Col>
+        <Col spacingLeftXL>
+          <Col spacingBottomS>
+            <Text nowrap>{toFullDate(Date.now())}</Text>
+          </Col>
+
+          <Col spacingTopS>
+            <Row bottom>
+              <Text XL>{toToken(market.price24hLow)}</Text>
+              <Text red S>&nbsp;&nbsp;low</Text>
+            </Row>
+            <Row bottom>
+              <Text XL>{toToken(market.price24hHigh)}</Text>
+              <Text green S>&nbsp;&nbsp;high</Text>
+            </Row>
+            <Text note S>{lang.trading.change[currentLang]}</Text>
+          </Col>
+
+          <Col spacingTopS>
+            <Text XL price>{toToken(market.price)}</Text>
+            <Text note S>{lang.trading.price[currentLang]}</Text>
+          </Col>
+
+          <Col spacingTopS>
+            <Text XL primary>{toToken(market.volumeAvg24h)}</Text>
+            <Text note S>{lang.trading.volume[currentLang]}</Text>
+          </Col>
+
+          <Col spacingTopS>
+            <Text XL>{toToken(market.pool)}</Text>
+            <Text note S>{lang.trading.cap[currentLang]}</Text>
+          </Col>
+
+          <Col spacingTopS>
+            <Text XL>{toToken(market.totalCt)}</Text>
+            <Text note S>{lang.trading.ct[currentLang]}</Text>
+          </Col>
+        </Col>
+      </Row>
 
       <Col spacingLeftS spacingRightS spacingBottomS center>
         <Col spacingBottomS spacingTopS>
