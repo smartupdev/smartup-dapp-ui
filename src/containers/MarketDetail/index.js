@@ -29,7 +29,6 @@ const TABS = [
 ]
 
 const Market = ({ market, activeTabIndex, isSell, setActiveTab, setIsSell }) => {
-  console.log(isSell)
   return (
     <Col>
       <Row spaceBetween spacingTopXS spacingBottomXS spacingRightS spacingLeftS color={theme.bgColorLight}>
@@ -49,7 +48,7 @@ const Market = ({ market, activeTabIndex, isSell, setActiveTab, setIsSell }) => 
         <Chart />
       </Col>
 
-      <Col spacingLeftS spacingRightS center>
+      <Col spacingLeftS spacingRightS spacingBottomS center>
         <Col spacingBottomS spacingTopS>
           <Text L center>{lang.trading.tradeTitle[currentLang]}</Text>
         </Col>
@@ -57,7 +56,7 @@ const Market = ({ market, activeTabIndex, isSell, setActiveTab, setIsSell }) => 
 
         <Col spacingTopXS spacingBottomS>
           <Text S center note>{lang.trading.tradeText[currentLang]}</Text>
-          <Text S center note>6,758,643 SMARTUP  = 1 IDEA(832288)</Text>
+          <Text S center note>61.75 SMARTUP  = 1 IDEA(832288)</Text>
         </Col>
 
         <Col maxWidth='1000px' width='100%'>
@@ -72,7 +71,7 @@ const Market = ({ market, activeTabIndex, isSell, setActiveTab, setIsSell }) => 
               {/* <Text error XS>You need more SmartUp to make this trade.</Text> */}
             </Col>
             <Col spacingLeftM spacingRightM>
-              <Trade onClick={setIsSell} leftActive={!isSell} rightActive={isSell} />
+              <Trade onClick={setIsSell} leftActive={isSell} rightActive={!isSell} />
             </Col>
             <Avatar icon={market.icon} />
             <Col>
@@ -94,6 +93,14 @@ const Market = ({ market, activeTabIndex, isSell, setActiveTab, setIsSell }) => 
           </Row>
 
         </Col>
+
+      </Col>
+      <Hr />
+      <Col>
+        <Col spacingBottomS spacingTopS>
+          <Text L center>{lang.trading.trans[currentLang]}</Text>
+        </Col>
+        <Hr />
       </Col>
     </Col>
   )
