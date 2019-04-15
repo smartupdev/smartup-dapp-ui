@@ -6,15 +6,15 @@ import { timeFormat } from "d3-time-format";
 
 import { ChartCanvas, Chart } from "react-stockcharts";
 import {
-	BarSeries,
-	CandlestickSeries,
+  BarSeries,
+  CandlestickSeries,
 } from "react-stockcharts/lib/series";
 import { XAxis, YAxis } from "react-stockcharts/lib/axes";
 
 import {
-	CrossHairCursor,
-	MouseCoordinateX,
-	MouseCoordinateY
+  CrossHairCursor,
+  MouseCoordinateX,
+  MouseCoordinateY
 } from "react-stockcharts/lib/coordinates";
 
 import { discontinuousTimeScaleProvider } from "react-stockcharts/lib/scale";
@@ -53,6 +53,27 @@ const BlockPageScroll = ({ children }) => {
   )
 }
 
+// const defaultData = [
+//   {
+//     "open": 0.03260903,
+//     "high": 0.03265169,
+//     "low": 0.03260004,
+//     "close": 0.03260006,
+//     "volume": 41.76081266,
+//     "date": "2019-04-15T02:30:00",
+//     "BV": 1.3627340360562947
+//   },
+//   {
+//     "open": 0.03260903,
+//     "high": 0.03265169,
+//     "low": 0.03260004,
+//     "close": 0.03260006,
+//     "volume": 41.76081266,
+//     "date": "2019-04-15T02:30:00",
+//     "BV": 1.3627340360562947
+//   }
+// ]
+
 class DrawChart extends Component {
   // changeScroll(){
   //   let style = document.body.style.overflow 
@@ -67,26 +88,26 @@ class DrawChart extends Component {
   }
 
   render() {
-    const { 
-      type = 'svg', 
-      data: initialData = dumpData.map(d => ({...d, date: new Date(d.date)})), 
-      width, 
+    const {
+      type = 'svg',
+      data: initialData,
+      width,
       ratio
-    } = this.props 
+    } = this.props
+    if (!initialData || !initialData.length) return null;
+    const yGrid = {
+      innerTickSize: -1 * (width - MARGIN.left - MARGIN.right),
+      tickStrokeDasharray: 'Solid',
+      tickStrokeOpacity: 0.2,
+      tickStrokeWidth: 1
+    }
+    const xGrid = {
+      innerTickSize: -1 * (HEIGHT - MARGIN.top - MARGIN.bottom),
+      tickStrokeDasharray: 'Solid',
+      tickStrokeOpacity: 0.2,
+      tickStrokeWidth: 1
+    }
 
-    const yGrid = { 
-      innerTickSize: -1 * (width -  MARGIN.left - MARGIN.right),
-      tickStrokeDasharray: 'Solid',
-      tickStrokeOpacity: 0.2,
-      tickStrokeWidth: 1
-    }
-    const xGrid = { 
-      innerTickSize: -1 * (HEIGHT - MARGIN.top - MARGIN.bottom), 
-      tickStrokeDasharray: 'Solid',
-      tickStrokeOpacity: 0.2,
-      tickStrokeWidth: 1
-    }
-        
     const xScaleProvider = discontinuousTimeScaleProvider.inputDateAccessor(d => d.date);
     const {
       data,
@@ -94,43 +115,43 @@ class DrawChart extends Component {
       xAccessor,
       displayXAccessor,
     } = xScaleProvider(initialData);
-    console.log(displayXAccessor)
+
     const start = xAccessor(last(data)) + 1;
     const end = xAccessor(data[Math.max(0, data.length - 30)]);
     const xExtents = [start, end];
 
     return (
       <BlockPageScroll>
-      <ChartCanvas 
-        height={HEIGHT}
-        width={width}
-        ratio={ratio}
-        margin={MARGIN}
-        type={type}
-        seriesName="MSFT"
-        data={data}
-        xScale={xScale}
-        xAccessor={xAccessor}
-        displayXAccessor={displayXAccessor}
-        xExtents={xExtents}
-        mouseMoveEvent={true}
-        panEvent={true}
-        zoomEvent={true}
-      >
+        <ChartCanvas
+          height={HEIGHT}
+          width={width}
+          ratio={ratio}
+          margin={MARGIN}
+          type={type}
+          seriesName="MSFT"
+          data={data}
+          xScale={xScale}
+          xAccessor={xAccessor}
+          displayXAccessor={displayXAccessor}
+          xExtents={xExtents}
+          mouseMoveEvent={true}
+          panEvent={true}
+          zoomEvent={true}
+        >
 
-        <Chart id={1} yExtents={d => [d.high, d.low]}>
-          <XAxis axisAt="bottom" orient="bottom" ticks={10} {...this.axiaStyle} {...xGrid} />
-          <YAxis axisAt="right" orient="right" ticks={9} {...this.axiaStyle} {...yGrid} />
-          <MouseCoordinateX at="bottom" orient="bottom" displayFormat={timeFormat("%H:%M")} />
-					<MouseCoordinateY at="right" orient="right" displayFormat={d => d.toFixed(5)} />
-          <CandlestickSeries {...candlesAppearance}/>
-        </Chart> 
-        <Chart id={2} origin={(w, h) => [0, h - 100]} height={100} yExtents={d => d.volume}>
-          {/* <YAxis axisAt="left" orient="left" ticks={5} tickFormat={format(".2s")}/> */}
-          <BarSeries yAccessor={d => d.volume} fill={fill} />
-        </Chart>
-				<CrossHairCursor stroke="#ffffff" />
-      </ChartCanvas>
+          <Chart id={1} yExtents={d => [d.high, d.low]}>
+            <XAxis axisAt="bottom" orient="bottom" ticks={10} {...this.axiaStyle} {...xGrid} />
+            <YAxis axisAt="right" orient="right" ticks={9} {...this.axiaStyle} {...yGrid} />
+            <MouseCoordinateX at="bottom" orient="bottom" displayFormat={timeFormat("%H:%M")} />
+            <MouseCoordinateY at="right" orient="right" displayFormat={d => d.toFixed(5)} />
+            <CandlestickSeries {...candlesAppearance} />
+          </Chart>
+          <Chart id={2} origin={(w, h) => [0, h - 100]} height={100} yExtents={d => d.volume}>
+            {/* <YAxis axisAt="left" orient="left" ticks={5} tickFormat={format(".2s")}/> */}
+            <BarSeries yAccessor={d => d.volume} fill={fill} />
+          </Chart>
+          <CrossHairCursor stroke="#ffffff" />
+        </ChartCanvas>
       </BlockPageScroll>
     )
   }

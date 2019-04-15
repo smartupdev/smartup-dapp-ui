@@ -1,37 +1,10 @@
 import {
   GET_MARKET_LIST, GET_MARKET_CREATED_LIST, GET_MARKET_DETAIL, CREATE_MARKET, BOOKMARK_MARKET,
-  CREATE_MARKET_REQUESTED, CREATE_MARKET_SUCCEEDED, CREATE_MARKET_FAILED, CREATE_MARKET_SMARTUP_SUCCEEDED
+  CREATE_MARKET_REQUESTED, CREATE_MARKET_SUCCEEDED, CREATE_MARKET_FAILED, CREATE_MARKET_SMARTUP_SUCCEEDED,
+  TRADE_SELL_REQUESTED, TRADE_SELL_SUCCEEDED, TRADE_SELL_FAILED,  
+  TRADE_BUY_REQUESTED, TRADE_BUY_SUCCEEDED, TRADE_BUY_FAILED
 } from '../actions/actionTypes';
-import FakeIcon from '../images/035-sun.svg'
-import FakeImage from '../images/037-ufo.svg'
-
-const transations = [
-  { type: 'BUY', username: 'hit_ko', time: 1553740797139, avg: 2833, ct: 8.69},
-  { type: 'SELL', username: 'hit_ko', time: 1553740797139, avg: 2833, ct: 8.69},
-  { type: 'SELL', username: 'hit_ko', time: 1553740797139, avg: 2833, ct: 8.69},
-  { type: 'BUY', username: 'hit_ko', time: 1553740797139, avg: 2833, ct: 8.69},
-  { type: 'BUY', username: 'hit_ko', time: 1553740797139, avg: 2833, ct: 8.69},
-  { type: 'BUY', username: 'hit_ko', time: 1553740797139, avg: 2833, ct: 8.69},
-  { type: 'BUY', username: 'hit_ko', time: 1553740797139, avg: 2833, ct: 8.69},
-]
-
-const markets = [
-  { id: '1', icon: null, name: 'SMART',             createdDateTime: 1553740797139, price24hHigh: 59.37, price24hLow: 35.97, changeAvg24h: 0.18, price: 59.37, volumeAvg24h: 29002872, pool: 2682237283, totalCt: 100000, priceIn7d: [40, 50, 45, 60, 57, 66, 70], overview: 'Your musical ideas into reality, using the one instrument you’ve been practising since birth— the voice.', image: FakeImage, numberOfComments: 2000, numberOfSub: 1000, following: true, transations },
-  { id: '2', icon: null, name: 'SMART',             createdDateTime: 1553740797139, price24hHigh: 59.37, price24hLow: 35.97, changeAvg24h: 0.18, price: 59.37, volumeAvg24h: 29002872, pool: 2682237283, totalCt: 100000, priceIn7d: [40, 50, 45, 60, 57, 66, 70], overview: 'Let’s explain what is going on here.', image: FakeImage, numberOfComments: 2000, numberOfSub: 1000, following: false, transations },
-  { id: '3', icon: null, name: 'DUBLER STUDIO KIT', createdDateTime: 1553740797139, price24hHigh: 59.37, price24hLow: 35.97, changeAvg24h: 0.18, price: 59.37, volumeAvg24h: 29002872, pool: 2682237283, totalCt: 100000, priceIn7d: [40, 50, 45, 60, 57, 66, 70], overview: 'Let’s explain what is going on here.', image: FakeImage, numberOfComments: 2000, numberOfSub: 1000, following: false, transations },
-  { id: '4', icon: null, name: 'SMART',             createdDateTime: 1553740797139, price24hHigh: 59.37, price24hLow: 35.97, changeAvg24h: 0.18, price: 59.37, volumeAvg24h: 29002872, pool: 2682237283, totalCt: 100000, priceIn7d: [40, 50, 45, 60, 57, 66, 70], overview: 'Let’s explain what is going on here.', image: FakeImage, numberOfComments: 2000, numberOfSub: 1000, following: false, transations },
-  { id: '5', icon: null, name: 'SMART',             createdDateTime: 1553740797139, price24hHigh: 59.37, price24hLow: 35.97, changeAvg24h: 0.18, price: 59.37, volumeAvg24h: 29002872, pool: 2682237283, totalCt: 100000, priceIn7d: [40, 50, 45, 60, 57, 66, 70], overview: 'Let’s explain what is going on here.', image: FakeImage, numberOfComments: 2000, numberOfSub: 1000, following: false, transations },
-  { id: '6', icon: null, name: 'SMART',             createdDateTime: 1553740797139, price24hHigh: 59.37, price24hLow: 35.97, changeAvg24h: 0.18, price: 59.37, volumeAvg24h: 29002872, pool: 2682237283, totalCt: 100000, priceIn7d: [40, 50, 45, 60, 57, 66, 70], overview: 'Let’s explain what is going on here.', image: FakeImage, numberOfComments: 2000, numberOfSub: 1000, following: false, transations },
-  { id: '7', icon: FakeIcon, name: 'SMART',         createdDateTime: 1553740797139, price24hHigh: 59.37, price24hLow: 35.97, changeAvg24h: 0.18, price: 59.37, volumeAvg24h: 29002872, pool: 2682237283, totalCt: 100000, priceIn7d: [40, 50, 45, 60, 57, 66, 70], overview: 'Let’s explain what is going on here.', image: FakeImage, numberOfComments: 2000, numberOfSub: 1000, following: false, transations },
-  { id: '8', icon: null, name: 'SMART',             createdDateTime: 1553740797139, price24hHigh: 59.37, price24hLow: 35.97, changeAvg24h: 0.18, price: 59.37, volumeAvg24h: 29002872, pool: 2682237283, totalCt: 100000, priceIn7d: [40, 50, 45, 60, 57, 66, 70], overview: 'Let’s explain what is going on here.', image: FakeImage, numberOfComments: 2000, numberOfSub: 1000, following: false, transations },
-  { id: '9', icon: null, name: 'SMART',             createdDateTime: 1553740797139, price24hHigh: 59.37, price24hLow: 35.97, changeAvg24h: 0.18, price: 59.37, volumeAvg24h: 29002872, pool: 2682237283, totalCt: 100000, priceIn7d: [40, 50, 45, 60, 57, 66, 70], overview: 'Let’s explain what is going on here.', image: FakeImage, numberOfComments: 2000, numberOfSub: 1000, following: false, transations },
-  { id: '10', icon: null, name: 'SMART',            createdDateTime: 1553740797139, price24hHigh: 59.37, price24hLow: 35.97, changeAvg24h: 0.18, price: 59.37, volumeAvg24h: 29002872, pool: 2682237283, totalCt: 100000, priceIn7d: [40, 50, 45, 60, 57, 66, 70], overview: 'Let’s explain what is going on here.', image: FakeImage, numberOfComments: 2000, numberOfSub: 1000, following: false, transations },
-  { id: '11', icon: null, name: 'SMART',            createdDateTime: 1553740797139, price24hHigh: 59.37, price24hLow: 35.97, changeAvg24h: 0.18, price: 59.37, volumeAvg24h: 29002872, pool: 2682237283, totalCt: 100000, priceIn7d: [40, 50, 45, 60, 57, 66, 70], overview: 'Let’s explain what is going on here.', image: FakeImage, numberOfComments: 2000, numberOfSub: 1000, following: false, transations },
-  { id: '12', icon: null, name: 'SMART',            createdDateTime: 1553740797139, price24hHigh: 59.37, price24hLow: 35.97, changeAvg24h: 0.18, price: 59.37, volumeAvg24h: 29002872, pool: 2682237283, totalCt: 100000, priceIn7d: [40, 50, 45, 60, 57, 66, 70], overview: 'Let’s explain what is going on here.', image: FakeImage, numberOfComments: 2000, numberOfSub: 1000, following: false, transations },
-  { id: '13', icon: null, name: 'SMART',            createdDateTime: 1553740797139, price24hHigh: 59.37, price24hLow: 35.97, changeAvg24h: 0.18, price: 59.37, volumeAvg24h: 29002872, pool: 2682237283, totalCt: 100000, priceIn7d: [40, 50, 45, 60, 57, 66, 70], overview: 'Let’s explain what is going on here.', image: FakeImage, numberOfComments: 2000, numberOfSub: 1000, following: false, transations },
-  { id: '14', icon: null, name: 'SMART',            createdDateTime: 1553740797139, price24hHigh: 59.37, price24hLow: 35.97, changeAvg24h: 0.18, price: 59.37, volumeAvg24h: 29002872, pool: 2682237283, totalCt: 100000, priceIn7d: [40, 50, 45, 60, 57, 66, 70], overview: 'Let’s explain what is going on here.', image: FakeImage, numberOfComments: 2000, numberOfSub: 1000, following: false, transations },
-  { id: '15', icon: null, name: 'SMART',            createdDateTime: 1553740797139, price24hHigh: 59.37, price24hLow: 35.97, changeAvg24h: 0.18, price: 59.37, volumeAvg24h: 29002872, pool: 2682237283, totalCt: 100000, priceIn7d: [40, 50, 45, 60, 57, 66, 70], overview: 'Let’s explain what is going on here.', image: FakeImage, numberOfComments: 2000, numberOfSub: 1000, following: false, transations },
-];
+import { markets } from '../devData/marketDetail/'
 
 export const initialState = {
 
@@ -52,6 +25,35 @@ export const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    case TRADE_SELL_REQUESTED: 
+      return {
+        ...state,
+      }
+    case TRADE_SELL_SUCCEEDED: {
+      const { id, username, time, avg, ct } = action.payload
+      const marketIndex= state.markets.findIndex(m => m.id === id)
+      if(marketIndex <0) return state
+      return {
+        ...state,
+        markets: [
+          ...state.markets.slice(0, marketIndex),
+          {
+            ...state.markets[marketIndex],
+            transations: [
+              { type: 'BUY', username, time, avg, ct },
+              ...state.markets[marketIndex].transations
+            ]
+          },
+          ...state.markets.slice(marketIndex+1),
+        ]
+      }
+    }
+    case TRADE_SELL_FAILED: 
+      return {
+        ...state,
+      }
+
+
     case CREATE_MARKET_REQUESTED:
       return {
         ...state,

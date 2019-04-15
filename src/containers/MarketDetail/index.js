@@ -22,6 +22,7 @@ import Chart from './Chart'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { setActiveTab, setIsSell } from '../../actions/marketDetail';
+import { onSell } from '../../actions/trade';
 
 const model = [
   { label: lang.trading.table.buySell[currentLang], value: 'type', layoutStyle: { flex: 1, center: true }, component: ({value}) => <Text red={value === 'SELL'} green={value !== 'SELL'}>{value === 'SELL' ? lang.trading.table.sell[currentLang] : lang.trading.table.buy[currentLang]}</Text> },
@@ -39,7 +40,7 @@ const TABS = [
   { label: lang.marketTab.flag[currentLang], value: 'flag' },
 ]
 
-const Market = ({ market, activeTabIndex, isSell, setActiveTab, setIsSell }) => {
+const Market = ({ market, activeTabIndex, isSell, setActiveTab, setIsSell, onSell }) => {
   console.log(market)
   return (
     <Col>
@@ -58,7 +59,7 @@ const Market = ({ market, activeTabIndex, isSell, setActiveTab, setIsSell }) => 
       <Tab tabs={TABS} activeIndex={activeTabIndex} onClick={setActiveTab} width='100px' />
       <Row color={theme.bgColorDark} spacingLeftL spacingRightL spacingBottomL spacingTopL>
         <Col flex={1}>
-          <Chart />
+          <Chart data={market.data} />
         </Col>
         <Col spacingLeftXL>
           <Col spacingBottomS>
@@ -140,7 +141,7 @@ const Market = ({ market, activeTabIndex, isSell, setActiveTab, setIsSell }) => 
               <Checkbox label={<Text S note lineHeight>Agree to&nbsp;</Text>} />
               <Text S note underline lineHeight onClick={() => console.log('Get T&C')}>{'Teams & Conditions'}</Text>
             </Row>
-            <Botton label='Trade' icon={Trade} primary />
+            <Botton label='Trade' icon={Trade} primary onClick={() => onSell(market.id, 10)} />
           </Row>
 
         </Col>
@@ -162,7 +163,7 @@ const Market = ({ market, activeTabIndex, isSell, setActiveTab, setIsSell }) => 
   )
 }
 
-const ConnectMarket = ({ markets, activeTabIndex, isSell, setActiveTab, setIsSell, location }) => {
+const ConnectMarket = ({ markets, activeTabIndex, isSell, setActiveTab, setIsSell, onSell, location }) => {
   const id = new URLSearchParams(location.search).get('id');
   return (
     <Market
@@ -170,7 +171,8 @@ const ConnectMarket = ({ markets, activeTabIndex, isSell, setActiveTab, setIsSel
       activeTabIndex={activeTabIndex}
       isSell={isSell}
       setActiveTab={setActiveTab}
-      setIsSell={setIsSell} />
+      setIsSell={setIsSell}
+      onSell={onSell} />
   )
 }
 
@@ -181,8 +183,9 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  setIsSell: setIsSell,
-  setActiveTab
+  setIsSell,
+  setActiveTab,
+  onSell
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(ConnectMarket));
