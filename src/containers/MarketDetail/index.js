@@ -56,38 +56,43 @@ const Market = ({ market, activeTabIndex, isSell, setActiveTab, setIsSell }) => 
         </Row>
       </Row>
       <Tab tabs={TABS} activeIndex={activeTabIndex} onClick={setActiveTab} width='100px' />
-      <Row color={theme.bgColorDark} spacingLeftM spacingRightM spacingBottomXL spacingTopS>
+      <Row color={theme.bgColorDark} spacingLeftL spacingRightL spacingBottomL spacingTopL>
         <Col flex={1}>
           <Chart />
         </Col>
-        <Col spacingLeftS>
-          <Text nowrap>{toFullDate(Date.now())}</Text>
+        <Col spacingLeftXL>
+          <Col spacingBottomS>
+            <Text nowrap>{toFullDate(Date.now())}</Text>
+          </Col>
 
           <Col spacingTopS>
-            <Row botton>
+            <Row bottom>
               <Text XL>{toToken(market.price24hLow)}</Text>
-              <Text red S>low</Text>
+              <Text red S>&nbsp;&nbsp;low</Text>
             </Row>
-            <Text XL>{toToken(market.price24hHigh)}</Text>
+            <Row bottom>
+              <Text XL>{toToken(market.price24hHigh)}</Text>
+              <Text green S>&nbsp;&nbsp;high</Text>
+            </Row>
             <Text note S>{lang.trading.change[currentLang]}</Text>
           </Col>
 
-          <Col spacingTopXS>
+          <Col spacingTopS>
             <Text XL price>{toToken(market.price)}</Text>
             <Text note S>{lang.trading.price[currentLang]}</Text>
           </Col>
 
-          <Col spacingTopXS>
+          <Col spacingTopS>
             <Text XL primary>{toToken(market.volumeAvg24h)}</Text>
             <Text note S>{lang.trading.volume[currentLang]}</Text>
           </Col>
 
-          <Col spacingTopXS>
+          <Col spacingTopS>
             <Text XL>{toToken(market.pool)}</Text>
             <Text note S>{lang.trading.cap[currentLang]}</Text>
           </Col>
 
-          <Col spacingTopXS>
+          <Col spacingTopS>
             <Text XL>{toToken(market.totalCt)}</Text>
             <Text note S>{lang.trading.ct[currentLang]}</Text>
           </Col>

@@ -23,6 +23,9 @@ import { last } from "react-stockcharts/lib/utils";
 
 import dumpData from './dumpData'
 
+const MARGIN = { left: 20, right: 50, top: 10, bottom: 30 }
+const HEIGHT = 350
+
 function fill(d) {
   return d.close > d.open ? theme.red : theme.green
 }
@@ -51,10 +54,10 @@ const BlockPageScroll = ({ children }) => {
 }
 
 class DrawChart extends Component {
-  changeScroll(){
-    let style = document.body.style.overflow 
-    document.body.style.overflow = (style === 'hidden') ? 'auto':'hidden'
-  }
+  // changeScroll(){
+  //   let style = document.body.style.overflow 
+  //   document.body.style.overflow = (style === 'hidden') ? 'auto':'hidden'
+  // }
 
   axiaStyle = {
     fontSize: theme.fontSizeS,
@@ -70,7 +73,20 @@ class DrawChart extends Component {
       width, 
       ratio
     } = this.props 
-    
+
+    const yGrid = { 
+      innerTickSize: -1 * (width -  MARGIN.left - MARGIN.right),
+      tickStrokeDasharray: 'Solid',
+      tickStrokeOpacity: 0.2,
+      tickStrokeWidth: 1
+    }
+    const xGrid = { 
+      innerTickSize: -1 * (HEIGHT - MARGIN.top - MARGIN.bottom), 
+      tickStrokeDasharray: 'Solid',
+      tickStrokeOpacity: 0.2,
+      tickStrokeWidth: 1
+    }
+        
     const xScaleProvider = discontinuousTimeScaleProvider.inputDateAccessor(d => d.date);
     const {
       data,
@@ -86,10 +102,10 @@ class DrawChart extends Component {
     return (
       <BlockPageScroll>
       <ChartCanvas 
-        height={350}
+        height={HEIGHT}
         width={width}
         ratio={ratio}
-        margin={{ left: 50, right: 50, top: 10, bottom: 30 }}
+        margin={MARGIN}
         type={type}
         seriesName="MSFT"
         data={data}
@@ -97,11 +113,14 @@ class DrawChart extends Component {
         xAccessor={xAccessor}
         displayXAccessor={displayXAccessor}
         xExtents={xExtents}
+        mouseMoveEvent={true}
+        panEvent={true}
+        zoomEvent={true}
       >
 
         <Chart id={1} yExtents={d => [d.high, d.low]}>
-          <XAxis axisAt="bottom" orient="bottom" ticks={10} {...this.axiaStyle} />
-          <YAxis axisAt="right" orient="right" ticks={5} {...this.axiaStyle}  />
+          <XAxis axisAt="bottom" orient="bottom" ticks={10} {...this.axiaStyle} {...xGrid} />
+          <YAxis axisAt="right" orient="right" ticks={9} {...this.axiaStyle} {...yGrid} />
           <MouseCoordinateX at="bottom" orient="bottom" displayFormat={timeFormat("%H:%M")} />
 					<MouseCoordinateY at="right" orient="right" displayFormat={d => d.toFixed(5)} />
           <CandlestickSeries {...candlesAppearance}/>
@@ -110,7 +129,7 @@ class DrawChart extends Component {
           {/* <YAxis axisAt="left" orient="left" ticks={5} tickFormat={format(".2s")}/> */}
           <BarSeries yAccessor={d => d.volume} fill={fill} />
         </Chart>
-				<CrossHairCursor />
+				<CrossHairCursor stroke="#ffffff" />
       </ChartCanvas>
       </BlockPageScroll>
     )
