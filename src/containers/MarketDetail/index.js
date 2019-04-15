@@ -19,6 +19,7 @@ import Chart from './Chart'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { setActiveTab, setIsSell } from '../../actions/marketDetail';
+import { getBidQuote } from '../../actions/trade';
 
 const TABS = [
   { label: lang.marketTab.trade[currentLang], value: 'trading' },
@@ -28,7 +29,7 @@ const TABS = [
   { label: lang.marketTab.flag[currentLang], value: 'flag' },
 ]
 
-const Market = ({ market, activeTabIndex, isSell, setActiveTab, setIsSell }) => {
+const Market = ({ market, activeTabIndex, isSell, setActiveTab, setIsSell,getBidQuote }) => {
   return (
     <Col>
       <Row spaceBetween spacingTopXS spacingBottomXS spacingRightS spacingLeftS color={theme.bgColorLight}>
@@ -89,7 +90,7 @@ const Market = ({ market, activeTabIndex, isSell, setActiveTab, setIsSell }) => 
               <Checkbox label={<Text S note lineHeight>Agree to&nbsp;</Text>} />
               <Text S note underline lineHeight onClick={() => console.log('Get T&C')}>{'Teams & Conditions'}</Text>
             </Row>
-            <Botton label='Trade' icon={Trade} primary />
+            <Botton label='Trade' icon={Trade} primary onClick={() => getBidQuote()}/>
           </Row>
 
         </Col>
@@ -106,7 +107,7 @@ const Market = ({ market, activeTabIndex, isSell, setActiveTab, setIsSell }) => 
   )
 }
 
-const ConnectMarket = ({ markets, activeTabIndex, isSell, setActiveTab, setIsSell, location }) => {
+const ConnectMarket = ({ markets, activeTabIndex, isSell, setActiveTab, setIsSell, getBidQuote,location }) => {
   const id = new URLSearchParams(location.search).get('id');
   return (
     <Market
@@ -114,7 +115,8 @@ const ConnectMarket = ({ markets, activeTabIndex, isSell, setActiveTab, setIsSel
       activeTabIndex={activeTabIndex}
       isSell={isSell}
       setActiveTab={setActiveTab}
-      setIsSell={setIsSell} />
+      setIsSell={setIsSell}
+      getBidQuote={getBidQuote} />
   )
 }
 
@@ -126,7 +128,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   setIsSell: setIsSell,
-  setActiveTab
+  setActiveTab,
+  getBidQuote,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(ConnectMarket));

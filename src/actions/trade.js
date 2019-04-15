@@ -12,14 +12,17 @@ import {
 } from './api';
 import {
     asyncFunction, toWei, encodeParam, sutContractAddress, smartupWeb3, callbackFunction, getAccount,
-    createBidCtData, createAskCtData, createBidQuoteData, createAskQuoteData,
+    createBidCtData, createAskCtData, createBidQuoteData, createAskQuoteData,decodeResult,
 } from '../integrator'
+
+const marketAddress = '0xF6f7C3CDbA6ef2E9fFF12b1702481f99CA6Cd38c';
 
 //买入CT-先查询买入价格
 export function getBidQuote() {
     return async (dispatch, getState) => {
-        let marketAddress = getState().marketDetail.currentMarket;
-        let ctAmount = toWei(getState().marketDetail.ctBidAmount);
+        //let marketAddress = getState().marketDetail.currentMarket;
+        //let ctAmount = toWei(getState().marketDetail.ctBidAmount);
+        let ctAmount = toWei('1000');
         let encodeCtAmount = encodeParam(ctAmount);
         let [error, response] = await dispatch(callbackFunction(
             smartupWeb3.eth.call,
@@ -29,14 +32,15 @@ export function getBidQuote() {
                 params: {
                     to: marketAddress,
                     data: createBidQuoteData(encodeCtAmount),
-                    responsePayload: formatToken
+                    
                 }
             }
         ));
         if (!error) {
             //response sut amount
-            console.log('------------ 需要 SUT', response);
-            dispatch(bidCt(response));
+            const sutAmount = smartupWeb3.utils.fromWei(response).toString();
+            console.log('------------ 需要 SUT',sutAmount);
+            dispatch(bidCt(sutAmount));
         }
     }
 }
@@ -44,7 +48,7 @@ export function getBidQuote() {
 //根据查询到的价格(sut数量)买入ct
 function bidCt(sutAmount) {
     return (dispatch, getState) => {
-        let marketAddress = getState().marketDetail.currentMarket;
+        //let marketAddress = getState().marketDetail.currentMarket;
         let encodeCtPrice = toWei(sutAmount);
         let ctAmount = toWei(getState().marketDetail.ctBidAmount);
         let encodeCtAmount = encodeParam(ctAmount);
@@ -68,8 +72,9 @@ function bidCt(sutAmount) {
 //卖出CT-先查询卖出价格
 export function getAskQuote() {
     return async (dispatch, getState) => {
-        let marketAddress = getState().marketDetail.currentMarket;
-        let ctAmount = toWei(getState().marketDetail.ctBidAmount);
+        //let marketAddress = getState().marketDetail.currentMarket;
+        //let ctAmount = toWei(getState().marketDetail.ctBidAmount);
+        let ctAmount = toWei(100);
         let encodeCtAmount = encodeParam(ctAmount);
         let [error, response] = await dispatch(callbackFunction(
             smartupWeb3.eth.call,
@@ -79,7 +84,7 @@ export function getAskQuote() {
                 params: {
                     to: marketAddress,
                     data: createAskQuoteData(encodeCtAmount),
-                    responsePayload: formatToken
+                    responsePayload: decodeResult
                 }
             }
         ));
@@ -93,7 +98,7 @@ export function getAskQuote() {
 
 export function askCt() {
     return (dispatch, getState) => {
-        let marketAddress = getState().marketDetail.currentMarket;
+        //let marketAddress = getState().marketDetail.currentMarket;
         let ctAmount = toWei(getState().marketDetail.ctAskAmount);
         let encodeCtAmount = encodeParam(ctAmount);
         dispatch(asyncFunction(

@@ -31,6 +31,10 @@ export function encodeParam(r) {
   return `${smartupWeb3.eth.abi.encodeParameter('uint256', r)}`
 }
 
+export function decodeResult(r){
+  return `${smartupWeb3.utils.fromWei(r)}`
+}
+
 export function getBalance(account) {
   return smartupWeb3.eth.abi.encodeFunctionCall({
     name: 'balanceOf',
