@@ -1,4 +1,9 @@
-import { SET_ACTIVE_INDEX, MARKET_NAME_CHANGE, MARKET_DESC_CHANGE } from '../actions/actionTypes';
+import { 
+  SET_ACTIVE_INDEX, 
+  MARKET_NAME_CHANGE, 
+  MARKET_DESC_CHANGE, 
+  CREATE_MARKET_SMARTUP_SUCCEEDED,
+  MARKET_RESET } from '../actions/actionTypes';
 
 export const initialState = {
   activeIndex: 0,
@@ -42,6 +47,17 @@ export default (state = initialState, action) => {
         activeIndex: block ? state.activeIndex : action.payload
       }
     }
+
+    case CREATE_MARKET_SMARTUP_SUCCEEDED: {
+      return {
+        ...state,
+        activeIndex: -1,
+      }
+    }
+
+    case MARKET_RESET: 
+      return initialState
+
     default:
       return state;
   }

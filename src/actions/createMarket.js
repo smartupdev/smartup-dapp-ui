@@ -1,4 +1,4 @@
-import { SET_ACTIVE_INDEX, MARKET_NAME_CHANGE, MARKET_DESC_CHANGE } from './actionTypes';
+import { SET_ACTIVE_INDEX, MARKET_NAME_CHANGE, MARKET_DESC_CHANGE, MARKET_RESET } from './actionTypes';
 
 export function setActiveIndex(changeNumber) {
   return ({
@@ -19,4 +19,10 @@ export function onChangeDesc(text) {
     type: MARKET_DESC_CHANGE,
     payload: text,
   })
+}
+
+export function reset() {
+  return {
+    type: MARKET_RESET,
+  }
 }

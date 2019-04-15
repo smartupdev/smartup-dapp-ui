@@ -30,9 +30,29 @@ export function createMarket() {
         }
       }
     ));
-    if(!error){
-      dispatch(createSmartUpMarket(response));
-    }
+    const createMarket = getState().createMarket
+    dispatch({
+      type: CREATE_MARKET_SMARTUP_SUCCEEDED,
+      payload: {
+        id: '99', 
+        icon: null, 
+        name: createMarket.name, 
+        createdDateTime: 1553740797139, 
+        changeAvg24h: null, 
+        price: 61.75, 
+        volumeAvg24h: 0, 
+        pool: 0, 
+        priceIn7d: [0, 0, 0, 0, 0, 0, 0], 
+        overview: createMarket.desc, 
+        image: null, 
+        numberOfComments: 0, 
+        numberOfSub: 0, 
+        following: false 
+      }
+    })
+    // if(!error){
+    //   dispatch(createSmartUpMarket(response));
+    // }
     console.log('------------ error', error);
     console.log('------------ response', response);
   }

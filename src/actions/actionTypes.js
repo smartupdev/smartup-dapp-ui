@@ -45,6 +45,7 @@ export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';
 export const REGISTER = 'REGISTER';
 //market
+export const MARKET_RESET = 'MARKET_RESET';
 export const MARKET_NAME_CHANGE = 'MARKET_NAME_CHANGE';
 export const MARKET_DESC_CHANGE = 'MARKET_DESC_CHANGE';
 export const CREATE_MARKET_REQUESTED = 'CREATE_MARKET_REQUESTED';
