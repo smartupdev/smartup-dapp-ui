@@ -55,6 +55,9 @@ export const Text = styled.p`
     width: 100%;
   `}
 
+  ${p => p.red && css`color: ${p.theme.red}`};
+  ${p => p.green && css`color: ${p.theme.green}`};
+
   ${p => p.error && css`
     color: ${p.theme.red};
     font-size: ${p.theme.fontSizeXS};

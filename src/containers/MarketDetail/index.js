@@ -12,14 +12,24 @@ import Button from '../../components/Button'
 import Hr from '../../components/Hr'
 import Avatar from '../../components/Avatar'
 import Botton from '../../components/Button'
+
 import lang, { currentLang } from '../../lang'
+import { toToken, toAgo } from '../../lib/util'
 
 import Chart from './Chart'
 
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
-import { setActiveTab, setIsSell } from '../../actions/marketDetail';
-import { getBidQuote } from '../../actions/trade';
+import { setActiveTab, setIsSell, onChangeCtAmount } from '../../actions/marketDetail';
+import { onTrade } from '../../actions/trade';
+
+const model = [
+  { label: lang.trading.table.buySell[currentLang], value: 'type', layoutStyle: { flex: 1, center: true }, component: ({value}) => <Text red={value === 'SELL'} green={value !== 'SELL'}>{value === 'SELL' ? lang.trading.table.sell[currentLang] : lang.trading.table.buy[currentLang]}</Text> },
+  { label: lang.trading.table.user[currentLang], value: 'username', layoutStyle: { flex: 1, center: true }, component: ({record}) => <Row centerVertical><Avatar icon={record.userIcon}/><Text>{record.username}</Text></Row> },
+  { label: lang.trading.table.time[currentLang], value: 'time', layoutStyle: { flex: 1, center: true }, component: ({value}) => <Text>{toAgo(value)}</Text> },
+  { label: lang.trading.table.avgPrice[currentLang], value: 'avg', layoutStyle: { flex: 1, center: true }, component: ({value}) => <Text>{toToken(value)}</Text> },
+  { label: lang.trading.table.ct[currentLang], value: 'ct', layoutStyle: { flex: 1, center: true }, },
+]
 
 const TABS = [
   { label: lang.marketTab.trade[currentLang], value: 'trading' },
@@ -29,7 +39,9 @@ const TABS = [
   { label: lang.marketTab.flag[currentLang], value: 'flag' },
 ]
 
-const Market = ({ market, activeTabIndex, isSell, setActiveTab, setIsSell,getBidQuote }) => {
+const Market = ({ market, activeTabIndex, isSell, ctInputAmount,askQuoteAmount,bidQuoteAmount,
+  setActiveTab, setIsSell,onChangeCtAmount,onTrade }) => {
+  console.log(market);
   return (
     <Col>
       <Row spaceBetween spacingTopXS spacingBottomXS spacingRightS spacingLeftS color={theme.bgColorLight}>
@@ -68,7 +80,7 @@ const Market = ({ market, activeTabIndex, isSell, setActiveTab, setIsSell,getBid
               <Text S>SMARTUP</Text>
             </Col>
             <Col spacingLeftS spacingTopS flex={1}>
-              <Input underline L center fullWidth />
+              <Input underline L center fullWidth value={ctInputAmount} onChange={e => onChangeCtAmount(e.target.value)}/>
               {/* <Text error XS>You need more SmartUp to make this trade.</Text> */}
             </Col>
             <Col spacingLeftM spacingRightM>
@@ -80,7 +92,7 @@ const Market = ({ market, activeTabIndex, isSell, setActiveTab, setIsSell,getBid
               <Text S>{market.name}</Text>
             </Col>
             <Col spacingLeftS spacingTopS flex={1}>
-              <Input underline L center fullWidth />
+              <Input underline L center fullWidth value={isSell ? askQuoteAmount : bidQuoteAmount}/>
               {/* <Text error XS>You need more SmartUp to make this trade.</Text> */}
             </Col>
           </Row>
@@ -90,33 +102,43 @@ const Market = ({ market, activeTabIndex, isSell, setActiveTab, setIsSell,getBid
               <Checkbox label={<Text S note lineHeight>Agree to&nbsp;</Text>} />
               <Text S note underline lineHeight onClick={() => console.log('Get T&C')}>{'Teams & Conditions'}</Text>
             </Row>
-            <Botton label='Trade' icon={Trade} primary onClick={() => getBidQuote()}/>
+            <Botton label='Trade' icon={Trade} primary onClick={() => onTrade()}/>
           </Row>
 
         </Col>
 
       </Col>
       <Hr />
-      <Col>
+      <Col spacingLeftM spacingRightM>
         <Col spacingBottomS spacingTopS>
           <Text L center>{lang.trading.trans[currentLang]}</Text>
         </Col>
         <Hr />
+        <Table
+          model={model}
+          values={market.transations || []}
+        />
+
       </Col>
     </Col>
   )
 }
 
-const ConnectMarket = ({ markets, activeTabIndex, isSell, setActiveTab, setIsSell, getBidQuote,location }) => {
+const ConnectMarket = ({ markets, activeTabIndex, isSell, ctInputAmount, askQuoteAmount,bidQuoteAmount,
+  setActiveTab, setIsSell,onChangeCtAmount,onTrade,location }) => {
   const id = new URLSearchParams(location.search).get('id');
   return (
     <Market
       market={markets.find(m => m.id === id)}
       activeTabIndex={activeTabIndex}
       isSell={isSell}
+      ctInputAmount={ctInputAmount}
       setActiveTab={setActiveTab}
       setIsSell={setIsSell}
-      getBidQuote={getBidQuote} />
+      askQuoteAmount={askQuoteAmount}
+      bidQuoteAmount={bidQuoteAmount}
+      onChangeCtAmount={onChangeCtAmount}
+      onTrade={onTrade} />
   )
 }
 
@@ -124,12 +146,16 @@ const mapStateToProps = state => ({
   markets: state.market.markets,
   activeTabIndex: state.marketDetail.activeTabIndex,
   isSell: state.marketDetail.isSell,
+  ctInputAmount: state.marketDetail.ctInputAmount,
+  bidQuoteAmount: state.trade.bidQuoteAmount,
+  askQuoteAmount: state.trade.askQuoteAmount,
 });
 
 const mapDispatchToProps = {
   setIsSell: setIsSell,
   setActiveTab,
-  getBidQuote,
+  onTrade,
+  onChangeCtAmount,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(ConnectMarket));

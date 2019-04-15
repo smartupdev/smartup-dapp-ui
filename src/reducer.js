@@ -5,6 +5,7 @@ import market from './reducers/market';
 import createMarket from './reducers/createMarket';
 import panel from './reducers/panel';
 import marketDetail from './reducers/marketDetail';
+import trade from './reducers/trade';
 import { combineReducers } from 'redux';
 import { routerReducer } from 'react-router-redux';
 
@@ -15,6 +16,7 @@ export default combineReducers({
     market,
     createMarket,
     marketDetail,
+    trade,
     panel,
     router: routerReducer
 });
