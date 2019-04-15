@@ -34,7 +34,7 @@ const _More = ({ isExpanded }) => <More reverse={isExpanded} XS color={theme.whi
 const _Name = ({ value, record }) =>
   <Col>
     <Text>{value}</Text>
-    <Text note S>{toDate(record.createdDateTime)}</Text> { TODO }
+    <Text note S>{toDate(record.createdDateTime)}</Text> {/* { TODO } */}
   </Col>
 const _Percent = ({ value }) => <Text>{value * 100 + '%'}</Text>
 const _Price = ({ value }) => <Text price>{toPrice(value)}</Text>
