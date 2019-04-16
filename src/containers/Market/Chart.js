@@ -161,7 +161,7 @@ class DrawChart extends Component {
               snapX={true}
               displayFormat={d => d.toFixed(5)} />
             <CandlestickSeries {...candlesAppearance} />
-            <OHLCTooltip ohlcFormat={format(".5f")} forChart={1} origin={[20, 0]} />
+            {/* <OHLCTooltip ohlcFormat={format(".5f")} forChart={1} origin={[20, 0]} /> */}
           </Chart>
           <Chart id={2} origin={(w, h) => [0, h - 100]} height={100} yExtents={d => d.volume}>
             {/* <YAxis axisAt="left" orient="left" ticks={5} tickFormat={format(".2s")}/> */}
