@@ -1,5 +1,4 @@
-export default 
-[
+const a = [
         {
             "open":0.035444,
             "high":0.0354954,
@@ -17281,4 +17280,5 @@ export default
             "BV":1.3627340360562947
         }
     ]
-    
+
+export default a.map(d => ({...d, date: new Date(d.date)}))

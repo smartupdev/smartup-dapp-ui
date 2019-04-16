@@ -95,11 +95,12 @@ class DrawChart extends Component {
   render() {
     const {
       type = 'svg',
-      data: initialData,
+      data: propsData,
       width,
       ratio
     } = this.props
-    if (!initialData || !initialData.length) return null;
+    const noData = !propsData || !propsData.length
+    const initialData = noData ? dumpData : propsData
     const yGrid = {
       innerTickSize: -1 * (width - MARGIN.left - MARGIN.right),
       tickStrokeDasharray: 'Solid',
@@ -127,48 +128,58 @@ class DrawChart extends Component {
 
     return (
       <BlockPageScroll>
-        <ChartCanvas
-          height={HEIGHT}
-          width={width}
-          ratio={ratio}
-          margin={MARGIN}
-          type={type}
-          seriesName="MSFT"
-          data={data}
-          xScale={xScale}
-          xAccessor={xAccessor}
-          displayXAccessor={displayXAccessor}
-          xExtents={xExtents}
-          mouseMoveEvent={true}
-          panEvent={true}
-          zoomEvent={true}
-        >
+        <div style={{opacity: noData ? 0.2 : 1}}>
+          <ChartCanvas
+            height={HEIGHT}
+            width={width}
+            ratio={ratio}
+            margin={MARGIN}
+            type={type}
+            seriesName="MSFT"
+            data={data}
+            xScale={xScale}
+            xAccessor={xAccessor}
+            displayXAccessor={displayXAccessor}
+            xExtents={xExtents}
+            mouseMoveEvent={!noData}
+            panEvent={!noData}
+            zoomEvent={!noData}
+            clamp={false}
+            >
 
-          <Chart id={1} yExtents={d => [d.high, d.low]}>
-            <XAxis axisAt="bottom" orient="bottom" ticks={10} {...this.axiaStyle} {...xGrid} />
-            <YAxis axisAt="right" orient="right" ticks={9} {...this.axiaStyle} {...yGrid} />
-            <MouseCoordinateX at="bottom" orient="bottom" displayFormat={timeFormat("%H:%M")} />
-            <MouseCoordinateY
-              dx={-10}
-              yAxisPad={100}
-              rectHeight={15}
-              rectWidth={70}
-              at="right"
-              orient="right"
-              fill="#ffffff"
-              opacity={1}
-              textFill="#000000"
-              snapX={true}
-              displayFormat={d => d.toFixed(5)} />
-            <CandlestickSeries {...candlesAppearance} />
-            {/* <OHLCTooltip ohlcFormat={format(".5f")} forChart={1} origin={[20, 0]} /> */}
-          </Chart>
-          <Chart id={2} origin={(w, h) => [0, h - 100]} height={100} yExtents={d => d.volume}>
-            {/* <YAxis axisAt="left" orient="left" ticks={5} tickFormat={format(".2s")}/> */}
-            <BarSeries yAccessor={d => d.volume} fill={fill} />
-          </Chart>
-          <CrossHairCursor stroke="#ffffff" />
-        </ChartCanvas>
+            <Chart id={1} yExtents={d => [d.high, d.low]}>
+              <XAxis axisAt="bottom" orient="bottom" ticks={10} {...this.axiaStyle} {...xGrid} />
+              <YAxis axisAt="right" orient="right" ticks={9} {...this.axiaStyle} {...yGrid} />
+              <MouseCoordinateX at="bottom" orient="bottom" displayFormat={timeFormat("%H:%M")} />
+              <MouseCoordinateY
+                dx={-10}
+                yAxisPad={100}
+                rectHeight={15}
+                rectWidth={70}
+                at="right"
+                orient="right"
+                fill="#ffffff"
+                opacity={1}
+                textFill="#000000"
+                snapX={true}
+                displayFormat={d => d.toFixed(5)} />
+              <CandlestickSeries {...candlesAppearance} />
+              {/* <OHLCTooltip ohlcFormat={format(".5f")} forChart={1} origin={[20, 0]} /> */}
+            </Chart>
+            <Chart id={2} origin={(w, h) => [0, h - 100]} height={100} yExtents={d => d.volume}>
+              {/* <YAxis axisAt="left" orient="left" ticks={5} tickFormat={format(".2s")}/> */}
+              <BarSeries yAccessor={d => d.volume} fill={fill} />
+            </Chart>
+            <CrossHairCursor stroke="#ffffff" />
+          </ChartCanvas>
+
+        </div>
+        {
+          !!noData && 
+          <div style={{ width: width, textAlign: 'center', position: 'absolute', top: HEIGHT/2 - 18, zIndex: 1100, opacity: .6, fontSize: 18, fontFamily: 'Quicksand, sans-serif' }}>
+            Graph will be vailable after transactions made
+          </div> 
+        }
       </BlockPageScroll>
     )
   }

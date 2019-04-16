@@ -140,7 +140,15 @@ function Trading({ activeTabIndex, isSell, ctInputAmount, askQuoteAmount, bidQuo
                 model={model}
                 values={market.transations || []}
               />
-
+              {
+                (!market.transations || !market.transations.length) &&
+                <>
+                  <Hr />
+                  <Col center spacingTopS spacingBottomL>
+                    <Text note>Transaction record will be available after the first transaction made</Text>
+                  </Col>
+                </>
+              }
             </Col>
 
           </>
