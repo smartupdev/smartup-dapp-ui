@@ -37,13 +37,13 @@ export function onSell(marketId, numberOfct) {
   )
 }
 
-export function onTrade() {
+export function onTrade(marketId) {
   return (dispatch, getState) => {
     let isSell = getState().marketDetail.isSell;
     if (!!isSell) {
-      dispatch(askCt());
+      dispatch(askCt(marketId));
     } else {
-      dispatch(bidCt());
+      dispatch(bidCt(marketId));
     }
   }
 }
@@ -70,7 +70,7 @@ export function getBidQuote(ctInputAmount) {
 }
 
 //根据查询到的价格(sut数量)买入ct
-function bidCt() {
+function bidCt(marketId) {
   return (dispatch, getState) => {
     //let marketAddress = getState().marketDetail.currentMarket;
     let encodeCtPrice = toWei(getState().trade.bidQuoteAmount);
@@ -86,6 +86,17 @@ function bidCt() {
           to: sutContractAddress,
           value: '0x0',
           data: createBidCtData({ marketAddress, encodeCtPrice, encodeCtAmount })
+        },
+        responsePayload: hash => {
+          const { marketDetail: {ctInputAmount}, trade: {bidQuoteAmount} } = getState()
+          return {
+            hash,
+            id: marketId, 
+            username: getState().user.userName, 
+            time: Date.now(), 
+            avg: bidQuoteAmount/ctInputAmount, 
+            ct: ctInputAmount
+          }
         }
       }
     ));

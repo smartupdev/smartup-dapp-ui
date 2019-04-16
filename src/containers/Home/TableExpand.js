@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from '../../routes'
 import { Row, Col } from '../../components/Layout'
 import theme from '../../theme'
 import { Comment, Trade, People, Bookmarked } from '../../components/Icon'
@@ -6,7 +7,6 @@ import Text from '../../components/Text'
 import lang, { currentLang } from '../../lang'
 import Button from '../../components/Button'
 import Image from '../../components/Image'
-import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { bookMarkClick } from '../../actions/home'
 
@@ -29,7 +29,11 @@ const TableExpand = ({ record, history, bookMarkClick }) => {
           <Button label={record.numberOfComments} icon={Comment} />
           <Button label={record.numberOfSub} icon={People} />
         </Row>
-        <Button primary label={lang.trade[currentLang]} icon={Trade} onClick={()=>history.push(`/market?id=${record.id}`)} />
+        <Link>
+          { ({goto}) =>
+          <Button primary label={lang.trade[currentLang]} icon={Trade} onClick={()=>goto.trading({id: record.id})} />
+           }
+        </Link>
       </Row>
     </Col>
   </Row>
@@ -40,4 +44,4 @@ const mapDispatchToProps = {
   bookMarkClick,
 }
 
-export default connect(null, mapDispatchToProps)(withRouter(TableExpand));
+export default connect(null, mapDispatchToProps)(TableExpand);

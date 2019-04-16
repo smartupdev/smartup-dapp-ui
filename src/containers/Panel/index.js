@@ -70,10 +70,10 @@ const Panel = ({
           <Text note>{metaMaskHint}</Text>
             <Row width={`${PANEL_WIDTH*.8}px`} spacingTopXS>
               { metaMaskEableError &&
-                <Text error>Please install or enable the MetaMask browser plug-in from <A XS error href='https://metamask.io/' target="_blank">Metamask.io</A></Text>
+                <Text error S>Please install or enable the MetaMask browser plug-in from <A XS error href='https://metamask.io/' target="_blank">Metamask.io</A></Text>
               }
               { metaMaskSignError &&
-                <Text error>Please sign the message for login purpose.</Text>
+                <Text error S>Please sign the message for login purpose.</Text>
               }
             </Row>
         </Col>

@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import { Link } from '../../routes'
 // import styled from 'styled-components'
 import Text from '../../components/Text'
 import Input, { Selector } from '../../components/Input'
@@ -119,7 +120,12 @@ const CreateMarket = ({
               <Col spacingTopL spacingBottomL>
                 <Text XL wordSpaceL center>MAKRET IS CREATED SUCCESSFULLY!</Text>
               </Col>
-              <Button label='Explore Market' primary onClick={()=>history.push(`/market?id=99`)} extended />
+              <Link>
+                {
+                  ({goto}) =>
+                <Button label='Explore Market' primary onClick={()=>goto.trading({id: 99})} extended />
+                }
+              </Link>
             </Col>
           </>
       }

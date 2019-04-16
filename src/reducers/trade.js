@@ -52,7 +52,7 @@ export default (state = initialState, action) => {
         case TRADE_BID_CT_SUCCEEDED:
             return {
                 ...state,
-                bidCtHash: action.payload,
+                bidCtHash: action.payload.hash,
                 bidingCt: false,
                 bidCtError: initialState.bidCtError
             };
