@@ -21,6 +21,11 @@ import { discontinuousTimeScaleProvider } from "react-stockcharts/lib/scale";
 import { fitWidth } from "react-stockcharts/lib/helper";
 import { last } from "react-stockcharts/lib/utils";
 
+import {
+  OHLCTooltip,
+  MovingAverageTooltip
+} from "react-stockcharts/lib/tooltip";
+
 import dumpData from './dumpData'
 
 const MARGIN = { left: 20, right: 50, top: 10, bottom: 30 }
@@ -143,8 +148,20 @@ class DrawChart extends Component {
             <XAxis axisAt="bottom" orient="bottom" ticks={10} {...this.axiaStyle} {...xGrid} />
             <YAxis axisAt="right" orient="right" ticks={9} {...this.axiaStyle} {...yGrid} />
             <MouseCoordinateX at="bottom" orient="bottom" displayFormat={timeFormat("%H:%M")} />
-            <MouseCoordinateY at="right" orient="right" displayFormat={d => d.toFixed(5)} />
+            <MouseCoordinateY
+              dx={-10}
+              yAxisPad={100}
+              rectHeight={15}
+              rectWidth={70}
+              at="right"
+              orient="right"
+              fill="#ffffff"
+              opacity={1}
+              textFill="#000000"
+              snapX={true}
+              displayFormat={d => d.toFixed(5)} />
             <CandlestickSeries {...candlesAppearance} />
+            <OHLCTooltip ohlcFormat={format(".5f")} forChart={1} origin={[20, 0]} />
           </Chart>
           <Chart id={2} origin={(w, h) => [0, h - 100]} height={100} yExtents={d => d.volume}>
             {/* <YAxis axisAt="left" orient="left" ticks={5} tickFormat={format(".2s")}/> */}
