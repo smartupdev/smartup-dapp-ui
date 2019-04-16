@@ -81,7 +81,7 @@ class DrawChart extends Component {
   // }
 
   axiaStyle = {
-    fontSize: theme.fontSizeS,
+    fontSize: +theme.fontSizeS.slice(0, -2),
     fontFamily: theme.fontFamily,
     tickStroke: '#ffffff',
     stroke: "#ffffff"

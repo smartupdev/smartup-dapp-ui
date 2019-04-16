@@ -40,7 +40,7 @@ export default (state = initialState, action) => {
           {
             ...state.markets[marketIndex],
             transations: [
-              { type: 'BUY', username, time, avg, ct },
+              { id: state.markets[marketIndex].transations.length+100, type: 'BUY', username, time, avg, ct },
               ...state.markets[marketIndex].transations
             ]
           },

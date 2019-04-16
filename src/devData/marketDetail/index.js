@@ -3,13 +3,13 @@ import FakeIcon from '../../images/035-sun.svg'
 import FakeImage from '../../images/037-ufo.svg'
 
 const transations = [
-  { type: 'BUY', username: 'hit_ko', time: 1553740797139, avg: 2833, ct: 8.69},
-  { type: 'SELL', username: 'hit_ko', time: 1553740797139, avg: 2833, ct: 8.69},
-  { type: 'SELL', username: 'hit_ko', time: 1553740797139, avg: 2833, ct: 8.69},
-  { type: 'BUY', username: 'hit_ko', time: 1553740797139, avg: 2833, ct: 8.69},
-  { type: 'BUY', username: 'hit_ko', time: 1553740797139, avg: 2833, ct: 8.69},
-  { type: 'BUY', username: 'hit_ko', time: 1553740797139, avg: 2833, ct: 8.69},
-  { type: 'BUY', username: 'hit_ko', time: 1553740797139, avg: 2833, ct: 8.69},
+  { id: 1, type: 'BUY', username: 'hit_ko', time: 1553740797139, avg: 2833, ct: 8.69},
+  { id: 2, type: 'SELL', username: 'hit_ko', time: 1553740797139, avg: 2833, ct: 8.69},
+  { id: 3, type: 'SELL', username: 'hit_ko', time: 1553740797139, avg: 2833, ct: 8.69},
+  { id: 4, type: 'BUY', username: 'hit_ko', time: 1553740797139, avg: 2833, ct: 8.69},
+  { id: 5, type: 'BUY', username: 'hit_ko', time: 1553740797139, avg: 2833, ct: 8.69},
+  { id: 6, type: 'BUY', username: 'hit_ko', time: 1553740797139, avg: 2833, ct: 8.69},
+  { id: 7, type: 'BUY', username: 'hit_ko', time: 1553740797139, avg: 2833, ct: 8.69},
 ]
 
 export const markets = [
