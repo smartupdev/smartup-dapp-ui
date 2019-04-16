@@ -8,7 +8,9 @@ const getMiddleware = () => {
   return process.env.NODE_ENV === 'production' ?
     applyMiddleware(thunk)
     :
-    composeWithDevTools(applyMiddleware(thunk, createLogger()))
+    composeWithDevTools(applyMiddleware(thunk
+      , createLogger()
+      ))
 };
 
 export const store = createStore(reducer, getMiddleware());

@@ -6,7 +6,8 @@ import {
   TRADE_LIST_REQUESTED, TRADE_LIST_SUCCEEDED, TRADE_LIST_FAILED,
   TRADE_DETAIL_REQUESTED, TRADE_DETAIL_SUCCEEDED, TRADE_DETAIL_FAILED,
   TRADE_SELL_REQUESTED, TRADE_SELL_SUCCEEDED, TRADE_SELL_FAILED,
-  TRADE_BUY_REQUESTED, TRADE_BUY_SUCCEEDED, TRADE_BUY_FAILED
+  TRADE_BUY_REQUESTED, TRADE_BUY_SUCCEEDED, TRADE_BUY_FAILED,
+  TOGGLE_IS_SELL, TRADE_CHANGE_CT_AMOUNT
 } from '../actions/actionTypes';
 import fetch from '../lib/util/fetch';
 import {
@@ -21,6 +22,28 @@ const marketAddress = '0xF6f7C3CDbA6ef2E9fFF12b1702481f99CA6Cd38c';
 
 function fakeFetch() {
   return () => new Promise((resolve, reject) => setTimeout(resolve, 1000))
+}
+
+export function toggleIsSell() {
+  return ({
+    type: TOGGLE_IS_SELL,
+  })
+}
+
+export function onChangeCtAmount(amount){
+  return (dispatch, getState)=>{
+    dispatch({
+      type: TRADE_CHANGE_CT_AMOUNT,
+      payload: amount
+    });
+    let isSell = getState().trade.isSell;
+    if(!!isSell){
+      dispatch(getAskQuote(amount));
+    }else{
+      dispatch(getBidQuote(amount));
+    }
+    
+  }
 }
 
 export function onSell(marketId, numberOfct) {
@@ -39,7 +62,7 @@ export function onSell(marketId, numberOfct) {
 
 export function onTrade(marketId) {
   return (dispatch, getState) => {
-    let isSell = getState().marketDetail.isSell;
+    let isSell = getState().trade.isSell;
     if (!!isSell) {
       dispatch(askCt(marketId));
     } else {
@@ -51,7 +74,7 @@ export function onTrade(marketId) {
 //买入CT-先查询买入价格
 export function getBidQuote(ctInputAmount) {
   return (dispatch, getState) => {
-    //let marketAddress = getState().marketDetail.currentMarket;
+    //let marketAddress = getState().trade.currentMarket;
     let ctAmount = toWei(ctInputAmount);
     let encodeCtAmount = encodeParam(ctAmount);
     dispatch(asyncFunction(
@@ -72,9 +95,9 @@ export function getBidQuote(ctInputAmount) {
 //根据查询到的价格(sut数量)买入ct
 function bidCt(marketId) {
   return (dispatch, getState) => {
-    //let marketAddress = getState().marketDetail.currentMarket;
+    //let marketAddress = getState().trade.currentMarket;
     let encodeCtPrice = toWei(getState().trade.bidQuoteAmount);
-    let ctAmount = toWei(getState().marketDetail.ctInputAmount);
+    let ctAmount = toWei(getState().trade.ctInputAmount);
     let encodeCtAmount = encodeParam(ctAmount);
     dispatch(callbackFunction(
       smartupWeb3.eth.sendTransaction,
@@ -106,7 +129,7 @@ function bidCt(marketId) {
 //卖出CT-先查询卖出价格
 export function getAskQuote(ctInputAmount) {
   return (dispatch, getState) => {
-    //let marketAddress = getState().marketDetail.currentMarket;
+    //let marketAddress = getState().trade.currentMarket;
     let ctAmount = toWei(ctInputAmount);
     let encodeCtAmount = encodeParam(ctAmount);
     dispatch(callbackFunction(
@@ -126,8 +149,8 @@ export function getAskQuote(ctInputAmount) {
 
 export function askCt() {
   return (dispatch, getState) => {
-    //let marketAddress = getState().marketDetail.currentMarket;
-    let ctAmount = toWei(getState().marketDetail.ctInputAmount);
+    //let marketAddress = getState().trade.currentMarket;
+    let ctAmount = toWei(getState().trade.ctInputAmount);
     let encodeCtAmount = encodeParam(ctAmount);
     dispatch(asyncFunction(
       smartupWeb3.eth.sendTransaction,
