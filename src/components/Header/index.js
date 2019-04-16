@@ -14,19 +14,21 @@ const Header = styled.header`
   flex-direction: column;
 `
 
-export default ({ routes }) => 
+export default ({ routes }) =>
   <Header>
-    <Menu image={Logo} fixed />
+    <Link to={routes[0].path}>
+      <Menu image={Logo} fixed />
+    </Link>
     {
-      routes.map( ({path, icon, includePaths}, i) => 
+      routes.map(({ path, icon, includePaths }, i) =>
         icon && <Route
-          key={i} 
+          key={i}
           path={path}
           exact={true}
           children={({ match, location }) => (
             <Link to={path}>
-                <Menu selected={match || includePaths && includePaths.includes(location.pathname)} icon={icon} />
-              </Link>
+              <Menu selected={match || includePaths && includePaths.includes(location.pathname)} icon={icon} />
+            </Link>
           )}
         />
       )
