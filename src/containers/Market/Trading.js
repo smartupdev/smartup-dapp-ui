@@ -2,8 +2,7 @@ import React from 'react'
 import { Link, WithMarket } from '../../routes'
 
 import { connect } from 'react-redux'
-import { setActiveTab, setIsSell, onChangeCtAmount } from '../../actions/marketDetail';
-import { onTrade, onSell } from '../../actions/trade';
+import { onTrade, onSell, onChangeCtAmount, toggleIsSell } from '../../actions/trade';
 
 import theme from '../../theme'
 import { Row, Col } from '../../components/Layout'
@@ -32,8 +31,7 @@ const model = [
 ]
 
 
-function Trading({ activeTabIndex, isSell, ctInputAmount, askQuoteAmount, bidQuoteAmount, setActiveTab, setIsSell, onSell, onChangeCtAmount, onTrade
-}) {
+function Trading({ isSell, ctInputAmount, askQuoteAmount, bidQuoteAmount, toggleIsSell, onSell, onChangeCtAmount, onTrade }) {
   return (
     <WithMarket>
       {
@@ -105,7 +103,7 @@ function Trading({ activeTabIndex, isSell, ctInputAmount, askQuoteAmount, bidQuo
                     {/* <Text error XS>You need more SmartUp to make this trade.</Text> */}
                   </Col>
                   <Col spacingLeftM spacingRightM>
-                    <Trade onClick={setIsSell} leftActive={isSell} rightActive={!isSell} />
+                    <Trade onClick={toggleIsSell} leftActive={isSell} rightActive={!isSell} />
                   </Col>
                   <Avatar icon={market.icon} />
                   <Col>
@@ -140,7 +138,15 @@ function Trading({ activeTabIndex, isSell, ctInputAmount, askQuoteAmount, bidQuo
                 model={model}
                 values={market.transations || []}
               />
-
+              {
+                (!market.transations || !market.transations.length) &&
+                <>
+                  <Hr />
+                  <Col center spacingTopS spacingBottomL>
+                    <Text note>Transaction record will be available after the first transaction made</Text>
+                  </Col>
+                </>
+              }
             </Col>
 
           </>
@@ -150,15 +156,14 @@ function Trading({ activeTabIndex, isSell, ctInputAmount, askQuoteAmount, bidQuo
 }
 
 const mapStateToProps = state => ({
-  isSell: state.marketDetail.isSell,
-  ctInputAmount: state.marketDetail.ctInputAmount,
+  isSell: state.trade.isSell,
+  ctInputAmount: state.trade.ctInputAmount,
   bidQuoteAmount: state.trade.bidQuoteAmount,
   askQuoteAmount: state.trade.askQuoteAmount,
 });
 
 const mapDispatchToProps = {
-  setIsSell,
-  setActiveTab,
+  toggleIsSell,
   onTrade,
   onChangeCtAmount,
   onSell

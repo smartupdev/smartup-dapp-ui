@@ -23,7 +23,7 @@ import Dispute from './containers/Dispute'
 // ORDER MATTER
 let routes = [
   { id: 'home', path: '/', component: Home, icon: Menu1, selected: true, exact: true },
-  { id: 'createMarket', path: '/create_market', component: CreateMarket, icon: Menu2 },
+  { id: 'createMarket', path: '/create/market', component: CreateMarket, icon: Menu2 },
   { id: 'account', path: '/account', component: Account, icon: Menu3 },
   { id: 'dispute', path: '/dispute', component: Dispute, icon: Menu4 },
 
