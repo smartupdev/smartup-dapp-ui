@@ -70,4 +70,5 @@ export { default as Close } from './Close'
 export { default as More } from './More' 
 export { default as Trade } from './Trade' 
 export { default as Share } from './Share' 
+export { default as Copy } from './Copy' 
 

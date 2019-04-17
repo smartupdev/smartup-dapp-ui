@@ -96,6 +96,7 @@ export function getBidQuote(ctInputAmount) {
 function bidCt(marketId) {
   return (dispatch, getState) => {
     //let marketAddress = getState().trade.currentMarket;
+    console.log(getState().trade)
     let encodeCtPrice = toWei(getState().trade.bidQuoteAmount);
     let ctAmount = toWei(getState().trade.ctInputAmount);
     let encodeCtAmount = encodeParam(ctAmount);
@@ -111,7 +112,7 @@ function bidCt(marketId) {
           data: createBidCtData({ marketAddress, encodeCtPrice, encodeCtAmount })
         },
         responsePayload: hash => {
-          const { marketDetail: {ctInputAmount}, trade: {bidQuoteAmount} } = getState()
+          const { trade: {ctInputAmount}, trade: {bidQuoteAmount} } = getState()
           return {
             hash,
             id: marketId, 

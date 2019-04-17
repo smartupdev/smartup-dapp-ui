@@ -8,7 +8,7 @@ function toPrice(number, decimal = 2) {
 }
 
 function toToken(number, decimal = 4) {
-  if(number === null) return '-'
+  if(number === null || number === undefined) return '-'
   const int = ~~number
   const dec = ~~((number - int)*Math.pow(10, decimal))
   return (

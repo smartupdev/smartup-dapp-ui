@@ -123,7 +123,7 @@ const CreateMarket = ({
               <Link>
                 {
                   ({goto}) =>
-                <Button label='Explore Market' primary onClick={()=>goto.trading({id: 99})} extended />
+                <Button label='Go To New Market' primary onClick={()=>goto.trading({id: '865329'})} extended />
                 }
               </Link>
             </Col>

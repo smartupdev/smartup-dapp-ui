@@ -13,7 +13,7 @@ import ChartJS from 'chart.js'
 //   return arr
 // }
 
-// const range = getRange(0, 500000, 5000)
+// const range = getRange(0, 10000, 1500)
 // const data = range.map(x => {
 //   let y = f(x)
 //   return y < 0 ? 0 : y

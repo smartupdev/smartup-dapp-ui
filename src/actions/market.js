@@ -34,14 +34,14 @@ export function createMarket() {
     dispatch({
       type: CREATE_MARKET_SMARTUP_SUCCEEDED,
       payload: {
-        id: '99', 
+        id: '865329', 
         icon: null, 
         name: createMarket.name, 
         createdDateTime: 1553740797139, 
         changeAvg24h: null, 
-        price: 61.75, 
-        volumeAvg24h: 0, 
-        pool: 0, 
+        price: null, 
+        volumeAvg24h: null, 
+        pool: null, 
         priceIn7d: [0, 0, 0, 0, 0, 0, 0], 
         overview: createMarket.desc, 
         image: null, 

@@ -48,33 +48,33 @@ function Trading({ isSell, ctInputAmount, askQuoteAmount, bidQuoteAmount, toggle
 
                 <Col spacingTopS>
                   <Row bottom>
-                    <Text XL>{toToken(market.price24hLow)}</Text>
+                    <Text XL>{toToken(market.price24hLow, 2)}</Text>
                     <Text red S>&nbsp;&nbsp;low</Text>
                   </Row>
                   <Row bottom>
-                    <Text XL>{toToken(market.price24hHigh)}</Text>
+                    <Text XL>{toToken(market.price24hHigh, 2)}</Text>
                     <Text green S>&nbsp;&nbsp;high</Text>
                   </Row>
                   <Text note S>{lang.trading.change[currentLang]}</Text>
                 </Col>
 
                 <Col spacingTopS>
-                  <Text XL price>{toToken(market.price)}</Text>
+                  <Text XL price>{toToken(market.price, 2)}</Text>
                   <Text note S>{lang.trading.price[currentLang]}</Text>
                 </Col>
 
                 <Col spacingTopS>
-                  <Text XL primary>{toToken(market.volumeAvg24h)}</Text>
+                  <Text XL primary>{toToken(market.volumeAvg24h, 2)}</Text>
                   <Text note S>{lang.trading.volume[currentLang]}</Text>
                 </Col>
 
                 <Col spacingTopS>
-                  <Text XL>{toToken(market.pool)}</Text>
+                  <Text XL>{toToken(market.pool, 2)}</Text>
                   <Text note S>{lang.trading.cap[currentLang]}</Text>
                 </Col>
 
                 <Col spacingTopS>
-                  <Text XL>{toToken(market.totalCt)}</Text>
+                  <Text XL>{toToken(market.totalCt, 2)}</Text>
                   <Text note S>{lang.trading.ct[currentLang]}</Text>
                 </Col>
               </Col>
@@ -88,7 +88,7 @@ function Trading({ isSell, ctInputAmount, askQuoteAmount, bidQuoteAmount, toggle
 
               <Col spacingTopXS spacingBottomS>
                 <Text S center note>{lang.trading.tradeText[currentLang]}</Text>
-                <Text S center note>61.75 SMARTUP  = 1 IDEA(832288)</Text>
+                <Text S center note>1,127 SMARTUP  = 1 IDEA(832288)</Text>
               </Col>
 
               <Col maxWidth='1000px' width='100%'>

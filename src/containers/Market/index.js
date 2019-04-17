@@ -5,7 +5,7 @@ import { Link, WithMarket } from '../../routes'
 import theme from '../../theme'
 import { Row, Col } from '../../components/Layout'
 import Tab from '../../components/Tab'
-import Icon, { Comment, Trade, People, More, Bookmarked, Share } from '../../components/Icon'
+import Icon, { Comment, Trade, People, More, Bookmarked, Share, Copy } from '../../components/Icon'
 import Text from '../../components/Text'
 import Button from '../../components/Button'
 import Avatar from '../../components/Avatar'
@@ -19,8 +19,21 @@ const TABS = [
   { label: lang.marketTab.proposal[currentLang], value: 'proposal' },
   { label: lang.marketTab.flag[currentLang], value: 'flag' },
 ]
+const copyToClipboard = str => {
+  const el = document.createElement('textarea');
+  el.value = str;
+  el.setAttribute('readonly', '');
+  el.style.position = 'absolute';
+  el.style.left = '-9999px';
+  document.body.appendChild(el);
+  el.select();
+  document.execCommand('copy');
+  document.body.removeChild(el);
+};
+const marketAddress = '0xF6f7C3CDbA6ef2E9fFF12b1702481f99CA6Cd38c';
 
 const Market = () => {
+  const [copied, setCopy] = useState(false)
   return (
     <WithMarket>
       { market =>
@@ -28,7 +41,10 @@ const Market = () => {
         <Row spaceBetween spacingTopXS spacingBottomXS spacingRightS spacingLeftS color={theme.bgColorLight}>
           <Row centerVertical>
             <Avatar icon={market.icon} />
-            <Text>{market.name}</Text>
+            <Text>{`${market.name} (${market.id})`}</Text>
+            <Col spacingLeftXS onClick={() => {setCopy(true); copyToClipboard(marketAddress)}}>
+              <Copy S color={copied ? '#aaa' : '#fff'} />
+            </Col>
           </Row>
           <Row centerVertical>
             <Button label={market.numberOfComments} icon={Comment} />
