@@ -4,16 +4,15 @@ import {
   TRADE_ASK_CT_REQUESTED, TRADE_ASK_CT_SUCCEEDED, TRADE_ASK_CT_FAILED,
   TRADE_ASK_QUOTE_REQUESTED, TRADE_ASK_QUOTE_SUCCEEDED, TRADE_ASK_QUOTE_FAILED,
   TRADE_LIST_REQUESTED, TRADE_LIST_SUCCEEDED, TRADE_LIST_FAILED,
+  TRADE_DETAIL_REQUESTED, TRADE_DETAIL_SUCCEEDED, TRADE_DETAIL_FAILED,
   TOGGLE_IS_SELL, TRADE_CHANGE_CT_AMOUNT,
 } from '../actions/actionTypes';
-
-
 
 export const initialState = {
   isSell: false,
   ctInputAmount: null,
 
-  trades:[], 
+  trades: [],
   /*
   [
       {
@@ -26,12 +25,17 @@ export const initialState = {
         "sutAmount": 0.8893047281869846,
         "ctAmount": 1000,
         "createTime": "2019-04-16 23:18:18",
-        "blockTime": "2019-04-16 23:18:10"
+        "blockTime": "2019-04-16 23:18:10",
+        "avgAmount" 0.0008893047281869
       }
     ]
   */
   gettingTrades: false,
   getTradesError: null,
+
+  oneDetail: null,
+  gettingOneDetail: false,
+  getOneTradeError: null,
 
   bidQuoteAmount: null,
   bidingQuote: false,
@@ -64,24 +68,42 @@ export default (state = initialState, action) => {
       }
     }
 
-  case TRADE_LIST_REQUESTED:
-    return {
-      ...state,
-      gettingTrades: true,
-    };
-  case TRADE_LIST_SUCCEEDED:
-    return {
-      ...state,
-      trades: action.payload,
-      gettingTrades: false,
-      getTradesError: initialState.getTradesError
-    };
-  case TRADE_LIST_FAILED:
-    return {
-      ...state,
-      gettingTrades: false,
-      getTradesError: action.payload,
-    };
+    case TRADE_DETAIL_REQUESTED:
+      return {
+        ...state,
+        gettingOneDetail: true,
+      };
+    case TRADE_DETAIL_SUCCEEDED:
+      return {
+        ...state,
+        oneDetail: action.payload,
+        gettingOneDetail: false,
+        getOneTradeError: initialState.getOneTradeError
+      };
+    case TRADE_DETAIL_FAILED:
+      return {
+        ...state,
+        gettingOneDetail: false,
+        getOneTradeError: action.payload,
+      };
+    case TRADE_LIST_REQUESTED:
+      return {
+        ...state,
+        gettingTrades: true,
+      };
+    case TRADE_LIST_SUCCEEDED:
+      return {
+        ...state,
+        trades: action.payload,
+        gettingTrades: false,
+        getTradesError: initialState.getTradesError
+      };
+    case TRADE_LIST_FAILED:
+      return {
+        ...state,
+        gettingTrades: false,
+        getTradesError: action.payload,
+      };
     case TRADE_BID_QUOTE_REQUESTED:
       return {
         ...state,

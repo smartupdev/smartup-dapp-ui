@@ -169,7 +169,7 @@ export function askCt() {
 
 }
 
-//Trade Detail
+//get trade detail by txhash
 export function getTradeDetail(txHash) {
   return (dispatch, getState) => {
     dispatch(callbackFunction(
@@ -179,7 +179,8 @@ export function getTradeDetail(txHash) {
         isWeb3: true,
         params: {
           txHash,
-        }
+        },
+        responsePayload: reps => reps.obj
       }
     ));
   }
@@ -194,10 +195,16 @@ export function getTradeList() {
       {
         isWeb3: true,
         params: API_USER_TRADE_LIST, 
-        responsePayload: reps => reps.obj.list
+        responsePayload: reps => getTradeListReps(reps)
       }
     ));
   }
+}
+
+// add avgAmount field
+function getTradeListReps(reps){
+  reps.obj.list.forEach( trade => trade.avgAmount = trade.sutAmount / trade.ctAmount );
+  return reps.obj.list;
 }
 
 
