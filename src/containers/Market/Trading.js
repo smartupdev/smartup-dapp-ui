@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Link, WithMarket } from '../../routes'
 
 import { connect } from 'react-redux'
-import { onChangeCT, onChangeSUT, onTrade, toggleIsSell } from '../../actions/trade';
+import { onChangeCT, onChangeSUT, onTrade, toggleIsSell, reset } from '../../actions/trade';
 
 import theme from '../../theme'
 import { Row, Col } from '../../components/Layout'
@@ -31,7 +31,9 @@ const model = [
 ]
 
 
-function Trading({ tradeState, onChangeCT, onChangeSUT, toggleIsSell, onTrade }) {
+function Trading({ tradeState, onChangeCT, onChangeSUT, toggleIsSell, onTrade, reset }) {
+  useEffect(() => reset, [])
+
   const { ct, sut, isSell } = tradeState
   return (
     <WithMarket>
@@ -165,7 +167,8 @@ const mapDispatchToProps = {
   toggleIsSell,
   onTrade,
   onChangeCT,
-  onChangeSUT
+  onChangeSUT,
+  reset
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Trading);

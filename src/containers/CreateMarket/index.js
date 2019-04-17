@@ -37,9 +37,7 @@ const CreateMarket = ({
     tab === 1 && page1Ready && setActiveIndex(tab) ||
     tab === 2 && page2Ready && setActiveIndex(tab)
   
-  useEffect( () => {
-    return reset
-  }, [])
+  useEffect( () => reset, [])
   
   return (
     <Col>

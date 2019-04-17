@@ -1,4 +1,5 @@
 import {
+  TRADE_RESET,
   TRADE_LIST_REQUESTED, TRADE_LIST_SUCCEEDED, TRADE_LIST_FAILED,
   TRADE_DETAIL_REQUESTED, TRADE_DETAIL_SUCCEEDED, TRADE_DETAIL_FAILED,
   TOGGLE_IS_SELL, 
@@ -21,6 +22,10 @@ const marketAddress = '0xF6f7C3CDbA6ef2E9fFF12b1702481f99CA6Cd38c';
 // function fakeFetch() {
 //   return () => new Promise((resolve, reject) => setTimeout(resolve, 1000))
 // }
+
+export function reset() {
+  return { type: TRADE_RESET }
+}
 
 export function toggleIsSell() {
   return ({

@@ -1,4 +1,5 @@
 import {
+  TRADE_RESET,
   TOGGLE_IS_SELL,
   TRADE_CHANGE_CT, TRADE_CHANGE_SUT,
   TRADE_GET_CT_REQUESTED, TRADE_GET_CT_SUCCEEDED, TRADE_GET_CT_FAILED,
@@ -25,6 +26,8 @@ export const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    case TRADE_RESET:
+      return initialState
     case TRADE_CHANGE_SUT: 
       return {
         ...state,
