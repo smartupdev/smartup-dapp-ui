@@ -6,12 +6,13 @@ import {
   TRADE_LIST_REQUESTED, TRADE_LIST_SUCCEEDED, TRADE_LIST_FAILED,
   TRADE_DETAIL_REQUESTED, TRADE_DETAIL_SUCCEEDED, TRADE_DETAIL_FAILED,
   TRADE_SELL_REQUESTED, TRADE_SELL_SUCCEEDED, TRADE_SELL_FAILED,
+  TRADE_KLINE_REQUESTED, TRADE_KLINE_SUCCEEDED, TRADE_KLINE_FAILED,
   TRADE_BUY_REQUESTED, TRADE_BUY_SUCCEEDED, TRADE_BUY_FAILED,
   TOGGLE_IS_SELL, TRADE_CHANGE_CT_AMOUNT
 } from '../actions/actionTypes';
 import fetch from '../lib/util/fetch';
 import {
-  API_USER_TRADE_LIST, API_USER_TRADE_DETAIL,
+  API_MARKET_TRADE_LIST, API_USER_TRADE_DETAIL,API_KLINE_DATA,
 } from './api';
 import {
   asyncFunction, toWei, encodeParam, sutContractAddress, smartupWeb3, callbackFunction, getAccount,
@@ -177,7 +178,8 @@ export function getTradeDetail(txHash) {
       TRADE_DETAIL_REQUESTED, TRADE_DETAIL_SUCCEEDED, TRADE_DETAIL_FAILED,
       {
         isWeb3: true,
-        params: {
+        params: API_USER_TRADE_DETAIL,
+        params2: {
           txHash,
         },
         responsePayload: reps => reps.obj
@@ -186,7 +188,7 @@ export function getTradeDetail(txHash) {
   }
 }
 
-//Trade List
+//Market Trade List
 export function getTradeList() {
   return (dispatch, getState) => {
     dispatch(asyncFunction(
@@ -194,16 +196,39 @@ export function getTradeList() {
       TRADE_LIST_REQUESTED, TRADE_LIST_SUCCEEDED, TRADE_LIST_FAILED,
       {
         isWeb3: true,
-        params: API_USER_TRADE_LIST, 
-        responsePayload: reps => getTradeListReps(reps)
+        params: API_MARKET_TRADE_LIST, 
+        responsePayload: reps => reps.obj.list
       }
     ));
   }
 }
 
+// get kline list
+export function getKlineList(){
+  return (dispatch, getState) => {
+    let requestParams = {
+      marketAddress,
+      start:'2019_04_16',
+      end:'2019_04_16',
+      segment:'1day'
+    }
+    dispatch(asyncFunction(
+      fetch.post,
+      TRADE_KLINE_REQUESTED, TRADE_KLINE_SUCCEEDED, TRADE_KLINE_FAILED,
+      {
+        isWeb3: true,
+        params: API_KLINE_DATA,
+        params2:requestParams,
+        responsePayload: reps => reps.obj
+      }
+    ));
+  }
+}
+
+
 // add avgAmount field
-function getTradeListReps(reps){
-  reps.obj.list.forEach( trade => trade.avgAmount = trade.sutAmount / trade.ctAmount );
+function getKlineListReps(reps){
+  
   return reps.obj.list;
 }
 

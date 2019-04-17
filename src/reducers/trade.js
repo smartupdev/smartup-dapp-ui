@@ -5,6 +5,7 @@ import {
   TRADE_ASK_QUOTE_REQUESTED, TRADE_ASK_QUOTE_SUCCEEDED, TRADE_ASK_QUOTE_FAILED,
   TRADE_LIST_REQUESTED, TRADE_LIST_SUCCEEDED, TRADE_LIST_FAILED,
   TRADE_DETAIL_REQUESTED, TRADE_DETAIL_SUCCEEDED, TRADE_DETAIL_FAILED,
+  TRADE_KLINE_REQUESTED, TRADE_KLINE_SUCCEEDED, TRADE_KLINE_FAILED,
   TOGGLE_IS_SELL, TRADE_CHANGE_CT_AMOUNT,
 } from '../actions/actionTypes';
 
@@ -32,6 +33,26 @@ export const initialState = {
   */
   gettingTrades: false,
   getTradesError: null,
+
+  klineData: [],
+  /*
+  [
+    {
+      "marketAddress": "0xf6f7c3cdba6ef2e9fff12b1702481f99ca6cd38c",
+      "timeId": "2019_04_16",
+      "segment": "1day",
+      "high": 0.0008893047281869845,
+      "low": 0.0008875846265085669,
+      "start": 0.0008875846265085669,
+      "end": 0.0008893047281869845,
+      "amount": 3.187307075635292,
+      "count": 6,
+      "time": "2019-04-16 12:00:00"
+    }
+  ]
+  */
+  gettingKline: false,
+  getKlineError: null,
 
   oneDetail: null,
   gettingOneDetail: false,
@@ -68,6 +89,35 @@ export default (state = initialState, action) => {
       }
     }
 
+    case TRADE_KLINE_REQUESTED:
+      return {
+        ...state,
+        gettingKline: true,
+      };
+    case TRADE_KLINE_SUCCEEDED:{
+      let tempLines = action.payload.map(line => {
+        return {
+          ...line,
+          open: line.start,
+          close: line.end,
+          volume: line.amount,
+          date: new Date(line.time),
+        }
+      });
+      
+      return {
+        ...state,
+        klineData: tempLines,
+        gettingKline: false,
+        getKlineError: initialState.getKlineError
+      };
+    }
+    case TRADE_KLINE_FAILED:
+      return {
+        ...state,
+        gettingKline: false,
+        getKlineError: action.payload,
+    };
     case TRADE_DETAIL_REQUESTED:
       return {
         ...state,
@@ -91,13 +141,15 @@ export default (state = initialState, action) => {
         ...state,
         gettingTrades: true,
       };
-    case TRADE_LIST_SUCCEEDED:
+    case TRADE_LIST_SUCCEEDED:{
+      action.payload.forEach( trade => trade.avgAmount = trade.sutAmount / trade.ctAmount);
       return {
         ...state,
         trades: action.payload,
         gettingTrades: false,
         getTradesError: initialState.getTradesError
       };
+    }
     case TRADE_LIST_FAILED:
       return {
         ...state,

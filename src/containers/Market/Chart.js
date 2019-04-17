@@ -99,7 +99,7 @@ class DrawChart extends Component {
       width,
       ratio
     } = this.props
-    const noData = !propsData || !propsData.length
+    const noData = !propsData || (propsData.length < 2)
     const initialData = noData ? dumpData : propsData
     const yGrid = {
       innerTickSize: -1 * (width - MARGIN.left - MARGIN.right),

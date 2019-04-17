@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { Link, WithMarket } from '../../routes'
 
 import { connect } from 'react-redux'
-import { onTrade, onSell, onChangeCtAmount, toggleIsSell,getTradeList } from '../../actions/trade';
+import { onTrade, onSell, onChangeCtAmount, toggleIsSell, getTradeList, getKlineList } from '../../actions/trade';
 
 import theme from '../../theme'
 import { Row, Col } from '../../components/Layout'
@@ -31,9 +31,10 @@ const model = [
 ]
 
 
-function Trading({ isSell, ctInputAmount, askQuoteAmount, bidQuoteAmount, trades, toggleIsSell, onSell, onChangeCtAmount, onTrade,getTradeList }) {
+function Trading({ isSell, ctInputAmount, askQuoteAmount, bidQuoteAmount, trades, toggleIsSell, onSell, onChangeCtAmount, onTrade,getTradeList,getKlineList,klineData }) {
   useEffect( () => {
     getTradeList()
+    getKlineList()
   }, [])
   return (
     <WithMarket>
@@ -42,7 +43,7 @@ function Trading({ isSell, ctInputAmount, askQuoteAmount, bidQuoteAmount, trades
           <>
             <Row color={theme.bgColorDark} spacingLeftL spacingRightL spacingBottomL spacingTopL>
               <Col flex={1}>
-                <Chart data={market.data} />
+                <Chart data={klineData} />
               </Col>
               <Col spacingLeftXL>
                 <Col spacingBottomS>
@@ -164,6 +165,7 @@ const mapStateToProps = state => ({
   bidQuoteAmount: state.trade.bidQuoteAmount,
   askQuoteAmount: state.trade.askQuoteAmount,
   trades: state.trade.trades,
+  klineData: state.trade.klineData,
 });
 
 const mapDispatchToProps = {
@@ -172,6 +174,7 @@ const mapDispatchToProps = {
   onChangeCtAmount,
   onSell,
   getTradeList,
+  getKlineList,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Trading);
