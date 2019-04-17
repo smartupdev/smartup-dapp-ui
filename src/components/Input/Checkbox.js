@@ -23,28 +23,28 @@ const CheckboxStyle = styled.label`
     width: 8px;
     background-color: transparent;
     border: 1px solid ${p => p.theme.colorPrimary}
-    :after {
-      content: "";
-      position: absolute;
-      display: none;
-      top: 0;
-      bottom: 0;
-      right: 0;
-      left: 0;
-      background-color: ${p => p.theme.colorPrimary};
-    }
     // :after {
     //   content: "";
     //   position: absolute;
     //   display: none;
-    //   left: 3px;
-    //   top: -3px;
-    //   width: 5px;
-    //   height: 10px;
-    //   border: solid ${p => p.theme.colorPrimary};
-    //   border-width: 0 1px 1px 0;
-    //   transform: rotate(45deg);
-    // }   
+    //   top: 0;
+    //   bottom: 0;
+    //   right: 0;
+    //   left: 0;
+    //   background-color: ${p => p.theme.colorPrimary};
+    // }
+    :after {
+      content: "";
+      position: absolute;
+      display: none;
+      left: 4px;
+      top: -4px;
+      width: 3px;
+      height: 8px;
+      border: solid ${p => p.theme.colorPrimary};
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
+    }   
   }
   // :hover input ~ .mark {
   //   background-color: #ccc;
