@@ -162,7 +162,7 @@ class DrawChart extends Component {
                 opacity={1}
                 textFill="#000000"
                 snapX={true}
-                displayFormat={d => d.toFixed(5)} />
+                displayFormat={d => d.toFixed(2)} />
               <CandlestickSeries {...candlesAppearance} />
               {/* <OHLCTooltip ohlcFormat={format(".5f")} forChart={1} origin={[20, 0]} /> */}
             </Chart>
