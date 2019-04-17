@@ -137,7 +137,7 @@ function loginSmartUp() {
     let [error, response] = await dispatch(asyncFunction(
       fetch.post,
       USER_LOGIN_SMARTUP_REQUESTED, USER_LOGIN_SMARTUP_SUCCEEDED, USER_LOGIN_SMARTUP_FAILED,
-      { isWeb3: true, params: API_USER_LOGIN, params2: { address: getAccount() }, responsePayload: reps => reps.obj }
+      { isWeb3: true, params: API_USER_LOGIN, params2: { address: getAccount() } }
     ));
     if (!error) {
       dispatch(getPersonSign(response));
@@ -150,7 +150,7 @@ function authSmartUp(signature){
     let [error, response] = await dispatch(asyncFunction(
       fetch.post,
       USER_AUTH_SMARTUP_REQUESTED, USER_AUTH_SMARTUP_SUCCEEDED, USER_AUTH_SMARTUP_FAILED,
-      { isWeb3: true, params: API_USER_AUTH, params2: { address: getAccount(),signature }, responsePayload: reps => reps.obj.token }
+      { isWeb3: true, params: API_USER_AUTH, params2: { address: getAccount(),signature }, responsePayload: reps => reps.token }
     ));
     if (!error) {
       setStorageToken(response)

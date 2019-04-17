@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { Link } from '../../routes'
 // import styled from 'styled-components'
 import Text from '../../components/Text'
+import { DonutLoader } from '../../components/Loader'
 import Input, { Selector } from '../../components/Input'
 import Hr from '../../components/Hr'
 import Button from '../../components/Button'
@@ -15,29 +16,33 @@ import Chart from './Chart'
 
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux';
-import { setActiveIndex, onChangeName, onChangeDesc, reset } from '../../actions/createMarket'
-import { createMarket } from '../../actions/market'
+import { setActiveIndex, onChangeName, onChangeDesc, reset, get, create } from '../../actions/createMarket'
+// import { createMarket } from '../../actions/market'
 
 const options = ['Basic Information', 'Price Equation', 'Deposit']
 const optionsSpeed = ['Slow', 'Standard', 'Fast']
 const CreateMarket = ({
-  history,
-  createMarketState: { activeIndex, name, desc, error }, 
-  setActiveIndex, createMarket, onChangeName, onChangeDesc, reset}) => {
+  createMarketState: { activeIndex, name, desc, error, isFetching, isReady }, 
+  setActiveIndex, create, onChangeName, onChangeDesc, reset, get
+}) => {
+
+  useEffect( () => {
+    get()
+    return reset
+  }, [])
+  if(!isReady) return <DonutLoader page />  
 
   function next() { setActiveIndex(activeIndex + 1) }
   function back() { setActiveIndex(activeIndex - 1) }
   const Label = ({ children }) => <Text S spaceV>{children}</Text>
-  const Next = ({disabled}) =>  <Button label='Next' primary extended onClick={next} disabled={disabled} />
-  const Back = () =>  <Button label='Back' primary extended onClick={back} />
+  const Next = ({disabled}) =>  <Button label='Next' primary extended onClick={next} disabled={disabled || isFetching} />
+  const Back = () =>  <Button label='Back' primary extended onClick={back} disabled={isFetching} />
   const page1Ready = !(error.name || error.desc || !name || !desc)
   const page2Ready = page1Ready
   const onChangeProgress = tab => 
     tab === 0 && setActiveIndex(tab) ||
     tab === 1 && page1Ready && setActiveIndex(tab) ||
     tab === 2 && page2Ready && setActiveIndex(tab)
-  
-  useEffect( () => reset, [])
   
   return (
     <Col>
@@ -47,7 +52,7 @@ const CreateMarket = ({
       <Hr />
       {
         activeIndex >= 0 && 
-        <ProgressBar options={options} activeIndex={activeIndex} onClick={onChangeProgress} />
+        <ProgressBar options={options} activeIndex={activeIndex} onClick={!isFetching && onChangeProgress} />
       }
 
       <Col spacingLeftS spacingRightS>
@@ -55,10 +60,15 @@ const CreateMarket = ({
         activeIndex === 0 ? 
           <>
             <Label>Market Name</Label>
-            <Input background XL value={name} onChange={e => onChangeName(e.target.value)} />
-            <Text S right error={error.name}>Capital sensitive, 3-20 characters, community name cannot be changed.</Text>
+            <Input background XL value={name} onChange={e => onChangeName(e.target.value)} disabled={isFetching} />
+            <Text S right error={error.name}>
+              {
+                typeof error.name === 'string' ? error.name :
+              'Capital sensitive, 3-20 characters, community name cannot be changed.'
+              } 
+            </Text>
             <Label>Market description</Label>
-            <Input background L line={3} value={desc} onChange={e => onChangeDesc(e.target.value)} />
+            <Input background L line={3} value={desc} onChange={e => onChangeDesc(e.target.value)} disabled={isFetching} />
             <Text S right error={error.desc}>150 characters to help new members get to know your community.</Text>
             <Row spacingTopL right>
               <Next disabled={!page1Ready} />
@@ -108,8 +118,11 @@ const CreateMarket = ({
             </Col> */}
             <Row spacingTopL spaceBetween>
               <Back />
-              <Button label='Create' primary onClick={createMarket} extended />
+              <Button label='Create' primary onClick={create} extended disabled={isFetching} />
             </Row>
+            <Col right>
+              { error.api && <Text S error>{error.api}</Text> }
+            </Col>
           </>
         :
         <>
@@ -136,7 +149,7 @@ const mapStateToProps = state => ({
   createMarketState: state.createMarket,
 });
 const mapDispatchToProps = {
-  setActiveIndex, createMarket, onChangeName, onChangeDesc, reset
+  setActiveIndex, create, onChangeName, onChangeDesc, reset, get
 } 
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(CreateMarket));

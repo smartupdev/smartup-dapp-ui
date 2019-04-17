@@ -1,6 +1,6 @@
 import {
   GET_MARKET_LIST, GET_MARKET_CREATED_LIST, GET_MARKET_DETAIL, CREATE_MARKET, BOOKMARK_MARKET,
-  CREATE_MARKET_REQUESTED, CREATE_MARKET_SUCCEEDED, CREATE_MARKET_FAILED, CREATE_MARKET_SMARTUP_SUCCEEDED,
+  CREATE_MARKET_PAY_REQUESTED, CREATE_MARKET_PAY_SUCCEEDED, CREATE_MARKET_PAY_FAILED, CREATE_MARKET_SMARTUP_SUCCEEDED,
   TRADE_SUCCEEDED
 } from '../actions/actionTypes';
 import { markets } from '../devData/marketDetail/'
@@ -48,19 +48,19 @@ export default (state = initialState, action) => {
       }
     }
 
-    case CREATE_MARKET_REQUESTED:
+    case CREATE_MARKET_PAY_REQUESTED:
       return {
         ...state,
         creatingMarket: true,
       };
-    case CREATE_MARKET_SUCCEEDED:
+    case CREATE_MARKET_PAY_SUCCEEDED:
       return {
         ...state,
         createMarketHash: action.payload,
         creatingMarket: false,
         createMarketError: initialState.loginError
       };
-    case CREATE_MARKET_FAILED:
+    case CREATE_MARKET_PAY_FAILED:
       return {
         ...state,
         creatingMarket: false,

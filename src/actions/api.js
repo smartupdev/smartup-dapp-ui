@@ -4,6 +4,11 @@ export const API_USER_MARKET_CREATED = '/api/user/market/created';
 export const API_MARKET_LIST = '/api/market/list';
 export const API_MARKET_ONE = '/api/market/one';
 export const API_MARKET_QUERY_BY_TX_HASH = '/api/market/query/by/tx/hash';
+
+export const API_MARKET_CREATE_GET = '/api/user/market/creating'
+export const API_MARKET_CREATE_CHANGE_NAME = '/api/user/market/is/name/right'
+export const API_MARKET_CREATE_SAVE = '/api/user/market/save'
+
 //user-controller
 export const API_USER_AUTH = '/api/auth';
 export const API_USER_LOGIN = '/api/login';

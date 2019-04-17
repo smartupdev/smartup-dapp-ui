@@ -68,7 +68,7 @@ export default ({ activeIndex, options, dotSize = '26px', color = theme.colorPri
       <Line activeIndex={activeIndex} numberOfRecord={options.length} />
       {
         options.map( (option, index) => 
-          <Item numberOfRecord={options.length} key={index} center centerVertical  onClick={() => onClick(index)}>
+          <Item numberOfRecord={options.length} key={index} center centerVertical  onClick={onClick ? (() => onClick(index)) : undefined}>
             <Dot dotSize={dotSize} color={color} activeIndex={activeIndex} index={index} />
           </Item>
         )

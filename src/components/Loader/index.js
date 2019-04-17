@@ -1,5 +1,6 @@
 import React from 'react'
 import styled, { keyframes } from 'styled-components'
+import { Col } from '../Layout'
 
 const donutSpin = keyframes`
   0% {
@@ -9,8 +10,7 @@ const donutSpin = keyframes`
     transform: rotate(360deg);
   }
 `
-
-export const DonutLoader = styled.div`
+const DonutStyle = styled.div`
   display: inline-block;
   border: 4px solid rgba(0, 0, 0, 0.1);
   border-left-color: #5778F3;
@@ -28,6 +28,14 @@ const DcStyle = styled.div`
     min-width: 100px;
   }
 `
+export function DonutLoader({ page }) {
+  if(page) return (
+    <Col center spacingTopXL>
+      <DonutLoader />
+    </Col>
+  )
+  return <DonutStyle />
+} 
 
 export const DcLoader = () =>
 <DcStyle>

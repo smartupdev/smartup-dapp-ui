@@ -1,6 +1,6 @@
 import {
   TRADE_RESET,
-  TOGGLE_IS_SELL,
+  TRADE_TOGGLE_IS_SELL,
   TRADE_CHANGE_CT, TRADE_CHANGE_SUT,
   TRADE_GET_CT_REQUESTED, TRADE_GET_CT_SUCCEEDED, TRADE_GET_CT_FAILED,
   TRADE_GET_SUT_REQUESTED, TRADE_GET_SUT_SUCCEEDED, TRADE_GET_SUT_FAILED,
@@ -93,7 +93,7 @@ export default (state = initialState, action) => {
         isTrading: false
       }
 
-    case TOGGLE_IS_SELL: {
+    case TRADE_TOGGLE_IS_SELL: {
       return {
         ...state,
         isSell: !state.isSell,

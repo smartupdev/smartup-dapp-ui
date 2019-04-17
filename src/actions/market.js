@@ -1,5 +1,4 @@
 import {
-  CREATE_MARKET_REQUESTED, CREATE_MARKET_SUCCEEDED, CREATE_MARKET_FAILED,
   CREATE_MARKET_SMARTUP_REQUESTED,CREATE_MARKET_SMARTUP_SUCCEEDED,CREATE_MARKET_SMARTUP_FAILED,
   GET_MARKET_LIST, GET_MARKET_DETAIL, BOOKMARK_MARKET,
 } from './actionTypes';
@@ -13,58 +12,13 @@ import {
   asyncFunction,createMarketData,sutContractAddress,smartupWeb3, callbackFunction, getAccount
 } from '../integrator'
 
-//创建市场
-export function createMarket() {
-  return async (dispatch, getState) => {
-    let address = getAccount()
-    let [error, response] = await dispatch(callbackFunction(
-      smartupWeb3.eth.sendTransaction,
-      CREATE_MARKET_REQUESTED, CREATE_MARKET_SUCCEEDED, CREATE_MARKET_FAILED,
-      {
-        isWeb3: true,
-        params: {
-          from: address,
-          to: sutContractAddress,
-          value: '0x0',
-          data: createMarketData()
-        }
-      }
-    ));
-    const createMarket = getState().createMarket
-    dispatch({
-      type: CREATE_MARKET_SMARTUP_SUCCEEDED,
-      payload: {
-        id: '865329', 
-        icon: null, 
-        name: createMarket.name, 
-        createdDateTime: 1553740797139, 
-        changeAvg24h: null, 
-        price: null, 
-        volumeAvg24h: null, 
-        pool: null, 
-        priceIn7d: [0, 0, 0, 0, 0, 0, 0], 
-        overview: createMarket.desc, 
-        image: null, 
-        numberOfComments: 0, 
-        numberOfSub: 0, 
-        following: false 
-      }
-    })
-    // if(!error){
-    //   dispatch(createSmartUpMarket(response));
-    // }
-    console.log('------------ error', error);
-    console.log('------------ response', response);
-  }
-}
-
 function createSmartUpMarket(txHash){
   return (dispatch, getState) => {
     const {name, desc: description} = getState().createMarket;
     dispatch(asyncFunction(
       fetch.post,
       CREATE_MARKET_SMARTUP_REQUESTED, CREATE_MARKET_SMARTUP_SUCCEEDED, CREATE_MARKET_SMARTUP_FAILED,
-      { isWeb3: true, params: API_USER_MARKET_CREATE, params2: { txHash,name,description }, responsePayload: reps => reps.obj }
+      { isWeb3: true, params: API_USER_MARKET_CREATE, params2: { txHash,name,description } }
     ));
   }
 }

@@ -38,7 +38,11 @@ function timeoutWrapper (promise, timeout = fetchTimeout) {
 async function cmFetch(method, api, params) {
   const r = await timeoutWrapper( () => fetch(apiBaseUrl + (api[0] === '/' ? api : '/'+api), getOptions(method, params)) )
   if(!r.ok) throw new Error(r.status)
-  return await r.json()
+  const json = await r.json()
+  if(json.code === '1') throw new Error('System Error')
+  if(json.code === '2') throw new Error(json.msg || 'Custom Error')
+  if(json.code === '3') throw new Error('Not Login')
+  return json.obj
 }
 
 function getOptions(method = 'GET', params) {
