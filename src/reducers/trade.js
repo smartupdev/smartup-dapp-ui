@@ -3,12 +3,35 @@ import {
   TRADE_BID_QUOTE_REQUESTED, TRADE_BID_QUOTE_SUCCEEDED, TRADE_BID_QUOTE_FAILED,
   TRADE_ASK_CT_REQUESTED, TRADE_ASK_CT_SUCCEEDED, TRADE_ASK_CT_FAILED,
   TRADE_ASK_QUOTE_REQUESTED, TRADE_ASK_QUOTE_SUCCEEDED, TRADE_ASK_QUOTE_FAILED,
+  TRADE_LIST_REQUESTED, TRADE_LIST_SUCCEEDED, TRADE_LIST_FAILED,
   TOGGLE_IS_SELL, TRADE_CHANGE_CT_AMOUNT,
 } from '../actions/actionTypes';
+
+
 
 export const initialState = {
   isSell: false,
   ctInputAmount: null,
+
+  trades:[], 
+  /*
+  [
+      {
+        "txHash": "0x82f02b76b9324524a8c9fafa0a795b71b1e223d9601b26d94decceb931dc423d",
+        "stage": "success",
+        "userAddress": "0x8028012ef4b5aceba7778afbdf1757018af1eee8",
+        "marketAddress": "0xf6f7c3cdba6ef2e9fff12b1702481f99ca6cd38c",
+        "type": "buy",
+        "sutOffer": 0.8893047281869846,
+        "sutAmount": 0.8893047281869846,
+        "ctAmount": 1000,
+        "createTime": "2019-04-16 23:18:18",
+        "blockTime": "2019-04-16 23:18:10"
+      }
+    ]
+  */
+  gettingTrades: false,
+  getTradesError: null,
 
   bidQuoteAmount: null,
   bidingQuote: false,
@@ -41,6 +64,24 @@ export default (state = initialState, action) => {
       }
     }
 
+  case TRADE_LIST_REQUESTED:
+    return {
+      ...state,
+      gettingTrades: true,
+    };
+  case TRADE_LIST_SUCCEEDED:
+    return {
+      ...state,
+      trades: action.payload,
+      gettingTrades: false,
+      getTradesError: initialState.getTradesError
+    };
+  case TRADE_LIST_FAILED:
+    return {
+      ...state,
+      gettingTrades: false,
+      getTradesError: action.payload,
+    };
     case TRADE_BID_QUOTE_REQUESTED:
       return {
         ...state,

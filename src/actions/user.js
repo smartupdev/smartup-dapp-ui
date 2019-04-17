@@ -34,6 +34,7 @@ function setStorageToken(token) {
 }
 function getStorageToken() {
   const r = window.localStorage.getItem(STORAGE_KEY_TOKEN)
+  console.log('------------ token',r);
   return r === 'undefined' ? undefined : r
 }
 function getStorageAccount() {

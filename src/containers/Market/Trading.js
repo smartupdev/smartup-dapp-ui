@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Link, WithMarket } from '../../routes'
 
 import { connect } from 'react-redux'
-import { onTrade, onSell, onChangeCtAmount, toggleIsSell } from '../../actions/trade';
+import { onTrade, onSell, onChangeCtAmount, toggleIsSell,getTradeList } from '../../actions/trade';
 
 import theme from '../../theme'
 import { Row, Col } from '../../components/Layout'
@@ -24,14 +24,17 @@ import Chart from './Chart'
 
 const model = [
   { label: lang.trading.table.buySell[currentLang], value: 'type', layoutStyle: { flex: 1, center: true }, component: ({ value }) => <Text red={value === 'SELL'} green={value !== 'SELL'}>{value === 'SELL' ? lang.trading.table.sell[currentLang] : lang.trading.table.buy[currentLang]}</Text> },
-  { label: lang.trading.table.user[currentLang], value: 'username', layoutStyle: { flex: 1, center: true }, component: ({ record }) => <Row centerVertical><Avatar icon={record.userIcon} /><Text>{record.username}</Text></Row> },
-  { label: lang.trading.table.time[currentLang], value: 'time', layoutStyle: { flex: 1, center: true }, component: ({ value }) => <Text>{toAgo(value)}</Text> },
-  { label: lang.trading.table.avgPrice[currentLang], value: 'avg', layoutStyle: { flex: 1, center: true }, component: ({ value }) => <Text>{toToken(value)}</Text> },
-  { label: lang.trading.table.ct[currentLang], value: 'ct', layoutStyle: { flex: 1, center: true }, },
+  { label: lang.trading.table.user[currentLang], value: 'userAddress', layoutStyle: { flex: 1, center: true }, component: ({ record }) => <Row centerVertical><Avatar icon={record.userIcon} /><Text>{record.username}</Text></Row> },
+  { label: lang.trading.table.time[currentLang], value: 'createTime', layoutStyle: { flex: 1, center: true }, component: ({ value }) => <Text>{toAgo(value)}</Text> },
+  { label: lang.trading.table.avgPrice[currentLang], value: 'sutOffer', layoutStyle: { flex: 1, center: true }, component: ({ value }) => <Text>{toToken(value)}</Text> },
+  { label: lang.trading.table.ct[currentLang], value: 'ctAmount', layoutStyle: { flex: 1, center: true }, },
 ]
 
 
-function Trading({ isSell, ctInputAmount, askQuoteAmount, bidQuoteAmount, toggleIsSell, onSell, onChangeCtAmount, onTrade }) {
+function Trading({ isSell, ctInputAmount, askQuoteAmount, bidQuoteAmount, trades, toggleIsSell, onSell, onChangeCtAmount, onTrade,getTradeList }) {
+  useEffect( () => {
+    getTradeList()
+  }, [])
   return (
     <WithMarket>
       {
@@ -136,10 +139,10 @@ function Trading({ isSell, ctInputAmount, askQuoteAmount, bidQuoteAmount, toggle
               <Hr />
               <Table
                 model={model}
-                values={market.transations || []}
+                values={trades || []}
               />
               {
-                (!market.transations || !market.transations.length) &&
+                (!trades || !trades.length) &&
                 <>
                   <Hr />
                   <Col center spacingTopS spacingBottomL>
@@ -160,13 +163,15 @@ const mapStateToProps = state => ({
   ctInputAmount: state.trade.ctInputAmount,
   bidQuoteAmount: state.trade.bidQuoteAmount,
   askQuoteAmount: state.trade.askQuoteAmount,
+  trades: state.trade.trades,
 });
 
 const mapDispatchToProps = {
   toggleIsSell,
   onTrade,
   onChangeCtAmount,
-  onSell
+  onSell,
+  getTradeList,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Trading);

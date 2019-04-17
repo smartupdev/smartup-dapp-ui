@@ -188,15 +188,13 @@ export function getTradeDetail(txHash) {
 //Trade List
 export function getTradeList() {
   return (dispatch, getState) => {
-
-    dispatch(callbackFunction(
+    dispatch(asyncFunction(
       fetch.post,
       TRADE_LIST_REQUESTED, TRADE_LIST_SUCCEEDED, TRADE_LIST_FAILED,
       {
         isWeb3: true,
-        params: {
-
-        }
+        params: API_USER_TRADE_LIST, 
+        responsePayload: reps => reps.obj.list
       }
     ));
   }
