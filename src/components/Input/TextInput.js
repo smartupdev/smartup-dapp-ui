@@ -41,6 +41,19 @@ const TextArea = styled.textarea`
   ${TextStyle}
   resize: none;
 `
+function _onChange(onChange, number) {
+  if(onChange) {
+    return e => {
+      if(number) 
+        return /^\d*$/.test(e.target.value) ? onChange(e) : undefined
+      return onChange(e)
+    }
+  } 
+  return undefined
+}
 
-export default ({line, ...rest}) => line ? <TextArea {...rest} rows={line} /> : <TextInput {...rest} />
+export default ({line, onChange, number, ...rest}) => line ? 
+  <TextArea onChange={_onChange(onChange, number)} {...rest} rows={line} /> 
+: 
+  <TextInput onChange={_onChange(onChange, number)} {...rest} />
 

@@ -167,6 +167,8 @@ export function callbackFunction(
   options = {} // isWeb3, params, responsePayload, params2
 ) {
   return async dispatch => {
+    console.log('============')
+    console.log({options})
     const promise = () => new Promise((resolve, reject) =>
       func(...[options.params, options.params2], (error, response) => {
         if (error) reject(error)

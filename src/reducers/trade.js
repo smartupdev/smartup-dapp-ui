@@ -1,39 +1,95 @@
 import {
-  TRADE_BID_CT_REQUESTED, TRADE_BID_CT_SUCCEEDED, TRADE_BID_CT_FAILED,
-  TRADE_BID_QUOTE_REQUESTED, TRADE_BID_QUOTE_SUCCEEDED, TRADE_BID_QUOTE_FAILED,
-  TRADE_ASK_CT_REQUESTED, TRADE_ASK_CT_SUCCEEDED, TRADE_ASK_CT_FAILED,
-  TRADE_ASK_QUOTE_REQUESTED, TRADE_ASK_QUOTE_SUCCEEDED, TRADE_ASK_QUOTE_FAILED,
-  TOGGLE_IS_SELL, TRADE_CHANGE_CT_AMOUNT,
+  TOGGLE_IS_SELL,
+  TRADE_CHANGE_CT, TRADE_CHANGE_SUT,
+  TRADE_GET_CT_REQUESTED, TRADE_GET_CT_SUCCEEDED, TRADE_GET_CT_FAILED,
+  TRADE_GET_SUT_REQUESTED, TRADE_GET_SUT_SUCCEEDED, TRADE_GET_SUT_FAILED,
+  TRADE_REQUESTED, TRADE_SUCCEEDED, TRADE_FAILED,
+
 } from '../actions/actionTypes';
 
 export const initialState = {
   isSell: false,
   ctInputAmount: null,
 
-  bidQuoteAmount: null,
-  bidingQuote: false,
-  bidQuoteError: null,
+  sut: '',
+  gettingSUT: false,
+  sutError: null,
 
-  askQuoteAmount: null,
-  askingQuote: false,
-  askQuoteError: null,
+  ct: '',
+  gettingCT: false,
+  ctError: null,
 
-  bidCtHash: null,
-  bidingCt: false,
-  bidCtError: null,
-
-  askCtHash: null,
-  askingCt: false,
-  askCtError: null,
+  isTrading: false,
+  tradingError: null,
 }
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case TRADE_CHANGE_CT_AMOUNT:
+    case TRADE_CHANGE_SUT: 
       return {
         ...state,
-        ctInputAmount: action.payload,
-      };
+        sut: action.payload
+      }
+    case TRADE_GET_CT_REQUESTED: 
+      return {
+        ...state,
+        gettingCT: true
+      }
+    case TRADE_GET_CT_SUCCEEDED: 
+      return {
+        ...state,
+        gettingCT: false,
+        ct: action.payload,
+        ctError: initialState.ctError
+      }
+    case TRADE_GET_CT_FAILED: 
+      return {
+        ...state,
+        gettingCT: false,
+        ctError: action.payload
+      }
+
+    case TRADE_CHANGE_CT: 
+      return {
+        ...state,
+        ct: action.payload
+      }
+    case TRADE_GET_SUT_REQUESTED: 
+      return {
+        ...state,
+        gettingSUT: true
+      }
+    case TRADE_GET_SUT_SUCCEEDED: 
+      return {
+        ...state,
+        gettingSUT: false,
+        sut: action.payload,
+        sutError: initialState.sutError
+      }
+    case TRADE_GET_SUT_FAILED: 
+      return {
+        ...state,
+        gettingSUT: false,
+        sutError: action.payload
+      }
+
+    case TRADE_REQUESTED: 
+      return {
+        ...state,
+        isTrading: true
+      }
+    case TRADE_SUCCEEDED: {
+      const { ct, sut, tradingError, isTrading } = initialState
+      return {
+        ...state, ct, sut, tradingError, isTrading,
+      }
+    }
+    case TRADE_FAILED: 
+      return {
+        ...state,
+        isTrading: false
+      }
+
     case TOGGLE_IS_SELL: {
       return {
         ...state,
@@ -41,78 +97,6 @@ export default (state = initialState, action) => {
       }
     }
 
-    case TRADE_BID_QUOTE_REQUESTED:
-      return {
-        ...state,
-        bidingQuote: true,
-      };
-    case TRADE_BID_QUOTE_SUCCEEDED:
-      return {
-        ...state,
-        bidQuoteAmount: action.payload,
-        bidingQuote: false,
-        bidQuoteError: initialState.bidQuoteError
-      };
-    case TRADE_BID_QUOTE_FAILED:
-      return {
-        ...state,
-        bidingQuote: false,
-        bidQuoteError: action.payload,
-      };
-    case TRADE_BID_CT_REQUESTED:
-      return {
-        ...state,
-        bidingCt: true,
-      };
-    case TRADE_BID_CT_SUCCEEDED:
-      return {
-        ...state,
-        bidCtHash: action.payload.hash,
-        bidingCt: false,
-        bidCtError: initialState.bidCtError
-      };
-    case TRADE_BID_CT_FAILED:
-      return {
-        ...state,
-        bidingCt: false,
-        bidCtError: action.payload,
-      };
-    case TRADE_ASK_QUOTE_REQUESTED:
-      return {
-        ...state,
-        askingQuote: true,
-      };
-    case TRADE_ASK_QUOTE_SUCCEEDED:
-      return {
-        ...state,
-        askQuoteAmount: action.payload,
-        askingQuote: false,
-        askQuoteError: initialState.askQuoteError
-      };
-    case TRADE_ASK_QUOTE_FAILED:
-      return {
-        ...state,
-        askingQuote: false,
-        askQuoteError: action.payload,
-      };
-    case TRADE_ASK_CT_REQUESTED:
-      return {
-        ...state,
-        askingCt: true,
-      };
-    case TRADE_ASK_CT_SUCCEEDED:
-      return {
-        ...state,
-        askCtHash: action.payload,
-        askingCt: false,
-        askCtError: initialState.askCtError
-      };
-    case TRADE_ASK_CT_FAILED:
-      return {
-        ...state,
-        askingCt: false,
-        askCtError: action.payload,
-      };
     default:
       return state;
   }

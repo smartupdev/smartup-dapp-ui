@@ -1,9 +1,7 @@
 import {
   GET_MARKET_LIST, GET_MARKET_CREATED_LIST, GET_MARKET_DETAIL, CREATE_MARKET, BOOKMARK_MARKET,
   CREATE_MARKET_REQUESTED, CREATE_MARKET_SUCCEEDED, CREATE_MARKET_FAILED, CREATE_MARKET_SMARTUP_SUCCEEDED,
-  TRADE_SELL_REQUESTED, TRADE_SELL_SUCCEEDED, TRADE_SELL_FAILED,  
-  TRADE_BUY_REQUESTED, TRADE_BUY_SUCCEEDED, TRADE_BUY_FAILED,
-  TRADE_BID_CT_SUCCEEDED
+  TRADE_SUCCEEDED
 } from '../actions/actionTypes';
 import { markets } from '../devData/marketDetail/'
 
@@ -26,13 +24,8 @@ export const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case TRADE_SELL_REQUESTED: 
-      return {
-        ...state,
-      }
-    case TRADE_BID_CT_SUCCEEDED:
-    case TRADE_SELL_SUCCEEDED: {
-      const { id, username, time, avg, ct } = action.payload
+    case TRADE_SUCCEEDED: {
+      const { id, username, userIcon, time, avg, ct, isSell } = action.payload
       const marketIndex= state.markets.findIndex(m => m.id === id)
       if(marketIndex <0) return state
       return {
@@ -42,7 +35,11 @@ export default (state = initialState, action) => {
           {
             ...state.markets[marketIndex],
             transations: [
-              { id: state.markets[marketIndex].transations.length+100, type: 'BUY', username, time, avg, ct },
+              { 
+                id: state.markets[marketIndex].transations.length+100, 
+                type: isSell ? 'SELL' : 'BUY', 
+                username, userIcon,
+                time, avg, ct },
               ...state.markets[marketIndex].transations
             ]
           },
@@ -50,11 +47,6 @@ export default (state = initialState, action) => {
         ]
       }
     }
-    case TRADE_SELL_FAILED: 
-      return {
-        ...state,
-      }
-
 
     case CREATE_MARKET_REQUESTED:
       return {

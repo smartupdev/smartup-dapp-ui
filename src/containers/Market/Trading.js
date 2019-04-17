@@ -2,7 +2,7 @@ import React from 'react'
 import { Link, WithMarket } from '../../routes'
 
 import { connect } from 'react-redux'
-import { onTrade, onSell, onChangeCtAmount, toggleIsSell } from '../../actions/trade';
+import { onChangeCT, onChangeSUT, onTrade, toggleIsSell } from '../../actions/trade';
 
 import theme from '../../theme'
 import { Row, Col } from '../../components/Layout'
@@ -27,11 +27,12 @@ const model = [
   { label: lang.trading.table.user[currentLang], value: 'username', layoutStyle: { flex: 1, center: true }, component: ({ record }) => <Row centerVertical><Avatar icon={record.userIcon} /><Text>{record.username}</Text></Row> },
   { label: lang.trading.table.time[currentLang], value: 'time', layoutStyle: { flex: 1, center: true }, component: ({ value }) => <Text>{toAgo(value)}</Text> },
   { label: lang.trading.table.avgPrice[currentLang], value: 'avg', layoutStyle: { flex: 1, center: true }, component: ({ value }) => <Text>{toToken(value)}</Text> },
-  { label: lang.trading.table.ct[currentLang], value: 'ct', layoutStyle: { flex: 1, center: true }, },
+  { label: lang.trading.table.ct[currentLang], value: 'ct', layoutStyle: { flex: 1, center: true }, component: ({ value }) => <Text>{toToken(value)}</Text>},
 ]
 
 
-function Trading({ isSell, ctInputAmount, askQuoteAmount, bidQuoteAmount, toggleIsSell, onSell, onChangeCtAmount, onTrade }) {
+function Trading({ tradeState, onChangeCT, onChangeSUT, toggleIsSell, onTrade }) {
+  const { ct, sut, isSell } = tradeState
   return (
     <WithMarket>
       {
@@ -99,7 +100,7 @@ function Trading({ isSell, ctInputAmount, askQuoteAmount, bidQuoteAmount, toggle
                     <Text S>SMARTUP</Text>
                   </Col>
                   <Col spacingLeftS spacingTopS flex={1}>
-                    <Input underline L center fullWidth value={ctInputAmount} onChange={e => onChangeCtAmount(e.target.value)} />
+                    <Input underline L center fullWidth value={sut} onChange={e => onChangeSUT(e.target.value)} number />
                     {/* <Text error XS>You need more SmartUp to make this trade.</Text> */}
                   </Col>
                   <Col spacingLeftM spacingRightM>
@@ -111,7 +112,7 @@ function Trading({ isSell, ctInputAmount, askQuoteAmount, bidQuoteAmount, toggle
                     <Text S>{market.name}</Text>
                   </Col>
                   <Col spacingLeftS spacingTopS flex={1}>
-                    <Input underline L center fullWidth value={isSell ? askQuoteAmount : bidQuoteAmount} />
+                    <Input underline L center fullWidth disabled value={ct && (+ct).toFixed(4)} onChange={e => onChangeCT(e.target.value)} number />
                     {/* <Text error XS>You need more SmartUp to make this trade.</Text> */}
                   </Col>
                 </Row>
@@ -156,17 +157,15 @@ function Trading({ isSell, ctInputAmount, askQuoteAmount, bidQuoteAmount, toggle
 }
 
 const mapStateToProps = state => ({
-  isSell: state.trade.isSell,
-  ctInputAmount: state.trade.ctInputAmount,
-  bidQuoteAmount: state.trade.bidQuoteAmount,
-  askQuoteAmount: state.trade.askQuoteAmount,
-});
+  tradeState: state.trade
+})
+
 
 const mapDispatchToProps = {
   toggleIsSell,
   onTrade,
-  onChangeCtAmount,
-  onSell
+  onChangeCT,
+  onChangeSUT
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Trading);
