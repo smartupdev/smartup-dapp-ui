@@ -1,14 +1,6 @@
 import React from 'react'
 import styled, {css} from 'styled-components'
-
-const Img = styled.img`
-  height: ${p => p.theme.iconSizeM};
-  width: ${p => p.theme.iconSizeM};
-  transition: transform .3s ease-in-out;
-  ${p => p.reverse && css`transform: rotate(180deg)`};
-`
-export default ({ source, ...rest }) => 
-  <Img src={source} {...rest} />
+import { spacingCss, onClickCss } from '../Theme'
 
 export const Path = styled.path`
   ${p => p.active && css`fill: ${p.theme.white};`}
@@ -53,10 +45,8 @@ const StyledSvg = styled.svg`
   transition: transform .3s ease-in-out;
   ${p => p.primary && css`fill: ${p.theme.colorPrimary}`};
   ${p => p.reverse && css`transform: rotate(180deg)`};
-  ${p => p.rightText && css`margin-right: ${p.theme.fontSizeXS}`};
-  ${p => p.leftText && css`margin-left: ${p.theme.fontSizeXS}`};
-  ${p => p.onClick && css`cursor: pointer;`}
-  ${p => p.disabled && css`cursor: not-allowed;`}
+  ${spacingCss}
+  ${onClickCss}
 `
 
 export { default as Menu1 } from './Menu1' 

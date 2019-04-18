@@ -1,12 +1,11 @@
 // import React from 'react'
 import styled, { css } from 'styled-components'
-
+import { spacingCss, onClickCss } from '../Theme'
 const Flex = styled.div`
   display: flex;
   position: relative;
   
   ${p => p.color && css`background-color: ${p.color}`}
-  ${p => p.onClick && css`cursor: pointer`}
 
   ${props => typeof props.flex === 'number' && css`flex: ${props.flex}`};
   ${props => props.maxWidth && css`max-width: ${props.maxWidth}`};
@@ -14,35 +13,8 @@ const Flex = styled.div`
   ${props => props.height && css`height: ${props.height}; min-height: ${props.height}`};
   ${props => props.fullHeight && css`height: 100%`};
 
-  ${props => props.spacingLeft && css`padding-left: ${props.spacingLeft}`};
-  ${props => props.spacingRight && css`padding-right: ${props.spacingRight}`};
-  ${props => props.spacingBottom && css`padding-bottom: ${props.spacingBottom}`};
-  ${props => props.spacingTop && css`padding-top: ${props.spacingTop}`};
-  
-  ${p => p.spacingLeftXS && css`padding-left: ${p.theme.spacingXS}`};
-  ${p => p.spacingRightXS && css`padding-right: ${p.theme.spacingXS}`};
-  ${p => p.spacingBottomXS && css`padding-bottom: ${p.theme.spacingXS}`};
-  ${p => p.spacingTopXS && css`padding-top: ${p.theme.spacingXS}`};
-
-  ${p => p.spacingLeftS && css`padding-left: ${p.theme.spacingS}`};
-  ${p => p.spacingRightS && css`padding-right: ${p.theme.spacingS}`};
-  ${p => p.spacingBottomS && css`padding-bottom: ${p.theme.spacingS}`};
-  ${p => p.spacingTopS && css`padding-top: ${p.theme.spacingS}`};
-
-  ${p => p.spacingLeftM && css`padding-left: ${p.theme.spacingM}`};
-  ${p => p.spacingRightM && css`padding-right: ${p.theme.spacingM}`};
-  ${p => p.spacingBottomM && css`padding-bottom: ${p.theme.spacingM}`};
-  ${p => p.spacingTopM && css`padding-top: ${p.theme.spacingM}`};
-
-  ${p => p.spacingLeftL && css`padding-left: ${p.theme.spacingL}`};
-  ${p => p.spacingRightL && css`padding-right: ${p.theme.spacingL}`};
-  ${p => p.spacingBottomL && css`padding-bottom: ${p.theme.spacingL}`};
-  ${p => p.spacingTopL && css`padding-top: ${p.theme.spacingL}`};
-
-  ${p => p.spacingLeftXL && css`padding-left: ${p.theme.spacingXL}`};
-  ${p => p.spacingRightXL && css`padding-right: ${p.theme.spacingXL}`};
-  ${p => p.spacingBottomXL && css`padding-bottom: ${p.theme.spacingXL}`};
-  ${p => p.spacingTopXL && css`padding-top: ${p.theme.spacingXL}`};
+  ${onClickCss}
+  ${spacingCss}
 `
 
 const Row = styled(Flex)`

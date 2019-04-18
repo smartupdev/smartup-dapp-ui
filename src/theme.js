@@ -29,12 +29,18 @@ const theme = {
   // #9b9ea1 light grey
   
   // Layout
-  spacingXXS: '8px',
-  spacingXS: '10px',
-  spacingS: '16px',
-  spacingM: '20px',
-  spacingL: '30px',
-  spacingXL: '60px',
+  spacingBase: '4px',
+  spacingXS: '8px',
+  spacingS: '12px',
+  spacingM: '16px',
+  spacingL: '20px',
+  spacingXL: '24px',
+  // spacingXXS: '8px',
+  // spacingXS: '10px',
+  // spacingS: '16px',
+  // spacingM: '20px',
+  // spacingL: '30px',
+  // spacingXL: '60px',
 
   headerWidth: '60px',
   // tabWidth: '100px',
@@ -48,9 +54,9 @@ const theme = {
   fontSizeL: '16px',
   fontSizeXL: '20px',
 
-  fontSpacingL: '6px',
-  fontSpacingM: '4px',
   fontSpacingS: '2px',
+  fontSpacingM: '4px',
+  fontSpacingL: '6px',
 
   iconSizeM: '30px',
 
