@@ -57,7 +57,7 @@ const Home = ({ markets, expandedRecords, activeTab, totalResults, sortBy, order
   return (
     <Col>
       <Top flex={1} spaceBetween relative>
-        <Tab activeTab={activeTab} tabs={FILTERS} onClick={setActiveTab} type='simple' />
+        <Tab activeIndex={0} tabs={FILTERS} onClick={setActiveTab} type='simple' />
         <Row centerVertical>
           <Text HS S note>{totalResults} RESULTS</Text>
           <Search backgroundColor={theme.bgColorLight} id='home' />
