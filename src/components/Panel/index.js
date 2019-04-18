@@ -28,7 +28,7 @@ export const Expanded = styled(Col)`
 
 export default ({ body, header, expanded, dark, onClick, maxHeight }) => 
   <Container dark={dark}>
-    <Row onClick={onClick} center flex={1}>
+    <Row onClick={onClick} center flex={1} relative>
       <Text M center VXS wordSpaceS>{header}</Text>
       <MoreIcon color='#ffffff' XS reverse={expanded} />
     </Row>

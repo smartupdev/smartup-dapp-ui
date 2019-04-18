@@ -3,7 +3,8 @@ import styled, { css } from 'styled-components'
 import { spacingCss, onClickCss } from '../Theme'
 const Flex = styled.div`
   display: flex;
-  position: relative;
+  
+  ${p => p.relative && css`position: relative;`}
   
   ${p => p.color && css`background-color: ${p.color}`}
 

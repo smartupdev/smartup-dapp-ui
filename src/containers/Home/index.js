@@ -8,6 +8,7 @@ import Text from '../../components/Text'
 import SimpleLineChart from '../../components/SimpleLineChart'
 import Avatar from '../../components/Avatar'
 import { Row, Col } from '../../components/Layout'
+import Search from '../../components/Search'
 import lang, { currentLang } from '../../lang'
 import theme from '../../theme'
 import { toPrice, toDate } from '../../lib/util'
@@ -55,11 +56,11 @@ const Home = ({ markets, expandedRecords, activeTab, totalResults, sortBy, order
   setExpandedRecords, setActiveTab, onTableHeaderClick }) => {
   return (
     <Col>
-      <Top flex={1} spaceBetween>
+      <Top flex={1} spaceBetween relative>
         <Tab activeTab={activeTab} tabs={FILTERS} onClick={setActiveTab} type='simple' />
         <Row centerVertical>
-          <Text spaceH={theme.spacingS} S>{totalResults} RESULTS</Text>
-          <Text S>Search</Text>
+          <Text HS S note>{totalResults} RESULTS</Text>
+          <Search backgroundColor={theme.bgColorLight} id='home' />
         </Row>
       </Top>
       <Table

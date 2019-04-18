@@ -63,7 +63,7 @@ const Dot = styled.div`
 
 export default ({ activeIndex, options, dotSize = '26px', color = theme.colorPrimary, onClick }) =>
   <Box spacingTopS spacingBottomS>
-    <Row flex={1}>
+    <Row flex={1} relative>
       <Line numberOfRecord={options.length} /> 
       <Line activeIndex={activeIndex} numberOfRecord={options.length} />
       {

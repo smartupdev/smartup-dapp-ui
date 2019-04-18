@@ -7,7 +7,9 @@ const TextStyle = css`
   border: 0px;
   box-shadow: 0;
   padding: 8px 12px;
-
+  ::placeholder {
+    color: ${p => p.theme.colorSecondary};
+  }
   background-color: ${p => p.background ? p.theme.bgColorLight : 'transparent'};
   ${p => p.underline && css`
     border-bottom: 1px solid ${p.theme.borderColor};

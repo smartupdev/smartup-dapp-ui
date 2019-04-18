@@ -3,36 +3,43 @@ import { Search } from '../../components/Icon'
 // import Text from '../../components/Text'
 import Input from '../../components/Input'
 import { Row } from '../../components/Layout'
-import styled from 'styled-components'
+import styled, {css} from 'styled-components'
 
 const Container = styled.div`
   position: absolute;
   cursor: pointer;
-  right: ${p => p.theme.spacingS};
-  :focus-within { 
-    left: ${p => p.theme.spacingS};
-    transition: 0.5s;
-  }
+  ${p => p.backgroundColor && css`background-color: ${p.backgroundColor}`};
+  right: 0;
+  max-width: 100%;
+  transition: 0.3s;
   top: 0;
   bottom: 0;
   svg {
     fill: ${p => p.theme.colorSecondary}
   }
+  input {
+    :focus {
+      width: 2000px;
+    }
+    width: 44px;
+  }
 `
 const Dump = styled.div`
   height: ${p => p.theme.imageSizeL};
-`
+  width: 80px; 
+` // margin number
 
-export default () => {
+// MUST set relative outside
+export default ({ id = '', backgroundColor }) => {
   return (
     <>
     <Dump />
-    <Container>
+    <Container backgroundColor={backgroundColor}>
       <Row centerVertical fullHeight spaceBetween>
-        <Input id="search" placeholder='Search' size={6} />
+        <Input id={id+"search"} placeholder='Search' />
         {/* <Text note>Search</Text> */}
-        <label htmlFor="search">
-         <Search S leftText />
+        <label htmlFor={id+"search"}>
+         <Search S RightXS />
         </label>
       </Row>
     </Container>

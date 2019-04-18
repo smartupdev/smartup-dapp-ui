@@ -35,8 +35,8 @@ const notificaitons = [
 export default () => {
   return (
     <Col>
-      <Row>
-        <Search />
+      <Row relative right>
+        <Search id='notification' />
       </Row>
       {
         notificaitons.map(n =>
