@@ -70,8 +70,8 @@ const Portfilio = ({
   return (
     <Col>
       <Col center>
-        <Col spacingTop={theme.spacingXS} spacingBottom={theme.spacingXS}>
-          <Row bottom spacingBottom={theme.spacingXS}>
+        <Col TopXS BottomXS>
+          <Row bottom BottomXS>
             <Image size={theme.fontSizeXL} rightText source={ethIcon} />
             <Text L wordSpaceS>{toToken(ethBalance)}</Text>
             <Text S>ETH</Text>
@@ -91,7 +91,7 @@ const Portfilio = ({
         header={portfilioText.wallet.title[currentLang]}
         body={
           <>
-            <Col spacingBottom={theme.spacingXS} spacingLeft={theme.spacingS} spacingRight={theme.spacingS}>
+            <Col BottomXS LeftS RightS>
               <Table S noBorderCol model={TableName} values={walletList} />
             </Col>
             <Hr />

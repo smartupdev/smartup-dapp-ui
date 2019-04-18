@@ -6,6 +6,6 @@ import theme from '../../theme'
 
 export default ({ icon, ...rest }) => 
  icon ? 
-  <Image source={icon} rightText {...rest} /> : 
-  <People color={theme.white} round rightText {...rest} /> 
+  <Image source={icon} MarginRightXS {...rest} /> : 
+  <People color={theme.white} round MarginRightXS {...rest} /> 
 

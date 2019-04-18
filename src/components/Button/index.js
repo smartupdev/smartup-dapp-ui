@@ -1,5 +1,6 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
+import { spacingCss, onClickCss } from '../Theme'
 import Text from '../Text'
 
 const Button = styled.button`
@@ -11,7 +12,7 @@ const Button = styled.button`
   border-radius: ${p => p.theme.borderRadius}
   padding: ${p => p.theme.spacingXXS} ${p => p.theme.spacingXS}
   ${p => p.condensed && css`padding: 2px ${p => p.theme.spacingXS}; border-radius: 2px;`}
-  ${p => p.extended && css`padding: ${p.theme.spacingXXS} ${p.theme.spacingL};`}
+  // ${p => p.extended && css`padding: ${p.theme.spacingXXS} ${p.theme.spacingL};`}
   display: flex;
   justify-content: center;
   align-items: center;
@@ -21,15 +22,16 @@ const Button = styled.button`
   ${p => p.light && css`color: ${p.theme.white}; fill: ${p.theme.white};`}  
   ${p => p.primary && p.outline && css`background-color: transparent; color: ${p.theme.colorPrimary}; border: 1px solid ${p.theme.colorPrimary}`}  
   :disabled {
-    cursor: not-allowed;
     opacity: .5;
   }
+  ${spacingCss}
+  ${onClickCss}
 `
 
 export default ({ label, icon: Icon, primary, light, condensed, extended, outline, verticalMargin, ...rest }) => {
   return (
-    <Button primary={primary} light={light} condensed={condensed} extended={extended} outline={outline} verticalMargin={verticalMargin} {...rest}>
-      { Icon && <Icon XS rightText={!!label} />}
+    <Button primary={primary} light={light} condensed={condensed} VBase={extended} HL={extended} outline={outline} verticalMargin={verticalMargin} {...rest}>
+      { Icon && <Icon XS RightBase={!!label} />}
       { label && <Text>{label}</Text>}
     </Button>
   )

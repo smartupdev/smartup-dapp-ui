@@ -12,8 +12,8 @@ import { bookMarkClick } from '../../actions/home'
 
 const TableExpand = ({ record, history, bookMarkClick }) => {
   return (
-  <Row spacingBottom={theme.spacingS} spacingTop={theme.spacingS}>
-    <Col spacingLeft={theme.spacingXS} spacingRight={theme.spacingL}>
+  <Row BottomS TopS>
+    <Col LeftXS RightL>
       <Image source={record.image} photo />
     </Col>
     <Col spaceBetween flex={1}>

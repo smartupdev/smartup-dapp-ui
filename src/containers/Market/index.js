@@ -41,16 +41,14 @@ const Market = () => {
         <Row spaceBetween spacingTopXS spacingBottomXS spacingRightS spacingLeftS color={theme.bgColorLight}>
           <Row centerVertical>
             <Avatar icon={market.icon} />
-            <Text>{`${market.name} (${market.id})`}</Text>
-            <Col spacingLeftXS onClick={() => {setCopy(true); copyToClipboard(marketAddress)}}>
-              <Copy S color={copied ? '#aaa' : '#fff'} />
-            </Col>
+            <Text MarginLeftXS>{`${market.name} (${market.id})`}</Text>
+            <Copy S MarginLeftXS color={copied ? '#aaa' : '#fff'} onClick={() => {setCopy(true); copyToClipboard(marketAddress)}} />
           </Row>
           <Row centerVertical>
             <Button label={market.numberOfComments} icon={Comment} />
             <Button label={market.numberOfSub} icon={People} />
-            <Share S color={theme.white} rightText onClick={() => console.log(market.id)} />
-            <Bookmarked S onClick={() => console.log(market.id)} checked={market.following} />
+            <Share S color={theme.white} onClick={() => console.log(market.id)} />
+            <Bookmarked S MarginLeftS onClick={() => console.log(market.id)} checked={market.following} />
           </Row>
         </Row>
         <Link>

@@ -34,7 +34,7 @@ const CreateMarket = ({
 
   function next() { setActiveIndex(activeIndex + 1) }
   function back() { setActiveIndex(activeIndex - 1) }
-  const Label = ({ children }) => <Text S spaceV>{children}</Text>
+  const Label = ({ children }) => <Text S VXS>{children}</Text>
   const Next = ({disabled}) =>  <Button label='Next' primary extended onClick={next} disabled={disabled || isFetching} />
   const Back = () =>  <Button label='Back' primary extended onClick={back} disabled={isFetching} />
   const page1Ready = !(error.name || error.desc || !name || !desc)
@@ -46,16 +46,14 @@ const CreateMarket = ({
   
   return (
     <Col>
-      <Col center spacingBottomXS spacingTopXS>
-        <Text center>CREATE MARKET</Text>
-      </Col>
+      <Text center BottomS TopS>CREATE MARKET</Text>
       <Hr />
       {
         activeIndex >= 0 && 
         <ProgressBar options={options} activeIndex={activeIndex} onClick={!isFetching && onChangeProgress} />
       }
 
-      <Col spacingLeftS spacingRightS>
+      <Col LeftM RightM>
       {
         activeIndex === 0 ? 
           <>

@@ -40,56 +40,40 @@ function Trading({ tradeState, onChangeCT, onChangeSUT, toggleIsSell, onTrade, r
       {
         market =>
           <>
-            <Row color={theme.bgColorDark} spacingLeftL spacingRightL spacingBottomL spacingTopL>
-              <Col flex={1}>
+            <Row color={theme.bgColorDark} spacingLeftL spacingRightL spacingBottomL spacingTopXL>
+              <Col flex={1} spacingRightL>
                 <Chart data={market.data} />
               </Col>
-              <Col spacingLeftXL>
-                <Col spacingBottomS>
-                  <Text nowrap>{toFullDate(Date.now())}</Text>
-                </Col>
+              <Col spacingLeftXL spacingRightL>
+                <Text nowrap spacingBottomS>{toFullDate(Date.now())}</Text>
 
-                <Col spacingTopS>
-                  <Row bottom>
-                    <Text XL>{toToken(market.price24hLow, 2)}</Text>
-                    <Text red S>&nbsp;&nbsp;low</Text>
-                  </Row>
-                  <Row bottom>
-                    <Text XL>{toToken(market.price24hHigh, 2)}</Text>
-                    <Text green S>&nbsp;&nbsp;high</Text>
-                  </Row>
-                  <Text note S>{lang.trading.change[currentLang]}</Text>
-                </Col>
+                <Row bottom spacingTopS>
+                  <Text XL>{toToken(market.price24hLow, 2)}</Text><Text red S>&nbsp;&nbsp;low</Text>
+                </Row>
+                <Row bottom>
+                  <Text XL>{toToken(market.price24hHigh, 2)}</Text><Text green S>&nbsp;&nbsp;high</Text>
+                </Row>
+                <Text note S>{lang.trading.change[currentLang]}</Text>
 
-                <Col spacingTopS>
-                  <Text XL price>{toToken(market.price, 2)}</Text>
-                  <Text note S>{lang.trading.price[currentLang]}</Text>
-                </Col>
+                <Text XL price spacingTopS>{toToken(market.price, 2)}</Text>
+                <Text note S>{lang.trading.price[currentLang]}</Text>
 
-                <Col spacingTopS>
-                  <Text XL primary>{toToken(market.volumeAvg24h, 2)}</Text>
-                  <Text note S>{lang.trading.volume[currentLang]}</Text>
-                </Col>
+                <Text XL primary spacingTopS>{toToken(market.volumeAvg24h, 2)}</Text>
+                <Text note S>{lang.trading.volume[currentLang]}</Text>
 
-                <Col spacingTopS>
-                  <Text XL>{toToken(market.pool, 2)}</Text>
-                  <Text note S>{lang.trading.cap[currentLang]}</Text>
-                </Col>
+                <Text XL spacingTopS>{toToken(market.pool, 2)}</Text>
+                <Text note S>{lang.trading.cap[currentLang]}</Text>
 
-                <Col spacingTopS>
-                  <Text XL>{toToken(market.totalCt, 2)}</Text>
-                  <Text note S>{lang.trading.ct[currentLang]}</Text>
-                </Col>
+                <Text XL spacingTopS>{toToken(market.totalCt, 2)}</Text>
+                <Text note S>{lang.trading.ct[currentLang]}</Text>
               </Col>
             </Row>
 
             <Col spacingLeftS spacingRightS spacingBottomS center>
-              <Col spacingBottomS spacingTopS>
-                <Text L center>{lang.trading.tradeTitle[currentLang]}</Text>
-              </Col>
+              <Text spacingBottomS spacingTopS L center>{lang.trading.tradeTitle[currentLang]}</Text>
               <Hr />
 
-              <Col spacingTopXS spacingBottomS>
+              <Col spacingTopXS spacingBottomL>
                 <Text S center note>{lang.trading.tradeText[currentLang]}</Text>
                 <Text S center note>1,127 SMARTUP  = 1 IDEA(832288)</Text>
               </Col>
@@ -105,9 +89,7 @@ function Trading({ tradeState, onChangeCT, onChangeSUT, toggleIsSell, onTrade, r
                     <Input underline L center fullWidth disabled={isTrading} value={sut} onChange={e => onChangeSUT(e.target.value)} number />
                     { sutError && <Text error XS>{sutError}</Text> }
                   </Col>
-                  <Col spacingLeftM spacingRightM>
-                    <Trade disabled={isTrading} onClick={toggleIsSell} leftActive={isSell} rightActive={!isSell} />
-                  </Col>
+                  <Trade disabled={isTrading} spacingLeftM spacingRightM onClick={toggleIsSell} leftActive={isSell} rightActive={!isSell} />
                   <Avatar icon={market.icon} />
                   <Col>
                     <Text S note>{lang.trading[isSell ? 'tradePay' : 'tradeReceive'][currentLang]}</Text>
@@ -133,9 +115,7 @@ function Trading({ tradeState, onChangeCT, onChangeSUT, toggleIsSell, onTrade, r
             </Col>
             <Hr />
             <Col spacingLeftM spacingRightM>
-              <Col spacingBottomS spacingTopS>
-                <Text L center>{lang.trading.trans[currentLang]}</Text>
-              </Col>
+              <Text L center spacingBottomS spacingTopS>{lang.trading.trans[currentLang]}</Text>
               <Hr />
               <Table
                 model={model}

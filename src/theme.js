@@ -29,8 +29,8 @@ const theme = {
   // #9b9ea1 light grey
   
   // Layout
-  spacingBase: '4px',
-  spacingXS: '8px',
+  spacingBase: '8px',
+  spacingXS: '10px',
   spacingS: '12px',
   spacingM: '16px',
   spacingL: '20px',
