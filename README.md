@@ -21,16 +21,8 @@ Text, InputText, Row, Col, Icon can set spacing by props, e.g.
 
 Supported props:    
 format: `{spacing}{margin}{area}{size}`
-* `{spacing}` - can skip, e.g. spacingTopS can be TopS
-* `{margin}` - e.g. spacingTopS(padding-top), spacingMarginTopS(margin-top)
-* `{area}` - All, Right, Left, Top, Bottom, H(Right & Left), V(Top & Bottom)   
+* `spacing` - can skip, e.g. spacingTopS can be TopS
+* `margin` - e.g. spacingTopS(padding-top), spacingMarginTopS(margin-top)
+* `area` - All, Right, Left, Top, Bottom, H(Right & Left), V(Top & Bottom)   
 For 4 edges, e.g. `spacingS` or `AllS`
-* `{size}` - Base, XS, S, M, L, XL
-
-* spacingLeftBase, spacingRightBase, spacingBottomBase, spacingTopBase
-* spacingLeftXS, spacingRightXS, spacingBottomXS, spacingTopXS
-* spacingLeftS, spacingRightS, spacingBottomS, spacingTopS
-* spacingLeftM, spacingRightM, spacingBottomM, spacingTopM
-* spacingLeftL, spacingRightL, spacingBottomL, spacingTopL
-* spacingLeftXL, spacingRightXL, spacingBottomXL, spacingTopXL
-(P.S. spacing can be omitted, e.g. spacingTopS can be TopS)
+* `size` - Base, XS, S, M, L, XL
