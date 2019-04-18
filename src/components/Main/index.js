@@ -3,5 +3,5 @@ import { Col } from '../Layout'
 
 export default styled(Col)`
   flex: 1;
-  overflow: scroll;
+  overflow: auto;
 ` 
