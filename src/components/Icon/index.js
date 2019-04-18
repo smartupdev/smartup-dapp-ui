@@ -15,7 +15,7 @@ export const Path = styled.path`
   ${p => p.passive && css`fill: ${p.theme.colorSecondary};`}
 `
 
-export const SVG = ({onClick, disabled, ...rest}) => <StyledSvg onClick={disabled ? undefined : onClick} disabled {...rest} />
+export const SVG = ({onClick, disabled, ...rest}) => <StyledSvg onClick={disabled ? undefined : onClick} disabled={disabled} {...rest} />
 const StyledSvg = styled.svg`
   display: block;
   width: ${p => 
