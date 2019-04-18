@@ -15,7 +15,8 @@ export const Path = styled.path`
   ${p => p.passive && css`fill: ${p.theme.colorSecondary};`}
 `
 
-export const SVG = styled.svg`
+export const SVG = ({onClick, disabled, ...rest}) => <StyledSvg onClick={disabled ? undefined : onClick} disabled {...rest} />
+const StyledSvg = styled.svg`
   display: block;
   width: ${p => 
     p.XS ? p.theme.imageSizeXS :
@@ -55,6 +56,7 @@ export const SVG = styled.svg`
   ${p => p.rightText && css`margin-right: ${p.theme.fontSizeXS}`};
   ${p => p.leftText && css`margin-left: ${p.theme.fontSizeXS}`};
   ${p => p.onClick && css`cursor: pointer;`}
+  ${p => p.disabled && css`cursor: not-allowed;`}
 `
 
 export { default as Menu1 } from './Menu1' 

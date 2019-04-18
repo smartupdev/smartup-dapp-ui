@@ -31,10 +31,10 @@ const model = [
 ]
 
 
-function Trading({ tradeState, onChangeCT, onChangeSUT, toggleIsSell, onTrade, reset }) {
+function Trading({ tradeState, onChangeCT, onChangeSUT, toggleIsSell, onTrade, reset, userSut }) {
   useEffect(() => reset, [])
-
-  const { ct, sut, isSell } = tradeState
+  const { ct, sut, isSell, isTrading } = tradeState
+  const sutError = +userSut < +sut ? 'You need more SmartUp to make this trade.' : null
   return (
     <WithMarket>
       {
@@ -102,11 +102,11 @@ function Trading({ tradeState, onChangeCT, onChangeSUT, toggleIsSell, onTrade, r
                     <Text S>SMARTUP</Text>
                   </Col>
                   <Col spacingLeftS spacingTopS flex={1}>
-                    <Input underline L center fullWidth value={sut} onChange={e => onChangeSUT(e.target.value)} number />
-                    {/* <Text error XS>You need more SmartUp to make this trade.</Text> */}
+                    <Input underline L center fullWidth disabled={isTrading} value={sut} onChange={e => onChangeSUT(e.target.value)} number />
+                    { sutError && <Text error XS>{sutError}</Text> }
                   </Col>
                   <Col spacingLeftM spacingRightM>
-                    <Trade onClick={toggleIsSell} leftActive={isSell} rightActive={!isSell} />
+                    <Trade disabled={isTrading} onClick={toggleIsSell} leftActive={isSell} rightActive={!isSell} />
                   </Col>
                   <Avatar icon={market.icon} />
                   <Col>
@@ -114,18 +114,18 @@ function Trading({ tradeState, onChangeCT, onChangeSUT, toggleIsSell, onTrade, r
                     <Text S>{market.name}</Text>
                   </Col>
                   <Col spacingLeftS spacingTopS flex={1}>
-                    <Input underline L center fullWidth disabled value={ct && (+ct).toFixed(4)} onChange={e => onChangeCT(e.target.value)} number />
+                    <Input underline L center fullWidth disabled={isTrading} value={ct && (+ct).toFixed(4)} onChange={e => onChangeCT(e.target.value)} number />
                     {/* <Text error XS>You need more SmartUp to make this trade.</Text> */}
                   </Col>
                 </Row>
 
                 <Row spaceBetween>
                   <Row centerVertical>
-                    <Checkbox label={<Text S note lineHeight>Agree to&nbsp;</Text>} />
+                    <Checkbox disabled={isTrading} label={<Text S note lineHeight>Agree to&nbsp;</Text>} />
                     <Text S note underline lineHeight onClick={() => console.log('Get T&C')}>{'Teams & Conditions'}</Text>
                   </Row>
                   {/* <Botton label='Trade' icon={Trade} primary onClick={() => onSell(market.id, 10)} /> */}
-                  <Botton label='Trade' icon={Trade} primary onClick={() => onTrade(market.id)} />
+                  <Botton label='Trade' icon={Trade} primary disabled={isTrading} onClick={() => onTrade(market.id)} />
                 </Row>
 
               </Col>
@@ -159,7 +159,8 @@ function Trading({ tradeState, onChangeCT, onChangeSUT, toggleIsSell, onTrade, r
 }
 
 const mapStateToProps = state => ({
-  tradeState: state.trade
+  tradeState: state.trade,
+  userSut: state.user.sutBalance
 })
 
 

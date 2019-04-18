@@ -1,5 +1,5 @@
 import React from 'react'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 const CheckboxStyle = styled.label`
   display: flex;
@@ -16,6 +16,7 @@ const CheckboxStyle = styled.label`
     height: 0;
     width: 0;
   }
+  ${p => p.disabled && css`cursor: not-allowed;`}
   .mark {
     position: absolute;
     left: 0;
@@ -57,9 +58,9 @@ const CheckboxStyle = styled.label`
   }
 `
 
-export default ({ checked, label = '' }) =>
-  <CheckboxStyle>
+export default ({ checked, disabled, label = '' }) =>
+  <CheckboxStyle disabled={disabled}>
     {label}
-    <input type='checkbox' checked={checked} />
+    <input type='checkbox' checked={checked} disabled={disabled} />
     <span className='mark' />
   </CheckboxStyle>

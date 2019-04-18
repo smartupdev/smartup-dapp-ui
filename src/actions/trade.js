@@ -9,11 +9,11 @@ import {
   TRADE_REQUESTED, TRADE_SUCCEEDED, TRADE_FAILED
 } from '../actions/actionTypes';
 import fetch from '../lib/util/fetch';
+// import {
+//   API_USER_TRADE_LIST, API_USER_TRADE_DETAIL,
+// } from './api';
 import {
-  API_USER_TRADE_LIST, API_USER_TRADE_DETAIL,
-} from './api';
-import {
-  asyncFunction, toWei, encodeParam, sutContractAddress, smartupWeb3, callbackFunction, getAccount,
+  toWei, encodeParam, sutContractAddress, smartupWeb3, callbackFunction, getAccount,
   createBidCtData, createAskCtData, createBidQuoteData, createAskQuoteData, decodeResult,
 } from '../integrator'
 
