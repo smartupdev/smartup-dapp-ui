@@ -39,7 +39,6 @@ export default (state = initialState, action) => {
         isFetching: true
       }
     case CREATE_MARKET_GET_SUCCEEDED: {
-
     // "stage" : "creating"
       const { marketId, description: desc, name } = action.payload
       return {
