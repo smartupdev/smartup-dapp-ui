@@ -27,7 +27,7 @@ const toFullDate = (d = now()) => `${getDay(d)}, ${getMonthString(d)} ${getDate(
 
 // d is a number
 const toAgo = (date, nowText = 'now', minText = 'm ago', hourText = 'h ago', dayText = 'd ago') => {
-  const timeAgo = Date.now() - date
+  const timeAgo = Date.now() - new Date(date).getTime()
   return timeAgo < MIN ? nowText :
     timeAgo < HOUR ? ~~(timeAgo/MIN) + minText :
     timeAgo < DAY ? ~~(timeAgo/HOUR) + hourText :

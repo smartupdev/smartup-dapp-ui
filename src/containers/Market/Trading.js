@@ -2,7 +2,8 @@ import React, { useEffect } from 'react'
 import { Link, WithMarket } from '../../routes'
 
 import { connect } from 'react-redux'
-import { onChangeCT, onChangeSUT, onTrade, toggleIsSell, reset } from '../../actions/trade';
+import { onChangeCT, onChangeSUT, onTrade, toggleIsSell, reset, getTradeList, getKlineList } from '../../actions/trade';
+
 
 import theme from '../../theme'
 import { Row, Col } from '../../components/Layout'
@@ -24,17 +25,21 @@ import Chart from './Chart'
 
 const model = [
   { label: lang.trading.table.buySell[currentLang], value: 'type', layoutStyle: { flex: 1, center: true }, component: ({ value }) => <Text red={value === 'SELL'} green={value !== 'SELL'}>{value === 'SELL' ? lang.trading.table.sell[currentLang] : lang.trading.table.buy[currentLang]}</Text> },
-  { label: lang.trading.table.user[currentLang], value: 'username', layoutStyle: { flex: 1, center: true }, component: ({ record }) => <Row centerVertical><Avatar icon={record.userIcon} /><Text>{record.username}</Text></Row> },
-  { label: lang.trading.table.time[currentLang], value: 'time', layoutStyle: { flex: 1, center: true }, component: ({ value }) => <Text>{toAgo(value)}</Text> },
-  { label: lang.trading.table.avgPrice[currentLang], value: 'avg', layoutStyle: { flex: 1, center: true }, component: ({ value }) => <Text>{toToken(value)}</Text> },
-  { label: lang.trading.table.ct[currentLang], value: 'ct', layoutStyle: { flex: 1, center: true }, component: ({ value }) => <Text>{toToken(value)}</Text>},
+{ label: lang.trading.table.user[currentLang], value: 'userAddress', layoutStyle: { flex: 1, center: true }, component: ({ record }) => <Row centerVertical><Avatar icon={record.userIcon} /><Text>{record.username}</Text></Row> },
+{ label: lang.trading.table.time[currentLang], value: 'createTime', layoutStyle: { flex: 1, center: true }, component: ({ value }) => <Text>{toAgo(value)}</Text> },
+{ label: lang.trading.table.avgPrice[currentLang], value: 'avgAmount', layoutStyle: { flex: 1, center: true }, component: ({ value }) => <Text>{toToken(value)}</Text> },
+{ label: lang.trading.table.ct[currentLang], value: 'ctAmount', layoutStyle: { flex: 1, center: true }, },
 ]
 
 
-function Trading({ tradeState, onChangeCT, onChangeSUT, toggleIsSell, onTrade, reset, userSut }) {
-  useEffect(() => reset, [])
-  const { ct, sut, isSell, isTrading } = tradeState
+function Trading({ tradeState, onChangeCT, onChangeSUT, toggleIsSell, onTrade, reset, userSut ,getTradeList,getKlineList}) {
+  useEffect(() => {
+    reset()
+    getTradeList() 
+    getKlineList()}, [])
+  const { ct, sut, isSell, isTrading,trades,klineData } = tradeState
   const sutError = +userSut < +sut ? 'You need more SmartUp to make this trade.' : null
+
   return (
     <WithMarket>
       {
@@ -42,7 +47,8 @@ function Trading({ tradeState, onChangeCT, onChangeSUT, toggleIsSell, onTrade, r
           <>
             <Row color={theme.bgColorDark} spacingLeftL spacingRightL spacingBottomL spacingTopXL>
               <Col flex={1} spacingRightL>
-                <Chart data={market.data} />
+                <Chart  data={klineData} />
+
               </Col>
               <Col spacingLeftXL spacingRightL>
                 <Text nowrap spacingBottomS>{toFullDate(Date.now())}</Text>
@@ -119,10 +125,10 @@ function Trading({ tradeState, onChangeCT, onChangeSUT, toggleIsSell, onTrade, r
               <Hr />
               <Table
                 model={model}
-                values={market.transations || []}
+                values={trades || []}
               />
               {
-                (!market.transations || !market.transations.length) &&
+                (!trades || !trades.length) &&
                 <>
                   <Hr />
                   <Col center spacingTopS spacingBottomL>
@@ -140,7 +146,7 @@ function Trading({ tradeState, onChangeCT, onChangeSUT, toggleIsSell, onTrade, r
 
 const mapStateToProps = state => ({
   tradeState: state.trade,
-  userSut: state.user.sutBalance
+  userSut: state.user.sutBalance,
 })
 
 
@@ -149,7 +155,9 @@ const mapDispatchToProps = {
   onTrade,
   onChangeCT,
   onChangeSUT,
-  reset
+  reset,
+  getTradeList,
+  getKlineList,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Trading);
