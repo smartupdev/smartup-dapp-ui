@@ -1,201 +1,74 @@
 import {
-  CREATE_MARKET_SMARTUP_REQUESTED,CREATE_MARKET_SMARTUP_SUCCEEDED,CREATE_MARKET_SMARTUP_FAILED,
-  GET_MARKET_LIST, GET_MARKET_DETAIL, BOOKMARK_MARKET,
-} from './actionTypes';
-import { Net } from '../lib/util/request';
-import fetch from '../lib/util/fetch';
-import {
-  API_USER_MARKET_CREATE,API_MARKET_LIST,
-  API_MARKET_ONE,API_MARKET_QUERY_BY_TX_HASH,
-} from './api';
-import {
-  asyncFunction,createMarketData,sutContractAddress,smartupWeb3, callbackFunction, getAccount
-} from '../integrator'
+  GET_MARKET_LIST_REQUESTED, GET_MARKET_LIST_SUCCEEDED, GET_MARKET_LIST_FAILED,
+  CT_ACCOUNT_IN_MARKET_REQUESTED,CT_ACCOUNT_IN_MARKET_SUCCEEDED,CT_ACCOUNT_IN_MARKET_FAILED,
+  GET_MARKET_GLOBAL_REQUESTED,GET_MARKET_GLOBAL_SUCCEEDED,GET_MARKET_GLOBAL_FAILED,
+  TABLE_HEADER_CLICK,
+} from './actionTypes'
+import fetch from '../lib/util/fetch'
+import { API_MARKET_LIST, API_CT_ACCOUNT_IN_MARKET, API_MARKET_GLOBAL} from './api'
+import { asyncFunction } from '../integrator'
 
-function createSmartUpMarket(txHash){
+//全部市场列表
+export function getMarketList(requestParams) {
+  return (dispatch, getState) => dispatch(
+    asyncFunction(
+      fetch.post,
+      GET_MARKET_LIST_REQUESTED, GET_MARKET_LIST_SUCCEEDED, GET_MARKET_LIST_FAILED,
+      {
+        params: API_MARKET_LIST,
+        params2: requestParams,
+        responsePayload: reps => reps.list
+      }
+    )
+  )
+}
+
+export function getDefaultMarketList() {
   return (dispatch, getState) => {
-    const {name, desc: description} = getState().createMarket;
+    const requestParams = {
+      orderBy: getState().home.sortBy,
+      asc:  getState().home.orderBy === 'asc'
+    }
     dispatch(asyncFunction(
       fetch.post,
-      CREATE_MARKET_SMARTUP_REQUESTED, CREATE_MARKET_SMARTUP_SUCCEEDED, CREATE_MARKET_SMARTUP_FAILED,
-      { isWeb3: true, params: API_USER_MARKET_CREATE, params2: { txHash,name,description } }
-    ));
-  }
+      GET_MARKET_LIST_REQUESTED, GET_MARKET_LIST_SUCCEEDED, GET_MARKET_LIST_FAILED,
+      {
+        params: API_MARKET_LIST,
+        params2: requestParams,
+        responsePayload: reps => reps.list
+      }
+    )
+  )}
 }
 
-//全部市场列表<暂用,后续会有各种排序>
-export function getMarketList(params) {
-  return (dispatch, getState) => {
-    dispatch({
-      type: GET_MARKET_LIST,
-      payload: {
-        status: 'loading',
-        obj: null,
-        msg: null,
-        code: null,
-      },
-    });
-    Net(API_MARKET_LIST, params).then((res) => {
-      dispatch({
-        type: GET_MARKET_LIST,
-        payload: {
-          status: 'success',
-          obj: res.obj,
-          msg: res.msg,
-          code: res.code,
-        },
-      });
-    }).catch((error) => {
-      dispatch({
-        type: GET_MARKET_LIST,
-        payload: {
-          status: 'error',
-          obj: null,
-          msg: error,
-          code: null,
-        },
-      });
-    });
-  }
+//CT账户和市场信息
+export function getCtAccountInMarket(){
+  return (dispatch, getState) =>
+    dispatch(
+      asyncFunction(
+        fetch.post,
+        CT_ACCOUNT_IN_MARKET_REQUESTED, CT_ACCOUNT_IN_MARKET_SUCCEEDED, CT_ACCOUNT_IN_MARKET_FAILED,
+        {
+          params: API_CT_ACCOUNT_IN_MARKET,
+          params2: {},
+          responsePayload: reps => reps.list
+        }
+      )
+    )
 }
 
-//市场详情
-export function getMarketDetailByAddress(marketAddress) {
-  return (dispatch, getState) => {
-    dispatch({
-      type: GET_MARKET_DETAIL,
-      payload: {
-        status: 'loading',
-        obj: null,
-        msg: null,
-        code: null,
-      },
-    });
-    let params = {
-      marketAddress: marketAddress,
-    }
-    Net(API_MARKET_ONE, params).then((res) => {
-      dispatch({
-        type: GET_MARKET_DETAIL,
-        payload: {
-          status: 'success',
-          obj: res.obj,
-          msg: res.msg,
-          code: res.code,
-        },
-      });
-    }).catch((error) => {
-      dispatch({
-        type: GET_MARKET_DETAIL,
-        payload: {
-          status: 'error',
-          obj: null,
-          msg: error,
-          code: null,
-        },
-      });
-    });
-  }
-}
-
-export function getMarketDetailByTxHash(marketAddress) {
-  return (dispatch, getState) => {
-    dispatch({
-      type: GET_MARKET_DETAIL,
-      payload: {
-        status: 'loading',
-        obj: null,
-        msg: null,
-        code: null,
-      },
-    });
-    let params = {
-      marketAddress: marketAddress,
-    }
-    Net(API_MARKET_QUERY_BY_TX_HASH, params).then((res) => {
-      dispatch({
-        type: GET_MARKET_DETAIL,
-        payload: {
-          status: 'success',
-          obj: res.obj,
-          msg: res.msg,
-          code: res.code,
-        },
-      });
-    }).catch((error) => {
-      dispatch({
-        type: GET_MARKET_DETAIL,
-        payload: {
-          status: 'error',
-          obj: null,
-          msg: error,
-          code: null,
-        },
-      });
-    });
-  }
-}
-
-//创建者创建的市场列表
-export function getMarketCreatedList(params) {
-  // return (dispatch, getState) => {
-  //   dispatch({
-  //     type: GET_MARKET_CREATED_LIST,
-  //     payload: {
-  //       status: 'loading',
-  //       obj: null,
-  //       msg: null,
-  //       code: null,
-  //     },
-  //   });
-  //   Net(API_MARKET_CREATOR_CREATED, params).then((res) => {
-  //     dispatch({
-  //       type: GET_MARKET_CREATED_LIST,
-  //       payload: {
-  //         status: 'success',
-  //         obj: res.obj,
-  //         msg: res.msg,
-  //         code: res.code,
-  //       },
-  //     });
-  //   }).catch((error) => {
-  //     dispatch({
-  //       type: GET_MARKET_CREATED_LIST,
-  //       payload: {
-  //         status: 'error',
-  //         obj: null,
-  //         msg: error,
-  //         code: null,
-  //       },
-  //     });
-  //   });
-  // }
-}
-
-//更新市场address<暂用，后续由服务端处理>
-export function updateMarketAddress(txHash, marketAddress) {
-  // return (dispatch, getState) => {
-  //   let params = {
-  //     txHash: txHash,
-  //     marketAddress: marketAddress,
-  //   }
-  //   Net(API_MARKET_UPDATE_MARKET_ADDRESS, params).then((res) => {
-
-  //   }).catch((error) => {
-
-  //   });
-  // }
-}
-
-//bookmark market
-export function bookMarkMarket(recordData) {
-  //after network request
-  return (dispatch, getState) => {
-    dispatch({
-      type: BOOKMARK_MARKET,
-      recordData: recordData,
-    });
-  }
+//全部市场数据
+export function getMarketGlobal(){
+  return (dispatch, getState) =>
+    dispatch(
+      asyncFunction(
+        fetch.post,
+        GET_MARKET_GLOBAL_REQUESTED, GET_MARKET_GLOBAL_SUCCEEDED, GET_MARKET_GLOBAL_FAILED,
+        {
+          params: API_MARKET_GLOBAL,
+        }
+      )
+    )
 }
 
 

@@ -48,7 +48,6 @@ function Trading({ tradeState, onChangeCT, onChangeSUT, toggleIsSell, onTrade, r
             <Row color={theme.bgColorDark} spacingLeftL spacingRightL spacingBottomL spacingTopXL>
               <Col flex={1} spacingRightL>
                 <Chart  data={klineData} />
-
               </Col>
               <Col spacingLeftXL spacingRightL>
                 <Text nowrap spacingBottomS>{toFullDate(Date.now())}</Text>
@@ -61,16 +60,16 @@ function Trading({ tradeState, onChangeCT, onChangeSUT, toggleIsSell, onTrade, r
                 </Row>
                 <Text note S>{lang.trading.change[currentLang]}</Text>
 
-                <Text XL price spacingTopS>{toToken(market.price, 2)}</Text>
+                <Text XL price spacingTopS>{toToken(market.data.last, 2)}</Text>
                 <Text note S>{lang.trading.price[currentLang]}</Text>
 
-                <Text XL primary spacingTopS>{toToken(market.volumeAvg24h, 2)}</Text>
+                <Text XL primary spacingTopS>{toToken(market.data.ctAmount, 2)}</Text>
                 <Text note S>{lang.trading.volume[currentLang]}</Text>
 
-                <Text XL spacingTopS>{toToken(market.pool, 2)}</Text>
+                <Text XL spacingTopS>{toToken(market.data.amount, 2)}</Text>
                 <Text note S>{lang.trading.cap[currentLang]}</Text>
 
-                <Text XL spacingTopS>{toToken(market.totalCt, 2)}</Text>
+                <Text XL spacingTopS>{toToken(market.data.ctTopAmount, 2)}</Text>
                 <Text note S>{lang.trading.ct[currentLang]}</Text>
               </Col>
             </Row>

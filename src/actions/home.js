@@ -1,15 +1,42 @@
 import {
-  SET_EXPANDED_RECORDS, SET_ACTIVE_TAB, TABLE_HEADER_CLICK, SEARCH_MARKETS,
+  SET_EXPANDED_RECORDS, SET_ACTIVE_TAB, TABLE_HEADER_CLICK,
 } from './actionTypes';
 
-import { bookMarkMarket } from './market';
+import { getCtAccountInMarket, getMarketList } from '../actions/market';
 
 export function setExpandedRecords(recordData) {
   return (dispatch, getState) => {
     dispatch({
       type: SET_EXPANDED_RECORDS,
-      recordData: recordData,
+      payload: recordData,
     });
+  }
+}
+
+export function onTableHeaderClick(headerName) {
+  return (dispatch, getState) => {
+    let sortBy = getState().home.sortBy;
+    let orderBy = getState().home.orderBy;
+    if (!!headerName) {
+      if (sortBy !== headerName) {
+        sortBy = headerName;
+        orderBy = 'desc';
+      } else {
+        orderBy = orderBy === 'desc' ? 'asc' : 'desc';
+      }
+    }
+
+    const requestParams = {
+      orderBy: sortBy,
+      asc: orderBy === 'asc'
+    }
+
+    dispatch({
+      type: TABLE_HEADER_CLICK,
+      payload: { sortBy, orderBy },
+    });
+    dispatch(getMarketList(requestParams));
+
   }
 }
 
@@ -20,44 +47,7 @@ export function setActiveTab(activeTab) {
       networkStatus: 'loading',
       activeTab: activeTab
     });
-    //notify markets refresh
-    //getMarketList(params)(dispatch,getState);
   }
 }
 
-export function onTableHeaderClick(headerName) {
-  return (dispatch, getState) => {
-    dispatch({
-      type: TABLE_HEADER_CLICK,
-      headerName: headerName,
-    });
-    //notify markets refresh
-    //getMarketList(params)(dispatch,getState);
-  }
-}
 
-export function bookMarkClick(recordData) {
-  return bookMarkMarket(recordData);
-}
-
-export function searchMarkets(keyword) {
-  return (dispatch, getState) => {
-    dispatch({
-      type: SEARCH_MARKETS,
-      networkStatus: 'loading',
-    });
-    // Net('API_SEARCH_MARKETS', params, 'get').then((res) => {
-    //     dispatch({
-    //         type: SEARCH_MARKETS,
-    //         networkStatus: 'loading',
-    //         data: res
-    //     });
-    // }).catch((error) => {
-    //     dispatch({
-    //         type: SEARCH_MARKETS,
-    //         networkStatus: 'error',
-    //         errorInfo: error,
-    //     });
-    // });
-  }
-}

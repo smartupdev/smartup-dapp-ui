@@ -2,6 +2,8 @@ import theme from './reducers/theme';
 import user from './reducers/user';
 import home from './reducers/home';
 import market from './reducers/market';
+import collect from './reducers/collect';
+import notification from './reducers/notification';
 import createMarket from './reducers/createMarket';
 import panel from './reducers/panel';
 import trade from './reducers/trade';
@@ -13,6 +15,8 @@ export default combineReducers({
     user,
     home,
     market,
+    collect,
+    notification,
     createMarket,
     trade,
     panel,
