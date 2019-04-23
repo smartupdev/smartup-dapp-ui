@@ -5,6 +5,7 @@ const Flex = styled.div`
   display: flex;
   
   ${p => p.relative && css`position: relative;`}
+  ${p => p.overflowHidden && css`overflow: hidden;`}
   
   ${p => p.color && css`background-color: ${p.color}`}
 
@@ -27,7 +28,7 @@ const Row = styled(Flex)`
   ${props => props.bottom && css`align-items: flex-end`};
   `
   
-  const Col = styled(Flex)`
+const Col = styled(Flex)`
   flex-direction: column;
   ${props => props.right && css`align-items: flex-end`};
   ${props => props.center && css`align-items: center`};
