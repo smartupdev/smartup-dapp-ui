@@ -1,4 +1,6 @@
 import Web3 from 'web3'
+import { NOT_LOGIN } from './lib/util/fetch'
+import { USER_PERSON_SIGN_FAILED } from './actions/actionTypes'
 
 export const smartupContractAddress = '0x1bff1dc00bb838187e104400d7e9128d93db5313';
 export const sutContractAddress = '0xf1899c6eb6940021c1ae4e9c3a8e29ee93704b03'
@@ -138,7 +140,7 @@ export function asyncFunction(
   requestType, responseType, errorType,
   options = {} // isWeb3, params, responsePayload
 ) {
-  return async dispatch => {
+  return async (dispatch, getState) => {
     dispatch({ type: requestType })
     try {
       if (options.isWeb3 && !checkIsSupportWeb3()) throw new Error('Web3 or ethereum is not supported.')
@@ -151,6 +153,7 @@ export function asyncFunction(
       return [null, response]
     }
     catch (error) {
+      if(error.message === NOT_LOGIN) dispatch({ type: USER_PERSON_SIGN_FAILED, payload: error, error: true })
       dispatch({
         type: errorType,
         payload: error,
