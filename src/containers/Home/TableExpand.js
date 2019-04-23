@@ -30,7 +30,7 @@ const TableExpand = ({ record, history, bookMarkClick }) => {
         </Row>
         <Link>
           { ({goto}) =>
-          <Button primary label={lang.trade[currentLang]} icon={Trade} onClick={()=>goto.trading({id: record.id})} />
+          <Button primary label={lang.trade[currentLang]} icon={Trade} onClick={()=>goto.trading({address: record.address})} />
            }
         </Link>
       </Row>
