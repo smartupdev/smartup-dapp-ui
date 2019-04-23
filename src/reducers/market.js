@@ -5,9 +5,25 @@ import {
   GET_MARKET_GLOBAL_REQUESTED, GET_MARKET_GLOBAL_SUCCEEDED, GET_MARKET_GLOBAL_FAILED,
   USER_COLLECT_ADD_REQUESTED, USER_COLLECT_ADD_SUCCEEDED, USER_COLLECT_ADD_FAILED,
   USER_COLLECT_DEL_REQUESTED, USER_COLLECT_DEL_SUCCEEDED, USER_COLLECT_DEL_FAILED,
-  TRADE_SUCCEEDED
+  TRADE_SUCCEEDED,
+  GET_MARKET_DETAIL_REQUESTED, GET_MARKET_DETAIL_SUCCEEDED, GET_MARKET_DETAIL_FAILED,
 } from '../actions/actionTypes';
 import { markets } from '../devData/marketDetail/'
+
+function marketMassage(m) {
+  return {
+    ...m,
+    ...m.data,
+    id: m.marketId,
+    address: m.marketAddress,
+    icon: null,
+    priceIn7d: [40, 50, 45, 60, 57, 66, 70],
+    overview: 'Let’s explain what is going on here.',
+    numberOfComments: 2000,
+    numberOfSub: 1000,
+    following: false,
+  }
+}
 
 export const initialState = {
 
@@ -60,10 +76,30 @@ export const initialState = {
 
   delingCollect: false,
   delCollectError: null,
+  
+  currentMarket: null,
+  gettingMarket: false,
 }
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    case GET_MARKET_DETAIL_REQUESTED: 
+      return {
+        ...state,
+        gettingMarket: true
+      }
+    case GET_MARKET_DETAIL_SUCCEEDED: 
+      return {
+        ...state,
+        currentMarket: marketMassage(action.payload),
+        gettingMarket: false
+      }
+    case GET_MARKET_DETAIL_FAILED: 
+      return {
+        ...state,
+        gettingMarket: false
+      }
+
     case TRADE_SUCCEEDED: {
       const { id, username, userIcon, time, avg, ct, isSell } = action.payload
       const marketIndex = state.markets.findIndex(m => m.id === id)
@@ -113,18 +149,7 @@ export default (state = initialState, action) => {
         gettingMarketList: true,
       };
     case GET_MARKET_LIST_SUCCEEDED: {
-      let tempMarkets = action.payload.map(m => {
-        return {
-          ...m,
-          id: m.marketId,
-          icon: null,
-          priceIn7d: [40, 50, 45, 60, 57, 66, 70],
-          overview: 'Let’s explain what is going on here.',
-          numberOfComments: 2000,
-          numberOfSub: 1000,
-          following: false,
-        }
-      });
+      let tempMarkets = action.payload.map(marketMassage);
       return {
         ...state,
         markets: tempMarkets,

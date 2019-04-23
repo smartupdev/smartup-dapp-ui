@@ -52,7 +52,7 @@ const BlockPageScroll = ({ children }) => {
   }, [])
   const stopScroll = e => e.preventDefault()
   return (
-    <div ref={scrollRef}>
+    <div ref={scrollRef} style={{position: 'relative'}}>
       {children}
     </div>
   )

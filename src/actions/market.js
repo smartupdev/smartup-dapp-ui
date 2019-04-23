@@ -4,14 +4,24 @@ import {
   GET_MARKET_GLOBAL_REQUESTED, GET_MARKET_GLOBAL_SUCCEEDED, GET_MARKET_GLOBAL_FAILED,
   USER_COLLECT_ADD_REQUESTED, USER_COLLECT_ADD_SUCCEEDED, USER_COLLECT_ADD_FAILED,
   USER_COLLECT_DEL_REQUESTED, USER_COLLECT_DEL_SUCCEEDED, USER_COLLECT_DEL_FAILED,
+  TABLE_HEADER_CLICK,
+  GET_MARKET_DETAIL_REQUESTED, GET_MARKET_DETAIL_SUCCEEDED, GET_MARKET_DETAIL_FAILED
 } from './actionTypes'
-import fetch from '../lib/util/fetch'
 import {
   API_MARKET_LIST, API_CT_ACCOUNT_IN_MARKET, API_MARKET_GLOBAL,
-  API_USER_COLLECT_ADD, API_USER_COLLECT_DEL
+  API_USER_COLLECT_ADD, API_USER_COLLECT_DEL, API_MARKET_DETAIL
 } from './api'
-import { asyncFunction, callbackFunction } from '../integrator'
+import fetch from '../lib/util/fetch'
+import { asyncFunction } from '../integrator'
 import { getUserCollectLists } from '../actions/collect'
+
+export function get(marketAddress) {
+  return asyncFunction(
+    fetch.get,
+    GET_MARKET_DETAIL_REQUESTED, GET_MARKET_DETAIL_SUCCEEDED, GET_MARKET_DETAIL_FAILED,
+    { params: API_MARKET_DETAIL, params2: { marketAddress } }
+  )
+}
 
 //全部市场列表
 export function getMarketList(requestParams) {
