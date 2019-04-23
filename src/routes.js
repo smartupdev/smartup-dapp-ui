@@ -2,7 +2,6 @@
 // import Icon2 from './images/menu2.svg'
 // import Icon3 from './images/menu3.svg'
 // import Icon4 from './images/menu4.svg'
-import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { toParams } from './lib/util/fetch'
 
@@ -55,14 +54,3 @@ export const Link = withRouter( ({ history, location, children }) => children({
   history,
   location
 }) )
-
-const mapStateToProps = state => ({
-  markets: state.market.markets,
-});
-
-export const WithMarket = connect(mapStateToProps)(
-  withRouter(( {location, markets, children} ) => {
-    const id = new URLSearchParams(location.search).get('id')
-    return children(markets.find(m => m.id === id))
-  } )
-)

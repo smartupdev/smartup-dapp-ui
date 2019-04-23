@@ -140,8 +140,23 @@ export default (state = initialState, action) => {
       }
     case TRADE_SUCCEEDED: {
       const { ct, sut, tradingError, isTrading } = initialState
+      const { hash, isSell, username, userIcon, sut: sutAmount , ct: ctAmount } = action.payload
+
       return {
         ...state, ct, sut, tradingError, isTrading,
+        trades: [
+          {
+            id: hash,
+            type: isSell ? 'sell' : 'buy',
+            avgAmount: sutAmount / ctAmount,
+            sutAmount,
+            ctAmount,
+            userIcon,
+            username,
+            time: new Date()  
+          },
+          ...state.trades
+        ]
       }
     }
     case TRADE_FAILED:
@@ -210,10 +225,15 @@ export default (state = initialState, action) => {
         gettingTrades: true,
       };
     case TRADE_LIST_SUCCEEDED: {
-      action.payload.forEach(trade => trade.avgAmount = trade.sutAmount / trade.ctAmount);
       return {
         ...state,
-        trades: action.payload,
+        trades: action.payload.map( trade => ({
+          ...trade, 
+          id: trade.txHash,
+          avgAmount: trade.sutAmount / trade.ctAmount,
+          userIcon: trade.user.avatarIpfsHash,
+          username: trade.user.name
+        })),
         gettingTrades: false,
         getTradesError: initialState.getTradesError
       };

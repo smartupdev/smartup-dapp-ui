@@ -35,7 +35,6 @@ const copyToClipboard = str => {
   document.execCommand('copy');
   document.body.removeChild(el);
 };
-const marketAddress = '0xF6f7C3CDbA6ef2E9fFF12b1702481f99CA6Cd38c';
 
 const Market = ({ get, getting, location, market }) => {
   const [copied, setCopy] = useState(false)
@@ -52,7 +51,7 @@ const Market = ({ get, getting, location, market }) => {
         <Row centerVertical>
           <Avatar icon={market.icon} />
           <Text MarginLeftXS>{`${market.name} (${market.id})`}</Text>
-          <Copy S MarginLeftXS color={copied ? '#aaa' : '#fff'} onClick={() => { setCopy(true); copyToClipboard(marketAddress) }} />
+          <Copy S MarginLeftXS color={copied ? '#aaa' : '#fff'} onClick={() => { setCopy(true); copyToClipboard(market.address) }} />
         </Row>
         <Row centerVertical>
           <Button label={market.numberOfComments} icon={Comment} />

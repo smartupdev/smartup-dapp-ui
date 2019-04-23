@@ -24,7 +24,7 @@ import { toToken, toAgo, toFullDate } from '../../lib/util'
 import Chart from './Chart'
 
 const model = [
-  { label: lang.trading.table.buySell[currentLang], value: 'type', layoutStyle: { flex: 1, center: true }, component: ({ value }) => <Text red={value === 'SELL'} green={value !== 'SELL'}>{value === 'SELL' ? lang.trading.table.sell[currentLang] : lang.trading.table.buy[currentLang]}</Text> },
+  { label: lang.trading.table.buySell[currentLang], value: 'type', layoutStyle: { flex: 1, center: true }, component: ({ value }) => <Text red={value === 'sell'} green={value !== 'sell'}>{value === 'sell' ? lang.trading.table.sell[currentLang] : lang.trading.table.buy[currentLang]}</Text> },
   { label: lang.trading.table.user[currentLang], value: 'userAddress', layoutStyle: { flex: 1, center: true }, component: ({ record }) => <Row centerVertical><Avatar icon={record.userIcon} /><Text>{record.username}</Text></Row> },
   { label: lang.trading.table.time[currentLang], value: 'createTime', layoutStyle: { flex: 1, center: true }, component: ({ value }) => <Text>{toAgo(value)}</Text> },
   { label: lang.trading.table.avgPrice[currentLang], value: 'avgAmount', layoutStyle: { flex: 1, center: true }, component: ({ value }) => <Text>{toToken(value)}</Text> },
@@ -34,10 +34,12 @@ const model = [
 
 function Trading({ market, tradeState, onChangeCT, onChangeSUT, toggleIsSell, onTrade, reset, userSut, getTradeList, getKlineList }) {
   useEffect(() => {
-    reset()
-    getTradeList()
-    getKlineList()
-  }, [])
+    if(market) {
+      getTradeList()
+      getKlineList()
+    }
+    return reset
+  }, [market])
   const { ct, sut, isSell, isTrading, trades, klineData } = tradeState
   const sutError = +userSut < +sut ? 'You need more SmartUp to make this trade.' : null
 
@@ -91,7 +93,7 @@ function Trading({ market, tradeState, onChangeCT, onChangeSUT, toggleIsSell, on
               <Text S>SMARTUP</Text>
             </Col>
             <Col spacingLeftS spacingTopS flex={1}>
-              <Input underline L center fullWidth disabled={isTrading} value={sut} onChange={e => onChangeSUT(e.target.value)} number />
+              <Input underline L center fullWidth disabled={true} value={sut && (+sut).toFixed(4)} onChange={e => onChangeSUT(e.target.value)} number />
               {sutError && <Text error XS>{sutError}</Text>}
             </Col>
             <Trade disabled={isTrading} spacingLeftM spacingRightM onClick={toggleIsSell} leftActive={isSell} rightActive={!isSell} />
@@ -101,7 +103,7 @@ function Trading({ market, tradeState, onChangeCT, onChangeSUT, toggleIsSell, on
               <Text S>{market.name}</Text>
             </Col>
             <Col spacingLeftS spacingTopS flex={1}>
-              <Input underline L center fullWidth disabled={isTrading} value={ct && (+ct).toFixed(4)} onChange={e => onChangeCT(e.target.value)} number />
+              <Input underline L center fullWidth disabled={isTrading} value={ct} onChange={e => onChangeCT(e.target.value)} number />
               {/* <Text error XS>You need more SmartUp to make this trade.</Text> */}
             </Col>
           </Row>

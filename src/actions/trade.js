@@ -51,29 +51,29 @@ export function onChangeSUT(amount) {
 }
 
 function getCT() { // TODO
-  return (dispatch, getState) => {
-    const { isSell, sut } = getState().trade
-    if(!sut) 
-      return dispatch({
-        type: TRADE_GET_CT_SUCCEEDED,
-        payload: ''
-      })
+  // return (dispatch, getState) => {
+  //   const { isSell, sut } = getState().trade
+  //   if(!sut) 
+  //     return dispatch({
+  //       type: TRADE_GET_CT_SUCCEEDED,
+  //       payload: ''
+  //     })
     
-    const encodeCtAmount = encodeParam(toWei(sut))
-    const data = isSell ? createBidQuoteData(encodeCtAmount) : createAskQuoteData(encodeCtAmount)
-    dispatch(callbackFunction(
-      smartupWeb3.eth.call,
-      TRADE_GET_CT_REQUESTED, TRADE_GET_CT_SUCCEEDED, TRADE_GET_CT_FAILED,
-      {
-        isWeb3: true,
-        params: {
-          to: marketAddress,
-          data,
-        },
-        responsePayload: decodeResult
-      }
-    ))
-  }
+  //   const encodeCtAmount = encodeParam(toWei(sut))
+  //   const data = isSell ? createBidQuoteData(encodeCtAmount) : createAskQuoteData(encodeCtAmount)
+  //   dispatch(callbackFunction(
+  //     smartupWeb3.eth.call,
+  //     TRADE_GET_CT_REQUESTED, TRADE_GET_CT_SUCCEEDED, TRADE_GET_CT_FAILED,
+  //     {
+  //       isWeb3: true,
+  //       params: {
+  //         to: marketAddress,
+  //         data,
+  //       },
+  //       responsePayload: decodeResult
+  //     }
+  //   ))
+  // }
 }
 
 export function onChangeCT(amount) {
@@ -88,22 +88,21 @@ export function onChangeCT(amount) {
 
 function getSUT() {
   return (dispatch, getState) => {
-    const { isSell, ct } = getState().trade
+    const { trade: {isSell, ct}, market: {currentMarket: {address}} } = getState()
     if(!ct) 
       return dispatch({
         type: TRADE_GET_SUT_SUCCEEDED,
         payload: ''
       })
-
     const encodeCtAmount = encodeParam(toWei(ct))
-    const data = isSell ? createAskQuoteData(encodeCtAmount) : createBidQuoteData(encodeCtAmount)
+    const data = !isSell ? createAskQuoteData(encodeCtAmount) : createBidQuoteData(encodeCtAmount)
     dispatch(callbackFunction(
       smartupWeb3.eth.call,
       TRADE_GET_SUT_REQUESTED, TRADE_GET_SUT_SUCCEEDED, TRADE_GET_SUT_FAILED,
       {
         isWeb3: true,
         params: {
-          to: marketAddress,
+          to: address,
           data,
         },
         responsePayload: decodeResult
@@ -112,14 +111,12 @@ function getSUT() {
   }
 }
 
-// TODO: Move mkt to reducer
-export function onTrade(marketId) {
+export function onTrade() {
   return (dispatch, getState) => {
-    const { ct, sut, isSell } = getState().trade
+    const { trade: {ct, sut, isSell}, market: { currentMarket: {id, address} } } = getState()
 
-    // TODO: CHANGE!!!
-    const encodeCtPrice = toWei(ct);
-    const ctAmount = toWei(sut);
+    const encodeCtPrice = toWei(sut);
+    const ctAmount = toWei(ct);
     const encodeCtAmount = encodeParam(ctAmount);
 
     dispatch(callbackFunction(
@@ -129,20 +126,19 @@ export function onTrade(marketId) {
         isWeb3: true,
         params: {
           from: getAccount(),
-          to: !isSell ? marketAddress : sutContractAddress,
+          to: isSell ? sutContractAddress : address,
           value: '0x0',
-          data: !isSell ? createAskCtData(encodeCtAmount) : createBidCtData({ marketAddress, encodeCtPrice, encodeCtAmount })
+          data: isSell ? createBidCtData({ marketAddress: address, encodeCtPrice, encodeCtAmount }) : createAskCtData(encodeCtAmount)
         },
         responsePayload: hash => {
           const { trade: { sut, ct, isSell }, user: { userName: username, userAvatar: userIcon } } = getState()
           return {
             hash,
             isSell,
-            id: marketId,
+            id,
             username,
             userIcon,
-            time: Date.now(),
-            avg: sut / ct,
+            sut,
             ct
           }
         }
@@ -163,7 +159,6 @@ export function getTradeDetail(txHash) {
         params2: {
           txHash,
         },
-        responsePayload: reps => reps.obj
       }
     ));
   }
@@ -178,7 +173,8 @@ export function getTradeList() {
       {
         isWeb3: true,
         params: API_MARKET_TRADE_LIST, 
-        responsePayload: reps => reps.obj.list
+        params2: {marketAddress: getState().market.currentMarket.address},
+        responsePayload: reps => reps.list
       }
     ));
   }
@@ -188,9 +184,9 @@ export function getTradeList() {
 export function getKlineList(){
   return (dispatch, getState) => {
     let requestParams = {
-      marketAddress,
+      marketAddress: getState().market.currentMarket.address,
       start:'2019_04_16',
-      end:'2019_04_16',
+      end:'2019_04_24',
       segment:'1day'
     }
     dispatch(asyncFunction(
