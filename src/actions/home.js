@@ -2,7 +2,7 @@ import {
   SET_EXPANDED_RECORDS, SET_ACTIVE_TAB, TABLE_HEADER_CLICK,
 } from './actionTypes';
 
-import { getCtAccountInMarket, getMarketList } from '../actions/market';
+import { getMarketList } from '../actions/market';
 
 export function setExpandedRecords(recordData) {
   return (dispatch, getState) => {

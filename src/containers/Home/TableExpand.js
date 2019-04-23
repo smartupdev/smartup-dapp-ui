@@ -8,8 +8,9 @@ import lang, { currentLang } from '../../lang'
 import Button from '../../components/Button'
 import Image from '../../components/Image'
 import { connect } from 'react-redux'
+import { collectMarket } from '../../actions/market'
 
-const TableExpand = ({ record, history, bookMarkClick }) => {
+const TableExpand = ({ record, history, collectMarket }) => {
   return (
   <Row BottomS TopS>
     <Col LeftXS RightL>
@@ -21,7 +22,7 @@ const TableExpand = ({ record, history, bookMarkClick }) => {
           <Text XL wordSpaceL>{record.name}</Text>
           <Text note>{record.overview}</Text>
         </Col>
-        <Bookmarked S onClick={() => bookMarkClick(record)} checked={record.following} /> 
+        <Bookmarked S onClick={() => collectMarket(record)} checked={record.following} /> 
       </Row>
       <Row centerVertical spaceBetween>
         <Row>
@@ -40,6 +41,7 @@ const TableExpand = ({ record, history, bookMarkClick }) => {
 }
 
 const mapDispatchToProps = {
+  collectMarket
 }
 
 export default connect(null, mapDispatchToProps)(TableExpand);
