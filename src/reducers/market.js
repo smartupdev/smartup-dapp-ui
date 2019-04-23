@@ -3,6 +3,8 @@ import {
   GET_MARKET_LIST_REQUESTED, GET_MARKET_LIST_SUCCEEDED, GET_MARKET_LIST_FAILED,
   CT_ACCOUNT_IN_MARKET_REQUESTED, CT_ACCOUNT_IN_MARKET_SUCCEEDED, CT_ACCOUNT_IN_MARKET_FAILED,
   GET_MARKET_GLOBAL_REQUESTED, GET_MARKET_GLOBAL_SUCCEEDED, GET_MARKET_GLOBAL_FAILED,
+  USER_COLLECT_ADD_REQUESTED, USER_COLLECT_ADD_SUCCEEDED, USER_COLLECT_ADD_FAILED,
+  USER_COLLECT_DEL_REQUESTED, USER_COLLECT_DEL_SUCCEEDED, USER_COLLECT_DEL_FAILED,
   TRADE_SUCCEEDED
 } from '../actions/actionTypes';
 import { markets } from '../devData/marketDetail/'
@@ -52,6 +54,12 @@ export const initialState = {
   marketGlobal: {},
   gettingMarketGlobal: false,
   marketGlobalError: null,
+
+  addingCollect: false,
+  addCollectError: null,
+
+  delingCollect: false,
+  delCollectError: null,
 }
 
 export default (state = initialState, action) => {
@@ -167,16 +175,54 @@ export default (state = initialState, action) => {
         marketGlobalError: action.payload,
       };
 
-    case 'BOOKMARK_MARKET': {
-      const { id } = action.recordData;
+    case USER_COLLECT_ADD_REQUESTED:
+      return {
+        ...state,
+        addingCollect: true,
+      };
+    case USER_COLLECT_ADD_SUCCEEDED:{
+      const { id } = action.payload;
       const currentMarkets = state.markets;
       let tempMarkets = currentMarkets.map(market => market.id === id ? {
-        ...market, following: !market.following
+        ...market, following: true,
       } : market);
-      return Object.assign({}, state, {
+      return {
+        ...state,
         markets: tempMarkets,
-      })
+        addingCollect: false,
+        addCollectError: initialState.addCollectError,
+      };
     }
+    case USER_COLLECT_ADD_FAILED:
+      return {
+        ...state,
+        addingCollect: false,
+        addCollectError: action.payload,
+      };
+    case USER_COLLECT_DEL_REQUESTED:
+      return {
+        ...state,
+        addingCollect: true,
+      };
+    case USER_COLLECT_DEL_SUCCEEDED:{
+      const { id } = action.payload;
+      const currentMarkets = state.markets;
+      let tempMarkets = currentMarkets.map(market => market.id === id ? {
+        ...market, following: false,
+      } : market);
+      return {
+        ...state,
+        markets: tempMarkets,
+        delingCollect: false,
+        delCollectError: initialState.delCollectError,
+      };
+    }
+    case USER_COLLECT_DEL_FAILED:
+      return {
+        ...state,
+        delingCollect: false,
+        delCollectError: action.payload,
+      };
 
     default:
       return state;

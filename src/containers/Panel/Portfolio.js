@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components'
 
 import { connect } from 'react-redux'
 import { toggleExpandedBookmark, toggleExpandedMarket, toggleExpandedWallet } from '../../actions/panel'
-import { getMarketGlobal,getCtAccountInMarket } from '../../actions/market'
+import { getMarketGlobal,getCtAccountInMarket,collectMarket } from '../../actions/market'
 import { getUserCollectLists } from '../../actions/collect'
 
 
@@ -64,7 +64,7 @@ const Portfilio = ({
   ethBalance, sutBalance,marketGlobal,collects,ctInMarket,
   expandedWallet, expandedMarket, expandedBookmark,
   toggleExpandedBookmark, toggleExpandedMarket, toggleExpandedWallet,
-  getMarketGlobal,getUserCollectLists,getCtAccountInMarket
+  getMarketGlobal,getUserCollectLists,getCtAccountInMarket,collectMarket
 }) => {
   useEffect(() => {
     getMarketGlobal()
@@ -139,7 +139,7 @@ const Portfilio = ({
               collects.map(({ name, marketId }, index) =>
                 <BookmarkBlock spaceBetween centerVertical key={index}>
                   <Text S>{name}</Text>
-                  <Close XS onClick={() => console.log(marketId)} />
+                  <Close XS onClick={() => collectMarket({id: marketId, following: true})} />
                 </BookmarkBlock>
               )
             }
@@ -163,7 +163,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = { 
   toggleExpandedBookmark, toggleExpandedMarket, toggleExpandedWallet,
-  getMarketGlobal,getUserCollectLists,getCtAccountInMarket
+  getMarketGlobal,getUserCollectLists,getCtAccountInMarket,collectMarket,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Portfilio);
