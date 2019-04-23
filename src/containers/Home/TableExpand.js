@@ -8,7 +8,6 @@ import lang, { currentLang } from '../../lang'
 import Button from '../../components/Button'
 import Image from '../../components/Image'
 import { connect } from 'react-redux'
-import { bookMarkClick } from '../../actions/home'
 
 const TableExpand = ({ record, history, bookMarkClick }) => {
   return (
@@ -41,7 +40,6 @@ const TableExpand = ({ record, history, bookMarkClick }) => {
 }
 
 const mapDispatchToProps = {
-  bookMarkClick,
 }
 
 export default connect(null, mapDispatchToProps)(TableExpand);

@@ -9,7 +9,7 @@ const getMiddleware = () => {
     applyMiddleware(thunk)
     :
     composeWithDevTools(applyMiddleware(thunk
-      // , createLogger()
+      , createLogger()
       ))
 };
 

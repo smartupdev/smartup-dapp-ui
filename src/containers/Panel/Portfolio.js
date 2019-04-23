@@ -1,8 +1,11 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styled, { css } from 'styled-components'
 
 import { connect } from 'react-redux'
 import { toggleExpandedBookmark, toggleExpandedMarket, toggleExpandedWallet } from '../../actions/panel'
+import { getMarketGlobal,getCtAccountInMarket } from '../../actions/market'
+import { getUserCollectLists } from '../../actions/collect'
+
 
 import CommentIcon from '../../images/018-planet-earth-2.svg'
 import Avatar from '../../components/Avatar'
@@ -36,24 +39,19 @@ const BookmarkBlock = styled(Row)`
 
 `
 
-const walletList = [
-  { id: 245465, ct: 879.22, volume: 0.009 },
-  { id: 245463, ct: 39.42, volume: -0.023 },
-  { id: 245464, ct: 87.22, volume: 0.009 },
-  { id: 245462, icon: CommentIcon, ct: 87.22, volume: 0.02313 },
-]
-
-const bookmarks = [
-  { id: 1, name: 'DUBLER STUDIO KIT' },
-  { id: 2, name: 'DUBLER STUDIO KIT' },
-]
+// const walletList = [
+//   { id: 245465, ct: 879.22, volume: 0.009 },
+//   { id: 245463, ct: 39.42, volume: -0.023 },
+//   { id: 245464, ct: 87.22, volume: 0.009 },
+//   { id: 245462, icon: CommentIcon, ct: 87.22, volume: 0.02313 },
+// ]
 
 const TableName = [
   { label: '', value: 'icon', layoutStyle: { width: '18px' }, component: ({ value }) => <Avatar XS icon={value} /> },
-  { label: portfilioText.wallet.id[currentLang], value: 'id', },
-  { label: portfilioText.wallet.ct[currentLang], value: 'ct', component: ({ value }) => <Text S>{`${value} CT`}</Text> },
+  { label: portfilioText.wallet.id[currentLang], value: 'marketId', },
+  { label: portfilioText.wallet.ct[currentLang], value: 'ctAmount', component: ({ value }) => <Text S>{`${value} CT`}</Text> },
   {
-    label: portfilioText.wallet.volume[currentLang], value: 'volume', component: ({ value }) =>
+    label: portfilioText.wallet.volume[currentLang], value: 'latelyChange', component: ({ value }) =>
       <Text S style={{ color: value >= 0 ? theme.green : theme.red }}>{`${value < 0 ? '' : '+'}${(value * 100).toFixed(2)}%`}</Text>
   },
   {
@@ -63,10 +61,17 @@ const TableName = [
 ]
 
 const Portfilio = ({
-  ethBalance, sutBalance,
+  ethBalance, sutBalance,marketGlobal,collects,ctInMarket,
   expandedWallet, expandedMarket, expandedBookmark,
-  toggleExpandedBookmark, toggleExpandedMarket, toggleExpandedWallet
+  toggleExpandedBookmark, toggleExpandedMarket, toggleExpandedWallet,
+  getMarketGlobal,getUserCollectLists,getCtAccountInMarket
 }) => {
+  useEffect(() => {
+    getMarketGlobal()
+    getUserCollectLists()
+    getCtAccountInMarket()
+  }, [])
+  const {sutAmount,marketCount,latelyPostCount} = marketGlobal
   return (
     <Col>
       <Col center>
@@ -92,7 +97,7 @@ const Portfilio = ({
         body={
           <>
             <Col BottomXS LeftS RightS>
-              <Table S noBorderCol model={TableName} values={walletList} />
+              <Table S noBorderCol model={TableName} values={ctInMarket} />
             </Col>
             <Hr />
           </>
@@ -108,15 +113,15 @@ const Portfilio = ({
             <Col>
               <InfoBlock first>
                 <Text S spaceBottom>{portfilioText.marketInfo.totalSmartup[currentLang]}</Text>
-                <Text L wordSpaceM bold>834,585,923</Text>
+                <Text L wordSpaceM bold>{sutAmount}</Text>
               </InfoBlock>
               <InfoBlock>
                 <Text S spaceBottom>{portfilioText.marketInfo.totalMarket[currentLang]}</Text>
-                <Text L wordSpaceM bold>1,547</Text>
+                <Text L wordSpaceM bold>{marketCount}</Text>
               </InfoBlock>
               <InfoBlock>
                 <Text S spaceBottom>{portfilioText.marketInfo.totalDiscussion[currentLang]}</Text>
-                <Text L wordSpaceM bold>2,364</Text>
+                <Text L wordSpaceM bold>{latelyPostCount}</Text>
               </InfoBlock>
             </Col>
             <Hr />
@@ -131,10 +136,10 @@ const Portfilio = ({
         body={
           <Col>
             {
-              bookmarks.map(({ name, id }, index) =>
+              collects.map(({ name, marketId }, index) =>
                 <BookmarkBlock spaceBetween centerVertical key={index}>
                   <Text S>{name}</Text>
-                  <Close XS onClick={() => console.log(id)} />
+                  <Close XS onClick={() => console.log(marketId)} />
                 </BookmarkBlock>
               )
             }
@@ -151,10 +156,14 @@ const mapStateToProps = state => ({
   expandedWallet: state.panel.expandedWallet,
   expandedMarket: state.panel.expandedMarket,
   expandedBookmark: state.panel.expandedBookmark,
+  marketGlobal: state.market.marketGlobal,
+  collects: state.collect.collects,
+  ctInMarket: state.market.ctInMarket,
 });
 
 const mapDispatchToProps = { 
-  toggleExpandedBookmark, toggleExpandedMarket, toggleExpandedWallet
+  toggleExpandedBookmark, toggleExpandedMarket, toggleExpandedWallet,
+  getMarketGlobal,getUserCollectLists,getCtAccountInMarket
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Portfilio);
