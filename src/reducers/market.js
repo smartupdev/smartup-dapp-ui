@@ -17,8 +17,8 @@ function marketMassage(m) {
     ...m.data,
     id: m.marketId,
     address: m.marketAddress,
-    numberOfComments: m.data.postCount,
-    numberOfSub: m.data.userCount,
+    numberOfComments: m.data ? m.data.postCount : '-',
+    numberOfSub: m.data ? m.data.userCount : '-',
     priceIn7d: m.sevenDayNode,
     following: m.isCollect,
     overview: m.description,
@@ -271,6 +271,10 @@ export default (state = initialState, action) => {
       return {
         ...state,
         markets: tempMarkets,
+        currentMarket: {
+          ...state.currentMarket,
+          following: !state.currentMarket.following
+        },
         addingCollect: false,
         addCollectError: initialState.addCollectError,
       };
@@ -295,6 +299,10 @@ export default (state = initialState, action) => {
       return {
         ...state,
         markets: tempMarkets,
+        currentMarket: {
+          ...state.currentMarket,
+          following: !state.currentMarket.following
+        },
         delingCollect: false,
         delCollectError: initialState.delCollectError,
       };

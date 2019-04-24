@@ -1,19 +1,12 @@
 import {
   CREATE_MARKET_SET_TAB, CREATE_MARKET_NAME_CHANGE, CREATE_MARKET_DESC_CHANGE, CREATE_MARKET_RESET,
-  CREATE_MARKET_GET_REQUESTED,
-  CREATE_MARKET_GET_SUCCEEDED,
-  CREATE_MARKET_GET_FAILED,
-  CREATE_MARKET_CHECK_REQUESTED,
-  CREATE_MARKET_CHECK_SUCCEEDED,
-  CREATE_MARKET_CHECK_FAILED,
-  CREATE_MARKET_SAVE_REQUESTED,
-  CREATE_MARKET_SAVE_SUCCEEDED,
-  CREATE_MARKET_SAVE_FAILED,
-  CREATE_MARKET_PAY_REQUESTED,
-  CREATE_MARKET_PAY_SUCCEEDED,
-  CREATE_MARKET_PAY_FAILED,
+  CREATE_MARKET_GET_REQUESTED, CREATE_MARKET_GET_SUCCEEDED, CREATE_MARKET_GET_FAILED,
+  CREATE_MARKET_CHECK_REQUESTED, CREATE_MARKET_CHECK_SUCCEEDED, CREATE_MARKET_CHECK_FAILED,
+  CREATE_MARKET_SAVE_REQUESTED, CREATE_MARKET_SAVE_SUCCEEDED, CREATE_MARKET_SAVE_FAILED,
+  CREATE_MARKET_LOCK_REQUESTED, CREATE_MARKET_LOCK_SUCCEEDED, CREATE_MARKET_LOCK_FAILED,
+  CREATE_MARKET_PAY_REQUESTED, CREATE_MARKET_PAY_SUCCEEDED, CREATE_MARKET_PAY_FAILED,
 } from './actionTypes';
-import { API_MARKET_CREATE_GET, API_MARKET_CREATE_CHANGE_NAME, API_MARKET_CREATE_SAVE } from './api'
+import { API_MARKET_CREATE_GET, API_MARKET_CREATE_CHANGE_NAME, API_MARKET_CREATE_SAVE, API_MARKET_CREATE_LOCK } from './api'
 
 import fetch from '../lib/util/fetch';
 import { asyncFunction, callbackFunction, getAccount, createMarketData, sutContractAddress, smartupWeb3, } from '../integrator'
@@ -52,19 +45,37 @@ export function create() {
   }
 }
 
+export function lock(txHash) {
+  return async (dispatch, getState) => {
+    const { marketId } = getState().createMarket
+    return dispatch(
+      asyncFunction(
+        fetch.post,
+        CREATE_MARKET_LOCK_REQUESTED, CREATE_MARKET_LOCK_SUCCEEDED, CREATE_MARKET_LOCK_FAILED,
+        { params: API_MARKET_CREATE_LOCK, params2: { txHash, marketId } }
+      )
+    )
+  }
+}
+
 export function pay() {
-  return callbackFunction(
-    smartupWeb3.eth.sendTransaction,
-    CREATE_MARKET_PAY_REQUESTED, CREATE_MARKET_PAY_SUCCEEDED, CREATE_MARKET_PAY_FAILED,
-    {
-      isWeb3: true,
-      params: {
-        from: getAccount(),
-        to: sutContractAddress,
-        value: '0x0',
-        data: createMarketData()
-      }
-    })
+  return async (dispatch, getState) => {
+    const [error, response] = await dispatch(      
+      callbackFunction(
+        smartupWeb3.eth.sendTransaction,
+        CREATE_MARKET_PAY_REQUESTED, CREATE_MARKET_PAY_SUCCEEDED, CREATE_MARKET_PAY_FAILED,
+        {
+          isWeb3: true,
+          params: {
+            from: getAccount(),
+            to: sutContractAddress,
+            value: '0x0',
+            data: createMarketData()
+          }
+        })
+    )
+    if(!error) dispatch(lock(response))
+  }
 }
 
 

@@ -40,7 +40,7 @@ export default {
         title: name('Market Wallet'),
         id: name('Idea ID'),
         ct: name('# of CT'),
-        volume: name('Volume(%)')
+        volume: name('Change(%)')
       },
       marketInfo: {
         title: name('Global market info'),

@@ -4,7 +4,7 @@ import { Link } from '../../routes'
 
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
-import { get } from '../../actions/market'
+import { get, collectMarket } from '../../actions/market'
 
 import theme from '../../theme'
 import { DonutLoader } from '../../components/Loader'
@@ -36,11 +36,11 @@ const copyToClipboard = str => {
   document.body.removeChild(el);
 };
 
-const Market = ({ get, getting, location, market }) => {
+const Market = ({ get, collectMarket, getting, location, market }) => {
   const [copied, setCopy] = useState(false)
-  const address = new URLSearchParams(location.search).get('address')
+  const id = new URLSearchParams(location.search).get('id')
   useEffect(() => {
-    get(address)
+    get(id)
   }, [])
   if(getting) return <DonutLoader page />
   if (!market) return null
@@ -57,13 +57,13 @@ const Market = ({ get, getting, location, market }) => {
           <Button label={market.numberOfComments} icon={Comment} />
           <Button label={market.numberOfSub} icon={People} />
           <Share S color={theme.white} onClick={() => console.log(market.id)} />
-          <Bookmarked S MarginLeftS onClick={() => console.log(market.id)} checked={market.following} />
+          <Bookmarked S MarginLeftS onClick={() => collectMarket(market)} checked={market.following} />
         </Row>
       </Row>
       <Link>
         {
           ({ goto, location }) =>
-            <Tab tabs={TABS} activeIndex={TABS.findIndex(t => location.pathname.includes(t.value))} onClick={index => goto[TABS[index].value]({ address: market.address })} width='100px' />
+            <Tab tabs={TABS} activeIndex={TABS.findIndex(t => location.pathname.includes(t.value))} onClick={index => goto[TABS[index].value]({ id: market.id })} width='100px' />
         }
       </Link>
     </Col>
@@ -76,7 +76,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  get
+  get, collectMarket
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Market))

@@ -17,6 +17,7 @@ import Text from '../../components/Text'
 import Button from '../../components/Button'
 import { Row, Col } from '../../components/Layout'
 import lang, { currentLang } from '../../lang'
+import { Link } from '../../routes'
 import { toToken } from '../../lib/util'
 import theme from '../../theme';
 import ethIcon from '../../images/eth.png';
@@ -49,14 +50,16 @@ const BookmarkBlock = styled(Row)`
 const TableName = [
   { label: '', value: 'icon', layoutStyle: { width: '18px' }, component: ({ value }) => <Avatar XS icon={value} /> },
   { label: portfilioText.wallet.id[currentLang], value: 'marketId', },
-  { label: portfilioText.wallet.ct[currentLang], value: 'ctAmount', component: ({ value }) => <Text S>{`${value} CT`}</Text> },
+  { label: portfilioText.wallet.ct[currentLang], value: 'ctAmount', component: ({ value }) => <Text S>{`${value}`}</Text> },
   {
     label: portfilioText.wallet.volume[currentLang], value: 'latelyChange', component: ({ value }) =>
       <Text S style={{ color: value >= 0 ? theme.green : theme.red }}>{`${value < 0 ? '' : '+'}${(value * 100).toFixed(2)}%`}</Text>
   },
   {
     label: '', value: 'action', layoutStyle: { width: '40px' }, component: ({ record }) =>
-      <Button icon={Trade} primary light condensed />
+      <Link>
+        { ({goto}) => <Button icon={Trade} primary light condensed onClick={() => goto.trading({id: record.id})} /> }
+      </Link>
   },
 ]
 

@@ -19,17 +19,17 @@ import { getUserCollectLists } from '../actions/collect'
 
 const topFilters = {
   0: 'all',
-  1:'hottest',
-  2:'newest',
-  3:'populous',
-  4:'richest',
+  1: 'hottest',
+  2: 'newest',
+  3: 'populous',
+  4: 'richest',
 }
 
-export function get(marketAddress) {
+export function get(marketId) {
   return asyncFunction(
     fetch.get,
     GET_MARKET_DETAIL_REQUESTED, GET_MARKET_DETAIL_SUCCEEDED, GET_MARKET_DETAIL_FAILED,
-    { params: API_MARKET_DETAIL, params2: { marketAddress } }
+    { params: API_MARKET_DETAIL, params2: { marketId } }
   )
 }
 

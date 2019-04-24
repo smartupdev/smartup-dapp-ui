@@ -11,7 +11,7 @@ import { Row, Col } from '../../components/Layout'
 import Search from '../../components/Search'
 import lang, { currentLang } from '../../lang'
 import theme from '../../theme'
-import { toPrice, toDate } from '../../lib/util'
+import { toPrice, toDate, toAgo } from '../../lib/util'
 import { connect } from 'react-redux'
 import { setExpandedRecords, setActiveTab, onTableHeaderClick,onSearchChange,searchMarketClick } from '../../actions/home'
 import { getDefaultMarketList } from '../../actions/market'
@@ -37,9 +37,9 @@ const _More = ({ isExpanded }) => <More reverse={isExpanded} XS color={theme.whi
 const _Name = ({ value, record }) =>
   <Col>
     <Text>{value}</Text>
-    <Text note S>{record.createTime}</Text> {/* { TODO } */}
+    <Text note S>{toAgo(record.createTime)}</Text>
   </Col>
-const _Percent = ({ value,record }) => <Text>{record.data.latelyChange + '%'}</Text>
+const _Percent = ({ value,record }) => <Text>{record.data.latelyChange ? record.data.latelyChange + '%' : '-'}</Text>
 const _Price = ({ value,record }) => <Text price>{toPrice(record.data.last)}</Text>
 const _Volume = ({ value,record }) => <Text primary>{toPrice(record.data.latelyVolume, 0)}</Text>
 const _Cap = ({ value,record }) => <Text>{toPrice(record.data.amount, 0)}</Text>

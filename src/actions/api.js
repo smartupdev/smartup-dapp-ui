@@ -15,12 +15,13 @@ export const API_POST_REPLY_ONE = '/api/post/reply/one';
 export const API_USER_POST_ADD = '/api/user/post/add';
 export const API_USER_POST_REPLY_ADD = '/api/user/post/reply/add';
 //market-controller
-export const API_MARKET_DETAIL = '/api/market/one';
+export const API_MARKET_DETAIL = '/api/market/one/by/id';
 export const API_MARKET_LIST = '/api/market/list';
 export const API_MARKET_GLOBAL = '/api/market/global/data';
 export const API_MARKET_CREATE_GET = '/api/user/market/creating'
 export const API_MARKET_CREATE_CHANGE_NAME = '/api/user/market/is/name/right'
 export const API_MARKET_CREATE_SAVE = '/api/user/market/save'
+export const API_MARKET_CREATE_LOCK = '/api/user/market/lock'
 export const API_MARKET_SEARCH = '/api/market/search'
 export const API_MARKET_TOP = '/api/market/top'
 //account-controller
