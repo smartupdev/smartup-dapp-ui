@@ -22,7 +22,7 @@ import { setActiveIndex, onChangeName, onChangeDesc, reset, get, create } from '
 const options = ['Basic Information', 'Price Equation', 'Deposit']
 const optionsSpeed = ['Slow', 'Standard', 'Fast']
 const CreateMarket = ({
-  createMarketState: { activeIndex, name, desc, error, isFetching, isReady }, 
+  createMarketState: { activeIndex, name, desc, error, isFetching, isReady, marketId }, 
   setActiveIndex, create, onChangeName, onChangeDesc, reset, get
 }) => {
 
@@ -132,7 +132,7 @@ const CreateMarket = ({
               <Link>
                 {
                   ({goto}) =>
-                <Button label='Go To New Market' primary onClick={()=>goto.trading({id: '865329'})} extended />
+                <Button label='Go To New Market' primary onClick={()=>goto.trading({id: marketId})} extended />
                 }
               </Link>
             </Col>

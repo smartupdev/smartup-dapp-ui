@@ -25,6 +25,7 @@ export const initialState = {
   isReady: false,
   name: '',
   desc: '',
+  marketId: '',
   error: {
     name: null,
     desc: null
@@ -38,15 +39,18 @@ export default (state = initialState, action) => {
         ...state,
         isFetching: true
       }
+    case CREATE_MARKET_SAVE_SUCCEEDED: 
     case CREATE_MARKET_GET_SUCCEEDED: {
     // "stage" : "creating"
-      const { marketId, description: desc, name } = action.payload
+    // status: "locked"
+    // stage: "pending"
+      const { marketId, description: desc, name, status } = action.payload
       return {
         ...state,
         isFetching: false,
         isReady: true,
         ...marketId && {
-          desc, name, activeIndex: 2
+          marketId, desc, name, activeIndex: status === 'locked' ? -1 : 2
         }
       }
     } 
@@ -82,7 +86,6 @@ export default (state = initialState, action) => {
         ...state,
         isFetching: true
       }
-    // case CREATE_MARKET_SAVE_SUCCEEDED: 
     case CREATE_MARKET_PAY_SUCCEEDED: 
       return {
         ...state,
