@@ -218,7 +218,7 @@ export default (state = initialState, action) => {
     case CT_ACCOUNT_IN_MARKET_SUCCEEDED:
       return {
         ...state,
-        ctInMarket: action.payload,
+        ctInMarket: action.payload.map(c => ({...c, id: c.marketId})),
         gettingCtInMarket: false,
         ctInMarketError: initialState.ctInMarketError
       };
