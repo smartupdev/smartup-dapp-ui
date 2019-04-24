@@ -1,5 +1,6 @@
 import {
   TRADE_RESET,
+  TRADE_SET_TAB,  
   TRADE_TOGGLE_IS_SELL, TRADE_TOGGLE_AGREE_TNC,
   TRADE_CHANGE_CT, TRADE_CHANGE_SUT,
   TRADE_GET_CT_REQUESTED, TRADE_GET_CT_SUCCEEDED, TRADE_GET_CT_FAILED,
@@ -16,6 +17,8 @@ import {
 } from '../actions/actionTypes';
 
 export const initialState = {
+  tabIndex: 0,
+
   isSell: false,
   agreeTnc: false,
 
@@ -81,6 +84,11 @@ export default (state = initialState, action) => {
   switch (action.type) {
     case TRADE_RESET:
       return initialState
+    case TRADE_SET_TAB: 
+      return {
+        ...state,
+        tabIndex: action.payload.index
+      }
     case TRADE_CHANGE_SUT:
       return {
         ...state,
@@ -150,7 +158,7 @@ export default (state = initialState, action) => {
             ctAmount,
             userIcon,
             username,
-            time: new Date()  
+            createTime: Date.now()  
           },
           ...state.trades
         ]

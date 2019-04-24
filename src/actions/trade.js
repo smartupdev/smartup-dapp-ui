@@ -1,5 +1,6 @@
 import {
   TRADE_RESET,
+  TRADE_SET_TAB,
   TRADE_LIST_REQUESTED, TRADE_LIST_SUCCEEDED, TRADE_LIST_FAILED,
   TRADE_DETAIL_REQUESTED, TRADE_DETAIL_SUCCEEDED, TRADE_DETAIL_FAILED,
   TRADE_TOGGLE_IS_SELL, TRADE_TOGGLE_AGREE_TNC,
@@ -24,8 +25,20 @@ import {
   createBidCtData, createAskCtData, createBidQuoteData, createAskQuoteData, decodeResult,
 } from '../integrator'
 
+import { getYear, getMonth, getDate, getHour } from '../lib/util'
+
 export function reset() {
   return { type: TRADE_RESET }
+}
+
+export function setTab(index) {
+  return (dispatch, getState) => {
+    const { trade: { tabIndex } } = getState()
+    if(index !== tabIndex) {
+      dispatch({ type: TRADE_SET_TAB, payload: {index} })
+      dispatch(getKlineList())
+    }
+  }  
 }
 
 export function toggleTnc() {
@@ -35,8 +48,9 @@ export function toggleTnc() {
 }
 
 export function toggleIsSell() {
-  return {
-    type: TRADE_TOGGLE_IS_SELL,
+  return dispatch => {
+    dispatch({ type: TRADE_TOGGLE_IS_SELL })
+    dispatch(getSUT())    
   }
 }
 
@@ -183,13 +197,33 @@ export function getTradeList() {
 }
 
 // get kline list
+const DAY = 1000 * 60 * 60 * 24
+const MONTH = DAY * 30
+const YEAR = DAY * 365
+function getDateRange(tabIndex) {
+  const now = Date.now()
+  function getDateShort(d) { return `${getYear(d)}_${getMonth(d)}_${getDate(d)}` }
+  function getDateLong(d) { return `${getYear(d)}_${getMonth(d)}_${getDate(d)}_${getHour(d)}` }
+  const end = getDateShort(now)
+  return [
+    { start: getDateLong(now - DAY), end: getDateLong(now), segment: '1hour'}, // 1d
+    { start: getDateShort(now - MONTH), end, segment: '1day'}, // 1m
+    { start: getDateShort(now - YEAR), end, segment: '1week'}, // 1y
+  ][tabIndex]
+}
+
 export function getKlineList(){
   return (dispatch, getState) => {
+    const { 
+      market: { currentMarket: {address: marketAddress} },
+      trade: { tabIndex }
+    } = getState()
     let requestParams = {
-      marketAddress: getState().market.currentMarket.address,
-      start:'2019_04_16',
-      end:'2019_04_24',
-      segment:'1day'
+      marketAddress,
+      ...getDateRange(tabIndex)
+      // start:'2019_04_16',
+      // end:'2019_04_24',
+      // segment:'1day'
     }
     dispatch(asyncFunction(
       fetch.post,
@@ -198,7 +232,6 @@ export function getKlineList(){
         isWeb3: true,
         params: API_KLINE_DATA,
         params2:requestParams,
-        responsePayload: reps => reps.obj
       }
     ));
   }

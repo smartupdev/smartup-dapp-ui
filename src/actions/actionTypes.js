@@ -83,6 +83,7 @@ export const QUERY_USER_INFO = 'QUERY_USER_INFO';
 //trade
 export const TRADE_RESET = 'TRADE_RESET';
 
+export const TRADE_SET_TAB = 'TRADE_SET_TAB';
 export const TRADE_TOGGLE_AGREE_TNC = 'TRADE_TOGGLE_AGREE_TNC';
 export const TRADE_TOGGLE_IS_SELL = 'TRADE_TOGGLE_IS_SELL';
 export const TRADE_CHANGE_CT = 'TRADE_CHANGE_CT';

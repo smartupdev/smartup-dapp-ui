@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { Link } from '../../routes'
 
 import { connect } from 'react-redux'
-import { onChangeCT, onChangeSUT, onTrade, toggleIsSell, toggleTnc, reset, getTradeList, getKlineList, } from '../../actions/trade';
+import { setTab, onChangeCT, onChangeSUT, onTrade, toggleIsSell, toggleTnc, reset, getTradeList, getKlineList, } from '../../actions/trade';
 
 
 import theme from '../../theme'
@@ -31,8 +31,13 @@ const model = [
   { label: lang.trading.table.ct[currentLang], value: 'ctAmount', layoutStyle: { flex: 1, center: true }, },
 ]
 
+const klineTabs = [
+  { label: '1hour' },
+  { label: '1day' },
+  { label: '1week' },
+]
 
-function Trading({ market, tradeState, onChangeCT, onChangeSUT, toggleIsSell, toggleTnc, onTrade, reset, userSut, getTradeList, getKlineList }) {
+function Trading({ market, tradeState, setTab, onChangeCT, onChangeSUT, toggleIsSell, toggleTnc, onTrade, reset, userSut, getTradeList, getKlineList }) {
   useEffect(() => {
     if(market) {
       getTradeList()
@@ -40,14 +45,21 @@ function Trading({ market, tradeState, onChangeCT, onChangeSUT, toggleIsSell, to
     }
     return reset
   }, [market])
-  const { ct, sut, isSell, isTrading, trades, klineData, agreeTnc, tradingError } = tradeState
+  const { tabIndex, ct, sut, isSell, isTrading, trades, klineData, agreeTnc, tradingError } = tradeState
   const sutError = +userSut < +sut ? 'You need more SmartUp to make this trade.' : null
 
   if(!market) return null
 
   return (
     <>
-      <Row color={theme.bgColorDark} spacingLeftL spacingRightL spacingBottomL spacingTopXL>
+      <Row TopXL BottomS LeftL color={theme.bgColorDark}>
+        {klineTabs.map( ({ label }, index) =>
+          <Col primary={index === tabIndex} secondary={index !== tabIndex} key={label} HXS MarginLeftS onClick={() => setTab(index)}>
+            <Text lineHeight>{label}</Text>
+          </Col>
+        )}
+      </Row>
+      <Row color={theme.bgColorDark} spacingLeftL spacingRightL spacingBottomL>
         <Col flex={1} spacingRightL>
           <Chart data={klineData} />
         </Col>
@@ -152,6 +164,7 @@ const mapStateToProps = state => ({
 
 
 const mapDispatchToProps = {
+  setTab,
   toggleIsSell,
   toggleTnc,
   onTrade,
