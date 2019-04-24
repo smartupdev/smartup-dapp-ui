@@ -3,11 +3,12 @@ import { Row, Col } from '../../components/Layout'
 import NotificationItem from '../../components/Notification'
 import Search from '../../components/Search'
 import Hr from '../../components/Hr'
+import { Link } from '../../routes'
 import ethIcon from '../../images/eth.png';
 import smartupIcon from '../../images/smartup.png';
 
 import { connect } from 'react-redux'
-import { getNotificationList } from '../../actions/notification'
+import { getNotificationList, setNotificationRead } from '../../actions/notification'
 
 const TYPES = {
   trade: {
@@ -42,6 +43,7 @@ const typeValueToImage = Object.keys(TYPES).reduce((p, t) => ({
 const Notification = ({
   notifications,
   getNotificationList,
+  setNotificationRead
 }) => {
   useEffect(() => {
     getNotificationList()
@@ -51,21 +53,26 @@ const Notification = ({
       <Row relative right>
         <Search id='notification' />
       </Row>
-      {
+      <Link>
+      { ({ goto }) =>
         notifications.map(n =>
           <NotificationItem
             key={n.notificationId}
             id={n.notificationId}
-            onClick={console.debug}
+            onClick={() => {
+              goto.trading({id: n.marketId})
+              setNotificationRead(n.notificationId)
+            }}
             image={typeValueToImage[n.type]}
             sender={n.sender}
             title={n.title}
-            content={n.content}
+            content={n.text}
             date={n.createTime}
             unread={!n.isRead}
           />
         )
       }
+      </Link>
       <Hr />
     </Col>
   )
@@ -76,7 +83,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = { 
-  getNotificationList
+  getNotificationList, setNotificationRead
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Notification);

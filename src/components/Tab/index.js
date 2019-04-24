@@ -43,7 +43,7 @@ export default ({ activeIndex, tabs, fullWidth, onClick, width, type = TYPE.bord
   {type === TYPE.border  && <Hr />}
   <Row>
     {tabs.map( ({ label, dot }, index) =>
-      <Tab key={index} first={!index} center activeIndex={activeIndex === index} type={type} width={width} flex={fullWidth && 1} onClick={() => onClick(index)}>
+      <Tab relative key={index} first={!index} center activeIndex={activeIndex === index} type={type} width={width} flex={fullWidth && 1} onClick={() => onClick(index)}>
         <Text S>{label}</Text>
         { dot && <Dot /> }
       </Tab>

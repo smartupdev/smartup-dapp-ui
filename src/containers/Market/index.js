@@ -41,7 +41,7 @@ const Market = ({ get, collectMarket, getting, location, market }) => {
   const id = new URLSearchParams(location.search).get('id')
   useEffect(() => {
     get(id)
-  }, [])
+  }, [id])
   if(getting) return <DonutLoader page />
   if (!market) return null
 

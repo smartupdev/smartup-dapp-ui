@@ -3,6 +3,9 @@ import {
     USER_NOTIFICATION_READ_REQUESTED, USER_NOTIFICATION_READ_SUCCEEDED, USER_NOTIFICATION_READ_FAILED,
     USER_NOTIFICATION_UNREAD_REQUESTED, USER_NOTIFICATION_UNREAD_SUCCEEDED, USER_NOTIFICATION_UNREAD_FAILED
 } from '../actions/actionTypes';
+
+import { changeArrayById } from '../lib/util/reducerHelper'
+
 export const initialState = {
 
     notifications: [],
@@ -29,7 +32,10 @@ export default (state = initialState, action) => {
         case USER_NOTIFICATION_LIST_SUCCEEDED:
             return {
                 ...state,
-                notifications: action.payload,
+                notifications: action.payload.map( n => ({
+                    ...n,
+                    ...JSON.parse(n.content)
+                })),
                 gettingNotifications: false,
                 notificationsError: initialState.notificationsError,
             };
@@ -44,11 +50,12 @@ export default (state = initialState, action) => {
                 ...state,
                 readingNotification: true,
             };
-        case USER_NOTIFICATION_READ_SUCCEEDED:
+        case USER_NOTIFICATION_READ_SUCCEEDED:     
             return {
                 ...state,
                 readingNotification: false,
                 readingNotificationError: initialState.readingNotificationError,
+                notifications: changeArrayById(state.notifications, action.meta.notificationId, () => ({isRead: true}), 'notificationId')
             };
         case USER_NOTIFICATION_READ_FAILED:
             return {

@@ -23,7 +23,7 @@ export function getNotificationList() {
 }
 
 //设为已读
-export function setNotificationRead(requestParam) {
+export function setNotificationRead(notificationId) {
     return (dispatch, getState) =>
         dispatch(
             asyncFunction(
@@ -31,7 +31,8 @@ export function setNotificationRead(requestParam) {
                 USER_NOTIFICATION_READ_REQUESTED, USER_NOTIFICATION_READ_SUCCEEDED, USER_NOTIFICATION_READ_FAILED,
                 {
                     params: API_USER_NOTIFICATION_SET_READ,
-                    params2: requestParam,
+                    params2: {notificationId},
+                    meta: {notificationId}
                 }
             )
         )

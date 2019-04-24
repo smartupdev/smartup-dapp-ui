@@ -126,30 +126,30 @@ export default (state = initialState, action) => {
         gettingMarket: false
       }
 
-    case TRADE_SUCCEEDED: {
-      const { id, username, userIcon, time, avg, ct, isSell } = action.payload
-      const marketIndex = state.markets.findIndex(m => m.id === id)
-      if (marketIndex < 0) return state
-      return {
-        ...state,
-        markets: [
-          ...state.markets.slice(0, marketIndex),
-          {
-            ...state.markets[marketIndex],
-            transations: [
-              {
-                id: state.markets[marketIndex].transations.length + 100,
-                type: isSell ? 'SELL' : 'BUY',
-                username, userIcon,
-                time, avg, ct
-              },
-              ...state.markets[marketIndex].transations
-            ]
-          },
-          ...state.markets.slice(marketIndex + 1),
-        ]
-      }
-    }
+    // case TRADE_SUCCEEDED: {
+    //   const { id, username, userIcon, time, avg, ct, isSell } = action.payload
+    //   const marketIndex = state.markets.findIndex(m => m.id === id)
+    //   if (marketIndex < 0) return state
+    //   return {
+    //     ...state,
+    //     markets: [
+    //       ...state.markets.slice(0, marketIndex),
+    //       {
+    //         ...state.markets[marketIndex],
+    //         transations: [
+    //           {
+    //             id: state.markets[marketIndex].transations.length + 100,
+    //             type: isSell ? 'SELL' : 'BUY',
+    //             username, userIcon,
+    //             time, avg, ct
+    //           },
+    //           ...state.markets[marketIndex].transations
+    //         ]
+    //       },
+    //       ...state.markets.slice(marketIndex + 1),
+    //     ]
+    //   }
+    // }
     case CREATE_MARKET_PAY_REQUESTED:
       return {
         ...state,
