@@ -17,6 +17,14 @@ import fetch from '../lib/util/fetch'
 import { asyncFunction } from '../integrator'
 import { getUserCollectLists } from '../actions/collect'
 
+const topFilters = {
+  0: 'all',
+  1:'hottest',
+  2:'newest',
+  3:'populous',
+  4:'richest',
+}
+
 export function get(marketAddress) {
   return asyncFunction(
     fetch.get,
@@ -106,18 +114,26 @@ export function markerSearch(requestParams){
 }
 
 //市场TOP
-export function markerTop(){
-  return (dispatch, getState) =>
+export function markerTop(activeIndex){
+  return (dispatch, getState) =>{
+    let sortBy = getState().home.sortBy;
+    let orderBy = getState().home.orderBy;
+    const requestParams = {
+      type: topFilters[activeIndex]
+    }
+    
     dispatch(
       asyncFunction(
         fetch.post,
         MARKET_TOP_REQUESTED, MARKET_TOP_SUCCEEDED, MARKET_TOP_FAILED,
         {
           params: API_MARKET_TOP,
-          responsePayload: reps => reps.list
+          params2: requestParams,
+          responsePayload: reps => {return{list:reps, sortBy, orderBy}}
         }
       )
     )
+  }
 }
 
 //收藏

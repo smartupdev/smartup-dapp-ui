@@ -54,7 +54,7 @@ const TableName = [
   { label: '', value: 'action', sortable: false, layoutStyle: { width: `calc( ${theme.iconSizeM} + 15px )`, right: true }, component: _More },
 ]
 
-const Home = ({ markets, expandedRecords, activeTab, totalResults, sortBy, orderBy,
+const Home = ({ markets, expandedRecords, activeTabIndex, totalResults, sortBy, orderBy,
   getDefaultMarketList,setExpandedRecords, setActiveTab, onTableHeaderClick, onSearchChange, searchMarketClick }) => {
   useEffect(() => {
     getDefaultMarketList()
@@ -62,7 +62,7 @@ const Home = ({ markets, expandedRecords, activeTab, totalResults, sortBy, order
   return (
     <Col>
       <Top flex={1} spaceBetween relative>
-        <Tab activeIndex={0} tabs={FILTERS} onClick={setActiveTab} type='simple' />
+        <Tab activeIndex={activeTabIndex} tabs={FILTERS} onClick={setActiveTab} type='simple' />
         <Row centerVertical>
           <Text HS S note>{totalResults} RESULTS</Text>
           <Search backgroundColor={theme.bgColorLight} id='home' onChange={onSearchChange} onSearchClick={searchMarketClick}/>
@@ -89,7 +89,7 @@ const mapStateToProps = state => ({
   markets: state.market.markets,
   totalResults: state.market.totalResults,
   expandedRecords: state.home.expandedRecords,
-  activeTab: state.home.activeTab,
+  activeTabIndex: state.home.activeTabIndex,
   sortBy: state.home.sortBy,
   orderBy: state.home.orderBy,
 });

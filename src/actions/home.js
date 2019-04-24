@@ -1,8 +1,8 @@
 import {
-  SET_EXPANDED_RECORDS, SET_ACTIVE_TAB, TABLE_HEADER_CLICK,SEARCH_CONTENT_CHANGE
+  SET_EXPANDED_RECORDS, SET_ACTIVE_TAB, TABLE_HEADER_CLICK,SEARCH_CONTENT_CHANGE,MARKET_TOP_SORT
 } from './actionTypes';
 
-import { getMarketList,markerSearch } from '../actions/market';
+import { getMarketList,markerSearch,markerTop, getDefaultMarketList } from '../actions/market';
 
 export function setExpandedRecords(recordData) {
   return (dispatch, getState) => {
@@ -18,6 +18,7 @@ export function onTableHeaderClick(headerName) {
     let sortBy = getState().home.sortBy;
     let orderBy = getState().home.orderBy;
     let name = getState().home.searchContent;
+    let activeTabIndex = getState().home.activeTabIndex;
     if (!!headerName) {
       if (sortBy !== headerName) {
         sortBy = headerName;
@@ -35,22 +36,37 @@ export function onTableHeaderClick(headerName) {
       type: TABLE_HEADER_CLICK,
       payload: { sortBy, orderBy },
     });
-    if(!!name){
-      requestParams.name = name;
-      dispatch(markerSearch(requestParams));
+    if(activeTabIndex === 0){
+      if(!!name){
+        requestParams.name = name;
+        dispatch(markerSearch(requestParams));
+      }else{
+        dispatch(getMarketList(requestParams));
+      }
     }else{
-      dispatch(getMarketList(requestParams));
+      dispatch({
+        type: MARKET_TOP_SORT,
+        payload:{
+          sortBy,
+          orderBy
+        }
+      });
     }
+    
   }
 }
 
-export function setActiveTab(activeTab) {
+export function setActiveTab(activeTabIndex) {
   return (dispatch, getState) => {
     dispatch({
       type: SET_ACTIVE_TAB,
-      networkStatus: 'loading',
-      activeTab: activeTab
+      payload: activeTabIndex
     });
+    if(activeTabIndex > 0){
+      dispatch(markerTop(activeTabIndex));
+    }else{
+      dispatch(getDefaultMarketList());
+    }
   }
 }
 
