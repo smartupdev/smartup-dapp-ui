@@ -8,7 +8,7 @@ import {
   TRADE_SUCCEEDED,
   GET_MARKET_DETAIL_REQUESTED, GET_MARKET_DETAIL_SUCCEEDED, GET_MARKET_DETAIL_FAILED,
   MARKET_SEARCH_REQUESTED, MARKET_SEARCH_SUCCEEDED, MARKET_SEARCH_FAILED,
-  MARKET_TOP_REQUESTED, MARKET_TOP_SUCCEEDED, MARKET_TOP_FAILED
+  MARKET_TOP_REQUESTED, MARKET_TOP_SUCCEEDED, MARKET_TOP_FAILED,MARKET_TOP_SORT
 } from '../actions/actionTypes';
 
 function marketMassage(m) {
@@ -17,14 +17,38 @@ function marketMassage(m) {
     ...m.data,
     id: m.marketId,
     address: m.marketAddress,
+    numberOfComments: m.data.postCount,
+    numberOfSub: m.data.userCount,
+    priceIn7d: m.sevenDayNode,
     following: m.isCollect,
+    overview: m.description,
     icon: null,
-    priceIn7d: [40, 50, 45, 60, 57, 66, 70],
-    overview: 'Let’s explain what is going on here.',
-    numberOfComments: 2000,
-    numberOfSub: 1000,
-
   }
+}
+
+function marketSort(markets, sortKey,asc){
+  markets.sort((a,b)=>{
+    if(!!asc){
+      if(a[sortKey] > b[sortKey]){
+        return 1
+      }else if(a[sortKey] === b[sortKey]){
+        return 0
+      }
+      else if(a[sortKey] < b[sortKey]){
+        return -1
+      }
+    }else{
+      if(a[sortKey] > b[sortKey]){
+        return -1
+      }else if(a[sortKey] === b[sortKey]){
+        return 0
+      }
+      else if(a[sortKey] < b[sortKey]){
+        return 1
+      }
+    }
+  });
+  return markets;
 }
 
 export const initialState = {
@@ -144,7 +168,6 @@ export default (state = initialState, action) => {
         creatingMarket: false,
         createMarketError: action.payload,
       };
-
     case MARKET_SEARCH_REQUESTED:
       return {
         ...state,
@@ -173,7 +196,10 @@ export default (state = initialState, action) => {
         gettingMarketList: true,
       };
     case MARKET_TOP_SUCCEEDED: {
-      let tempMarkets = action.payload.map(marketMassage);
+      let tempMarkets = action.payload.list.map(marketMassage);
+      const orderBy = action.payload.sortBy;
+      const asc = action.payload.orderBy === 'asc';
+      tempMarkets = marketSort(tempMarkets,orderBy,asc);
       return {
         ...state,
         markets: tempMarkets,
@@ -187,6 +213,15 @@ export default (state = initialState, action) => {
         ...state,
         gettingMarketList: false,
         marketListError: action.payload,
+      };
+    }
+    case MARKET_TOP_SORT: {
+      const orderBy = action.payload.sortBy;
+      const asc = action.payload.orderBy === 'asc';
+      let tempMarkets = marketSort(state.markets,orderBy,asc);
+      return {
+        ...state,
+        markets: tempMarkets,
       };
     }
     case GET_MARKET_LIST_REQUESTED:
@@ -246,7 +281,7 @@ export default (state = initialState, action) => {
         gettingMarketGlobal: false,
         marketGlobalError: action.payload,
       };
-
+      
     case USER_COLLECT_ADD_REQUESTED:
       return {
         ...state,

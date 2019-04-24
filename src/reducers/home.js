@@ -4,7 +4,7 @@ import {
 
 export const initialState = {
   expandedRecords: [],
-  activeTab: null,
+  activeTabIndex: 0,
   sortBy: 'last',
   orderBy: 'desc',
   searchContent: '',
@@ -39,10 +39,9 @@ export default (state = initialState, action) => {
       }
     case SET_ACTIVE_TAB: {
       return Object.assign({}, state, {
-        activeTab: action.activeTab,
+        activeTabIndex: action.payload,
         expandedRecords: [],
-        sortBy: '',
-        orderBy: 'desc',
+        searchContent:'',
       });
     }
     default:
