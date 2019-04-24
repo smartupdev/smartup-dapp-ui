@@ -58,9 +58,9 @@ const Notification = ({
             id={n.notificationId}
             onClick={console.debug}
             image={typeValueToImage[n.type]}
-            sender={n.sender}
-            title={n.title}
-            content={n.content}
+            sender={n.userAddress}
+            title={n.content.title}
+            content={n.content.text}
             date={n.createTime}
             unread={!n.isRead}
           />
