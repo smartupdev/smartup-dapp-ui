@@ -39,7 +39,7 @@ const _Name = ({ value, record }) =>
     <Text>{value}</Text>
     <Text note S>{record.createTime}</Text> {/* { TODO } */}
   </Col>
-const _Percent = ({ value,record }) => <Text>{record.data.latelyChange + '%'}</Text>
+const _Percent = ({ value,record }) => <Text>{record.data.latelyChange ? record.data.latelyChange + '%' : '-'}</Text>
 const _Price = ({ value,record }) => <Text price>{toPrice(record.data.last)}</Text>
 const _Volume = ({ value,record }) => <Text primary>{toPrice(record.data.latelyVolume, 0)}</Text>
 const _Cap = ({ value,record }) => <Text>{toPrice(record.data.amount, 0)}</Text>

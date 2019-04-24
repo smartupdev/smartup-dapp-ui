@@ -49,7 +49,7 @@ const BookmarkBlock = styled(Row)`
 const TableName = [
   { label: '', value: 'icon', layoutStyle: { width: '18px' }, component: ({ value }) => <Avatar XS icon={value} /> },
   { label: portfilioText.wallet.id[currentLang], value: 'marketId', },
-  { label: portfilioText.wallet.ct[currentLang], value: 'ctAmount', component: ({ value }) => <Text S>{`${value} CT`}</Text> },
+  { label: portfilioText.wallet.ct[currentLang], value: 'ctAmount', component: ({ value }) => <Text S>{`${value}`}</Text> },
   {
     label: portfilioText.wallet.volume[currentLang], value: 'latelyChange', component: ({ value }) =>
       <Text S style={{ color: value >= 0 ? theme.green : theme.red }}>{`${value < 0 ? '' : '+'}${(value * 100).toFixed(2)}%`}</Text>
