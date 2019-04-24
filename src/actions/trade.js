@@ -1,8 +1,9 @@
 import {
   TRADE_RESET,
+  TRADE_SET_TAB,
   TRADE_LIST_REQUESTED, TRADE_LIST_SUCCEEDED, TRADE_LIST_FAILED,
   TRADE_DETAIL_REQUESTED, TRADE_DETAIL_SUCCEEDED, TRADE_DETAIL_FAILED,
-  TRADE_TOGGLE_IS_SELL, 
+  TRADE_TOGGLE_IS_SELL, TRADE_TOGGLE_AGREE_TNC,
   TRADE_CHANGE_CT, TRADE_CHANGE_SUT,
   TRADE_GET_CT_REQUESTED, TRADE_GET_CT_SUCCEEDED, TRADE_GET_CT_FAILED,
   TRADE_GET_SUT_REQUESTED, TRADE_GET_SUT_SUCCEEDED, TRADE_GET_SUT_FAILED,
@@ -24,20 +25,33 @@ import {
   createBidCtData, createAskCtData, createBidQuoteData, createAskQuoteData, decodeResult,
 } from '../integrator'
 
-const marketAddress = '0x4b331d6AdCdBE3d9228c2BbA113b93681958263F';
-
-// function fakeFetch() {
-//   return () => new Promise((resolve, reject) => setTimeout(resolve, 1000))
-// }
+import { getYear, getMonth, getDate, getHour } from '../lib/util'
 
 export function reset() {
   return { type: TRADE_RESET }
 }
 
+export function setTab(index) {
+  return (dispatch, getState) => {
+    const { trade: { tabIndex } } = getState()
+    if(index !== tabIndex) {
+      dispatch({ type: TRADE_SET_TAB, payload: {index} })
+      dispatch(getKlineList())
+    }
+  }  
+}
+
+export function toggleTnc() {
+  return {
+    type: TRADE_TOGGLE_AGREE_TNC,
+  }
+}
+
 export function toggleIsSell() {
-  return ({
-    type: TRADE_TOGGLE_IS_SELL,
-  })
+  return dispatch => {
+    dispatch({ type: TRADE_TOGGLE_IS_SELL })
+    dispatch(getSUT())    
+  }
 }
 
 export function onChangeSUT(amount) {
@@ -88,14 +102,14 @@ export function onChangeCT(amount) {
 
 function getSUT() {
   return (dispatch, getState) => {
-    const { trade: {isSell, ct}, market: {currentMarket: {address}} } = getState()
+    const { trade: {isSell, ct, getSUTCount}, market: {currentMarket: {address}} } = getState()
     if(!ct) 
       return dispatch({
         type: TRADE_GET_SUT_SUCCEEDED,
         payload: ''
       })
     const encodeCtAmount = encodeParam(toWei(ct))
-    const data = !isSell ? createAskQuoteData(encodeCtAmount) : createBidQuoteData(encodeCtAmount)
+    const data = isSell ? createAskQuoteData(encodeCtAmount) : createBidQuoteData(encodeCtAmount)
     dispatch(callbackFunction(
       smartupWeb3.eth.call,
       TRADE_GET_SUT_REQUESTED, TRADE_GET_SUT_SUCCEEDED, TRADE_GET_SUT_FAILED,
@@ -105,6 +119,7 @@ function getSUT() {
           to: address,
           data,
         },
+        meta: { getSUTCount: getSUTCount + 1 },
         responsePayload: decodeResult
       }
     ))
@@ -124,11 +139,12 @@ export function onTrade() {
       TRADE_REQUESTED, TRADE_SUCCEEDED, TRADE_FAILED,
       {
         isWeb3: true,
+        loginRequired: true,
         params: {
           from: getAccount(),
-          to: isSell ? sutContractAddress : address,
+          to: isSell ? address : sutContractAddress,
           value: '0x0',
-          data: isSell ? createBidCtData({ marketAddress: address, encodeCtPrice, encodeCtAmount }) : createAskCtData(encodeCtAmount)
+          data: isSell ? createAskCtData(encodeCtAmount) : createBidCtData({ marketAddress: address, encodeCtPrice, encodeCtAmount })
         },
         responsePayload: hash => {
           const { trade: { sut, ct, isSell }, user: { userName: username, userAvatar: userIcon } } = getState()
@@ -181,13 +197,33 @@ export function getTradeList() {
 }
 
 // get kline list
+const DAY = 1000 * 60 * 60 * 24
+const MONTH = DAY * 30
+const YEAR = DAY * 365
+function getDateRange(tabIndex) {
+  const now = Date.now()
+  function getDateShort(d) { return `${getYear(d)}_${getMonth(d)}_${getDate(d)}` }
+  function getDateLong(d) { return `${getYear(d)}_${getMonth(d)}_${getDate(d)}_${getHour(d)}` }
+  const end = getDateShort(now)
+  return [
+    { start: getDateLong(now - DAY), end: getDateLong(now), segment: '1hour'}, // 1d
+    { start: getDateShort(now - MONTH), end, segment: '1day'}, // 1m
+    { start: getDateShort(now - YEAR), end, segment: '1week'}, // 1y
+  ][tabIndex]
+}
+
 export function getKlineList(){
   return (dispatch, getState) => {
+    const { 
+      market: { currentMarket: {address: marketAddress} },
+      trade: { tabIndex }
+    } = getState()
     let requestParams = {
-      marketAddress: getState().market.currentMarket.address,
-      start:'2019_04_16',
-      end:'2019_04_24',
-      segment:'1day'
+      marketAddress,
+      ...getDateRange(tabIndex)
+      // start:'2019_04_16',
+      // end:'2019_04_24',
+      // segment:'1day'
     }
     dispatch(asyncFunction(
       fetch.post,
@@ -196,7 +232,6 @@ export function getKlineList(){
         isWeb3: true,
         params: API_KLINE_DATA,
         params2:requestParams,
-        responsePayload: reps => reps.obj
       }
     ));
   }

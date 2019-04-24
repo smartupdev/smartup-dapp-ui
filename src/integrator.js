@@ -138,25 +138,28 @@ export function getCredit(account) {
 export function asyncFunction(
   func,
   requestType, responseType, errorType,
-  options = {} // isWeb3, params, responsePayload
+  options = {} // isWeb3, params, responsePayload, meta
 ) {
   return async (dispatch, getState) => {
-    dispatch({ type: requestType })
+    dispatch({ type: requestType, meta: options.meta })
     try {
       if (options.isWeb3 && !checkIsSupportWeb3()) throw new Error('Web3 or ethereum is not supported.')
+      if(options.loginRequired && !getAccount()) throw new Error('Please connect to metamask.')
       let response = await func(...[options.params, options.params2])
       response = options.responsePayload ? options.responsePayload(response) : response
       dispatch({
         type: responseType,
-        payload: response
+        payload: response,
+        meta: options.meta
       })
       return [null, response]
     }
     catch (error) {
-      if(error.message === NOT_LOGIN) dispatch({ type: USER_PERSON_SIGN_FAILED, payload: error, error: true })
+      if(error.message === NOT_LOGIN) dispatch({ type: USER_PERSON_SIGN_FAILED, meta: options.meta, payload: error, error: true })
       dispatch({
         type: errorType,
         payload: error,
+        meta: options.meta,
         error: true
       })
       return [error]
@@ -167,16 +170,18 @@ export function asyncFunction(
 export function callbackFunction(
   func,
   requestType, responseType, errorType,
-  options = {} // isWeb3, params, responsePayload, params2
+  options = {} // isWeb3, params, responsePayload, params2, meta, loginRequired
 ) {
   return async dispatch => {
-    const promise = () => new Promise((resolve, reject) =>
-      func(...[options.params, options.params2], (error, response) => {
+    const promise = () => new Promise((resolve, reject) => {
+      const f = () => func(...[options.params, options.params2], (error, response) => {
         if (error) reject(error)
         resolve(response)
       })
+      if(func instanceof Promise) return f().catch(e => reject(e) )
+      return f()
+    }
     )
     return await dispatch(asyncFunction(promise, requestType, responseType, errorType, options))
-
   }
 }

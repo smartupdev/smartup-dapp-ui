@@ -8,6 +8,8 @@ const Flex = styled.div`
   ${p => p.overflowHidden && css`overflow: hidden;`}
   
   ${p => p.color && css`background-color: ${p.color}`}
+  ${p => !!p.primary && css`background-color: ${p.theme.colorPrimary}`}
+  ${p => !!p.secondary && css`background-color: ${p.theme.colorSecondary}`}
 
   ${props => typeof props.flex === 'number' && css`flex: ${props.flex}`};
   ${props => props.maxWidth && css`max-width: ${props.maxWidth}`};

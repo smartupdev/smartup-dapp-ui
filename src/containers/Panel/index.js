@@ -67,7 +67,7 @@ const Panel = ({
         <Col center>
           <People XL round color={theme.white} />
           <Button primary outline verticalMargin label={lang.panel.connectButton[currentLang]} onClick={loginMetaMask} disabled={isLoading} />
-          <Text note>{metaMaskHint}</Text>
+          <Text note>{isLoading ? 'Please check Metamask' : metaMaskHint}</Text>
             <Row width={`${PANEL_WIDTH*.8}px`} spacingTopXS>
               { metaMaskEableError &&
                 <Text error S>Please install or enable the MetaMask browser plug-in from <A XS error href='https://metamask.io/' target="_blank">Metamask.io</A></Text>

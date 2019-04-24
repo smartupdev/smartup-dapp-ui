@@ -58,9 +58,9 @@ const CheckboxStyle = styled.label`
   }
 `
 
-export default ({ checked, disabled, label = '' }) =>
+export default ({ onChange, checked, disabled, label = '' }) =>
   <CheckboxStyle disabled={disabled}>
     {label}
-    <input type='checkbox' checked={checked} disabled={disabled} />
+    <input type='checkbox' checked={checked} disabled={disabled} onChange={onChange} />
     <span className='mark' />
   </CheckboxStyle>
