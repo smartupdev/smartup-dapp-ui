@@ -1,5 +1,5 @@
 import {
-  HOME_PAGE_LOADED, SET_EXPANDED_RECORDS, SET_ACTIVE_TAB, TABLE_HEADER_CLICK,
+  HOME_PAGE_LOADED, SET_EXPANDED_RECORDS, SET_ACTIVE_TAB, TABLE_HEADER_CLICK, SEARCH_CONTENT_CHANGE
 } from '../actions/actionTypes';
 
 export const initialState = {
@@ -7,6 +7,7 @@ export const initialState = {
   activeTab: null,
   sortBy: 'last',
   orderBy: 'desc',
+  searchContent: '',
 }
 
 export default (state = initialState, action) => {
@@ -30,6 +31,11 @@ export default (state = initialState, action) => {
         ...state,
         sortBy: action.payload.sortBy,
         orderBy: action.payload.orderBy,
+      }
+    case SEARCH_CONTENT_CHANGE:
+      return {
+        ...state,
+        searchContent: action.payload,
       }
     case SET_ACTIVE_TAB: {
       return Object.assign({}, state, {

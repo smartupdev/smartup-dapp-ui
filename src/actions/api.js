@@ -21,6 +21,8 @@ export const API_MARKET_GLOBAL = '/api/market/global/data';
 export const API_MARKET_CREATE_GET = '/api/user/market/creating'
 export const API_MARKET_CREATE_CHANGE_NAME = '/api/user/market/is/name/right'
 export const API_MARKET_CREATE_SAVE = '/api/user/market/save'
+export const API_MARKET_SEARCH = '/api/market/search'
+export const API_MARKET_TOP = '/api/market/top'
 //account-controller
 export const API_CT_ACCOUNT_IN_MARKET = '/api/user/ct/account/in/market'
 //user-controller

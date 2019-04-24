@@ -7,8 +7,9 @@ import {
   USER_COLLECT_DEL_REQUESTED, USER_COLLECT_DEL_SUCCEEDED, USER_COLLECT_DEL_FAILED,
   TRADE_SUCCEEDED,
   GET_MARKET_DETAIL_REQUESTED, GET_MARKET_DETAIL_SUCCEEDED, GET_MARKET_DETAIL_FAILED,
+  MARKET_SEARCH_REQUESTED, MARKET_SEARCH_SUCCEEDED, MARKET_SEARCH_FAILED,
+  MARKET_TOP_REQUESTED, MARKET_TOP_SUCCEEDED, MARKET_TOP_FAILED
 } from '../actions/actionTypes';
-import { markets } from '../devData/marketDetail/'
 
 function marketMassage(m) {
   return {
@@ -16,12 +17,13 @@ function marketMassage(m) {
     ...m.data,
     id: m.marketId,
     address: m.marketAddress,
+    following: m.isCollect,
     icon: null,
     priceIn7d: [40, 50, 45, 60, 57, 66, 70],
     overview: 'Let’s explain what is going on here.',
     numberOfComments: 2000,
     numberOfSub: 1000,
-    following: false,
+
   }
 }
 
@@ -76,25 +78,25 @@ export const initialState = {
 
   delingCollect: false,
   delCollectError: null,
-  
+
   currentMarket: null,
   gettingMarket: false,
 }
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case GET_MARKET_DETAIL_REQUESTED: 
+    case GET_MARKET_DETAIL_REQUESTED:
       return {
         ...state,
         gettingMarket: true
       }
-    case GET_MARKET_DETAIL_SUCCEEDED: 
+    case GET_MARKET_DETAIL_SUCCEEDED:
       return {
         ...state,
         currentMarket: marketMassage(action.payload),
         gettingMarket: false
       }
-    case GET_MARKET_DETAIL_FAILED: 
+    case GET_MARKET_DETAIL_FAILED:
       return {
         ...state,
         gettingMarket: false
@@ -143,6 +145,50 @@ export default (state = initialState, action) => {
         createMarketError: action.payload,
       };
 
+    case MARKET_SEARCH_REQUESTED:
+      return {
+        ...state,
+        gettingMarketList: true,
+      };
+    case MARKET_SEARCH_SUCCEEDED: {
+      let tempMarkets = action.payload.map(marketMassage);
+      return {
+        ...state,
+        markets: tempMarkets,
+        totalResults: tempMarkets.length,
+        gettingMarketList: false,
+        marketListError: initialState.marketListError
+      };
+    }
+    case MARKET_SEARCH_FAILED: {
+      return {
+        ...state,
+        gettingMarketList: false,
+        marketListError: action.payload,
+      };
+    }
+    case MARKET_TOP_REQUESTED:
+      return {
+        ...state,
+        gettingMarketList: true,
+      };
+    case MARKET_TOP_SUCCEEDED: {
+      let tempMarkets = action.payload.map(marketMassage);
+      return {
+        ...state,
+        markets: tempMarkets,
+        totalResults: tempMarkets.length,
+        gettingMarketList: false,
+        marketListError: initialState.marketListError
+      };
+    }
+    case MARKET_TOP_FAILED: {
+      return {
+        ...state,
+        gettingMarketList: false,
+        marketListError: action.payload,
+      };
+    }
     case GET_MARKET_LIST_REQUESTED:
       return {
         ...state,
@@ -153,6 +199,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         markets: tempMarkets,
+        totalResults: tempMarkets.length,
         gettingMarketList: false,
         marketListError: initialState.marketListError
       };
@@ -205,7 +252,7 @@ export default (state = initialState, action) => {
         ...state,
         addingCollect: true,
       };
-    case USER_COLLECT_ADD_SUCCEEDED:{
+    case USER_COLLECT_ADD_SUCCEEDED: {
       const { id } = action.payload;
       const currentMarkets = state.markets;
       let tempMarkets = currentMarkets.map(market => market.id === id ? {
@@ -229,7 +276,7 @@ export default (state = initialState, action) => {
         ...state,
         addingCollect: true,
       };
-    case USER_COLLECT_DEL_SUCCEEDED:{
+    case USER_COLLECT_DEL_SUCCEEDED: {
       const { id } = action.payload;
       const currentMarkets = state.markets;
       let tempMarkets = currentMarkets.map(market => market.id === id ? {

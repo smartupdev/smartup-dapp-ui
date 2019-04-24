@@ -13,7 +13,7 @@ import lang, { currentLang } from '../../lang'
 import theme from '../../theme'
 import { toPrice, toDate } from '../../lib/util'
 import { connect } from 'react-redux'
-import { setExpandedRecords, setActiveTab, onTableHeaderClick } from '../../actions/home'
+import { setExpandedRecords, setActiveTab, onTableHeaderClick,onSearchChange,searchMarketClick } from '../../actions/home'
 import { getDefaultMarketList } from '../../actions/market'
 
 const Top = styled(Row)`
@@ -55,7 +55,7 @@ const TableName = [
 ]
 
 const Home = ({ markets, expandedRecords, activeTab, totalResults, sortBy, orderBy,
-  getDefaultMarketList,setExpandedRecords, setActiveTab, onTableHeaderClick }) => {
+  getDefaultMarketList,setExpandedRecords, setActiveTab, onTableHeaderClick, onSearchChange, searchMarketClick }) => {
   useEffect(() => {
     getDefaultMarketList()
   }, [])
@@ -65,7 +65,7 @@ const Home = ({ markets, expandedRecords, activeTab, totalResults, sortBy, order
         <Tab activeIndex={0} tabs={FILTERS} onClick={setActiveTab} type='simple' />
         <Row centerVertical>
           <Text HS S note>{totalResults} RESULTS</Text>
-          <Search backgroundColor={theme.bgColorLight} id='home' />
+          <Search backgroundColor={theme.bgColorLight} id='home' onChange={onSearchChange} onSearchClick={searchMarketClick}/>
         </Row>
       </Top>
       <Table
@@ -98,6 +98,8 @@ const mapDispatchToProps = {
   setActiveTab,
   onTableHeaderClick,
   getDefaultMarketList,
+  onSearchChange,
+  searchMarketClick,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

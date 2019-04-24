@@ -1,8 +1,8 @@
 import {
-  SET_EXPANDED_RECORDS, SET_ACTIVE_TAB, TABLE_HEADER_CLICK,
+  SET_EXPANDED_RECORDS, SET_ACTIVE_TAB, TABLE_HEADER_CLICK,SEARCH_CONTENT_CHANGE
 } from './actionTypes';
 
-import { getMarketList } from '../actions/market';
+import { getMarketList,markerSearch } from '../actions/market';
 
 export function setExpandedRecords(recordData) {
   return (dispatch, getState) => {
@@ -17,6 +17,7 @@ export function onTableHeaderClick(headerName) {
   return (dispatch, getState) => {
     let sortBy = getState().home.sortBy;
     let orderBy = getState().home.orderBy;
+    let name = getState().home.searchContent;
     if (!!headerName) {
       if (sortBy !== headerName) {
         sortBy = headerName;
@@ -30,13 +31,16 @@ export function onTableHeaderClick(headerName) {
       orderBy: sortBy,
       asc: orderBy === 'asc'
     }
-
     dispatch({
       type: TABLE_HEADER_CLICK,
       payload: { sortBy, orderBy },
     });
-    dispatch(getMarketList(requestParams));
-
+    if(!!name){
+      requestParams.name = name;
+      dispatch(markerSearch(requestParams));
+    }else{
+      dispatch(getMarketList(requestParams));
+    }
   }
 }
 
@@ -47,6 +51,34 @@ export function setActiveTab(activeTab) {
       networkStatus: 'loading',
       activeTab: activeTab
     });
+  }
+}
+
+export function onSearchChange(content){
+  return {
+    type:SEARCH_CONTENT_CHANGE,
+    payload: content,
+  }
+}
+
+export function searchMarketClick(){
+  return (dispatch, getState) => {
+    let sortBy = getState().home.sortBy;
+    let orderBy = getState().home.orderBy;
+    let name = getState().home.searchContent;
+
+    const requestParams = {
+      orderBy: sortBy,
+      asc: orderBy === 'asc',
+      name,
+    }
+
+    dispatch({
+      type: TABLE_HEADER_CLICK,
+      payload: { sortBy, orderBy },
+    });
+    dispatch(markerSearch(requestParams));
+
   }
 }
 

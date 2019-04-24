@@ -30,16 +30,16 @@ const Dump = styled.div`
 ` // margin number
 
 // MUST set relative outside
-export default ({ id = '', backgroundColor }) => {
+export default ({ id = '', backgroundColor, onChange,onSearchClick}) => {
   return (
     <>
     <Dump />
     <Container backgroundColor={backgroundColor}>
       <Row centerVertical fullHeight spaceBetween>
-        <Input id={id+"search"} placeholder='Search' />
+        <Input id={id+"search"} placeholder='Search' onChange={e => onChange(e.target.value)}/>
         {/* <Text note>Search</Text> */}
         <label htmlFor={id+"search"}>
-         <Search S RightXS />
+         <Search S RightXS onClick={onSearchClick} />
         </label>
       </Row>
     </Container>

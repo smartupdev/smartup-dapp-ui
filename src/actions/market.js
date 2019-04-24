@@ -4,12 +4,14 @@ import {
   GET_MARKET_GLOBAL_REQUESTED, GET_MARKET_GLOBAL_SUCCEEDED, GET_MARKET_GLOBAL_FAILED,
   USER_COLLECT_ADD_REQUESTED, USER_COLLECT_ADD_SUCCEEDED, USER_COLLECT_ADD_FAILED,
   USER_COLLECT_DEL_REQUESTED, USER_COLLECT_DEL_SUCCEEDED, USER_COLLECT_DEL_FAILED,
-  TABLE_HEADER_CLICK,
-  GET_MARKET_DETAIL_REQUESTED, GET_MARKET_DETAIL_SUCCEEDED, GET_MARKET_DETAIL_FAILED
+  GET_MARKET_DETAIL_REQUESTED, GET_MARKET_DETAIL_SUCCEEDED, GET_MARKET_DETAIL_FAILED,
+  MARKET_SEARCH_REQUESTED,MARKET_SEARCH_SUCCEEDED,MARKET_SEARCH_FAILED,
+  MARKET_TOP_REQUESTED,MARKET_TOP_SUCCEEDED,MARKET_TOP_FAILED
 } from './actionTypes'
 import {
   API_MARKET_LIST, API_CT_ACCOUNT_IN_MARKET, API_MARKET_GLOBAL,
-  API_USER_COLLECT_ADD, API_USER_COLLECT_DEL, API_MARKET_DETAIL
+  API_USER_COLLECT_ADD, API_USER_COLLECT_DEL, API_MARKET_DETAIL,
+  API_MARKET_SEARCH,API_MARKET_TOP
 } from './api'
 import fetch from '../lib/util/fetch'
 import { asyncFunction } from '../integrator'
@@ -82,6 +84,37 @@ export function getMarketGlobal() {
         GET_MARKET_GLOBAL_REQUESTED, GET_MARKET_GLOBAL_SUCCEEDED, GET_MARKET_GLOBAL_FAILED,
         {
           params: API_MARKET_GLOBAL,
+        }
+      )
+    )
+}
+
+//搜索
+export function markerSearch(requestParams){
+  return (dispatch, getState) =>
+    dispatch(
+      asyncFunction(
+        fetch.post,
+        MARKET_SEARCH_REQUESTED, MARKET_SEARCH_SUCCEEDED, MARKET_SEARCH_FAILED,
+        {
+          params: API_MARKET_SEARCH,
+          params2: requestParams,
+          responsePayload: reps => reps.list
+        }
+      )
+    )
+}
+
+//市场TOP
+export function markerTop(){
+  return (dispatch, getState) =>
+    dispatch(
+      asyncFunction(
+        fetch.post,
+        MARKET_TOP_REQUESTED, MARKET_TOP_SUCCEEDED, MARKET_TOP_FAILED,
+        {
+          params: API_MARKET_TOP,
+          responsePayload: reps => reps.list
         }
       )
     )
