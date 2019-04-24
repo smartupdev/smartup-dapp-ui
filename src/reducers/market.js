@@ -296,6 +296,10 @@ export default (state = initialState, action) => {
       return {
         ...state,
         markets: tempMarkets,
+        currentMarket: {
+          ...state.currentMarket,
+          following: !state.currentMarket.following
+        },
         addingCollect: false,
         addCollectError: initialState.addCollectError,
       };
@@ -320,6 +324,10 @@ export default (state = initialState, action) => {
       return {
         ...state,
         markets: tempMarkets,
+        currentMarket: {
+          ...state.currentMarket,
+          following: !state.currentMarket.following
+        },
         delingCollect: false,
         delCollectError: initialState.delCollectError,
       };
