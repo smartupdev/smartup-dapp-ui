@@ -2,7 +2,7 @@ import {
   TRADE_RESET,
   TRADE_LIST_REQUESTED, TRADE_LIST_SUCCEEDED, TRADE_LIST_FAILED,
   TRADE_DETAIL_REQUESTED, TRADE_DETAIL_SUCCEEDED, TRADE_DETAIL_FAILED,
-  TRADE_TOGGLE_IS_SELL, 
+  TRADE_TOGGLE_IS_SELL, TRADE_TOGGLE_AGREE_TNC,
   TRADE_CHANGE_CT, TRADE_CHANGE_SUT,
   TRADE_GET_CT_REQUESTED, TRADE_GET_CT_SUCCEEDED, TRADE_GET_CT_FAILED,
   TRADE_GET_SUT_REQUESTED, TRADE_GET_SUT_SUCCEEDED, TRADE_GET_SUT_FAILED,
@@ -24,20 +24,20 @@ import {
   createBidCtData, createAskCtData, createBidQuoteData, createAskQuoteData, decodeResult,
 } from '../integrator'
 
-const marketAddress = '0x4b331d6AdCdBE3d9228c2BbA113b93681958263F';
-
-// function fakeFetch() {
-//   return () => new Promise((resolve, reject) => setTimeout(resolve, 1000))
-// }
-
 export function reset() {
   return { type: TRADE_RESET }
 }
 
+export function toggleTnc() {
+  return {
+    type: TRADE_TOGGLE_AGREE_TNC,
+  }
+}
+
 export function toggleIsSell() {
-  return ({
+  return {
     type: TRADE_TOGGLE_IS_SELL,
-  })
+  }
 }
 
 export function onChangeSUT(amount) {
@@ -88,14 +88,14 @@ export function onChangeCT(amount) {
 
 function getSUT() {
   return (dispatch, getState) => {
-    const { trade: {isSell, ct}, market: {currentMarket: {address}} } = getState()
+    const { trade: {isSell, ct, getSUTCount}, market: {currentMarket: {address}} } = getState()
     if(!ct) 
       return dispatch({
         type: TRADE_GET_SUT_SUCCEEDED,
         payload: ''
       })
     const encodeCtAmount = encodeParam(toWei(ct))
-    const data = !isSell ? createAskQuoteData(encodeCtAmount) : createBidQuoteData(encodeCtAmount)
+    const data = isSell ? createAskQuoteData(encodeCtAmount) : createBidQuoteData(encodeCtAmount)
     dispatch(callbackFunction(
       smartupWeb3.eth.call,
       TRADE_GET_SUT_REQUESTED, TRADE_GET_SUT_SUCCEEDED, TRADE_GET_SUT_FAILED,
@@ -105,6 +105,7 @@ function getSUT() {
           to: address,
           data,
         },
+        meta: { getSUTCount: getSUTCount + 1 },
         responsePayload: decodeResult
       }
     ))
@@ -124,11 +125,12 @@ export function onTrade() {
       TRADE_REQUESTED, TRADE_SUCCEEDED, TRADE_FAILED,
       {
         isWeb3: true,
+        loginRequired: true,
         params: {
           from: getAccount(),
-          to: isSell ? sutContractAddress : address,
+          to: isSell ? address : sutContractAddress,
           value: '0x0',
-          data: isSell ? createBidCtData({ marketAddress: address, encodeCtPrice, encodeCtAmount }) : createAskCtData(encodeCtAmount)
+          data: isSell ? createAskCtData(encodeCtAmount) : createBidCtData({ marketAddress: address, encodeCtPrice, encodeCtAmount })
         },
         responsePayload: hash => {
           const { trade: { sut, ct, isSell }, user: { userName: username, userAvatar: userIcon } } = getState()

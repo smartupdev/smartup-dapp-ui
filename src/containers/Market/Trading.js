@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { Link } from '../../routes'
 
 import { connect } from 'react-redux'
-import { onChangeCT, onChangeSUT, onTrade, toggleIsSell, reset, getTradeList, getKlineList } from '../../actions/trade';
+import { onChangeCT, onChangeSUT, onTrade, toggleIsSell, toggleTnc, reset, getTradeList, getKlineList, } from '../../actions/trade';
 
 
 import theme from '../../theme'
@@ -32,7 +32,7 @@ const model = [
 ]
 
 
-function Trading({ market, tradeState, onChangeCT, onChangeSUT, toggleIsSell, onTrade, reset, userSut, getTradeList, getKlineList }) {
+function Trading({ market, tradeState, onChangeCT, onChangeSUT, toggleIsSell, toggleTnc, onTrade, reset, userSut, getTradeList, getKlineList }) {
   useEffect(() => {
     if(market) {
       getTradeList()
@@ -40,7 +40,7 @@ function Trading({ market, tradeState, onChangeCT, onChangeSUT, toggleIsSell, on
     }
     return reset
   }, [market])
-  const { ct, sut, isSell, isTrading, trades, klineData } = tradeState
+  const { ct, sut, isSell, isTrading, trades, klineData, agreeTnc, tradingError } = tradeState
   const sutError = +userSut < +sut ? 'You need more SmartUp to make this trade.' : null
 
   if(!market) return null
@@ -110,11 +110,13 @@ function Trading({ market, tradeState, onChangeCT, onChangeSUT, toggleIsSell, on
 
           <Row spaceBetween>
             <Row centerVertical>
-              <Checkbox disabled={isTrading} label={<Text S note lineHeight>Agree to&nbsp;</Text>} />
+              <Checkbox checked={agreeTnc} onChange={toggleTnc} disabled={isTrading} label={<Text S note lineHeight>Agree to&nbsp;</Text>} />
               <Text S note underline lineHeight onClick={() => console.log('Get T&C')}>{'Teams & Conditions'}</Text>
             </Row>
-            {/* <Botton label='Trade' icon={Trade} primary onClick={() => onSell(market.id, 10)} /> */}
-            <Botton label='Trade' icon={Trade} primary disabled={isTrading} onClick={() => onTrade(market.id)} />
+            <Col right>
+              <Botton label='Trade' icon={Trade} primary onClick={() => onTrade(market.id)} disabled={isTrading || !agreeTnc || !ct | !!sutError} />
+              {tradingError && <Text error XS>{tradingError.message}</Text>}
+            </Col>
           </Row>
 
         </Col>
@@ -151,6 +153,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   toggleIsSell,
+  toggleTnc,
   onTrade,
   onChangeCT,
   onChangeSUT,

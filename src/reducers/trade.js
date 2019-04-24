@@ -1,6 +1,6 @@
 import {
   TRADE_RESET,
-  TRADE_TOGGLE_IS_SELL,
+  TRADE_TOGGLE_IS_SELL, TRADE_TOGGLE_AGREE_TNC,
   TRADE_CHANGE_CT, TRADE_CHANGE_SUT,
   TRADE_GET_CT_REQUESTED, TRADE_GET_CT_SUCCEEDED, TRADE_GET_CT_FAILED,
   TRADE_GET_SUT_REQUESTED, TRADE_GET_SUT_SUCCEEDED, TRADE_GET_SUT_FAILED,
@@ -17,11 +17,20 @@ import {
 
 export const initialState = {
   isSell: false,
-  ctInputAmount: null,
+  agreeTnc: false,
 
   sut: '',
   gettingSUT: false,
   sutError: null,
+  getSUTCount: 0,
+
+  ct: '',
+  gettingCT: false,
+  ctError: null,
+
+  isTrading: false,
+  tradingError: null,
+
   trades: [],
   /*
   [
@@ -66,21 +75,6 @@ export const initialState = {
   oneDetail: null,
   gettingOneDetail: false,
   getOneTradeError: null,
-
-  bidQuoteAmount: null,
-  bidingQuote: false,
-  bidQuoteError: null,
-
-  askQuoteAmount: null,
-  askingQuote: false,
-  askQuoteError: null,
-
-  ct: '',
-  gettingCT: false,
-  ctError: null,
-
-  isTrading: false,
-  tradingError: null,
 }
 
 export default (state = initialState, action) => {
@@ -118,9 +112,11 @@ export default (state = initialState, action) => {
     case TRADE_GET_SUT_REQUESTED:
       return {
         ...state,
-        gettingSUT: true
+        gettingSUT: true,
+        getSUTCount: action.meta.getSUTCount
       }
     case TRADE_GET_SUT_SUCCEEDED:
+      if(action.meta && state.getSUTCount !== action.meta.getSUTCount) return state
       return {
         ...state,
         gettingSUT: false,
@@ -128,6 +124,7 @@ export default (state = initialState, action) => {
         sutError: initialState.sutError
       }
     case TRADE_GET_SUT_FAILED:
+      if(action.meta && state.getSUTCount !== action.meta.getSUTCount) return state
       return {
         ...state,
         gettingSUT: false,
@@ -162,15 +159,23 @@ export default (state = initialState, action) => {
     case TRADE_FAILED:
       return {
         ...state,
-        isTrading: false
+        isTrading: false,
+        tradingError: action.payload
       }
 
-    case TRADE_TOGGLE_IS_SELL: {
+    case TRADE_TOGGLE_AGREE_TNC: 
+      return {
+        ...state,
+        agreeTnc: !state.agreeTnc,
+      }
+    
+
+    case TRADE_TOGGLE_IS_SELL: 
       return {
         ...state,
         isSell: !state.isSell,
       }
-    }
+    
 
     case TRADE_KLINE_REQUESTED:
       return {
