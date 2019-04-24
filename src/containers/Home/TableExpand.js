@@ -31,7 +31,7 @@ const TableExpand = ({ record, history, collectMarket }) => {
         </Row>
         <Link>
           { ({goto}) =>
-          <Button primary label={lang.trade[currentLang]} icon={Trade} onClick={()=>goto.trading({address: record.address})} />
+          <Button primary label={lang.trade[currentLang]} icon={Trade} onClick={()=>goto.trading({id: record.id})} />
            }
         </Link>
       </Row>

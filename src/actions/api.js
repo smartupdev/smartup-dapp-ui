@@ -15,7 +15,7 @@ export const API_POST_REPLY_ONE = '/api/post/reply/one';
 export const API_USER_POST_ADD = '/api/user/post/add';
 export const API_USER_POST_REPLY_ADD = '/api/user/post/reply/add';
 //market-controller
-export const API_MARKET_DETAIL = '/api/market/one';
+export const API_MARKET_DETAIL = '/api/market/one/by/id';
 export const API_MARKET_LIST = '/api/market/list';
 export const API_MARKET_GLOBAL = '/api/market/global/data';
 export const API_MARKET_CREATE_GET = '/api/user/market/creating'

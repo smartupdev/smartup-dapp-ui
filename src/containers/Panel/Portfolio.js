@@ -17,6 +17,7 @@ import Text from '../../components/Text'
 import Button from '../../components/Button'
 import { Row, Col } from '../../components/Layout'
 import lang, { currentLang } from '../../lang'
+import { Link } from '../../routes'
 import { toToken } from '../../lib/util'
 import theme from '../../theme';
 import ethIcon from '../../images/eth.png';
@@ -56,7 +57,9 @@ const TableName = [
   },
   {
     label: '', value: 'action', layoutStyle: { width: '40px' }, component: ({ record }) =>
-      <Button icon={Trade} primary light condensed />
+      <Link>
+        { ({goto}) => <Button icon={Trade} primary light condensed onClick={() => goto.trading({id: record.id})} /> }
+      </Link>
   },
 ]
 

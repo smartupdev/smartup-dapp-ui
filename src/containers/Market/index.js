@@ -38,9 +38,9 @@ const copyToClipboard = str => {
 
 const Market = ({ get, getting, location, market }) => {
   const [copied, setCopy] = useState(false)
-  const address = new URLSearchParams(location.search).get('address')
+  const id = new URLSearchParams(location.search).get('id')
   useEffect(() => {
-    get(address)
+    get(id)
   }, [])
   if(getting) return <DonutLoader page />
   if (!market) return null
