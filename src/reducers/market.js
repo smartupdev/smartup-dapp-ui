@@ -62,31 +62,6 @@ export const initialState = {
   markets: [],
   gettingMarketList: false,
   marketListError: null,
-  /*
-  [
-      {
-        "marketId": "1p0re3to9og",
-        "txHash": "0x19bcfbaa866e4d86fe5fa9cf8fd33696e3941529104bb159a94ade48044bd19a",
-        "creatorAddress": "0xB44940Be0eeA81a3D0dA22CC15208AF4744BeA8E",
-        "marketAddress": "0x4b331d6AdCdBE3d9228c2BbA113b93681958263F",
-        "name": "ZZ",
-        "description": "Test for ZZ",
-        "type": null,
-        "stage": "built",
-        "createTime": "2019-04-19 14:25:52",
-        "data": {
-          "marketAddress": "0x4b331d6AdCdBE3d9228c2BbA113b93681958263F",
-          "latelyChange": null,
-          "last": 0.0006585051657205122,
-          "latelyVolume": 4.124292006115548,
-          "amount": 4.124292006115548,
-          "ctAmount": 7000,
-          "ctTopAmount": 7000,
-          "count": 3
-        }
-      }
-    ]
-  */
   totalResults: 0,
 
   ctInMarket: [],
