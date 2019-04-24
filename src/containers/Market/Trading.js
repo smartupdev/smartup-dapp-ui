@@ -19,13 +19,13 @@ import Avatar from '../../components/Avatar'
 import Botton from '../../components/Button'
 
 import lang, { currentLang } from '../../lang'
-import { toToken, toAgo, toFullDate } from '../../lib/util'
+import { toToken, toAgo, toFullDate, shorten } from '../../lib/util'
 
 import Chart from './Chart'
 
 const model = [
   { label: lang.trading.table.buySell[currentLang], value: 'type', layoutStyle: { flex: 1, center: true }, component: ({ value }) => <Text red={value === 'sell'} green={value !== 'sell'}>{value === 'sell' ? lang.trading.table.sell[currentLang] : lang.trading.table.buy[currentLang]}</Text> },
-  { label: lang.trading.table.user[currentLang], value: 'userAddress', layoutStyle: { flex: 1, center: true }, component: ({ record }) => <Row centerVertical><Avatar icon={record.userIcon} /><Text>{record.username}</Text></Row> },
+  { label: lang.trading.table.user[currentLang], value: 'userAddress', layoutStyle: { flex: 1, center: true }, component: ({ record }) => <Row centerVertical><Avatar icon={record.userIcon} /><Text>{shorten(record.username)}</Text></Row> },
   { label: lang.trading.table.time[currentLang], value: 'createTime', layoutStyle: { flex: 1, center: true }, component: ({ value }) => <Text>{toAgo(value)}</Text> },
   { label: lang.trading.table.avgPrice[currentLang], value: 'avgAmount', layoutStyle: { flex: 1, center: true }, component: ({ value }) => <Text>{toToken(value)}</Text> },
   { label: lang.trading.table.ct[currentLang], value: 'ctAmount', layoutStyle: { flex: 1, center: true }, },
