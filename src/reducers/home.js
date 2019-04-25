@@ -41,7 +41,6 @@ export default (state = initialState, action) => {
       return Object.assign({}, state, {
         activeTabIndex: action.payload,
         expandedRecords: [],
-        searchContent:'',
       });
     }
     default:

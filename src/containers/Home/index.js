@@ -54,7 +54,7 @@ const TableName = [
   { label: '', value: 'action', sortable: false, layoutStyle: { width: `calc( ${theme.iconSizeM} + 15px )`, right: true }, component: _More },
 ]
 
-const Home = ({ markets, expandedRecords, activeTabIndex, totalResults, sortBy, orderBy,
+const Home = ({ markets, expandedRecords, activeTabIndex, totalResults, sortBy, orderBy,searchContent,
   getDefaultMarketList,setExpandedRecords, setActiveTab, onTableHeaderClick, onSearchChange, searchMarketClick }) => {
   useEffect(() => {
     getDefaultMarketList()
@@ -65,7 +65,7 @@ const Home = ({ markets, expandedRecords, activeTabIndex, totalResults, sortBy, 
         <Tab activeIndex={activeTabIndex} tabs={FILTERS} onClick={setActiveTab} type='simple' />
         <Row centerVertical>
           <Text HS S note>{totalResults} RESULTS</Text>
-          <Search backgroundColor={theme.bgColorLight} id='home' onChange={onSearchChange} onSearchClick={searchMarketClick}/>
+          <Search backgroundColor={theme.bgColorLight} id='home' content={searchContent} onChange={onSearchChange} onSearchClick={searchMarketClick}/>
         </Row>
       </Top>
       <Table
@@ -92,6 +92,7 @@ const mapStateToProps = state => ({
   activeTabIndex: state.home.activeTabIndex,
   sortBy: state.home.sortBy,
   orderBy: state.home.orderBy,
+  searchContent:state.home.searchContent,
 });
 const mapDispatchToProps = {
   setExpandedRecords,
