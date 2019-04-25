@@ -5,10 +5,14 @@ import {
   CREATE_MARKET_SAVE_REQUESTED, CREATE_MARKET_SAVE_SUCCEEDED, CREATE_MARKET_SAVE_FAILED,
   CREATE_MARKET_LOCK_REQUESTED, CREATE_MARKET_LOCK_SUCCEEDED, CREATE_MARKET_LOCK_FAILED,
   CREATE_MARKET_PAY_REQUESTED, CREATE_MARKET_PAY_SUCCEEDED, CREATE_MARKET_PAY_FAILED,
+  CREATE_MARKET_AVATAR_CHANGE_REQUESTED, CREATE_MARKET_AVATAR_CHANGE_SUCCEEDED, CREATE_MARKET_AVATAR_CHANGE_FAILED,
+  CREATE_MARKET_COVER_CHANGE_REQUESTED, CREATE_MARKET_COVER_CHANGE_SUCCEEDED, CREATE_MARKET_COVER_CHANGE_FAILED
 } from './actionTypes';
 import { API_MARKET_CREATE_GET, API_MARKET_CREATE_CHANGE_NAME, API_MARKET_CREATE_SAVE, API_MARKET_CREATE_LOCK } from './api'
 
-import fetch from '../lib/util/fetch';
+import { postIpfsImg } from './ipfs'
+
+import fetch from '../lib/util/fetch'
 import { asyncFunction, callbackFunction, getAccount, createMarketData, sutContractAddress, smartupWeb3, } from '../integrator'
 
 export function get() {
@@ -60,7 +64,7 @@ export function lock(txHash) {
 
 export function pay() {
   return async (dispatch, getState) => {
-    const [error, response] = await dispatch(      
+    const [error, response] = await dispatch(
       callbackFunction(
         smartupWeb3.eth.sendTransaction,
         CREATE_MARKET_PAY_REQUESTED, CREATE_MARKET_PAY_SUCCEEDED, CREATE_MARKET_PAY_FAILED,
@@ -74,7 +78,7 @@ export function pay() {
           }
         })
     )
-    if(!error) dispatch(lock(response))
+    if (!error) dispatch(lock(response))
   }
 }
 
@@ -104,6 +108,32 @@ export function onChangeDesc(text) {
     type: CREATE_MARKET_DESC_CHANGE,
     payload: text,
   })
+}
+
+export function onChangeAvatar(files) {
+  if(!files) return {
+    type: CREATE_MARKET_AVATAR_CHANGE_SUCCEEDED,
+  }
+  return asyncFunction(
+    postIpfsImg,
+    CREATE_MARKET_AVATAR_CHANGE_REQUESTED, CREATE_MARKET_AVATAR_CHANGE_SUCCEEDED, CREATE_MARKET_AVATAR_CHANGE_FAILED,
+    {
+      params: files[0]
+    }
+  )
+}
+
+export function onChangeCover(files) {
+  if(!files) return {
+    type: CREATE_MARKET_COVER_CHANGE_SUCCEEDED,
+  }
+  return asyncFunction(
+    postIpfsImg,
+    CREATE_MARKET_COVER_CHANGE_REQUESTED, CREATE_MARKET_COVER_CHANGE_SUCCEEDED, CREATE_MARKET_COVER_CHANGE_FAILED,
+    {
+      params: files[0]
+    }
+  )
 }
 
 export function reset() {
