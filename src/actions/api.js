@@ -36,3 +36,11 @@ export const API_MARKET_TRADE_LIST = '/api/market/trade/list';
 export const API_USER_TRADE_LIST = '/api/user/trade/list';
 export const API_USER_TRADE_DETAIL = '/api/user/trade/one';
 export const API_KLINE_DATA = '/api/kline/data';
+//proposal-controller
+export const API_MARKET_PROPOSAL_LIST = '/api/market/proposal/list';
+export const API_PROPOSAL_ONE = '/api/proposal/one';
+export const API_USER_PROPOSAL_LIST = 'API_USER_PROPOSAL_LIST';
+export const API_USER_PROPOSAL_SUGGEST_EDITING = '/api/user/proposal/suggest/editing';
+export const API_USER_PROPOSAL_SUGGEST_SAVE = '/api/user/proposal/suggest/save';
+export const API_USER_PROPOSAL_SUT_EDITING = '/api/user/proposal/sut/editing';
+export const API_USER_PROPOSAL_SUT_SAVE = '/api/user/proposal/sut/save';
