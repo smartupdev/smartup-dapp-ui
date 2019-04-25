@@ -76,8 +76,10 @@ const CreateMarket = ({
             <Text S right error={error.desc}>150 characters to help new members get to know your community.</Text>
             <Label>Market Avatar</Label>
             <DropToUpload MarginBottomM onChoose={onChangeAvatar} isLoading={avatarUploading} value={avatarUrl} imageHeight='100px' imageWidth='100px' />
+            { error.avatar && <Text  right error={true}>This is required.</Text> }
             <Label>Market Cover Photo</Label>
             <DropToUpload MarginBottomM onChoose={onChangeCover} isLoading={coverUploading} value={coverUrl} imageHeight='300px' imageWidth='450px' />
+            { error.cover && <Text  right error={true}>This is required.</Text> }
             <Row spacingTopL right>
               <Next disabled={!page1Ready} />
             </Row>

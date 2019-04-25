@@ -31,7 +31,9 @@ export const initialState = {
   marketId: '',
   error: {
     name: null,
-    desc: null
+    desc: null,
+    cover: null,
+    avatar: null
   }
 }
 
@@ -60,7 +62,10 @@ export default (state = initialState, action) => {
       return {
         ...state,
         coverUploading: false,
-        ...hashToCover(action.payload)
+        ...hashToCover(action.payload),
+        error: action.payload 
+          ? { ...state.error, cover: initialState.error.cover }
+          : state.error
       } 
     case CREATE_MARKET_COVER_CHANGE_FAILED:
       return {
@@ -77,7 +82,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         avatarUploading: false,
-        ...hashToAvatar(action.payload)
+        ...hashToAvatar(action.payload),
+        error: action.payload 
+        ? { ...state.error, avatar: initialState.error.avatar }
+        : state.error
+
       }
     case CREATE_MARKET_AVATAR_CHANGE_FAILED:
       return {
@@ -106,7 +115,7 @@ export default (state = initialState, action) => {
           desc, name, 
           ...hashToAvatar(photo),
           ...hashToCover(cover),
-          activeIndex: status === 'locked' ? -1 : 2
+          activeIndex: status === 'locked' ? -1 : 0
         }
       }
     } 
@@ -183,10 +192,14 @@ export default (state = initialState, action) => {
     }
 
     case CREATE_MARKET_SET_TAB: {
-      const block = state.error.name || state.error.desc
+      const error = {...state.error}
+      if(!state.avatarHash) error.avatar = true
+      if(!state.coverHash) error.cover = true
+      const block = error.name || error.desc || error.avatar || error.cover
       return {
         ...state,
-        activeIndex: block ? state.activeIndex : action.payload
+        activeIndex: block ? state.activeIndex : action.payload,
+        error
       }
     }
 

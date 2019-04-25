@@ -48,10 +48,11 @@ export const Text = styled.p`
     color: ${p.theme.red};
     :before {
       content: "!";
+      font-size: 10px;
       border-radius: 8px;
       border: 1px solid;
-      padding-left: 5px;
-      padding-right: 5px;
+      padding-left: 6.5px;
+      padding-right: 6.5px;
       margin-right: 4px;
     }    
   `}
