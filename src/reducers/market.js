@@ -11,12 +11,16 @@ import {
   MARKET_TOP_REQUESTED, MARKET_TOP_SUCCEEDED, MARKET_TOP_FAILED,MARKET_TOP_SORT
 } from '../actions/actionTypes';
 
+import { ipfsHost } from '../actions/ipfs'
+
 function marketMassage(m) {
   return {
     ...m,
     ...m.data,
     id: m.marketId,
     address: m.marketAddress,
+    cover: m.cover && (ipfsHost + m.cover),
+    avatar: m.photo && (ipfsHost + m.photo),
     numberOfComments: m.data ? m.data.postCount : '-',
     numberOfSub: m.data ? m.data.userCount : '-',
     priceIn7d: m.sevenDayNode,

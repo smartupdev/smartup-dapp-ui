@@ -44,7 +44,7 @@ const _Price = ({ value,record }) => <Text price>{toPrice(record.data.last)}</Te
 const _Volume = ({ value,record }) => <Text primary>{toPrice(record.data.latelyVolume, 0)}</Text>
 const _Cap = ({ value,record }) => <Text>{toPrice(record.data.amount, 0)}</Text>
 const TableName = [
-  { label: '', value: 'icon', sortable: false, layoutStyle: { width: `calc( ${theme.iconSizeM} + 15px )`, center: true }, component: _Icon },
+  { label: '', value: 'avatar', sortable: false, layoutStyle: { width: `calc( ${theme.iconSizeM} + 15px )`, center: true }, component: _Icon },
   { label: lang.home.table.name[currentLang], value: 'name', sortable: true, layoutStyle: { flex: 1, width: colWidth }, component: _Name },
   { label: lang.home.table.change[currentLang], value: 'latelyChange', sortable: true, layoutStyle: { width: colWidth }, component: _Percent },
   { label: lang.home.table.price[currentLang], value: 'last', sortable: true, layoutStyle: { width: colWidth }, component: _Price },

@@ -14,7 +14,7 @@ const TableExpand = ({ record, history, collectMarket }) => {
   return (
   <Row BottomS TopS>
     <Col LeftXS RightL>
-      <Image source={record.image} photo />
+      <Image source={record.cover} photo cover />
     </Col>
     <Col spaceBetween flex={1}>
       <Row spaceBetween> 
