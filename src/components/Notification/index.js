@@ -25,10 +25,10 @@ const Dot = styled.div`
 `
 const Main = styled(Col)`
   margin-left: ${p => p.theme.spacingXS};
-  width: 200px;
-`// margin number
+  flex: 1;
+`
 export default ({ image, sender, title, content, date, unread, expanded, onClick, id }) => 
-  <Container unread={unread} onClick={onClick && (() => onClick(id))}>
+  <Container spaceBetween unread={unread} onClick={onClick && (() => onClick(id))}>
     <Dot unread={unread} />
     <Image source={image} size={'18px'} />
     <Main expanded={expanded}>

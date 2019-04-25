@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import styled from 'styled-components'
 import Image from '../../components/Image'
@@ -17,14 +17,17 @@ import { shorten } from '../../lib/util'
 import { connect } from 'react-redux'
 import { setActiveTab } from '../../actions/panel'
 import { updateUserName, updateUserAvatar, loginMetaMask } from '../../actions/user'
+import { watch as watchNotification } from '../../actions/notification'
 
 const PANEL_WIDTH = 300
 
-const TABS = [
-  { label: lang.panel.tab.portfilio[currentLang], component: Portfolio },
-  { label: lang.panel.tab.notification[currentLang], dot: true, component: Notification },
-  { label: lang.panel.tab.setting[currentLang], component: Setting },
-]
+function getTabs(unreadCount) {
+  return [
+    { label: lang.panel.tab.portfilio[currentLang], component: Portfolio },
+    { label: lang.panel.tab.notification[currentLang], dot: !!unreadCount, component: Notification },
+    { label: lang.panel.tab.setting[currentLang], component: Setting },
+  ]
+}
 
 const Top = styled(Row)`
   padding: ${p => `${p.theme.spacingS} ${p.theme.spacingM}`};
@@ -42,8 +45,13 @@ const Panel = ({
   metaMaskHint, account, 
   userAvatar, userName, loginMetaMask, 
   loggedIn, isLoading, metaMaskEableError, metaMaskSignError,
-  setActiveTab, activeTabIndex }) => {
+  setActiveTab, activeTabIndex,
+  watchNotification, unreadCount }) => {
+  const TABS = getTabs(unreadCount)
   const Main = TABS[activeTabIndex].component
+  useEffect(() => {
+    watchNotification()
+  }, [])
   return (
     <Col width={`${PANEL_WIDTH}px`} center={!loggedIn} centerVertical={!loggedIn}>
       {loggedIn ?
@@ -94,6 +102,7 @@ const mapStateToProps = state => ({
   isLoading: state.user.isLoading,
   metaMaskEableError: state.user.metaMaskEableError,
   metaMaskSignError: state.user.metaMaskSignError,
+  unreadCount: state.notification.unreadCount
 });
 
 const mapDispatchToProps = {
@@ -101,6 +110,7 @@ const mapDispatchToProps = {
   updateUserName,
   updateUserAvatar,
   setActiveTab,
+  watchNotification
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Panel);

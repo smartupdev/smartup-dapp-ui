@@ -49,8 +49,14 @@ function _onChange(onChange, number) {
   return undefined
 }
 
+function shouldBlur(e) {
+  if (e.keyCode === 13) { // enter
+    e.target.blur();
+  }
+}
+
 export default ({line, onChange, number, ...rest}) => line ? 
   <TextArea onChange={_onChange(onChange, number)} {...rest} rows={line} /> 
 : 
-  <TextInput onChange={_onChange(onChange, number)} {...rest} />
+  <TextInput onChange={_onChange(onChange, number)} onKeyDown={shouldBlur} {...rest} />
 

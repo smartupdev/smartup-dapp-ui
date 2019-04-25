@@ -4,6 +4,7 @@ export const API_USER_COLLECT_DEL = '/api/user/collect/del';
 export const API_USER_COLLECT_LIST = '/api/user/collect/list';
 //notification-controller
 export const API_USER_NOTIFICATION_LIST = '/api/user/notification/list';
+export const API_USER_NOTIFICATION_SEARCH = '/api/user/notification/search';
 export const API_USER_NOTIFICATION_SET_READ = '/api/user/notification/set/read';
 export const API_USER_NOTIFICATION_UNREAD = '/api/user/notification/unread';
 //post-controller

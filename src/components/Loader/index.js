@@ -15,8 +15,8 @@ const DonutStyle = styled.div`
   border: 4px solid rgba(0, 0, 0, 0.1);
   border-left-color: #5778F3;
   border-radius: 50%;
-  width: 30px;
-  height: 30px;
+  width: ${p => p.size};
+  height: ${p => p.size};
   animation: ${donutSpin} 1.2s linear infinite;
 `
 
@@ -28,13 +28,13 @@ const DcStyle = styled.div`
     min-width: 100px;
   }
 `
-export function DonutLoader({ page }) {
+export function DonutLoader({ page, size='30px' }) {
   if(page) return (
     <Col center spacingTopXL>
-      <DonutLoader />
+      <DonutLoader size={size} />
     </Col>
   )
-  return <DonutStyle />
+  return <DonutStyle size={size} />
 } 
 
 export const DcLoader = () =>
