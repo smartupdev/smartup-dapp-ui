@@ -2,15 +2,20 @@ import React, {useEffect} from 'react'
 import { Row, Col } from '../../components/Layout'
 import NotificationItem from '../../components/Notification'
 import Search from '../../components/Search'
+import { DonutLoader } from '../../components/Loader'
+import Button from '../../components/Button'
+import Text from '../../components/Text'
+import { Comment } from '../../components/Icon'
 import Hr from '../../components/Hr'
 import { Link } from '../../routes'
+import theme from '../../theme'
 import ethIcon from '../../images/eth.png';
 import smartupIcon from '../../images/smartup.png';
 
 import { shorten } from '../../lib/util';
 
 import { connect } from 'react-redux'
-import { getNotificationList, setNotificationRead } from '../../actions/notification'
+import { getList, read, readAll, toggleShowUnread, onChangeKeyword } from '../../actions/notification'
 
 const TYPES = {
   personal: {
@@ -27,20 +32,28 @@ const TYPES = {
 //   ...p,
 //   [TYPES[t].value]: TYPES[t].image
 // }), {})
-
+function noop() {}
 const Notification = ({
-  notifications,
-  getNotificationList,
-  setNotificationRead,
-  userAvatar
+  notification: { notifications, showUnreadOnly, unreadCount, gettingNotifications, keyword },
+  getList,
+  read,
+  readAll,
+  userAvatar,
+  toggleShowUnread,
+  onChangeKeyword,
 }) => {
   useEffect(() => {
-    getNotificationList()
-  }, [])
+    getList()
+  }, [showUnreadOnly])
+  const disabled = gettingNotifications
+  const readAllDisabled = !unreadCount || disabled
   return (
     <Col>
-      <Row relative right>
-        <Search id='notification' />
+      <Row relative centerVertical>
+        { !keyword && <Comment S LeftS color={showUnreadOnly && !disabled ? theme.colorPrimary : theme.colorSecondary} onClick={(!disabled && toggleShowUnread) || noop} />}
+        <Text LeftS RightS primary={!readAllDisabled} note={readAllDisabled} onClick={readAllDisabled ? noop : readAll} disabled={readAllDisabled}>Read all</Text>
+        { gettingNotifications && <DonutLoader size='12px' /> }
+        <Search id='notification' backgroundColor={theme.bgColor} onChange={onChangeKeyword} value={keyword} onSearch={getList} />
       </Row>
       <Link>
       { ({ goto }) =>
@@ -50,10 +63,10 @@ const Notification = ({
             id={n.notificationId}
             onClick={() => {
               n.content && n.content.marketId && goto.trading({id: n.content.marketId})
-              setNotificationRead(n.notificationId)
+              !n.isRead && read(n.notificationId)
             }}
             image={n.style === TYPES.system.value ? TYPES.system.image : userAvatar}
-            sender={shorten(n.userAddress)}
+            sender={n.style === TYPES.system.value ? 'SmartUp' : 'Me'}
             title={n.title}
             content={n.text}
             date={n.createTime}
@@ -68,12 +81,12 @@ const Notification = ({
 }
 
 const mapStateToProps = state => ({
-  notifications: state.notification.notifications,
+  notification: state.notification,
   userAvatar: state.user.userAvatar
 });
 
 const mapDispatchToProps = { 
-  getNotificationList, setNotificationRead
+  getList, read, readAll, toggleShowUnread, onChangeKeyword
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Notification);

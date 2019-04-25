@@ -2,6 +2,10 @@ const apiBaseUrl = 'http://39.105.101.248:86';
 // const apiBaseUrl = 'https://jsonplaceholder.typicode.com';
 const fetchTimeout = 20000
 
+export function delay(ms = 1000) {
+  return new Promise(resolve => setTimeout(resolve, ms))
+}
+
 export function toParams(params = {}) {
   return Object.keys(params).reduce((p, key, i) =>
     [null, undefined].includes(params[key]) ? p :

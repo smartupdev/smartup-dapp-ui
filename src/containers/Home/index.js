@@ -65,7 +65,7 @@ const Home = ({ markets, expandedRecords, activeTabIndex, totalResults, sortBy, 
         <Tab activeIndex={activeTabIndex} tabs={FILTERS} onClick={setActiveTab} type='simple' />
         <Row centerVertical>
           <Text HS S note>{totalResults} RESULTS</Text>
-          <Search backgroundColor={theme.bgColorLight} id='home' content={searchContent} onChange={onSearchChange} onSearchClick={searchMarketClick}/>
+          <Search backgroundColor={theme.bgColorLight} id='home' content={searchContent} onChange={onSearchChange} onSearch={searchMarketClick}/>
         </Row>
       </Top>
       <Table
