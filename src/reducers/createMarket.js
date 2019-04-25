@@ -35,6 +35,20 @@ export const initialState = {
   }
 }
 
+function hashToAvatar(hash) {
+  return {
+    avatarHash: hash,
+    avatarUrl: hash ? ipfsHost + hash : initialState.avatarUrl
+  }
+}
+
+function hashToCover(hash) {
+  return {
+    coverHash: hash,
+    coverUrl: hash ? ipfsHost + hash : initialState.coverUrl
+  }
+}
+
 export default (state = initialState, action) => {
   switch (action.type) {
     case CREATE_MARKET_COVER_CHANGE_REQUESTED:
@@ -46,8 +60,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         coverUploading: false,
-        coverHash: action.payload,
-        coverUrl: action.payload ? ipfsHost + action.payload : initialState.coverUrl
+        ...hashToCover(action.payload)
       } 
     case CREATE_MARKET_COVER_CHANGE_FAILED:
       return {
@@ -64,8 +77,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         avatarUploading: false,
-        avatarHash: action.payload,
-        avatarUrl: action.payload ? ipfsHost + action.payload : initialState.avatarUrl
+        ...hashToAvatar(action.payload)
       }
     case CREATE_MARKET_AVATAR_CHANGE_FAILED:
       return {
@@ -84,13 +96,17 @@ export default (state = initialState, action) => {
     // "stage" : "creating"
     // status: "locked"
     // stage: "pending"
-      const { marketId, description: desc, name, status } = action.payload
+      const { marketId, description: desc, name, status, photo, cover } = action.payload
       return {
         ...state,
         isFetching: false,
         isReady: true,
         ...marketId && {
-          marketId, desc, name, activeIndex: status === 'locked' ? -1 : 2
+          marketId, 
+          desc, name, 
+          ...hashToAvatar(photo),
+          ...hashToCover(cover),
+          activeIndex: status === 'locked' ? -1 : 2
         }
       }
     } 
