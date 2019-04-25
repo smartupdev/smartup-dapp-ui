@@ -4,6 +4,7 @@ const fetchTimeout = 20000
 
 export function toParams(params = {}) {
   return Object.keys(params).reduce((p, key, i) =>
+    [null, undefined].includes(params[key]) ? p :
     `${p}${i ? '&' : '?'}${key}=${params[key]}`
     , '')
 }

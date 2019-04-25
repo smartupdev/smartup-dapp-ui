@@ -13,17 +13,23 @@ import ethIcon from '../../images/eth.png';
 import smartupIcon from '../../images/smartup.png';
 import successImg from '../../images/market_success.png';
 import Chart from './Chart'
+import DropToUpload from '../../components/DropToUpload'
 
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux';
-import { setActiveIndex, onChangeName, onChangeDesc, reset, get, create } from '../../actions/createMarket'
+import { setActiveIndex, onChangeName, onChangeDesc, reset, get, create, onChangeAvatar, onChangeCover } from '../../actions/createMarket'
 // import { createMarket } from '../../actions/market'
 
 const options = ['Basic Information', 'Price Equation', 'Deposit']
 const optionsSpeed = ['Slow', 'Standard', 'Fast']
 const CreateMarket = ({
-  createMarketState: { activeIndex, name, desc, error, isFetching, isReady, marketId }, 
-  setActiveIndex, create, onChangeName, onChangeDesc, reset, get
+  createMarketState: { 
+    activeIndex, name, desc, error, isFetching, isReady, marketId, 
+    avatarUrl, avatarUploading,
+    coverUrl, coverUploading  
+  }, 
+  setActiveIndex, create, onChangeName, onChangeDesc, reset, get, 
+  onChangeAvatar, onChangeCover
 }) => {
 
   useEffect( () => {
@@ -68,6 +74,10 @@ const CreateMarket = ({
             <Label>Market description</Label>
             <Input background L line={3} value={desc} onChange={e => onChangeDesc(e.target.value)} disabled={isFetching} />
             <Text S right error={error.desc}>150 characters to help new members get to know your community.</Text>
+            <Label>Market Avatar</Label>
+            <DropToUpload MarginBottomM onChoose={onChangeAvatar} isLoading={avatarUploading} value={avatarUrl} imageHeight='100px' imageWidth='100px' />
+            <Label>Market Cover Photo</Label>
+            <DropToUpload MarginBottomM onChoose={onChangeCover} isLoading={coverUploading} value={coverUrl} imageHeight='300px' imageWidth='450px' />
             <Row spacingTopL right>
               <Next disabled={!page1Ready} />
             </Row>
@@ -147,7 +157,7 @@ const mapStateToProps = state => ({
   createMarketState: state.createMarket,
 });
 const mapDispatchToProps = {
-  setActiveIndex, create, onChangeName, onChangeDesc, reset, get
+  setActiveIndex, create, onChangeName, onChangeDesc, reset, get, onChangeAvatar, onChangeCover
 } 
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(CreateMarket));

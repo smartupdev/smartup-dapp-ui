@@ -3,6 +3,8 @@ import toBuffer from 'blob-to-buffer';
 
 const client = ipfsClient('ipfs-api.smartup.global', '80', { protocol: 'http' });
 
+export const ipfsHost = 'https://ipfs.smartup.global/ipfs/';
+
 //IPFS写入图片
 export function postIpfsImg(file) {
   return new Promise((resolve, reject) => {
@@ -17,7 +19,7 @@ export function postIpfsImg(file) {
           } else {
             if (ret && ret[0] && ret[0].hash) {
               resolve(ret[0].hash);
-              postResult = ret[0].hash;
+              // postResult = ret[0].hash;
             } else {
               reject('unknown error');
             }

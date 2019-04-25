@@ -1,10 +1,13 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useEffect } from 'react'
 import { WithMarket } from '../../routes'
 import { Row, Col } from '../../components/Layout'
 import Text from '../../components/Text'
 import Hr from '../../components/Hr'
 import theme from '../../theme'
 import Icon, { Comment, Trade, People, More, Bookmarked, Share } from '../../components/Icon'
+
+import { connect } from 'react-redux'
+import { getMarketPost } from '../../actions/post'
 
 import { toToken, toAgo, toFullDate } from '../../lib/util'
 
@@ -24,7 +27,10 @@ const posts = [
 
 // 'Posted by Smart, about 3 hours ago'
 
-export default function() {
+function Disussion({ getMarketPost, post }) {
+  useEffect( () => {
+    getMarketPost()
+  }, [])
   return posts.map( ({ id, authorName, time, title, content, numberOfLike, numberOfDislike, numberOfComment }) =>
     <Fragment key={id}>
       <Row spaceBetween spacingM>
@@ -42,3 +48,12 @@ export default function() {
     </Fragment>
   )  
 }
+
+const mapStateToProps = state => ({
+  post: state.post,
+});
+const mapDispatchToProps = {
+  getMarketPost
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Disussion);

@@ -13,6 +13,8 @@ import Market from './containers/Market'
 import Trading from './containers/Market/Trading'
 import General from './containers/Market/General'
 import Discussion from './containers/Market/Discussion'
+import DiscussionDetail from './containers/Market/DiscussionDetail'
+import DiscussionCreate from './containers/Market/DiscussionCreate'
 import Proposal from './containers/Market/Proposal'
 import Flag from './containers/Market/Flag'
 import Account from './containers/Account'
@@ -31,6 +33,8 @@ let routes = [
   { id: 'trading', path: '/market/trading', component: Trading, from: 'home' },
   { id: 'general', path: '/market/general', component: General, from: 'home' },
   { id: 'discussion', path: '/market/discussion', component: Discussion, from: 'home' },
+  { id: 'discussionDetail', path: '/market/discussion/details', component: DiscussionDetail, from: 'home' },
+  { id: 'discussionCreate', path: '/market/discussion/create', component: DiscussionCreate, from: 'home' },
   { id: 'proposal', path: '/market/proposal', component: Proposal, from: 'home' },
   { id: 'flag', path: '/market/flag', component: Flag, from: 'home' },
 ]
