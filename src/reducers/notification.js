@@ -32,10 +32,7 @@ export default (state = initialState, action) => {
         case USER_NOTIFICATION_LIST_SUCCEEDED:
             return {
                 ...state,
-                notifications: action.payload.map( n => ({
-                    ...n,
-                    ...JSON.parse(n.content)
-                })),
+                notifications: action.payload,
                 gettingNotifications: false,
                 notificationsError: initialState.notificationsError,
             };

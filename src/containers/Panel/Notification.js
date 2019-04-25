@@ -7,43 +7,32 @@ import { Link } from '../../routes'
 import ethIcon from '../../images/eth.png';
 import smartupIcon from '../../images/smartup.png';
 
+import { shorten } from '../../lib/util';
+
 import { connect } from 'react-redux'
 import { getNotificationList, setNotificationRead } from '../../actions/notification'
 
 const TYPES = {
-  trade: {
-    value: 'TradeFinish',
-    image: smartupIcon,
-  },
-  announcement: {
-    value: 'announcement',
-    image: ethIcon
+  personal: {
+    value: 'personal',
+    image: null,
   },
   system: {
     value: 'system',
-    image: ethIcon
-  },
-  market: {
-    value: 'MarketCreateFinish',
-    image: smartupIcon,
+    image: smartupIcon
   },
 }
 
-const typeValueToImage = Object.keys(TYPES).reduce((p, t) => ({
-  ...p,
-  [TYPES[t].value]: TYPES[t].image
-}), {})
-
-// const notificaitons = [
-//   { id: 1, type: TYPES.trade.value, unread: true, sender: 'SMARTUP', title: 'Trade order', content: `You're drawn to be juror for dispute of idea rdv43w efr rfv r gf 43wsrf `, createdDateTime: 1554266225299, },
-//   { id: 2, type: TYPES.trade.value, unread: false, sender: 'SMARTUP', title: 'Trade order', content: `You're drawn to be juror for dispute of idea `, createdDateTime: 1553740797139, },
-//   { id: 3, type: TYPES.announcement.value, unread: true, sender: 'SMARTUP', title: 'Trade order', content: `You're drawn to be juror for dispute of idea`, createdDateTime: 1553740797139, },
-// ]
+// const typeValueToImage = Object.keys(TYPES).reduce((p, t) => ({
+//   ...p,
+//   [TYPES[t].value]: TYPES[t].image
+// }), {})
 
 const Notification = ({
   notifications,
   getNotificationList,
-  setNotificationRead
+  setNotificationRead,
+  userAvatar
 }) => {
   useEffect(() => {
     getNotificationList()
@@ -60,13 +49,13 @@ const Notification = ({
             key={n.notificationId}
             id={n.notificationId}
             onClick={() => {
-              goto.trading({id: n.marketId})
+              n.content && n.content.marketId && goto.trading({id: n.content.marketId})
               setNotificationRead(n.notificationId)
             }}
-            image={typeValueToImage[n.type]}
-            sender={n.userAddress}
-            title={n.content.title}
-            content={n.content.text}
+            image={n.style === TYPES.system.value ? TYPES.system.image : userAvatar}
+            sender={shorten(n.userAddress)}
+            title={n.title}
+            content={n.text}
             date={n.createTime}
             unread={!n.isRead}
           />
@@ -79,7 +68,8 @@ const Notification = ({
 }
 
 const mapStateToProps = state => ({
-  notifications: state.notification.notifications
+  notifications: state.notification.notifications,
+  userAvatar: state.user.userAvatar
 });
 
 const mapDispatchToProps = { 
