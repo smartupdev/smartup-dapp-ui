@@ -246,7 +246,7 @@ export default (state = initialState, action) => {
           avgAmount: trade.sutAmount / trade.ctAmount,
           userIcon: trade.user.avatarIpfsHash,
           username: trade.user.name
-        })),
+        })).filter(t => t.stage === 'success'),
         gettingTrades: false,
         getTradesError: initialState.getTradesError
       };

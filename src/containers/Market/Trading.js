@@ -19,13 +19,13 @@ import Avatar from '../../components/Avatar'
 import Botton from '../../components/Button'
 
 import lang, { currentLang } from '../../lang'
-import { toToken, toAgo, toFullDate } from '../../lib/util'
+import { toToken, toAgo, toFullDate, shorten } from '../../lib/util'
 
 import Chart from './Chart'
 
 const model = [
   { label: lang.trading.table.buySell[currentLang], value: 'type', layoutStyle: { flex: 1, center: true }, component: ({ value }) => <Text red={value === 'sell'} green={value !== 'sell'}>{value === 'sell' ? lang.trading.table.sell[currentLang] : lang.trading.table.buy[currentLang]}</Text> },
-  { label: lang.trading.table.user[currentLang], value: 'userAddress', layoutStyle: { flex: 1, center: true }, component: ({ record }) => <Row centerVertical><Avatar icon={record.userIcon} /><Text>{record.username}</Text></Row> },
+  { label: lang.trading.table.user[currentLang], value: 'userAddress', layoutStyle: { flex: 1 }, component: ({ record }) => <Row centerVertical><Avatar icon={record.userIcon} /><Text>{shorten(record.username)}</Text></Row> },
   { label: lang.trading.table.time[currentLang], value: 'createTime', layoutStyle: { flex: 1, center: true }, component: ({ value }) => <Text>{toAgo(value)}</Text> },
   { label: lang.trading.table.avgPrice[currentLang], value: 'avgAmount', layoutStyle: { flex: 1, center: true }, component: ({ value }) => <Text>{toToken(value)}</Text> },
   { label: lang.trading.table.ct[currentLang], value: 'ctAmount', layoutStyle: { flex: 1, center: true }, },
@@ -37,7 +37,7 @@ const klineTabs = [
   { label: '1week' },
 ]
 
-function Trading({ market, tradeState, setTab, onChangeCT, onChangeSUT, toggleIsSell, toggleTnc, onTrade, reset, userSut, getTradeList, getKlineList }) {
+function Trading({ market, gettingMarket, tradeState, setTab, onChangeCT, onChangeSUT, toggleIsSell, toggleTnc, onTrade, reset, userSut, getTradeList, getKlineList }) {
   useEffect(() => {
     if(market) {
       getTradeList()
@@ -48,7 +48,7 @@ function Trading({ market, tradeState, setTab, onChangeCT, onChangeSUT, toggleIs
   const { tabIndex, ct, sut, isSell, isTrading, trades, klineData, agreeTnc, tradingError } = tradeState
   const sutError = +userSut < +sut ? 'You need more SmartUp to make this trade.' : null
 
-  if(!market) return null
+  if(!market || gettingMarket) return null
 
   return (
     <>
@@ -159,6 +159,7 @@ function Trading({ market, tradeState, setTab, onChangeCT, onChangeSUT, toggleIs
 const mapStateToProps = state => ({
   tradeState: state.trade,
   market: state.market.currentMarket,
+  gettingMarket: state.market.gettingMarket,
   userSut: state.user.sutBalance,
 })
 
