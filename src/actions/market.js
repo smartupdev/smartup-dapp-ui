@@ -54,16 +54,19 @@ export function getDefaultMarketList() {
       orderBy: getState().home.sortBy,
       asc: getState().home.orderBy === 'asc'
     }
-    dispatch(asyncFunction(
-      fetch.post,
-      GET_MARKET_LIST_REQUESTED, GET_MARKET_LIST_SUCCEEDED, GET_MARKET_LIST_FAILED,
-      {
-        params: API_MARKET_LIST,
-        params2: requestParams,
-        responsePayload: reps => reps.list
-      }
-    )
-    )
+
+    if(getState().home.activeTabIndex === 0){
+      dispatch(asyncFunction(
+        fetch.post,
+        GET_MARKET_LIST_REQUESTED, GET_MARKET_LIST_SUCCEEDED, GET_MARKET_LIST_FAILED,
+        {
+          params: API_MARKET_LIST,
+          params2: requestParams,
+          responsePayload: reps => reps.list
+        }
+      )
+      )
+    }
   }
 }
 
