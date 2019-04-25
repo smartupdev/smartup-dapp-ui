@@ -67,10 +67,10 @@ function Trading({ market, gettingMarket, tradeState, setTab, onChangeCT, onChan
           <Text nowrap spacingBottomS>{toFullDate(Date.now())}</Text>
 
           <Row bottom spacingTopS>
-            <Text XL>{toToken(market.price24hLow, 2)}</Text><Text red S>&nbsp;&nbsp;low</Text>
+            <Text XL>{toToken(klineData.length > 0 ? klineData[klineData.length - 1].low : '', 2)}</Text><Text red S>&nbsp;&nbsp;low</Text>
           </Row>
           <Row bottom>
-            <Text XL>{toToken(market.price24hHigh, 2)}</Text><Text green S>&nbsp;&nbsp;high</Text>
+            <Text XL>{toToken(klineData.length > 0 ? klineData[klineData.length - 1].high : '', 2)}</Text><Text green S>&nbsp;&nbsp;high</Text>
           </Row>
           <Text note S>{lang.trading.change[currentLang]}</Text>
 

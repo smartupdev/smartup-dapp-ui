@@ -64,9 +64,9 @@ const Notification = ({
               setNotificationRead(n.notificationId)
             }}
             image={typeValueToImage[n.type]}
-            sender={n.sender}
-            title={n.title}
-            content={n.text}
+            sender={n.userAddress}
+            title={n.content.title}
+            content={n.content.text}
             date={n.createTime}
             unread={!n.isRead}
           />
