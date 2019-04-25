@@ -63,6 +63,10 @@ export function setActiveTab(activeTabIndex) {
       payload: activeTabIndex
     });
     if(activeTabIndex > 0){
+      dispatch({
+        type:SEARCH_CONTENT_CHANGE,
+        payload: '',
+      });
       dispatch(markerTop(activeTabIndex));
     }else{
       dispatch(getDefaultMarketList());
@@ -92,6 +96,10 @@ export function searchMarketClick(){
     dispatch({
       type: TABLE_HEADER_CLICK,
       payload: { sortBy, orderBy },
+    });
+    dispatch({
+      type: SET_ACTIVE_TAB,
+      payload: 0
     });
     dispatch(markerSearch(requestParams));
 

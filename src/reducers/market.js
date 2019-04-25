@@ -171,10 +171,7 @@ export default (state = initialState, action) => {
         gettingMarketList: true,
       };
     case MARKET_TOP_SUCCEEDED: {
-      let tempMarkets = action.payload.list.map(marketMassage);
-      const orderBy = action.payload.sortBy;
-      const asc = action.payload.orderBy === 'asc';
-      tempMarkets = marketSort(tempMarkets,orderBy,asc);
+      let tempMarkets = action.payload.map(marketMassage);
       return {
         ...state,
         markets: tempMarkets,

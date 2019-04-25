@@ -6,7 +6,7 @@ import {
   USER_COLLECT_DEL_REQUESTED, USER_COLLECT_DEL_SUCCEEDED, USER_COLLECT_DEL_FAILED,
   GET_MARKET_DETAIL_REQUESTED, GET_MARKET_DETAIL_SUCCEEDED, GET_MARKET_DETAIL_FAILED,
   MARKET_SEARCH_REQUESTED,MARKET_SEARCH_SUCCEEDED,MARKET_SEARCH_FAILED,
-  MARKET_TOP_REQUESTED,MARKET_TOP_SUCCEEDED,MARKET_TOP_FAILED
+  MARKET_TOP_REQUESTED,MARKET_TOP_SUCCEEDED,MARKET_TOP_FAILED,TABLE_HEADER_CLICK
 } from './actionTypes'
 import {
   API_MARKET_LIST, API_CT_ACCOUNT_IN_MARKET, API_MARKET_GLOBAL,
@@ -116,12 +116,13 @@ export function markerSearch(requestParams){
 //市场TOP
 export function markerTop(activeIndex){
   return (dispatch, getState) =>{
-    let sortBy = getState().home.sortBy;
-    let orderBy = getState().home.orderBy;
     const requestParams = {
       type: topFilters[activeIndex]
     }
-    
+    dispatch({
+      type: TABLE_HEADER_CLICK,
+      payload: { sortBy:'', orderBy:'' },
+    });
     dispatch(
       asyncFunction(
         fetch.post,
@@ -129,7 +130,6 @@ export function markerTop(activeIndex){
         {
           params: API_MARKET_TOP,
           params2: requestParams,
-          responsePayload: reps => {return{list:reps, sortBy, orderBy}}
         }
       )
     )
