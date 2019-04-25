@@ -39,16 +39,16 @@ const _Name = ({ value, record }) =>
     <Text>{value}</Text>
     <Text note S>{toAgo(record.createTime)}</Text>
   </Col>
-const _Percent = ({ value,record }) => <Text>{record.data.latelyChange ? record.data.latelyChange + '%' : '-'}</Text>
-const _Price = ({ value,record }) => <Text price>{toPrice(record.data.last)}</Text>
-const _Volume = ({ value,record }) => <Text primary>{toPrice(record.data.latelyVolume, 0)}</Text>
-const _Cap = ({ value,record }) => <Text>{toPrice(record.data.amount, 0)}</Text>
+const _Percent = ({ value,record }) => <Text>{record.latelyChange ? record.latelyChange + '%' : '-'}</Text>
+const _Price = ({ value,record }) => <Text price>{toPrice(record.last)}</Text>
+const _Volume = ({ value,record }) => <Text primary>{toPrice(record.lately_volume, 0)}</Text>
+const _Cap = ({ value,record }) => <Text>{toPrice(record.amount, 0)}</Text>
 const TableName = [
   { label: '', value: 'avatar', sortable: false, layoutStyle: { width: `calc( ${theme.iconSizeM} + 15px )`, center: true }, component: _Icon },
   { label: lang.home.table.name[currentLang], value: 'name', sortable: true, layoutStyle: { flex: 1, width: colWidth }, component: _Name },
   { label: lang.home.table.change[currentLang], value: 'latelyChange', sortable: true, layoutStyle: { width: colWidth }, component: _Percent },
   { label: lang.home.table.price[currentLang], value: 'last', sortable: true, layoutStyle: { width: colWidth }, component: _Price },
-  { label: lang.home.table.volume[currentLang], value: 'latelyVolume', sortable: true, layoutStyle: { width: colWidth }, component: _Volume },
+  { label: lang.home.table.volume[currentLang], value: 'lately_volume', sortable: true, layoutStyle: { width: colWidth }, component: _Volume },
   { label: lang.home.table.cap[currentLang], value: 'amount', sortable: true, layoutStyle: { width: colWidth }, component: _Cap },
   { label: lang.home.table.graph[currentLang], value: 'priceIn7d', sortable: false, layoutStyle: { width: '200px', center: true }, component: SimpleLineChart },
   { label: '', value: 'action', sortable: false, layoutStyle: { width: `calc( ${theme.iconSizeM} + 15px )`, right: true }, component: _More },

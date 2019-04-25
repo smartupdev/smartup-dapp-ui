@@ -23,6 +23,7 @@ function marketMassage(m) {
     avatar: m.photo && (ipfsHost + m.photo),
     numberOfComments: m.data ? m.data.postCount : '-',
     numberOfSub: m.data ? m.data.userCount : '-',
+    lately_volume: m.data.latelyVolume,
     priceIn7d: m.sevenDayNode,
     following: m.isCollect,
     overview: m.description,
