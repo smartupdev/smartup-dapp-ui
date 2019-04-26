@@ -47,7 +47,7 @@ const InfoBody = ({ info }) => {
           </Col>
           <Col>
             <Text XS note>{generalText.creator[currentLang]}</Text>
-            <Text M wordSpaceM spacingTopBase>{info.creatorAddress}</Text>
+            <Text M wordSpaceM spacingTopBase>{info.creator.name}</Text>
           </Col>
         </Row>
         <Col>
