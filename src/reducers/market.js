@@ -68,6 +68,9 @@ export const initialState = {
   gettingMarketList: false,
   marketListError: null,
   totalResults: 0,
+  pageSize: 10,
+  pageNumb: 1,
+  hasNextPage: true,
 
   ctInMarket: [],
   gettingCtInMarket: false,
@@ -154,12 +157,19 @@ export default (state = initialState, action) => {
         gettingMarketList: true,
       };
     case MARKET_SEARCH_SUCCEEDED: {
-      let tempMarkets = action.payload.map(marketMassage);
+      const {list:marketList, pageNumb, pageSize,hasNextPage} = action.payload;
+      let searchMarkets;
+      if(pageNumb === 1){
+        searchMarkets = marketList.map(marketMassage);
+      }else{
+        searchMarkets = state.markets.concat(marketList.map(marketMassage));
+      }
       return {
         ...state,
-        markets: tempMarkets,
-        totalResults: tempMarkets.length,
+        markets: searchMarkets,
+        totalResults: searchMarkets.length,
         gettingMarketList: false,
+        pageSize,pageNumb,hasNextPage,
         marketListError: initialState.marketListError
       };
     }
@@ -182,6 +192,8 @@ export default (state = initialState, action) => {
         markets: tempMarkets,
         totalResults: tempMarkets.length,
         gettingMarketList: false,
+        pageNumb: initialState.pageNumb,
+        hasNextPage: false,
         marketListError: initialState.marketListError
       };
     }
@@ -207,12 +219,21 @@ export default (state = initialState, action) => {
         gettingMarketList: true,
       };
     case GET_MARKET_LIST_SUCCEEDED: {
-      let tempMarkets = action.payload.map(marketMassage);
+      const {list:marketList, pageNumb, pageSize,hasNextPage} = action.payload;
+      let tempMarkets;
+      if(pageNumb === 1){
+        tempMarkets = marketList.map(marketMassage);
+      }else{
+        tempMarkets = state.markets.concat(marketList.map(marketMassage));
+      }
       return {
         ...state,
         markets: tempMarkets,
         totalResults: tempMarkets.length,
         gettingMarketList: false,
+        hasNextPage,
+        pageNumb,
+        pageSize,
         marketListError: initialState.marketListError
       };
     }

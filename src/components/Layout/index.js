@@ -17,6 +17,7 @@ const Flex = styled.div`
   ${props => props.width && css`width: ${props.width}`};
   ${props => props.height && css`height: ${props.height}; min-height: ${props.height}`};
   ${props => props.fullHeight && css`height: 100%`};
+  ${props => props.fullWidth && css`width: 100%`};
 
   ${onClickCss}
   ${spacingCss}
