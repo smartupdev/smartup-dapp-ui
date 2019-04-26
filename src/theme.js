@@ -20,6 +20,7 @@ const theme = {
   red: '#E8666D',
 
   white: '#ffffff',
+  black: '#333333',
   // #7fc88e  high
   // #ffd35c   yellow 
   // #1b242b  bg_highlight (dark blue)

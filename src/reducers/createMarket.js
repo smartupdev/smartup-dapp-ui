@@ -95,11 +95,11 @@ export default (state = initialState, action) => {
       }
 
 
-    case CREATE_MARKET_GET_REQUESTED: 
-      return {
-        ...state,
-        isFetching: true
-      }
+    // case CREATE_MARKET_GET_REQUESTED: 
+    //   return {
+    //     ...state,
+    //     isFetching: true
+    //   }
     case CREATE_MARKET_SAVE_SUCCEEDED: 
     case CREATE_MARKET_GET_SUCCEEDED: {
     // "stage" : "creating"
@@ -108,21 +108,21 @@ export default (state = initialState, action) => {
       const { marketId, description: desc, name, status, photo, cover } = action.payload
       return {
         ...state,
-        isFetching: false,
+        // isFetching: false,
         isReady: true,
         ...marketId && {
           marketId, 
           desc, name, 
           ...hashToAvatar(photo),
           ...hashToCover(cover),
-          activeIndex: status === 'locked' ? -1 : 0
+          activeIndex: status === 'locked' ? -1 : 2
         }
       }
     } 
     case CREATE_MARKET_GET_FAILED: 
       return {
         ...state,
-        isFetching: false,
+        // isFetching: false,
         isReady: true
       }
       
