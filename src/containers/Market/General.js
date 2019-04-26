@@ -9,7 +9,7 @@ import Panel from '../../components/Panel'
 import { Row, Col } from '../../components/Layout'
 import lang, { currentLang } from '../../lang'
 import theme from '../../theme';
-import { Share } from '../../components/Icon';
+import { Information } from '../../components/Icon';
 import { connect } from 'react-redux'
 import { toggleExpandedInfo, toggleExpandedRule, toggleExpandedSub } from '../../actions/general';
 import moment from 'moment';
@@ -88,7 +88,7 @@ const SubBody = ({ subs }) => {
 const TitleIcon = ({ title }) => {
   return (
     <Row centerVertical>
-      <Share S color={theme.white} />
+      <Information S color={theme.white} />
       <Text M wordSpaceS LeftS>{title}</Text>
     </Row>
   )

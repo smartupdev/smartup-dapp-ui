@@ -1,6 +1,6 @@
 import React from 'react'
 import { SVG } from './index'
-
+export default ({ color, ...rest }) => 
 <SVG {...rest}  color={color} version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 viewBox="0 0 100 100" xmlSpace="preserve">
 <path d="M97.8,45.5c2-1.9,2.7-4.7,1.8-7.4c-0.9-2.6-3.1-4.5-5.8-4.9l-24.2-3.5c-1-0.2-1.9-0.8-2.4-1.7L56.4,6.1
