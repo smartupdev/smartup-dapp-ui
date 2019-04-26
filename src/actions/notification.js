@@ -13,7 +13,7 @@ export function watch() {
     while(true) {
       const [error, res] = await dispatch(getUnread())
       const { unreadCount } = getState().notification
-      if(res.count !== unreadCount) dispatch(getList())
+      if(!error && res.count !== unreadCount) dispatch(getList())
       await delay(10000)
     }
   }
