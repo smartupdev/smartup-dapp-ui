@@ -1,10 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Col } from '../Layout'
-import { Close } from '../Icon'
+import { CloseWithCircle } from '../Icon'
 import Text from '../Text'
 import Button from '../Button'
 import Image from '../Image'
 import { DonutLoader } from '../Loader'
+import theme from '../../theme'
 import styled, { css } from 'styled-components'
 
 const Box = styled(Col)`
@@ -88,8 +89,9 @@ export default function ({
       <ImageBox show={value} center relative>
         <Col relative>
           <Image source={value} cover width={imageWidth} height={imageHeight} />
-          <TextWrapper centerVertical onClick={() => onChoose()}>
-            <Text center>Click here to delete</Text>
+          <TextWrapper centerVertical center onClick={() => onChoose()}>
+            {/* <Text center>Click here to delete</Text> */}
+            <CloseWithCircle M color={theme.black}  />
           </TextWrapper>
         </Col>
         {/* <Col relative>
