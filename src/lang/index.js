@@ -135,7 +135,7 @@ export default {
     sub: name('Subscribers'),
     table: {
       name: name('NAME'),
-      level: name('LEVEL'),
+      rank: name('RANK'),
       time: name('JOINED DATE'),
       ct: name('CT OWNED'),
     }

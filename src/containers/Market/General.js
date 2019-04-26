@@ -1,5 +1,142 @@
 import React from 'react'
 
-export default function() {
-  return <div>General</div>
+import Avatar from '../../components/Avatar'
+import Hr from '../../components/Hr'
+import Table from '../../components/Table'
+import Image from '../../components/Image'
+import Text from '../../components/Text'
+import Panel from '../../components/Panel'
+import { Row, Col } from '../../components/Layout'
+import lang, { currentLang } from '../../lang'
+import theme from '../../theme';
+import { Share } from '../../components/Icon';
+import { connect } from 'react-redux'
+import { toggleExpandedInfo, toggleExpandedRule, toggleExpandedSub } from '../../actions/general';
+const generalText = lang.general
+
+const info = {
+  createTime: '31 Jan 2019',
+  creator: 'Smart',
+  description: 'Your musical ideas into reality. using the one instrument you have been practising since birth-the voice.'
 }
+
+const subs = [{ rank: 1, name: 'Tony', ct: '180.29' }, { rank: 2, name: 'Tony', ct: '180.29' }, { rank: 3, name: 'Tony', ct: '180.29' },
+{ rank: 4, name: 'Tony', ct: '180.29' }, { rank: 5, name: 'Tony', ct: '180.29' }]
+
+const SubTableName = [
+  { label: generalText.table.rank[currentLang], value: 'rank', layoutStyle: { width: '80px', center: true }, component: ({ value }) => <Text S>{`${value}`}</Text> },
+  { label: generalText.table.name[currentLang], value: 'name', layoutStyle: { width: '80px', center: true }, component: ({ value }) => <Text S>{`${value}`}</Text> },
+  { label: generalText.table.ct[currentLang], value: 'ct', layoutStyle: { width: '160px', center: true }, component: ({ value }) => <Text S>{`${value}`}</Text> },
+]
+
+const rules = [
+  {id:1, title: '1.NO US Internal News or Policies', desc: '' },
+  {id:2, title: '2.NO Memes, Gifs, unlabeled NSFW images', desc: 'NO Memes, Gifs, unlabeled NSFW imagesNO Memes, Gifs, unlabeled NSFW imagesNO Memes, Gifs, unlabeled NSFW imagesNO Memes, Gifs, unlabeled NSFW imagesNO Memes, Gifs, unlabeled NSFW imagesNO Memes, Gifs, unlabeled NSFW images' },
+]
+
+const ruleTableName = [
+  { label: '', value: 'title', component: ({ value }) => <Text S>{`${value}`}</Text> },
+]
+
+const InfoBody = ({ info }) => {
+  return (
+    <Row BottomS TopS>
+      <Col LeftXS RightXS>
+        <Image photo cover />
+      </Col>
+      <Col centerVertical>
+        <Row BottomM>
+          <Col RightM>
+            <Text note>{generalText.createTime[currentLang]}</Text>
+            <Text M wordSpaceL>{info.createTime}</Text>
+          </Col>
+          <Col>
+            <Text note>{generalText.creator[currentLang]}</Text>
+            <Text M wordSpaceL>{info.creator}</Text>
+          </Col>
+        </Row>
+        <Col>
+          <Text note>{generalText.overview[currentLang]}</Text>
+          <Text M>{info.description}</Text>
+        </Col>
+      </Col>
+    </Row>
+  )
+}
+
+const TableExpand = ({record})=>{
+  return(
+    <Text S>{record.desc}</Text>
+  );
+}
+
+const RuleBody = ({ rules,expandedRecords }) => {
+  return (<Row BottomXS LeftS RightS spaceBetween>
+    <Table
+      S
+      inset
+      model={ruleTableName} 
+      values={rules}
+      expandedRecords={expandedRecords}
+      expandCompoent={TableExpand} />
+  </Row>);
+}
+
+const SubBody = ({ subs }) => {
+  return (<Row BottomXS LeftS RightS spaceBetween>
+    <Table S model={SubTableName} values={subs} />
+    <Table S model={SubTableName} values={subs} />
+    <Table S model={SubTableName} values={subs} />
+  </Row>);
+}
+
+const TitleIcon = ({ title }) => {
+  return (
+    <Row centerVertical>
+      <Share S color={theme.white} />
+      <Text M wordSpaceL LeftS>{title}</Text>
+    </Row>
+  )
+
+
+}
+
+const General = ({ expandedInfo, expandedRule, expandedSub, toggleExpandedInfo, toggleExpandedRule, toggleExpandedSub }) => {
+  return (
+    <Col>
+      <Panel
+        dark={expandedInfo}
+        expanded={expandedInfo}
+        onClick={toggleExpandedInfo}
+        header={<TitleIcon title={generalText.info[currentLang]} />}
+        body={<InfoBody info={info} />}
+      />
+      {/* <Panel
+        dark={expandedRule}
+        expanded={expandedRule}
+        onClick={toggleExpandedRule}
+        header={<TitleIcon title={generalText.rule[currentLang]} />}
+        body={<RuleBody rules={rules} expandedRecords={[2]}/>}
+      /> */}
+      <Panel
+        dark={expandedSub}
+        expanded={expandedSub}
+        onClick={toggleExpandedSub}
+        header={<TitleIcon title={generalText.sub[currentLang]} />}
+        body={<SubBody subs={subs} />}
+      />
+    </Col>
+  );
+}
+
+const mapStateToProps = state => ({
+  expandedInfo: state.general.expandedInfo,
+  expandedRule: state.general.expandedRule,
+  expandedSub: state.general.expandedSub,
+});
+
+const mapDispatchToProps = {
+  toggleExpandedInfo, toggleExpandedRule, toggleExpandedSub
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(General);
