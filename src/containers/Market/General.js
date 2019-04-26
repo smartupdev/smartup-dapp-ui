@@ -12,13 +12,8 @@ import theme from '../../theme';
 import { Share } from '../../components/Icon';
 import { connect } from 'react-redux'
 import { toggleExpandedInfo, toggleExpandedRule, toggleExpandedSub } from '../../actions/general';
+import moment from 'moment';
 const generalText = lang.general
-
-const info = {
-  createTime: '31 Jan 2019',
-  creator: 'Smart',
-  description: 'Your musical ideas into reality. using the one instrument you have been practising since birth-the voice.'
-}
 
 const subs = [{ rank: 1, name: 'Tony', ct: '180.29' }, { rank: 2, name: 'Tony', ct: '180.29' }, { rank: 3, name: 'Tony', ct: '180.29' },
 { rank: 4, name: 'Tony', ct: '180.29' }, { rank: 5, name: 'Tony', ct: '180.29' }]
@@ -42,22 +37,22 @@ const InfoBody = ({ info }) => {
   return (
     <Row BottomS TopS>
       <Col LeftXS RightXS>
-        <Image photo cover />
+        <Image source={info.cover} photo cover />
       </Col>
       <Col centerVertical>
         <Row BottomM>
           <Col RightM>
-            <Text note>{generalText.createTime[currentLang]}</Text>
-            <Text M wordSpaceL>{info.createTime}</Text>
+            <Text XS note>{generalText.createTime[currentLang]}</Text>
+            <Text M wordSpaceM spacingTopBase>{moment(info.createTime).format('DD MMM YYYY')}</Text>
           </Col>
           <Col>
-            <Text note>{generalText.creator[currentLang]}</Text>
-            <Text M wordSpaceL>{info.creator}</Text>
+            <Text XS note>{generalText.creator[currentLang]}</Text>
+            <Text M wordSpaceM spacingTopBase>{info.creatorAddress}</Text>
           </Col>
         </Row>
         <Col>
-          <Text note>{generalText.overview[currentLang]}</Text>
-          <Text M>{info.description}</Text>
+          <Text XS note>{generalText.overview[currentLang]}</Text>
+          <Text M spacingTopBase>{info.description}</Text>
         </Col>
       </Col>
     </Row>
@@ -94,14 +89,14 @@ const TitleIcon = ({ title }) => {
   return (
     <Row centerVertical>
       <Share S color={theme.white} />
-      <Text M wordSpaceL LeftS>{title}</Text>
+      <Text M wordSpaceS LeftS>{title}</Text>
     </Row>
   )
-
-
 }
 
-const General = ({ expandedInfo, expandedRule, expandedSub, toggleExpandedInfo, toggleExpandedRule, toggleExpandedSub }) => {
+const General = ({ expandedInfo, expandedRule, expandedSub, toggleExpandedInfo, 
+  toggleExpandedRule, toggleExpandedSub,market,gettingMarket }) => {
+  if(!market || gettingMarket) return null
   return (
     <Col>
       <Panel
@@ -109,7 +104,7 @@ const General = ({ expandedInfo, expandedRule, expandedSub, toggleExpandedInfo, 
         expanded={expandedInfo}
         onClick={toggleExpandedInfo}
         header={<TitleIcon title={generalText.info[currentLang]} />}
-        body={<InfoBody info={info} />}
+        body={<InfoBody info={market} />}
       />
       {/* <Panel
         dark={expandedRule}
@@ -133,6 +128,8 @@ const mapStateToProps = state => ({
   expandedInfo: state.general.expandedInfo,
   expandedRule: state.general.expandedRule,
   expandedSub: state.general.expandedSub,
+  market: state.market.currentMarket,
+  gettingMarket: state.market.gettingMarket,
 });
 
 const mapDispatchToProps = {
