@@ -48,7 +48,7 @@ const Notification = ({
   const disabled = gettingNotifications
   const readAllDisabled = !unreadCount || disabled
   return (
-    <Col>
+    <Col overflowAuto>
       <Row relative centerVertical>
         { !keyword && <Comment S LeftS color={showUnreadOnly && !disabled ? theme.colorPrimary : theme.colorSecondary} onClick={(!disabled && toggleShowUnread) || noop} />}
         <Text LeftS RightS primary={!readAllDisabled} note={readAllDisabled} onClick={readAllDisabled ? noop : readAll} disabled={readAllDisabled}>Read all</Text>

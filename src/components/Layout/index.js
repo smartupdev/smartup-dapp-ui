@@ -6,6 +6,7 @@ const Flex = styled.div`
   
   ${p => p.relative && css`position: relative;`}
   ${p => p.overflowHidden && css`overflow: hidden;`}
+  ${p => p.overflowAuto && css`overflow: auto;`}
   
   ${p => p.color && css`background-color: ${p.color}`}
   ${p => !!p.primary && css`background-color: ${p.theme.colorPrimary}`}
