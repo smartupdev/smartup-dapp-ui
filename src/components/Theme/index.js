@@ -21,6 +21,7 @@ export const fontSizeCss = css`
 
 export const fontCss = css`
   font-family: ${p => p.theme.fontFamily};
+  ${p => p.newline && css`white-space: pre;`}
   ${fontSizeCss}
 `
 

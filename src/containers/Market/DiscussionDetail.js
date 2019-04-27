@@ -55,8 +55,8 @@ function DiscussionDetail({
             <Avatar icon={userAvatar} username={username || shorten(userAddress)} />
           </Col>
           <Col LeftS TopBase>
-            <Col bgLight spacingXS round>
-              <Text note>{content}</Text>
+            <Col bgLight spacingXS round fitWidth>
+              <Text note newline>{content}</Text>
             </Col>
             <Row centerVertical TopXS>
               <Like S color={isLiked ? theme.green : theme.white} MarginRightBase />
