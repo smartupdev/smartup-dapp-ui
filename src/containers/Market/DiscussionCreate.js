@@ -31,9 +31,9 @@ function DiscussionCreate({ addApi, history }) {
   return (
     <Col spacingM>
       <Text BottomBase>Title</Text>
-      <TextInput background disabled={loading} value={title} onChange={e => setTitle(e.target.value)} />
+      <TextInput background disabled={loading} value={title} onChange={setTitle} />
       <Text TopS BottomBase>Text</Text>
-      <TextInput background line={5} disabled={loading} value={text} onChange={e => setText(e.target.value)} />
+      <TextInput background line={5} disabled={loading} value={text} onChange={setText} />
       <Text TopS BottomBase>Photo</Text>
       <DropToUpload disabled={loading} value={photo ? ipfsHost + photo : null} onChoose={uploadPhoto} />
       <Row right TopXL>

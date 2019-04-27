@@ -1,16 +1,19 @@
 import React, { Fragment, useEffect } from 'react'
+
 import { Row, Col } from '../../components/Layout'
 import Text from '../../components/Text'
 import Hr from '../../components/Hr'
 import Button from '../../components/Button'
 import { DonutLoader } from '../../components/Loader'
 import { Link } from '../../routes'
-import theme from '../../theme'
 import Icon, { Comment, Trade, People, More, Bookmarked, Add, Share, Like, Dislike, Reply } from '../../components/Icon'
+
+import DiscussionItem from './DiscussionItem'
 
 import { connect } from 'react-redux'
 import { getMarketPost } from '../../actions/post'
 
+import theme from '../../theme'
 import { toToken, toAgo, toFullDate, shorten } from '../../lib/util'
 
 const content = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent volutpat augue at egestas tincidunt. Morbi congue scelerisque euismod. Suspendisse pretium leo dui, sit amet pellentesque risus luctus at. Aliquam rutrum enim id interdum laoreet. Cras eget neque quis felis scelerisque bibendum. Curabitur ullamcorper tortor at risus dignissim, id scelerisque purus porttitor. In hac habitasse platea dictumst. Mauris sit amet laoreet elit, vitae convallis nulla. Pellentesque id maximus dui.
@@ -43,27 +46,11 @@ function Disussion({ getMarketPost, post }) {
       </Row>
     </Col>
   )
-  return posts.map( ({ id, authorName, time, title, content, numberOfLike = 1000, numberOfDislike = 2000, numberOfComment = 3000 }) =>
-    <Fragment key={id}>
+  return posts.map( post =>
+    <Fragment key={post.id}>
       <Link>
-        {
-          ({ goto }) => 
-          <Row spaceBetween spacingM onClick={() => goto.discussionDetail()}>
-            <Col flex={1} overflowHidden RightXL>
-              <Text S note>{`Posted by ${shorten(authorName)}, about ${toAgo(time)}`}</Text>
-              <Text VXS>{title}</Text>
-              <Text S note textOverflow>{content}</Text>
-              <Row centerVertical TopM>
-                <Like S color={theme.green} MarginRightBase /><Text RightM>{numberOfLike}</Text>
-                <Dislike S color={theme.red} MarginRightBase /><Text RightM>{numberOfDislike}</Text>
-                <Reply S color={theme.white} MarginRightBase /><Text RightM>{numberOfComment}</Text>
-              </Row>
-            </Col>
-            <Row>
-              <Share S color={theme.white} MarginRightS />
-              <Bookmarked S color={theme.white} />
-            </Row>
-          </Row>
+        {({ goto }) => 
+          <DiscussionItem onClick={() => goto.discussionDetail({ postId: post.id })} post={post} />
         }
       </Link>
       <Hr />

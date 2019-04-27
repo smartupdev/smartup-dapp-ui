@@ -29,6 +29,7 @@ const Row = styled(Flex)`
   ${props => props.centerVertical && css`align-items: center`};
   ${p => p.spaceBetween && css`justify-content: space-between`};
   ${p => p.spaceAround && css`justify-content: space-around`};
+  ${props => props.top && css`align-items: flex-start`};
   ${props => props.bottom && css`align-items: flex-end`};
   `
   

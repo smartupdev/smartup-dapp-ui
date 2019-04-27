@@ -105,7 +105,7 @@ function Trading({ market, gettingMarket, tradeState, setTab, onChangeCT, onChan
               <Text S>SMARTUP</Text>
             </Col>
             <Col spacingLeftS spacingTopS flex={1}>
-              <Input underline L center fullWidth disabled={true} value={sut && (+sut).toFixed(4)} onChange={e => onChangeSUT(e.target.value)} number />
+              <Input underline L center fullWidth disabled={true} value={sut && (+sut).toFixed(4)} onChange={onChangeSUT} number />
               {sutError && <Text error XS>{sutError}</Text>}
             </Col>
             <Trade disabled={isTrading} spacingLeftM spacingRightM onClick={toggleIsSell} leftActive={isSell} rightActive={!isSell} />
@@ -115,7 +115,7 @@ function Trading({ market, gettingMarket, tradeState, setTab, onChangeCT, onChan
               <Text S>{market.name}</Text>
             </Col>
             <Col spacingLeftS spacingTopS flex={1}>
-              <Input underline L center fullWidth disabled={isTrading} value={ct} onChange={e => onChangeCT(e.target.value)} number />
+              <Input underline L center fullWidth disabled={isTrading} value={ct} onChange={onChangeCT} number />
               {/* <Text error XS>You need more SmartUp to make this trade.</Text> */}
             </Col>
           </Row>

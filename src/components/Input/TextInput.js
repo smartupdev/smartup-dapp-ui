@@ -41,9 +41,10 @@ const TextArea = styled.textarea`
 function _onChange(onChange, number) {
   if(onChange) {
     return e => {
+      const value = e.target.value
       if(number) 
-        return /^\d*$/.test(e.target.value) ? onChange(e) : undefined
-      return onChange(e)
+        return /^\d*$/.test(value) ? onChange(value) : undefined
+      return onChange(value)
     }
   } 
   return undefined

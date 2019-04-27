@@ -41,7 +41,7 @@ export default ({ id = '', backgroundColor, content, onChange, onSearch, top, bo
       <Dump />
       <Container backgroundColor={backgroundColor} top={top} bottom={bottom} right={right}>
         <Row centerVertical fullHeight spaceBetween>
-          <Input id={id + "search"} value={content} placeholder='Search' onChange={e => onChange(e.target.value)} onBlur={onSearch} />
+          <Input id={id + "search"} value={content} placeholder='Search' onChange={onChange} onBlur={onSearch} />
           {/* <Text note>Search</Text> */}
           <label htmlFor={id + "search"}>
             <Search S RightXS />

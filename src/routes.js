@@ -20,6 +20,7 @@ import Flag from './containers/Market/Flag'
 import Account from './containers/Account'
 import Dispute from './containers/Dispute'
 
+import { connect } from 'react-redux'
 
 // ORDER MATTER
 let routes = [
@@ -47,14 +48,29 @@ routes = routes.map(r => ({
 // from will map to includePaths
 export default routes
 
-// export const MarketTab
+export function getUrlParams() {
+  const search = window.location.search
+  if(!search) return {}
+  return window.location.search.slice(1)
+    .split('&')
+    .reduce( (p, keyVal) => {
+      const [key, val] = keyVal.split('=')
+      return { ...p, [key]: val }
+    }, {})
+}
 
 // TODO add params checking
-export const Link = withRouter( ({ history, location, children }) => children({
-  goto: routes.reduce( (p, c) => ({
-    ...p,
-    [c.id]: (params) => history.push(c.path + toParams(params) )
-  }), {}),
-  history,
-  location
-}) )
+const mapStateToProps = state => ({
+  marketId: state.market.currentMarketId,
+});
+
+export const Link = connect(mapStateToProps)(withRouter( 
+  ({ history, location, children, marketId }) => children({
+    goto: routes.reduce( (p, c) => ({
+      ...p,
+      [c.id]: (params) => history.push(c.path + toParams({id: marketId, ...params}) )
+    }), {}),
+    history,
+    location
+  }) 
+))

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 
-import { Link } from '../../routes'
+import { Link, getUrlParams } from '../../routes'
 
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
@@ -40,7 +40,7 @@ const copyToClipboard = str => {
 
 const Market = ({ get, collectMarket, getting, location, market }) => {
   const [copied, setCopy] = useState(false)
-  const id = new URLSearchParams(location.search).get('id')
+  const id = getUrlParams().id
   useEffect(() => {
     get(id)
   }, [id])
@@ -68,7 +68,7 @@ const Market = ({ get, collectMarket, getting, location, market }) => {
           <Link>
             {
               ({ goto, location }) =>
-                <Tab tabs={TABS} activeIndex={activeIndex} onClick={index => goto[TABS[index].value]({ id: market.id })} width='100px' />
+                <Tab tabs={TABS} activeIndex={activeIndex} onClick={index => goto[TABS[index].value]()} width='100px' />
             }
           </Link>
         </Col>
@@ -79,7 +79,7 @@ const Market = ({ get, collectMarket, getting, location, market }) => {
             <Row right centerVertical>
               <Search backgroundColor={theme.bgColor} bottom='1px' top='1px' right='30px' />
               <Link>
-                { ({ goto }) => <Add primary S MarginRightXS onClick={() => goto.discussionCreate({id: market.id})} /> }
+                { ({ goto }) => <Add primary S MarginRightXS onClick={() => goto.discussionCreate()} /> }
               </Link>
             </Row>
           }

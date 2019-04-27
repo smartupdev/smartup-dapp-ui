@@ -64,7 +64,7 @@ const CreateMarket = ({
         activeIndex === 0 ? 
           <>
             <Label>Market Name</Label>
-            <Input background XL value={name} onChange={e => onChangeName(e.target.value)} disabled={isFetching} />
+            <Input background XL value={name} onChange={onChangeName} disabled={isFetching} />
             <Text S right error={error.name}>
               {
                 typeof error.name === 'string' ? error.name :
@@ -72,7 +72,7 @@ const CreateMarket = ({
               } 
             </Text>
             <Label>Market description</Label>
-            <Input background L line={3} value={desc} onChange={e => onChangeDesc(e.target.value)} disabled={isFetching} />
+            <Input background L line={3} value={desc} onChange={onChangeDesc} disabled={isFetching} />
             <Text S right error={error.desc}>150 characters to help new members get to know your community.</Text>
             <Label>Market Avatar</Label>
             <DropToUpload MarginBottomM onChoose={onChangeAvatar} isLoading={avatarUploading} value={avatarUrl} imageHeight='100px' imageWidth='100px' />

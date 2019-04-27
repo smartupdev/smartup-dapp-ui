@@ -46,18 +46,15 @@ function getPostList(requestParam) {
 主题详情
 requestParam: postId
 */
-export function getPostOne(requestParam) {
-  return (dispatch, getState) =>
-    dispatch(
-      asyncFunction(
-        fetch.post,
-        POST_ONE_REQUESTED, POST_ONE_SUCCEEDED, POST_ONE_FAILED,
-        {
-          params: API_POST_ONE,
-          params2: requestParam,
-        }
-      )
-    )
+export function getPost(postId) {
+  return asyncFunction(
+    fetch.post,
+    POST_ONE_REQUESTED, POST_ONE_SUCCEEDED, POST_ONE_FAILED,
+    {
+      params: API_POST_ONE,
+      params2: { postId },
+    }
+  )
 }
 
 /*
@@ -121,11 +118,11 @@ export function getReplyOne(requestParam) {
 requestParam: type(root=系统讨论区, market=市场讨论区), marketAddress(如果type=root marketAddress为空), title, description
 */
 export function addMarketPost(title, text, photo) {
-  return (dispatch, getState) => 
+  return (dispatch, getState) =>
     dispatch(
       addPost({ type: 'market', marketId: getState().market.currentMarketId, title, description: text, photo })
     )
-  
+
 }
 export function addRootPost() {
 

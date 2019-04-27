@@ -8,6 +8,20 @@ import {
     POST_USER_REPLAY_ADD_REQUESTED, POST_USER_REPLAY_ADD_SUCCEEDED, POST_USER_REPLAY_ADD_FAILED
 } from '../actions/actionTypes';
 
+function postMassage(p) {
+    return {
+        ...p,
+        id: p.postId, 
+        authorName: p.username || p.userAddress, 
+        time: p.createTime, 
+        // title, 
+        content: p.description, 
+        // numberOfLike, 
+        // numberOfDislike, 
+        // numberOfComment, 
+    }
+}
+
 export const initialState = {
 
     posts: [],
@@ -83,17 +97,7 @@ export default (state = initialState, action) => {
         case POST_LIST_SUCCEEDED:
             return {
                 ...state,
-                posts: action.payload.map( p => ({
-                    ...p,
-                    id: p.postId, 
-                    authorName: p.username || p.userAddress, 
-                    time: p.createTime, 
-                    // title, 
-                    content: p.description, 
-                    // numberOfLike, 
-                    // numberOfDislike, 
-                    // numberOfComment, 
-                })),
+                posts: action.payload.map(postMassage),
                 gettingPost: false,
                 getPostError: initialState.getPostError
             }
@@ -111,7 +115,7 @@ export default (state = initialState, action) => {
         case POST_ONE_SUCCEEDED:
             return {
                 ...state,
-                detail: action.payload,
+                detail: postMassage(action.payload),
                 gettingDetail: false,
                 getDetailError: initialState.getDetailError
             }
