@@ -11,6 +11,11 @@ const Flex = styled.div`
   ${p => p.color && css`background-color: ${p.color}`}
   ${p => !!p.primary && css`background-color: ${p.theme.colorPrimary}`}
   ${p => !!p.secondary && css`background-color: ${p.theme.colorSecondary}`}
+  ${p => !!p.bgDark && css`background-color: ${p.theme.bgColorDark}`}
+  ${p => !!p.bgLight && css`background-color: ${p.theme.bgColorLight}`}
+
+  ${p => p.round && css`border-radius: ${p.theme.borderRadius}`}
+
 
   ${props => typeof props.flex === 'number' && css`flex: ${props.flex}`};
   ${props => props.maxWidth && css`max-width: ${props.maxWidth}`};
@@ -24,6 +29,7 @@ const Flex = styled.div`
 `
 
 const Row = styled(Flex)`
+  ${props => props.left && css`justify-content: flex-start`};
   ${props => props.right && css`justify-content: flex-end`};
   ${props => props.center && css`justify-content: center`};
   ${props => props.centerVertical && css`align-items: center`};
@@ -35,6 +41,7 @@ const Row = styled(Flex)`
   
 const Col = styled(Flex)`
   flex-direction: column;
+  ${props => props.left && css`align-items: flex-start`};
   ${props => props.right && css`align-items: flex-end`};
   ${props => props.center && css`align-items: center`};
   ${props => props.centerVertical && css`justify-content: center`};

@@ -1,4 +1,5 @@
 import {
+  POST_NEW_COMMENT_ONCHANGE,
   POST_LIST_REQUESTED, POST_LIST_SUCCEEDED, POST_LIST_FAILED,
   POST_ONE_REQUESTED, POST_ONE_SUCCEEDED, POST_ONE_FAILED,
   POST_REPLY_CHILDREN_LIST_REQUESTED, POST_REPLY_CHILDREN_LIST_SUCCEEDED, POST_REPLY_CHILDREN_LIST_FAILED,
@@ -13,6 +14,13 @@ import {
 } from './api';
 import fetch from '../lib/util/fetch';
 import { asyncFunction } from '../integrator'
+
+export function onChangeNewComment(value) {
+  return {
+    type: POST_NEW_COMMENT_ONCHANGE,
+    payload: { value }
+  }
+}
 
 /*
 查询主题列表
@@ -42,10 +50,6 @@ function getPostList(requestParam) {
   )
 }
 
-/*
-主题详情
-requestParam: postId
-*/
 export function getPost(postId) {
   return asyncFunction(
     fetch.post,
@@ -80,7 +84,7 @@ export function getPostReplyChildrenList(requestParam) {
 主题下回复列表
 requestParam: postId
 */
-export function getPostReplyList(requestParam) {
+export function getReplyList(postId) {
   return (dispatch, getState) =>
     dispatch(
       asyncFunction(
@@ -88,8 +92,7 @@ export function getPostReplyList(requestParam) {
         POST_REPLY_LIST_REQUESTED, POST_REPLY_LIST_SUCCEEDED, POST_REPLY_LIST_FAILED,
         {
           params: API_POST_REPLY_LIST,
-          params2: requestParam,
-          responsePayload: reps => reps.list
+          params2: { postId },
         }
       )
     )
@@ -146,16 +149,19 @@ export function addPost(requestParam) {
 发布回复
 requestParam: postId, fatherId(可以空, 如果对个一个回复进行回复则需填写, 且只能回复一级), content
 */
-export function addPostReply(requestParam) {
-  return (dispatch, getState) =>
-    dispatch(
+export function reply() {
+  return async (dispatch, getState) => {
+    const { detail: {postId}, newComment } = getState().post
+    const [e, r] = await dispatch(
       asyncFunction(
         fetch.post,
         POST_USER_REPLAY_ADD_REQUESTED, POST_USER_REPLAY_ADD_SUCCEEDED, POST_USER_REPLAY_ADD_FAILED,
         {
           params: API_USER_POST_REPLY_ADD,
-          params2: requestParam
+          params2: { postId, content: newComment }
         }
       )
     )
+    if(!e) dispatch(getReplyList(postId))
+  }
 }
