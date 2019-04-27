@@ -6,9 +6,11 @@ import {
   POST_REPLY_LIST_REQUESTED, POST_REPLY_LIST_SUCCEEDED, POST_REPLY_LIST_FAILED,
   POST_REPLY_ONE_REQUESTED, POST_REPLY_ONE_SUCCEEDED, POST_REPLY_ONE_FAILED,
   POST_USER_ADD_REQUESTED, POST_USER_ADD_SUCCEEDED, POST_USER_ADD_FAILED,
-  POST_USER_REPLAY_ADD_REQUESTED, POST_USER_REPLAY_ADD_SUCCEEDED, POST_USER_REPLAY_ADD_FAILED
+  POST_USER_REPLAY_ADD_REQUESTED, POST_USER_REPLAY_ADD_SUCCEEDED, POST_USER_REPLAY_ADD_FAILED,
+  POST_TOGGLE_POST_LIKE, POST_TOGGLE_POST_DISLIKE, POST_TOGGLE_REPLY_LIKE, POST_TOGGLE_REPLY_DISLIKE
 } from './actionTypes';
 import {
+  API_POST_LIKE,
   API_POST_LIST, API_POST_ONE, API_POST_REPLY_CHILDREN_LIST,
   API_POST_REPLY_LIST, API_POST_REPLY_ONE, API_USER_POST_ADD, API_USER_POST_REPLY_ADD
 } from './api';
@@ -165,3 +167,43 @@ export function reply() {
     if(!e) dispatch(getReplyList(postId))
   }
 }
+
+export function toggleLikePost(post) {
+  return toggleLikeDislike(post, POST_TOGGLE_POST_LIKE, true, 'post')
+}
+
+export function toggleDislikePost(post) {
+  return toggleLikeDislike(post, POST_TOGGLE_POST_DISLIKE, false, 'post')
+}
+
+export function toggleLikeReply(reply) {
+  return toggleLikeDislike(reply, POST_TOGGLE_REPLY_LIKE, true)
+}
+
+export function toggleDislikeReply(reply) {
+  return toggleLikeDislike(reply, POST_TOGGLE_REPLY_DISLIKE, false)
+}
+
+// type: reply || post
+export function toggleLikeDislike(postOrReplyObject, actionType, isLike, type = 'reply', ) { 
+  const { id, isDisliked, isLiked } = postOrReplyObject
+  return dispatch => {
+    dispatch({ type: actionType, payload: {id, isDisliked, isLiked} })
+    dispatch(
+      asyncFunction(
+        () => fetch.post(API_POST_LIKE, { type, id, isLike, isMark: isLike ? !isLiked : !isDisliked }),
+      )
+    )
+  }
+
+}
+
+
+
+
+
+
+
+
+
+

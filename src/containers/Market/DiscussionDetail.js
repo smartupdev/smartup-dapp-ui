@@ -14,14 +14,15 @@ import theme from '../../theme'
 
 import { getUrlParams } from '../../routes'
 import { connect } from 'react-redux'
-import { getPost, onChangeNewComment, reply, getReplyList } from '../../actions/post'
+import { getPost, onChangeNewComment, reply, getReplyList, toggleLikeReply, toggleDislikeReply } from '../../actions/post'
 
 function DiscussionDetail({
   post, gettingDetail, getDetailError, 
   newComment, replying,
   gettingReply, replys,
   getPost, getReplyList, reply, onChangeNewComment,
-  loggedIn, username, userAvatar
+  loggedIn, username, userAvatar,
+  toggleLikeReply, toggleDislikeReply,
 }) {
   const { postId } = getUrlParams()
   useEffect( () => {
@@ -49,8 +50,8 @@ function DiscussionDetail({
         </Row>
       }
       {!!replys.length && 
-      replys.map( ({ replyId, userAvatar, username, userAddress, content, isDisliked, isLiked, createTime }) => 
-        <Row key={replyId} top TopS BottomXS>
+      replys.map( ({ id, userAvatar, username, userAddress, content, isDisliked, isLiked, createTime }) => 
+        <Row key={id} top TopS BottomXS>
           <Col TopXS>
             <Avatar icon={userAvatar} username={username || shorten(userAddress)} />
           </Col>
@@ -59,8 +60,8 @@ function DiscussionDetail({
               <Text note newline>{content}</Text>
             </Col>
             <Row centerVertical TopXS>
-              <Like S color={isLiked ? theme.green : theme.white} MarginRightBase />
-              <Dislike S color={isDisliked ? theme.red : theme.white} MarginRightBase />
+              <Like S color={isLiked ? theme.green : theme.white} MarginRightBase onClick={() => toggleLikeReply({id, isLiked, isDisliked})} />
+              <Dislike S color={isDisliked ? theme.red : theme.white} MarginRightBase onClick={() => toggleDislikeReply({id, isLiked, isDisliked})}/>
               <Text note>{toAgo(createTime)}</Text>
             </Row>
           </Col>
@@ -94,7 +95,7 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = {
-  getPost, onChangeNewComment, reply, getReplyList
+  getPost, onChangeNewComment, reply, getReplyList, toggleLikeReply, toggleDislikeReply
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(DiscussionDetail);

@@ -1,5 +1,6 @@
 import {
   POST_NEW_COMMENT_ONCHANGE,
+  POST_TOGGLE_POST_LIKE, POST_TOGGLE_POST_DISLIKE, POST_TOGGLE_REPLY_LIKE, POST_TOGGLE_REPLY_DISLIKE,
   POST_LIST_REQUESTED, POST_LIST_SUCCEEDED, POST_LIST_FAILED,
   POST_ONE_REQUESTED, POST_ONE_SUCCEEDED, POST_ONE_FAILED,
   POST_REPLY_CHILDREN_LIST_REQUESTED, POST_REPLY_CHILDREN_LIST_SUCCEEDED, POST_REPLY_CHILDREN_LIST_FAILED,
@@ -8,6 +9,21 @@ import {
   POST_USER_ADD_REQUESTED, POST_USER_ADD_SUCCEEDED, POST_USER_ADD_FAILED,
   POST_USER_REPLAY_ADD_REQUESTED, POST_USER_REPLAY_ADD_SUCCEEDED, POST_USER_REPLAY_ADD_FAILED
 } from '../actions/actionTypes';
+
+import { changeArrayById } from '../lib/util/reducerHelper'
+
+function toggleLike(r) {
+  if(!r) return r
+  return { ...r, isLiked: !r.isLiked, isDisliked: r.isLiked ? r.isDisliked : false }
+}
+function toggleDislike(r) {
+  if(!r) return r
+  return { ...r, isLiked: r.isDisliked ? r.isLiked : false, isDisliked: !r.isDisliked }
+}
+
+function replyMassage(r) {
+  return {...r, id: r.replyId}
+}
 
 function postMassage(p) {
   return {
@@ -47,9 +63,9 @@ export const initialState = {
   getDetailError: null,
   newComment: '',
 
-  replyChildren: [],
-  gettingReplyChildren: false,
-  replyChildrenError: null,
+  // replyChildren: [],
+  // gettingReplyChildren: false,
+  // replyChildrenError: null,
 
   replys: [],
   replyHasMore: false,
@@ -92,6 +108,37 @@ export const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    case POST_TOGGLE_POST_LIKE: {
+      const { id } = action.payload
+      return {
+        ...state,
+        detail: toggleLike(state.detail),
+        posts: changeArrayById(state.posts, id, toggleLike)
+      } 
+    }
+    case POST_TOGGLE_POST_DISLIKE: {
+      const { id } = action.payload
+      return {
+        ...state,
+        detail: toggleDislike(state.detail),
+        posts: changeArrayById(state.posts, id, toggleDislike)
+      }
+    }
+    case POST_TOGGLE_REPLY_LIKE: {
+      const { id } = action.payload
+      return {
+        ...state,
+        replys: changeArrayById(state.replys, id, toggleLike)
+      } 
+    }
+    case POST_TOGGLE_REPLY_DISLIKE: {
+      const { id } = action.payload
+      return {
+        ...state,
+        replys: changeArrayById(state.replys, id, toggleDislike)
+      }
+    }
+
     case POST_NEW_COMMENT_ONCHANGE:
       return {
         ...state,
@@ -133,24 +180,24 @@ export default (state = initialState, action) => {
         gettingDetail: false,
         getDetailError: action.payload,
       }
-    case POST_REPLY_CHILDREN_LIST_REQUESTED:
-      return {
-        ...state,
-        gettingReplyChildren: true
-      }
-    case POST_REPLY_CHILDREN_LIST_SUCCEEDED:
-      return {
-        ...state,
-        replyChildren: action.payload,
-        gettingReplyChildren: false,
-        replyChildrenError: initialState.replyChildrenError
-      }
-    case POST_REPLY_CHILDREN_LIST_FAILED:
-      return {
-        ...state,
-        gettingReplyChildren: false,
-        replyChildrenError: action.payload,
-      }
+    // case POST_REPLY_CHILDREN_LIST_REQUESTED:
+    //   return {
+    //     ...state,
+    //     gettingReplyChildren: true
+    //   }
+    // case POST_REPLY_CHILDREN_LIST_SUCCEEDED:
+    //   return {
+    //     ...state,
+    //     replyChildren: action.payload,
+    //     gettingReplyChildren: false,
+    //     replyChildrenError: initialState.replyChildrenError
+    //   }
+    // case POST_REPLY_CHILDREN_LIST_FAILED:
+    //   return {
+    //     ...state,
+    //     gettingReplyChildren: false,
+    //     replyChildrenError: action.payload,
+    //   }
     case POST_REPLY_LIST_REQUESTED:
       return {
         ...state,
@@ -159,7 +206,7 @@ export default (state = initialState, action) => {
     case POST_REPLY_LIST_SUCCEEDED:
       return {
         ...state,
-        replys: action.payload.list,
+        replys: action.payload.list.map(replyMassage),
         replyHasMore: action.payload.hasNextPage,
         gettingReply: false,
         getReplyError: initialState.getReplyError
