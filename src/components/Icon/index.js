@@ -47,6 +47,12 @@ const StyledSvg = styled.svg`
   ${p => p.reverse && css`transform: rotate(180deg)`};
   ${spacingCss}
   ${onClickCss}
+  ${p => p.backgroundColor && css`background-color: ${p.backgroundColor};`}
+  ${p => p.absolute && css`position: absolute;`}
+  ${p => p.top && css`top: ${p.top};`}
+  ${p => p.bottom && css`bottom: ${p.bottom};`}
+  ${p => p.right && css`right: ${p.right};`}
+  ${p => p.left && css`left: ${p.left};`}
 `
 
 export { default as Menu1 } from './Menu1' 

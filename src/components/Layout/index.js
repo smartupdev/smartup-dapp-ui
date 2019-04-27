@@ -5,6 +5,12 @@ const Flex = styled.div`
   display: flex;
   
   ${p => p.relative && css`position: relative;`}
+  ${p => p.absolute && css`position: absolute;`}
+  ${p => typeof p.absTop === 'string' && css`top: ${p.absTop};`}
+  ${p => typeof p.absBottom === 'string' && css`bottom: ${p.absBottom};`}
+  ${p => typeof p.absRight === 'string' && css`right: ${p.absRight};`}
+  ${p => typeof p.absLeft === 'string' && css`left: ${p.absLeft};`}
+
   ${p => p.overflowHidden && css`overflow: hidden;`}
   ${p => p.overflowAuto && css`overflow: auto;`}
   
@@ -13,9 +19,9 @@ const Flex = styled.div`
   ${p => !!p.secondary && css`background-color: ${p.theme.colorSecondary}`}
   ${p => !!p.bgDark && css`background-color: ${p.theme.bgColorDark}`}
   ${p => !!p.bgLight && css`background-color: ${p.theme.bgColorLight}`}
+  ${p => p.backgroundColor && css`background-color: ${p.backgroundColor};`}
 
   ${p => p.round && css`border-radius: ${p.theme.borderRadius}`}
-
 
   ${props => typeof props.flex === 'number' && css`flex: ${props.flex}`};
   ${props => props.maxWidth && css`max-width: ${props.maxWidth}`};
