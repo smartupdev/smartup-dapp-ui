@@ -17,6 +17,7 @@ import Button from '../../components/Button'
 import Hr from '../../components/Hr'
 import Avatar from '../../components/Avatar'
 import Botton from '../../components/Button'
+import TableFooter from '../../components/TableFooter'
 
 import lang, { currentLang } from '../../lang'
 import { toToken, toAgo, toFullDate, shorten } from '../../lib/util'
@@ -45,7 +46,7 @@ function Trading({ market, gettingMarket, tradeState, setTab, onChangeCT, onChan
     }
     return reset
   }, [market])
-  const { tabIndex, ct, sut, isSell, isTrading, trades, klineData, agreeTnc, tradingError } = tradeState
+  const { tabIndex, ct, sut, isSell, isTrading, trades,hasNextPage, klineData, agreeTnc, tradingError } = tradeState
   const sutError = +userSut < +sut ? 'You need more SmartUp to make this trade.' : null
 
   if(!market || gettingMarket) return null
@@ -141,6 +142,7 @@ function Trading({ market, gettingMarket, tradeState, setTab, onChangeCT, onChan
         <Table
           model={model}
           values={trades || []}
+          footer={()=>{ return(<TableFooter hasNextPage={hasNextPage} loadMore={getTradeList}/>) }}
         />
         {
           (!trades || !trades.length) &&

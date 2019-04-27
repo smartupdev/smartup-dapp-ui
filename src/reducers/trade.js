@@ -35,23 +35,9 @@ export const initialState = {
   tradingError: null,
 
   trades: [],
-  /*
-  [
-      {
-        "txHash": "0x82f02b76b9324524a8c9fafa0a795b71b1e223d9601b26d94decceb931dc423d",
-        "stage": "success",
-        "userAddress": "0x8028012ef4b5aceba7778afbdf1757018af1eee8",
-        "marketAddress": "0xf6f7c3cdba6ef2e9fff12b1702481f99ca6cd38c",
-        "type": "buy",
-        "sutOffer": 0.8893047281869846,
-        "sutAmount": 0.8893047281869846,
-        "ctAmount": 1000,
-        "createTime": "2019-04-16 23:18:18",
-        "blockTime": "2019-04-16 23:18:10",
-        "avgAmount" 0.0008893047281869
-      }
-    ]
-  */
+  pageSize: 10,
+  pageNumb: 0,
+  hasNextPage: true,
   gettingTrades: false,
   getTradesError: null,
 
@@ -238,15 +224,18 @@ export default (state = initialState, action) => {
         gettingTrades: true,
       };
     case TRADE_LIST_SUCCEEDED: {
+      const {list: tradeList, pageNumb, pageSize, hasNextPage} = action.payload;
+
       return {
         ...state,
-        trades: action.payload.map( trade => ({
+        trades: tradeList.map( trade => ({
           ...trade, 
           id: trade.txHash,
           avgAmount: trade.sutAmount / trade.ctAmount,
           userIcon: trade.user.avatarIpfsHash,
           username: trade.user.name
         })).filter(t => t.stage === 'success'),
+        pageNumb,pageSize,hasNextPage,
         gettingTrades: false,
         getTradesError: initialState.getTradesError
       };

@@ -5,7 +5,6 @@ import {
   TRADE_DETAIL_REQUESTED, TRADE_DETAIL_SUCCEEDED, TRADE_DETAIL_FAILED,
   TRADE_TOGGLE_IS_SELL, TRADE_TOGGLE_AGREE_TNC,
   TRADE_CHANGE_CT, TRADE_CHANGE_SUT,
-  TRADE_GET_CT_REQUESTED, TRADE_GET_CT_SUCCEEDED, TRADE_GET_CT_FAILED,
   TRADE_GET_SUT_REQUESTED, TRADE_GET_SUT_SUCCEEDED, TRADE_GET_SUT_FAILED,
   TRADE_REQUESTED, TRADE_SUCCEEDED, TRADE_FAILED,
   TRADE_KLINE_REQUESTED, TRADE_KLINE_SUCCEEDED, TRADE_KLINE_FAILED,
@@ -177,6 +176,10 @@ export function getTradeDetail(txHash) {
 //Market Trade List
 export function getTradeList() {
   return (dispatch, getState) => {
+    const requestParams = {
+      pageSize: getState().trade.pageSize,
+      pageNumb: getState().trade.pageNumb + 1,
+    }
     dispatch(asyncFunction(
       fetch.post,
       TRADE_LIST_REQUESTED, TRADE_LIST_SUCCEEDED, TRADE_LIST_FAILED,
@@ -184,7 +187,7 @@ export function getTradeList() {
         isWeb3: true,
         params: API_MARKET_TRADE_LIST, 
         params2: {marketAddress: getState().market.currentMarket.address},
-        responsePayload: reps => reps.list
+        responsePayload: reps => reps
       }
     ));
   }

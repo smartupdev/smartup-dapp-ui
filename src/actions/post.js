@@ -35,7 +35,11 @@ export function getRootPost() {
 export function getMarketPost() {
   return (dispatch, getState) => {
     dispatch(
-      getPostList({ type: 'market', marketId: getState().market.currentMarketId })
+      getPostList({ type: 'market', 
+      marketId: getState().market.currentMarketId,
+      pageNumb: getState().post.pageNumb + 1,
+      pageSize: getState().post.pageSize,
+     })
     )
   }
 }
@@ -47,7 +51,7 @@ function getPostList(requestParam) {
     {
       params: API_POST_LIST,
       params2: requestParam,
-      responsePayload: reps => reps.list
+      responsePayload: reps => reps
     }
   )
 }

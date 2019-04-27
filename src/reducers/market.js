@@ -298,7 +298,7 @@ export default (state = initialState, action) => {
         markets: tempMarkets,
         currentMarket: {
           ...state.currentMarket,
-          following: !state.currentMarket.following
+          following: state.currentMarket && !state.currentMarket.following
         },
         addingCollect: false,
         addCollectError: initialState.addCollectError,

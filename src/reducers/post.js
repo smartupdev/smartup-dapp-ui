@@ -44,19 +44,13 @@ export const initialState = {
   posts: [],
   gettingPost: false,
   getPostError: null,
-  /*主题列表
-  [
-    {
-      "postId": 6859106652524544,
-      "type": "market",
-      "marketAddress": "0x4b331d6AdCdBE3d9228c2BbA113b93681958263F",
-      "userAddress": "0x8028012ef4b5aceba7778afbdf1757018af1eee8",
-      "title": "post test title",
-      "description": "post test desc",
-      "createTime": "2019-04-21 10:15:38"
-    }
-  ]
-  */
+  pageSize: 10,
+  pageNumb: 0,
+  hasNextPage: true,
+
+  detail: null,
+  gettingDetail: false,
+  getDetailError: null,
 
   detail: null,
   gettingDetail: false,
@@ -149,13 +143,17 @@ export default (state = initialState, action) => {
         ...state,
         gettingPost: true
       }
-    case POST_LIST_SUCCEEDED:
+    case POST_LIST_SUCCEEDED:{
+      const {list: postList, pageNumb,pageSize,hasNextPage} = action.payload
       return {
         ...state,
-        posts: action.payload.map(postMassage),
+        posts: postList.map(postMassage),
+        pageNumb,pageSize,hasNextPage,
         gettingPost: false,
         getPostError: initialState.getPostError
       }
+    }
+      
     case POST_LIST_FAILED:
       return {
         ...state,
