@@ -10,6 +10,7 @@ import SimpleLineChart from '../../components/SimpleLineChart'
 import Avatar from '../../components/Avatar'
 import { Row, Col } from '../../components/Layout'
 import Search from '../../components/Search'
+import TableFooter from '../../components/TableFooter'
 import lang, { currentLang } from '../../lang'
 import theme from '../../theme'
 import { toPrice, toDate, toAgo } from '../../lib/util'
@@ -40,10 +41,10 @@ const _Name = ({ value, record }) =>
     <Text>{value}</Text>
     <Text note S>{toAgo(record.createTime)}</Text>
   </Col>
-const _Percent = ({ value,record }) => <Text>{record.latelyChange ? record.latelyChange + '%' : '-'}</Text>
-const _Price = ({ value,record }) => <Text price>{toPrice(record.last)}</Text>
-const _Volume = ({ value,record }) => <Text primary>{toPrice(record.lately_volume, 0)}</Text>
-const _Cap = ({ value,record }) => <Text>{toPrice(record.amount, 0)}</Text>
+const _Percent = ({ value }) => <Text>{value ? value + '%' : '-'}</Text>
+const _Price = ({ value }) => <Text price>{toPrice(value)}</Text>
+const _Volume = ({ value }) => <Text primary>{toPrice(value, 0)}</Text>
+const _Cap = ({ value }) => <Text>{toPrice(value, 0)}</Text>
 const TableName = [
   { label: '', value: 'avatar', sortable: false, layoutStyle: { width: `calc( ${theme.iconSizeM} + 15px )`, center: true }, component: _Icon },
   { label: lang.home.table.name[currentLang], value: 'name', sortable: true, layoutStyle: { flex: 1, width: colWidth }, component: _Name },
@@ -54,11 +55,6 @@ const TableName = [
   { label: lang.home.table.graph[currentLang], value: 'priceIn7d', sortable: false, layoutStyle: { width: '200px', center: true }, component: SimpleLineChart },
   { label: '', value: 'action', sortable: false, layoutStyle: { width: `calc( ${theme.iconSizeM} + 15px )`, right: true }, component: _More },
 ]
-
-const TableFooter = ({hasNextPage,moreMarket})=>{
-  return(<Row fullWidth center><Button disabled={!hasNextPage} label='More'  light onClick={() => {moreMarket()}} /></Row>
-  )
-};
 
 const Home = ({ markets, expandedRecords, activeTabIndex, totalResults, sortBy, orderBy,searchContent,hasNextPage,
   getDefaultMarketList,setExpandedRecords, setActiveTab, onTableHeaderClick, onSearchChange, searchMarketClick,moreMarketClick }) => {
@@ -86,7 +82,7 @@ const Home = ({ markets, expandedRecords, activeTabIndex, totalResults, sortBy, 
         orderBy={orderBy}
         expandedRecords={expandedRecords}
         expandCompoent={TableExpand}
-        footer={()=>{ return(<TableFooter hasNextPage={hasNextPage} moreMarket={moreMarketClick}/>) }}
+        footer={()=>{ return(<TableFooter hasNextPage={hasNextPage} loadMore={moreMarketClick}/>) }}
       />
     </Col>
   )

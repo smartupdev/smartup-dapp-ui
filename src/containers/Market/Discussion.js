@@ -5,6 +5,7 @@ import Text from '../../components/Text'
 import Hr from '../../components/Hr'
 import Button from '../../components/Button'
 import { DonutLoader } from '../../components/Loader'
+import TableFooter from '../../components/TableFooter'
 import { Link } from '../../routes'
 import Icon, { Comment, Trade, People, More, Bookmarked, Add, Share, Like, Dislike, Reply } from '../../components/Icon'
 

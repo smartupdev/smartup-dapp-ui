@@ -27,6 +27,10 @@ export const initialState = {
     posts: [],
     gettingPost: false,
     getPostError: null,
+    pageSize: 10,
+    pageNumb: 0,
+    hasNextPage: true,
+
     /*主题列表
     [
       {
@@ -94,13 +98,16 @@ export default (state = initialState, action) => {
                 ...state,
                 gettingPost: true
             }
-        case POST_LIST_SUCCEEDED:
+        case POST_LIST_SUCCEEDED:{
+            const {list: postList, pageNumb,pageSize,hasNextPage} = action.payload;
             return {
                 ...state,
-                posts: action.payload.map(postMassage),
+                posts: postList.map(postMassage),
+                pageNumb,pageSize,hasNextPage,
                 gettingPost: false,
                 getPostError: initialState.getPostError
             }
+        }
         case POST_LIST_FAILED:
             return {
                 ...state,
