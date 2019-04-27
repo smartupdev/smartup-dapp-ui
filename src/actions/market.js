@@ -42,7 +42,7 @@ export function getMarketList(requestParams) {
       {
         params: API_MARKET_LIST,
         params2: requestParams,
-        responsePayload: reps => reps.list
+        responsePayload: reps => reps
       }
     )
   )
@@ -52,7 +52,9 @@ export function getDefaultMarketList() {
   return (dispatch, getState) => {
     const requestParams = {
       orderBy: getState().home.sortBy,
-      asc: getState().home.orderBy === 'asc'
+      asc: getState().home.orderBy === 'asc',
+      pageSize: getState().market.pageSize,
+      pageNumb: getState().market.pageNumb,
     }
 
     if(getState().home.activeTabIndex === 0){
@@ -62,7 +64,7 @@ export function getDefaultMarketList() {
         {
           params: API_MARKET_LIST,
           params2: requestParams,
-          responsePayload: reps => reps.list
+          responsePayload: reps => reps
         }
       )
       )
@@ -110,7 +112,7 @@ export function markerSearch(requestParams){
         {
           params: API_MARKET_SEARCH,
           params2: requestParams,
-          responsePayload: reps => reps.list
+          responsePayload: reps => reps
         }
       )
     )

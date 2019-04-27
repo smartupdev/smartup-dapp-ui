@@ -23,6 +23,12 @@ const TableTitle = styled(Row)`
   padding-left: ${p => p.inset ? p.theme.spacingXS : 0}
   padding-right: ${p => p.inset ? p.theme.spacingS : 0}
 `
+
+const TableFooter = styled(Row)`
+  padding-left: ${p => p.inset ? p.theme.spacingXS : 0}
+  padding-right: ${p => p.inset ? p.theme.spacingS : 0}
+`
+
 const TableRecord = styled(Col)`
   ${p => p.isExpanded && css`background-color: ${p.theme.bgColorDark}`}
   ${p => p.hasBorder && css`border-top: 1px solid ${p.theme.borderColor}`}
@@ -49,7 +55,7 @@ const Expanded = styled(Col)`
 // expandedRecords: Array <id>
 // S for small font size
 // noBorderCol is for no border in column
-export default ({ model, values, sortBy, orderBy, onClickHeader, onClick, expandedRecords = [], expandCompoent: ExpandCompoent, minWidth, S, inset, noBorderCol }) => {
+export default ({ model, values, sortBy, orderBy, onClickHeader, onClick, expandedRecords = [], expandCompoent: ExpandCompoent, minWidth, S, inset, noBorderCol,footer:Footer }) => {
   return (
     <Table minWidth={minWidth}>
       <TableTitle inset={inset}>
@@ -65,7 +71,7 @@ export default ({ model, values, sortBy, orderBy, onClickHeader, onClick, expand
         values.map( (record, index) => {
           const isExpanded = expandedRecords.includes(record.id)
           return (
-            <TableRecord key={record.id} isExpanded={isExpanded} hasBorder={!index || !noBorderCol} inset={inset}>
+            <TableRecord key={record.id + '-' + index} isExpanded={isExpanded} hasBorder={!index || !noBorderCol} inset={inset}>
               <Row>
                 {
                   model.map( ({ value: key, component: Component, layoutStyle = { flex: 1 } }, j) =>
@@ -89,6 +95,11 @@ export default ({ model, values, sortBy, orderBy, onClickHeader, onClick, expand
           )
         })
       }
+      <TableFooter inset={inset}>
+      {
+        Footer && <Footer />
+      }
+      </TableFooter>
     </Table>
   )
 }

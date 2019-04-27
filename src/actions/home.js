@@ -1,8 +1,8 @@
 import {
-  SET_EXPANDED_RECORDS, SET_ACTIVE_TAB, TABLE_HEADER_CLICK,SEARCH_CONTENT_CHANGE,MARKET_TOP_SORT
+  SET_EXPANDED_RECORDS, SET_ACTIVE_TAB, TABLE_HEADER_CLICK, SEARCH_CONTENT_CHANGE, MARKET_TOP_SORT
 } from './actionTypes';
 
-import { getMarketList,markerSearch,markerTop, getDefaultMarketList } from '../actions/market';
+import { getMarketList, markerSearch, markerTop, getDefaultMarketList } from '../actions/market';
 
 export function setExpandedRecords(recordData) {
   return (dispatch, getState) => {
@@ -30,29 +30,31 @@ export function onTableHeaderClick(headerName) {
 
     const requestParams = {
       orderBy: sortBy,
-      asc: orderBy === 'asc'
+      asc: orderBy === 'asc',
+      pageNumb: 1,
+      pageSize : 10,
     }
     dispatch({
       type: TABLE_HEADER_CLICK,
       payload: { sortBy, orderBy },
     });
-    if(activeTabIndex === 0){
-      if(!!name){
+    if (activeTabIndex === 0) {
+      if (!!name) {
         requestParams.name = name;
         dispatch(markerSearch(requestParams));
-      }else{
+      } else {
         dispatch(getMarketList(requestParams));
       }
-    }else{
+    } else {
       dispatch({
         type: MARKET_TOP_SORT,
-        payload:{
+        payload: {
           sortBy,
           orderBy
         }
       });
     }
-    
+
   }
 }
 
@@ -62,26 +64,26 @@ export function setActiveTab(activeTabIndex) {
       type: SET_ACTIVE_TAB,
       payload: activeTabIndex
     });
-    if(activeTabIndex > 0){
+    if (activeTabIndex > 0) {
       dispatch({
-        type:SEARCH_CONTENT_CHANGE,
+        type: SEARCH_CONTENT_CHANGE,
         payload: '',
       });
       dispatch(markerTop(activeTabIndex));
-    }else{
+    } else {
       dispatch(getDefaultMarketList());
     }
   }
 }
 
-export function onSearchChange(content){
+export function onSearchChange(content) {
   return {
-    type:SEARCH_CONTENT_CHANGE,
+    type: SEARCH_CONTENT_CHANGE,
     payload: content,
   }
 }
 
-export function searchMarketClick(){
+export function searchMarketClick() {
   return (dispatch, getState) => {
     let sortBy = getState().home.sortBy;
     let orderBy = getState().home.orderBy;
@@ -91,6 +93,8 @@ export function searchMarketClick(){
       orderBy: sortBy,
       asc: orderBy === 'asc',
       name,
+      pageNumb: 1,
+      pageSize : 10,
     }
 
     dispatch({
@@ -104,6 +108,46 @@ export function searchMarketClick(){
     dispatch(markerSearch(requestParams));
 
   }
+}
+
+export function moreMarketClick() {
+  return (dispatch, getState) => {
+    let sortBy = getState().home.sortBy;
+    let orderBy = getState().home.orderBy;
+    orderBy = orderBy === 'desc' ? 'asc' : 'desc';
+    let name = getState().home.searchContent;
+    let activeTabIndex = getState().home.activeTabIndex;
+
+    let pageNumb = getState().market.pageNumb + 1;
+    let pageSize = getState().market.pageSize;
+
+    const requestParams = {
+      orderBy: sortBy,
+      asc: orderBy === 'asc',
+      pageNumb,
+      pageSize,
+    }
+
+    if (activeTabIndex === 0) {
+      if (!!name) {
+        requestParams.name = name;
+        dispatch(markerSearch(requestParams));
+      } else {
+        dispatch(getMarketList(requestParams));
+      }
+    } else {
+      dispatch({
+        type: MARKET_TOP_SORT,
+        payload: {
+          sortBy,
+          orderBy
+        }
+      });
+    }
+  }
+
+
+
 }
 
 

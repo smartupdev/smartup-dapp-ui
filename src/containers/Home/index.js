@@ -4,6 +4,7 @@ import TableExpand from './TableExpand'
 import Tab from '../../components/Tab'
 import Table from '../../components/Table'
 import { More } from '../../components/Icon'
+import Button from '../../components/Button'
 import Text from '../../components/Text'
 import SimpleLineChart from '../../components/SimpleLineChart'
 import Avatar from '../../components/Avatar'
@@ -13,7 +14,7 @@ import lang, { currentLang } from '../../lang'
 import theme from '../../theme'
 import { toPrice, toDate, toAgo } from '../../lib/util'
 import { connect } from 'react-redux'
-import { setExpandedRecords, setActiveTab, onTableHeaderClick,onSearchChange,searchMarketClick } from '../../actions/home'
+import { setExpandedRecords, setActiveTab, onTableHeaderClick,onSearchChange,searchMarketClick,moreMarketClick } from '../../actions/home'
 import { getDefaultMarketList } from '../../actions/market'
 
 const Top = styled(Row)`
@@ -54,8 +55,13 @@ const TableName = [
   { label: '', value: 'action', sortable: false, layoutStyle: { width: `calc( ${theme.iconSizeM} + 15px )`, right: true }, component: _More },
 ]
 
-const Home = ({ markets, expandedRecords, activeTabIndex, totalResults, sortBy, orderBy,searchContent,
-  getDefaultMarketList,setExpandedRecords, setActiveTab, onTableHeaderClick, onSearchChange, searchMarketClick }) => {
+const TableFooter = ({hasNextPage,moreMarket})=>{
+  return(<Row fullWidth center><Button disabled={!hasNextPage} label='More'  light onClick={() => {moreMarket()}} /></Row>
+  )
+};
+
+const Home = ({ markets, expandedRecords, activeTabIndex, totalResults, sortBy, orderBy,searchContent,hasNextPage,
+  getDefaultMarketList,setExpandedRecords, setActiveTab, onTableHeaderClick, onSearchChange, searchMarketClick,moreMarketClick }) => {
   useEffect(() => {
     getDefaultMarketList()
   }, [])
@@ -80,6 +86,7 @@ const Home = ({ markets, expandedRecords, activeTabIndex, totalResults, sortBy, 
         orderBy={orderBy}
         expandedRecords={expandedRecords}
         expandCompoent={TableExpand}
+        footer={()=>{ return(<TableFooter hasNextPage={hasNextPage} moreMarket={moreMarketClick}/>) }}
       />
     </Col>
   )
@@ -93,6 +100,7 @@ const mapStateToProps = state => ({
   sortBy: state.home.sortBy,
   orderBy: state.home.orderBy,
   searchContent:state.home.searchContent,
+  hasNextPage: state.market.hasNextPage,
 });
 const mapDispatchToProps = {
   setExpandedRecords,
@@ -101,6 +109,7 @@ const mapDispatchToProps = {
   getDefaultMarketList,
   onSearchChange,
   searchMarketClick,
+  moreMarketClick,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);
