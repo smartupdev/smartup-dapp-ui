@@ -48,6 +48,8 @@ routes = routes.map(r => ({
 // from will map to includePaths
 export default routes
 
+export const routeMap = routes.reduce((p, c) => ({...p, [c.id]: c}), {})
+
 export function getUrlParams() {
   const search = window.location.search
   if(!search) return {}

@@ -9,7 +9,7 @@ export function delay(ms = 1000) {
 export function toParams(params = {}) {
   return Object.keys(params).reduce((p, key, i) =>
     [null, undefined].includes(params[key]) ? p :
-    `${p}${i ? '&' : '?'}${key}=${params[key]}`
+    `${p}${i ? '&' : '?'}${key}=${encodeURIComponent(params[key])}`
     , '')
 }
 

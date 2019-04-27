@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 
-import { Link, getUrlParams } from '../../routes'
+import { Link, getUrlParams, routeMap } from '../../routes'
 
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
@@ -75,11 +75,15 @@ const Market = ({ get, collectMarket, getting, location, market }) => {
         <Col flex={1} spaceBetween>
           <Hr />
           {
-            activeIndex === 2 && 
+            window.location.pathname === routeMap.discussion.path && 
             <Row right centerVertical>
               <Search backgroundColor={theme.bgColor} bottom='1px' top='1px' right='30px' />
               <Link>
-                { ({ goto }) => <Add primary S MarginRightXS onClick={() => goto.discussionCreate()} /> }
+                { ({ goto }) => 
+                <Col absolute absRight='0' absTop='1px' absBottom='1px' HS backgroundColor={theme.bgColor} centerVertical>
+                  <Add primary S onClick={() => goto.discussionCreate()} />
+                </Col>
+                }
               </Link>
             </Row>
           }
