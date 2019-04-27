@@ -8,6 +8,7 @@ const centerDotSize = '8px'
 const dotSizeInactive = '18px'
 
 const Box = styled(Col)`
+  min-height: fit-content;
 `
 const Line = styled.div`
   position: absolute;
