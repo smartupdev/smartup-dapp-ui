@@ -140,14 +140,14 @@ export function asyncFunction(
   requestType, responseType, errorType,
   options = {} // isWeb3, params, responsePayload, meta
 ) {
-  return async (dispatch, getState) => {
-    dispatch({ type: requestType, meta: options.meta })
+  return async dispatch => {
+    requestType && dispatch({ type: requestType, meta: options.meta })
     try {
       if (options.isWeb3 && !checkIsSupportWeb3()) throw new Error('Web3 or ethereum is not supported.')
       if(options.loginRequired && !getAccount()) throw new Error('Please connect to metamask.')
       let response = await func(...[options.params, options.params2])
       response = options.responsePayload ? options.responsePayload(response) : response
-      dispatch({
+      responseType && dispatch({
         type: responseType,
         payload: response,
         meta: options.meta
@@ -156,7 +156,7 @@ export function asyncFunction(
     }
     catch (error) {
       if(error.message === NOT_LOGIN) dispatch({ type: USER_PERSON_SIGN_FAILED, meta: options.meta, payload: error, error: true })
-      dispatch({
+      errorType && dispatch({
         type: errorType,
         payload: error,
         meta: options.meta,

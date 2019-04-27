@@ -29,7 +29,7 @@ export function get(marketId) {
   return asyncFunction(
     fetch.get,
     GET_MARKET_DETAIL_REQUESTED, GET_MARKET_DETAIL_SUCCEEDED, GET_MARKET_DETAIL_FAILED,
-    { params: API_MARKET_DETAIL, params2: { marketId } }
+    { params: API_MARKET_DETAIL, params2: { marketId }, meta: { marketId } }
   )
 }
 

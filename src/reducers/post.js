@@ -83,7 +83,17 @@ export default (state = initialState, action) => {
         case POST_LIST_SUCCEEDED:
             return {
                 ...state,
-                posts: action.payload,
+                posts: action.payload.map( p => ({
+                    ...p,
+                    id: p.postId, 
+                    authorName: p.username || p.userAddress, 
+                    time: p.createTime, 
+                    // title, 
+                    content: p.description, 
+                    // numberOfLike, 
+                    // numberOfDislike, 
+                    // numberOfComment, 
+                })),
                 gettingPost: false,
                 getPostError: initialState.getPostError
             }

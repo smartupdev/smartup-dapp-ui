@@ -25,7 +25,7 @@ export function getRootPost() {
 export function getMarketPost() {
   return (dispatch, getState) => {
     dispatch(
-      getPostList({ type: 'market', marketAddress: getState().market.currentMarket.address })
+      getPostList({ type: 'market', marketId: getState().market.currentMarketId })
     )
   }
 }
@@ -120,12 +120,23 @@ export function getReplyOne(requestParam) {
 发布主题
 requestParam: type(root=系统讨论区, market=市场讨论区), marketAddress(如果type=root marketAddress为空), title, description
 */
+export function addMarketPost(title, text, photo) {
+  return (dispatch, getState) => 
+    dispatch(
+      addPost({ type: 'market', marketId: getState().market.currentMarketId, title, description: text, photo })
+    )
+  
+}
+export function addRootPost() {
+
+}
+
 export function addPost(requestParam) {
-  return (dispatch, getState) =>
+  return dispatch =>
     dispatch(
       asyncFunction(
         fetch.post,
-        POST_USER_ADD_REQUESTED, POST_USER_ADD_SUCCEEDED, POST_USER_ADD_FAILED,
+        null, null, null,
         {
           params: API_USER_POST_ADD,
           params2: requestParam

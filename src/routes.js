@@ -32,7 +32,7 @@ let routes = [
   { id: 'market', path: '/market', component: Market, from: 'home', },
   { id: 'trading', path: '/market/trading', component: Trading, from: 'home' },
   { id: 'general', path: '/market/general', component: General, from: 'home' },
-  { id: 'discussion', path: '/market/discussion', component: Discussion, from: 'home' },
+  { id: 'discussion', path: '/market/discussion', component: Discussion, from: 'home', exact: true },
   { id: 'discussionDetail', path: '/market/discussion/details', component: DiscussionDetail, from: 'home' },
   { id: 'discussionCreate', path: '/market/discussion/create', component: DiscussionCreate, from: 'home' },
   { id: 'proposal', path: '/market/proposal', component: Proposal, from: 'home' },

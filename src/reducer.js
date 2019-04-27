@@ -5,6 +5,7 @@ import market from './reducers/market';
 import collect from './reducers/collect';
 import proposal from './reducers/proposal';
 import general from './reducers/general';
+import post from './reducers/post';
 import notification from './reducers/notification';
 import createMarket from './reducers/createMarket';
 import panel from './reducers/panel';
@@ -20,6 +21,7 @@ export default combineReducers({
     collect,
     proposal,
     general,
+    post,
     notification,
     createMarket,
     trade,

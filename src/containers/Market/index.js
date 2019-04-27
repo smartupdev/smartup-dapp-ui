@@ -10,8 +10,10 @@ import theme from '../../theme'
 import { DonutLoader } from '../../components/Loader'
 import { Row, Col } from '../../components/Layout'
 import Tab from '../../components/Tab'
-import Icon, { Comment, Trade, People, More, Bookmarked, Share, Copy } from '../../components/Icon'
+import Icon, { Comment, Trade, People, More, Bookmarked, Share, Copy, Add } from '../../components/Icon'
 import Text from '../../components/Text'
+import Search from '../../components/Search'
+import Hr from '../../components/Hr'
 import Button from '../../components/Button'
 import Avatar from '../../components/Avatar'
 
@@ -45,6 +47,7 @@ const Market = ({ get, collectMarket, getting, location, market }) => {
   if(getting) return <DonutLoader page />
   if (!market) return null
 
+  const activeIndex = TABS.findIndex(t => location.pathname.includes(t.value))
   return (
     <Col>
       <Row spaceBetween spacingTopXS spacingBottomXS spacingRightS spacingLeftS color={theme.bgColorLight}>
@@ -60,12 +63,29 @@ const Market = ({ get, collectMarket, getting, location, market }) => {
           <Bookmarked S MarginLeftS onClick={() => collectMarket(market)} checked={market.following} />
         </Row>
       </Row>
-      <Link>
-        {
-          ({ goto, location }) =>
-            <Tab tabs={TABS} activeIndex={TABS.findIndex(t => location.pathname.includes(t.value))} onClick={index => goto[TABS[index].value]({ id: market.id })} width='100px' />
-        }
-      </Link>
+      <Row relative>
+        <Col>
+          <Link>
+            {
+              ({ goto, location }) =>
+                <Tab tabs={TABS} activeIndex={activeIndex} onClick={index => goto[TABS[index].value]({ id: market.id })} width='100px' />
+            }
+          </Link>
+        </Col>
+        <Col flex={1} spaceBetween>
+          <Hr />
+          {
+            activeIndex === 2 && 
+            <Row right centerVertical>
+              <Search backgroundColor={theme.bgColor} bottom='1px' top='1px' right='30px' />
+              <Link>
+                { ({ goto }) => <Add primary S MarginRightXS onClick={() => goto.discussionCreate({id: market.id})} /> }
+              </Link>
+            </Row>
+          }
+          <Hr />
+        </Col>
+      </Row>
     </Col>
   )
 }

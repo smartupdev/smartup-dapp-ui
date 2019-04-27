@@ -84,6 +84,7 @@ export const initialState = {
   delCollectError: null,
 
   currentMarket: null,
+  currentMarketId : null,
   gettingMarket: false,
 }
 
@@ -92,6 +93,7 @@ export default (state = initialState, action) => {
     case GET_MARKET_DETAIL_REQUESTED:
       return {
         ...state,
+        currentMarketId: action.meta.marketId,
         gettingMarket: true
       }
     case GET_MARKET_DETAIL_SUCCEEDED:
