@@ -33,6 +33,7 @@ export const API_USER_AUTH = '/api/auth';
 export const API_USER_LOGIN = '/api/login';
 export const API_USER_CURRENT = '/api/user/current';
 export const API_USER_UPDATE = '/api/user/update';
+export const API_USER_TRANSACTION_LIST = '/api/user/transaction/list';
 //trade-controller
 export const API_MARKET_TRADE_LIST = '/api/market/trade/list';
 export const API_USER_TRADE_LIST = '/api/user/trade/list';

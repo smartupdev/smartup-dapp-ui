@@ -6,8 +6,11 @@ import {
   USER_LOGIN_SMARTUP_REQUESTED, USER_LOGIN_SMARTUP_SUCCEEDED, USER_LOGIN_SMARTUP_FAILED,
   USER_PERSON_SIGN_REQUESTED, USER_PERSON_SIGN_SUCCEEDED, USER_PERSON_SIGN_FAILED,
   USER_AUTH_SMARTUP_REQUESTED, USER_AUTH_SMARTUP_SUCCEEDED, USER_AUTH_SMARTUP_FAILED,
-  UPDATE_USER_NAME, UPDATE_USER_AVATAR, QUERY_USER_INFO,
-  METAMASK_RESET
+  METAMASK_RESET,
+  USER_TRANSACTION_LIST_REQUESTED,USER_TRANSACTION_LIST_SUCCEEDED,USER_TRANSACTION_LIST_FAIL,
+  USER_AVATAR_CHANGE_REQUESTED,USER_AVATAR_CHANGE_SUCCEEDED,USER_AVATAR_CHANGE_FAIL,
+  USER_UPDATE_INFO_REQUESTED,USER_UPDATE_INFO_SUCCEEDED,USER_UPDATE_INFO_FAIL,
+  USER_CURRENT_INFO_REQUESTED,USER_CURRENT_INFO_SUCCEEDED,USER_CURRENT_INFO_FAIL,
 } from './actionTypes'
 import {
   asyncFunction, callbackFunction,
@@ -17,13 +20,10 @@ import {
   smartupWeb3, getAccount
 } from '../integrator'
 import {
-  API_USER_LOGIN, API_USER_CURRENT, API_USER_UPDATE, API_USER_AUTH,
+  API_USER_LOGIN, API_USER_CURRENT, API_USER_UPDATE, API_USER_AUTH,API_USER_TRANSACTION_LIST
 } from './api';
-import ipfsClient from 'ipfs-http-client';
-import toBuffer from 'blob-to-buffer';
 import fetch from '../lib/util/fetch';
-
-const client = ipfsClient('ipfs-api.smartup.global', '80', { protocol: 'http' });
+import {postIpfsImg} from './ipfs'
 
 const STORAGE_KEY_TOKEN = 'token'
 const STORAGE_KEY_ACC = 'acc'
@@ -93,6 +93,7 @@ export function loginMetaMask(skipLogin) {
     if (!error) {
       await Promise.all([
         dispatch(getAllBalance()),
+        dispatch(getUserInfo()),
         skipLogin !== true && dispatch(loginSmartUp()),
       ])
     }
@@ -162,6 +163,7 @@ function authSmartUp(signature) {
     ));
     if (!error) {
       setStorageToken(response)
+      dispatch(getUserInfo())
       console.debug('Saved to token as ' + response)
     }
   }
@@ -183,178 +185,61 @@ function getPersonSign(msg) {
   }
 }
 
-// web3.personal.sign(msg, account, (err, ret) => {
-//   if (err) {
-//     console.log('err', err)
-//   } else {
-//     console.log('account: ', account)
-//     console.log('msg: ', msg)
-//     console.log('sign: ', ret)
-//   }
-// })
-
-//update user name
-export function updateUserName(name) {
-  // return (dispatch, getState) => {
-  //   dispatch({
-  //     type: UPDATE_USER_NAME,
-  //     payload: {
-  //       status: 'loading',
-  //       obj: null,
-  //       msg: null,
-  //       code: null,
-  //     },
-  //   });
-  //   let params = {
-  //     address: window.account,
-  //     name: name
-  //   }
-  //   Net(API_USER_UPDATE, params).then((res) => {
-  //     dispatch({
-  //       type: UPDATE_USER_NAME,
-  //       userName: name,
-  //       payload: {
-  //         status: 'success',
-  //         obj: res.obj,
-  //         msg: res.msg,
-  //         code: res.code,
-  //       },
-  //     });
-  //   }).catch(() => {
-  //     dispatch({
-  //       type: UPDATE_USER_NAME,
-  //       payload: {
-  //         status: 'error',
-  //         obj: null,
-  //         msg: null,
-  //         code: null,
-  //       },
-  //     });
-  //   });
-  // }
+//get user transactions
+export function getUserTransactionList(){
+  return (dispatch,getState)=>{
+    return dispatch(
+      asyncFunction(
+        fetch.post,
+        USER_TRANSACTION_LIST_REQUESTED, USER_TRANSACTION_LIST_SUCCEEDED, USER_TRANSACTION_LIST_FAIL,
+        { params: API_USER_TRANSACTION_LIST,
+          params2:{pageNumb:getState().user.pageNumb + 1, pageSize: getState().user.pageSize}
+         }
+      )
+    )
+  }
 }
 
-//update user avatar
-export function updateUserAvatar(chooseImgs) {
-
-  // return (dispatch, getState) => {
-  //   dispatch({
-  //     type: UPDATE_USER_AVATAR,
-  //     payload: {
-  //       status: 'loading',
-  //       obj: null,
-  //       msg: null,
-  //       code: null,
-  //     },
-  //   });
-  //   const file = chooseImgs.files[0];
-  //   const blob = new Blob([file], { type: file.type });
-  //   toBuffer(blob, (err, buffer) => {
-  //     if (err) {
-  //       dispatch({
-  //         type: UPDATE_USER_AVATAR,
-  //         payload: {
-  //           status: 'error',
-  //           obj: null,
-  //           msg: err,
-  //           code: null,
-  //         },
-  //       });
-  //     } else {
-  //       client.add(buffer, null, function (err, ret) {
-  //         if (err) {
-  //           dispatch({
-  //             type: UPDATE_USER_AVATAR,
-  //             payload: {
-  //               status: 'error',
-  //               obj: null,
-  //               msg: err,
-  //               code: null,
-  //             },
-  //           });
-  //         } else {
-  //           if (ret && ret[0] && ret[0].hash) {
-  //             let ipfsResult = ret[0].hash;
-  //             let params = {
-  //               address: window.account,
-  //               avatarIpfsHash: ipfsResult
-  //             }
-  //             Net(API_USER_UPDATE, params).then((res) => {
-  //               dispatch({
-  //                 type: UPDATE_USER_AVATAR,
-  //                 userAvatar: ipfsResult,
-  //                 payload: {
-  //                   status: 'success',
-  //                   obj: res.obj,
-  //                   msg: res.msg,
-  //                   code: res.code,
-  //                 },
-  //               });
-  //             }).catch(() => {
-  //               dispatch({
-  //                 type: UPDATE_USER_AVATAR,
-  //                 payload: {
-  //                   status: 'error',
-  //                   obj: null,
-  //                   msg: null,
-  //                   code: null,
-  //                 },
-  //               });
-  //             });
-  //           } else {
-  //             dispatch({
-  //               type: UPDATE_USER_AVATAR,
-  //               payload: {
-  //                 status: 'error',
-  //                 obj: null,
-  //                 msg: err,
-  //                 code: null,
-  //               },
-  //             });
-  //           }
-  //         }
-  //       })
-  //     }
-  //   });
-  // }
+//upload image
+export function onChangeAvatar(files) {
+  if(!files) return {
+    type: USER_AVATAR_CHANGE_SUCCEEDED,
+  }
+  return asyncFunction(
+    postIpfsImg,
+    USER_AVATAR_CHANGE_REQUESTED, USER_AVATAR_CHANGE_SUCCEEDED, USER_AVATAR_CHANGE_FAIL,
+    {
+      params: files[0]
+    }
+  )
 }
 
-//query user by address
-export function queryUserInfo(account) {
-  // return (dispatch, getState) => {
-  //   dispatch({
-  //     type: QUERY_USER_INFO,
-  //     payload: {
-  //       status: 'loading',
-  //       obj: null,
-  //       msg: null,
-  //       code: null,
-  //     },
-  //   });
-  //   let params = {
-  //     address: account,
-  //   }
-  //   Net(API_USER_QUERY, params).then((res) => {
-  //     dispatch({
-  //       type: QUERY_USER_INFO,
-  //       payload: {
-  //         status: 'success',
-  //         obj: res.obj,
-  //         msg: res.msg,
-  //         code: res.code,
-  //       },
-  //     });
-  //   }).catch(() => {
-  //     dispatch({
-  //       type: QUERY_USER_INFO,
-  //       payload: {
-  //         status: 'error',
-  //         obj: null,
-  //         msg: null,
-  //         code: null,
-  //       },
-  //     });
-  //   });
-  // }
+//update user info
+export function updateUserInfo(){
+  return (dispatch,getState)=>{
+    const requestParams = {
+      name: getState().user.userName,
+      avatarIpfsHash: getState().user.avatarHash,
+    }
+    return dispatch(
+      asyncFunction(
+        fetch.post,
+        USER_UPDATE_INFO_REQUESTED, USER_UPDATE_INFO_SUCCEEDED, USER_UPDATE_INFO_FAIL,
+        { params: API_USER_UPDATE, params2: requestParams }
+      )
+    )
+  }
 }
 
+//update user info
+export function getUserInfo(){
+  return (dispatch,getState)=>{
+    return dispatch(
+      asyncFunction(
+        fetch.post,
+        USER_CURRENT_INFO_REQUESTED, USER_CURRENT_INFO_SUCCEEDED, USER_CURRENT_INFO_FAIL,
+        { params: API_USER_CURRENT }
+      )
+    )
+  }
+}
