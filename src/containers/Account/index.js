@@ -19,7 +19,7 @@ export default () => {
   const activeIndex = TABS.findIndex(t => window.location.pathname.includes(t.path))
   return (
     <Col>
-      <Text center BottomS TopS L>PERSONAL CENTER</Text>
+      <Text center VS L>PERSONAL CENTER</Text>
       <Link>
         {
           ({ goto }) => 

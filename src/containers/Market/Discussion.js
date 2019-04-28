@@ -49,11 +49,7 @@ function Disussion({ getMarketPost, post }) {
   )
   return posts.map( post =>
     <Fragment key={post.id}>
-      <Link>
-        {({ goto }) => 
-          <DiscussionItem onClick={() => goto.discussionDetail({ postId: post.id })} post={post} />
-        }
-      </Link>
+      <DiscussionItem post={post} />
       <Hr />
     </Fragment>
   )  

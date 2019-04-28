@@ -35,7 +35,7 @@ function DiscussionDetail({
 
   return (
     <Col>
-      <DiscussionItem post={post} />
+      <DiscussionItem post={post} isDetailView />
       <Col spacingM>
       {
         loggedIn && 
