@@ -20,6 +20,7 @@ export default () => {
         body={
           <MarketTable markets={markets} noExpand />
         }/>
+      {expandCreated && <Hr />}
       <Panel
         expandedDark
         expanded={expandSaved}

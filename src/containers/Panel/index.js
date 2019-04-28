@@ -68,7 +68,7 @@ const Panel = ({
             </Col>
           </Top>
           <Tab tabs={TABS} activeIndex={activeTabIndex} onClick={setActiveTab} fullWidth />
-            <Main />
+          <Main />
           <Terms />
         </>
         :

@@ -76,7 +76,7 @@ const Portfilio = ({
   }, [])
   const {sutAmount,marketCount,latelyPostCount} = marketGlobal
   return (
-    <Col>
+    <Col overflowAuto>
       <Col center>
         <Col TopXS BottomXS>
           <Row bottom BottomXS>
