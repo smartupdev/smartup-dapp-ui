@@ -1,14 +1,14 @@
 import React from 'react'
-import { Link } from '../../routes'
-import { Row, Col } from '../../components/Layout'
-import theme from '../../theme'
-import { Comment, Trade, People, Bookmarked } from '../../components/Icon'
-import Text from '../../components/Text'
-import lang, { currentLang } from '../../lang'
-import Button from '../../components/Button'
-import Image from '../../components/Image'
+import { Link } from '../../../routes'
+import { Row, Col } from '../../../components/Layout'
+import theme from '../../../theme'
+import { Comment, Trade, People, Bookmarked } from '../../../components/Icon'
+import Text from '../../../components/Text'
+import lang, { currentLang } from '../../../lang'
+import Button from '../../../components/Button'
+import Image from '../../../components/Image'
 import { connect } from 'react-redux'
-import { collectMarket } from '../../actions/market'
+import { collectMarket } from '../../../actions/market'
 
 const TableExpand = ({ record, history, collectMarket }) => {
   return (

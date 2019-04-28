@@ -9,6 +9,8 @@ export const Expanded = styled(Col)`
   ${p => p.isExpanded && css`
     max-height: ${p.maxHeight};
     transition: max-height 0.25s ease-in;
+    overflow: auto;
+
   `}
 `
 
