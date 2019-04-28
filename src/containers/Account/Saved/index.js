@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from 'react'
 
-import DiscussionItem from '../../Market/DiscussionItem'
-import DiscussionComment from '../../Market/DiscussionComment'
+import DiscussionItem from '../../Market/Discussion/Item'
+import DiscussionComment from '../../Market/Discussion/Comment'
 
 import { Row, Col } from '../../../components/Layout'
 import Text from '../../../components/Text'
@@ -15,6 +15,7 @@ export default () => {
   return (
     <Col>
       <Panel
+        expandedDark
         expanded={expandMarket}
         onClick={() => setExpandMarket(!expandMarket)}
         header='Saved market'
@@ -26,6 +27,7 @@ export default () => {
         }/>
 
       <Panel
+        expandedDark
         expanded={expandPost}
         onClick={() => setExpandPost(!expandPost)}
         header='Created post'
@@ -36,6 +38,7 @@ export default () => {
           </Fragment>
         )}/>
       <Panel
+        expandedDark
         expanded={expandReply}
         onClick={() => setExpandReply(!expandReply)}
         header='Your comment'

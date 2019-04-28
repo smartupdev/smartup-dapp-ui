@@ -1,21 +1,21 @@
 import React, { useEffect, useState } from 'react'
 
-import DiscussionItem from './DiscussionItem'
-import DiscussionComment from './DiscussionComment'
-import { Row, Col } from '../../components/Layout'
-import Text from '../../components/Text'
-import TextInput from '../../components/Input'
-import Avatar from '../../components/Avatar'
-import Button from '../../components/Button'
-import { DonutLoader } from '../../components/Loader'
-import { Bookmarked, Share, Like, Dislike, Reply } from '../../components/Icon'
+import DiscussionItem from './Item'
+import DiscussionComment from './Comment'
+import { Row, Col } from '../../../components/Layout'
+import Text from '../../../components/Text'
+import TextInput from '../../../components/Input'
+import Avatar from '../../../components/Avatar'
+import Button from '../../../components/Button'
+import { DonutLoader } from '../../../components/Loader'
+import { Bookmarked, Share, Like, Dislike, Reply } from '../../../components/Icon'
 
-import { shorten, toAgo } from '../../lib/util'
-import theme from '../../theme'
+import { shorten, toAgo } from '../../../lib/util'
+import theme from '../../../theme'
 
-import { getUrlParams } from '../../routes'
+import { getUrlParams } from '../../../routes'
 import { connect } from 'react-redux'
-import { getPost, onChangeNewComment, reply, getReplyList, toggleLikeReply, toggleDislikeReply } from '../../actions/post'
+import { getPost, onChangeNewComment, reply, getReplyList, toggleLikeReply, toggleDislikeReply } from '../../../actions/post'
 
 function DiscussionDetail({
   post, gettingDetail, getDetailError, 

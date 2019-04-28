@@ -18,8 +18,8 @@ const MoreIcon = styled(More)`
   bottom: 0;
 `
 
-export default ({ body, header, expanded, dark, onClick, maxHeight }) => 
-  <Container dark={dark}>
+export default ({ body, header, expanded, dark, expandedDark, onClick, maxHeight }) => 
+  <Container dark={dark || expandedDark && expanded}>
     <Row onClick={onClick} center flex={1} relative>
       <Text M center VXS wordSpaceS>{header}</Text>
       <MoreIcon color='#ffffff' XS reverse={expanded} />

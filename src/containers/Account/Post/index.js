@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react'
 
 import { Row, Col } from '../../../components/Layout'
-import DiscussionItem from '../../Market/DiscussionItem'
+import DiscussionItem from '../../Market/Discussion/Item'
 import Text from '../../../components/Text'
 import Hr from '../../../components/Hr'
 

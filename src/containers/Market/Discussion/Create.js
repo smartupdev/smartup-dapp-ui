@@ -1,14 +1,14 @@
 import React, { useState } from 'react'
-import { Row, Col } from '../../components/Layout'
-import Text from '../../components/Text'
-import TextInput from '../../components/Input'
-import DropToUpload from '../../components/DropToUpload'
-import Button from '../../components/Button'
-import { postIpfsImg, ipfsHost } from '../../actions/ipfs'
+import { Row, Col } from '../../../components/Layout'
+import Text from '../../../components/Text'
+import TextInput from '../../../components/Input'
+import DropToUpload from '../../../components/DropToUpload'
+import Button from '../../../components/Button'
+import { postIpfsImg, ipfsHost } from '../../../actions/ipfs'
 
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { addMarketPost } from '../../actions/post'
+import { addMarketPost } from '../../../actions/post'
 
 function DiscussionCreate({ addApi, history }) {
   const [title, setTitle] = useState('')

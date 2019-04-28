@@ -1,15 +1,15 @@
 import React from 'react'
 
-import { Row, Col } from '../../components/Layout'
-import Text from '../../components/Text'
-import Avatar from '../../components/Avatar'
-import { Bookmarked, Share, Like, Dislike, Reply } from '../../components/Icon'
+import { Row, Col } from '../../../components/Layout'
+import Text from '../../../components/Text'
+import Avatar from '../../../components/Avatar'
+import { Bookmarked, Share, Like, Dislike, Reply } from '../../../components/Icon'
 
-import { shorten, toAgo } from '../../lib/util'
-import theme from '../../theme'
+import { shorten, toAgo } from '../../../lib/util'
+import theme from '../../../theme'
 
 import { connect } from 'react-redux'
-import { toggleLikeReply, toggleDislikeReply } from '../../actions/post'
+import { toggleLikeReply, toggleDislikeReply } from '../../../actions/post'
 
 
 function DiscussionComment({ 
