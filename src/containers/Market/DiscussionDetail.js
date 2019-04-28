@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 
 import DiscussionItem from './DiscussionItem'
+import DiscussionComment from './DiscussionComment'
 import { Row, Col } from '../../components/Layout'
 import Text from '../../components/Text'
 import TextInput from '../../components/Input'
@@ -49,32 +50,10 @@ function DiscussionDetail({
           </Col>
         </Row>
       }
-      {!!replys.length && 
-      replys.map( ({ id, userAvatar, username, userAddress, content, isDisliked, isLiked, createTime }) => 
-        <Row key={id} top TopS BottomXS>
-          <Col TopXS>
-            <Avatar icon={userAvatar} username={username || shorten(userAddress)} />
-          </Col>
-          <Col LeftS TopBase>
-            <Col bgLight spacingXS round fitWidth>
-              <Text note newline>{content}</Text>
-            </Col>
-            <Row centerVertical TopXS>
-              <Like S color={isLiked ? theme.green : theme.white} MarginRightBase onClick={() => toggleLikeReply({id, isLiked, isDisliked})} />
-              <Dislike S color={isDisliked ? theme.red : theme.white} MarginRightBase onClick={() => toggleDislikeReply({id, isLiked, isDisliked})}/>
-              <Text note>{toAgo(createTime)}</Text>
-            </Row>
-          </Col>
-          <Row flex={1} right TopXS>
-            <Share S color={theme.white} MarginRightS />
-            <Bookmarked S color={theme.white} />
-          </Row>
-        </Row>
-      )
-      
-      // JSON.stringify(replys)
-      }
       </Col>
+      {!!replys.length && 
+        replys.map(reply => <DiscussionComment reply={reply} key={reply.id} />)
+      }
     </Col>
   )
 }
