@@ -52,7 +52,7 @@ const CreateMarket = ({
   
   return (
     <Col>
-      <Text center BottomS TopS>CREATE MARKET</Text>
+      <Text center BottomS TopS L>CREATE MARKET</Text>
       <Hr />
       {
         activeIndex >= 0 && 

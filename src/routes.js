@@ -9,6 +9,7 @@ import { Menu1, Menu2, Menu3, Menu4 } from './components/Icon/index'
 
 import Home from './containers/Home'
 import CreateMarket from './containers/CreateMarket'
+
 import Market from './containers/Market'
 import Trading from './containers/Market/Trading'
 import General from './containers/Market/General'
@@ -17,19 +18,27 @@ import DiscussionDetail from './containers/Market/DiscussionDetail'
 import DiscussionCreate from './containers/Market/DiscussionCreate'
 import Proposal from './containers/Market/Proposal'
 import Flag from './containers/Market/Flag'
+
 import Account from './containers/Account'
+import AccountTransition from './containers/Account/Transition'
+import AccountMarket from './containers/Account/Market'
+import AccountPost from './containers/Account/Post'
+import AccountComment from './containers/Account/Comment'
+import AccountSaved from './containers/Account/Saved'
+
+
 import Dispute from './containers/Dispute'
 
 import { connect } from 'react-redux'
 
 // ORDER MATTER
+// if has Icon, show in menu 
 let routes = [
-  { id: 'home', path: '/', component: Home, icon: Menu1, selected: true, exact: true },
+  { id: 'home', path: '/', component: Home, icon: Menu1, selected: true, exact: true },  
   { id: 'createMarket', path: '/create/market', component: CreateMarket, icon: Menu2 },
-  { id: 'account', path: '/account', component: Account, icon: Menu3 },
-  { id: 'dispute', path: '/dispute', component: Dispute, icon: Menu4 },
+  { id: 'account', path: '/account', component: Account },
 
-  // market, must hv id as params
+  // market, must have id as params
   { id: 'market', path: '/market', component: Market, from: 'home', },
   { id: 'trading', path: '/market/trading', component: Trading, from: 'home' },
   { id: 'general', path: '/market/general', component: General, from: 'home' },
@@ -38,6 +47,15 @@ let routes = [
   { id: 'discussionCreate', path: '/market/discussion/create', component: DiscussionCreate, from: 'home' },
   { id: 'proposal', path: '/market/proposal', component: Proposal, from: 'home' },
   { id: 'flag', path: '/market/flag', component: Flag, from: 'home' },
+
+  // account
+  { id: 'accountTransition', label: 'Transition', path: '/account/transition', component: AccountTransition, icon: Menu3 },
+  { id: 'accountMarket', label: 'Market', path: '/account/market', component: AccountMarket, from: 'accountTransition' },
+  { id: 'accountPost', label: 'Post', path: '/account/post', component: AccountPost, from: 'accountTransition' },
+  { id: 'accountComment', label: 'Comment', path: '/account/comment', component: AccountComment, from: 'accountTransition' },
+  { id: 'accountSaved', label: 'Saved', path: '/account/saved', component: AccountSaved, from: 'accountTransition' },
+
+  { id: 'dispute', path: '/dispute', component: Dispute, icon: Menu4 },
 ]
 
 routes = routes.map(r => ({

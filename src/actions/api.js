@@ -13,6 +13,7 @@ export const API_POST_ONE = '/api/post/one';
 export const API_POST_REPLY_CHILDREN_LIST = '/api/post/reply/children/list';
 export const API_POST_REPLY_LIST = '/api/post/reply/list';
 export const API_POST_REPLY_ONE = '/api/post/reply/one';
+export const API_POST_LIKE = '/api/user/post/like';
 export const API_USER_POST_ADD = '/api/user/post/add';
 export const API_USER_POST_REPLY_ADD = '/api/user/post/reply/add';
 //market-controller

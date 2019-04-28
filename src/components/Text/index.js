@@ -36,6 +36,7 @@ export const Text = styled.p`
   
   ${p => p.bold && css`font-weight: bold`}
   ${p => p.underline && css`text-decoration: underline;`}
+  ${p => p.newline && css`white-space: pre-wrap;`}  
   ${p => p.nowrap && css`white-space: nowrap;`}
   ${p => p.textOverflow && css`
     overflow: hidden; 
@@ -43,6 +44,7 @@ export const Text = styled.p`
     text-overflow: ellipsis;
     width: 100%;
   `}
+  ${p => p.width && css`width: ${p.width};`}
 
   ${p => p.error && css`
     color: ${p.theme.red};

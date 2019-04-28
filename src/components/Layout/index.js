@@ -1,6 +1,6 @@
 // import React from 'react'
 import styled, { css } from 'styled-components'
-import { spacingCss, onClickCss } from '../Theme'
+import { spacingCss, onClickCss, expandCss } from '../Theme'
 const Flex = styled.div`
   display: flex;
   
@@ -27,6 +27,7 @@ const Flex = styled.div`
   ${props => props.maxWidth && css`max-width: ${props.maxWidth}`};
   ${props => props.width && css`width: ${props.width}`};
   ${p => p.fitWidth && css`width: fit-content;`}
+  ${p => p.fitHeight && css`min-height: fit-content;`}
   ${props => props.height && css`height: ${props.height}; min-height: ${props.height}`};
   ${props => props.fullHeight && css`height: 100%`};
   ${props => props.fullWidth && css`width: 100%`};
