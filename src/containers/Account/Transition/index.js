@@ -55,7 +55,7 @@ export default () => {
             <Text note S>{toFullDate(createTime)}</Text>
           </Col>
           <Col spaceBetween right>
-            <Text S green={stage===STAGE.success} red={stage===STAGE.fail}>{stage.toUpperCase()}</Text>
+            <Text S green={stage===STAGE.success} red={stage===STAGE.fail} primary={stage===STAGE.pending}>{stage.toUpperCase()}</Text>
             <More color='#ffffff' XS reverse={expands[index]} />
           </Col>
         </Row>
