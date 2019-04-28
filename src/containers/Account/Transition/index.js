@@ -38,11 +38,9 @@ export default () => {
     hxHash, type, detail, marketName, createTime, stage, blockTime
   }, index) => {
     function onClick() {
-      setExpands([
-        ...expands.slice(0, index),
-        !expands[index],
-        ...expands.slice(index + 1)
-      ])
+      const newExpands = [...expands]
+      newExpands[index] = !newExpands[index] 
+      setExpands(newExpands)
     }
     return (
       <Col key={hxHash} fitHeight onClick={onClick}>
