@@ -7,7 +7,7 @@ import { Row, Col } from '../../../components/Layout'
 import Text from '../../../components/Text'
 import Panel from '../../../components/Panel'
 import Hr from '../../../components/Hr'
-import { expandCss } from '../../../components/Theme'
+import Expand from '../../../components/Expand'
 import { toFullDate } from '../../../lib/util'
 
 const marketAddress = '0xb822B98e02397e9F1dD4C6237e63257dd1f7C4'
@@ -32,8 +32,6 @@ const STAGE = {
   fail: 'fail',
 }
  
-export const Expanded = styled(Col)`${expandCss}`
-
 export default () => {
   const [expands, setExpands] = useState([])
   return transitions.map( ({ 
@@ -59,7 +57,7 @@ export default () => {
             <More color='#ffffff' XS reverse={expands[index]} />
           </Col>
         </Row>
-        <Expanded isExpanded={expands[index]}>
+        <Expand isOpen={expands[index]}>
           <Col backgroundColor={theme.bgColorDark} HL VM>
           {[
             { label: 'HXHASH', value: hxHash },
@@ -76,7 +74,7 @@ export default () => {
             </Row>
           )}
           </Col>
-        </Expanded>
+        </Expand>
         <Hr />
       </Col>
     )

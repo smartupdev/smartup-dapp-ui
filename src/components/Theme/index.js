@@ -10,16 +10,6 @@ export const ThemeProvider = ({defaultTheme = cmTheme, children}) => {
   );
 }
 
-export const expandCss = css`
-  max-height: 0;
-  transition: max-height 0.15s ease-out;
-  overflow: hidden;
-  ${p => p.isExpanded && css`
-    max-height: ${p.maxHeight || '100vw'};
-    transition: max-height 0.25s ease-in;
-  `}
-`
-
 export const fontSizeCss = css`
   font-size: ${p => p.theme.fontSizeM};
   ${props => props.XS && css`font-size: ${p => p.theme.fontSizeXS}`}

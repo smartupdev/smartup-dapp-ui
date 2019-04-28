@@ -2,7 +2,7 @@ import React from 'react'
 import styled, { css } from 'styled-components'
 import { Row, Col } from '../Layout'
 import Text from '../Text'
-import { expandCss } from '../Theme'
+import Expand from '../Expand'
 
 const ORDER_BY = {
   asc: 'asc',
@@ -36,8 +36,6 @@ const TableRecord = styled(Col)`
   padding-left: ${p => p.inset ? p.theme.spacingXS : 0}
   padding-right: ${p => p.inset ? p.theme.spacingS : 0}
 `
-
-const Expanded = styled(Col)`${expandCss}`
 
 // model: Array { label, value, layoutStyle, component<record, value, id> }
 // values: Array { id }
@@ -80,9 +78,9 @@ export default ({ model, values, sortBy, orderBy, onClickHeader, onClick, expand
                 }
               </Row>
               {
-                <Expanded isExpanded={isExpanded}>
+                <Expand isOpen={isExpanded}>
                   {ExpandCompoent && <ExpandCompoent record={record} />}
-                </Expanded>
+                </Expand>
               }
             </TableRecord>
           )
