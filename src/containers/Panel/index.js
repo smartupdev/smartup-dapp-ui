@@ -16,7 +16,7 @@ import lang, { currentLang } from '../../lang'
 import { shorten } from '../../lib/util'
 import { connect } from 'react-redux'
 import { setActiveTab } from '../../actions/panel'
-import { updateUserName, updateUserAvatar, loginMetaMask } from '../../actions/user'
+import { loginMetaMask } from '../../actions/user'
 import { watch as watchNotification } from '../../actions/notification'
 
 const PANEL_WIDTH = 300
@@ -107,8 +107,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   loginMetaMask,
-  updateUserName,
-  updateUserAvatar,
   setActiveTab,
   watchNotification
 }
