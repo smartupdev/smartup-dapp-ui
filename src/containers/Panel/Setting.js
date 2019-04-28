@@ -17,6 +17,8 @@ const Setting = ({avatarUploading,avatarUrl,error,onChangeAvatar,updateUserInfo}
         <Button primary LeftM RightM label='Submit' onClick={updateUserInfo} />
         <Button MarginLeftXS LeftM RightM style={{backgroundColor:'#8F9497'}}  label='Cancel' onClick={() => { }} />
       </Row>
+      <Text MarginLeftXS S VXS>{'User Name'}</Text>
+      {/* <Input value={content} placeholder='User Name' onChange={onChangeName} /> */}
     </Col>
   )
 }

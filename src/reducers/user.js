@@ -9,6 +9,11 @@ import {
   USER_TRANSACTION_LIST_REQUESTED, USER_TRANSACTION_LIST_SUCCEEDED, USER_TRANSACTION_LIST_FAIL,
   USER_CURRENT_INFO_REQUESTED, USER_CURRENT_INFO_SUCCEEDED, USER_CURRENT_INFO_FAIL,
   USER_UPDATE_INFO_REQUESTED, USER_UPDATE_INFO_SUCCEEDED, USER_UPDATE_INFO_FAIL,
+  USER_NAME_CHANGE,
+  USER_MARKET_CREATED_REQUESTED, USER_MARKET_CREATED_SUCCEEDED, USER_MARKET_CREATED_FAIL,
+  USER_MARKET_TRADED_REQUESTED, USER_MARKET_TRADED_SUCCEEDED, USER_MARKET_TRADED_FAIL,
+  USER_POST_COLLECTED_REQUESTED, USER_POST_COLLECTED_SUCCEEDED, USER_POST_COLLECTED_FAIL,
+  USER_POST_CREATED_REQUESTED, USER_POST_CREATED_SUCCEEDED, USER_POST_CREATED_FAIL,
 } from '../actions/actionTypes';
 
 import { ipfsHost } from '../actions/ipfs'
@@ -40,6 +45,7 @@ export const initialState = {
   updateError: null,
 
   userName: '',
+  displayName: '',
   userAvatar: null,
   userAddress: null,
   gettingUserInfo: false,
@@ -52,12 +58,13 @@ export const initialState = {
     avatar: null,
   },
 
+  pageSize: 10,
+
   trancations: [],
   gettingTrancation: false,
   trancationError: null,
-  pageNumb: 0,
-  pageSize: 10,
-  hasNextPage: true,
+  transPageNumb: 0,
+  transHasNextPage: true,
   /*交易列表
   type = CreateMarket, detail = {sut}
 　type = BuyCT, detail = {sut, ct}
@@ -79,6 +86,30 @@ export const initialState = {
       }
     ]
   */
+
+  createdMarkets: [],
+  gettingCreatedMarmkets: false,
+  createdMarketsError: null,
+  createdMarketsPageNumb: 0,
+  createdMarketsHasNextPage: true,
+
+  tradedMarkets: [],
+  gettingTradedMarmkets: false,
+  tradedMarketsError: null,
+  tradedMarketsPageNumb: 0,
+  tradedMarketsHasNextPage: true,
+
+  collectedPosts: [],
+  gettingCollectedPosts: false,
+  collectedPostsError: null,
+  collectedPostsPageNumb: 0,
+  collectedPostsHasNextPage: true,
+
+  createdPosts: [],
+  gettingCreatedPosts: false,
+  createdPostsError: null,
+  createdPostsPageNumb: 0,
+  createdPostsHasNextPage: true,
 }
 
 function hashToAvatar(hash) {
@@ -94,7 +125,8 @@ function userInfo(user) {
     avatarUrl: user.avatarIpfsHash ? ipfsHost + user.avatarIpfsHash : initialState.avatarUrl,
     userAvatar: user.avatarIpfsHash ? ipfsHost + user.avatarIpfsHash : initialState.avatarUrl,
     userAddress: user.userAddress,
-    userName: user.name ? user.name : user.userAddress,
+    displayName: user.name ? user.name : user.userAddress,
+    userName: user.name,
   }
 }
 
@@ -248,13 +280,14 @@ export default (state = initialState, action) => {
         gettingTrancation: true,
       }
     case USER_TRANSACTION_LIST_SUCCEEDED: {
-      const { list: trancationList, pageNumb, pageSize, hasNextPage } = action.payload;
+      const { list: trancationList, pageNumb, hasNextPage } = action.payload;
       let tempTrancations = state.trancations.concat(trancationList);
       return {
         ...state,
         trancations: tempTrancations,
         gettingTrancation: false,
-        pageNumb, pageSize, hasNextPage,
+        transPageNumb: pageNumb,
+        transHasNextPage: hasNextPage,
         trancationError: initialState.trancationError,
       }
     }
@@ -264,6 +297,103 @@ export default (state = initialState, action) => {
         gettingTrancation: false,
         trancationError: action.payload,
       }
+    case USER_MARKET_CREATED_REQUESTED:
+      return {
+        ...state,
+        gettingCreatedMarmkets: true,
+      }
+    case USER_MARKET_CREATED_SUCCEEDED: {
+      const { list: marketList, pageNumb, hasNextPage } = action.payload;
+      let tempMarkets = state.createdMarkets.concat(marketList);
+      return {
+        ...state,
+        createdMarkets: tempMarkets,
+        gettingCreatedMarmkets: false,
+        createdMarketsPageNumb: pageNumb,
+        createdMarketsHasNextPage: hasNextPage,
+        createdMarketsError: initialState.createdMarketsError,
+      }
+    }
+    case USER_MARKET_CREATED_FAIL:
+      return {
+        ...state,
+        gettingCreatedMarmkets: false,
+        createdMarketsError: action.payload,
+      }
+    case USER_MARKET_TRADED_REQUESTED:
+      return {
+        ...state,
+        gettingTradedMarmkets: true,
+      }
+    case USER_MARKET_TRADED_SUCCEEDED: {
+      const { list: marketList, pageNumb, hasNextPage } = action.payload;
+      let tempMarkets = state.tradedMarkets.concat(marketList);
+      return {
+        ...state,
+        tradedMarkets: tempMarkets,
+        gettingTradedMarmkets: false,
+        tradedMarketsPageNumb: pageNumb,
+        tradedMarketsHasNextPage: hasNextPage,
+        tradedMarketsError: initialState.tradedMarketsError,
+      }
+    }
+    case USER_MARKET_TRADED_FAIL:
+      return {
+        ...state,
+        gettingTradedMarmkets: false,
+        tradedMarketsError: action.payload,
+      }
+    case USER_POST_COLLECTED_REQUESTED:
+      return {
+        ...state,
+        gettingCollectedPosts: true,
+      }
+    case USER_POST_COLLECTED_SUCCEEDED: {
+      const { list: postList, pageNumb, hasNextPage } = action.payload;
+      let tempPosts = state.collectedPosts.concat(postList);
+      return {
+        ...state,
+        collectedPosts: tempPosts,
+        gettingCollectedPosts: false,
+        collectedPostsPageNumb: pageNumb,
+        collectedPostsHasNextPage: hasNextPage,
+        collectedPostsError: initialState.collectedPostsError,
+      }
+    }
+    case USER_POST_COLLECTED_FAIL:
+      return {
+        ...state,
+        gettingCollectedPosts: false,
+        collectedPostsError: action.payload,
+      }
+    case USER_POST_CREATED_REQUESTED:
+      return {
+        ...state,
+        gettingCreatedPosts: true,
+      }
+    case USER_POST_CREATED_SUCCEEDED: {
+      const { list: postList, pageNumb, hasNextPage } = action.payload;
+      let tempPosts = state.createdPosts.concat(postList);
+      return {
+        ...state,
+        createdPosts: tempPosts,
+        gettingCreatedPosts: false,
+        createdPostsPageNumb: pageNumb,
+        createdPostsHasNextPage: hasNextPage,
+        createdPostsError: initialState.createdPostsError,
+      }
+    }
+    case USER_POST_CREATED_FAIL:
+      return {
+        ...state,
+        gettingCreatedPosts: false,
+        createdPostsError: action.payload,
+      }
+
+
+    case USER_NAME_CHANGE: {
+
+    }
     default:
       return state;
   }
