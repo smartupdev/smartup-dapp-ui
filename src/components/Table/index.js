@@ -2,6 +2,7 @@ import React from 'react'
 import styled, { css } from 'styled-components'
 import { Row, Col } from '../Layout'
 import Text from '../Text'
+import { expandCss } from '../Theme'
 
 const ORDER_BY = {
   asc: 'asc',
@@ -36,15 +37,7 @@ const TableRecord = styled(Col)`
   padding-right: ${p => p.inset ? p.theme.spacingS : 0}
 `
 
-const Expanded = styled(Col)`
-  max-height: 0;
-  transition: max-height 0.15s ease-out;
-  overflow: hidden;
-  ${p => p.isExpanded && css`
-    max-height: 100vw; 
-    transition: max-height 0.25s ease-in;
-  `} 
-` // magic number
+const Expanded = styled(Col)`${expandCss}`
 
 // model: Array { label, value, layoutStyle, component<record, value, id> }
 // values: Array { id }

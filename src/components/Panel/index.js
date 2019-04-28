@@ -2,6 +2,7 @@ import React from 'react'
 import styled, { css } from 'styled-components'
 
 import { Row, Col } from '../Layout'
+import { expandCss } from '../Theme'
 import Text from '../Text'
 import Hr from '../Hr'
 import { More } from '../Icon'
@@ -16,22 +17,14 @@ const MoreIcon = styled(More)`
   top: 0;
   bottom: 0;
 `
-export const Expanded = styled(Col)`
-  max-height: 0;
-  transition: max-height 0.15s ease-out;
-  overflow: hidden;
-  ${p => p.expanded && css`
-    max-height: ${p.maxHeight || '100vw'};
-    transition: max-height 0.25s ease-in;
-  `}
-`
+export const Expanded = styled(Col)`${expandCss}`
 
-export default ({ body, header, expanded, dark, onClick, maxHeight }) => 
+export default ({ body, header, expanded, dark, onClick, maxHeight = '100vw' }) => 
   <Container dark={dark}>
     <Row onClick={onClick} center flex={1} relative>
       <Text M center VXS wordSpaceS>{header}</Text>
       <MoreIcon color='#ffffff' XS reverse={expanded} />
     </Row>
     <Hr />
-    <Expanded expanded={expanded} maxHeight={maxHeight}>{body}</Expanded>
+    <Expanded isExpanded={expanded} maxHeight={maxHeight}>{body}</Expanded>
   </Container>
