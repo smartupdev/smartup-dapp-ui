@@ -38,7 +38,7 @@ const Dot = styled.div`
 `
 // tabs: [ { <label: string>, <dot: bool>, <value: any> } ]
 // type: border || simple
-export default ({ activeIndex, activeValue, tabs, fullWidth, onClick, width, type = TYPE.border }) =>
+export default ({ activeIndex, activeValue = -999, tabs, fullWidth, onClick, width, type = TYPE.border }) =>
   <>
   {type === TYPE.border  && <Hr />}
   <Row>
