@@ -14,6 +14,7 @@ export const A = styled.a`
 export const Text = styled.p`
   margin: 0;
   padding: 0;
+  word-break: break-word;
   ${spacingCss}
   ${onClickCss}
   ${fontCss}
