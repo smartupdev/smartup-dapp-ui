@@ -47,6 +47,7 @@ export const initialState = {
   updateError: null,
 
   userName: '',
+  realUserName: '',
   displayName: '',
   userAvatar: null,
   userAddress: null,
@@ -139,8 +140,8 @@ function userInfo(user) {
     avatarUrl: user.avatarIpfsHash ? ipfsHost + user.avatarIpfsHash : initialState.avatarUrl,
     userAvatar: user.avatarIpfsHash ? ipfsHost + user.avatarIpfsHash : initialState.avatarUrl,
     userAddress: user.userAddress,
-    displayName: user.name ? user.name : user.userAddress,
-    userName: user.name,
+    userName: user.name ? user.name : user.userAddress,
+    realUserName: user.name,
   }
 }
 
@@ -262,7 +263,7 @@ export default (state = initialState, action) => {
         updatingUserInfo: false,
         updateError: initialState.updateError,
         userAvatar: state.avatarUrl,
-        userName: state.userName,
+        userName: state.realUserName ? state.realUserName : state.userAddress,
       }
     case USER_UPDATE_INFO_FAIL:
       return {
@@ -449,9 +450,11 @@ export default (state = initialState, action) => {
         gettingCreatedReplys: false,
         createdReplysError: action.payload,
       }
-    case USER_NAME_CHANGE: {
-
-    }
+    case USER_NAME_CHANGE:
+      return {
+        ...state,
+        realUserName: action.payload,
+      }
     default:
       return state;
   }
