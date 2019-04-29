@@ -22,10 +22,10 @@ export const initialState = {
   isReady: false,
   name: '',
   desc: '',
-  avatarUrl: null,
+  // avatarUrl: null,
   avatarHash: '',
   avatarUploading: false,
-  coverUrl: null,
+  // coverUrl: null,
   coverHash: '',
   coverUploading: false,
   marketId: '',
@@ -34,20 +34,6 @@ export const initialState = {
     desc: null,
     cover: null,
     avatar: null
-  }
-}
-
-function hashToAvatar(hash) {
-  return {
-    avatarHash: hash,
-    avatarUrl: hash ? ipfsHost + hash : initialState.avatarUrl
-  }
-}
-
-function hashToCover(hash) {
-  return {
-    coverHash: hash,
-    coverUrl: hash ? ipfsHost + hash : initialState.coverUrl
   }
 }
 
@@ -62,7 +48,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         coverUploading: false,
-        ...hashToCover(action.payload),
+        coverHash: action.payload,
         error: action.payload 
           ? { ...state.error, cover: initialState.error.cover }
           : state.error
@@ -82,7 +68,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         avatarUploading: false,
-        ...hashToAvatar(action.payload),
+        avatarHash: action.payload,
         error: action.payload 
         ? { ...state.error, avatar: initialState.error.avatar }
         : state.error
@@ -113,8 +99,8 @@ export default (state = initialState, action) => {
         ...marketId && {
           marketId, 
           desc, name, 
-          ...hashToAvatar(photo),
-          ...hashToCover(cover),
+          avatarHash: photo,
+          coverHash: cover,
           activeIndex: status === 'locked' ? -1 : 2
         }
       }

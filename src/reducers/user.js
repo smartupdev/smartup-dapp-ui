@@ -18,8 +18,6 @@ import {
   USER_REPLY_CREATED_REQUESTED, USER_REPLY_CREATED_SUCCEEDED, USER_REPLY_CREATED_FAIL,
 } from '../actions/actionTypes';
 
-import { ipfsHost } from '../actions/ipfs'
-
 export const initialState = {
   ethBalance: null,
   gettingEth: false,
@@ -127,18 +125,10 @@ export const initialState = {
   createdReplysHasNextPage: true,
 }
 
-function hashToAvatar(hash) {
-  return {
-    avatarHash: hash,
-    avatarUrl: hash ? ipfsHost + hash : initialState.avatarUrl
-  }
-}
-
 function userInfo(user) {
   return {
     avatarHash: user.avatarIpfsHash,
-    avatarUrl: user.avatarIpfsHash ? ipfsHost + user.avatarIpfsHash : initialState.avatarUrl,
-    userAvatar: user.avatarIpfsHash ? ipfsHost + user.avatarIpfsHash : initialState.avatarUrl,
+    userAvatar: user.avatarIpfsHash,
     userAddress: user.userAddress,
     userName: user.name ? user.name : user.userAddress,
     realUserName: user.name,
@@ -242,7 +232,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         avatarUploading: false,
-        ...hashToAvatar(action.payload),
+        avatarHash: action.payload,
         error: action.payload
           ? { ...state.error, avatar: initialState.error.avatar }
           : state.error
@@ -262,7 +252,7 @@ export default (state = initialState, action) => {
         ...state,
         updatingUserInfo: false,
         updateError: initialState.updateError,
-        userAvatar: state.avatarUrl,
+        userAvatar: state.avatarHash,
         userName: state.realUserName ? state.realUserName : state.userAddress,
       }
     case USER_UPDATE_INFO_FAIL:

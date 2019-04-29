@@ -48,6 +48,7 @@ const Image =  styled.img`
   ${p => p.height && css`height: ${p => p.height};`}
   ${p => p.width && css`width: ${p => p.width};`}
   ${p => p.cover && css`object-fit: cover;`}
+  ${p => p.origin && css`max-width: 100%; width: auto; height: auto; min-width: auto; min-height: auto;`}
 `
 
 export default ({ source, ...rest }) => 

@@ -25,8 +25,8 @@ const optionsSpeed = ['Slow', 'Standard', 'Fast']
 const CreateMarket = ({
   createMarketState: { 
     activeIndex, name, desc, error, isFetching, isReady, marketId, 
-    avatarUrl, avatarUploading,
-    coverUrl, coverUploading  
+    avatarHash, avatarUploading,
+    coverHash, coverUploading  
   }, 
   setActiveIndex, create, onChangeName, onChangeDesc, reset, get, 
   onChangeAvatar, onChangeCover
@@ -75,10 +75,10 @@ const CreateMarket = ({
             <Input background L line={3} value={desc} onChange={onChangeDesc} disabled={isFetching} />
             <Text S right error={error.desc}>150 characters to help new members get to know your community.</Text>
             <Label>Market Avatar</Label>
-            <DropToUpload MarginBottomM onChoose={onChangeAvatar} isLoading={avatarUploading} value={avatarUrl} imageHeight='100px' imageWidth='100px' />
+            <DropToUpload MarginBottomM onChoose={onChangeAvatar} isLoading={avatarUploading} value={avatarHash} imageHeight='100px' imageWidth='100px' />
             { error.avatar && <Text  right error={true}>This is required.</Text> }
             <Label>Market Cover Photo</Label>
-            <DropToUpload MarginBottomM onChoose={onChangeCover} isLoading={coverUploading} value={coverUrl} imageHeight='300px' imageWidth='450px' />
+            <DropToUpload MarginBottomM onChoose={onChangeCover} isLoading={coverUploading} value={coverHash} imageHeight='300px' imageWidth='450px' />
             { error.cover && <Text  right error={true}>This is required.</Text> }
             <Row spacingTopL right>
               <Next disabled={!page1Ready} />

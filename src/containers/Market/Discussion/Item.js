@@ -1,6 +1,8 @@
 import React from 'react'
 import { Row, Col } from '../../../components/Layout'
 import Text from '../../../components/Text'
+import Avatar from '../../../components/Avatar'
+import Image from '../../../components/Image'
 import { Bookmarked, Share, Like, Dislike, Reply } from '../../../components/Icon'
 import { Link } from '../../../routes'
 
@@ -8,16 +10,15 @@ import { toToken, toAgo, toFullDate, shorten } from '../../../lib/util'
 import theme from '../../../theme'
 import { connect } from 'react-redux'
 import { toggleLikePost, toggleDislikePost, toggleFollowPost } from '../../../actions/post'
+import { ipfsHost } from '../../../actions/ipfs'
 
 function DiscussionItem ({ post, isDetailView, toggleLikePost, toggleDislikePost, toggleFollowPost }) {
-  const { id, authorName, time, title, content, isCollect, isLiked, isDisliked, numberOfLike = 1000, numberOfDislike = 2000, numberOfComment = 3000, marketId } = post
+  const { id, authorName, time, title, content, photo, isCollect, isLiked, isDisliked, numberOfLike = 1000, numberOfDislike = 2000, numberOfComment = 3000, marketId, lastReply } = post
   function like(e) {
-    e.preventDefault(); e.stopPropagation();
-    toggleLikePost({id, isLiked, isDisliked})
+    toggleLikePost(e, {id, isLiked, isDisliked})
   }
   function dislike(e) {
-    e.preventDefault(); e.stopPropagation();
-    toggleDislikePost({id, isLiked, isDisliked})
+    toggleDislikePost(e, {id, isLiked, isDisliked})
   }
   return (
     <Link>
@@ -26,11 +27,28 @@ function DiscussionItem ({ post, isDetailView, toggleLikePost, toggleDislikePost
           <Col flex={1} overflowHidden RightXL>
             <Text S note>{`Posted by ${shorten(authorName)}, about ${toAgo(time)}`}</Text>
             <Text VXS>{title}</Text>
-            <Text S note textOverflow>{content}</Text>
-            <Row centerVertical TopM>
-              <Like onClick={like} S color={isLiked ? theme.green : theme.white} MarginRightBase /><Text RightM>{numberOfLike}</Text>
-              <Dislike onClick={dislike} S color={isDisliked ? theme.red : theme.white} MarginRightBase /><Text RightM>{numberOfDislike}</Text>
-              <Reply S color={theme.white} MarginRightBase /><Text RightM>{numberOfComment}</Text>
+            {
+              isDetailView ?
+                <>
+                { content && <Text S note BottomS>{content}</Text>}
+                { photo &&  <Image source={ipfsHost + photo} origin BottomS />}
+                </>
+              :
+                lastReply && 
+                <Row centerVertical BottomS>
+                  <Avatar XS icon={lastReply.userAvatar} />
+                  <Text S note textOverflow>{lastReply.content}</Text>
+                </Row>
+            }
+            <Row centerVertical>
+              <Row onClick={like}>
+                <Like S color={isLiked ? theme.green : theme.white} MarginRightBase />
+                <Text RightM>{numberOfLike}</Text>
+              </Row>
+              <Row onClick={dislike}>
+                <Dislike S color={isDisliked ? theme.red : theme.white} MarginRightBase /><Text RightM>{numberOfDislike}</Text>
+                <Reply S color={theme.white} MarginRightBase /><Text RightM>{numberOfComment}</Text>
+              </Row>
             </Row>
           </Col>
           <Row>

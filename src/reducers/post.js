@@ -44,8 +44,23 @@ function toggleDislike(r) {
   }
 }
 
+function userMassage(u) {
+  return {
+    userAvatar: u.avatarIpfsHash, 
+    username: u.name, 
+    userAddress: u.userAddress
+  }
+}
+
 function replyMassage(r) {
-  return {...r, id: r.replyId, isCollect: r.isCollected }
+  return {
+    ...r, 
+    id: r.replyId, 
+    isCollect: r.isCollected,
+    numberOfLike: r.data && r.data.likeCount, 
+    numberOfDislike: r.data && r.data.dislikeCount, 
+    ...userMassage(r.user)
+   }
 }
 
 function postMassage(p) {
@@ -59,7 +74,12 @@ function postMassage(p) {
     numberOfLike: p.data && p.data.likeCount, 
     numberOfDislike: p.data && p.data.dislikeCount, 
     numberOfComment: p.data && p.data.replyCount, 
-    isCollect: p.isCollected
+    isCollect: p.isCollected,
+    lastReply: p.lastReply && {
+      ...p.lastReply,
+      ...userMassage(p.lastReply.user)
+    },
+    ...userMassage(p.user)
   }
 }
 
@@ -136,7 +156,7 @@ export default (state = initialState, action) => {
     case POST_TOGGLE_POST_FOLLOW: 
       return {
         ...state,
-        detail: {
+        detail: state.detail && {
           ...state.detail,
           isCollect: !state.detail.isCollect
         },
