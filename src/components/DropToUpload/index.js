@@ -7,6 +7,7 @@ import Image from '../Image'
 import { DonutLoader } from '../Loader'
 import theme from '../../theme'
 import styled, { css } from 'styled-components'
+import { ipfsHost } from '../../actions/ipfs'
 
 const Box = styled(Col)`
   border: dashed 1px ${p => p.theme.borderColor};
@@ -88,7 +89,7 @@ export default function ({
     <>
       <ImageBox show={value} center relative>
         <Col relative>
-          <Image source={value} cover width={imageWidth} height={imageHeight} />
+          <Image source={ipfsHost + value} cover width={imageWidth} height={imageHeight} />
           <TextWrapper centerVertical center onClick={() => onChoose()}>
             {/* <Text center>Click here to delete</Text> */}
             <CloseWithCircle M color={theme.black}  />

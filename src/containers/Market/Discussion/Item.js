@@ -13,12 +13,10 @@ import { toggleLikePost, toggleDislikePost, toggleFollowPost } from '../../../ac
 function DiscussionItem ({ post, isDetailView, toggleLikePost, toggleDislikePost, toggleFollowPost }) {
   const { id, authorName, time, title, content, isCollect, isLiked, isDisliked, numberOfLike = 1000, numberOfDislike = 2000, numberOfComment = 3000, marketId, lastReply } = post
   function like(e) {
-    e.preventDefault(); e.stopPropagation();
-    toggleLikePost({id, isLiked, isDisliked})
+    toggleLikePost(e, {id, isLiked, isDisliked})
   }
   function dislike(e) {
-    e.preventDefault(); e.stopPropagation();
-    toggleDislikePost({id, isLiked, isDisliked})
+    toggleDislikePost(e, {id, isLiked, isDisliked})
   }
   return (
     <Link>
@@ -33,14 +31,19 @@ function DiscussionItem ({ post, isDetailView, toggleLikePost, toggleDislikePost
               :
                 lastReply && 
                 <Row centerVertical BottomS>
-                  <Avatar XS icon={lastReply.avatarIpfsHash} />
+                  <Avatar XS icon={lastReply.userAvatar} />
                   <Text S note textOverflow>{lastReply.content}</Text>
                 </Row>
             }
             <Row centerVertical>
-              <Like onClick={like} S color={isLiked ? theme.green : theme.white} MarginRightBase /><Text RightM>{numberOfLike}</Text>
-              <Dislike onClick={dislike} S color={isDisliked ? theme.red : theme.white} MarginRightBase /><Text RightM>{numberOfDislike}</Text>
-              <Reply S color={theme.white} MarginRightBase /><Text RightM>{numberOfComment}</Text>
+              <Row onClick={like}>
+                <Like S color={isLiked ? theme.green : theme.white} MarginRightBase />
+                <Text RightM>{numberOfLike}</Text>
+              </Row>
+              <Row onClick={dislike}>
+                <Dislike S color={isDisliked ? theme.red : theme.white} MarginRightBase /><Text RightM>{numberOfDislike}</Text>
+                <Reply S color={theme.white} MarginRightBase /><Text RightM>{numberOfComment}</Text>
+              </Row>
             </Row>
           </Col>
           <Row>

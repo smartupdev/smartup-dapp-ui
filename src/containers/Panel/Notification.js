@@ -16,6 +16,7 @@ import { shorten } from '../../lib/util';
 
 import { connect } from 'react-redux'
 import { getList, read, readAll, toggleShowUnread, onChangeKeyword } from '../../actions/notification'
+import { ipfsHost } from '../../actions/ipfs'
 
 const TYPES = {
   personal: {
@@ -65,7 +66,7 @@ const Notification = ({
               n.content && n.content.marketId && goto.trading({id: n.content.marketId})
               !n.isRead && read(n.notificationId)
             }}
-            image={n.style === TYPES.system.value ? TYPES.system.image : userAvatar}
+            image={n.style === TYPES.system.value ? TYPES.system.image : userAvatar && (ipfsHost + userAvatar)}
             sender={n.style === TYPES.system.value ? 'SmartUp' : 'Me'}
             title={n.title}
             content={n.text}

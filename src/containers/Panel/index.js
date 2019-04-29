@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 
 import styled from 'styled-components'
 import Image from '../../components/Image'
+import Avatar from '../../components/Avatar'
 import { People } from '../../components/Icon'
 import Button from '../../components/Button'
 import Text, { A } from '../../components/Text'
@@ -57,10 +58,7 @@ const Panel = ({
       {loggedIn ?
         <>
           <Top centerVertical spaceBetween>
-            <Row centerVertical>
-              <Image source={userAvatar} L rightText />
-              <Text note>{shorten(userName)}</Text>
-            </Row>
+            <Avatar icon={userAvatar} username={userName} />
             <Col>
               <Text S note>{shorten(account)}</Text>
               <Text right S note>200 honours</Text>

@@ -185,19 +185,23 @@ export function reply() {
   }
 }
 
-export function toggleLikePost(post) {
+export function toggleLikePost(e, post) {
+  e.preventDefault(); e.stopPropagation();
   return toggleLikeDislike(post, POST_TOGGLE_POST_LIKE, true, 'post')
 }
 
-export function toggleDislikePost(post) {
+export function toggleDislikePost(e, post) {
+  e.preventDefault(); e.stopPropagation();
   return toggleLikeDislike(post, POST_TOGGLE_POST_DISLIKE, false, 'post')
 }
 
-export function toggleLikeReply(reply) {
+export function toggleLikeReply(e, reply) {
+  e.preventDefault(); e.stopPropagation();
   return toggleLikeDislike(reply, POST_TOGGLE_REPLY_LIKE, true)
 }
 
-export function toggleDislikeReply(reply) {
+export function toggleDislikeReply(e, reply) {
+  e.preventDefault(); e.stopPropagation();
   return toggleLikeDislike(reply, POST_TOGGLE_REPLY_DISLIKE, false)
 }
 

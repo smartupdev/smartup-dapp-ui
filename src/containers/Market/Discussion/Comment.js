@@ -12,7 +12,7 @@ import { connect } from 'react-redux'
 import { toggleLikeReply, toggleDislikeReply, toggleFollowReply } from '../../../actions/post'
 
 function DiscussionComment({ 
-  reply: {id, userAvatar, username, userAddress, content, isDisliked, isLiked, createTime, isCollect},
+  reply: {id, userAvatar, username, userAddress, content, isDisliked, isLiked, createTime, isCollect, numberOfLike, numberOfDislike },
   toggleLikeReply, toggleDislikeReply, toggleFollowReply
 }) {
   return (
@@ -25,8 +25,14 @@ function DiscussionComment({
           <Text note newline>{content}</Text>
         </Col>
         <Row centerVertical TopXS>
-          <Like S color={isLiked ? theme.green : theme.white} MarginRightBase onClick={() => toggleLikeReply({ id, isLiked, isDisliked })} />
-          <Dislike S color={isDisliked ? theme.red : theme.white} MarginRightBase onClick={() => toggleDislikeReply({ id, isLiked, isDisliked })} />
+          <Row centerVertical onClick={(e) => toggleLikeReply(e, { id, isLiked, isDisliked })}>
+            <Like S color={isLiked ? theme.green : theme.white} MarginRightBase />
+            <Text RightM>{numberOfLike}</Text>
+          </Row>
+          <Row centerVertical onClick={(e) => toggleDislikeReply(e, { id, isLiked, isDisliked })}>
+            <Dislike S color={isDisliked ? theme.red : theme.white} MarginRightBase />
+            <Text RightM>{numberOfDislike}</Text>
+          </Row>
           <Text note>{toAgo(createTime)}</Text>
         </Row>
       </Col>
