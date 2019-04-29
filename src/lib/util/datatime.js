@@ -8,7 +8,7 @@ const MIN = 1000 * 60
 const HOUR = MIN * 60
 const DAY = HOUR * 24
 
-const toDateObject = d => typeof d === 'number' ? new Date(d) : d
+const toDateObject = d => d instanceof Date ? d : new Date(d)
 
 const getYear = (d) => padStart(toDateObject(d).getFullYear(), 4)
 const getMonth = (d) => padStart(toDateObject(d).getMonth() + 1)

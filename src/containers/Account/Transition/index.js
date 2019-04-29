@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled, { css } from 'styled-components'
 import theme from '../../../theme'
 
@@ -8,23 +8,18 @@ import Text from '../../../components/Text'
 import Panel from '../../../components/Panel'
 import Hr from '../../../components/Hr'
 import Expand from '../../../components/Expand'
+
 import { toFullDate } from '../../../lib/util'
 
-const marketAddress = '0xb822B98e02397e9F1dD4C6237e63257dd1f7C4'
-const marketName = 'DUBLER STUDIO KIT'
-const hxHash = '0xb822B98e02397e9F1dD4C6237e63257dd1f7C4'
-const marketId = '2halepvlo1s'
-const transitions = [
-  { hxHash: hxHash+1, stage: 'pending', type: 'BuyCT', detail: {sut: 30, ct: 10}, marketId, marketAddress, marketName, createTime: 1556421940664, blockTime: 1456421940664 },
-  { hxHash: hxHash+2, stage: 'success', type: 'BuyCT', detail: {sut: 34, ct: 10}, marketId, marketAddress, marketName, createTime: 1556421940664, blockTime: 1456421940664 },
-  { hxHash: hxHash+3, stage: 'fail', type: 'BuyCT', detail: {sut: 39, ct: 11}, marketId, marketAddress, marketName, createTime: 1556421940664, blockTime: 1456421940664 },
-  { hxHash: hxHash+4, stage: 'pending', type: 'SellCT', detail: {sut: 30, ct: 10}, marketId, marketAddress, marketName, createTime: 1556421940664, blockTime: 1456421940664 },
-  { hxHash: hxHash+5, stage: 'success', type: 'SellCT', detail: {sut: 34, ct: 10}, marketId, marketAddress, marketName, createTime: 1556421940664, blockTime: 1456421940664 },
-  { hxHash: hxHash+6, stage: 'fail', type: 'SellCT', detail: {ct: 11}, marketId, marketAddress, createTime: marketName, createTime: 1556421940664, blockTime: 1456421940664 },
-  { hxHash: hxHash+7, stage: 'pending', type: 'CreateMarket', detail: {sut: 30}, marketId, marketAddress, marketName, createTime: 1556421940664, blockTime: 1456421940664 },
-  { hxHash: hxHash+8, stage: 'success', type: 'CreateMarket', detail: {sut: 34}, marketId, marketAddress, marketName, createTime: 1556421940664, blockTime: 1456421940664 },
-  { hxHash: hxHash+9, stage: 'fail', type: 'CreateMarket', detail: {sut: 11}, marketId, marketAddress, marketName, createTime: 1556421940664, blockTime: 1456421940664 },
-]
+import { connect } from 'react-redux'
+import { getUserTransactionList } from '../../../actions/user'
+
+
+const typeHelper = {
+  BuyCT:        { label: 'Trade placed (Buy)', title: (ct, sut) => `Bought ${ct} community token from ${sut} SmartUp token` },
+  SellCT:       { label: 'Trade placed (Sell)', title: (ct, sut) => `Sold ${ct} community token to ${sut} SmartUp token` },
+  CreateMarket: { label: 'Market created', title: (ct, sut) => `Paid ${sut} SmartUp token` },
+}
 
 const STAGE = {
   pending: 'pending',
@@ -32,10 +27,13 @@ const STAGE = {
   fail: 'fail',
 }
  
-export default () => {
+function Transition({ getUserTransactionList, transitions }) {
+  useEffect(() => {
+    getUserTransactionList()
+  }, [])
   const [expands, setExpands] = useState([])
   return transitions.map( ({ 
-    hxHash, type, detail, marketName, createTime, stage, blockTime
+    txHash, type, detail: {ct, sut}, marketName, marketAddress, createTime, stage, blockTime
   }, index) => {
     function onClick() {
       const newExpands = [...expands]
@@ -43,10 +41,10 @@ export default () => {
       setExpands(newExpands)
     }
     return (
-      <Col key={hxHash} fitHeight onClick={onClick}>
+      <Col key={txHash} fitHeight onClick={onClick}>
         <Row spacingM fitHeight>
           <Col flex={1}>
-            <Text BottomS L>{`${type} ${detail.ct} CT OF YES AT ${detail.sut} SUT`}</Text>
+            <Text BottomS L>{typeHelper[type].title(ct, sut)}</Text>
             <Text BottomXS note>{marketName}</Text>
             <Text note S>{toFullDate(createTime)}</Text>
           </Col>
@@ -58,16 +56,15 @@ export default () => {
         <Expand isOpen={expands[index]}>
           <Col backgroundColor={theme.bgColorDark} HL VM>
           {[
-            { label: 'HXHASH', value: hxHash },
-            { label: 'TYPE', value: type },
-            { label: 'OUTCOME', value: '?????' },
-            { label: 'SHARES', value: '????' },
-            { label: 'PRICE', value: '????' },
-            { label: 'FEE', value: '????' },
-            { label: 'TIMESTAMP', value: toFullDate(blockTime) },
+            { label: 'TXHASH', value: txHash },
+            { label: 'Type', value: typeHelper[type].label },
+            { label: 'Market', value: `${marketName} ${marketAddress}` },
+            { label: 'Number of Community token', value: ct || 'N/A' },
+            { label: 'Created on', value: toFullDate(createTime) },
+            { label: 'Last update', value: toFullDate(blockTime) },
           ].map( ({label, value}) => 
             <Row key={label} VXS>
-              <Text width='150px'>{label}</Text>
+              <Text width='250px'>{label}</Text>
               <Text>{value}</Text>
             </Row>
           )}
@@ -78,3 +75,13 @@ export default () => {
     )
   })
 }
+
+const mapStateToProps = state => ({
+  transitions: state.user.trancations
+});
+
+const mapDispatchToProps = {
+  getUserTransactionList
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Transition);
