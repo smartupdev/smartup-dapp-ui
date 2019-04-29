@@ -14,6 +14,6 @@ export default ({ icon, username, ...rest }) =>
       <People color={theme.white} round MarginRightXS {...rest} /> 
     }
     {
-      username && <Text {...rest}>{username}</Text>
+      username && <Text nowrap {...rest}>{username}</Text>
     }
   </Row>

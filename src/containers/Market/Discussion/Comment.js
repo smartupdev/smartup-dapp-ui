@@ -9,12 +9,11 @@ import { shorten, toAgo } from '../../../lib/util'
 import theme from '../../../theme'
 
 import { connect } from 'react-redux'
-import { toggleLikeReply, toggleDislikeReply } from '../../../actions/post'
-
+import { toggleLikeReply, toggleDislikeReply, toggleFollowReply } from '../../../actions/post'
 
 function DiscussionComment({ 
-  reply: {id, userAvatar, username, userAddress, content, isDisliked, isLiked, createTime},
-  toggleLikeReply, toggleDislikeReply 
+  reply: {id, userAvatar, username, userAddress, content, isDisliked, isLiked, createTime, isCollect},
+  toggleLikeReply, toggleDislikeReply, toggleFollowReply
 }) {
   return (
     <Row key={id} top spacingM>
@@ -31,9 +30,9 @@ function DiscussionComment({
           <Text note>{toAgo(createTime)}</Text>
         </Row>
       </Col>
-      <Row flex={1} right TopXS>
+      <Row flex={1} right TopXS LeftXS>
         <Share S color={theme.white} MarginRightS />
-        <Bookmarked S color={theme.white} />
+        <Bookmarked S color={theme.white} checked={isCollect} onClick={(e) => toggleFollowReply(e, id, isCollect)} />
       </Row>
     </Row>
   )
@@ -41,7 +40,7 @@ function DiscussionComment({
 
 
 const mapDispatchToProps = {
-  toggleLikeReply, toggleDislikeReply
+  toggleLikeReply, toggleDislikeReply, toggleFollowReply
 }
 
 export default connect(null, mapDispatchToProps)(DiscussionComment);

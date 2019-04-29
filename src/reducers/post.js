@@ -1,5 +1,6 @@
 import {
-  POST_NEW_COMMENT_ONCHANGE,
+  POST_NEW_COMMENT_ONCHANGE, POST_ONCHANGE_KEYWORD,
+  POST_TOGGLE_POST_FOLLOW, POST_TOGGLE_REPLY_FOLLOW,
   POST_TOGGLE_POST_LIKE, POST_TOGGLE_POST_DISLIKE, POST_TOGGLE_REPLY_LIKE, POST_TOGGLE_REPLY_DISLIKE,
   POST_LIST_REQUESTED, POST_LIST_SUCCEEDED, POST_LIST_FAILED,
   POST_ONE_REQUESTED, POST_ONE_SUCCEEDED, POST_ONE_FAILED,
@@ -14,15 +15,37 @@ import { changeArrayById } from '../lib/util/reducerHelper'
 
 function toggleLike(r) {
   if(!r) return r
-  return { ...r, isLiked: !r.isLiked, isDisliked: r.isLiked ? r.isDisliked : false }
+  if(r.isLiked) return { // unmark like
+    ...r,
+    isLiked: !r.isLiked,
+    numberOfLike: r.numberOfLike - 1
+  }
+  return { 
+    ...r, 
+    isLiked: !r.isLiked, 
+    isDisliked: false,
+    numberOfLike: r.numberOfLike + 1,
+    numberOfDislike: r.isDisliked ? r.numberOfDislike - 1 : r.numberOfDislike
+  }
 }
 function toggleDislike(r) {
   if(!r) return r
-  return { ...r, isLiked: r.isDisliked ? r.isLiked : false, isDisliked: !r.isDisliked }
+  if(r.isDisliked) return { // ummark dislike
+    ...r, 
+    isDisliked: !r.isDisliked,
+    numberOfDislike: r.numberOfDislike - 1
+  }
+  return { // mark dislike
+    ...r,
+    isLiked: false,
+    isDisliked: !r.isDisliked,
+    numberOfDislike: r.numberOfDislike + 1,
+    numberOfLike: r.isLiked ? r.numberOfLike - 1 : r.numberOfLike
+  }
 }
 
 function replyMassage(r) {
-  return {...r, id: r.replyId}
+  return {...r, id: r.replyId, isCollect: r.isCollected }
 }
 
 function postMassage(p) {
@@ -33,13 +56,16 @@ function postMassage(p) {
     time: p.createTime,
     // title, 
     content: p.description,
-    // numberOfLike, 
-    // numberOfDislike, 
-    // numberOfComment, 
+    numberOfLike: p.data && p.data.likeCount, 
+    numberOfDislike: p.data && p.data.dislikeCount, 
+    numberOfComment: p.data && p.data.replyCount, 
+    isCollect: p.isCollected
   }
 }
 
 export const initialState = {
+
+  keyword: '',
 
   posts: [],
   gettingPost: false,
@@ -102,6 +128,27 @@ export const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    case POST_ONCHANGE_KEYWORD: 
+      return {
+        ...state,
+        keyword: action.payload.value
+      }
+    case POST_TOGGLE_POST_FOLLOW: 
+      return {
+        ...state,
+        detail: {
+          ...state.detail,
+          isCollect: !state.detail.isCollect
+        },
+        posts: changeArrayById(state.posts, action.payload.id, r => ({...r, isCollect: !r.isCollect}))
+      }
+    case POST_TOGGLE_REPLY_FOLLOW: 
+      return {
+        ...state,
+        replys: changeArrayById(state.replys, action.payload.id, r => ({...r, isCollect: !r.isCollect}))
+      }
+
+
     case POST_TOGGLE_POST_LIKE: {
       const { id } = action.payload
       return {
@@ -260,7 +307,11 @@ export default (state = initialState, action) => {
         ...state,
         replying: false,
         replyError: initialState.replyError,
-        newComment: initialState.newComment
+        newComment: initialState.newComment,
+        detail: {
+          ...state.detail,
+          numberOfComment: state.detail.numberOfComment + 1
+        }
       }
     case POST_USER_REPLAY_ADD_FAILED:
       return {

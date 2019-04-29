@@ -25,7 +25,7 @@ function marketMassage(m) {
     numberOfSub: m.data ? m.data.userCount : '-',
     lately_volume: m.data.latelyVolume,
     priceIn7d: m.sevenDayNode,
-    following: m.isCollect,
+    following: m.isCollected,
     overview: m.description,
     icon: null,
   }

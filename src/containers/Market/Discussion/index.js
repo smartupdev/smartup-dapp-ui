@@ -32,7 +32,7 @@ const title = `Neque porro quisquam est qui dolorem ipsum quia dolor sit amet`
 // ]
 
 function Disussion({ getMarketPost, post }) {
-  const { posts, gettingPost, getPostError } = post
+  const { posts, gettingPost, getPostError, keyword } = post
   useEffect( () => {
     getMarketPost()
   }, [])
@@ -41,9 +41,16 @@ function Disussion({ getMarketPost, post }) {
   if(!posts.length) return (
     <Col center centerVertical flex={1} >
       <Row centerVertical>
-        <Text>Click</Text>
-        <Add primary LeftS RightS S />
-        <Text>to create a new post.</Text>
+        {
+          keyword ? 
+            <Text>No result found.</Text> 
+          : 
+            <>
+              <Text>Click</Text>
+              <Add primary LeftS RightS S />
+              <Text>to create a new post.</Text>
+            </>
+        }
       </Row>
     </Col>
   )

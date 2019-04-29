@@ -5,6 +5,7 @@ import { Link, getUrlParams, routeMap } from '../../routes'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { get, collectMarket } from '../../actions/market'
+import { onChangeKeyword, getMarketPost } from '../../actions/post'
 
 import theme from '../../theme'
 import { DonutLoader } from '../../components/Loader'
@@ -38,7 +39,7 @@ const copyToClipboard = str => {
   document.body.removeChild(el);
 };
 
-const Market = ({ get, collectMarket, getting, location, market }) => {
+const Market = ({ get, collectMarket, getting, location, market, getMarketPost, onChangeKeyword, postKeyword }) => {
   const [copied, setCopy] = useState(false)
   const id = getUrlParams().id
   useEffect(() => {
@@ -77,7 +78,7 @@ const Market = ({ get, collectMarket, getting, location, market }) => {
           {
             window.location.pathname === routeMap.discussion.path && 
             <Row right centerVertical>
-              <Search backgroundColor={theme.bgColor} bottom='1px' top='1px' right='30px' />
+              <Search backgroundColor={theme.bgColor} bottom='1px' top='1px' right='30px' value={postKeyword} onChange={onChangeKeyword} onSearch={getMarketPost} />
               <Link>
                 { ({ goto }) => 
                 <Col absolute absRight='0' absTop='1px' absBottom='1px' HS backgroundColor={theme.bgColor} centerVertical>
@@ -97,10 +98,11 @@ const Market = ({ get, collectMarket, getting, location, market }) => {
 const mapStateToProps = state => ({
   market: state.market.currentMarket,
   getting: state.market.gettingMarket,
+  postKeyword: state.post.keyword,
 });
 
 const mapDispatchToProps = {
-  get, collectMarket
+  get, collectMarket, onChangeKeyword, getMarketPost
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Market))
