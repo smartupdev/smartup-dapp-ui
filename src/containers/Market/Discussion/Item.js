@@ -2,6 +2,7 @@ import React from 'react'
 import { Row, Col } from '../../../components/Layout'
 import Text from '../../../components/Text'
 import Avatar from '../../../components/Avatar'
+import Image from '../../../components/Image'
 import { Bookmarked, Share, Like, Dislike, Reply } from '../../../components/Icon'
 import { Link } from '../../../routes'
 
@@ -9,9 +10,10 @@ import { toToken, toAgo, toFullDate, shorten } from '../../../lib/util'
 import theme from '../../../theme'
 import { connect } from 'react-redux'
 import { toggleLikePost, toggleDislikePost, toggleFollowPost } from '../../../actions/post'
+import { ipfsHost } from '../../../actions/ipfs'
 
 function DiscussionItem ({ post, isDetailView, toggleLikePost, toggleDislikePost, toggleFollowPost }) {
-  const { id, authorName, time, title, content, isCollect, isLiked, isDisliked, numberOfLike = 1000, numberOfDislike = 2000, numberOfComment = 3000, marketId, lastReply } = post
+  const { id, authorName, time, title, content, photo, isCollect, isLiked, isDisliked, numberOfLike = 1000, numberOfDislike = 2000, numberOfComment = 3000, marketId, lastReply } = post
   function like(e) {
     toggleLikePost(e, {id, isLiked, isDisliked})
   }
@@ -27,7 +29,10 @@ function DiscussionItem ({ post, isDetailView, toggleLikePost, toggleDislikePost
             <Text VXS>{title}</Text>
             {
               isDetailView ?
-                <Text S note BottomS>{content}</Text>
+                <>
+                { content && <Text S note BottomS>{content}</Text>}
+                { photo &&  <Image source={ipfsHost + photo} origin BottomS />}
+                </>
               :
                 lastReply && 
                 <Row centerVertical BottomS>

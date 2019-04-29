@@ -40,7 +40,7 @@ const IconWrapper = styled(Col)`
 `
 
 export default function ({ 
-  height = '200px', imageWidth = '100%', imageHeight = '200px', 
+  height = '200px', imageWidth = '100%', imageHeight = '200px', origin,
   value, onChoose = console.log, isLoading = false, 
   ...rest }) {
   let dragCounter = 0
@@ -89,7 +89,7 @@ export default function ({
     <>
       <ImageBox show={value} center relative>
         <Col relative>
-          <Image source={ipfsHost + value} cover width={imageWidth} height={imageHeight} />
+          <Image source={value && (ipfsHost + value)} cover width={imageWidth} height={imageHeight} origin={origin} />
           <TextWrapper centerVertical center onClick={() => onChoose()}>
             {/* <Text center>Click here to delete</Text> */}
             <CloseWithCircle M color={theme.black}  />
