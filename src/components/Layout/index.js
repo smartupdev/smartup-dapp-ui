@@ -25,7 +25,7 @@ const Flex = styled.div`
 
   ${props => typeof props.flex === 'number' && css`flex: ${props.flex}`};
   ${props => props.maxWidth && css`max-width: ${props.maxWidth}`};
-  ${props => props.width && css`width: ${props.width}`};
+  ${props => props.width && css`width: ${props.width}; min-width: ${props.width}`};
   ${p => p.fitWidth && css`width: fit-content;`}
   ${p => p.fitHeight && css`min-height: fit-content;`}
   ${props => props.height && css`height: ${props.height}; min-height: ${props.height}`};

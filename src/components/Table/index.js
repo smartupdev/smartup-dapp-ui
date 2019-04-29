@@ -10,7 +10,7 @@ const ORDER_BY = {
 }
 
 const Table = styled(Col)`
-  ${p => p.minWidth && css`min-width: ${p.minWidth}`};
+  overflow: auto;
 `
 
 const TD = styled(Col)`
@@ -62,7 +62,7 @@ export default ({ model, values, sortBy, orderBy, onClickHeader, onClick, expand
         values.map( (record, index) => {
           const isExpanded = expandedRecords.includes(record.id)
           return (
-            <TableRecord key={record.id + '-' + index} isExpanded={isExpanded} hasBorder={!index || !noBorderCol} inset={inset}>
+            <TableRecord key={record.id + '-' + index} isExpanded={isExpanded} hasBorder={!index || !noBorderCol} inset={inset} fitWidth>
               <Row>
                 {
                   model.map( ({ value: key, component: Component, layoutStyle = { flex: 1 } }, j) =>
