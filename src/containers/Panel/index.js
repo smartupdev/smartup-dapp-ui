@@ -59,7 +59,7 @@ const Panel = ({
           <Top centerVertical spaceBetween>
             <Row centerVertical>
               <Image source={userAvatar} L rightText />
-              <Text note>{userName}</Text>
+              <Text note>{shorten(userName)}</Text>
             </Row>
             <Col>
               <Text S note>{shorten(account)}</Text>
