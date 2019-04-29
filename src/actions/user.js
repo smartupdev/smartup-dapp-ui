@@ -11,6 +11,11 @@ import {
   USER_AVATAR_CHANGE_REQUESTED,USER_AVATAR_CHANGE_SUCCEEDED,USER_AVATAR_CHANGE_FAIL,
   USER_UPDATE_INFO_REQUESTED,USER_UPDATE_INFO_SUCCEEDED,USER_UPDATE_INFO_FAIL,
   USER_CURRENT_INFO_REQUESTED,USER_CURRENT_INFO_SUCCEEDED,USER_CURRENT_INFO_FAIL,
+  USER_NAME_CHANGE,
+  USER_MARKET_CREATED_REQUESTED,USER_MARKET_CREATED_SUCCEEDED,USER_MARKET_CREATED_FAIL,
+  USER_MARKET_TRADED_REQUESTED,USER_MARKET_TRADED_SUCCEEDED,USER_MARKET_TRADED_FAIL,
+  USER_POST_COLLECTED_REQUESTED,USER_POST_COLLECTED_SUCCEEDED,USER_POST_COLLECTED_FAIL,
+  USER_POST_CREATED_REQUESTED,USER_POST_CREATED_SUCCEEDED,USER_POST_CREATED_FAIL,
 } from './actionTypes'
 import {
   asyncFunction, callbackFunction,
@@ -20,7 +25,8 @@ import {
   smartupWeb3, getAccount
 } from '../integrator'
 import {
-  API_USER_LOGIN, API_USER_CURRENT, API_USER_UPDATE, API_USER_AUTH,API_USER_TRANSACTION_LIST
+  API_USER_LOGIN, API_USER_CURRENT, API_USER_UPDATE, API_USER_AUTH,API_USER_TRANSACTION_LIST,
+  API_USER_MARKET_CREATED,API_USER_MARKET_TRADED,API_USER_POST_COLLECTED,API_USER_POST_CREATED,
 } from './api';
 import fetch from '../lib/util/fetch';
 import {postIpfsImg} from './ipfs'
@@ -185,21 +191,6 @@ function getPersonSign(msg) {
   }
 }
 
-//get user transactions
-export function getUserTransactionList(){
-  return (dispatch,getState)=>{
-    return dispatch(
-      asyncFunction(
-        fetch.post,
-        USER_TRANSACTION_LIST_REQUESTED, USER_TRANSACTION_LIST_SUCCEEDED, USER_TRANSACTION_LIST_FAIL,
-        { params: API_USER_TRANSACTION_LIST,
-          params2:{pageNumb:getState().user.pageNumb + 1, pageSize: getState().user.pageSize}
-         }
-      )
-    )
-  }
-}
-
 //upload image
 export function onChangeAvatar(files) {
   if(!files) return {
@@ -243,3 +234,86 @@ export function getUserInfo(){
     )
   }
 }
+
+export function onChangeName(name){
+  return {
+    type: USER_NAME_CHANGE,
+    payload: name,
+  }
+}
+
+//get user transactions
+export function getUserTransactionList(){
+  return (dispatch,getState)=>{
+    return dispatch(
+      asyncFunction(
+        fetch.post,
+        USER_TRANSACTION_LIST_REQUESTED, USER_TRANSACTION_LIST_SUCCEEDED, USER_TRANSACTION_LIST_FAIL,
+        { params: API_USER_TRANSACTION_LIST,
+          params2:{pageNumb:getState().user.transPageNumb + 1, pageSize: getState().user.pageSize}
+         }
+      )
+    )
+  }
+}
+
+//用户创建的市场
+export function getCreatedMarkets(){
+  return (dispatch,getState)=>{
+    return dispatch(
+      asyncFunction(
+        fetch.post,
+        USER_MARKET_CREATED_REQUESTED, USER_MARKET_CREATED_SUCCEEDED, USER_MARKET_CREATED_FAIL,
+        { params: API_USER_MARKET_CREATED,
+          params2:{pageNumb:getState().user.createdMarketsPageNumb + 1, pageSize: getState().user.pageSize}
+         }
+      )
+    )
+  }
+}
+
+//用户交易的市场
+export function getTradedMarkets(){
+  return (dispatch,getState)=>{
+    return dispatch(
+      asyncFunction(
+        fetch.post,
+        USER_MARKET_TRADED_REQUESTED, USER_MARKET_TRADED_SUCCEEDED, USER_MARKET_TRADED_FAIL,
+        { params: API_USER_MARKET_TRADED,
+          params2:{pageNumb:getState().user.tradedMarketsPageNumb + 1, pageSize: getState().user.pageSize}
+         }
+      )
+    )
+  }
+}
+
+//用户收藏的帖子
+export function getCollectedPosts(){
+  return (dispatch,getState)=>{
+    return dispatch(
+      asyncFunction(
+        fetch.post,
+        USER_POST_COLLECTED_REQUESTED, USER_POST_COLLECTED_SUCCEEDED, USER_POST_COLLECTED_FAIL,
+        { params: API_USER_POST_COLLECTED,
+          params2:{pageNumb:getState().user.collectedPostsPageNumb + 1, pageSize: getState().user.pageSize}
+         }
+      )
+    )
+  }
+}
+
+//用户创建的帖子
+export function getCreatedPosts(){
+  return (dispatch,getState)=>{
+    return dispatch(
+      asyncFunction(
+        fetch.post,
+        USER_POST_CREATED_REQUESTED, USER_POST_CREATED_SUCCEEDED, USER_POST_CREATED_FAIL,
+        { params: API_USER_POST_CREATED,
+          params2:{pageNumb:getState().user.createdPostsPageNumb + 1, pageSize: getState().user.pageSize}
+         }
+      )
+    )
+  }
+}
+
