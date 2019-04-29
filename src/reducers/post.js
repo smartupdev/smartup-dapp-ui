@@ -14,11 +14,33 @@ import { changeArrayById } from '../lib/util/reducerHelper'
 
 function toggleLike(r) {
   if(!r) return r
-  return { ...r, isLiked: !r.isLiked, isDisliked: r.isLiked ? r.isDisliked : false }
+  if(r.isLiked) return { // unmark like
+    ...r,
+    isLiked: !r.isLiked,
+    numberOfLike: r.numberOfLike - 1
+  }
+  return { 
+    ...r, 
+    isLiked: !r.isLiked, 
+    isDisliked: false,
+    numberOfLike: r.numberOfLike + 1,
+    numberOfDislike: r.isDisliked ? r.numberOfDislike - 1 : r.numberOfDislike
+  }
 }
 function toggleDislike(r) {
   if(!r) return r
-  return { ...r, isLiked: r.isDisliked ? r.isLiked : false, isDisliked: !r.isDisliked }
+  if(r.isDisliked) return { // ummark dislike
+    ...r, 
+    isDisliked: !r.isDisliked,
+    numberOfDislike: r.numberOfDislike - 1
+  }
+  return { // mark dislike
+    ...r,
+    isLiked: false,
+    isDisliked: !r.isDisliked,
+    numberOfDislike: r.numberOfDislike + 1,
+    numberOfLike: r.isLiked ? r.numberOfLike - 1 : r.numberOfLike
+  }
 }
 
 function replyMassage(r) {
@@ -33,9 +55,9 @@ function postMassage(p) {
     time: p.createTime,
     // title, 
     content: p.description,
-    // numberOfLike, 
-    // numberOfDislike, 
-    // numberOfComment, 
+    numberOfLike: p.data && p.data.likeCount, 
+    numberOfDislike: p.data && p.data.dislikeCount, 
+    numberOfComment: p.data && p.data.replyCount, 
   }
 }
 
