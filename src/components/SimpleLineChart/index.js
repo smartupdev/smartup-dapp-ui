@@ -18,7 +18,12 @@ export default ({ value, height = 40, width = 200 }) => {
   return (
     <SVG height={height} width={width}>
       <Polyline 
-        points={value.map( (v, i) => `${i * width/(value.length - 1)},${ height - (v - minValue)/(maxValue - minValue) * (height -2)}`).join(' ')}
+        points={
+          maxValue === minValue ?
+            `${0},${height/2} ${width},${height/2}`
+          :
+            value.map( (v, i) => `${i * width/(value.length - 1)},${ height - (v - minValue)/(maxValue - minValue) * (height -2)}`).join(' ')
+        }
         />
     </SVG>
   )
