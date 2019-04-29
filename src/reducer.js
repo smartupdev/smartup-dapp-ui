@@ -10,8 +10,8 @@ import notification from './reducers/notification';
 import createMarket from './reducers/createMarket';
 import panel from './reducers/panel';
 import trade from './reducers/trade';
-import personalCenterMarket from './reducers/PersonalCenter/market';
-import personalCenterPost from './reducers/PersonalCenter/post';
+import personalCenterMarket from './reducers/personalCenterMarket';
+import personalCenterPost from './reducers/personalCenterPost';
 import { combineReducers } from 'redux';
 import { routerReducer } from 'react-router-redux';
 
