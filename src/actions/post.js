@@ -1,5 +1,6 @@
 import {
   POST_NEW_COMMENT_ONCHANGE,
+  POST_ONCHANGE_KEYWORD,
   POST_TOGGLE_POST_FOLLOW, POST_TOGGLE_REPLY_FOLLOW,
   POST_LIST_REQUESTED, POST_LIST_SUCCEEDED, POST_LIST_FAILED,
   POST_ONE_REQUESTED, POST_ONE_SUCCEEDED, POST_ONE_FAILED,
@@ -19,6 +20,13 @@ import fetch from '../lib/util/fetch';
 import { asyncFunction } from '../integrator'
 import { addCollect, delCollect } from './collect'
 
+export function onChangeKeyword(value) {
+  return {
+    type: POST_ONCHANGE_KEYWORD,
+    payload: { value }
+  }
+}
+
 export function onChangeNewComment(value) {
   return {
     type: POST_NEW_COMMENT_ONCHANGE,
@@ -36,12 +44,14 @@ export function getRootPost() {
 
 export function getMarketPost() {
   return (dispatch, getState) => {
+    const { market: { currentMarketId: marketId }, post: { pageNumb, pageSize, keyword } } = getState()
     dispatch(
       getPostList({
         type: 'market',
-        marketId: getState().market.currentMarketId,
-        pageNumb: getState().post.pageNumb + 1,
-        pageSize: getState().post.pageSize,
+        query: keyword,
+        marketId,
+        pageNumb: pageNumb + 1,
+        pageSize
       })
     )
   }

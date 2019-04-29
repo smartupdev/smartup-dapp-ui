@@ -1,5 +1,5 @@
 import {
-  POST_NEW_COMMENT_ONCHANGE,
+  POST_NEW_COMMENT_ONCHANGE, POST_ONCHANGE_KEYWORD,
   POST_TOGGLE_POST_FOLLOW, POST_TOGGLE_REPLY_FOLLOW,
   POST_TOGGLE_POST_LIKE, POST_TOGGLE_POST_DISLIKE, POST_TOGGLE_REPLY_LIKE, POST_TOGGLE_REPLY_DISLIKE,
   POST_LIST_REQUESTED, POST_LIST_SUCCEEDED, POST_LIST_FAILED,
@@ -65,6 +65,8 @@ function postMassage(p) {
 
 export const initialState = {
 
+  keyword: '',
+
   posts: [],
   gettingPost: false,
   getPostError: null,
@@ -126,6 +128,11 @@ export const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    case POST_ONCHANGE_KEYWORD: 
+      return {
+        ...state,
+        keyword: action.payload.value
+      }
     case POST_TOGGLE_POST_FOLLOW: 
       return {
         ...state,
