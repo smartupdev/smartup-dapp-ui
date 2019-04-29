@@ -13,8 +13,10 @@ import Notification from './Notification'
 import Setting from './Setting'
 import theme from '../../theme'
 import { Col, Row } from '../../components/Layout'
+
 import lang, { currentLang } from '../../lang'
 import { shorten } from '../../lib/util'
+
 import { connect } from 'react-redux'
 import { setActiveTab } from '../../actions/panel'
 import { loginMetaMask } from '../../actions/user'

@@ -45,7 +45,7 @@ export const Text = styled.p`
     text-overflow: ellipsis;
     width: 100%;
   `}
-  ${p => p.width && css`width: ${p.width};`}
+  ${p => p.width && css`width: ${p.width}; min-width: ${p.width};`}
 
   ${p => p.error && css`
     color: ${p.theme.red};
