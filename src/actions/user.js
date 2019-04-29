@@ -212,7 +212,7 @@ export function onChangeAvatar(files) {
 export function updateUserInfo(){
   return (dispatch,getState)=>{
     const requestParams = {
-      name: getState().user.userName,
+      name: getState().user.realUserName,
       avatarIpfsHash: getState().user.avatarHash,
     }
     return dispatch(
@@ -239,6 +239,7 @@ export function getUserInfo(){
 }
 
 export function onChangeName(name){
+  console.log('------------ name',name);
   return {
     type: USER_NAME_CHANGE,
     payload: name,
