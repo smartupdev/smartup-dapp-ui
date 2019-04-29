@@ -20,7 +20,7 @@ function marketMassage(m) {
     id: m.marketId,
     address: m.marketAddress,
     cover: m.cover && (ipfsHost + m.cover),
-    avatar: m.photo && (ipfsHost + m.photo),
+    avatar: m.photo,
     numberOfComments: m.data ? m.data.postCount : '-',
     numberOfSub: m.data ? m.data.userCount : '-',
     lately_volume: m.data.latelyVolume,

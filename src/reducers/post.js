@@ -136,7 +136,7 @@ export default (state = initialState, action) => {
     case POST_TOGGLE_POST_FOLLOW: 
       return {
         ...state,
-        detail: {
+        detail: state.detail && {
           ...state.detail,
           isCollect: !state.detail.isCollect
         },

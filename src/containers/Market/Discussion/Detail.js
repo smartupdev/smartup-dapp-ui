@@ -39,17 +39,19 @@ function DiscussionDetail({
       <DiscussionItem post={post} isDetailView />
       <Col spacingM>
       {
-        loggedIn && 
-        <Row top>
-          <Avatar icon={userAvatar} username={username} />
-          <Col flex={1} LeftS>
-            <TextInput background value={newComment} onChange={onChangeNewComment} disabled={replying} line={4} />
-            <Col right TopBase>
-              <Button primary HXL label='Save' onClick={reply} disabled={replying} />
-              {replyError && <Text S error>{replyError.message}</Text>}
+        loggedIn ? 
+          <Row top>
+            <Avatar icon={userAvatar} username={username} />
+            <Col flex={1} LeftS>
+              <TextInput background value={newComment} onChange={onChangeNewComment} disabled={replying} line={4} />
+              <Col right TopBase>
+                <Button primary HXL label='Save' onClick={reply} disabled={replying} />
+                {replyError && <Text S error>{replyError.message}</Text>}
+              </Col>
             </Col>
-          </Col>
-        </Row>
+          </Row>
+        :
+          <Text center note>Please login to comment</Text>
       }
       </Col>
       {!!replys.length && 
