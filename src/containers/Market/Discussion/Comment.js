@@ -30,7 +30,7 @@ function DiscussionComment({
           <Text note>{toAgo(createTime)}</Text>
         </Row>
       </Col>
-      <Row flex={1} right TopXS>
+      <Row flex={1} right TopXS LeftXS>
         <Share S color={theme.white} MarginRightS />
         <Bookmarked S color={theme.white} checked={isCollect} onClick={(e) => toggleFollowReply(e, id, isCollect)} />
       </Row>
