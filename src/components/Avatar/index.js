@@ -6,6 +6,7 @@ import Text from '../../components/Text'
 import { Row } from '../../components/Layout'
 import theme from '../../theme'
 import { ipfsHost } from '../../actions/ipfs'
+import { shorten } from '../../lib/util'
 
 export default ({ icon, username, ...rest }) => 
   <Row centerVertical>
@@ -15,6 +16,6 @@ export default ({ icon, username, ...rest }) =>
       <People color={theme.white} round MarginRightXS {...rest} /> 
     }
     {
-      username && <Text nowrap {...rest}>{username}</Text>
+      username && <Text nowrap {...rest}>{shorten(username)}</Text>
     }
   </Row>

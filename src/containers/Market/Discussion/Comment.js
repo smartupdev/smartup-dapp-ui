@@ -18,7 +18,7 @@ function DiscussionComment({
   return (
     <Row key={id} top spacingM>
       <Col TopXS>
-        <Avatar icon={userAvatar} username={username || shorten(userAddress)} />
+        <Avatar icon={userAvatar} username={username || userAddress} />
       </Col>
       <Col LeftS TopBase>
         <Col bgLight spacingXS round fitWidth>
