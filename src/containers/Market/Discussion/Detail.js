@@ -19,7 +19,7 @@ import { getPost, onChangeNewComment, reply, getReplyList, toggleLikeReply, togg
 
 function DiscussionDetail({
   post, gettingDetail, getDetailError, 
-  newComment, replying,
+  newComment, replying, replyError,
   gettingReply, replys,
   getPost, getReplyList, reply, onChangeNewComment,
   loggedIn, username, userAvatar,
@@ -46,6 +46,7 @@ function DiscussionDetail({
             <TextInput background value={newComment} onChange={onChangeNewComment} disabled={replying} line={4} />
             <Col right TopBase>
               <Button primary HXL label='Save' onClick={reply} disabled={replying} />
+              {replyError && <Text S error>{replyError.message}</Text>}
             </Col>
           </Col>
         </Row>
@@ -60,13 +61,13 @@ function DiscussionDetail({
 
 const mapStateToProps = state => {
   const { 
-    newComment, replying, 
+    newComment, replying, replyError,
     replys, gettingReply, getReplyError, 
     detail: post, gettingDetail, getDetailError, 
   } = state.post
   const { loggedIn, userName: username, userAvatar } = state.user
   return {
-    newComment, replying,
+    newComment, replying, replyError,
     replys, gettingReply, getReplyError,
     post, gettingDetail, getDetailError,
     loggedIn, username, userAvatar

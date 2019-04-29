@@ -7,10 +7,10 @@ import { Link } from '../../../routes'
 import { toToken, toAgo, toFullDate, shorten } from '../../../lib/util'
 import theme from '../../../theme'
 import { connect } from 'react-redux'
-import { toggleLikePost, toggleDislikePost } from '../../../actions/post'
+import { toggleLikePost, toggleDislikePost, toggleFollowPost } from '../../../actions/post'
 
-function DiscussionItem ({ post, isDetailView, toggleLikePost, toggleDislikePost }) {
-  const { id, authorName, time, title, content, isLiked, isDisliked, numberOfLike = 1000, numberOfDislike = 2000, numberOfComment = 3000, marketId } = post
+function DiscussionItem ({ post, isDetailView, toggleLikePost, toggleDislikePost, toggleFollowPost }) {
+  const { id, authorName, time, title, content, isCollect, isLiked, isDisliked, numberOfLike = 1000, numberOfDislike = 2000, numberOfComment = 3000, marketId } = post
   function like(e) {
     e.preventDefault(); e.stopPropagation();
     toggleLikePost({id, isLiked, isDisliked})
@@ -35,7 +35,7 @@ function DiscussionItem ({ post, isDetailView, toggleLikePost, toggleDislikePost
           </Col>
           <Row>
             <Share S color={theme.white} MarginRightS />
-            <Bookmarked S color={theme.white} />
+            <Bookmarked S color={theme.white} checked={isCollect} onClick={(e) => toggleFollowPost(e, id, isCollect)} />
           </Row>
         </Row>
       }
@@ -44,7 +44,7 @@ function DiscussionItem ({ post, isDetailView, toggleLikePost, toggleDislikePost
 }
 
 const mapDispatchToProps = {
-  toggleLikePost, toggleDislikePost
+  toggleLikePost, toggleDislikePost, toggleFollowPost
 }
 
 export default connect(null, mapDispatchToProps)(DiscussionItem)

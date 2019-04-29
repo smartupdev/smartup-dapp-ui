@@ -1,5 +1,6 @@
 import {
   POST_NEW_COMMENT_ONCHANGE,
+  POST_TOGGLE_POST_FOLLOW, POST_TOGGLE_REPLY_FOLLOW,
   POST_TOGGLE_POST_LIKE, POST_TOGGLE_POST_DISLIKE, POST_TOGGLE_REPLY_LIKE, POST_TOGGLE_REPLY_DISLIKE,
   POST_LIST_REQUESTED, POST_LIST_SUCCEEDED, POST_LIST_FAILED,
   POST_ONE_REQUESTED, POST_ONE_SUCCEEDED, POST_ONE_FAILED,
@@ -44,7 +45,7 @@ function toggleDislike(r) {
 }
 
 function replyMassage(r) {
-  return {...r, id: r.replyId}
+  return {...r, id: r.replyId, isCollect: r.isCollected }
 }
 
 function postMassage(p) {
@@ -58,6 +59,7 @@ function postMassage(p) {
     numberOfLike: p.data && p.data.likeCount, 
     numberOfDislike: p.data && p.data.dislikeCount, 
     numberOfComment: p.data && p.data.replyCount, 
+    isCollect: p.isCollected
   }
 }
 
@@ -124,6 +126,22 @@ export const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    case POST_TOGGLE_POST_FOLLOW: 
+      return {
+        ...state,
+        detail: {
+          ...state.detail,
+          isCollect: !state.detail.isCollect
+        },
+        posts: changeArrayById(state.posts, action.payload.id, r => ({...r, isCollect: !r.isCollect}))
+      }
+    case POST_TOGGLE_REPLY_FOLLOW: 
+      return {
+        ...state,
+        replys: changeArrayById(state.replys, action.payload.id, r => ({...r, isCollect: !r.isCollect}))
+      }
+
+
     case POST_TOGGLE_POST_LIKE: {
       const { id } = action.payload
       return {
@@ -282,7 +300,11 @@ export default (state = initialState, action) => {
         ...state,
         replying: false,
         replyError: initialState.replyError,
-        newComment: initialState.newComment
+        newComment: initialState.newComment,
+        detail: {
+          ...state.detail,
+          numberOfComment: state.detail.numberOfComment + 1
+        }
       }
     case POST_USER_REPLAY_ADD_FAILED:
       return {

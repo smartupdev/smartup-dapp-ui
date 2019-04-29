@@ -1,5 +1,6 @@
 import {
   POST_NEW_COMMENT_ONCHANGE,
+  POST_TOGGLE_POST_FOLLOW, POST_TOGGLE_REPLY_FOLLOW,
   POST_LIST_REQUESTED, POST_LIST_SUCCEEDED, POST_LIST_FAILED,
   POST_ONE_REQUESTED, POST_ONE_SUCCEEDED, POST_ONE_FAILED,
   POST_REPLY_CHILDREN_LIST_REQUESTED, POST_REPLY_CHILDREN_LIST_SUCCEEDED, POST_REPLY_CHILDREN_LIST_FAILED,
@@ -16,6 +17,7 @@ import {
 } from './api';
 import fetch from '../lib/util/fetch';
 import { asyncFunction } from '../integrator'
+import { addCollect, delCollect } from './collect'
 
 export function onChangeNewComment(value) {
   return {
@@ -35,11 +37,12 @@ export function getRootPost() {
 export function getMarketPost() {
   return (dispatch, getState) => {
     dispatch(
-      getPostList({ type: 'market', 
-      marketId: getState().market.currentMarketId,
-      pageNumb: getState().post.pageNumb + 1,
-      pageSize: getState().post.pageSize,
-     })
+      getPostList({
+        type: 'market',
+        marketId: getState().market.currentMarketId,
+        pageNumb: getState().post.pageNumb + 1,
+        pageSize: getState().post.pageSize,
+      })
     )
   }
 }
@@ -157,7 +160,7 @@ requestParam: postId, fatherId(可以空, 如果对个一个回复进行回复�
 */
 export function reply() {
   return async (dispatch, getState) => {
-    const { detail: {postId}, newComment } = getState().post
+    const { detail: { postId }, newComment } = getState().post
     const [e, r] = await dispatch(
       asyncFunction(
         fetch.post,
@@ -168,7 +171,7 @@ export function reply() {
         }
       )
     )
-    if(!e) dispatch(getReplyList(postId))
+    if (!e) dispatch(getReplyList(postId))
   }
 }
 
@@ -189,25 +192,39 @@ export function toggleDislikeReply(reply) {
 }
 
 // type: reply || post
-export function toggleLikeDislike(postOrReplyObject, actionType, isLike, type = 'reply', ) { 
+export function toggleLikeDislike(postOrReplyObject, actionType, isLike, type = 'reply', ) {
   const { id, isDisliked, isLiked } = postOrReplyObject
   return dispatch => {
-    dispatch({ type: actionType, payload: {id, isDisliked, isLiked} })
+    dispatch({ type: actionType, payload: { id, isDisliked, isLiked } })
     dispatch(
       asyncFunction(
         () => fetch.post(API_POST_LIKE, { type, id, isLike, isMark: isLike ? !isLiked : !isDisliked }),
       )
     )
   }
-
 }
 
-
-
-
-
-
-
-
-
-
+export function toggleFollowPost(e, id, value) {
+  e.preventDefault(); e.stopPropagation();
+  return dispatch => {
+    dispatch({
+      type: POST_TOGGLE_POST_FOLLOW,
+      payload: { id }
+    })
+    return value
+    ? dispatch(delCollect('post', id))
+    : dispatch(addCollect('post', id))
+  }
+}
+export function toggleFollowReply(e, id, value) {
+  e.preventDefault(); e.stopPropagation();
+  return dispatch => {
+    dispatch({
+      type: POST_TOGGLE_REPLY_FOLLOW,
+      payload: { id }
+    })
+    return value
+    ? dispatch(delCollect('reply', id))
+    : dispatch(addCollect('reply', id))
+  }
+}
