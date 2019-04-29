@@ -38,6 +38,8 @@ export const API_USER_MARKET_CREATED = '/api/user/market/created';
 export const API_USER_MARKET_TRADED = '/api/user/market/traded';
 export const API_USER_POST_COLLECTED = '/api/user/post/collected';
 export const API_USER_POST_CREATED = '/api/user/post/created';
+export const API_USER_REPLY_COLLECTED = '/api/user/reply/collected';
+export const API_USER_REPLY_CREATED = '/api/user/reply/created';
 //trade-controller
 export const API_MARKET_TRADE_LIST = '/api/market/trade/list';
 export const API_USER_TRADE_LIST = '/api/user/trade/list';
