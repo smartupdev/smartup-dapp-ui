@@ -16,14 +16,14 @@ const Setting = ({realUserName,avatarUploading,avatarUrl,error,onChangeAvatar,up
       { error.avatar && <Text  right error={true}>{error.avatar}</Text> }
       <Row center MarginTopXS>
         <Button primary LeftM RightM label='Submit' onClick={updateUserInfo} />
-        <Button MarginLeftXS LeftM RightM style={{backgroundColor:'#8F9497'}}  label='Cancel' onClick={() => { }} />
+        {/* <Button MarginLeftXS LeftM RightM style={{backgroundColor:'#8F9497'}}  label='Cancel' onClick={() => { }} /> */}
       </Row>
       <Text MarginLeftXS S VXS>{'User Name'}</Text>
-      <Input value={realUserName} placeholder='User Name' onChange={onChangeName} />
+      <Input value={realUserName} disabled={!!realUserName} placeholder='User Name' onChange={onChangeName} />
       { error.avatar && <Text  right error={true}>{error.avatar}</Text> }
       <Row center MarginTopXS>
-        <Button primary LeftM RightM label='Submit' onClick={updateUserInfo} />
-        <Button MarginLeftXS LeftM RightM style={{backgroundColor:'#8F9497'}}  label='Cancel' onClick={() => { }} />
+        <Button primary LeftM RightM disabled={!!realUserName} label='Submit' onClick={updateUserInfo} />
+        {/* <Button MarginLeftXS LeftM RightM style={{backgroundColor:'#8F9497'}}  label='Cancel' onClick={() => { }} /> */}
       </Row>
     </Col>
   )
