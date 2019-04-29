@@ -110,7 +110,8 @@ export default {
       avgPrice: name('AVERAGE PRICE IN SMARTUP'),
       ct: name('CT'),
       buy: name('BUY'),
-      sell: name('SELL')
+      sell: name('SELL'),
+      stage: name('Stage')
     }
   },
   discussion: {

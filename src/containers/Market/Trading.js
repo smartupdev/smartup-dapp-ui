@@ -30,6 +30,7 @@ const model = [
   { label: lang.trading.table.time[currentLang], value: 'createTime', layoutStyle: { flex: 1, center: true }, component: ({ value }) => <Text>{toAgo(value)}</Text> },
   { label: lang.trading.table.avgPrice[currentLang], value: 'avgAmount', layoutStyle: { flex: 1, center: true }, component: ({ value }) => <Text>{toToken(value)}</Text> },
   { label: lang.trading.table.ct[currentLang], value: 'ctAmount', layoutStyle: { flex: 1, center: true }, },
+  { label: lang.trading.table.stage[currentLang], value: 'stage', layoutStyle: { flex: 1, center: true }, },
 ]
 
 const klineTabs = [
