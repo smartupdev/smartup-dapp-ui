@@ -18,6 +18,27 @@ const DonutStyle = styled.div`
   width: ${p => p.size};
   height: ${p => p.size};
   animation: ${donutSpin} 1.2s linear infinite;
+  width: ${p => 
+    p.XS ? p.theme.imageSizeXS :
+    p.S ? p.theme.imageSizeS :
+    p.L ? p.theme.imageSizeL :
+    p.XL ? p.theme.imageSizeXL :
+    p.theme.imageSizeM
+  };
+  min-width: ${p => 
+    p.XS ? p.theme.imageSizeXS :
+    p.S ? p.theme.imageSizeS :
+    p.L ? p.theme.imageSizeL :
+    p.XL ? p.theme.imageSizeXL :
+    p.theme.imageSizeM
+  };
+  height: ${p => 
+    p.XS ? p.theme.imageSizeXS :
+    p.S ? p.theme.imageSizeS :
+    p.L ? p.theme.imageSizeL :
+    p.XL ? p.theme.imageSizeXL :
+    p.theme.imageSizeM
+  };
 `
 
 const DcStyle = styled.div`
@@ -28,13 +49,13 @@ const DcStyle = styled.div`
     min-width: 100px;
   }
 `
-export function DonutLoader({ page, size='30px' }) {
+export function DonutLoader({ page, size='30px', ...rest }) {
   if(page) return (
     <Col center spacingTopXL>
-      <DonutLoader size={size} />
+      <DonutLoader size={size} {...rest} />
     </Col>
   )
-  return <DonutStyle size={size} />
+  return <DonutStyle size={size} {...rest} />
 } 
 
 export const DcLoader = () =>

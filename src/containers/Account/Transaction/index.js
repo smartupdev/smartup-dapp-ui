@@ -27,7 +27,7 @@ const STAGE = {
   fail: 'fail',
 }
  
-function Transition({ getUserTransactionList, transactions, reset }) {
+function Transaction({ getUserTransactionList, transactions, reset }) {
   useEffect(() => {
     getUserTransactionList()
     return reset
@@ -85,4 +85,4 @@ const mapDispatchToProps = {
   getUserTransactionList, reset
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Transition);
+export default connect(mapStateToProps, mapDispatchToProps)(Transaction);
