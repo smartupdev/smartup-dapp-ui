@@ -46,9 +46,11 @@ function DiscussionItem ({ post, isDetailView, toggleLikePost, toggleDislikePost
                 <Text RightM>{numberOfLike}</Text>
               </Row>
               <Row onClick={dislike}>
-                <Dislike S color={isDisliked ? theme.red : theme.white} MarginRightBase /><Text RightM>{numberOfDislike}</Text>
-                <Reply S color={theme.white} MarginRightBase /><Text RightM>{numberOfComment}</Text>
+                <Dislike S color={isDisliked ? theme.red : theme.white} MarginRightBase />
+                <Text RightM>{numberOfDislike}</Text>
               </Row>
+                <Reply S color={theme.white} MarginRightBase />
+                <Text RightM>{numberOfComment}</Text>
             </Row>
           </Col>
           <Row>
