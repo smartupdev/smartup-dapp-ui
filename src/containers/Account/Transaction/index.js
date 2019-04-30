@@ -42,8 +42,8 @@ function Transaction({ getUserTransactionList, transactions, reset }) {
       setExpands(newExpands)
     }
     return (
-      <Col key={txHash} fitHeight onClick={onClick}>
-        <Row spacingM fitHeight>
+      <Col key={txHash} fitHeight>
+        <Row spacingM fitHeight onClick={onClick}>
           <Col flex={1}>
             <Text BottomS L>{typeHelper[type].title(ct, sut)}</Text>
             <Text BottomXS note>{marketName}</Text>
