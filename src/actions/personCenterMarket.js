@@ -42,7 +42,7 @@ export function getCreatedMarkets() {
         USER_MARKET_CREATED_REQUESTED, USER_MARKET_CREATED_SUCCEEDED, USER_MARKET_CREATED_FAIL,
         {
           params: API_USER_MARKET_CREATED,
-          params2: { pageNumb: getState().user.personalCenterMarket + 1, pageSize: getState().personalCenterMarket.pageSize }
+          params2: { pageNumb: getState().personalCenterMarket.createdMarketsPageNumb + 1, pageSize: getState().personalCenterMarket.pageSize }
         }
       )
     )

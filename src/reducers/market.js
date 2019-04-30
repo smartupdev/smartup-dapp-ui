@@ -13,7 +13,7 @@ import {
 
 import { ipfsHost } from '../actions/ipfs'
 
-function marketMassage(m) {
+export function marketMassage(m) {
   return {
     ...m,
     ...m.data,
