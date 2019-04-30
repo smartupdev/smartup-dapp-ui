@@ -1,11 +1,9 @@
 import React, { Fragment, useState, useEffect } from 'react'
 
 import { Row, Col } from '../../../components/Layout'
-import MarketTable from '../../Market/Table'
+import MarketTable from '../../Market/Table/ListView'
 import Hr from '../../../components/Hr'
 import Panel from '../../../components/Panel'
-
-import { Link } from '../../../routes'
 
 import { connect } from 'react-redux'
 import { getCreatedMarkets, getTradedMarkets, reset } from '../../../actions/personalCenter'
@@ -25,15 +23,6 @@ function Market({
     return reset
   }, [])
 
-  function MarketBody({ markets }) {
-    return (
-      <Link>
-        {({ goto }) =>
-          <MarketTable markets={markets} onClick={({ record: { id } }) => goto.trading({ id })} noExpand />
-        }
-      </Link>
-    )
-  }
   return (
     <Col>
       <Panel
@@ -43,7 +32,7 @@ function Market({
         error={createdMarketsError}
         loading={gettingCreatedMarmkets}
         header='Created market'
-        body={<MarketBody markets={createdMarkets} />} />
+        body={<MarketTable markets={createdMarkets} />} />
       {expandCreated && <Hr />}
       <Panel
         expandedDark
@@ -52,16 +41,16 @@ function Market({
         error={tradedMarketsError}
         loading={gettingTradedMarmkets}
         header='Saved market'
-        body={<MarketBody markets={tradedMarkets} />} />
+        body={<MarketTable markets={tradedMarkets} />} />
     </Col>
   )
 }
 
 const mapStateToProps = state => ({
   createdMarkets: state.personalCenterMarket.createdMarkets,
-  tradedMarkets: state.personalCenterMarket.tradedMarkets,
   gettingCreatedMarmkets: state.personalCenterMarket.gettingCreatedMarmkets,
   createdMarketsError: state.personalCenterMarket.createdMarketsError,
+  tradedMarkets: state.personalCenterMarket.tradedMarkets,
   gettingTradedMarmkets: state.personalCenterMarket.gettingTradedMarmkets,
   tradedMarketsError: state.personalCenterMarket.tradedMarketsError,
 });
