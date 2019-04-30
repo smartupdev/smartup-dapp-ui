@@ -92,6 +92,8 @@ export { default as Description } from './Description'
 export { default as Add } from './Add'
 export { default as MainPage } from './MainPage'
 export { default as FeedbackEmail } from './FeedbackEmail'
+export { default as Faq } from './Faq'
+export { default as MainPageButton } from './MainPageButton'
 
 
 
