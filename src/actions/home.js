@@ -71,6 +71,13 @@ export function setActiveTab(activeTabIndex) {
       });
       dispatch(markerTop(activeTabIndex));
     } else {
+      dispatch({
+        type:TABLE_HEADER_CLICK,
+        payload:{
+          sortBy: 'last',
+          orderBy: 'desc',
+        }
+      });
       dispatch(getDefaultMarketList());
     }
   }

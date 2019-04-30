@@ -45,6 +45,8 @@ const Home = ({ markets, expandedRecords, activeTabIndex, totalResults, sortBy, 
         sortBy={sortBy}
         orderBy={orderBy}
         expandedRecords={expandedRecords}
+        hasNextPage={hasNextPage}
+        getMore={moreMarketClick}
       />
     </Col>
   )
