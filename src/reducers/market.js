@@ -13,7 +13,7 @@ import {
 
 import { ipfsHost } from '../actions/ipfs'
 
-function marketMassage(m) {
+export function marketMassage(m) {
   return {
     ...m,
     ...m.data,
@@ -75,6 +75,9 @@ export const initialState = {
   ctInMarket: [],
   gettingCtInMarket: false,
   ctInMarketError: null,
+  ctInMarketPageSize: 10,
+  ctInMarketPageNumb: 0,
+  ctInMarketHasNextPage: true,
 
   marketGlobal: {},
   gettingMarketGlobal: false,
@@ -250,13 +253,19 @@ export default (state = initialState, action) => {
         ...state,
         gettingCtInMarket: true,
       };
-    case CT_ACCOUNT_IN_MARKET_SUCCEEDED:
+    case CT_ACCOUNT_IN_MARKET_SUCCEEDED:{
+      let {list: ctList,pageNumb,pageSize,hasNextPage} = action.payload
+      let tempCtList = ctList.map(c => ({...c, id: c.marketId}))
       return {
         ...state,
-        ctInMarket: action.payload.map(c => ({...c, id: c.marketId})),
+        ctInMarket: state.ctInMarket.concat(tempCtList),
+        ctInMarketPageNumb:pageNumb,
+        ctInMarketPageSize:pageSize,
+        ctInMarketHasNextPage: hasNextPage,
         gettingCtInMarket: false,
         ctInMarketError: initialState.ctInMarketError
       };
+    }
     case CT_ACCOUNT_IN_MARKET_FAILED:
       return {
         ...state,

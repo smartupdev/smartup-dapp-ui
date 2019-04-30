@@ -50,10 +50,10 @@ let routes = [
 
   // account
   { id: 'accountTransaction', label: 'Transaction', path: '/account/transaction', component: AccountTransaction, icon: Menu3 },
-  { id: 'accountMarket', label: 'Market', path: '/account/market', component: AccountMarket, from: 'accountTransition' },
-  { id: 'accountPost', label: 'Post', path: '/account/post', component: AccountPost, from: 'accountTransition' },
-  { id: 'accountComment', label: 'Comment', path: '/account/comment', component: AccountComment, from: 'accountTransition' },
-  { id: 'accountSaved', label: 'Saved', path: '/account/saved', component: AccountSaved, from: 'accountTransition' },
+  { id: 'accountMarket', label: 'Market', path: '/account/market', component: AccountMarket, from: 'accountTransaction' },
+  { id: 'accountPost', label: 'Post', path: '/account/post', component: AccountPost, from: 'accountTransaction' },
+  { id: 'accountComment', label: 'Comment', path: '/account/comment', component: AccountComment, from: 'accountTransaction' },
+  { id: 'accountSaved', label: 'Saved', path: '/account/saved', component: AccountSaved, from: 'accountTransaction' },
 
   { id: 'dispute', path: '/dispute', component: Dispute, icon: Menu4 },
 ]

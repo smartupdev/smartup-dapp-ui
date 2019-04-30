@@ -10,7 +10,6 @@ export const Expanded = styled(Col)`
     max-height: ${p.maxHeight};
     transition: max-height 0.25s ease-in;
     overflow: auto;
-
   `}
 `
 

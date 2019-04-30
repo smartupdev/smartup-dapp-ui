@@ -1,9 +1,15 @@
 import {
+    PERSONAL_CENTER_RESET,
+    POST_TOGGLE_POST_LIKE, POST_TOGGLE_POST_DISLIKE, POST_TOGGLE_POST_FOLLOW,
+    POST_TOGGLE_REPLY_LIKE, POST_TOGGLE_REPLY_DISLIKE, POST_TOGGLE_REPLY_FOLLOW,
     USER_POST_COLLECTED_REQUESTED, USER_POST_COLLECTED_SUCCEEDED, USER_POST_COLLECTED_FAIL,
     USER_POST_CREATED_REQUESTED, USER_POST_CREATED_SUCCEEDED, USER_POST_CREATED_FAIL,
     USER_REPLY_COLLECTED_REQUESTED, USER_REPLY_COLLECTED_SUCCEEDED, USER_REPLY_COLLECTED_FAIL,
     USER_REPLY_CREATED_REQUESTED, USER_REPLY_CREATED_SUCCEEDED, USER_REPLY_CREATED_FAIL,
 } from '../actions/actionTypes';
+
+import { postMassage, replyMassage, toggleLike, toggleDislike, toggleFollow } from './post'
+import { changeArrayById } from '../lib/util/reducerHelper'
 
 export const initialState = {
     pageSize: 10,
@@ -43,7 +49,7 @@ export default (state = initialState, action) => {
         }
       case USER_POST_COLLECTED_SUCCEEDED: {
         const { list: postList, pageNumb, hasNextPage } = action.payload;
-        let tempPosts = state.collectedPosts.concat(postList);
+        let tempPosts = state.collectedPosts.concat(postList.map(postMassage));
         return {
           ...state,
           collectedPosts: tempPosts,
@@ -66,7 +72,7 @@ export default (state = initialState, action) => {
         }
       case USER_POST_CREATED_SUCCEEDED: {
         const { list: postList, pageNumb, hasNextPage } = action.payload;
-        let tempPosts = state.createdPosts.concat(postList);
+        let tempPosts = state.createdPosts.concat(postList.map(postMassage));
         return {
           ...state,
           createdPosts: tempPosts,
@@ -89,7 +95,7 @@ export default (state = initialState, action) => {
         }
       case USER_REPLY_COLLECTED_SUCCEEDED: {
         const { list: replyList, pageNumb, hasNextPage } = action.payload;
-        let tempReplys = state.collectedReplys.concat(replyList);
+        let tempReplys = state.collectedReplys.concat(replyList.map(replyMassage));
         return {
           ...state,
           collectedReplys: tempReplys,
@@ -112,7 +118,7 @@ export default (state = initialState, action) => {
         }
       case USER_REPLY_CREATED_SUCCEEDED: {
         const { list: replyList, pageNumb, hasNextPage } = action.payload;
-        let tempReplys = state.createdReplys.concat(replyList);
+        let tempReplys = state.createdReplys.concat(replyList.map(replyMassage));
         return {
           ...state,
           createdReplys: tempReplys,
@@ -129,6 +135,50 @@ export default (state = initialState, action) => {
           createdReplysError: action.payload,
         }
 
+        case POST_TOGGLE_POST_LIKE: 
+          return {
+            ...state,
+            collectedPosts: changeArrayById(state.collectedPosts, action.payload.id, toggleLike),
+            createdPosts: changeArrayById(state.createdPosts, action.payload.id, toggleLike)
+          } 
+
+        case POST_TOGGLE_POST_DISLIKE: 
+          return {
+            ...state,
+            collectedPosts: changeArrayById(state.collectedPosts, action.payload.id, toggleDislike),
+            createdPosts: changeArrayById(state.createdPosts, action.payload.id, toggleDislike)
+          }
+        
+        case POST_TOGGLE_POST_FOLLOW:
+          return {
+            ...state,
+            collectedPosts: changeArrayById(state.collectedPosts, action.payload.id, toggleFollow),
+            createdPosts: changeArrayById(state.createdPosts, action.payload.id, toggleFollow)
+          }
+
+        case POST_TOGGLE_REPLY_LIKE: 
+          return {
+            ...state,
+            collectedReplys: changeArrayById(state.collectedReplys, action.payload.id, toggleLike),
+            createdReplys: changeArrayById(state.createdReplys, action.payload.id, toggleLike),
+          } 
+        
+        case POST_TOGGLE_REPLY_DISLIKE: 
+          return {
+            ...state,
+            collectedReplys: changeArrayById(state.collectedReplys, action.payload.id, toggleDislike),
+            createdReplys: changeArrayById(state.createdReplys, action.payload.id, toggleDislike),
+          }
+        case POST_TOGGLE_REPLY_FOLLOW:
+          return {
+            ...state,
+            collectedReplys: changeArrayById(state.collectedReplys, action.payload.id, toggleFollow),
+            createdReplys: changeArrayById(state.createdReplys, action.payload.id, toggleFollow),
+          }
+  
+      case PERSONAL_CENTER_RESET:
+        return initialState
+  
       default:
         return state;
     }

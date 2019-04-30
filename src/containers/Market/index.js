@@ -53,7 +53,7 @@ const Market = ({ get, collectMarket, getting, location, market, getMarketPost, 
     <Col>
       <Row spaceBetween spacingTopXS spacingBottomXS spacingRightS spacingLeftS color={theme.bgColorLight}>
         <Row centerVertical>
-          <Avatar icon={market.avatar} style={{ 'border-radius':'50%'}}/>
+          <Avatar icon={market.avatar} style={{ 'borderRadius':'50%'}}/>
           <Text>{`${market.name} (${market.id})`}</Text>
           <Copy S MarginLeftXS color={copied ? '#aaa' : '#fff'} onClick={() => { setCopy(true); copyToClipboard(market.address) }} />
         </Row>

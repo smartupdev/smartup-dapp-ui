@@ -12,7 +12,7 @@ import Expand from '../../../components/Expand'
 import { toFullDate, toToken } from '../../../lib/util'
 
 import { connect } from 'react-redux'
-import { getUserTransactionList, reset } from '../../../actions/personCenterMarket'
+import { getUserTransactionList, reset } from '../../../actions/personalCenter'
 
 
 const typeHelper = {
@@ -27,7 +27,7 @@ const STAGE = {
   fail: 'fail',
 }
  
-function Transition({ getUserTransactionList, transactions, reset }) {
+function Transaction({ getUserTransactionList, transactions, reset }) {
   useEffect(() => {
     getUserTransactionList()
     return reset
@@ -42,8 +42,8 @@ function Transition({ getUserTransactionList, transactions, reset }) {
       setExpands(newExpands)
     }
     return (
-      <Col key={txHash} fitHeight onClick={onClick}>
-        <Row spacingM fitHeight>
+      <Col key={txHash} fitHeight>
+        <Row spacingM fitHeight onClick={onClick}>
           <Col flex={1}>
             <Text BottomS L>{typeHelper[type].title(ct, sut)}</Text>
             <Text BottomXS note>{marketName}</Text>
@@ -85,4 +85,4 @@ const mapDispatchToProps = {
   getUserTransactionList, reset
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Transition);
+export default connect(mapStateToProps, mapDispatchToProps)(Transaction);

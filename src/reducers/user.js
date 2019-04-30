@@ -208,9 +208,14 @@ export default (state = initialState, action) => {
         userInfoError: action.payload,
       }
     case USER_NAME_CHANGE:
+    const error = action.payload.length < 6 || action.payload.length > 15 
       return {
         ...state,
         realUserName: action.payload,
+        error: {
+          ...state.error,
+          avatar: error
+        }
       }
     default:
       return state;

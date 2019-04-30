@@ -5,6 +5,8 @@ import {
   USER_MARKET_TRADED_REQUESTED, USER_MARKET_TRADED_SUCCEEDED, USER_MARKET_TRADED_FAIL,
 } from '../actions/actionTypes';
 
+import {marketMassage} from './market'
+
 export const initialState = {
 
   pageSize: 10,
@@ -81,7 +83,7 @@ export default (state = initialState, action) => {
       }
     case USER_MARKET_CREATED_SUCCEEDED: {
       const { list: marketList, pageNumb, hasNextPage } = action.payload;
-      let tempMarkets = state.createdMarkets.concat(marketList);
+      let tempMarkets = state.createdMarkets.concat(marketList.map(marketMassage));
       return {
         ...state,
         createdMarkets: tempMarkets,
@@ -104,7 +106,7 @@ export default (state = initialState, action) => {
       }
     case USER_MARKET_TRADED_SUCCEEDED: {
       const { list: marketList, pageNumb, hasNextPage } = action.payload;
-      let tempMarkets = state.tradedMarkets.concat(marketList);
+      let tempMarkets = state.tradedMarkets.concat(marketList.map(marketMassage));
       return {
         ...state,
         tradedMarkets: tempMarkets,

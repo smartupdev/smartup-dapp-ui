@@ -5,13 +5,13 @@ import {
   USER_COLLECT_ADD_REQUESTED, USER_COLLECT_ADD_SUCCEEDED, USER_COLLECT_ADD_FAILED,
   USER_COLLECT_DEL_REQUESTED, USER_COLLECT_DEL_SUCCEEDED, USER_COLLECT_DEL_FAILED,
   GET_MARKET_DETAIL_REQUESTED, GET_MARKET_DETAIL_SUCCEEDED, GET_MARKET_DETAIL_FAILED,
-  MARKET_SEARCH_REQUESTED,MARKET_SEARCH_SUCCEEDED,MARKET_SEARCH_FAILED,
-  MARKET_TOP_REQUESTED,MARKET_TOP_SUCCEEDED,MARKET_TOP_FAILED,TABLE_HEADER_CLICK
+  MARKET_SEARCH_REQUESTED, MARKET_SEARCH_SUCCEEDED, MARKET_SEARCH_FAILED,
+  MARKET_TOP_REQUESTED, MARKET_TOP_SUCCEEDED, MARKET_TOP_FAILED, TABLE_HEADER_CLICK
 } from './actionTypes'
 import {
   API_MARKET_LIST, API_CT_ACCOUNT_IN_MARKET, API_MARKET_GLOBAL,
   API_USER_COLLECT_ADD, API_USER_COLLECT_DEL, API_MARKET_DETAIL,
-  API_MARKET_SEARCH,API_MARKET_TOP
+  API_MARKET_SEARCH, API_MARKET_TOP
 } from './api'
 import fetch from '../lib/util/fetch'
 import { asyncFunction } from '../integrator'
@@ -57,7 +57,7 @@ export function getDefaultMarketList() {
       pageNumb: getState().market.pageNumb,
     }
 
-    if(getState().home.activeTabIndex === 0){
+    if (getState().home.activeTabIndex === 0) {
       dispatch(asyncFunction(
         fetch.post,
         GET_MARKET_LIST_REQUESTED, GET_MARKET_LIST_SUCCEEDED, GET_MARKET_LIST_FAILED,
@@ -74,18 +74,23 @@ export function getDefaultMarketList() {
 
 //CT账户和市场信息
 export function getCtAccountInMarket() {
-  return (dispatch, getState) =>
+  return (dispatch, getState) => {
+    const requestParams = {
+      pageNumb: getState().market.ctInMarketPageNumb + 1,
+      pageSize: getState().market.ctInMarketPageSize,
+    }
     dispatch(
       asyncFunction(
         fetch.post,
         CT_ACCOUNT_IN_MARKET_REQUESTED, CT_ACCOUNT_IN_MARKET_SUCCEEDED, CT_ACCOUNT_IN_MARKET_FAILED,
         {
           params: API_CT_ACCOUNT_IN_MARKET,
-          params2: {},
-          responsePayload: reps => reps.list
+          params2: requestParams,
+          responsePayload: reps => reps
         }
       )
     )
+  }
 }
 
 //全部市场数据
@@ -103,7 +108,7 @@ export function getMarketGlobal() {
 }
 
 //搜索
-export function markerSearch(requestParams){
+export function markerSearch(requestParams) {
   return (dispatch, getState) =>
     dispatch(
       asyncFunction(
@@ -119,14 +124,14 @@ export function markerSearch(requestParams){
 }
 
 //市场TOP
-export function markerTop(activeIndex){
-  return (dispatch, getState) =>{
+export function markerTop(activeIndex) {
+  return (dispatch, getState) => {
     const requestParams = {
       type: topFilters[activeIndex]
     }
     dispatch({
       type: TABLE_HEADER_CLICK,
-      payload: { sortBy:'', orderBy:'' },
+      payload: { sortBy: '', orderBy: '' },
     });
     dispatch(
       asyncFunction(
@@ -147,42 +152,42 @@ export function collectMarket(record) {
     type: 'market',
     objectMark: record.id,
   }
-  if(!record.following){
+  if (!record.following) {
     //收藏
     return async (dispatch, getState) => {
       let [error, response] = await dispatch(asyncFunction(
-          fetch.post,
-          USER_COLLECT_ADD_REQUESTED, USER_COLLECT_ADD_SUCCEEDED, USER_COLLECT_ADD_FAILED,
-          {
-            params: API_USER_COLLECT_ADD,
-            params2: requestParams,
-            responsePayload: reps => record
-          }
-        )
+        fetch.post,
+        USER_COLLECT_ADD_REQUESTED, USER_COLLECT_ADD_SUCCEEDED, USER_COLLECT_ADD_FAILED,
+        {
+          params: API_USER_COLLECT_ADD,
+          params2: requestParams,
+          responsePayload: reps => record
+        }
       )
-      if(!error){
+      )
+      if (!error) {
         dispatch(getUserCollectLists())
       }
     }
-  }else{
+  } else {
     //取消收藏
     return async (dispatch, getState) => {
       const requestParams = {
         type: 'market',
         objectMark: record.id,
       }
-  
+
       let [error, response] = await dispatch(asyncFunction(
-          fetch.post,
-          USER_COLLECT_DEL_REQUESTED, USER_COLLECT_DEL_SUCCEEDED, USER_COLLECT_DEL_FAILED,
-          {
-            params: API_USER_COLLECT_DEL,
-            params2: requestParams,
-            responsePayload: reps => record
-          }
-        )
+        fetch.post,
+        USER_COLLECT_DEL_REQUESTED, USER_COLLECT_DEL_SUCCEEDED, USER_COLLECT_DEL_FAILED,
+        {
+          params: API_USER_COLLECT_DEL,
+          params2: requestParams,
+          responsePayload: reps => record
+        }
       )
-      if(!error){
+      )
+      if (!error) {
         dispatch(getUserCollectLists())
       }
     }

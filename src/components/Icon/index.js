@@ -91,9 +91,14 @@ export { default as Money } from './Money'
 export { default as Description } from './Description'
 export { default as Add } from './Add'
 export { default as MainPage } from './MainPage'
+<<<<<<< HEAD
 export { default as FeedbackEmail } from './FeedbackEmail'
 export { default as Faq } from './Faq'
 export { default as MainPageButton } from './MainPageButton'
+=======
+export { default as Faq } from './Faq'
+
+>>>>>>> 9b2ae43dd91e94296c614031ae6eb04ecce13354
 
 
 

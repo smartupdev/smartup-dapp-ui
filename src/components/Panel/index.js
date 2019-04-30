@@ -6,6 +6,7 @@ import Text from '../Text'
 import Hr from '../Hr'
 import Expand from '../Expand'
 import { More } from '../Icon'
+import { DonutLoader } from '../Loader'
 
 const Container = styled(Col)`
   ${p => p.dark && css`background-color: ${p.theme.bgColorDark}`}
@@ -18,12 +19,17 @@ const MoreIcon = styled(More)`
   bottom: 0;
 `
 
-export default ({ body, header, expanded, dark, expandedDark, onClick, maxHeight }) => 
+export default ({ body, header, loading, error, expanded, dark, expandedDark, onClick, maxHeight }) => 
   <Container dark={dark || expandedDark && expanded} fitHeight>
-    <Row onClick={onClick} center flex={1} relative>
+    <Row onClick={onClick} center centerVertical flex={1} relative >
       <Text M center VXS wordSpaceS>{header}</Text>
+      { loading && <DonutLoader S /> }
       <MoreIcon color='#ffffff' XS reverse={expanded} />
     </Row>
     <Hr />
-    <Expand isOpen={expanded} maxHeight={maxHeight}>{body}</Expand>
+    <Expand isOpen={expanded} maxHeight={maxHeight}>{
+      error ?
+      <Text error center VM>{error.message}</Text>
+      : body
+    }</Expand>
   </Container>
