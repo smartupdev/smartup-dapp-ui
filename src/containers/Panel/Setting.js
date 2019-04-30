@@ -20,7 +20,10 @@ const Setting = ({ realUserName, avatarUploading, avatarHash, error, onChangeAva
       </Row>
       <Text MarginLeftXS S VXS>{'User Name'}</Text>
       <Input value={realUserName} disabled={!!realUserName} placeholder='User Name' onChange={onChangeName} />
-      { error.avatar && <Text  right error={true}>{error.avatar}</Text> }
+      <Text right error={error.avatar}>{
+        typeof error.avatar === 'string' ? error.avatar :
+          'Capital sensitive, 6-15 characters.'
+      } </Text>
       <Row center MarginTopXS>
         <Button primary LeftM RightM disabled={!!realUserName} label='Submit' onClick={updateUserInfo} />
         {/* <Button MarginLeftXS LeftM RightM style={{backgroundColor:'#8F9497'}}  label='Cancel' onClick={() => { }} /> */}
