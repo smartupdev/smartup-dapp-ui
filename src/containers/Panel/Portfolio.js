@@ -3,9 +3,8 @@ import styled, { css } from 'styled-components'
 
 import { connect } from 'react-redux'
 import { toggleExpandedBookmark, toggleExpandedMarket, toggleExpandedWallet } from '../../actions/panel'
-import { getMarketGlobal,getCtAccountInMarket,collectMarket } from '../../actions/market'
+import { getMarketGlobal, getCtAccountInMarket, collectMarket } from '../../actions/market'
 import { getUserCollectLists } from '../../actions/collect'
-
 
 import CommentIcon from '../../images/018-planet-earth-2.svg'
 import Avatar from '../../components/Avatar'
@@ -23,6 +22,8 @@ import theme from '../../theme';
 import ethIcon from '../../images/eth.png';
 import smartupIcon from '../../images/smartup.png';
 import { Close, Trade } from '../../components/Icon';
+import TableFooter from '../../components/TableFooter'
+
 const portfilioText = lang.panel.portfilio
 
 const InfoBlock = styled(Col)`
@@ -58,23 +59,23 @@ const TableName = [
   {
     label: '', value: 'action', layoutStyle: { width: '40px' }, component: ({ record }) =>
       <Link>
-        { ({goto}) => <Button icon={Trade} primary light condensed onClick={() => goto.trading({id: record.id})} /> }
+        {({ goto }) => <Button icon={Trade} primary light condensed onClick={() => goto.trading({ id: record.id })} />}
       </Link>
   },
 ]
 
 const Portfilio = ({
-  ethBalance, sutBalance,marketGlobal,collects,ctInMarket,
+  ethBalance, sutBalance, marketGlobal, collects, ctInMarket,ctInMarketHasNextPage,
   expandedWallet, expandedMarket, expandedBookmark,
   toggleExpandedBookmark, toggleExpandedMarket, toggleExpandedWallet,
-  getMarketGlobal,getUserCollectLists,getCtAccountInMarket,collectMarket
+  getMarketGlobal, getUserCollectLists, getCtAccountInMarket, collectMarket
 }) => {
   useEffect(() => {
     getMarketGlobal()
     getUserCollectLists()
     getCtAccountInMarket()
   }, [])
-  const {sutAmount,marketCount,latelyPostCount} = marketGlobal
+  const { sutAmount, marketCount, latelyPostCount } = marketGlobal
   return (
     <Col overflowAuto>
       <Col center>
@@ -100,7 +101,9 @@ const Portfilio = ({
         body={
           <>
             <Col BottomXS LeftS RightS>
-              <Table S noBorderCol model={TableName} values={ctInMarket} />
+              <Table S noBorderCol model={TableName} values={ctInMarket}
+                footer={() => { return (<TableFooter hasNextPage={ctInMarketHasNextPage} loadMore={getCtAccountInMarket} />) }}
+              />
             </Col>
             <Hr />
           </>
@@ -142,7 +145,7 @@ const Portfilio = ({
               collects.map(({ name, marketId }, index) =>
                 <BookmarkBlock spaceBetween centerVertical key={index}>
                   <Text S>{name}</Text>
-                  <Close XS onClick={() => collectMarket({id: marketId, following: true})} />
+                  <Close XS onClick={() => collectMarket({ id: marketId, following: true })} />
                 </BookmarkBlock>
               )
             }
@@ -162,11 +165,12 @@ const mapStateToProps = state => ({
   marketGlobal: state.market.marketGlobal,
   collects: state.collect.collects,
   ctInMarket: state.market.ctInMarket,
+  ctInMarketHasNextPage:state.market.ctInMarketHasNextPage,
 });
 
-const mapDispatchToProps = { 
+const mapDispatchToProps = {
   toggleExpandedBookmark, toggleExpandedMarket, toggleExpandedWallet,
-  getMarketGlobal,getUserCollectLists,getCtAccountInMarket,collectMarket,
+  getMarketGlobal, getUserCollectLists, getCtAccountInMarket, collectMarket,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Portfilio);
