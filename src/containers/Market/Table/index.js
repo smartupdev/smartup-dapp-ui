@@ -16,7 +16,7 @@ const tableLang = lang.home.table
 const colWidth = '130px'
 
 //TODO field match
-const _Icon = ({ value }) => <Avatar icon={value} />
+const _Icon = ({ value }) => <Avatar icon={value} style={{ 'borderRadius':'50%'}}/>
 const _More = ({ isExpanded }) => <More reverse={isExpanded} XS color={theme.white} />
 const _Name = ({ value, record }) =>
   <Col>

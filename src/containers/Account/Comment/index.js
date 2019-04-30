@@ -1,56 +1,91 @@
-import React, { Fragment }  from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 
 import { Row, Col } from '../../../components/Layout'
 import DiscussionComment from '../../Market/Discussion/Comment'
 import Text from '../../../components/Text'
 import Hr from '../../../components/Hr'
+import Panel from '../../../components/Panel'
 
-const replys = [ {
-  "id" : 9146123868442624,
-  "replyId" : 9146123868442624,
-  "postId" : 9098959200980992,
-  "fatherId" : 0,
-  "userAddress" : "0x1A3a50565EB671c08D607a4095761c6c6dAAFf5D",
-  "content" : "cmcmcm",
-  "createTime" : "2019-04-27 17:43:25",
-  "childrenPage" : {
-    "list" : [ ],
-    "rowCount" : 0,
-    "pageSize" : 10,
-    "pageNumb" : 0,
-    "pageCount" : 1,
-    "hasNextPage" : true
-  },
-  "isLiked" : null,
-  "isDisliked" : null
-}, {
-  "id" : 9146191388348416,
-  "replyId" : 9146191388348416,
-  "postId" : 9098959200980992,
-  "fatherId" : 0,
-  "userAddress" : "0x1A3a50565EB671c08D607a4095761c6c6dAAFf5D",
-  "content" : "rkewdo",
-  "createTime" : "2019-04-27 17:43:41",
-  "childrenPage" : {
-    "list" : [ ],
-    "rowCount" : 0,
-    "pageSize" : 10,
-    "pageNumb" : 0,
-    "pageCount" : 1,
-    "hasNextPage" : true
-  },
-  "isLiked" : null,
-  "isDisliked" : null
-}]
+import { Link } from '../../../routes'
 
-export default () => 
-  <Col>
-    <Text center VS>Your comment</Text>
-    <Hr />
-    {replys.map(reply => 
-      <Fragment key={reply.replyId}>
-        <DiscussionComment reply={reply} />
-        <Hr />
-      </Fragment>
-    )}
-  </Col>
+import { connect } from 'react-redux'
+import { getCollectedReplys, getCreatedReplys, reset } from '../../../actions/personalCenter'
+
+function Index({
+  collectedReplys, gettingCollectedReplys, collectedReplysError,
+  createdReplys, gettingCreatedReplys, createdReplysError,
+  getCollectedReplys, getCreatedReplys, reset
+}) {
+  const [expandCreated, setExpandCreated] = useState(true)
+  const [expandSaved, setExpandSaved] = useState(false)
+  useEffect( () => {
+    getCollectedReplys()
+    getCreatedReplys()
+    return reset
+  }, [])
+
+  function ReplyBody({ reply }) {
+    return (
+      <Link>
+        {({ goto }) =>
+          <Fragment key={reply.id}>
+            <DiscussionComment reply={reply} onClick={() => goto.DiscussionDetail({ id: reply.id, })}  />
+            <Hr />
+          </Fragment>
+        }
+      </Link>
+    )
+  }
+
+  return (
+    <Col>
+      <Panel
+        maxHeight='1000vh'
+        expandedDark
+        expanded={expandCreated}
+        onClick={() => setExpandCreated(!expandCreated)}
+        error={createdReplysError}
+        loading={gettingCreatedReplys}
+        header='Created post'
+        body={
+          createdReplys.map(reply =>             
+            <Fragment key={reply.id}>
+              <DiscussionComment reply={reply} />
+              <Hr />
+            </Fragment>
+          )
+        } />
+      <Panel
+        maxHeight='1000vh'
+        expandedDark
+        expanded={expandSaved}
+        onClick={() => setExpandSaved(!expandSaved)}
+        error={collectedReplysError}
+        loading={gettingCollectedReplys}
+        header='Saved post'
+        body={
+          collectedReplys.map(reply => 
+            <Fragment key={reply.id}>
+              <DiscussionComment reply={reply} />
+              <Hr />
+            </Fragment>
+          )
+        } />
+    </Col>
+  )
+} 
+
+const mapStateToProps = state => ({
+  collectedReplys: state.personalCenterPost.collectedReplys,
+  gettingCollectedReplys: state.personalCenterPost.gettingCollectedReplys,
+  collectedReplysError: state.personalCenterPost.collectedReplysError,
+  createdReplys: state.personalCenterPost.createdReplys,
+  gettingCreatedReplys: state.personalCenterPost.gettingCreatedReplys,
+  createdReplysError: state.personalCenterPost.createdReplysError,
+});
+
+const mapDispatchToProps = {
+  getCollectedReplys, getCreatedReplys, reset
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Index);

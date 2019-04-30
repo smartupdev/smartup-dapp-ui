@@ -5,7 +5,7 @@ import Search from '../../components/Search'
 import { DonutLoader } from '../../components/Loader'
 import Button from '../../components/Button'
 import Text from '../../components/Text'
-import { Comment } from '../../components/Icon'
+import { Expand } from '../../components/Icon'
 import Hr from '../../components/Hr'
 import { Link } from '../../routes'
 import theme from '../../theme'
@@ -51,7 +51,7 @@ const Notification = ({
   return (
     <Col overflowAuto>
       <Row relative centerVertical>
-        { !keyword && <Comment S LeftS color={showUnreadOnly && !disabled ? theme.colorPrimary : theme.colorSecondary} onClick={(!disabled && toggleShowUnread) || noop} />}
+        { !keyword && <Expand S LeftS color={showUnreadOnly && !disabled ? theme.colorPrimary : theme.colorSecondary} onClick={(!disabled && toggleShowUnread) || noop} />}
         <Text LeftS RightS primary={!readAllDisabled} note={readAllDisabled} onClick={readAllDisabled ? noop : readAll} disabled={readAllDisabled}>Read all</Text>
         { gettingNotifications && <DonutLoader size='12px' /> }
         <Search id='notification' backgroundColor={theme.bgColor} onChange={onChangeKeyword} value={keyword} onSearch={getList} />
