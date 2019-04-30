@@ -20,7 +20,7 @@ import Proposal from './containers/Market/Proposal'
 import Flag from './containers/Market/Flag'
 
 import Account from './containers/Account'
-import AccountTransition from './containers/Account/Transition'
+import AccountTransaction from './containers/Account/Transaction'
 import AccountMarket from './containers/Account/Market'
 import AccountPost from './containers/Account/Post'
 import AccountComment from './containers/Account/Comment'
@@ -49,7 +49,7 @@ let routes = [
   { id: 'flag', path: '/market/flag', component: Flag, from: 'home' },
 
   // account
-  { id: 'accountTransition', label: 'Transition', path: '/account/transition', component: AccountTransition, icon: Menu3 },
+  { id: 'accountTransaction', label: 'Transaction', path: '/account/transaction', component: AccountTransaction, icon: Menu3 },
   { id: 'accountMarket', label: 'Market', path: '/account/market', component: AccountMarket, from: 'accountTransition' },
   { id: 'accountPost', label: 'Post', path: '/account/post', component: AccountPost, from: 'accountTransition' },
   { id: 'accountComment', label: 'Comment', path: '/account/comment', component: AccountComment, from: 'accountTransition' },
