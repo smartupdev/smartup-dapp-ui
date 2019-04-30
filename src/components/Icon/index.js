@@ -91,6 +91,7 @@ export { default as Money } from './Money'
 export { default as Description } from './Description'
 export { default as Add } from './Add'
 export { default as MainPage } from './MainPage'
+export { default as Faq } from './Faq'
 
 
 
