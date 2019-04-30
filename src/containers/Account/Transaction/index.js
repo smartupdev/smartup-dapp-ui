@@ -9,15 +9,15 @@ import Panel from '../../../components/Panel'
 import Hr from '../../../components/Hr'
 import Expand from '../../../components/Expand'
 
-import { toFullDate } from '../../../lib/util'
+import { toFullDate, toToken } from '../../../lib/util'
 
 import { connect } from 'react-redux'
-import { getUserTransactionList } from '../../../actions/personCenterMarket'
+import { getUserTransactionList, reset } from '../../../actions/personCenterMarket'
 
 
 const typeHelper = {
-  BuyCT:        { label: 'Trade placed (Buy)', title: (ct, sut) => `Bought ${ct} community token from ${sut} SmartUp token` },
-  SellCT:       { label: 'Trade placed (Sell)', title: (ct, sut) => `Sold ${ct} community token to ${sut} SmartUp token` },
+  BuyCT:        { label: 'Trade placed (Buy)', title: (ct, sut) => `Bought ${ct} community token from ${toToken(sut)} SmartUp token` },
+  SellCT:       { label: 'Trade placed (Sell)', title: (ct, sut) => `Sold ${ct} community token to ${toToken(sut)} SmartUp token` },
   CreateMarket: { label: 'Market created', title: (ct, sut) => `Paid ${sut} SmartUp token` },
 }
 
@@ -27,12 +27,13 @@ const STAGE = {
   fail: 'fail',
 }
  
-function Transition({ getUserTransactionList, transitions }) {
+function Transition({ getUserTransactionList, transactions, reset }) {
   useEffect(() => {
     getUserTransactionList()
+    return reset
   }, [])
   const [expands, setExpands] = useState([])
-  return transitions.map( ({ 
+  return transactions.map( ({ 
     txHash, type, detail: {ct, sut}, marketName, marketAddress, createTime, stage, blockTime
   }, index) => {
     function onClick() {
@@ -77,11 +78,11 @@ function Transition({ getUserTransactionList, transitions }) {
 }
 
 const mapStateToProps = state => ({
-  transitions: state.user.trancations
+  transactions: state.personalCenterMarket.transactions
 });
 
 const mapDispatchToProps = {
-  getUserTransactionList
+  getUserTransactionList, reset
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Transition);
