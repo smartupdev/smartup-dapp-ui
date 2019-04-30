@@ -113,13 +113,13 @@ const General = ({ expandedInfo, expandedRule, expandedSub, toggleExpandedInfo,
         header={<TitleIcon title={generalText.rule[currentLang]} />}
         body={<RuleBody rules={rules} expandedRecords={[2]}/>}
       /> */}
-      <Panel
+      {/* <Panel
         dark={expandedSub}
         expanded={expandedSub}
         onClick={toggleExpandedSub}
         header={<TitleIcon title={generalText.sub[currentLang]} />}
         body={<SubBody subs={subs} />}
-      />
+      /> */}
     </Col>
   );
 }
