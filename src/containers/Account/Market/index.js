@@ -2,10 +2,8 @@ import React, { Fragment, useState, useEffect } from 'react'
 
 import { Row, Col } from '../../../components/Layout'
 import MarketTable from '../../Market/Table'
-import Text from '../../../components/Text'
 import Hr from '../../../components/Hr'
 import Panel from '../../../components/Panel'
-import { DonutLoader } from '../../../components/Loader'
 
 import { Link } from '../../../routes'
 

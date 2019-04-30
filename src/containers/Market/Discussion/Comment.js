@@ -27,11 +27,11 @@ function DiscussionComment({
         <Row centerVertical TopXS>
           <Row centerVertical onClick={(e) => toggleLikeReply(e, { id, isLiked, isDisliked })}>
             <Like S color={isLiked ? theme.green : theme.white} MarginRightBase />
-            <Text RightM>{numberOfLike}</Text>
+            <Text RightM>{numberOfLike || 0}</Text>
           </Row>
           <Row centerVertical onClick={(e) => toggleDislikeReply(e, { id, isLiked, isDisliked })}>
             <Dislike S color={isDisliked ? theme.red : theme.white} MarginRightBase />
-            <Text RightM>{numberOfDislike}</Text>
+            <Text RightM>{numberOfDislike || 0}</Text>
           </Row>
           <Text note>{toAgo(createTime)}</Text>
         </Row>
