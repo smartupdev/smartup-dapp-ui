@@ -19,7 +19,7 @@ const MoreIcon = styled(More)`
   bottom: 0;
 `
 
-export default ({ body, header, loading, expanded, dark, expandedDark, onClick, maxHeight }) => 
+export default ({ body, header, loading, error, expanded, dark, expandedDark, onClick, maxHeight }) => 
   <Container dark={dark || expandedDark && expanded} fitHeight>
     <Row onClick={onClick} center centerVertical flex={1} relative >
       <Text M center VXS wordSpaceS>{header}</Text>
@@ -27,5 +27,9 @@ export default ({ body, header, loading, expanded, dark, expandedDark, onClick, 
       <MoreIcon color='#ffffff' XS reverse={expanded} />
     </Row>
     <Hr />
-    <Expand isOpen={expanded} maxHeight={maxHeight}>{body}</Expand>
+    <Expand isOpen={expanded} maxHeight={maxHeight}>{
+      error ?
+      <Text error center VM>{error.message}</Text>
+      : body
+    }</Expand>
   </Container>

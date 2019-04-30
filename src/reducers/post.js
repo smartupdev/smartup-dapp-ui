@@ -13,7 +13,11 @@ import {
 
 import { changeArrayById } from '../lib/util/reducerHelper'
 
-function toggleLike(r) {
+export function toggleFollow(r) {
+  return {...r, isCollect: !r.isCollect}
+}
+
+export function toggleLike(r) {
   if(!r) return r
   if(r.isLiked) return { // unmark like
     ...r,
@@ -28,7 +32,7 @@ function toggleLike(r) {
     numberOfDislike: r.isDisliked ? r.numberOfDislike - 1 : r.numberOfDislike
   }
 }
-function toggleDislike(r) {
+export function toggleDislike(r) {
   if(!r) return r
   if(r.isDisliked) return { // ummark dislike
     ...r, 
@@ -52,7 +56,7 @@ function userMassage(u) {
   }
 }
 
-function replyMassage(r) {
+export function replyMassage(r) {
   return {
     ...r, 
     id: r.replyId, 
@@ -63,7 +67,7 @@ function replyMassage(r) {
    }
 }
 
-function postMassage(p) {
+export function postMassage(p) {
   return {
     ...p,
     id: p.postId,
@@ -160,14 +164,13 @@ export default (state = initialState, action) => {
           ...state.detail,
           isCollect: !state.detail.isCollect
         },
-        posts: changeArrayById(state.posts, action.payload.id, r => ({...r, isCollect: !r.isCollect}))
+        posts: changeArrayById(state.posts, action.payload.id, toggleFollow)
       }
     case POST_TOGGLE_REPLY_FOLLOW: 
       return {
         ...state,
-        replys: changeArrayById(state.replys, action.payload.id, r => ({...r, isCollect: !r.isCollect}))
+        replys: changeArrayById(state.replys, action.payload.id, toggleFollow)
       }
-
 
     case POST_TOGGLE_POST_LIKE: {
       const { id } = action.payload

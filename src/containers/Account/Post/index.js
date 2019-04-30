@@ -1,46 +1,76 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 
 import { Row, Col } from '../../../components/Layout'
 import DiscussionItem from '../../Market/Discussion/Item'
 import Text from '../../../components/Text'
 import Hr from '../../../components/Hr'
+import Panel from '../../../components/Panel'
 
-const posts = [ {
-  "id" : 9098959200980992,
-  "postId" : 9098959200980992,
-  "type" : "market",
-  "photo" : "QmQqW9bwkjUkm92Dp9wVWdCwZbzHXMymtrWWCcqGhgeNzm",
-  "marketAddress" : "0xb822B98e02397e9F1dD4C6237e63257dd1f7C4D2",
-  "marketId" : "2halepvlo1s",
-  "userAddress" : "0x1A3a50565EB671c08D607a4095761c6c6dAAFf5D",
-  "title" : "ccmcmc",
-  "description" : "rdfxd",
-  "createTime" : "2019-04-27 14:36:00",
-  "isLiked" : null,
-  "isDisliked" : true
-}, {
-  "id" : 9103764199837696,
-  "postId" : 9103764199837696,
-  "type" : "market",
-  "photo" : "QmQqW9bwkjUkm92Dp9wVWdCwZbzHXMymtrWWCcqGhgeNzm",
-  "marketAddress" : "0xb822B98e02397e9F1dD4C6237e63257dd1f7C4D2",
-  "marketId" : "2halepvlo1s",
-  "userAddress" : "0x1A3a50565EB671c08D607a4095761c6c6dAAFf5D",
-  "title" : "cmo3",
-  "description" : "dmfro",
-  "createTime" : "2019-04-27 14:55:06",
-  "isLiked" : true,
-  "isDisliked" : null
-} ]
+import { connect } from 'react-redux'
+import { getCollectedPosts, getCreatedPosts, reset } from '../../../actions/personalCenter'
 
-export default () => 
-  <Col>
-    <Text center VS>Created post</Text>
-    <Hr />
-    {posts.map(post => 
-      <Fragment key={post.postId}>
-        <DiscussionItem post={post} />
-        <Hr />
-      </Fragment>
-    )}
-  </Col>
+function Index({ 
+  createdPosts, collectedPosts, 
+  reset, getCollectedPosts, getCreatedPosts,
+  gettingCreatedPosts, createdPostsError,
+  gettingCollectedPosts, collectedPostsError
+ }) {
+  const [expandCreated, setExpandCreated] = useState(true)
+  const [expandSaved, setExpandSaved] = useState(false)
+  useEffect( () => {
+    getCollectedPosts()
+    getCreatedPosts()
+    return reset
+  }, [])
+  return (
+    <Col>
+      <Panel
+        maxHeight='1000vh'
+        expandedDark
+        expanded={expandCreated}
+        onClick={() => setExpandCreated(!expandCreated)}
+        error={createdPostsError}
+        loading={gettingCreatedPosts}
+        header='Created post'
+        body={
+          createdPosts.map(post => 
+            <Fragment key={post.postId}>
+              <DiscussionItem post={post} />
+              <Hr />
+            </Fragment>
+          )
+        } />
+      <Panel
+        maxHeight='1000vh'
+        expandedDark
+        expanded={expandSaved}
+        onClick={() => setExpandSaved(!expandSaved)}
+        error={collectedPostsError}
+        loading={gettingCollectedPosts}
+        header='Saved post'
+        body={
+          collectedPosts.map(post => 
+            <Fragment key={post.postId}>
+              <DiscussionItem post={post} />
+              <Hr />
+            </Fragment>
+          )
+        } />
+    </Col>
+  )
+} 
+
+const mapStateToProps = state => ({
+  createdPosts: state.personalCenterPost.createdPosts,
+  collectedPosts: state.personalCenterPost.collectedPosts,
+  gettingCreatedPosts: state.personalCenterPost.gettingCreatedPosts,
+  createdPostsError: state.personalCenterPost.createdPostsError,
+  gettingCollectedPosts: state.personalCenterPost.gettingCollectedPosts,
+  collectedPostsError: state.personalCenterPost.collectedPostsError,
+});
+
+const mapDispatchToProps = {
+  getCollectedPosts, getCreatedPosts, reset
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Index);

@@ -12,7 +12,7 @@ import Expand from '../../../components/Expand'
 import { toFullDate, toToken } from '../../../lib/util'
 
 import { connect } from 'react-redux'
-import { getUserTransactionList, reset } from '../../../actions/personCenterMarket'
+import { getUserTransactionList, reset } from '../../../actions/personalCenter'
 
 
 const typeHelper = {
