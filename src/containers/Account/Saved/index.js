@@ -46,7 +46,7 @@ function Index({
         onClick={() => setExpandPost(!expandPost)}
         error={collectedPostsError}
         loading={gettingCollectedPosts}
-        header='Created post'
+        header='Saved post'
         body={collectedPosts.map(post =>
           <Fragment key={post.postId}>
             <DiscussionItem post={post} />
@@ -57,7 +57,7 @@ function Index({
         expandedDark
         expanded={expandReply}
         onClick={() => setExpandReply(!expandReply)}
-        header='Your comment'
+        header='Saved comment'
         error={collectedReplysError}
         loading={gettingCollectedReplys}
         body={
