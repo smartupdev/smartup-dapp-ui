@@ -5,7 +5,7 @@
 import { withRouter } from 'react-router-dom'
 import { toParams } from './lib/util/fetch'
 
-import { Menu1, Menu2, Menu3, Menu4 } from './components/Icon/index'
+import { MainPageButton as Menu1, ViewMarketButton as Menu2, CreateMarketButton as Menu3, FindMarketButton as Menu4 } from './components/Icon/index'
 
 import Home from './containers/Home'
 import CreateMarket from './containers/CreateMarket'
