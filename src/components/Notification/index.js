@@ -2,6 +2,7 @@ import React from 'react'
 import { Row, Col } from '../Layout'
 import Text from '../Text'
 import Image from '../Image'
+import { People } from '../Icon'
 // import theme from '../../theme'
 import { toAgo } from '../../lib/util/datatime'
 import styled, { css } from 'styled-components'
@@ -30,7 +31,11 @@ const Main = styled(Col)`
 export default ({ image, sender, title, content, date, unread, expanded, onClick, id }) => 
   <Container spaceBetween unread={unread} onClick={onClick && (() => onClick(id))}>
     <Dot unread={unread} />
-    <Image source={image} size={'18px'} />
+    {
+      image ?
+      <Image source={image} size={'18px'} /> :
+      <People round color='white' size={'18px'} />
+    }
     <Main expanded={expanded}>
       <Text spaceBottom>{sender}</Text>
       <Text S bold>{title}</Text>

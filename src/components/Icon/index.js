@@ -11,6 +11,7 @@ export const SVG = ({onClick, disabled, ...rest}) => <StyledSvg onClick={disable
 const StyledSvg = styled.svg`
   display: block;
   width: ${p => 
+    p.size ? p.size :
     p.XS ? p.theme.imageSizeXS :
     p.S ? p.theme.imageSizeS :
     p.L ? p.theme.imageSizeL :
@@ -18,6 +19,7 @@ const StyledSvg = styled.svg`
     p.theme.imageSizeM
   };
   min-width: ${p => 
+    p.size ? p.size :
     p.XS ? p.theme.imageSizeXS :
     p.S ? p.theme.imageSizeS :
     p.L ? p.theme.imageSizeL :
@@ -25,6 +27,7 @@ const StyledSvg = styled.svg`
     p.theme.imageSizeM
   };
   height: ${p => 
+    p.size ? p.size :
     p.XS ? p.theme.imageSizeXS :
     p.S ? p.theme.imageSizeS :
     p.L ? p.theme.imageSizeL :
