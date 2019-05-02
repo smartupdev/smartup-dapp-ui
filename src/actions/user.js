@@ -86,14 +86,34 @@ export function getAllBalance() {
       dispatch(getNttBalance()),
     ])
 }
+/* Login process
+  loginMetaMask: [Metamask] Enable
+    => getAllBalance: [Metamask]
+      => getEthBalance
+      => getSutBalance
+      => getNttBalance
+    => loginSmartUp: [BE] Get sign code
+      => getPersonSign: [Metamask] Get signature
+        => authSmartUp: [BE] Get token for header, set localStorage
+          => getUserInfo: [BE]
 
+  checkLogin [if have token]
+    => loginMetaMask
+      => getAllBalance
+      => NO loginSmartUp
+      => getUserInfo
+  watchMetamask [if account change]
+    => Clear token
+    => Update account
+    => Reset
+*/
 export function loginMetaMask(skipLogin) {
   return async (dispatch) => {
     const [error, response] = await dispatch(enableEthereum())
     if (!error) {
       await Promise.all([
         dispatch(getAllBalance()),
-        dispatch(getUserInfo()),
+        skipLogin && dispatch(getUserInfo()),
         skipLogin !== true && dispatch(loginSmartUp()),
       ])
     }
