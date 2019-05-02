@@ -11,8 +11,8 @@ import { asyncFunction } from '../integrator'
 export function watch() {
   return async (dispatch, getState) => {
     while(true) {
-      const [error, res] = await dispatch(getUnread())
       const { unreadCount } = getState().notification
+      const [error, res] = await dispatch(getUnread())
       if(!error && res.count !== unreadCount) dispatch(getList())
       await delay(10000)
     }
