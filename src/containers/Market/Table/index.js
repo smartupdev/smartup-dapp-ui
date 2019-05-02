@@ -25,8 +25,8 @@ const _Name = ({ value, record }) =>
   </Col>
 const _Percent = ({ value }) => <Text>{toPercent(value)}</Text>
 const _Price = ({ value }) => <Text price>{toPrice(value)}</Text>
-const _Volume = ({ value }) => <Text primary>{toPrice(value, 0)}</Text>
-const _Cap = ({ value }) => <Text>{toPrice(value, 0)}</Text>
+const _Volume = ({ value }) => <Text primary>{toPrice(value)}</Text>
+const _Cap = ({ value }) => <Text>{toPrice(value)}</Text>
 const TableName = [
   { label: '',                            value: 'avatar',        sortable: false,  component: _Icon,           layoutStyle: { width: `calc( ${theme.iconSizeM} + 15px )`, center: true } },
   { label: tableLang.name[currentLang],   value: 'name',          sortable: true,   component: _Name,           layoutStyle: { flex: 1, width: colWidth } },

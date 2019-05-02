@@ -20,7 +20,7 @@ import Botton from '../../components/Button'
 import TableFooter from '../../components/TableFooter'
 
 import lang, { currentLang } from '../../lang'
-import { toToken, toAgo, toFullDate, shorten } from '../../lib/util'
+import { toPrice, toAgo, toFullDate, shorten } from '../../lib/util'
 
 import Chart from './Chart'
 
@@ -28,7 +28,7 @@ const model = [
   { label: lang.trading.table.buySell[currentLang], value: 'type', layoutStyle: { flex: 1, center: true }, component: ({ value }) => <Text red={value === 'sell'} green={value !== 'sell'}>{value === 'sell' ? lang.trading.table.sell[currentLang] : lang.trading.table.buy[currentLang]}</Text> },
   { label: lang.trading.table.user[currentLang], value: 'userAddress', layoutStyle: { flex: 1 }, component: ({ record }) => <Row centerVertical><Avatar icon={record.userIcon} /><Text>{shorten(record.username)}</Text></Row> },
   { label: lang.trading.table.time[currentLang], value: 'createTime', layoutStyle: { flex: 1, center: true }, component: ({ value }) => <Text>{toAgo(value)}</Text> },
-  { label: lang.trading.table.avgPrice[currentLang], value: 'avgAmount', layoutStyle: { flex: 1, center: true }, component: ({ value }) => <Text>{toToken(value)}</Text> },
+  { label: lang.trading.table.avgPrice[currentLang], value: 'avgAmount', layoutStyle: { flex: 1, center: true }, component: ({ value }) => <Text>{toPrice(value)}</Text> },
   { label: lang.trading.table.ct[currentLang], value: 'ctAmount', layoutStyle: { flex: 1, center: true }, },
   { label: lang.trading.table.stage[currentLang], value: 'stage', layoutStyle: { flex: 1, center: true }, },
 ]
@@ -69,23 +69,23 @@ function Trading({ market, gettingMarket, tradeState, setTab, onChangeCT, onChan
           <Text nowrap spacingBottomS>{toFullDate(Date.now())}</Text>
 
           <Row bottom spacingTopS>
-            <Text XL>{toToken(klineData.length > 0 ? klineData[klineData.length - 1].low : '', 2)}</Text><Text red S>&nbsp;&nbsp;low</Text>
+            <Text XL>{toPrice(klineData.length > 0 ? klineData[klineData.length - 1].low : '', 2)}</Text><Text red S>&nbsp;&nbsp;low</Text>
           </Row>
           <Row bottom>
-            <Text XL>{toToken(klineData.length > 0 ? klineData[klineData.length - 1].high : '', 2)}</Text><Text green S>&nbsp;&nbsp;high</Text>
+            <Text XL>{toPrice(klineData.length > 0 ? klineData[klineData.length - 1].high : '', 2)}</Text><Text green S>&nbsp;&nbsp;high</Text>
           </Row>
           <Text note S>{lang.trading.change[currentLang]}</Text>
 
-          <Text XL price spacingTopS>{toToken(market.last, 2)}</Text>
+          <Text XL price spacingTopS>{toPrice(market.last, 2)}</Text>
           <Text note S>{lang.trading.price[currentLang]}</Text>
 
-          <Text XL primary spacingTopS>{toToken(market.ctAmount, 2)}</Text>
+          <Text XL primary spacingTopS>{toPrice(market.ctAmount, 2)}</Text>
           <Text note S>{lang.trading.volume[currentLang]}</Text>
 
-          <Text XL spacingTopS>{toToken(market.amount, 2)}</Text>
+          <Text XL spacingTopS>{toPrice(market.amount, 2)}</Text>
           <Text note S>{lang.trading.cap[currentLang]}</Text>
 
-          <Text XL spacingTopS>{toToken(market.ctTopAmount, 2)}</Text>
+          <Text XL spacingTopS>{toPrice(market.ctTopAmount, 2)}</Text>
           <Text note S>{lang.trading.ct[currentLang]}</Text>
         </Col>
       </Row>
