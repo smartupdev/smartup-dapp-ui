@@ -36,7 +36,7 @@ const StyledSvg = styled.svg`
   };
   fill: ${p => p.color};
   ${p => p.round && css`
-    border: 1px ${p.theme.white} solid;
+    border: 1px ${p.color || p.theme.white} solid;
     border-radius: ${
       p.XS ? p.theme.imageSizeXS :
       p.S ? p.theme.imageSizeS :
