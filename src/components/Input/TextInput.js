@@ -43,7 +43,7 @@ function _onChange(onChange, number) {
     return e => {
       const value = e.target.value
       if(number) 
-        return /^\d*$/.test(value) ? onChange(value) : undefined
+        return /^\d{0,10}(\.\d{0,2})?$/.test(value) ? onChange(value) : undefined
       return onChange(value)
     }
   } 
