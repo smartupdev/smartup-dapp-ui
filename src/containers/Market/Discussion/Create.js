@@ -35,7 +35,7 @@ function DiscussionCreate({ addApi, history }) {
       <Text TopS BottomBase>Text</Text>
       <TextInput background line={5} disabled={loading} value={text} onChange={setText} />
       <Text TopS BottomBase>Photo</Text>
-      <DropToUpload origin disabled={loading} value={photo || null} onChoose={uploadPhoto} />
+      <DropToUpload actualSize disabled={loading} value={photo || null} onChoose={uploadPhoto} />
       <Row right TopXL>
         <Button primary HL label='Submit' disabled={loading} onClick={add} />
         <Button HL label='Cancel' disabled={loading} onClick={history.goBack} />

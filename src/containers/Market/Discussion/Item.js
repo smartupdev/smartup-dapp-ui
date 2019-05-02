@@ -31,7 +31,7 @@ function DiscussionItem ({ post, isDetailView, toggleLikePost, toggleDislikePost
               isDetailView ?
                 <>
                 { content && <Text S note BottomS>{content}</Text>}
-                { photo &&  <Image source={ipfsHost + photo} origin BottomS />}
+                { photo &&  <Image source={ipfsHost + photo} actualSize BottomS />}
                 </>
               :
                 lastReply && 
