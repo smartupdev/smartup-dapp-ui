@@ -17,25 +17,25 @@ export default {
       all: name('All'),
       hot: name('Hottest'),
       new: name('Newest'),
-      pop: name('Popolous'),
+      pop: name('Populous'),
       rich: name('Richest'),
     },
     table: {
       name: name('NAME'),
       change: name('24H CHANGE'),
-      price: name('LAST PRICE'),
+      price: name('SPOT PRICE'),
       volume: name('24H VOLUME'),
-      cap: name('FUNDING CAP'),
+      cap: name('FUNDING POOL'),
       graph: name('7D GRAPH')
     }
   },
   panel: {
     tab: {
-      portfilio: name('Portfilio'),
+      portfolio: name('Portfolio'),
       notification: name('Notifications'),
       setting: name('Settings')
     },
-    portfilio: {
+    portfolio: {
       wallet: {
         title: name('Market Wallet'),
         id: name('Idea ID'),

@@ -24,7 +24,7 @@ import smartupIcon from '../../images/smartup.png';
 import { Close, Trade } from '../../components/Icon';
 import TableFooter from '../../components/TableFooter'
 
-const portfilioText = lang.panel.portfilio
+const portfolioText = lang.panel.portfolio
 
 const InfoBlock = styled(Col)`
   margin: 0 ${p => p.theme.spacingS};
@@ -50,10 +50,10 @@ const BookmarkBlock = styled(Row)`
 
 const TableName = [
   { label: '', value: 'icon', layoutStyle: { width: '18px' }, component: ({ value }) => <Avatar XS icon={value} /> },
-  { label: portfilioText.wallet.id[currentLang], value: 'marketId', },
-  { label: portfilioText.wallet.ct[currentLang], value: 'ctAmount', component: ({ value }) => <Text S>{`${value}`}</Text> },
+  { label: portfolioText.wallet.id[currentLang], value: 'marketId', },
+  { label: portfolioText.wallet.ct[currentLang], value: 'ctAmount', component: ({ value }) => <Text S>{`${value}`}</Text> },
   {
-    label: portfilioText.wallet.volume[currentLang], value: 'latelyChange', component: ({ value }) =>
+    label: portfolioText.wallet.volume[currentLang], value: 'latelyChange', component: ({ value }) =>
       <Text S style={{ color: value >= 0 ? theme.green : theme.red }}>{`${value < 0 ? '' : '+'}${(value * 100).toFixed(2)}%`}</Text>
   },
   {
@@ -64,7 +64,7 @@ const TableName = [
   },
 ]
 
-const Portfilio = ({
+const Portfolio = ({
   ethBalance, sutBalance, marketGlobal, collects, ctInMarket,ctInMarketHasNextPage,
   expandedWallet, expandedMarket, expandedBookmark,
   toggleExpandedBookmark, toggleExpandedMarket, toggleExpandedWallet,
@@ -97,7 +97,7 @@ const Portfilio = ({
         dark={expandedWallet}
         expanded={expandedWallet}
         onClick={toggleExpandedWallet}
-        header={portfilioText.wallet.title[currentLang]}
+        header={portfolioText.wallet.title[currentLang]}
         body={
           <>
             <Col BottomXS LeftS RightS>
@@ -113,20 +113,20 @@ const Portfilio = ({
         expanded={expandedMarket}
         dark={expandedMarket}
         onClick={toggleExpandedMarket}
-        header={portfilioText.marketInfo.title[currentLang]}
+        header={portfolioText.marketInfo.title[currentLang]}
         body={
           <>
             <Col>
               <InfoBlock first>
-                <Text S spaceBottom>{portfilioText.marketInfo.totalSmartup[currentLang]}</Text>
+                <Text S spaceBottom>{portfolioText.marketInfo.totalSmartup[currentLang]}</Text>
                 <Text L wordSpaceM bold>{sutAmount}</Text>
               </InfoBlock>
               <InfoBlock>
-                <Text S spaceBottom>{portfilioText.marketInfo.totalMarket[currentLang]}</Text>
+                <Text S spaceBottom>{portfolioText.marketInfo.totalMarket[currentLang]}</Text>
                 <Text L wordSpaceM bold>{marketCount}</Text>
               </InfoBlock>
               <InfoBlock>
-                <Text S spaceBottom>{portfilioText.marketInfo.totalDiscussion[currentLang]}</Text>
+                <Text S spaceBottom>{portfolioText.marketInfo.totalDiscussion[currentLang]}</Text>
                 <Text L wordSpaceM bold>{latelyPostCount}</Text>
               </InfoBlock>
             </Col>
@@ -138,7 +138,7 @@ const Portfilio = ({
         expanded={expandedBookmark}
         dark={expandedBookmark}
         onClick={toggleExpandedBookmark}
-        header={portfilioText.bookmark.title[currentLang]}
+        header={portfolioText.bookmark.title[currentLang]}
         body={
           <Col>
             {
@@ -173,4 +173,4 @@ const mapDispatchToProps = {
   getMarketGlobal, getUserCollectLists, getCtAccountInMarket, collectMarket,
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Portfilio);
+export default connect(mapStateToProps, mapDispatchToProps)(Portfolio);

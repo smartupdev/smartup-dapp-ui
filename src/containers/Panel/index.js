@@ -26,7 +26,7 @@ const PANEL_WIDTH = 300
 
 function getTabs(unreadCount) {
   return [
-    { label: lang.panel.tab.portfilio[currentLang], component: Portfolio },
+    { label: lang.panel.tab.portfolio[currentLang], component: Portfolio },
     { label: lang.panel.tab.notification[currentLang], dot: !!unreadCount, component: Notification },
     { label: lang.panel.tab.setting[currentLang], component: Setting },
   ]
