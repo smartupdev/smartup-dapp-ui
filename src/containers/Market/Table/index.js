@@ -10,7 +10,7 @@ import { Row, Col } from '../../../components/Layout'
 import TableFooter from '../../../components/TableFooter'
 import lang, { currentLang } from '../../../lang'
 import theme from '../../../theme'
-import { toPrice, toDate, toAgo } from '../../../lib/util'
+import { toPrice, toDate, toAgo, toPercent } from '../../../lib/util'
 
 const tableLang = lang.home.table
 const colWidth = '130px'
@@ -23,7 +23,7 @@ const _Name = ({ value, record }) =>
     <Text>{value}</Text>
     <Text note S>{toAgo(record.createTime)}</Text>
   </Col>
-const _Percent = ({ value }) => <Text>{value ? value + '%' : '-'}</Text>
+const _Percent = ({ value }) => <Text>{toPercent(value)}</Text>
 const _Price = ({ value }) => <Text price>{toPrice(value)}</Text>
 const _Volume = ({ value }) => <Text primary>{toPrice(value, 0)}</Text>
 const _Cap = ({ value }) => <Text>{toPrice(value, 0)}</Text>
