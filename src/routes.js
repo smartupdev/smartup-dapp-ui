@@ -34,8 +34,8 @@ import { connect } from 'react-redux'
 // ORDER MATTER
 // if has Icon, show in menu 
 let routes = [
-  { id: 'home', path: '/', component: Home, icon: Menu1, selected: true, exact: true },  
-  { id: 'createMarket', path: '/create/market', component: CreateMarket, icon: Menu2 },
+  { id: 'home', path: '/', component: Home, icon: Menu1, iconLabel: 'Home', selected: true, exact: true },  
+  { id: 'createMarket', path: '/create/market', component: CreateMarket, icon: Menu2, iconLabel: 'Create Matket' },
   { id: 'account', path: '/account', component: Account },
 
   // market, must have id as params
@@ -49,13 +49,13 @@ let routes = [
   { id: 'flag', path: '/market/flag', component: Flag, from: 'home' },
 
   // account
-  { id: 'accountTransaction', label: 'Transaction', path: '/account/transaction', component: AccountTransaction, icon: Menu3 },
+  { id: 'accountTransaction', label: 'Transaction', path: '/account/transaction', component: AccountTransaction, icon: Menu3, iconLabel: 'Personal Center' },
   { id: 'accountMarket', label: 'Market', path: '/account/market', component: AccountMarket, from: 'accountTransaction' },
   { id: 'accountPost', label: 'Post', path: '/account/post', component: AccountPost, from: 'accountTransaction' },
   { id: 'accountComment', label: 'Comment', path: '/account/comment', component: AccountComment, from: 'accountTransaction' },
   { id: 'accountSaved', label: 'Saved', path: '/account/saved', component: AccountSaved, from: 'accountTransaction' },
 
-  { id: 'dispute', path: '/dispute', component: Dispute, icon: Menu4 },
+  { id: 'dispute', path: '/dispute', component: Dispute, icon: Menu4, iconLabel: 'Dispute' },
 ]
 
 routes = routes.map(r => ({

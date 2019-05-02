@@ -20,14 +20,14 @@ export default ({ routes }) =>
       <Menu image={Logo} fixed />
     </Link>
     {
-      routes.map(({ path, icon, includePaths }, i) =>
+      routes.map(({ path, icon, includePaths, iconLabel }, i) =>
         icon && <Route
           key={i}
           path={path}
           exact={true}
           children={({ match, location }) => (
             <Link to={path}>
-              <Menu selected={match || includePaths && includePaths.includes(location.pathname)} icon={icon} />
+              <Menu selected={match || includePaths && includePaths.includes(location.pathname)} icon={icon} iconLabel={iconLabel} />
             </Link>
           )}
         />
