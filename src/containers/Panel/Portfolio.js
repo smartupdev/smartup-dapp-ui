@@ -17,7 +17,7 @@ import Button from '../../components/Button'
 import { Row, Col } from '../../components/Layout'
 import lang, { currentLang } from '../../lang'
 import { Link } from '../../routes'
-import { toToken } from '../../lib/util'
+import { toToken, toPercent } from '../../lib/util'
 import theme from '../../theme';
 import ethIcon from '../../images/eth.png';
 import smartupIcon from '../../images/smartup.png';
@@ -54,7 +54,7 @@ const TableName = [
   { label: portfolioText.wallet.ct[currentLang], value: 'ctAmount', component: ({ value }) => <Text S>{`${value}`}</Text> },
   {
     label: portfolioText.wallet.volume[currentLang], value: 'latelyChange', component: ({ value }) =>
-      <Text S style={{ color: value >= 0 ? theme.green : theme.red }}>{`${value < 0 ? '' : '+'}${(value * 100).toFixed(2)}%`}</Text>
+      <Text S style={{ color: value >= 0 ? theme.green : theme.red }}>{toPercent(value)}</Text>
   },
   {
     label: '', value: 'action', layoutStyle: { width: '40px' }, component: ({ record }) =>
