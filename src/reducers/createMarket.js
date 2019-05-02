@@ -155,7 +155,7 @@ export default (state = initialState, action) => {
       }
 
     case CREATE_MARKET_NAME_CHANGE: {
-      const error = action.payload.length < 20 || action.payload.length > 40 
+      const error = action.payload.length < 3 || action.payload.length > 40 
       return {
         ...state,
         name: action.payload,

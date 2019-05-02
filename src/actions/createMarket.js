@@ -66,10 +66,11 @@ export function pay() {
   return async (dispatch, getState) => {
     const [error, response] = await dispatch(
       callbackFunction(
-        smartupWeb3.eth.sendTransaction,
+        smartupWeb3 && smartupWeb3.eth && smartupWeb3.eth.sendTransaction,
         CREATE_MARKET_PAY_REQUESTED, CREATE_MARKET_PAY_SUCCEEDED, CREATE_MARKET_PAY_FAILED,
         {
           isWeb3: true,
+          loginRequired: true,
           params: {
             from: getAccount(),
             to: sutContractAddress,

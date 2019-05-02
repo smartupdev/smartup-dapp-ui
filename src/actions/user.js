@@ -49,7 +49,7 @@ export function checkLogin() {
       const [error, response] = await dispatch(loginMetaMask(true))
       if (!error) {
         dispatch({
-          type: USER_PERSON_SIGN_SUCCEEDED
+          type: USER_AUTH_SMARTUP_SUCCEEDED
         })
       }
     }
@@ -113,7 +113,7 @@ export function loginMetaMask(skipLogin) {
     if (!error) {
       await Promise.all([
         dispatch(getAllBalance()),
-        skipLogin && dispatch(getUserInfo()),
+        skipLogin === true && dispatch(getUserInfo()),
         skipLogin !== true && dispatch(loginSmartUp()),
       ])
     }
