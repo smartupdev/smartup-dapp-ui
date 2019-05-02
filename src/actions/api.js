@@ -36,6 +36,7 @@ export const API_USER_UPDATE = '/api/user/update';
 export const API_USER_TRANSACTION_LIST = '/api/user/transaction/list';
 export const API_USER_MARKET_CREATED = '/api/user/market/created';
 export const API_USER_MARKET_TRADED = '/api/user/market/traded';
+export const API_USER_MARKET_COLLECTED = '/api/user/market/collected';
 export const API_USER_POST_COLLECTED = '/api/user/post/collected';
 export const API_USER_POST_CREATED = '/api/user/post/created';
 export const API_USER_REPLY_COLLECTED = '/api/user/reply/collected';

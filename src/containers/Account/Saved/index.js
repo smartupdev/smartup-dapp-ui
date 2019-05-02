@@ -10,17 +10,18 @@ import Panel from '../../../components/Panel'
 import Hr from '../../../components/Hr'
 
 import { connect } from 'react-redux'
-import { getCollectedPosts, getCollectedReplys, reset } from '../../../actions/personalCenter'
+import { getCollectedPosts, getCollectedReplys, getCollectedMarkets, reset } from '../../../actions/personalCenter'
 
 function Index({
   collectedPosts, gettingCollectedPosts, collectedPostsError,
   collectedMarkets, gettingCollectedMarmkets, collectedMarketsError,
   collectedReplys, gettingCollectedReplys, collectedReplysError,
-  getCollectedPosts, getCollectedReplys, reset
+  getCollectedPosts, getCollectedReplys, getCollectedMarkets, reset
 }) {
   useEffect(() => {
     getCollectedReplys()
     getCollectedPosts()
+    getCollectedMarkets()
     return reset
   }, [])
 
@@ -81,13 +82,13 @@ const mapStateToProps = state => ({
   gettingCollectedPosts: state.personalCenterPost.gettingCollectedPosts,
   collectedPostsError: state.personalCenterPost.collectedPostsError,
 
-  collectedMarkets: state.personalCenterMarket.tradedMarkets,
-  gettingCollectedMarmkets: state.personalCenterMarket.gettingTradedMarmkets,
-  collectedMarketsError: state.personalCenterMarket.tradedMarketsError,
+  collectedMarkets: state.personalCenterMarket.collectedMarkets,
+  gettingCollectedMarmkets: state.personalCenterMarket.gettingCollectedMarmkets,
+  collectedMarketsError: state.personalCenterMarket.collectedMarketsError,
 });
 
 const mapDispatchToProps = {
-  getCollectedPosts, getCollectedReplys, reset
+  getCollectedPosts, getCollectedReplys, getCollectedMarkets, reset
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Index);

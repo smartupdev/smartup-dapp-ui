@@ -3,6 +3,7 @@ import {
   USER_TRANSACTION_LIST_REQUESTED, USER_TRANSACTION_LIST_SUCCEEDED, USER_TRANSACTION_LIST_FAIL,
   USER_MARKET_CREATED_REQUESTED, USER_MARKET_CREATED_SUCCEEDED, USER_MARKET_CREATED_FAIL,
   USER_MARKET_TRADED_REQUESTED, USER_MARKET_TRADED_SUCCEEDED, USER_MARKET_TRADED_FAIL,
+  USER_MARKET_COLLECTED_REQUESTED, USER_MARKET_COLLECTED_SUCCEEDED, USER_MARKET_COLLECTED_FAIL,
 } from '../actions/actionTypes';
 
 import {marketMassage} from './market'
@@ -49,6 +50,12 @@ export const initialState = {
   tradedMarketsError: null,
   tradedMarketsPageNumb: 0,
   tradedMarketsHasNextPage: true,
+
+  collectedMarkets: [],
+  gettingCollectedMarmkets: false,
+  collectedMarketsError: null,
+  collectedMarketsPageNumb: 0,
+  collectedMarketsHasNextPage: true,
 }
 
 export default (state = initialState, action) => {
@@ -99,6 +106,33 @@ export default (state = initialState, action) => {
         gettingCreatedMarmkets: false,
         createdMarketsError: action.payload,
       }
+    case USER_MARKET_COLLECTED_REQUESTED:
+      return {
+        ...state,
+        gettingCollectedMarmkets: true
+      }
+    case USER_MARKET_COLLECTED_SUCCEEDED: {
+      const { list, pageNumb, hasNextPage } = action.payload;
+      return {
+        ...state,
+        gettingCollectedMarmkets: false,
+        collectedMarkets: [
+          ...state.collectedMarkets,
+          ...list.map(marketMassage)
+        ],
+        collectedMarketsPageNumb: pageNumb,
+        collectedMarketsHasNextPage: hasNextPage,
+        collectedMarketsError: initialState.collectedMarketsError
+      }
+    }
+    case USER_MARKET_COLLECTED_FAIL:
+      return {
+        ...state,
+        gettingCollectedMarmkets: false,
+        collectedMarketsError: action.payload
+      }
+
+
     case USER_MARKET_TRADED_REQUESTED:
       return {
         ...state,

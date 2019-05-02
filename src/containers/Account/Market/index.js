@@ -6,20 +6,22 @@ import Hr from '../../../components/Hr'
 import Panel from '../../../components/Panel'
 
 import { connect } from 'react-redux'
-import { getCreatedMarkets, getTradedMarkets, reset } from '../../../actions/personalCenter'
+import { getCreatedMarkets, getTradedMarkets, getCollectedMarkets, reset } from '../../../actions/personalCenter'
 
 function Market({
-  gettingCreatedMarmkets, createdMarketsError,
-  gettingTradedMarmkets, tradedMarketsError,
-  createdMarkets, tradedMarkets,
-  getCreatedMarkets, getTradedMarkets, reset
+  createdMarkets, gettingCreatedMarmkets, createdMarketsError,
+  tradedMarkets, gettingTradedMarmkets, tradedMarketsError,
+  collectedMarkets, gettingCollectedMarmkets, collectedMarketsError,
+  getCreatedMarkets, getTradedMarkets, getCollectedMarkets, reset
 }) {
   const [expandCreated, setExpandCreated] = useState(true)
   const [expandSaved, setExpandSaved] = useState(false)
+  const [expandTraded, setExpandTraded] = useState(false)
 
   useEffect(() => {
     getCreatedMarkets()
     getTradedMarkets()
+    getCollectedMarkets()
     return reset
   }, [])
 
@@ -38,9 +40,18 @@ function Market({
         expandedDark
         expanded={expandSaved}
         onClick={() => setExpandSaved(!expandSaved)}
+        error={collectedMarketsError}
+        loading={gettingCollectedMarmkets}
+        header='Saved market'
+        body={<MarketTable markets={collectedMarkets} />} />
+      {expandCreated && <Hr />}
+      <Panel
+        expandedDark
+        expanded={expandTraded}
+        onClick={() => setExpandTraded(!expandTraded)}
         error={tradedMarketsError}
         loading={gettingTradedMarmkets}
-        header='Saved market'
+        header='Subscribed market'
         body={<MarketTable markets={tradedMarkets} />} />
     </Col>
   )
@@ -53,10 +64,13 @@ const mapStateToProps = state => ({
   tradedMarkets: state.personalCenterMarket.tradedMarkets,
   gettingTradedMarmkets: state.personalCenterMarket.gettingTradedMarmkets,
   tradedMarketsError: state.personalCenterMarket.tradedMarketsError,
+  collectedMarkets: state.personalCenterMarket.collectedMarkets,
+  gettingCollectedMarmkets: state.personalCenterMarket.gettingCollectedMarmkets,
+  collectedMarketsError: state.personalCenterMarket.collectedMarketsError,
 });
 
 const mapDispatchToProps = {
-  getCreatedMarkets, getTradedMarkets, reset
+  getCreatedMarkets, getTradedMarkets, getCollectedMarkets, reset
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Market);
