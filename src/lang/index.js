@@ -43,7 +43,7 @@ export default {
         volume: name('CHANGE')
       },
       marketInfo: {
-        title: name('Global market information'),
+        title: name('Global Market Information'),
         totalSmartup: name('Total SMARTUP invested'),
         totalMarket: name('Total number of markets'),
         totalDiscussion: name('Total number of ongoing discussions')
@@ -62,7 +62,7 @@ export default {
       ct: name('TOKEN'),
       volumn: name('VOLUME')
     },
-    global: name('Global market information'),
+    global: name('Global Market Information'),
     sutInv: name('Total SMARTUP invested'),
     mktNumber: name ('Total number of markets'),
     disNumber: name('Total number of ongoing discussions'),
