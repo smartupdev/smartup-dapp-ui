@@ -52,9 +52,9 @@ const Notification = ({
     <Col overflowAuto>
       <Row relative centerVertical>
         { !keyword && <Expand S LeftS color={showUnreadOnly && !disabled ? theme.colorPrimary : theme.colorSecondary} onClick={(!disabled && toggleShowUnread) || noop} />}
-        <Tick S MarginLeftS color={!readAllDisabled && !disabled ? theme.colorPrimary : theme.colorSecondary} onClick={readAllDisabled ? noop : readAll} disabled={readAllDisabled} />
+        <Tick S MarginHS color={!readAllDisabled && !disabled ? theme.colorPrimary : theme.colorSecondary} onClick={readAllDisabled ? noop : readAll} disabled={readAllDisabled} />
         {/* <Text LeftBase RightS primary={!readAllDisabled} note={readAllDisabled} onClick={readAllDisabled ? noop : readAll} disabled={readAllDisabled}>Read all</Text> */}
-        { gettingNotifications && <DonutLoader size='12px' /> }
+        { gettingNotifications && <DonutLoader S /> }
         <Search id='notification' backgroundColor={theme.bgColor} onChange={onChangeKeyword} value={keyword} onSearch={getList} />
       </Row>
       <Link>

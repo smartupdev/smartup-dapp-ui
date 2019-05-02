@@ -15,8 +15,6 @@ const DonutStyle = styled.div`
   border: 4px solid rgba(0, 0, 0, 0.1);
   border-left-color: #5778F3;
   border-radius: 50%;
-  width: ${p => p.size};
-  height: ${p => p.size};
   animation: ${donutSpin} 1.2s linear infinite;
   width: ${p => 
     p.XS ? p.theme.imageSizeXS :
