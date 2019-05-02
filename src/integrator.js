@@ -8,6 +8,8 @@ export const nttContractAddress = '0x846ce03199a759a183cccb35146124cd3f120548'
 export const smartupWeb3 = window.web3 && new Web3(window.web3.currentProvider)
 window.sut = smartupWeb3
 
+const NO_ACCOUNT = 'Please connect to metamask.'
+
 export const getAccount = () => {
   if (window.web3) {
     return window.web3.eth.accounts[0];
@@ -144,7 +146,7 @@ export function asyncFunction(
     requestType && dispatch({ type: requestType, meta: options.meta })
     try {
       if (options.isWeb3 && !checkIsSupportWeb3()) throw new Error('Web3 or ethereum is not supported.')
-      if(options.loginRequired && !getAccount()) throw new Error('Please connect to metamask.')
+      if(options.loginRequired && !getAccount()) throw new Error(NO_ACCOUNT)
       let response = await func(...[options.params, options.params2])
       response = options.responsePayload ? options.responsePayload(response) : response
       responseType && dispatch({
@@ -155,7 +157,7 @@ export function asyncFunction(
       return [null, response]
     }
     catch (error) {
-      if(error.message === NOT_LOGIN) dispatch({ type: USER_PERSON_SIGN_FAILED, meta: options.meta, payload: error, error: true })
+      if(error.message === NOT_LOGIN || error.message === NO_ACCOUNT) dispatch({ type: USER_PERSON_SIGN_FAILED, meta: options.meta, payload: error, error: true })
       errorType && dispatch({
         type: errorType,
         payload: error,
