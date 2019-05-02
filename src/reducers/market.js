@@ -24,6 +24,7 @@ export function marketMassage(m) {
     numberOfComments: m.data ? m.data.postCount : '-',
     numberOfSub: m.data ? m.data.userCount : '-',
     lately_volume: m.data.latelyVolume,
+    lately_change: m.data.latelyChange,
     priceIn7d: m.sevenDayNode,
     following: m.isCollected,
     overview: m.description,

@@ -30,7 +30,7 @@ const _Cap = ({ value }) => <Text>{toPrice(value, 0)}</Text>
 const TableName = [
   { label: '',                            value: 'avatar',        sortable: false,  component: _Icon,           layoutStyle: { width: `calc( ${theme.iconSizeM} + 15px )`, center: true } },
   { label: tableLang.name[currentLang],   value: 'name',          sortable: true,   component: _Name,           layoutStyle: { flex: 1, width: colWidth } },
-  { label: tableLang.change[currentLang], value: 'latelyChange',  sortable: true,   component: _Percent,        layoutStyle: { width: colWidth } },
+  { label: tableLang.change[currentLang], value: 'lately_change',  sortable: true,   component: _Percent,        layoutStyle: { width: colWidth } },
   { label: tableLang.price[currentLang],  value: 'last',          sortable: true,   component: _Price,          layoutStyle: { width: colWidth } },
   { label: tableLang.volume[currentLang], value: 'lately_volume', sortable: true,   component: _Volume,         layoutStyle: { width: colWidth } },
   { label: tableLang.cap[currentLang],    value: 'amount',        sortable: true,   component: _Cap,            layoutStyle: { width: colWidth } },
