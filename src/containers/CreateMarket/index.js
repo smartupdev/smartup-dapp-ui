@@ -68,7 +68,7 @@ const CreateMarket = ({
             <Text S right error={error.name}>
               {
                 typeof error.name === 'string' ? error.name :
-              'Capital sensitive, 20-40 characters, community name cannot be changed.'
+              'Capital sensitive, 3-40 characters, community name cannot be changed.'
               } 
             </Text>
             <Label>Market description</Label>
