@@ -45,7 +45,7 @@ function DiscussionDetail({
             <Col flex={1} LeftS>
               <TextInput background value={newComment} onChange={onChangeNewComment} disabled={replying} line={4} />
               <Col right TopBase>
-                <Button primary HXL label='Save' onClick={reply} disabled={replying} />
+                <Button primary HXL label='Reply' onClick={reply} disabled={replying} />
                 {replyError && <Text S error>{replyError.message}</Text>}
               </Col>
             </Col>
