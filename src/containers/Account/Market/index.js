@@ -33,7 +33,7 @@ function Market({
         onClick={() => setExpandCreated(!expandCreated)}
         error={createdMarketsError}
         loading={gettingCreatedMarmkets}
-        header='Created market'
+        header='Created markets'
         body={<MarketTable markets={createdMarkets} />} />
       {expandCreated && <Hr />}
       <Panel
@@ -42,7 +42,7 @@ function Market({
         onClick={() => setExpandSaved(!expandSaved)}
         error={collectedMarketsError}
         loading={gettingCollectedMarmkets}
-        header='Saved market'
+        header='Saved markets'
         body={<MarketTable markets={collectedMarkets} />} />
       {expandCreated && <Hr />}
       <Panel
@@ -51,7 +51,7 @@ function Market({
         onClick={() => setExpandTraded(!expandTraded)}
         error={tradedMarketsError}
         loading={gettingTradedMarmkets}
-        header='Subscribed market'
+        header='Subscribed markets'
         body={<MarketTable markets={tradedMarkets} />} />
     </Col>
   )
