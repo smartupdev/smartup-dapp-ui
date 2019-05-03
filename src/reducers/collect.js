@@ -1,33 +1,37 @@
 import {
-    USER_COLLECT_LIST_REQUESTED, USER_COLLECT_LIST_SUCCEEDED, USER_COLLECT_LIST_FAILED
+  USER_COLLECT_LIST_REQUESTED, USER_COLLECT_LIST_SUCCEEDED, USER_COLLECT_LIST_FAILED
 } from '../actions/actionTypes';
 export const initialState = {
-    collects: [],
-    gettingCollects: false,
-    collectsError: null,
+  collects: [],
+  gettingCollects: false,
+  collectsError: null,
+  hasNextPage: true,
+  pageSize: 20,
+  pageNumb: 1,
 }
 
 export default (state = initialState, action) => {
-    switch (action.type) {
-        case USER_COLLECT_LIST_REQUESTED:
-            return {
-                ...state,
-                gettingCollects: true,
-            };
-        case USER_COLLECT_LIST_SUCCEEDED:
-            return {
-                ...state,
-                collects: action.payload,
-                gettingCollects: false,
-                collectsError: initialState.collectsError,
-            };
-        case USER_COLLECT_LIST_FAILED:
-            return {
-                ...state,
-                gettingCollects: false,
-                collectsError: action.payload,
-            };
-        default:
-            return state;
-    }
+  switch (action.type) {
+    case USER_COLLECT_LIST_REQUESTED:
+      return {
+        ...state,
+        gettingCollects: true,
+      };
+    case USER_COLLECT_LIST_SUCCEEDED:
+      return {
+        ...state,
+        collects: action.meta.isLoadMore ? [...state.collects, ...action.payload.list] : action.payload.list,
+        gettingCollects: false,
+        hasNextPage: action.payload.hasNextPage,
+        collectsError: initialState.collectsError,
+      };
+    case USER_COLLECT_LIST_FAILED:
+      return {
+        ...state,
+        gettingCollects: false,
+        collectsError: action.payload,
+      };
+    default:
+      return state;
+  }
 };

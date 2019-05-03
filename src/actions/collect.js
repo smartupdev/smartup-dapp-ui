@@ -21,18 +21,20 @@ export function delCollect(type, id) {
 
 
 //收藏列表
-export function getUserCollectLists(requestParam) {
-  requestParam = { type: 'market' }
-  return (dispatch, getState) =>
-    dispatch(
+export function getUserCollectLists(isLoadMore) {
+  return (dispatch, getState) => {
+    const { pageNumb, pageSize } = getState().collect
+    return dispatch(
       asyncFunction(
         fetch.post,
         USER_COLLECT_LIST_REQUESTED, USER_COLLECT_LIST_SUCCEEDED, USER_COLLECT_LIST_FAILED,
         {
           params: API_USER_COLLECT_LIST,
-          params2: requestParam,
-          responsePayload: reps => reps.list
+          params2: { type: 'market', pageNumb: isLoadMore ? pageNumb + 1 : 1, pageSize },
+          // responsePayload: reps => reps.list,
+          meta: {isLoadMore}
         }
       )
     )
+  }
 }

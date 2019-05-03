@@ -65,6 +65,7 @@ const TableName = [
 ]
 
 const Portfolio = ({
+  gettingCollects, collectsHasNextPage,
   ethBalance, sutBalance, marketGlobal, collects, ctInMarket,ctInMarketHasNextPage, gettingCtInMarket,
   expandedWallet, expandedMarket, expandedBookmark,
   toggleExpandedBookmark, toggleExpandedMarket, toggleExpandedWallet,
@@ -149,6 +150,7 @@ const Portfolio = ({
                 </BookmarkBlock>
               )
             }
+            <ScrollLoader isButton hasMore={collectsHasNextPage} id='bookmarked' isLoading={gettingCollects} loadMore={() => getUserCollectLists(true)} />
           </Col>
         }
       />
@@ -164,6 +166,8 @@ const mapStateToProps = state => ({
   expandedBookmark: state.panel.expandedBookmark,
   marketGlobal: state.market.marketGlobal,
   collects: state.collect.collects,
+  gettingCollects: state.collect.gettingCollects,
+  collectsHasNextPage: state.collect.hasNextPage,
   ctInMarket: state.market.ctInMarket,
   ctInMarketHasNextPage:state.market.ctInMarketHasNextPage,
   gettingCtInMarket:state.market.gettingCtInMarket,
