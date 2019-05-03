@@ -6,7 +6,7 @@ const formatter = new Intl.NumberFormat('en-US', {
 function toPercent(number) {
   return number ? 
     (number > 0 ? '+' : '') + (number * 100).toFixed(2) + '%'
-  : '-'
+  : number === 0 ? '0%' : '-'
 }
 
 function toPrice(number, decimal = 2) {
