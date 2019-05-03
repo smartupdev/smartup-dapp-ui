@@ -31,7 +31,7 @@ function Index({
         onClick={() => setExpandCreated(!expandCreated)}
         error={createdPostsError}
         loading={gettingCreatedPosts}
-        header='Created post'
+        header='Created posts'
         body={
           createdPosts.map(post => 
             <Fragment key={post.postId}>
@@ -47,7 +47,7 @@ function Index({
         onClick={() => setExpandSaved(!expandSaved)}
         error={collectedPostsError}
         loading={gettingCollectedPosts}
-        header='Saved post'
+        header='Saved posts'
         body={
           collectedPosts.map(post => 
             <Fragment key={post.postId}>

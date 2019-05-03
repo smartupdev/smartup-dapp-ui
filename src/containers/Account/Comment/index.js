@@ -46,7 +46,7 @@ function Index({
         onClick={() => setExpandCreated(!expandCreated)}
         error={createdReplysError}
         loading={gettingCreatedReplys}
-        header='Created post'
+        header='Created comments'
         body={
           createdReplys.map(reply =>             
             <Fragment key={reply.id}>
@@ -62,7 +62,7 @@ function Index({
         onClick={() => setExpandSaved(!expandSaved)}
         error={collectedReplysError}
         loading={gettingCollectedReplys}
-        header='Saved post'
+        header='Saved comments'
         body={
           collectedReplys.map(reply => 
             <Fragment key={reply.id}>

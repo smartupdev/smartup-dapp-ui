@@ -34,7 +34,7 @@ function Index({
         expandedDark
         expanded={expandMarket}
         onClick={() => setExpandMarket(!expandMarket)}
-        header='Saved market'
+        header='Saved markets'
         error={collectedMarketsError}
         loading={gettingCollectedMarmkets}
         body={
@@ -47,7 +47,7 @@ function Index({
         onClick={() => setExpandPost(!expandPost)}
         error={collectedPostsError}
         loading={gettingCollectedPosts}
-        header='Saved post'
+        header='Saved posts'
         body={collectedPosts.map(post =>
           <Fragment key={post.postId}>
             <DiscussionItem post={post} />
@@ -58,7 +58,7 @@ function Index({
         expandedDark
         expanded={expandReply}
         onClick={() => setExpandReply(!expandReply)}
-        header='Saved comment'
+        header='Saved comments'
         error={collectedReplysError}
         loading={gettingCollectedReplys}
         body={
