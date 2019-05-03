@@ -1,14 +1,11 @@
 import {
   CREATE_MARKET_PAY_REQUESTED, CREATE_MARKET_PAY_SUCCEEDED, CREATE_MARKET_PAY_FAILED,
-  GET_MARKET_LIST_REQUESTED, GET_MARKET_LIST_SUCCEEDED, GET_MARKET_LIST_FAILED,
   CT_ACCOUNT_IN_MARKET_REQUESTED, CT_ACCOUNT_IN_MARKET_SUCCEEDED, CT_ACCOUNT_IN_MARKET_FAILED,
   GET_MARKET_GLOBAL_REQUESTED, GET_MARKET_GLOBAL_SUCCEEDED, GET_MARKET_GLOBAL_FAILED,
   USER_COLLECT_ADD_REQUESTED, USER_COLLECT_ADD_SUCCEEDED, USER_COLLECT_ADD_FAILED,
   USER_COLLECT_DEL_REQUESTED, USER_COLLECT_DEL_SUCCEEDED, USER_COLLECT_DEL_FAILED,
   TRADE_SUCCEEDED,
   GET_MARKET_DETAIL_REQUESTED, GET_MARKET_DETAIL_SUCCEEDED, GET_MARKET_DETAIL_FAILED,
-  MARKET_SEARCH_REQUESTED, MARKET_SEARCH_SUCCEEDED, MARKET_SEARCH_FAILED,
-  MARKET_TOP_REQUESTED, MARKET_TOP_SUCCEEDED, MARKET_TOP_FAILED,MARKET_TOP_SORT
 } from '../actions/actionTypes';
 
 import { ipfsHost } from '../actions/ipfs'
@@ -30,31 +27,6 @@ export function marketMassage(m) {
     overview: m.description,
     icon: null,
   }
-}
-
-function marketSort(markets, sortKey,asc){
-  markets.sort((a,b)=>{
-    if(!!asc){
-      if(a[sortKey] > b[sortKey]){
-        return 1
-      }else if(a[sortKey] === b[sortKey]){
-        return 0
-      }
-      else if(a[sortKey] < b[sortKey]){
-        return -1
-      }
-    }else{
-      if(a[sortKey] > b[sortKey]){
-        return -1
-      }else if(a[sortKey] === b[sortKey]){
-        return 0
-      }
-      else if(a[sortKey] < b[sortKey]){
-        return 1
-      }
-    }
-  });
-  return markets;
 }
 
 export const initialState = {
@@ -157,98 +129,7 @@ export default (state = initialState, action) => {
         creatingMarket: false,
         createMarketError: action.payload,
       };
-    case MARKET_SEARCH_REQUESTED:
-      return {
-        ...state,
-        gettingMarketList: true,
-      };
-    case MARKET_SEARCH_SUCCEEDED: {
-      const {list:marketList, pageNumb, pageSize,hasNextPage} = action.payload;
-      let searchMarkets;
-      if(pageNumb === 1){
-        searchMarkets = marketList.map(marketMassage);
-      }else{
-        searchMarkets = state.markets.concat(marketList.map(marketMassage));
-      }
-      return {
-        ...state,
-        markets: searchMarkets,
-        totalResults: searchMarkets.length,
-        gettingMarketList: false,
-        pageSize,pageNumb,hasNextPage,
-        marketListError: initialState.marketListError
-      };
-    }
-    case MARKET_SEARCH_FAILED: {
-      return {
-        ...state,
-        gettingMarketList: false,
-        marketListError: action.payload,
-      };
-    }
-    case MARKET_TOP_REQUESTED:
-      return {
-        ...state,
-        gettingMarketList: true,
-      };
-    case MARKET_TOP_SUCCEEDED: {
-      let tempMarkets = action.payload.map(marketMassage);
-      return {
-        ...state,
-        markets: tempMarkets,
-        totalResults: tempMarkets.length,
-        gettingMarketList: false,
-        pageNumb: initialState.pageNumb,
-        hasNextPage: false,
-        marketListError: initialState.marketListError
-      };
-    }
-    case MARKET_TOP_FAILED: {
-      return {
-        ...state,
-        gettingMarketList: false,
-        marketListError: action.payload,
-      };
-    }
-    case MARKET_TOP_SORT: {
-      const orderBy = action.payload.sortBy;
-      const asc = action.payload.orderBy === 'asc';
-      let tempMarkets = marketSort(state.markets,orderBy,asc);
-      return {
-        ...state,
-        markets: tempMarkets,
-      };
-    }
-    case GET_MARKET_LIST_REQUESTED:
-      return {
-        ...state,
-        gettingMarketList: true,
-      };
-    case GET_MARKET_LIST_SUCCEEDED: {
-      const {list:marketList, pageNumb, pageSize,hasNextPage} = action.payload;
-      let tempMarkets;
-      if(pageNumb === 1){
-        tempMarkets = marketList.map(marketMassage);
-      }else{
-        tempMarkets = state.markets.concat(marketList.map(marketMassage));
-      }
-      return {
-        ...state,
-        markets: tempMarkets,
-        totalResults: tempMarkets.length,
-        gettingMarketList: false,
-        hasNextPage,
-        pageNumb,
-        pageSize,
-        marketListError: initialState.marketListError
-      };
-    }
-    case GET_MARKET_LIST_FAILED:
-      return {
-        ...state,
-        gettingMarketList: false,
-        marketListError: action.payload,
-      };
+
     case CT_ACCOUNT_IN_MARKET_REQUESTED:
       return {
         ...state,

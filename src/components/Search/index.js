@@ -35,13 +35,13 @@ const Dump = styled.div`
 ` // margin number
 
 // MUST set relative outside
-export default ({ id = '', backgroundColor, content, onChange, onSearch, top, bottom, right }) => {
+export default ({ id = '', backgroundColor, value, onChange, onSearch, top, bottom, right }) => {
   return (
     <>
       <Dump />
       <Container backgroundColor={backgroundColor} top={top} bottom={bottom} right={right}>
         <Row centerVertical fullHeight spaceBetween>
-          <Input id={id + "search"} value={content} placeholder='Search' onChange={onChange} onBlur={onSearch} />
+          <Input id={id + "search"} value={value} placeholder='Search' onChange={onChange} onBlur={onSearch} />
           {/* <Text note>Search</Text> */}
           <label htmlFor={id + "search"}>
             <Search S RightXS />

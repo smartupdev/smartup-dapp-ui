@@ -8,8 +8,8 @@ import Search from '../../components/Search'
 import lang, { currentLang } from '../../lang'
 import theme from '../../theme'
 import { connect } from 'react-redux'
-import { setExpandedRecords, setActiveTab, onTableHeaderClick,onSearchChange,searchMarketClick,moreMarketClick } from '../../actions/home'
-import { getDefaultMarketList } from '../../actions/market'
+import { reset, setExpandedRecords, setActiveTab, onTableHeaderClick, onSearchChange } from '../../actions/home'
+import { getList } from '../../actions/market'
 
 const Top = styled(Row)`
   padding: 0 ${p => p.theme.spacingXS}
@@ -18,16 +18,31 @@ const Top = styled(Row)`
 
 const FILTERS = [
   { label: lang.home.tab.all[currentLang], value: null },
-  { label: lang.home.tab.hot[currentLang], value: 'hot' },
-  { label: lang.home.tab.new[currentLang], value: 'new' },
-  { label: lang.home.tab.pop[currentLang], value: 'pop' },
-  { label: lang.home.tab.rich[currentLang], value: 'rich' },
+  { label: lang.home.tab.hot[currentLang], value: 'hottest' },
+  { label: lang.home.tab.new[currentLang], value: 'newest' },
+  { label: lang.home.tab.pop[currentLang], value: 'populous' },
+  { label: lang.home.tab.rich[currentLang], value: 'richest' },
 ]
 
-const Home = ({ markets, expandedRecords, activeTabIndex, totalResults, sortBy, orderBy,searchContent,hasNextPage,
-  getDefaultMarketList,setExpandedRecords, setActiveTab, onTableHeaderClick, onSearchChange, searchMarketClick,moreMarketClick }) => {
+const Home = ({ 
+  markets, 
+  totalResults, 
+  sortBy, orderBy, 
+  hasNextPage,
+
+  onTableHeaderClick, 
+  // moreMarketClick,
+
+  expandedRecords, setExpandedRecords,
+  activeTabIndex, setActiveTab,
+  searchContent, onSearchChange, 
+
+  reset,
+  getList,
+ }) => {
   useEffect(() => {
-    getDefaultMarketList()
+    getList()
+    return reset
   }, [])
   return (
     <Col>
@@ -35,41 +50,46 @@ const Home = ({ markets, expandedRecords, activeTabIndex, totalResults, sortBy, 
         <Tab activeIndex={activeTabIndex} tabs={FILTERS} onClick={setActiveTab} type='simple' />
         <Row centerVertical>
           <Text HS S note>{totalResults} RESULTS</Text>
-          <Search backgroundColor={theme.bgColorLight} id='home' content={searchContent} onChange={onSearchChange} onSearch={searchMarketClick}/>
+          <Search backgroundColor={theme.bgColorLight} id='home' value={searchContent} onChange={onSearchChange} onSearch={getList} />
         </Row>
       </Top>
-      <MarketTable 
+      <MarketTable
         onClickHeader={onTableHeaderClick}
         onClick={setExpandedRecords}
-        markets={markets}
+        markets={markets.filter(m => activeTabIndex ? m.name.toLowerCase().includes(searchContent.toLowerCase()) : true )}
         sortBy={sortBy}
         orderBy={orderBy}
         expandedRecords={expandedRecords}
-        hasNextPage={hasNextPage}
-        getMore={moreMarketClick}
+        // hasNextPage={hasNextPage}
+        // getMore={moreMarketClick}
       />
     </Col>
   )
 }
 
 const mapStateToProps = state => ({
-  markets: state.market.markets,
-  totalResults: state.market.totalResults,
+  markets: state.home.markets,
+  gettingMarketList: state.home.gettingMarketList,
+  marketListError: state.home.marketListError,
+  totalResults: state.home.totalResults,
+  pageSize: state.home.pageSize,
+  pageNumb: state.home.pageNumb,
+  hasNextPage: state.home.hasNextPage,
+
   expandedRecords: state.home.expandedRecords,
   activeTabIndex: state.home.activeTabIndex,
   sortBy: state.home.sortBy,
   orderBy: state.home.orderBy,
-  searchContent:state.home.searchContent,
-  hasNextPage: state.market.hasNextPage,
+  searchContent: state.home.searchContent,
 });
 const mapDispatchToProps = {
+  reset,
+  getList,
   setExpandedRecords,
   setActiveTab,
   onTableHeaderClick,
-  getDefaultMarketList,
   onSearchChange,
-  searchMarketClick,
-  moreMarketClick,
+  // moreMarketClick,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);
