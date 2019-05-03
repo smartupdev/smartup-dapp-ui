@@ -6,6 +6,7 @@ import Hr from '../../../components/Hr'
 import Button from '../../../components/Button'
 import { DonutLoader } from '../../../components/Loader'
 import TableFooter from '../../../components/TableFooter'
+import ScrollLoader from '../../../components/ScrollLoader'
 import { Link } from '../../../routes'
 import Icon, { Comment, Trade, People, More, Bookmarked, Add, Share, Like, Dislike, Reply } from '../../../components/Icon'
 
@@ -32,11 +33,11 @@ const title = `Neque porro quisquam est qui dolorem ipsum quia dolor sit amet`
 // ]
 
 function Disussion({ getMarketPost, post }) {
-  const { posts, gettingPost, getPostError, keyword } = post
+  const { posts, gettingPost, getPostError, keyword, hasNextPage, } = post
   useEffect( () => {
     getMarketPost()
   }, [])
-  if(gettingPost) return <DonutLoader page />
+  // if(gettingPost) return <DonutLoader page />
   if(getPostError) return <Text>{getPostError.messsage}</Text>
   if(!posts.length) return (
     <Col center centerVertical flex={1} >
@@ -54,11 +55,19 @@ function Disussion({ getMarketPost, post }) {
       </Row>
     </Col>
   )
-  return posts.map( post =>
-    <Fragment key={post.id}>
-      <DiscussionItem post={post} />
-      <Hr />
-    </Fragment>
+  return (
+    <>
+      {
+        posts.map( post =>
+          <Fragment key={post.id}>
+            <DiscussionItem post={post} />
+            <Hr />
+          </Fragment>
+        )
+      }
+      <ScrollLoader isButton isLoading={gettingPost} loadMore={() => getMarketPost(true)} hasMore={hasNextPage} />
+    </>
+
   )  
 }
 

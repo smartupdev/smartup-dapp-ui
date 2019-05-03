@@ -9,6 +9,7 @@ import {
   POST_REPLY_ONE_REQUESTED, POST_REPLY_ONE_SUCCEEDED, POST_REPLY_ONE_FAILED,
   POST_USER_ADD_REQUESTED, POST_USER_ADD_SUCCEEDED, POST_USER_ADD_FAILED,
   POST_USER_REPLAY_ADD_REQUESTED, POST_USER_REPLAY_ADD_SUCCEEDED, POST_USER_REPLAY_ADD_FAILED,
+  POST_ADD_SUCCEEDED,
   POST_TOGGLE_POST_LIKE, POST_TOGGLE_POST_DISLIKE, POST_TOGGLE_REPLY_LIKE, POST_TOGGLE_REPLY_DISLIKE
 } from './actionTypes';
 import {
@@ -42,7 +43,7 @@ export function getRootPost() {
   return getPostList({ type: 'root' })
 }
 
-export function getMarketPost() {
+export function getMarketPost(isLoadMore) {
   return (dispatch, getState) => {
     const { market: { currentMarketId: marketId }, post: { pageNumb, pageSize, keyword } } = getState()
     dispatch(
@@ -50,21 +51,21 @@ export function getMarketPost() {
         type: 'market',
         query: keyword,
         marketId,
-        pageNumb: pageNumb + 1,
+        pageNumb: isLoadMore ? pageNumb + 1 : 1,
         pageSize
-      })
+      }, { isLoadMore })
     )
   }
 }
 
-function getPostList(requestParam) {
+function getPostList(requestParam, meta) {
   return asyncFunction(
     fetch.post,
     POST_LIST_REQUESTED, POST_LIST_SUCCEEDED, POST_LIST_FAILED,
     {
       params: API_POST_LIST,
       params2: requestParam,
-      responsePayload: reps => reps
+      meta
     }
   )
 }
@@ -155,7 +156,7 @@ export function addPost(requestParam) {
     dispatch(
       asyncFunction(
         fetch.post,
-        null, null, null,
+        null, POST_ADD_SUCCEEDED, null,
         {
           params: API_USER_POST_ADD,
           params2: requestParam

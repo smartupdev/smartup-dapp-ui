@@ -5,6 +5,7 @@ import {
   USER_COLLECT_ADD_REQUESTED, USER_COLLECT_ADD_SUCCEEDED, USER_COLLECT_ADD_FAILED,
   USER_COLLECT_DEL_REQUESTED, USER_COLLECT_DEL_SUCCEEDED, USER_COLLECT_DEL_FAILED,
   TRADE_SUCCEEDED,
+  POST_ADD_SUCCEEDED,
   GET_MARKET_DETAIL_REQUESTED, GET_MARKET_DETAIL_SUCCEEDED, GET_MARKET_DETAIL_FAILED,
 } from '../actions/actionTypes';
 
@@ -69,6 +70,14 @@ export const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    case POST_ADD_SUCCEEDED:
+      return {
+        ...state,
+        currentMarket: {
+          ...state.currentMarket,
+          numberOfComments: state.currentMarket.numberOfComments + 1
+        }
+      }
     case GET_MARKET_DETAIL_REQUESTED:
       return {
         ...state,

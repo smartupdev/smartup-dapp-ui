@@ -95,7 +95,7 @@ export const initialState = {
   gettingPost: false,
   getPostError: null,
   pageSize: 10,
-  pageNumb: 0,
+  pageNumb: 1,
   hasNextPage: true,
 
   detail: null,
@@ -214,11 +214,14 @@ export default (state = initialState, action) => {
         gettingPost: true
       }
     case POST_LIST_SUCCEEDED:{
-      const {list: postList, pageNumb,pageSize,hasNextPage} = action.payload
+      const { list: postList, pageNumb, pageSize, hasNextPage } = action.payload
+      const posts = postList.map(postMassage)
       return {
         ...state,
-        posts: postList.map(postMassage),
-        pageNumb,pageSize,hasNextPage,
+        posts: action.meta.isLoadMore ? [...state.posts, ...posts] : posts,
+        pageNumb,
+        pageSize,
+        hasNextPage,
         gettingPost: false,
         getPostError: initialState.getPostError
       }

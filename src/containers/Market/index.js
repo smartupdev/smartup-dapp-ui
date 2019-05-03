@@ -58,7 +58,12 @@ const Market = ({ get, collectMarket, getting, location, market, getMarketPost, 
           <Copy S MarginLeftXS color={copied ? '#aaa' : '#fff'} onClick={() => { setCopy(true); copyToClipboard(market.address) }} />
         </Row>
         <Row centerVertical>
-          <Button label={market.numberOfComments} icon={Comment} />
+          <Link>
+            {
+              ({ goto, location }) =>
+                <Button label={market.numberOfComments} icon={Comment} onClick={() => goto.discussion()} />
+            }
+          </Link>
           <Button label={market.numberOfSub} icon={People} />
           <Share S color={theme.white} onClick={() => console.log(market.id)} />
           <Bookmarked S MarginLeftS onClick={() => collectMarket(market)} checked={market.following} />
