@@ -1,4 +1,5 @@
 import {
+  MARKET_DETAIL_RESET,
   GET_MARKET_LIST_REQUESTED, GET_MARKET_LIST_SUCCEEDED, GET_MARKET_LIST_FAILED,
   CT_ACCOUNT_IN_MARKET_REQUESTED, CT_ACCOUNT_IN_MARKET_SUCCEEDED, CT_ACCOUNT_IN_MARKET_FAILED,
   GET_MARKET_GLOBAL_REQUESTED, GET_MARKET_GLOBAL_SUCCEEDED, GET_MARKET_GLOBAL_FAILED,
@@ -25,6 +26,11 @@ const topIndexToValueMap = [
   'richest',
 ]
 
+export function resetDetail() {
+  return {
+    type: MARKET_DETAIL_RESET
+  }
+}
 
 export function get(marketId) {
   return asyncFunction(

@@ -1,4 +1,5 @@
 import {
+  MARKET_DETAIL_RESET,
   POST_NEW_COMMENT_ONCHANGE, POST_ONCHANGE_KEYWORD,
   POST_TOGGLE_POST_FOLLOW, POST_TOGGLE_REPLY_FOLLOW,
   POST_TOGGLE_POST_LIKE, POST_TOGGLE_POST_DISLIKE, POST_TOGGLE_REPLY_LIKE, POST_TOGGLE_REPLY_DISLIKE,
@@ -152,6 +153,8 @@ export const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    case MARKET_DETAIL_RESET:
+      return initialState
     case POST_ONCHANGE_KEYWORD: 
       return {
         ...state,

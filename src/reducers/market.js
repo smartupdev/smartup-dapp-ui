@@ -1,4 +1,5 @@
 import {
+  MARKET_DETAIL_RESET,
   CREATE_MARKET_PAY_REQUESTED, CREATE_MARKET_PAY_SUCCEEDED, CREATE_MARKET_PAY_FAILED,
   CT_ACCOUNT_IN_MARKET_REQUESTED, CT_ACCOUNT_IN_MARKET_SUCCEEDED, CT_ACCOUNT_IN_MARKET_FAILED,
   GET_MARKET_GLOBAL_REQUESTED, GET_MARKET_GLOBAL_SUCCEEDED, GET_MARKET_GLOBAL_FAILED,
@@ -70,6 +71,13 @@ export const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    case MARKET_DETAIL_RESET:
+      return {
+        ...state,
+        currentMarket: initialState.currentMarket,
+        currentMarketId: initialState.currentMarketId,
+        gettingMarket: initialState.gettingMarket,      
+      }
     case POST_ADD_SUCCEEDED:
       return {
         ...state,
