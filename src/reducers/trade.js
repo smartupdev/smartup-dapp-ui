@@ -35,7 +35,7 @@ export const initialState = {
   tradingError: null,
 
   trades: [],
-  pageSize: 10,
+  pageSize: 20,
   pageNumb: 0,
   hasNextPage: true,
   gettingTrades: false,
@@ -224,17 +224,17 @@ export default (state = initialState, action) => {
         gettingTrades: true,
       };
     case TRADE_LIST_SUCCEEDED: {
-      const {list: tradeList, pageNumb, pageSize, hasNextPage} = action.payload;
-
+      const {list, pageNumb, pageSize, hasNextPage} = action.payload;
+      const tradeList = list.map( trade => ({
+        ...trade, 
+        id: trade.txHash,
+        avgAmount: trade.sutAmount / trade.ctAmount,
+        userIcon: trade.user.avatarIpfsHash,
+        username: trade.user.name || trade.user.userAddress
+      })).filter(t => t.stage === 'success')
       return {
         ...state,
-        trades: tradeList.map( trade => ({
-          ...trade, 
-          id: trade.txHash,
-          avgAmount: trade.sutAmount / trade.ctAmount,
-          userIcon: trade.user.avatarIpfsHash,
-          username: trade.user.name
-        })).filter(t => t.stage === 'success'),
+        trades: action.meta.isLoadMore ? [...state.trades, ...tradeList] : tradeList,
         pageNumb,pageSize,hasNextPage,
         gettingTrades: false,
         getTradesError: initialState.getTradesError

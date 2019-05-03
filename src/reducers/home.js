@@ -20,7 +20,7 @@ export const initialState = {
   gettingMarketList: false,
   marketListError: null,
   totalResults: 0,
-  pageSize: 10, // fixed
+  pageSize: 20, // fixed
   pageNumb: 1,
   hasNextPage: false,
 }

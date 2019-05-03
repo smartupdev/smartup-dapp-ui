@@ -174,20 +174,17 @@ export function getTradeDetail(txHash) {
 }
 
 //Market Trade List
-export function getTradeList() {
+export function getTradeList(isLoadMore) {
   return (dispatch, getState) => {
-    const requestParams = {
-      pageSize: getState().trade.pageSize,
-      pageNumb: getState().trade.pageNumb + 1,
-    }
+    const { trade: {pageSize, pageNumb}, market: {currentMarket: {address}} } = getState()
     dispatch(asyncFunction(
       fetch.post,
       TRADE_LIST_REQUESTED, TRADE_LIST_SUCCEEDED, TRADE_LIST_FAILED,
       {
         isWeb3: true,
         params: API_MARKET_TRADE_LIST, 
-        params2: {marketAddress: getState().market.currentMarket.address},
-        responsePayload: reps => reps
+        params2: {marketAddress: address, pageSize, pageNumb: isLoadMore ? pageNumb + 1 : 1},
+        meta: { isLoadMore }
       }
     ));
   }

@@ -18,6 +18,7 @@ import Hr from '../../components/Hr'
 import Avatar from '../../components/Avatar'
 import Botton from '../../components/Button'
 import TableFooter from '../../components/TableFooter'
+import ScrollLoader from '../../components/ScrollLoader'
 
 import lang, { currentLang } from '../../lang'
 import { toPrice, toAgo, toFullDate, shorten } from '../../lib/util'
@@ -47,7 +48,7 @@ function Trading({ market, gettingMarket, tradeState, setTab, onChangeCT, onChan
     }
     return reset
   }, [market])
-  const { tabIndex, ct, sut, isSell, isTrading, trades,hasNextPage, klineData, agreeTnc, tradingError } = tradeState
+  const { tabIndex, ct, sut, isSell, isTrading, trades, gettingTrades, hasNextPage, klineData, agreeTnc, tradingError } = tradeState
   const sutError = +userSut < +sut ? 'You need more SmartUp to make this trade.' : null
 
   if(!market || gettingMarket) return null
@@ -143,8 +144,9 @@ function Trading({ market, gettingMarket, tradeState, setTab, onChangeCT, onChan
         <Table
           model={model}
           values={trades || []}
-          footer={()=>{ return(<TableFooter hasNextPage={hasNextPage} loadMore={getTradeList}/>) }}
+          // footer={()=>{ return(<TableFooter hasNextPage={hasNextPage} loadMore={getTradeList}/>) }}
         />
+        <ScrollLoader isButton hasMore={hasNextPage} loadMore={() => getTradeList(true)} isLoading={gettingTrades} />
         {
           (!trades || !trades.length) &&
           <>
