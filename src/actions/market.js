@@ -66,10 +66,10 @@ export function getList(isLoadMore) {
             ? searchContent ? API_MARKET_SEARCH : API_MARKET_LIST
             : API_MARKET_TOP,
           params2: isAll 
-            ? { orderBy: sortBy, asc: orderBy === 'asc', name: searchContent, pageSize, pageNumb: isLoadMore === true ? pageNumb + 1 : pageNumb } 
+            ? { orderBy: sortBy, asc: orderBy === 'asc', name: searchContent, pageSize, pageNumb: isLoadMore === true ? pageNumb + 1 : 1 } 
             : { type: topIndexToValueMap[activeTabIndex] },
           responsePayload: r => isAll ? r : {list: r},
-          meta: {isLoadMore}
+          meta: { isLoadMore }
         }
       )
     )
@@ -77,20 +77,21 @@ export function getList(isLoadMore) {
 }
 
 //CT账户和市场信息
-export function getCtAccountInMarket() {
+export function getCtAccountInMarketMore() {
+  return getCtAccountInMarket(true)
+}
+
+export function getCtAccountInMarket(isLoadMore) {
   return (dispatch, getState) => {
-    const requestParams = {
-      pageNumb: getState().market.ctInMarketPageNumb + 1,
-      pageSize: getState().market.ctInMarketPageSize,
-    }
+    const {ctInMarketPageNumb, ctInMarketPageSize} = getState().market;
     dispatch(
       asyncFunction(
         fetch.post,
         CT_ACCOUNT_IN_MARKET_REQUESTED, CT_ACCOUNT_IN_MARKET_SUCCEEDED, CT_ACCOUNT_IN_MARKET_FAILED,
         {
           params: API_CT_ACCOUNT_IN_MARKET,
-          params2: requestParams,
-          responsePayload: reps => reps
+          params2: { pageNumb: isLoadMore ? ctInMarketPageNumb + 1 : 1, pageSize: ctInMarketPageSize },
+          meta: { isLoadMore }
         }
       )
     )

@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components'
 
 import { connect } from 'react-redux'
 import { toggleExpandedBookmark, toggleExpandedMarket, toggleExpandedWallet } from '../../actions/panel'
-import { getMarketGlobal, getCtAccountInMarket, collectMarket } from '../../actions/market'
+import { getMarketGlobal, getCtAccountInMarket, getCtAccountInMarketMore, collectMarket } from '../../actions/market'
 import { getUserCollectLists } from '../../actions/collect'
 
 import CommentIcon from '../../images/018-planet-earth-2.svg'
@@ -14,6 +14,7 @@ import Table from '../../components/Table'
 import Image from '../../components/Image'
 import Text from '../../components/Text'
 import Button from '../../components/Button'
+import ScrollLoader from '../../components/ScrollLoader'
 import { Row, Col } from '../../components/Layout'
 import lang, { currentLang } from '../../lang'
 import { Link } from '../../routes'
@@ -22,7 +23,6 @@ import theme from '../../theme';
 import ethIcon from '../../images/eth.png';
 import smartupIcon from '../../images/smartup.png';
 import { Close, Trade } from '../../components/Icon';
-import TableFooter from '../../components/TableFooter'
 
 const portfolioText = lang.panel.portfolio
 
@@ -65,10 +65,10 @@ const TableName = [
 ]
 
 const Portfolio = ({
-  ethBalance, sutBalance, marketGlobal, collects, ctInMarket,ctInMarketHasNextPage,
+  ethBalance, sutBalance, marketGlobal, collects, ctInMarket,ctInMarketHasNextPage, gettingCtInMarket,
   expandedWallet, expandedMarket, expandedBookmark,
   toggleExpandedBookmark, toggleExpandedMarket, toggleExpandedWallet,
-  getMarketGlobal, getUserCollectLists, getCtAccountInMarket, collectMarket
+  getMarketGlobal, getUserCollectLists, getCtAccountInMarket, getCtAccountInMarketMore, collectMarket
 }) => {
   useEffect(() => {
     getMarketGlobal()
@@ -102,9 +102,8 @@ const Portfolio = ({
         body={
           <>
             <Col BottomXS LeftS RightS>
-              <Table S noBorderCol model={TableName} values={ctInMarket}
-                footer={() => { return (<TableFooter hasNextPage={ctInMarketHasNextPage} loadMore={getCtAccountInMarket} />) }}
-              />
+              <Table S noBorderCol model={TableName} values={ctInMarket} />
+              <ScrollLoader isButton hasMore={ctInMarketHasNextPage} id='market-wallet' isLoading={gettingCtInMarket} loadMore={getCtAccountInMarketMore} />
             </Col>
             <Hr />
           </>
@@ -167,11 +166,13 @@ const mapStateToProps = state => ({
   collects: state.collect.collects,
   ctInMarket: state.market.ctInMarket,
   ctInMarketHasNextPage:state.market.ctInMarketHasNextPage,
+  gettingCtInMarket:state.market.gettingCtInMarket,
 });
 
 const mapDispatchToProps = {
   toggleExpandedBookmark, toggleExpandedMarket, toggleExpandedWallet,
-  getMarketGlobal, getUserCollectLists, getCtAccountInMarket, collectMarket,
+  getMarketGlobal, getUserCollectLists, getCtAccountInMarket, getCtAccountInMarketMore,
+  collectMarket,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Portfolio);

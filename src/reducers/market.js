@@ -63,7 +63,7 @@ export const initialState = {
   delCollectError: null,
 
   currentMarket: null,
-  currentMarketId : null,
+  currentMarketId: null,
   gettingMarket: false,
 }
 
@@ -135,17 +135,17 @@ export default (state = initialState, action) => {
         ...state,
         gettingCtInMarket: true,
       };
-    case CT_ACCOUNT_IN_MARKET_SUCCEEDED:{
-      let {list: ctList,pageNumb,pageSize,hasNextPage} = action.payload
-      let tempCtList = ctList.map(c => ({...c, id: c.marketId}))
+    case CT_ACCOUNT_IN_MARKET_SUCCEEDED: {
+      const { list, pageNumb, pageSize, hasNextPage } = action.payload
+      const ctList = list.map(c => ({ ...c, id: c.marketId }))
       return {
         ...state,
-        ctInMarket: state.ctInMarket.concat(tempCtList),
-        ctInMarketPageNumb:pageNumb,
-        ctInMarketPageSize:pageSize,
-        ctInMarketHasNextPage: hasNextPage,
         gettingCtInMarket: false,
-        ctInMarketError: initialState.ctInMarketError
+        ctInMarketError: initialState.ctInMarketError,
+        ctInMarket: action.meta.isLoadMore ? [...state.ctInMarket, ...ctList] : ctList,
+        ctInMarketPageNumb: pageNumb,
+        ctInMarketPageSize: pageSize,
+        ctInMarketHasNextPage: hasNextPage,
       };
     }
     case CT_ACCOUNT_IN_MARKET_FAILED:
@@ -172,7 +172,7 @@ export default (state = initialState, action) => {
         gettingMarketGlobal: false,
         marketGlobalError: action.payload,
       };
-      
+
     case USER_COLLECT_ADD_REQUESTED:
       return {
         ...state,
