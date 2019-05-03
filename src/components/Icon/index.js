@@ -3,6 +3,7 @@ import styled, {css} from 'styled-components'
 import { spacingCss, onClickCss } from '../Theme'
 
 export const Path = styled.path`
+  ${p => p.color && css`fill: ${p.color};`}
   ${p => p.active && css`fill: ${p.theme.white};`}
   ${p => p.passive && css`fill: ${p.theme.colorSecondary};`}
 `
