@@ -2,12 +2,15 @@ import {
   HOME_RESET,
   HOME_PAGE_LOADED, SET_EXPANDED_RECORDS, SET_ACTIVE_TAB, HOME_SET_SORTING, SEARCH_CONTENT_CHANGE,
 
+  USER_COLLECT_ADD_SUCCEEDED, USER_COLLECT_DEL_SUCCEEDED,
+
   GET_MARKET_LIST_REQUESTED, GET_MARKET_LIST_SUCCEEDED, GET_MARKET_LIST_FAILED,
   MARKET_SEARCH_REQUESTED, MARKET_SEARCH_SUCCEEDED, MARKET_SEARCH_FAILED,
   MARKET_TOP_REQUESTED, MARKET_TOP_SUCCEEDED, MARKET_TOP_FAILED,MARKET_TOP_SORT,
 } from '../actions/actionTypes';
 
 import { marketMassage } from './market'
+import { changeArrayById } from '../lib/util/reducerHelper'
 
 export const initialState = {
   expandedRecords: [], // ids
@@ -34,6 +37,17 @@ export default (state = initialState, action) => {
     //     ...state,
     //     tags: action.payload[0].tags
     //   }
+    case USER_COLLECT_ADD_SUCCEEDED: 
+      return {
+        ...state,
+        markets: changeArrayById(state.markets, action.payload.id, () => ({ following: true }))
+      }
+    case USER_COLLECT_DEL_SUCCEEDED: 
+      return {
+        ...state,
+        markets: changeArrayById(state.markets, action.payload.id, () => ({ following: false }))
+      }
+
     case SET_EXPANDED_RECORDS: {
       const { record: { id }, isExpanded } = action.payload;
       return {
