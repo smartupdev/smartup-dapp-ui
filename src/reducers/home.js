@@ -49,6 +49,7 @@ export default (state = initialState, action) => {
         ...state,
         sortBy: action.payload.sortBy,
         orderBy,
+        pageNumb: initialState.pageNumb
       }
     }
     case SEARCH_CONTENT_CHANGE:
@@ -88,8 +89,7 @@ export default (state = initialState, action) => {
         ...state,
         gettingMarketList: false,
         marketListError: initialState.marketListError,
-        markets: marketList,
-        // state.markets.length && !state.searchContent ? [...state.markets, ...marketList] : 
+        markets: action.meta.isLoadMore === true ? [...state.markets, ...marketList] : marketList,
         totalResults: rowCount || marketList.length,
         hasNextPage: hasNextPage || false,
         pageNumb: pageNumb || 1,

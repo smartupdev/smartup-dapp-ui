@@ -28,7 +28,7 @@ const App = ({ watchMetamask, checkLogin }) => {
     <Container>
       <Header routes={routes} />
       <Hr vertical />
-      <Main>
+      <Main id='main'>
         {
           routes.map(({id, path, component, exact}) =>
             <Route key={id} exact={exact} path={path} component={component} />

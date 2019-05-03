@@ -1,10 +1,12 @@
-// import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef } from 'react'
 
-// export default function eventListener(event, handler) { // event: e.g. resize, handler: function, MUST return this in useEffect
-//   // handler()
-//   window.addEventListener(event, handler)
-//   return () => window.removeEventListener(event, handler)
-// }
+export default function eventListener(event, handler, targetId) { // event: e.g. resize, handler: function, MUST return this in useEffect
+  // handler()
+  // console.log(targetId)
+  const target = targetId ? document.getElementById(targetId) : window
+  target.addEventListener(event, handler)
+  return () => target.removeEventListener(event, handler)
+}
 
 // // const [isFetching, setIsFetching] = useInfiniteScroll(fetchMoreListItems);
 // export function useInfiniteScroll(callback) {
@@ -33,18 +35,21 @@
 //   return [isFetching, setIsFetching];
 // }
 
-
-// export function useAppear(id) {
-//   const [didShow, setDidShow] = useState(false);
-//   useEffect(() => eventListener('wheel', () => { 
-//     const elePosition = document.getElementById(id).getBoundingClientRect().top
-//     if(window.innerHeight > elePosition && !didShow) {
-//       console.log('show')
-//       setDidShow(true)
-//     } else {
-//       console.log('not-show')
-//       setDidShow(false)
-//     }
-//   }), [])
-//   return didShow
-// }
+// Bug: Cannot get new position when new element loaded
+export function useAppear(id, parentId) {
+  const [appear, setAppear] = useState(false);
+  function handle() {
+    const elePosition = document.getElementById(id).getBoundingClientRect().top
+    // console.log('size', {elePosition})
+    if(window.innerHeight > elePosition) {
+      setAppear(true)
+    } else {
+      setAppear(false)
+    }
+  }
+  useEffect(() => {
+    handle()
+    return eventListener('scroll', handle, parentId)
+  }, [])
+  return [appear, () => setAppear(false), handle]
+}

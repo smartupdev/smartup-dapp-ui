@@ -44,11 +44,13 @@ export default function({
   onClickHeader, onClick, 
   expandedRecords, noExpand,
   hasNextPage, getMore,
+  autoHeight,
   minWidth = '1000px'  }) {
   return (
       <Table
         S
         inset
+        autoHeight={autoHeight}
         minWidth={minWidth}
         onClickHeader={onClickHeader}
         onClick={onClick}

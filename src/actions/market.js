@@ -37,9 +37,12 @@ export function get(marketId) {
 // /api/market/list   Get all markets
 // /api/market/search Get market by filter
 // /api/market/top    Get filtered markets, e.g. hottest
-export function getList() {
+export function getListMore() {
+  return getList(true)
+}
+export function getList(isLoadMore) {
   return (dispatch, getState) => {
-    const {sortBy, orderBy, searchContent, activeTabIndex, markets} = getState().home;
+    const {sortBy, orderBy, searchContent, activeTabIndex, markets, pageNumb, pageSize} = getState().home;
     const isAll = !activeTabIndex
     if(!isAll && searchContent) return // handle in ui
     if(!isAll && sortBy) return dispatch({
@@ -59,17 +62,14 @@ export function getList() {
         fetch.post,
         GET_MARKET_LIST_REQUESTED, GET_MARKET_LIST_SUCCEEDED, GET_MARKET_LIST_FAILED,
         {
-          params: isAll ? 
-            searchContent ? API_MARKET_SEARCH : API_MARKET_LIST
-          : API_MARKET_TOP,
-          params2: isAll ?
-          {
-            orderBy: sortBy, asc: orderBy === 'asc', name: searchContent
-          } 
-          : {
-            type: topIndexToValueMap[activeTabIndex]
-          },
-          responsePayload: r => isAll ? r : {list: r}
+          params: isAll 
+            ? searchContent ? API_MARKET_SEARCH : API_MARKET_LIST
+            : API_MARKET_TOP,
+          params2: isAll 
+            ? { orderBy: sortBy, asc: orderBy === 'asc', name: searchContent, pageSize, pageNumb: isLoadMore === true ? pageNumb + 1 : pageNumb } 
+            : { type: topIndexToValueMap[activeTabIndex] },
+          responsePayload: r => isAll ? r : {list: r},
+          meta: {isLoadMore}
         }
       )
     )
