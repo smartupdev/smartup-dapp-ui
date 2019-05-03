@@ -7,9 +7,9 @@ import {
   USER_PERSON_SIGN_REQUESTED, USER_PERSON_SIGN_SUCCEEDED, USER_PERSON_SIGN_FAILED,
   USER_AUTH_SMARTUP_REQUESTED, USER_AUTH_SMARTUP_SUCCEEDED, USER_AUTH_SMARTUP_FAILED,
   METAMASK_RESET,
-  USER_AVATAR_CHANGE_REQUESTED,USER_AVATAR_CHANGE_SUCCEEDED,USER_AVATAR_CHANGE_FAIL,
-  USER_UPDATE_INFO_REQUESTED,USER_UPDATE_INFO_SUCCEEDED,USER_UPDATE_INFO_FAIL,
-  USER_CURRENT_INFO_REQUESTED,USER_CURRENT_INFO_SUCCEEDED,USER_CURRENT_INFO_FAIL,
+  USER_AVATAR_CHANGE_REQUESTED, USER_AVATAR_CHANGE_SUCCEEDED, USER_AVATAR_CHANGE_FAIL,
+  USER_UPDATE_INFO_REQUESTED, USER_UPDATE_INFO_SUCCEEDED, USER_UPDATE_INFO_FAIL,
+  USER_CURRENT_INFO_REQUESTED, USER_CURRENT_INFO_SUCCEEDED, USER_CURRENT_INFO_FAIL,
   USER_NAME_CHANGE,
 } from './actionTypes'
 import {
@@ -17,24 +17,24 @@ import {
   formatToken, formatCredit,
   getBalance, getCredit,
   sutContractAddress, nttContractAddress,
-  smartupWeb3, getAccount
+  smartupWeb3, getAccount,
 } from '../integrator'
 import {
   API_USER_LOGIN, API_USER_CURRENT, API_USER_UPDATE, API_USER_AUTH,
 } from './api';
 import fetch from '../lib/util/fetch';
-import {postIpfsImg} from './ipfs'
+import { postIpfsImg } from './ipfs'
 
 const STORAGE_KEY_TOKEN = 'token'
 const STORAGE_KEY_ACC = 'acc'
 
-function setStorageToken(token) {
+function setStorageToken(token, account = getAccount()) {
   window.localStorage.setItem(STORAGE_KEY_TOKEN, token)
-  window.localStorage.setItem(STORAGE_KEY_ACC, getAccount())
+  window.localStorage.setItem(STORAGE_KEY_ACC, account)
 }
 function getStorageToken() {
   const r = window.localStorage.getItem(STORAGE_KEY_TOKEN)
-  console.log('------------ token',r);
+  console.log('------------ token', r);
   return r === 'undefined' ? undefined : r
 }
 function getStorageAccount() {
@@ -61,11 +61,17 @@ export function watchMetamask() {
     let accountInterval = setInterval(() => {
       const storedAccount = getStorageAccount()
       const currentAccount = getAccount()
-      if (storedAccount != currentAccount && currentAccount) {
-        setStorageToken()
-        dispatch({ type: METAMASK_RESET })
+
+      if (currentAccount) dispatch(getAllBalance())
+
+      if (storedAccount != currentAccount) {
+        if (!currentAccount || storedAccount && currentAccount) {
+          window.localStorage.clear()
+          window.location.reload()
+        } else {
+          setStorageToken()
+        }
       }
-      // if (currentAccount ) dispatch( getAllBalance() )
     }, 1000)
   }
 }
@@ -79,7 +85,7 @@ export function enableEthereum() {
 }
 
 export function getAllBalance() {
-  return dispatch => 
+  return dispatch =>
     Promise.all([
       dispatch(getEthBalance()),
       dispatch(getSutBalance()),
@@ -207,7 +213,7 @@ function getPersonSign(msg) {
 
 //upload image
 export function onChangeAvatar(files) {
-  if(!files) return {
+  if (!files) return {
     type: USER_AVATAR_CHANGE_SUCCEEDED,
   }
   return asyncFunction(
@@ -220,8 +226,8 @@ export function onChangeAvatar(files) {
 }
 
 //update user info
-export function updateUserInfo(){
-  return (dispatch,getState)=>{
+export function updateUserInfo() {
+  return (dispatch, getState) => {
     const requestParams = {
       name: getState().user.realUserName,
       avatarIpfsHash: getState().user.avatarHash,
@@ -237,8 +243,8 @@ export function updateUserInfo(){
 }
 
 //update user info
-export function getUserInfo(){
-  return (dispatch,getState)=>{
+export function getUserInfo() {
+  return (dispatch, getState) => {
     return dispatch(
       asyncFunction(
         fetch.post,
@@ -249,8 +255,8 @@ export function getUserInfo(){
   }
 }
 
-export function onChangeName(name){
-  console.log('------------ name',name);
+export function onChangeName(name) {
+  console.log('------------ name', name);
   return {
     type: USER_NAME_CHANGE,
     payload: name,
