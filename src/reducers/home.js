@@ -89,7 +89,7 @@ export default (state = initialState, action) => {
         ...state,
         gettingMarketList: false,
         marketListError: initialState.marketListError,
-        markets: action.meta.isLoadMore === true ? [...state.markets, ...marketList] : marketList,
+        markets: action.meta && action.meta.isLoadMore === true ? [...state.markets, ...marketList] : marketList,
         totalResults: rowCount || marketList.length,
         hasNextPage: hasNextPage || false,
         pageNumb: pageNumb || 1,
