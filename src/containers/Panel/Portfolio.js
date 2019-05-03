@@ -50,8 +50,8 @@ const BookmarkBlock = styled(Row)`
 
 const TableName = [
   { label: '', value: 'icon', layoutStyle: { width: '18px' }, component: ({ value }) => <Avatar XS icon={value} /> },
-  { label: portfolioText.wallet.id[currentLang], value: 'marketId', },
-  { label: portfolioText.wallet.ct[currentLang], value: 'ctAmount', component: ({ value }) => <Text S>{`${value}`}</Text> },
+  { label: portfolioText.wallet.id[currentLang], value: 'marketId', layoutStyle: { width: '80px' }, component: ({value}) => <Text S textOverflow>{value}</Text> },
+  { label: portfolioText.wallet.ct[currentLang], value: 'ctAmount' },
   {
     label: portfolioText.wallet.volume[currentLang], value: 'latelyChange', component: ({ value }) =>
       <Text S style={{ color: value >= 0 ? theme.green : theme.red }}>{toPercent(value)}</Text>
@@ -76,6 +76,7 @@ const Portfolio = ({
     getCtAccountInMarket()
   }, [])
   const { sutAmount, marketCount, latelyPostCount } = marketGlobal
+  console.log(ctInMarket)
   return (
     <Col overflowAuto>
       <Col center>
