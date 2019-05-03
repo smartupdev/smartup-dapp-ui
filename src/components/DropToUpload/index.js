@@ -111,7 +111,7 @@ export default function ({
             :
             <>
               <Text BottomS note>Drag a file here</Text>
-              <Button primary LeftXL RightXL label='Choose files to upload' onClick={(e) => inputRef.current.click()} />
+              <Button primary LeftXL RightXL label='Choose file to upload' onClick={(e) => inputRef.current.click()} />
               <HiddenFile type='file' id="browse" name="browse" ref={inputRef} value={''} onChange={e => onChoose(e.target.files)} />
             </>
         }

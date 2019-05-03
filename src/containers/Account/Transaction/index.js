@@ -60,7 +60,7 @@ function Transaction({ getUserTransactionList, transactions, reset }) {
             { label: 'TXHASH', value: txHash },
             { label: 'Type', value: typeHelper[type].label },
             { label: 'Market', value: `${marketName} ${marketAddress}` },
-            { label: 'Number of Community token', value: ct || 'N/A' },
+            { label: 'Number of Idea token', value: ct || 'N/A' },
             { label: 'Created on', value: toFullDate(createTime) },
             { label: 'Last update', value: toFullDate(blockTime) },
           ].map( ({label, value}) => 

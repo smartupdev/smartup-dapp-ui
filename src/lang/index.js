@@ -38,18 +38,18 @@ export default {
     portfolio: {
       wallet: {
         title: name('Market Wallet'),
-        id: name('Idea ID'),
-        ct: name('# of CT'),
-        volume: name('Change(%)')
+        id: name('IDEA'),
+        ct: name('TOKENS'),
+        volume: name('CHANGE')
       },
       marketInfo: {
-        title: name('Global market info'),
+        title: name('Global Market Information'),
         totalSmartup: name('Total SMARTUP invested'),
         totalMarket: name('Total number of markets'),
-        totalDiscussion: name('Total number of ongoing discussion')
+        totalDiscussion: name('Total number of ongoing discussions')
       },
       bookmark: {
-        title: name('Bookmark')
+        title: name('Bookmarks')
       }
     },
     connectButton: name('Connect'),
@@ -58,15 +58,15 @@ export default {
   portfolio: {
     wallet: name('Market Wallet'),
     table: {
-      idea: name('Idea ID'),
-      ct: name('# of CT'),
-      volumn: name('Volume (%)')
+      idea: name('IDEA'),
+      ct: name('TOKEN'),
+      volumn: name('VOLUME')
     },
-    global: name('Global market info'),
+    global: name('Global Market Information'),
     sutInv: name('Total SMARTUP invested'),
     mktNumber: name ('Total number of markets'),
-    disNumber: name('Total number of ongoing discussion'),
-    bookmark: name('Bookmark')
+    disNumber: name('Total number of ongoing discussions'),
+    bookmark: name('Bookmarks')
   },
   notification:{
     day: name('d ago'),
@@ -74,8 +74,8 @@ export default {
   },
   setting: {
     avatar: name('Avatar photo'),
-    dragFile: name('Drag files here'),
-    changeFile: name('Change files to upload'),
+    dragFile: name('Drag file here'),
+    changeFile: name('Change file to upload'),
     submit: name('Submit'),
     cancel: name('Cancel'),
     deactivate: name('Deactivate account')
@@ -83,8 +83,8 @@ export default {
   marketTab: {
     trade: name('Trading'),
     general: name('General'),
-    discussion: name('Discussion'),
-    proposal: name('Proposal'),
+    discussion: name('Discussions'),
+    proposal: name('Proposals'),
     flag: name('Flag'),
     search: name('Search'),
   },
@@ -107,11 +107,11 @@ export default {
       buySell: name('BUY/ SELL'),
       user: name('USER'),
       time: name('TIME'),
-      avgPrice: name('AVERAGE PRICE IN SMARTUP'),
-      ct: name('CT'),
+      avgPrice: name('AVG PRICE IN SMARTUP'),
+      ct: name('TOKEN'),
       buy: name('BUY'),
       sell: name('SELL'),
-      stage: name('Stage')
+      stage: name('STATUS')
     }
   },
   discussion: {
@@ -138,7 +138,7 @@ export default {
       name: name('NAME'),
       rank: name('RANK'),
       time: name('JOINED DATE'),
-      ct: name('CT OWNED'),
+      ct: name('TOKEN OWNED'),
     }
   },
   proposal: {
