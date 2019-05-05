@@ -65,7 +65,13 @@ const Market = ({ get, collectMarket, getting, location, market, getMarketPost, 
                 <Button label={market.numberOfComments} icon={Comment} onClick={() => goto.discussion()} />
             }
           </Link>
-          <Button label={market.numberOfSub} icon={People} />
+          <Link>
+            {
+              ({ goto, location }) =>
+                <Button label={market.numberOfSub} icon={People} onClick={() => console.debug} />
+            }
+          </Link>
+          {/* <Button label={market.numberOfSub} icon={People} /> */}
           <Share S color={theme.white} onClick={() => console.log(market.id)} />
           <Bookmarked S MarginLeftS onClick={() => collectMarket(market)} checked={market.following} />
         </Row>

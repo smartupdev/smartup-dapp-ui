@@ -154,5 +154,8 @@ export default {
     para: name('Parameters'),
     from: name('from'),
     to: name('to'),
+  },
+  faq: {
+    title: name('FAQ'),
   }
 }
