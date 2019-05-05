@@ -32,4 +32,4 @@ const shorten = (s, start = 8, end = 6) => s ?
   s.length <= start + end + 3 ? s : `${s.slice(0, start)}...${s.slice(-end)}`
 : '-'
 
-export { upper, upperAll, upperEach, plural, shorten }
+export { upper, upperAll, upperEach, plural, shorten,upperOne }

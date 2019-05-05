@@ -22,7 +22,7 @@ import ScrollLoader from '../../components/ScrollLoader'
 import smartupIcon from '../../images/smartup.png'
 
 import lang, { currentLang } from '../../lang'
-import { toPrice, toAgo, toFullDate, shorten } from '../../lib/util'
+import { toPrice, toAgo, toFullDate, shorten,upperOne } from '../../lib/util'
 
 import Chart from './Chart'
 
@@ -32,7 +32,7 @@ const model = [
   { label: lang.trading.table.time[currentLang], value: 'createTime', layoutStyle: { flex: 1, center: true }, component: ({ value }) => <Text>{toAgo(value)}</Text> },
   { label: lang.trading.table.avgPrice[currentLang], value: 'avgAmount', layoutStyle: { flex: 1, center: true }, component: ({ value }) => <Text>{toPrice(value)}</Text> },
   { label: lang.trading.table.ct[currentLang], value: 'ctAmount', layoutStyle: { flex: 1, center: true }, },
-  { label: lang.trading.table.stage[currentLang], value: 'stage', layoutStyle: { flex: 1, center: true }, },
+  { label: lang.trading.table.stage[currentLang], value: 'stage', layoutStyle: { flex: 1, center: true }, component: ({ value }) => <Text>{upperOne(value)}</Text> },
 ]
 
 const klineTabs = [
