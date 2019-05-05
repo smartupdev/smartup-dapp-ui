@@ -8,7 +8,8 @@ import {
   USER_AUTH_SMARTUP_REQUESTED, USER_AUTH_SMARTUP_SUCCEEDED, USER_AUTH_SMARTUP_FAILED,
   METAMASK_RESET,
   USER_AVATAR_CHANGE_REQUESTED, USER_AVATAR_CHANGE_SUCCEEDED, USER_AVATAR_CHANGE_FAIL,
-  USER_UPDATE_INFO_REQUESTED, USER_UPDATE_INFO_SUCCEEDED, USER_UPDATE_INFO_FAIL,
+  USER_UPDATE_AVATAR_REQUESTED, USER_UPDATE_AVATAR_SUCCEEDED, USER_UPDATE_AVATAR_FAIL,
+  USER_UPDATE_NAME_REQUESTED, USER_UPDATE_NAME_SUCCEEDED, USER_UPDATE_NAME_FAIL,
   USER_CURRENT_INFO_REQUESTED, USER_CURRENT_INFO_SUCCEEDED, USER_CURRENT_INFO_FAIL,
   USER_NAME_CHANGE,
 } from './actionTypes'
@@ -225,17 +226,32 @@ export function onChangeAvatar(files) {
   )
 }
 
-//update user info
-export function updateUserInfo() {
+//update user avatar
+export function updateUserAvatar() {
   return (dispatch, getState) => {
     const requestParams = {
-      name: getState().user.realUserName,
       avatarIpfsHash: getState().user.avatarHash,
     }
     return dispatch(
       asyncFunction(
         fetch.post,
-        USER_UPDATE_INFO_REQUESTED, USER_UPDATE_INFO_SUCCEEDED, USER_UPDATE_INFO_FAIL,
+        USER_UPDATE_AVATAR_REQUESTED, USER_UPDATE_AVATAR_SUCCEEDED, USER_UPDATE_AVATAR_FAIL,
+        { params: API_USER_UPDATE, params2: requestParams }
+      )
+    )
+  }
+}
+
+//update user name
+export function updateUserName() {
+  return (dispatch, getState) => {
+    const requestParams = {
+      name: getState().user.realUserName,
+    }
+    return dispatch(
+      asyncFunction(
+        fetch.post,
+        USER_UPDATE_NAME_REQUESTED, USER_UPDATE_NAME_SUCCEEDED, USER_UPDATE_NAME_FAIL,
         { params: API_USER_UPDATE, params2: requestParams }
       )
     )
@@ -256,7 +272,6 @@ export function getUserInfo() {
 }
 
 export function onChangeName(name) {
-  console.log('------------ name', name);
   return {
     type: USER_NAME_CHANGE,
     payload: name,

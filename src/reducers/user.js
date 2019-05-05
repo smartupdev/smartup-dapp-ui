@@ -8,7 +8,8 @@ import {
   USER_PERSON_SIGN_REQUESTED, USER_PERSON_SIGN_SUCCEEDED, USER_PERSON_SIGN_FAILED,
   USER_AVATAR_CHANGE_REQUESTED, USER_AVATAR_CHANGE_SUCCEEDED, USER_AVATAR_CHANGE_FAIL,
   USER_CURRENT_INFO_REQUESTED, USER_CURRENT_INFO_SUCCEEDED, USER_CURRENT_INFO_FAIL,
-  USER_UPDATE_INFO_REQUESTED, USER_UPDATE_INFO_SUCCEEDED, USER_UPDATE_INFO_FAIL,
+  USER_UPDATE_AVATAR_REQUESTED, USER_UPDATE_AVATAR_SUCCEEDED, USER_UPDATE_AVATAR_FAIL,
+  USER_UPDATE_NAME_REQUESTED, USER_UPDATE_NAME_SUCCEEDED, USER_UPDATE_NAME_FAIL,
   USER_NAME_CHANGE,
 } from '../actions/actionTypes';
 
@@ -35,9 +36,6 @@ export const initialState = {
 
   metaMaskHint: 'MetaMask',
 
-  updatingUserInfo: false,
-  updateError: null,
-
   userName: '',
   realUserName: '',
   displayName: '',
@@ -49,9 +47,10 @@ export const initialState = {
   avatarUrl: null,
   avatarHash: '',
   avatarUploading: false,
-  error: {
-    avatar: null,
-  },
+
+  updatingUserInfo: false,
+  updateAvatarError: null,
+  updateNameError: null,
 }
 
 function userInfo(user) {
@@ -162,34 +161,51 @@ export default (state = initialState, action) => {
         ...state,
         avatarUploading: false,
         avatarHash: action.payload,
-        error: action.payload
-          ? { ...state.error, avatar: initialState.error.avatar }
-          : state.error
+        updateAvatarError: initialState.updateAvatarError
       }
     case USER_AVATAR_CHANGE_FAIL:
       return {
         ...state,
-        avatarUploading: false
+        avatarUploading: false,
+        updateAvatarError: action.payload
       }
-    case USER_UPDATE_INFO_REQUESTED:
+    case USER_UPDATE_AVATAR_REQUESTED:
       return {
         ...state,
         updatingUserInfo: true
       }
-    case USER_UPDATE_INFO_SUCCEEDED:
+    case USER_UPDATE_AVATAR_SUCCEEDED:
       return {
         ...state,
         updatingUserInfo: false,
-        updateError: initialState.updateError,
+        updateAvatarError: initialState.updateAvatarError,
         userAvatar: state.avatarHash,
+      }
+    case USER_UPDATE_AVATAR_FAIL:
+      return {
+        ...state,
+        updatingUserInfo: false,
+        updateAvatarError: action.payload,
+      }
+    case USER_UPDATE_NAME_REQUESTED:
+      return {
+        ...state,
+        updatingUserInfo: true
+      }
+    case USER_UPDATE_NAME_SUCCEEDED:
+      return {
+        ...state,
+        updatingUserInfo: false,
+        updateNameError: initialState.updateNameError,
         userName: state.realUserName ? state.realUserName : state.userAddress,
       }
-    case USER_UPDATE_INFO_FAIL:
+    case USER_UPDATE_NAME_FAIL:
       return {
         ...state,
         updatingUserInfo: false,
-        updateError: action.payload,
+        updateNameError: action.payload,
       }
+
     case USER_CURRENT_INFO_REQUESTED:
       return {
         ...state,
@@ -208,16 +224,14 @@ export default (state = initialState, action) => {
         gettingUserInfo: false,
         userInfoError: action.payload,
       }
-    case USER_NAME_CHANGE:
-    const error = action.payload.length < 6 || action.payload.length > 15 
+    case USER_NAME_CHANGE: {
+      const error = action.payload.length < 6 || action.payload.length > 15
       return {
         ...state,
         realUserName: action.payload,
-        error: {
-          ...state.error,
-          avatar: error
-        }
+        updateNameError: error,
       }
+    }
     default:
       return state;
   }
