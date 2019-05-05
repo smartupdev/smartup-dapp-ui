@@ -19,6 +19,7 @@ import Avatar from '../../components/Avatar'
 import Botton from '../../components/Button'
 import TableFooter from '../../components/TableFooter'
 import ScrollLoader from '../../components/ScrollLoader'
+import smartupIcon from '../../images/smartup.png'
 
 import lang, { currentLang } from '../../lang'
 import { toPrice, toAgo, toFullDate, shorten } from '../../lib/util'
@@ -40,7 +41,7 @@ const klineTabs = [
   { label: '1week' },
 ]
 
-function Trading({ market, gettingMarket, tradeState, setTab, onChangeCT, onChangeSUT, toggleIsSell, toggleTnc, onTrade, reset, userSut, getTradeList, getKlineList }) {
+function Trading({ market,userAvatar, gettingMarket, tradeState, setTab, onChangeCT, onChangeSUT, toggleIsSell, toggleTnc, onTrade, reset, userSut, getTradeList, getKlineList }) {
   useEffect(() => {
     if(market) {
       getTradeList()
@@ -102,7 +103,7 @@ function Trading({ market, gettingMarket, tradeState, setTab, onChangeCT, onChan
 
         <Col maxWidth='1000px' width='100%'>
           <Row center spacingBottomL>
-            <Avatar />
+          <Image source={smartupIcon} M rightText/>
             <Col>
               <Text S note>{lang.trading[isSell ? 'tradeReceive' : 'tradePay'][currentLang]}</Text>
               <Text S>SMARTUP</Text>
@@ -112,7 +113,7 @@ function Trading({ market, gettingMarket, tradeState, setTab, onChangeCT, onChan
               {sutError && <Text error XS>{sutError}</Text>}
             </Col>
             <Trade disabled={isTrading} spacingLeftM spacingRightM onClick={toggleIsSell} leftActive={isSell} rightActive={!isSell} />
-            <Avatar icon={market.icon} />
+            <Avatar icon={userAvatar} style={{ 'borderRadius':'50%'}}/>
             <Col>
               <Text S note>{lang.trading[isSell ? 'tradePay' : 'tradeReceive'][currentLang]}</Text>
               <Text S>{market.name}</Text>
@@ -166,6 +167,7 @@ const mapStateToProps = state => ({
   market: state.market.currentMarket,
   gettingMarket: state.market.gettingMarket,
   userSut: state.user.sutBalance,
+  userAvatar: state.user.userAvatar,
 })
 
 
