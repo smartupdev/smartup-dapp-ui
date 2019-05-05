@@ -32,7 +32,7 @@ const MARGIN = { left: 20, right: 50, top: 10, bottom: 30 }
 const HEIGHT = 350
 
 function fill(d) {
-  return d.close > d.open ? theme.red : theme.green
+  return d.close > d.open ? theme.green : theme.red
 }
 const candlesAppearance = {
   wickStroke: "#fff",

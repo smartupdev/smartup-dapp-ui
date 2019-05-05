@@ -81,7 +81,7 @@ function Trading({ market,userAvatar, gettingMarket, tradeState, setTab, onChang
           <Text XL price spacingTopS>{toPrice(market.last, 2)}</Text>
           <Text note S>{lang.trading.price[currentLang]}</Text>
 
-          <Text XL primary spacingTopS>{toPrice(market.ctAmount, 2)}</Text>
+          <Text XL primary spacingTopS>{toPrice(market.lately_volume, 2)}</Text>
           <Text note S>{lang.trading.volume[currentLang]}</Text>
 
           <Text XL spacingTopS>{toPrice(market.amount, 2)}</Text>

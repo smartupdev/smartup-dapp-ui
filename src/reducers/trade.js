@@ -186,6 +186,17 @@ export default (state = initialState, action) => {
           date: new Date(line.time),
         }
       });
+      
+      if(tempLines.length === 1){
+        tempLines.push({
+          ...tempLines[0],
+          open: 0,
+          close: 0,
+          high:0,
+          low:0,
+          volume: 0,
+        })
+      }
 
       return {
         ...state,
