@@ -13,7 +13,7 @@ import { toggleLikePost, toggleDislikePost, toggleFollowPost } from '../../../ac
 import { ipfsHost } from '../../../actions/ipfs'
 
 function DiscussionItem ({ post, isDetailView, toggleLikePost, toggleDislikePost, toggleFollowPost }) {
-  const { id, authorName, time, title, content, photo, isCollect, isLiked, isDisliked, numberOfLike = 1000, numberOfDislike = 2000, numberOfComment = 3000, marketId, lastReply } = post
+  const { id, authorName,username,userAddress, time, title, content, photo, isCollect, isLiked, isDisliked, numberOfLike = 1000, numberOfDislike = 2000, numberOfComment = 3000, marketId, lastReply } = post
   function like(e) {
     toggleLikePost(e, {id, isLiked, isDisliked})
   }
@@ -25,7 +25,7 @@ function DiscussionItem ({ post, isDetailView, toggleLikePost, toggleDislikePost
       {({ goto }) => 
         <Row spaceBetween spacingM onClick={isDetailView ? undefined : () => goto.discussionDetail({ postId: id, id: marketId })}>
           <Col flex={1} overflowHidden RightXL>
-            <Text S note>{`Posted by ${shorten(authorName)}, about ${toAgo(time)}`}</Text>
+            <Text S note>{`Posted by ${shorten(username || userAddress)}, about ${toAgo(time)}`}</Text>
             <Text VXS>{title}</Text>
             {
               isDetailView ?
