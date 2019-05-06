@@ -41,7 +41,7 @@ const klineTabs = [
   { label: '1week' },
 ]
 
-function Trading({ market,userAvatar, gettingMarket, tradeState, setTab, onChangeCT, onChangeSUT, toggleIsSell, toggleTnc, onTrade, reset, userSut, getTradeList, getKlineList }) {
+function Trading({ market, userAvatar, gettingMarket, tradeState, setTab, onChangeCT, onChangeSUT, toggleIsSell, toggleTnc, onTrade, reset, userSut, getTradeList, getKlineList }) {
   useEffect(() => {
     if(market) {
       getTradeList()
@@ -49,10 +49,12 @@ function Trading({ market,userAvatar, gettingMarket, tradeState, setTab, onChang
     }
     return reset
   }, [market])
-  const { tabIndex, ct, sut, isSell, isTrading, trades, gettingTrades, hasNextPage, klineData, agreeTnc, tradingError } = tradeState
+  const { tabIndex, userCt, ct, sut, isSell, isTrading, trades, gettingTrades, hasNextPage, klineData, agreeTnc, tradingError } = tradeState
   const sutError = +userSut < +sut ? 'You need more SmartUp to make this trade.' : null
 
   if(!market || gettingMarket) return null
+
+  const notEnoughCt = isSell && +ct > +userCt
 
   return (
     <>
@@ -104,14 +106,14 @@ function Trading({ market,userAvatar, gettingMarket, tradeState, setTab, onChang
         <Col maxWidth='1000px' width='100%'>
           <Row center spacingBottomL>
             
-            <Avatar icon={userAvatar} style={{ 'borderRadius':'50%'}}/>
+            <Avatar icon={market.avatar} style={{ 'borderRadius':'50%'}}/>
             <Col>
               <Text S note>{lang.trading[isSell ? 'tradePay' : 'tradeReceive'][currentLang]}</Text>
               <Text S>{market.name}</Text>
             </Col>
             <Col spacingLeftS spacingTopS flex={1}>
               <Input underline L center fullWidth disabled={isTrading} value={ct} onChange={onChangeCT} number />
-              {/* <Text error XS>You need more SmartUp to make this trade.</Text> */}
+              {notEnoughCt && <Text error XS>You don't have enough token to sell.</Text>}
             </Col>
 
             <Trade disabled={isTrading} spacingLeftM spacingRightM onClick={toggleIsSell} leftActive={!isSell} rightActive={isSell} />
@@ -134,7 +136,7 @@ function Trading({ market,userAvatar, gettingMarket, tradeState, setTab, onChang
               <Text S note underline lineHeight onClick={() => console.log('Get T&C')}>{'Teams & Conditions'}</Text>
             </Row>
             <Col right>
-              <Botton label='Trade' icon={Trade} primary onClick={() => onTrade(market.id)} disabled={isTrading || !agreeTnc || !ct | !!sutError} />
+              <Botton label='Trade' icon={Trade} primary onClick={() => onTrade(market.id)} disabled={isTrading || !agreeTnc || !ct | !!sutError || notEnoughCt} />
               {tradingError && <Text error XS>{tradingError.message}</Text>}
             </Col>
           </Row>
