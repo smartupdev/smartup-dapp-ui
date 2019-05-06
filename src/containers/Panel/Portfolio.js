@@ -145,7 +145,11 @@ const Portfolio = ({
             {
               collects.map(({ name, marketId }, index) =>
                 <BookmarkBlock spaceBetween centerVertical key={index}>
-                  <Text S>{name}</Text>
+                  <Link>
+                    {({ goto }) =>
+                      <Text S onClick={() => goto.trading({ id: marketId })}>{name}</Text>
+                    }
+                  </Link>
                   <Close XS onClick={() => collectMarket({ id: marketId, following: true })} />
                 </BookmarkBlock>
               )
