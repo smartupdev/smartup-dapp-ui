@@ -6,9 +6,10 @@ import Input from '../../components/Input'
 import DropToUpload from '../../components/DropToUpload'
 
 import { connect } from 'react-redux'
-import { onChangeAvatar, updateUserAvatar,updateUserName, onChangeName } from '../../actions/user';
+import { onChangeAvatar, updateUserAvatar, updateUserName, onChangeName, onChangeNameSubmit } from '../../actions/user';
 
-const Setting = ({ realUserName, avatarUploading, avatarHash,updateUserAvatar, updateUserName,onChangeAvatar, updateNameError,updateAvatarError, onChangeName }) => {
+const Setting = ({ realUserName, avatarUploading, avatarHash, updateUserAvatar,
+  updateUserName, onChangeAvatar, updateNameError, updateAvatarError, onChangeName, submittingName, onChangeNameSubmit }) => {
   return (
     <Col>
       <Text MarginLeftXS S VXS>{'Avatar photo'}</Text>
@@ -19,15 +20,21 @@ const Setting = ({ realUserName, avatarUploading, avatarHash,updateUserAvatar, u
         {/* <Button MarginLeftXS LeftM RightM style={{backgroundColor:'#8F9497'}}  label='Cancel' onClick={() => { }} /> */}
       </Row>
       <Text MarginLeftXS S VXS>{'User Name'}</Text>
-      <Input value={realUserName}  placeholder='User Name' onChange={onChangeName} />
+      <Input value={realUserName} placeholder='User Name' onChange={onChangeName} />
       <Text right error={updateNameError}>{
         typeof updateNameError === 'string' ? updateNameError :
           'Capital sensitive, 6-15 characters.'
       } </Text>
-      <Row center MarginTopXS>
-        <Button primary LeftM RightM label='Submit' onClick={updateUserName} />
-        {/* <Button MarginLeftXS LeftM RightM style={{backgroundColor:'#8F9497'}}  label='Cancel' onClick={() => { }} /> */}
+      {!submittingName ?
+        <Row center MarginTopXS>
+          <Button primary LeftM RightM label='Submit' onClick={()=>{onChangeNameSubmit(true)}}/>
+        </Row>
+        :
+        <Row center MarginTopXS>
+        <Button primary LeftM RightM label='Confirm' onClick={updateUserName} />
+        <Button MarginLeftXS LeftM RightM style={{backgroundColor:'#8F9497'}}  label='Cancel' onClick={() => {onChangeNameSubmit(false)}} />
       </Row>
+      }
     </Col>
   )
 }
@@ -38,10 +45,11 @@ const mapStateToProps = state => ({
   realUserName: state.user.realUserName,
   updateAvatarError: state.user.updateAvatarError,
   updateNameError: state.user.updateNameError,
+  submittingName: state.user.submittingName,
 });
 
 const mapDispatchToProps = {
-  onChangeAvatar, updateUserAvatar, updateUserName,onChangeName
+  onChangeAvatar, updateUserAvatar, updateUserName, onChangeName, onChangeNameSubmit
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Setting);
