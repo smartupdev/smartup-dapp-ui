@@ -9,34 +9,34 @@ import { Information } from '../../components/Icon'
 import Table from '../../components/Table'
 import { More } from '../../components/Icon'
 const faqText = lang.faq
+const _DescOne = () =>
+<Col>
+<h1>{'something h1'}</h1>
+</Col>
 
 const faqs = [{
   id:0,
   title:'What is the difference between CMS users and Project users?',
-  desc:'This is body content.'
+  desc:_DescOne
 },{
   id:1,
   title:'CMS(Content Management System) Users',
-  desc:'This is body content.'
+  desc:_DescOne
 },{
   id:2,
   title:'How to invite other CMS Users to your project',
-  desc:'This is body content.'
+  desc:_DescOne
 },{
   id:3,
   title:'How to invite other CMS Users to your project',
-  desc:'This is body content.'
+  desc:_DescOne
 }];
 
 const _Title = ({ value }) =><Text M wordSpaceM>{value}</Text>
 const _More = ({ isExpanded }) => <More reverse={isExpanded} XS color={theme.white} />
 
 const TableExpand = ({ record }) => {
-  return (
-    <Row centerVertical>
-      <Text M wordSpaceS >{record.desc}</Text>
-    </Row>
-  )
+  return record.desc();
 }
 
 const TableName = [
