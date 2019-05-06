@@ -35,9 +35,9 @@ export function toggleShowUnread() {
 }
 
 //通知列表
-export function getList() {
+export function getList(isLoadMore) { // isLoadMore can be event
   return (dispatch, getState) => {
-    const { showUnreadOnly, keyword } = getState().notification
+    const { showUnreadOnly, keyword, pageNumb, pageSize } = getState().notification
     dispatch(
       asyncFunction(
         fetch.post,
@@ -45,9 +45,10 @@ export function getList() {
         {
           params: keyword ? API_USER_NOTIFICATION_SEARCH : API_USER_NOTIFICATION_LIST,
           params2: keyword 
-          ? { query: keyword } 
-          : { unread: showUnreadOnly ? true : null},
-          responsePayload: reps => reps.list
+          ? { query: keyword, pageNumb: isLoadMore ? pageNumb + 1 : 1, pageSize } 
+          : { pageNumb: isLoadMore ? pageNumb + 1 : 1, pageSize, unread: showUnreadOnly ? true : null },
+          meta: { isLoadMore }
+          // responsePayload: reps => reps.list
         }
       )
     )

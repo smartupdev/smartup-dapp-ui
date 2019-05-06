@@ -17,7 +17,10 @@ export const initialState = {
   gettingNotifications: false,
   notificationsError: null,
   unreadCount: 0,
-
+  hasNextPage: false,
+  
+  pageNumb: 1, 
+  pageSize: 20,
   // readingNotification: false,
   // readingNotificationError: null,
 
@@ -40,11 +43,6 @@ export default (state = initialState, action) => {
         ...state,
         showUnreadOnly: !state.showUnreadOnly
       }
-    case USER_NOTIFICATION_KEYWORD_CHANGE: 
-      return {
-        ...state,
-      }
-
     case USER_NOTIFICATION_LIST_REQUESTED:
       return {
         ...state,
@@ -53,7 +51,9 @@ export default (state = initialState, action) => {
     case USER_NOTIFICATION_LIST_SUCCEEDED:
       return {
         ...state,
-        notifications: action.payload,
+        notifications: action.meta.isLoadMore ? [...state.notifications, ...action.payload.list] : action.payload.list,
+        hasNextPage: action.payload.hasNextPage,
+        pageNumb: action.meta.isLoadMore ? state.pageNumb + 1 : 1, 
         gettingNotifications: false,
         notificationsError: initialState.notificationsError,
       };
