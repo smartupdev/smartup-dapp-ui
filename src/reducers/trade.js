@@ -16,7 +16,18 @@ import {
   TRADE_HIGH_LOW_REQUESTED, TRADE_HIGH_LOW_SUCCEEDED, TRADE_HIGH_LOW_FAILED,
   TRADE_CHANGE_CT_AMOUNT,
   MARKET_DETAIL_GET_CT_REQUESTED, MARKET_DETAIL_GET_CT_SUCCEEDED, MARKET_DETAIL_GET_CT_FAILED,
+  TRADE_SAVE_SUCCEEDED,
 } from '../actions/actionTypes';
+
+function tradeMassage(trade) {
+  return {
+    ...trade, 
+    id: trade.txHash,
+    avgAmount: trade.sutAmount / trade.ctAmount,
+    userIcon: trade.user.avatarIpfsHash,
+    username: trade.user.name || trade.user.userAddress
+  }
+}
 
 export const initialState = {
   tabIndex: 0,
@@ -65,6 +76,14 @@ export default (state = initialState, action) => {
       return {
         ...state,
         tabIndex: action.payload.index
+      }
+    case TRADE_SAVE_SUCCEEDED: 
+      return {
+        ...state,
+        trades: [
+          tradeMassage(action.payload),
+          ...state.trades,
+        ]
       }
     // case MARKET_DETAIL_GET_CT_REQUESTED: 
     //   return {
@@ -141,23 +160,23 @@ export default (state = initialState, action) => {
       }
     case TRADE_SUCCEEDED: {
       const { ct, sut, tradingError, isTrading } = initialState
-      const { hash, isSell, username, userIcon, sut: sutAmount, ct: ctAmount } = action.payload
+      // const { hash, isSell, username, userIcon, sut: sutAmount , ct: ctAmount } = action.payload
 
       return {
         ...state, ct, sut, tradingError, isTrading,
-        trades: [
-          {
-            id: hash,
-            type: isSell ? 'sell' : 'buy',
-            avgAmount: sutAmount / ctAmount,
-            sutAmount,
-            ctAmount,
-            userIcon,
-            username,
-            createTime: Date.now()
-          },
-          ...state.trades
-        ]
+        // trades: [
+        //   {
+        //     id: hash,
+        //     type: isSell ? 'sell' : 'buy',
+        //     avgAmount: sutAmount / ctAmount,
+        //     sutAmount,
+        //     ctAmount,
+        //     userIcon,
+        //     username,
+        //     createTime: Date.now()  
+        //   },
+        //   ...state.trades
+        // ]
       }
     }
     case TRADE_FAILED:
@@ -274,14 +293,8 @@ export default (state = initialState, action) => {
         gettingTrades: true,
       };
     case TRADE_LIST_SUCCEEDED: {
-      const { list, pageNumb, pageSize, hasNextPage } = action.payload;
-      const tradeList = list.map(trade => ({
-        ...trade,
-        id: trade.txHash,
-        avgAmount: trade.sutAmount / trade.ctAmount,
-        userIcon: trade.user.avatarIpfsHash,
-        username: trade.user.name || trade.user.userAddress
-      })).filter(t => t.stage === 'success' || t.stage === 'pending')
+      const {list, pageNumb, pageSize, hasNextPage} = action.payload;
+      const tradeList = list.map(tradeMassage).filter(t => t.stage === 'success' || t.stage === 'pending')
       return {
         ...state,
         trades: action.meta.isLoadMore ? [...state.trades, ...tradeList] : tradeList,

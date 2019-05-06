@@ -45,6 +45,7 @@ export const API_USER_REPLY_CREATED = '/api/user/reply/created';
 export const API_MARKET_TRADE_LIST = '/api/market/trade/list';
 export const API_USER_TRADE_LIST = '/api/user/trade/list';
 export const API_USER_TRADE_DETAIL = '/api/user/trade/one';
+export const API_USER_TRADE_SAVE = '/api/user/trade/save';
 export const API_KLINE_DATA = '/api/kline/data';
 //proposal-controller
 export const API_MARKET_PROPOSAL_LIST = '/api/market/proposal/list';
