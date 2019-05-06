@@ -15,6 +15,7 @@ import {
   TRADE_KLINE_REQUESTED, TRADE_KLINE_SUCCEEDED, TRADE_KLINE_FAILED,
   TRADE_HIGH_LOW_REQUESTED, TRADE_HIGH_LOW_SUCCEEDED, TRADE_HIGH_LOW_FAILED,
   TRADE_CHANGE_CT_AMOUNT,
+  MARKET_DETAIL_GET_CT_REQUESTED, MARKET_DETAIL_GET_CT_SUCCEEDED, MARKET_DETAIL_GET_CT_FAILED,
 } from '../actions/actionTypes';
 
 export const initialState = {
@@ -28,6 +29,7 @@ export const initialState = {
   sutError: null,
   getSUTCount: 0,
 
+  userCt: 0, // TODO, change when trade
   ct: '',
   gettingCT: false,
   ctError: null,
@@ -64,6 +66,22 @@ export default (state = initialState, action) => {
         ...state,
         tabIndex: action.payload.index
       }
+    // case MARKET_DETAIL_GET_CT_REQUESTED: 
+    //   return {
+    //     ...state,
+
+    //   }
+    case MARKET_DETAIL_GET_CT_SUCCEEDED: 
+      return {
+        ...state,
+        userCt: action.payload
+      }
+    // case MARKET_DETAIL_GET_CT_FAILED: 
+    //   return {
+    //     ...state,
+
+    //   }
+
     case TRADE_CHANGE_SUT:
       return {
         ...state,
@@ -87,11 +105,14 @@ export default (state = initialState, action) => {
         gettingCT: false,
         ctError: action.payload
       }
-    case TRADE_CHANGE_CT:
+    case TRADE_CHANGE_CT: {
+      const ct =  action.payload.startsWith('.') ? '0' + action.payload : action.payload
       return {
         ...state,
-        ct: action.payload.startsWith('.') ? '0' + action.payload : action.payload
+        ct,
       }
+    }
+
     case TRADE_GET_SUT_REQUESTED:
       return {
         ...state,

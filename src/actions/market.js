@@ -6,6 +6,7 @@ import {
   USER_COLLECT_ADD_REQUESTED, USER_COLLECT_ADD_SUCCEEDED, USER_COLLECT_ADD_FAILED,
   USER_COLLECT_DEL_REQUESTED, USER_COLLECT_DEL_SUCCEEDED, USER_COLLECT_DEL_FAILED,
   GET_MARKET_DETAIL_REQUESTED, GET_MARKET_DETAIL_SUCCEEDED, GET_MARKET_DETAIL_FAILED,
+  MARKET_DETAIL_GET_CT_REQUESTED, MARKET_DETAIL_GET_CT_SUCCEEDED, MARKET_DETAIL_GET_CT_FAILED,
   MARKET_SEARCH_REQUESTED, MARKET_SEARCH_SUCCEEDED, MARKET_SEARCH_FAILED,
   MARKET_TOP_REQUESTED, MARKET_TOP_SUCCEEDED, MARKET_TOP_FAILED, HOME_SET_SORTING
 } from './actionTypes'
@@ -15,7 +16,7 @@ import {
   API_MARKET_SEARCH, API_MARKET_TOP
 } from './api'
 import fetch from '../lib/util/fetch'
-import { asyncFunction } from '../integrator'
+import { asyncFunction, callbackFunction, getBalance, getAccount, smartupWeb3, decodeResult } from '../integrator'
 import { getUserCollectLists } from '../actions/collect'
 
 const topIndexToValueMap = [
@@ -32,12 +33,37 @@ export function resetDetail() {
   }
 }
 
+export function getCtBalance() {
+  return (dispatch, getState) => 
+    dispatch(
+      callbackFunction(
+        smartupWeb3 && smartupWeb3.eth.call,
+        MARKET_DETAIL_GET_CT_REQUESTED, MARKET_DETAIL_GET_CT_SUCCEEDED, MARKET_DETAIL_GET_CT_FAILED,
+        {
+          params: { 
+            data:  getBalance( getAccount() ), 
+            to: getState().market.currentMarket.address 
+          },
+          responsePayload: decodeResult
+        }
+      )
+    )  
+}
+
+
+
 export function get(marketId) {
-  return asyncFunction(
-    fetch.get,
-    GET_MARKET_DETAIL_REQUESTED, GET_MARKET_DETAIL_SUCCEEDED, GET_MARKET_DETAIL_FAILED,
-    { params: API_MARKET_DETAIL, params2: { marketId }, meta: { marketId } }
-  )
+  return async (dispatch, getState) => {
+    const [error, result] = await dispatch(
+      asyncFunction(
+        fetch.get,
+        GET_MARKET_DETAIL_REQUESTED, GET_MARKET_DETAIL_SUCCEEDED, GET_MARKET_DETAIL_FAILED,
+        { params: API_MARKET_DETAIL, params2: { marketId }, meta: { marketId } }
+      )
+    )
+    if(!error) dispatch(getCtBalance())
+    return [error, result]
+  }
 }
 
 // /api/market/list   Get all markets
