@@ -132,7 +132,7 @@ export function loginMetaMask(skipLogin) {
 function getEthBalance() {
   return callbackFunction(
     smartupWeb3.eth.getBalance,
-    METAMASK_ETH_BALANCE_REQUESTED, METAMASK_ETH_BALANCE_SUCCEEDED, METAMASK_ETH_BALANCE_FAILED,
+    null, METAMASK_ETH_BALANCE_SUCCEEDED, null,
     {
       isWeb3: true,
       params: getAccount(),
@@ -145,7 +145,7 @@ function getEthBalance() {
 function getSutBalance() {
   return callbackFunction(
     smartupWeb3.eth.call,
-    METAMASK_SUT_BALANCE_REQUESTED, METAMASK_SUT_BALANCE_SUCCEEDED, METAMASK_SUT_BALANCE_FAILED,
+    null, METAMASK_SUT_BALANCE_SUCCEEDED, null,
     {
       isWeb3: true,
       params: { to: sutContractAddress, data: getBalance(getAccount()) },
@@ -158,7 +158,7 @@ function getSutBalance() {
 function getNttBalance() {
   return callbackFunction(
     smartupWeb3.eth.call,
-    METAMASK_NTT_BALANCE_REQUESTED, METAMASK_NTT_BALANCE_SUCCEEDED, METAMASK_NTT_BALANCE_FAILED,
+    null, METAMASK_NTT_BALANCE_SUCCEEDED, null,
     {
       isWeb3: true,
       params: { to: nttContractAddress, data: getCredit(getAccount()) },

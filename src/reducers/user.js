@@ -100,57 +100,57 @@ export default (state = initialState, action) => {
         loggedIn: false,
         metaMaskSignError: true
       }
-    case METAMASK_ETH_BALANCE_REQUESTED:
-      return {
-        ...state,
-        gettingEth: true
-      }
+    // case METAMASK_ETH_BALANCE_REQUESTED:
+    //   return {
+    //     ...state,
+    //     gettingEth: true
+    //   }
     case METAMASK_ETH_BALANCE_SUCCEEDED:
       return {
         ...state,
-        gettingEth: false,
+        // gettingEth: false,
         ethBalance: action.payload,
       };
-    case METAMASK_ETH_BALANCE_FAILED:
-      return {
-        ...state,
-        gettingEth: false,
-        ethError: action.payload
-      };
-    case METAMASK_SUT_BALANCE_REQUESTED:
-      return {
-        ...state,
-        gettingSut: true
-      }
+    // case METAMASK_ETH_BALANCE_FAILED:
+    //   return {
+    //     ...state,
+    //     gettingEth: false,
+    //     ethError: action.payload
+    //   };
+    // case METAMASK_SUT_BALANCE_REQUESTED:
+    //   return {
+    //     ...state,
+    //     gettingSut: true
+    //   }
     case METAMASK_SUT_BALANCE_SUCCEEDED:
       return {
         ...state,
-        gettingSut: false,
+        // gettingSut: false,
         sutBalance: action.payload,
       };
-    case METAMASK_SUT_BALANCE_FAILED:
-      return {
-        ...state,
-        gettingSut: false,
-        sutError: action.payload
-      };
-    case METAMASK_NTT_BALANCE_REQUESTED:
-      return {
-        ...state,
-        gettingNtt: true
-      }
+    // case METAMASK_SUT_BALANCE_FAILED:
+    //   return {
+    //     ...state,
+    //     gettingSut: false,
+    //     sutError: action.payload
+    //   };
+    // case METAMASK_NTT_BALANCE_REQUESTED:
+    //   return {
+    //     ...state,
+    //     gettingNtt: true
+    //   }
     case METAMASK_NTT_BALANCE_SUCCEEDED:
       return {
         ...state,
-        gettingNtt: false,
+        // gettingNtt: false,
         nttBalance: action.payload,
       };
-    case METAMASK_NTT_BALANCE_FAILED:
-      return {
-        ...state,
-        gettingNtt: false,
-        nttError: action.payload,
-      }
+    // case METAMASK_NTT_BALANCE_FAILED:
+    //   return {
+    //     ...state,
+    //     gettingNtt: false,
+    //     nttError: action.payload,
+    //   }
     case USER_AVATAR_CHANGE_REQUESTED:
       return {
         ...state,
