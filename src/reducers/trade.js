@@ -104,7 +104,8 @@ export default (state = initialState, action) => {
     case TRADE_CHANGE_SUT:
       return {
         ...state,
-        sut: action.payload.startsWith('.') ? '0' + action.payload : action.payload
+        sut: action.payload.startsWith('.') ? '0' + action.payload : action.payload,
+        tradingError: initialState.tradingError
       }
     case TRADE_GET_CT_REQUESTED:
       return {
@@ -129,6 +130,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         ct,
+        tradingError: initialState.tradingError
       }
     }
 

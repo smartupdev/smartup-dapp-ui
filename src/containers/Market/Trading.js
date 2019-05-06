@@ -41,7 +41,7 @@ const klineTabs = [
   { label: '1week' },
 ]
 
-function Trading({ market,userAvatar, gettingMarket, tradeState, setTab, onChangeCT, onChangeSUT, toggleIsSell, toggleTnc, onTrade, reset, userSut, getTradeList, getKlineList,getHighLowList }) {
+function Trading({ loggedIn, market, gettingMarket, tradeState, setTab, onChangeCT, onChangeSUT, toggleIsSell, toggleTnc, onTrade, reset, userSut, getTradeList, getKlineList, getHighLowList }) {
   useEffect(() => {
     if(market) {
       getTradeList()
@@ -51,11 +51,11 @@ function Trading({ market,userAvatar, gettingMarket, tradeState, setTab, onChang
     return reset
   }, [market])
   const { tabIndex, userCt, ct, sut, isSell, isTrading, trades, gettingTrades, hasNextPage, klineData,highLowData, agreeTnc, tradingError } = tradeState
-  const sutError = +userSut < +sut ? 'You need more SmartUp to make this trade.' : null
-
+  
   if(!market || gettingMarket) return null
 
-  const notEnoughCt = isSell && +ct > +userCt
+  const notEnoughSut = !isSell && +userSut < +sut && loggedIn
+  const notEnoughCt = isSell && +ct > +userCt && loggedIn
 
   return (
     <>
@@ -126,7 +126,7 @@ function Trading({ market,userAvatar, gettingMarket, tradeState, setTab, onChang
             </Col>
             <Col spacingLeftS spacingTopS flex={1}>
               <Input underline L center fullWidth disabled={true} value={sut && (+sut).toFixed(4)} onChange={onChangeSUT} number />
-              {sutError && <Text error XS>{sutError}</Text>}
+              {notEnoughSut && <Text error XS>You need more SmartUp to make this trade.</Text>}
             </Col>
             
           </Row>
@@ -137,7 +137,7 @@ function Trading({ market,userAvatar, gettingMarket, tradeState, setTab, onChang
               <Text S note underline lineHeight onClick={() => console.log('Get T&C')}>{'Teams & Conditions'}</Text>
             </Row>
             <Col right>
-              <Botton label='Trade' icon={Trade} primary onClick={() => onTrade(market.id)} disabled={isTrading || !agreeTnc || !ct | !!sutError || notEnoughCt} />
+              <Botton label='Trade' icon={Trade} primary onClick={() => onTrade(market.id)} disabled={isTrading || !agreeTnc || !ct | notEnoughSut || notEnoughCt} />
               {tradingError && <Text error XS>{tradingError.message}</Text>}
             </Col>
           </Row>
@@ -174,7 +174,7 @@ const mapStateToProps = state => ({
   market: state.market.currentMarket,
   gettingMarket: state.market.gettingMarket,
   userSut: state.user.sutBalance,
-  userAvatar: state.user.userAvatar,
+  loggedIn: state.user.loggedIn,
 })
 
 
