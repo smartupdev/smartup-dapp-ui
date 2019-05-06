@@ -142,14 +142,19 @@ export function onTrade() {
         }
       }
     ))
-
-    if(!error) { // TODO: enable this after BE ready
-      // dispatch(
-      //   asyncFunction(
-      //     () => fetch.post(API_USER_TRADE_SAVE, {txHash: response, type: isSell ? 'sell' : 'buy',  marketId: id, sut, ct}),
-      //     null, TRADE_SAVE_SUCCEEDED, null
-      //   )
-      // )
+    if(!error) {
+      dispatch(
+        asyncFunction(
+          () => fetch.post(API_USER_TRADE_SAVE, {txHash: response, type: isSell ? 'sell' : 'buy',  marketId: id, sut, ct}),
+          null, TRADE_SAVE_SUCCEEDED, null,
+          {
+            responsePayload: r => {
+              const { avatarHash, userName } = getState().user
+              return { ...r, user: { avatarIpfsHash: avatarHash, name: userName } }
+            }
+          }
+        )
+      )
     }
   }
 }
@@ -181,7 +186,7 @@ export function getTradeList(isLoadMore) {
       {
         isWeb3: true,
         params: API_MARKET_TRADE_LIST, 
-        params2: {marketAddress: address, pageSize, pageNumb: isLoadMore ? pageNumb + 1 : 1},
+        params2: {marketAddress: address, pageSize, pageNumb: isLoadMore ? pageNumb + 1 : 1, asc: false},
         meta: { isLoadMore }
       }
     ));
