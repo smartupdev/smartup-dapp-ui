@@ -7,6 +7,7 @@ import Button from '../../components/Button'
 import Text from '../../components/Text'
 import { Expand, Tick } from '../../components/Icon'
 import Hr from '../../components/Hr'
+import ScrollLoader from '../../components/ScrollLoader'
 import { Link } from '../../routes'
 import theme from '../../theme'
 import ethIcon from '../../images/eth.png';
@@ -35,7 +36,7 @@ const TYPES = {
 // }), {})
 function noop() {}
 const Notification = ({
-  notification: { notifications, showUnreadOnly, unreadCount, gettingNotifications, keyword },
+  notification: { notifications, showUnreadOnly, unreadCount, gettingNotifications, keyword, hasNextPage },
   getList,
   read,
   readAll,
@@ -78,6 +79,7 @@ const Notification = ({
       }
       </Link>
       <Hr />
+      <ScrollLoader isButton hasMore={hasNextPage} loadMore={getList} isLoading={gettingNotifications}  />
     </Col>
   )
 }

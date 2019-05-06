@@ -37,7 +37,7 @@ export const initialState = {
   trades: [],
   pageSize: 20,
   pageNumb: 0,
-  hasNextPage: true,
+  hasNextPage: false,
   gettingTrades: false,
   getTradesError: null,
 

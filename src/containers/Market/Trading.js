@@ -103,16 +103,7 @@ function Trading({ market,userAvatar, gettingMarket, tradeState, setTab, onChang
 
         <Col maxWidth='1000px' width='100%'>
           <Row center spacingBottomL>
-          <Image source={smartupIcon} M rightText/>
-            <Col>
-              <Text S note>{lang.trading[isSell ? 'tradeReceive' : 'tradePay'][currentLang]}</Text>
-              <Text S>SMARTUP</Text>
-            </Col>
-            <Col spacingLeftS spacingTopS flex={1}>
-              <Input underline L center fullWidth disabled={true} value={sut && (+sut).toFixed(4)} onChange={onChangeSUT} number />
-              {sutError && <Text error XS>{sutError}</Text>}
-            </Col>
-            <Trade disabled={isTrading} spacingLeftM spacingRightM onClick={toggleIsSell} leftActive={isSell} rightActive={!isSell} />
+            
             <Avatar icon={userAvatar} style={{ 'borderRadius':'50%'}}/>
             <Col>
               <Text S note>{lang.trading[isSell ? 'tradePay' : 'tradeReceive'][currentLang]}</Text>
@@ -122,6 +113,19 @@ function Trading({ market,userAvatar, gettingMarket, tradeState, setTab, onChang
               <Input underline L center fullWidth disabled={isTrading} value={ct} onChange={onChangeCT} number />
               {/* <Text error XS>You need more SmartUp to make this trade.</Text> */}
             </Col>
+
+            <Trade disabled={isTrading} spacingLeftM spacingRightM onClick={toggleIsSell} leftActive={!isSell} rightActive={isSell} />
+
+            <Image source={smartupIcon} M rightText/>
+            <Col>
+              <Text S note>{lang.trading[isSell ? 'tradeReceive' : 'tradePay'][currentLang]}</Text>
+              <Text S>SMARTUP</Text>
+            </Col>
+            <Col spacingLeftS spacingTopS flex={1}>
+              <Input underline L center fullWidth disabled={true} value={sut && (+sut).toFixed(4)} onChange={onChangeSUT} number />
+              {sutError && <Text error XS>{sutError}</Text>}
+            </Col>
+            
           </Row>
 
           <Row spaceBetween>

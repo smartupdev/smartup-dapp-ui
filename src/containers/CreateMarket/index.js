@@ -89,7 +89,7 @@ const CreateMarket = ({
           <>
             <Label>Price equation of the market token</Label>
             <Col spacingBottomXS>
-              <Input background L disabled value={'f(x) = 0.000074999921875 * ln(x) + 0.000000000015625 * x'} />
+              <Input background L disabled value={'f(x) = 0.074999921875 * ln(x) + 0.000000015625 * x'} />
             </Col>
             <Label>Preview price movement</Label>
             <Col spacingLeftL spacingRightL spacingTopM>
