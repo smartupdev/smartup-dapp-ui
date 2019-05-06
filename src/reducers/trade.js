@@ -1,6 +1,6 @@
 import {
   TRADE_RESET,
-  TRADE_SET_TAB,  
+  TRADE_SET_TAB,
   TRADE_TOGGLE_IS_SELL, TRADE_TOGGLE_AGREE_TNC,
   TRADE_CHANGE_CT, TRADE_CHANGE_SUT,
   TRADE_GET_CT_REQUESTED, TRADE_GET_CT_SUCCEEDED, TRADE_GET_CT_FAILED,
@@ -13,6 +13,7 @@ import {
   TRADE_LIST_REQUESTED, TRADE_LIST_SUCCEEDED, TRADE_LIST_FAILED,
   TRADE_DETAIL_REQUESTED, TRADE_DETAIL_SUCCEEDED, TRADE_DETAIL_FAILED,
   TRADE_KLINE_REQUESTED, TRADE_KLINE_SUCCEEDED, TRADE_KLINE_FAILED,
+  TRADE_HIGH_LOW_REQUESTED, TRADE_HIGH_LOW_SUCCEEDED, TRADE_HIGH_LOW_FAILED,
   TRADE_CHANGE_CT_AMOUNT,
 } from '../actions/actionTypes';
 
@@ -42,24 +43,12 @@ export const initialState = {
   getTradesError: null,
 
   klineData: [],
-  /*
-  [
-    {
-      "marketAddress": "0xf6f7c3cdba6ef2e9fff12b1702481f99ca6cd38c",
-      "timeId": "2019_04_16",
-      "segment": "1day",
-      "high": 0.0008893047281869845,
-      "low": 0.0008875846265085669,
-      "start": 0.0008875846265085669,
-      "end": 0.0008893047281869845,
-      "amount": 3.187307075635292,
-      "count": 6,
-      "time": "2019-04-16 12:00:00"
-    }
-  ]
-  */
   gettingKline: false,
   getKlineError: null,
+
+  highLowData: [],
+  gettingHighLow: false,
+  getHighLowError: null,
 
   oneDetail: null,
   gettingOneDetail: false,
@@ -70,7 +59,7 @@ export default (state = initialState, action) => {
   switch (action.type) {
     case TRADE_RESET:
       return initialState
-    case TRADE_SET_TAB: 
+    case TRADE_SET_TAB:
       return {
         ...state,
         tabIndex: action.payload.index
@@ -110,7 +99,7 @@ export default (state = initialState, action) => {
         getSUTCount: action.meta.getSUTCount
       }
     case TRADE_GET_SUT_SUCCEEDED:
-      if(action.meta && state.getSUTCount !== action.meta.getSUTCount) return state
+      if (action.meta && state.getSUTCount !== action.meta.getSUTCount) return state
       return {
         ...state,
         gettingSUT: false,
@@ -118,7 +107,7 @@ export default (state = initialState, action) => {
         sutError: initialState.sutError
       }
     case TRADE_GET_SUT_FAILED:
-      if(action.meta && state.getSUTCount !== action.meta.getSUTCount) return state
+      if (action.meta && state.getSUTCount !== action.meta.getSUTCount) return state
       return {
         ...state,
         gettingSUT: false,
@@ -131,7 +120,7 @@ export default (state = initialState, action) => {
       }
     case TRADE_SUCCEEDED: {
       const { ct, sut, tradingError, isTrading } = initialState
-      const { hash, isSell, username, userIcon, sut: sutAmount , ct: ctAmount } = action.payload
+      const { hash, isSell, username, userIcon, sut: sutAmount, ct: ctAmount } = action.payload
 
       return {
         ...state, ct, sut, tradingError, isTrading,
@@ -144,7 +133,7 @@ export default (state = initialState, action) => {
             ctAmount,
             userIcon,
             username,
-            createTime: Date.now()  
+            createTime: Date.now()
           },
           ...state.trades
         ]
@@ -157,19 +146,48 @@ export default (state = initialState, action) => {
         tradingError: action.payload
       }
 
-    case TRADE_TOGGLE_AGREE_TNC: 
+    case TRADE_TOGGLE_AGREE_TNC:
       return {
         ...state,
         agreeTnc: !state.agreeTnc,
       }
-    
 
-    case TRADE_TOGGLE_IS_SELL: 
+
+    case TRADE_TOGGLE_IS_SELL:
       return {
         ...state,
         isSell: !state.isSell,
       }
-    
+
+    case TRADE_HIGH_LOW_REQUESTED:
+      return {
+        ...state,
+        gettingHighLow: true,
+      };
+    case TRADE_HIGH_LOW_SUCCEEDED: {
+      let tempLines = action.payload.map(line => {
+        return {
+          ...line,
+          open: line.start,
+          close: line.end,
+          volume: line.amount,
+          date: new Date(line.time),
+        }
+      });
+
+      return {
+        ...state,
+        highLowData: tempLines,
+        gettingHighLow: false,
+        getHighLowError: initialState.getHighLowError
+      };
+    }
+    case TRADE_HIGH_LOW_FAILED:
+      return {
+        ...state,
+        gettingHighLow: false,
+        getHighLowError: action.payload,
+      };
 
     case TRADE_KLINE_REQUESTED:
       return {
@@ -186,14 +204,14 @@ export default (state = initialState, action) => {
           date: new Date(line.time),
         }
       });
-      
-      if(tempLines.length === 1){
+
+      if (tempLines.length === 1) {
         tempLines.push({
           ...tempLines[0],
           open: 0,
           close: 0,
-          high:0,
-          low:0,
+          high: 0,
+          low: 0,
           volume: 0,
         })
       }
@@ -235,9 +253,9 @@ export default (state = initialState, action) => {
         gettingTrades: true,
       };
     case TRADE_LIST_SUCCEEDED: {
-      const {list, pageNumb, pageSize, hasNextPage} = action.payload;
-      const tradeList = list.map( trade => ({
-        ...trade, 
+      const { list, pageNumb, pageSize, hasNextPage } = action.payload;
+      const tradeList = list.map(trade => ({
+        ...trade,
         id: trade.txHash,
         avgAmount: trade.sutAmount / trade.ctAmount,
         userIcon: trade.user.avatarIpfsHash,
@@ -246,7 +264,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         trades: action.meta.isLoadMore ? [...state.trades, ...tradeList] : tradeList,
-        pageNumb,pageSize,hasNextPage,
+        pageNumb, pageSize, hasNextPage,
         gettingTrades: false,
         getTradesError: initialState.getTradesError
       };

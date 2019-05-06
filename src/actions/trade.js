@@ -8,6 +8,7 @@ import {
   TRADE_GET_SUT_REQUESTED, TRADE_GET_SUT_SUCCEEDED, TRADE_GET_SUT_FAILED,
   TRADE_REQUESTED, TRADE_SUCCEEDED, TRADE_FAILED,
   TRADE_KLINE_REQUESTED, TRADE_KLINE_SUCCEEDED, TRADE_KLINE_FAILED,
+  TRADE_HIGH_LOW_REQUESTED,TRADE_HIGH_LOW_SUCCEEDED,TRADE_HIGH_LOW_FAILED,
 } from '../actions/actionTypes';
 import fetch from '../lib/util/fetch';
 import {
@@ -222,6 +223,28 @@ export function getKlineList(){
     dispatch(asyncFunction(
       fetch.post,
       TRADE_KLINE_REQUESTED, TRADE_KLINE_SUCCEEDED, TRADE_KLINE_FAILED,
+      {
+        isWeb3: true,
+        params: API_KLINE_DATA,
+        params2:requestParams,
+      }
+    ));
+  }
+}
+
+export function getHighLowList(){
+  return (dispatch, getState) => {
+    const { 
+      market: { currentMarket: {address: marketAddress} },
+      trade: { tabIndex }
+    } = getState()
+    let requestParams = {
+      marketAddress,
+      ...getDateRange(1)
+    }
+    dispatch(asyncFunction(
+      fetch.post,
+      TRADE_HIGH_LOW_REQUESTED,TRADE_HIGH_LOW_SUCCEEDED,TRADE_HIGH_LOW_FAILED,
       {
         isWeb3: true,
         params: API_KLINE_DATA,

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { Link } from '../../routes'
 
 import { connect } from 'react-redux'
-import { setTab, onChangeCT, onChangeSUT, onTrade, toggleIsSell, toggleTnc, reset, getTradeList, getKlineList, } from '../../actions/trade';
+import { setTab, onChangeCT, onChangeSUT, onTrade, toggleIsSell, toggleTnc, reset, getTradeList, getKlineList, getHighLowList,} from '../../actions/trade';
 
 
 import theme from '../../theme'
@@ -41,15 +41,16 @@ const klineTabs = [
   { label: '1week' },
 ]
 
-function Trading({ market,userAvatar, gettingMarket, tradeState, setTab, onChangeCT, onChangeSUT, toggleIsSell, toggleTnc, onTrade, reset, userSut, getTradeList, getKlineList }) {
+function Trading({ market,userAvatar, gettingMarket, tradeState, setTab, onChangeCT, onChangeSUT, toggleIsSell, toggleTnc, onTrade, reset, userSut, getTradeList, getKlineList,getHighLowList }) {
   useEffect(() => {
     if(market) {
       getTradeList()
       getKlineList()
+      getHighLowList()
     }
     return reset
   }, [market])
-  const { tabIndex, ct, sut, isSell, isTrading, trades, gettingTrades, hasNextPage, klineData, agreeTnc, tradingError } = tradeState
+  const { tabIndex, ct, sut, isSell, isTrading, trades, gettingTrades, hasNextPage, klineData,highLowData, agreeTnc, tradingError } = tradeState
   const sutError = +userSut < +sut ? 'You need more SmartUp to make this trade.' : null
 
   if(!market || gettingMarket) return null
@@ -71,10 +72,10 @@ function Trading({ market,userAvatar, gettingMarket, tradeState, setTab, onChang
           <Text nowrap spacingBottomS>{toFullDate(Date.now())}</Text>
 
           <Row bottom spacingTopS>
-            <Text XL>{toPrice(klineData.length > 0 ? klineData[klineData.length - 1].low : '', 2)}</Text><Text red S>&nbsp;&nbsp;low</Text>
+            <Text XL>{toPrice(highLowData.length > 0 ? highLowData[highLowData.length - 1].low : '', 2)}</Text><Text red S>&nbsp;&nbsp;low</Text>
           </Row>
           <Row bottom>
-            <Text XL>{toPrice(klineData.length > 0 ? klineData[klineData.length - 1].high : '', 2)}</Text><Text green S>&nbsp;&nbsp;high</Text>
+            <Text XL>{toPrice(highLowData.length > 0 ? highLowData[highLowData.length - 1].high : '', 2)}</Text><Text green S>&nbsp;&nbsp;high</Text>
           </Row>
           <Text note S>{lang.trading.change[currentLang]}</Text>
 
@@ -185,6 +186,7 @@ const mapDispatchToProps = {
   reset,
   getTradeList,
   getKlineList,
+  getHighLowList,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Trading);
