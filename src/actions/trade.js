@@ -6,12 +6,12 @@ import {
   TRADE_TOGGLE_IS_SELL, TRADE_TOGGLE_AGREE_TNC,
   TRADE_CHANGE_CT, TRADE_CHANGE_SUT,
   TRADE_GET_SUT_REQUESTED, TRADE_GET_SUT_SUCCEEDED, TRADE_GET_SUT_FAILED,
-  TRADE_REQUESTED, TRADE_SUCCEEDED, TRADE_FAILED,
+  TRADE_REQUESTED, TRADE_SUCCEEDED, TRADE_FAILED, TRADE_SAVE_SUCCEEDED,
   TRADE_KLINE_REQUESTED, TRADE_KLINE_SUCCEEDED, TRADE_KLINE_FAILED,
 } from '../actions/actionTypes';
 import fetch from '../lib/util/fetch';
 import {
-  API_MARKET_TRADE_LIST, API_USER_TRADE_DETAIL,API_KLINE_DATA,
+  API_MARKET_TRADE_LIST, API_USER_TRADE_DETAIL,API_KLINE_DATA, API_USER_TRADE_SAVE
 } from './api';
 import {
   asyncFunction, toWei, encodeParam, sutContractAddress, smartupWeb3, callbackFunction, getAccount,
@@ -120,14 +120,14 @@ function getSUT() {
 }
 
 export function onTrade() {
-  return (dispatch, getState) => {
+  return async (dispatch, getState) => {
     const { trade: {ct, sut, isSell}, market: { currentMarket: {id, address} } } = getState()
 
     const encodeCtPrice = toWei(sut);
     const ctAmount = toWei(ct);
     const encodeCtAmount = encodeParam(ctAmount);
 
-    dispatch(callbackFunction(
+    const [error, response] = await dispatch(callbackFunction(
       smartupWeb3.eth.sendTransaction,
       TRADE_REQUESTED, TRADE_SUCCEEDED, TRADE_FAILED,
       {
@@ -138,21 +138,18 @@ export function onTrade() {
           to: isSell ? address : sutContractAddress,
           value: '0x0',
           data: isSell ? createAskCtData(encodeCtAmount) : createBidCtData({ marketAddress: address, encodeCtPrice, encodeCtAmount })
-        },
-        responsePayload: hash => {
-          const { trade: { sut, ct, isSell }, user: { userName: username, userAvatar: userIcon } } = getState()
-          return {
-            hash,
-            isSell,
-            id,
-            username,
-            userIcon,
-            sut,
-            ct
-          }
         }
       }
-    ));
+    ))
+
+    if(!error) {
+      dispatch(
+        asyncFunction(
+          () => fetch.post(API_USER_TRADE_SAVE, {txHash: response, type: isSell ? 'sell' : 'buy',  marketId: id, sut, ct}),
+          null, TRADE_SAVE_SUCCEEDED, null
+        )
+      )
+    }
   }
 }
 
