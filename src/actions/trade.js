@@ -143,13 +143,13 @@ export function onTrade() {
       }
     ))
 
-    if(!error) {
-      dispatch(
-        asyncFunction(
-          () => fetch.post(API_USER_TRADE_SAVE, {txHash: response, type: isSell ? 'sell' : 'buy',  marketId: id, sut, ct}),
-          null, TRADE_SAVE_SUCCEEDED, null
-        )
-      )
+    if(!error) { // TODO: enable this after BE ready
+      // dispatch(
+      //   asyncFunction(
+      //     () => fetch.post(API_USER_TRADE_SAVE, {txHash: response, type: isSell ? 'sell' : 'buy',  marketId: id, sut, ct}),
+      //     null, TRADE_SAVE_SUCCEEDED, null
+      //   )
+      // )
     }
   }
 }
