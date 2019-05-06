@@ -40,7 +40,7 @@ function timeoutWrapper (promise, timeout = fetchTimeout) {
   ]);
 }
 
-export const NOT_LOGIN = 'Not Login'
+export const NOT_LOGIN = 'You had not logged in yet.'
 
 async function cmFetch(method, api, params) {
   const r = await timeoutWrapper( () => fetch(apiBaseUrl + (api[0] === '/' ? api : '/'+api), getOptions(method, params)) )
