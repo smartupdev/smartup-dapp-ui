@@ -8,10 +8,15 @@ import theme from '../../theme'
 import { Information } from '../../components/Icon'
 import Table from '../../components/Table'
 import { More } from '../../components/Icon'
+import smartupIcon from '../../images/smartup.png'
+
 const faqText = lang.faq
+
 const _DescOne = () =>
 <Col>
-<h1>{'something h1'}</h1>
+<Text L bold wordSpaceL>{'this is title h1'}</Text>
+<Text M wordSpaceL>{'this is title h2'}</Text>
+<Image source={smartupIcon} photo cover />
 </Col>
 
 const faqs = [{
