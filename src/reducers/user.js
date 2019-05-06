@@ -203,7 +203,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         updatingUserInfo: false,
-        updateNameError: action.payload,
+        updateNameError: 'User name can not change',
       }
 
     case USER_CURRENT_INFO_REQUESTED:

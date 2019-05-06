@@ -25,7 +25,7 @@ const Setting = ({ realUserName, avatarUploading, avatarHash,updateUserAvatar, u
           'Capital sensitive, 6-15 characters.'
       } </Text>
       <Row center MarginTopXS>
-        <Button primary LeftM RightM disabled={!!realUserName} label='Submit' onClick={updateUserName} />
+        <Button primary LeftM RightM label='Submit' onClick={updateUserName} />
         {/* <Button MarginLeftXS LeftM RightM style={{backgroundColor:'#8F9497'}}  label='Cancel' onClick={() => { }} /> */}
       </Row>
     </Col>
