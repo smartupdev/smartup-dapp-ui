@@ -12,12 +12,14 @@ import { connect } from 'react-redux'
 import { toggleLikePost, toggleDislikePost, toggleFollowPost } from '../../../actions/post'
 import { ipfsHost } from '../../../actions/ipfs'
 
-function DiscussionItem ({ post, isDetailView, toggleLikePost, toggleDislikePost, toggleFollowPost }) {
+function DiscussionItem ({ loggedIn, post, isDetailView, toggleLikePost, toggleDislikePost, toggleFollowPost }) {
   const { id, authorName,username,userAddress, time, title, content, photo, isCollect, isLiked, isDisliked, numberOfLike = 1000, numberOfDislike = 2000, numberOfComment = 3000, marketId, lastReply } = post
   function like(e) {
+    loggedIn &&
     toggleLikePost(e, {id, isLiked, isDisliked})
   }
   function dislike(e) {
+    loggedIn &&
     toggleDislikePost(e, {id, isLiked, isDisliked})
   }
   return (
@@ -41,11 +43,11 @@ function DiscussionItem ({ post, isDetailView, toggleLikePost, toggleDislikePost
                 </Row>
             }
             <Row centerVertical>
-              <Row onClick={like}>
+              <Row onClick={like} disabled={!loggedIn}>
                 <Like S color={isLiked ? theme.green : theme.white} MarginRightBase />
                 <Text RightM>{numberOfLike}</Text>
               </Row>
-              <Row onClick={dislike}>
+              <Row onClick={dislike} disabled={!loggedIn}>
                 <Dislike S color={isDisliked ? theme.red : theme.white} MarginRightBase />
                 <Text RightM>{numberOfDislike}</Text>
               </Row>
@@ -55,7 +57,7 @@ function DiscussionItem ({ post, isDetailView, toggleLikePost, toggleDislikePost
           </Col>
           <Row>
             <Share S color={theme.white} MarginRightS />
-            <Bookmarked S color={theme.white} checked={isCollect} onClick={(e) => toggleFollowPost(e, id, isCollect)} />
+            <Bookmarked S color={theme.white} checked={isCollect} disabled={!loggedIn} onClick={(e) => loggedIn && toggleFollowPost(e, id, isCollect)} />
           </Row>
         </Row>
       }
@@ -63,8 +65,13 @@ function DiscussionItem ({ post, isDetailView, toggleLikePost, toggleDislikePost
   )
 }
 
+
+const mapStateToProps = state => ({
+  loggedIn: state.user.loggedIn,
+});
+
 const mapDispatchToProps = {
   toggleLikePost, toggleDislikePost, toggleFollowPost
 }
 
-export default connect(null, mapDispatchToProps)(DiscussionItem)
+export default connect(mapStateToProps, mapDispatchToProps)(DiscussionItem)

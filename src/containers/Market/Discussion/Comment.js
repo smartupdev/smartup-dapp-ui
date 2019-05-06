@@ -12,6 +12,7 @@ import { connect } from 'react-redux'
 import { toggleLikeReply, toggleDislikeReply, toggleFollowReply } from '../../../actions/post'
 
 function DiscussionComment({ 
+  loggedIn,
   reply: {id, userAvatar, username, userAddress, content, isDisliked, isLiked, createTime, isCollect, numberOfLike, numberOfDislike },
   toggleLikeReply, toggleDislikeReply, toggleFollowReply
 }) {
@@ -25,11 +26,11 @@ function DiscussionComment({
           <Text note newline>{content}</Text>
         </Col>
         <Row centerVertical TopXS>
-          <Row centerVertical onClick={(e) => toggleLikeReply(e, { id, isLiked, isDisliked })}>
+          <Row centerVertical disabled={!loggedIn} onClick={(e) => loggedIn && toggleLikeReply(e, { id, isLiked, isDisliked })}>
             <Like S color={isLiked ? theme.green : theme.white} MarginRightBase />
             <Text RightM>{numberOfLike || 0}</Text>
           </Row>
-          <Row centerVertical onClick={(e) => toggleDislikeReply(e, { id, isLiked, isDisliked })}>
+          <Row centerVertical disabled={!loggedIn} onClick={(e) => loggedIn && toggleDislikeReply(e, { id, isLiked, isDisliked })}>
             <Dislike S color={isDisliked ? theme.red : theme.white} MarginRightBase />
             <Text RightM>{numberOfDislike || 0}</Text>
           </Row>
@@ -44,9 +45,12 @@ function DiscussionComment({
   )
 }
 
+const mapStateToProps = state => ({
+  loggedIn: state.user.loggedIn,
+});
 
 const mapDispatchToProps = {
   toggleLikeReply, toggleDislikeReply, toggleFollowReply
 }
 
-export default connect(null, mapDispatchToProps)(DiscussionComment);
+export default connect(mapStateToProps, mapDispatchToProps)(DiscussionComment);
