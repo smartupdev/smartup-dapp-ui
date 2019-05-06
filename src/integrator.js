@@ -40,7 +40,7 @@ export function decodeResult(r){
 }
 
 export function getBalance(account) {
-  return smartupWeb3 && smartupWeb3.eth.abi.encodeFunctionCall({
+  return account && smartupWeb3 && smartupWeb3.eth.abi.encodeFunctionCall({
     name: 'balanceOf',
     type: 'function',
     inputs: [{ type: 'address' }]

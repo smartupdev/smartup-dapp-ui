@@ -40,6 +40,7 @@ export function getCtBalance() {
         smartupWeb3 && smartupWeb3.eth.call,
         MARKET_DETAIL_GET_CT_REQUESTED, MARKET_DETAIL_GET_CT_SUCCEEDED, MARKET_DETAIL_GET_CT_FAILED,
         {
+          isWeb3: true,
           params: { 
             data:  getBalance( getAccount() ), 
             to: getState().market.currentMarket.address 

@@ -49,8 +49,8 @@ const BookmarkBlock = styled(Row)`
 // ]
 
 const TableName = [
-  { label: '', value: 'icon', layoutStyle: { width: '18px' }, component: ({ value }) => <Avatar XS icon={value} /> },
-  { label: portfolioText.wallet.id[currentLang], value: 'marketId', layoutStyle: { width: '80px' }, component: ({value}) => <Text S textOverflow>{value}</Text> },
+  { label: '', value: 'marketPhoto', layoutStyle: { width: '18px' }, component: ({ value }) => <Avatar XS icon={value} /> },
+  { label: portfolioText.wallet.id[currentLang], value: 'marketName', layoutStyle: { width: '80px' }, component: ({value}) => <Text S textOverflow>{value}</Text> },
   { label: portfolioText.wallet.ct[currentLang], value: 'ctAmount' },
   {
     label: portfolioText.wallet.volume[currentLang], value: 'latelyChange', component: ({ value }) =>

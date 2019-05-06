@@ -8,11 +8,11 @@ import theme from '../../theme'
 import { ipfsHost } from '../../actions/ipfs'
 import { shorten } from '../../lib/util'
 
-export default ({ icon, username, ...rest }) => 
+export default ({ icon, username, ...rest }) => // size
   <Row centerVertical>
     {
       icon ? 
-      <Image source={ipfsHost + icon} cover MarginRightXS {...rest} /> : 
+      <Image source={ipfsHost + icon} round cover MarginRightXS {...rest} /> : 
       <People color={theme.white} round MarginRightXS {...rest} /> 
     }
     {

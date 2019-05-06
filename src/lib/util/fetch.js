@@ -18,7 +18,7 @@ export function get(api, params) {
 }
 
 export function post(api, params) {
-  return cmFetch('POST', api + toParams(params))
+  return cmFetch('POST', api, params)
 }
 
 export function put(api, params) {
@@ -65,7 +65,9 @@ function getOptions(method = 'GET', params) {
     mode: 'cors',
     // credentials: 'include',
     // cache: 'no-cache',
-    // body: JSON.stringify(params)
+  }
+  if(params) {
+    r.body = toParams(params).slice(1)
   }
   // console.log(r)
   return r

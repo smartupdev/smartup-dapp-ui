@@ -48,12 +48,14 @@ const Home = ({
     getList()
     return reset
   }, [])
+
+  const filteredMarket = markets.filter(m => activeTabIndex ? m.name.toLowerCase().includes(searchContent.toLowerCase()) : true )
   return (
     <Col>
       <Top flex={1} spaceBetween relative>
         <Tab activeIndex={activeTabIndex} tabs={FILTERS} onClick={setActiveTab} type='simple' />
         <Row centerVertical>
-          <Text HS S note>{totalResults} RESULTS</Text>
+          <Text HS S note>{activeTabIndex ? filteredMarket.length : totalResults} RESULTS</Text>
           <Search backgroundColor={theme.bgColorLight} id='home' value={searchContent} onChange={onSearchChange} onSearch={getList} />
         </Row>
       </Top>
@@ -61,7 +63,7 @@ const Home = ({
         autoHeight
         onClickHeader={onTableHeaderClick}
         onClick={setExpandedRecords}
-        markets={markets.filter(m => activeTabIndex ? m.name.toLowerCase().includes(searchContent.toLowerCase()) : true )}
+        markets={filteredMarket}
         sortBy={sortBy}
         orderBy={orderBy}
         expandedRecords={expandedRecords}
