@@ -35,7 +35,7 @@ import { connect } from 'react-redux'
 // if has Icon, show in menu 
 let routes = [
   { id: 'home', path: '/', component: Home, icon: Menu1, iconLabel: 'Home', selected: true, exact: true },  
-  { id: 'createMarket', path: '/create/market', component: CreateMarket, icon: Menu2, iconLabel: 'Create Matket' },
+  { id: 'createMarket', path: '/create/market', component: CreateMarket, icon: Menu2, iconLabel: 'Create Market' },
   { id: 'account', path: '/account', component: Account },
 
   // market, must have id as params
