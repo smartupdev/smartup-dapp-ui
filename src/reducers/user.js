@@ -10,7 +10,7 @@ import {
   USER_CURRENT_INFO_REQUESTED, USER_CURRENT_INFO_SUCCEEDED, USER_CURRENT_INFO_FAIL,
   USER_UPDATE_AVATAR_REQUESTED, USER_UPDATE_AVATAR_SUCCEEDED, USER_UPDATE_AVATAR_FAIL,
   USER_UPDATE_NAME_REQUESTED, USER_UPDATE_NAME_SUCCEEDED, USER_UPDATE_NAME_FAIL,
-  USER_NAME_CHANGE,
+  USER_NAME_CHANGE,USER_NAME_SUBMITTING,
 } from '../actions/actionTypes';
 
 export const initialState = {
@@ -51,6 +51,7 @@ export const initialState = {
   updatingUserInfo: false,
   updateAvatarError: null,
   updateNameError: null,
+  submittingName: false,
 }
 
 function userInfo(user) {
@@ -186,6 +187,12 @@ export default (state = initialState, action) => {
         ...state,
         updatingUserInfo: false,
         updateAvatarError: action.payload,
+      }
+      case USER_NAME_SUBMITTING:
+      return {
+        ...state,
+        updateNameError: action.payload ? 'This action is irreversible.' : initialState.updateNameError,
+        submittingName: action.payload,
       }
     case USER_UPDATE_NAME_REQUESTED:
       return {

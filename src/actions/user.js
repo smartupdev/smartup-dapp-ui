@@ -11,7 +11,7 @@ import {
   USER_UPDATE_AVATAR_REQUESTED, USER_UPDATE_AVATAR_SUCCEEDED, USER_UPDATE_AVATAR_FAIL,
   USER_UPDATE_NAME_REQUESTED, USER_UPDATE_NAME_SUCCEEDED, USER_UPDATE_NAME_FAIL,
   USER_CURRENT_INFO_REQUESTED, USER_CURRENT_INFO_SUCCEEDED, USER_CURRENT_INFO_FAIL,
-  USER_NAME_CHANGE,
+  USER_NAME_CHANGE,USER_NAME_SUBMITTING,
 } from './actionTypes'
 import {
   asyncFunction, callbackFunction,
@@ -299,6 +299,13 @@ export function onChangeName(name) {
   return {
     type: USER_NAME_CHANGE,
     payload: name,
+  }
+}
+
+export function onChangeNameSubmit(submitting) {
+  return {
+    type: USER_NAME_SUBMITTING,
+    payload: submitting,
   }
 }
 
