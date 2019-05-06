@@ -10,7 +10,8 @@ const ORDER_BY = {
 }
 
 const Table = styled(Col)`
-  overflow: ${p => p.autoHeight ? 'visible' : 'auto'}
+  overflow-x: auto
+  overflow-y: ${p => p.autoHeight ? 'visible' : 'auto'}
 `
 
 const TD = styled(Col)`
