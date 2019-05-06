@@ -12,7 +12,7 @@ export default ({ icon, username, ...rest }) =>
   <Row centerVertical>
     {
       icon ? 
-      <Image source={ipfsHost + icon} cover MarginRightXS {...rest} /> : 
+      <Image source={ipfsHost + icon} round cover MarginRightXS {...rest} /> : 
       <People color={theme.white} round MarginRightXS {...rest} /> 
     }
     {

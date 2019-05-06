@@ -47,6 +47,15 @@ const Image =  styled.img`
   `}
   ${p => p.height && css`height: ${p => p.height};`}
   ${p => p.width && css`width: ${p => p.width};`}
+  ${p => p.round && css`
+    border-radius: ${
+      p.XS ? p.theme.imageSizeXS :
+      p.S ? p.theme.imageSizeS :
+      p.L ? p.theme.imageSizeL :
+      p.XL ? p.theme.imageSizeXL :
+      p.theme.imageSizeM
+    }
+  `}
   ${p => p.cover && css`object-fit: cover;`}
   ${p => p.actualSize && css`
     width: auto; 
