@@ -93,7 +93,7 @@ export default (state = initialState, action) => {
     case MARKET_DETAIL_GET_CT_SUCCEEDED: 
       return {
         ...state,
-        userCt: action.payload
+        userCt: +action.payload
       }
     // case MARKET_DETAIL_GET_CT_FAILED: 
     //   return {
@@ -164,6 +164,7 @@ export default (state = initialState, action) => {
 
       return {
         ...state, ct, sut, tradingError, isTrading,
+        userCt: state.isSell ? state.userCt - state.ct : state.userCt + +state.ct
         // trades: [
         //   {
         //     id: hash,
