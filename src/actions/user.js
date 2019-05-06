@@ -130,40 +130,64 @@ export function loginMetaMask(skipLogin) {
 
 //get eth balance
 function getEthBalance() {
-  return callbackFunction(
-    smartupWeb3.eth.getBalance,
-    null, METAMASK_ETH_BALANCE_SUCCEEDED, null,
-    {
-      isWeb3: true,
-      params: getAccount(),
-      responsePayload: formatToken
-    }
+  return async (dispatch, getState) => dispatch(
+    callbackFunction(
+      smartupWeb3.eth.getBalance,
+      null, null, null,
+      {
+        isWeb3: true,
+        params: getAccount(),
+        responsePayload: formatToken
+      }
+    )
+  )
+  .then( ([error, response]) => 
+    !error && response !== getState().user.ethBalance && dispatch({
+      type: METAMASK_ETH_BALANCE_SUCCEEDED,
+      payload: response
+    })
   )
 }
 
 //get sut balance
 function getSutBalance() {
-  return callbackFunction(
-    smartupWeb3.eth.call,
-    null, METAMASK_SUT_BALANCE_SUCCEEDED, null,
-    {
-      isWeb3: true,
-      params: { to: sutContractAddress, data: getBalance(getAccount()) },
-      responsePayload: formatToken
-    }
+  return async (dispatch, getState) => dispatch(
+    callbackFunction(
+      smartupWeb3.eth.call,
+      null, null, null,
+      {
+        isWeb3: true,
+        params: { to: sutContractAddress, data: getBalance(getAccount()) },
+        responsePayload: formatToken
+      }
+    )
+  )
+  .then( ([error, response]) => 
+    !error && response !== getState().user.sutBalance && dispatch({
+      type: METAMASK_SUT_BALANCE_SUCCEEDED,
+      payload: response
+    })
   )
 }
 
 //get ntt balance
 function getNttBalance() {
-  return callbackFunction(
-    smartupWeb3.eth.call,
-    null, METAMASK_NTT_BALANCE_SUCCEEDED, null,
-    {
-      isWeb3: true,
-      params: { to: nttContractAddress, data: getCredit(getAccount()) },
-      responsePayload: formatCredit
-    }
+  return async (dispatch, getState) => dispatch(
+    callbackFunction(
+      smartupWeb3.eth.call,
+      null, null, null,
+      {
+        isWeb3: true,
+        params: { to: nttContractAddress, data: getCredit(getAccount()) },
+        responsePayload: formatCredit
+      }
+    )
+    )
+  .then( ([error, response]) => 
+    !error && response !== getState().user.nttBalance && dispatch({
+      type: METAMASK_NTT_BALANCE_SUCCEEDED,
+      payload: response
+    })
   )
 }
 
