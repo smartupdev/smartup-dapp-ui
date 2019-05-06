@@ -68,7 +68,7 @@ const Notification = ({
               n.content && n.content.marketId && goto.trading({id: n.content.marketId})
               !n.isRead && read(n.notificationId)
             }}
-            image={n.style === TYPES.system.value ? TYPES.system.image : userAvatar && (ipfsHost + userAvatar)}
+            image={n.style === TYPES.system.value ? TYPES.system.image : userAvatar}
             sender={n.style === TYPES.system.value ? 'SmartUp' : 'Me'}
             title={n.title}
             content={n.text}

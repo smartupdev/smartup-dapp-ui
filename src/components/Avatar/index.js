@@ -8,7 +8,7 @@ import theme from '../../theme'
 import { ipfsHost } from '../../actions/ipfs'
 import { shorten } from '../../lib/util'
 
-export default ({ icon, username, ...rest }) => 
+export default ({ icon, username, ...rest }) => // size
   <Row centerVertical>
     {
       icon ? 

@@ -2,6 +2,7 @@ import React from 'react'
 import { Row, Col } from '../Layout'
 import Text from '../Text'
 import Image from '../Image'
+import Avatar from '../Avatar'
 import { People } from '../Icon'
 // import theme from '../../theme'
 import { toAgo } from '../../lib/util/datatime'
@@ -25,17 +26,12 @@ const Dot = styled.div`
   `}
 `
 const Main = styled(Col)`
-  margin-left: ${p => p.theme.spacingXS};
   flex: 1;
 `
 export default ({ image, sender, title, content, date, unread, expanded, onClick, id }) => 
-  <Container spaceBetween unread={unread} onClick={onClick && (() => onClick(id))}>
+  <Container top spaceBetween unread={unread} onClick={onClick && (() => onClick(id))}>
     <Dot unread={unread} />
-    {
-      image ?
-      <Image source={image} size={'18px'} /> :
-      <People round color='white' size={'18px'} />
-    }
+    <Avatar icon={image} size='18px' />
     <Main expanded={expanded}>
       <Text spaceBottom>{sender}</Text>
       <Text S bold>{title}</Text>
