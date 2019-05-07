@@ -77,7 +77,6 @@ const Portfolio = ({
     getCtAccountInMarket()
   }, [])
   const { sutAmount, marketCount, latelyPostCount } = marketGlobal
-  console.log(ctInMarket)
   return (
     <Col overflowAuto>
       <Col center>
