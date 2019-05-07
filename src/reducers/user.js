@@ -52,6 +52,7 @@ export const initialState = {
   updateAvatarError: null,
   updateNameError: null,
   submittingName: false,
+  nameHasChanged: false,
 }
 
 function userInfo(user) {
@@ -61,6 +62,7 @@ function userInfo(user) {
     userAddress: user.userAddress,
     userName: user.name ? user.name : user.userAddress,
     realUserName: user.name,
+    nameHasChanged: !!user.name,
   }
 }
 
@@ -191,7 +193,7 @@ export default (state = initialState, action) => {
       case USER_NAME_SUBMITTING:
       return {
         ...state,
-        updateNameError: action.payload ? 'This action is irreversible.' : initialState.updateNameError,
+        updateNameError: action.payload ? 'Username can only be changed once.' : initialState.updateNameError,
         submittingName: action.payload,
       }
     case USER_UPDATE_NAME_REQUESTED:
@@ -205,6 +207,8 @@ export default (state = initialState, action) => {
         updatingUserInfo: false,
         updateNameError: initialState.updateNameError,
         userName: state.realUserName ? state.realUserName : state.userAddress,
+        submittingName:false,
+        nameHasChanged: true,
       }
     case USER_UPDATE_NAME_FAIL:
       return {
