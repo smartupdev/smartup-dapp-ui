@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 
-import { Link, getUrlParams, routeMap } from '../../routes'
+import { Link, getUrlParams, routeMap, getPath } from '../../routes'
 
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
@@ -44,8 +44,10 @@ const Market = ({ get, collectMarket, getting, location, market, getMarketPost, 
   const id = getUrlParams().id
   useEffect(() => {
     get(id)
-    return resetDetail
   }, [id])
+  useEffect(() => {
+    return resetDetail
+  }, [])
   if(getting) return <DonutLoader page />
   if (!market) return null
 
@@ -88,7 +90,7 @@ const Market = ({ get, collectMarket, getting, location, market, getMarketPost, 
         <Col flex={1} spaceBetween>
           <Hr />
           {
-            window.location.pathname === routeMap.discussion.path && 
+            getPath() === routeMap.discussion.path && 
             <Row right centerVertical>
               <Search backgroundColor={theme.bgColor} bottom='1px' top='1px' right='30px' value={postKeyword} onChange={onChangeKeyword} onSearch={() => getMarketPost()} />
               <Link>
