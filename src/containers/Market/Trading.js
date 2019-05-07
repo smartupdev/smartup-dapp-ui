@@ -120,7 +120,7 @@ function Trading({ loggedIn, market, gettingMarket, tradeState, setTab, onChange
           <Row spaceBetween>
             <Row centerVertical>
               <Checkbox checked={agreeTnc} onChange={toggleTnc} disabled={isTrading} label={<Text S note lineHeight>Agree to&nbsp;</Text>} />
-              <Text S note underline lineHeight onClick={() => console.log('Get T&C')}>{'Teams & Conditions'}</Text>
+              <Text S note underline lineHeight onClick={() => console.log('Get T&C')}>{'Terms of Service'}</Text>
             </Row>
             <Col right>
               <Button label='Trade' icon={Trade} primary onClick={() => onTrade(market.id)} disabled={isTrading || !agreeTnc || !ct | notEnoughSut || notEnoughCt} />
