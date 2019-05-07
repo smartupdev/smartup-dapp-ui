@@ -114,7 +114,7 @@ function Trading({ loggedIn, market, gettingMarket, tradeState, setTab, onChange
                 </Col>
             </Row>
           </Col>
-          <Text S center note BottomM>Cost {sut ? (+sut).toFixed(4) : 0} SMARTUP</Text>
+          <Text S center note BottomM>{`${isSell ? 'To receive' : 'Cost'} ${sut ? (+sut).toFixed(4) : 0} SMARTUP`}</Text>
 
 
           <Row spaceBetween>
