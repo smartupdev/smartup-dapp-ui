@@ -98,8 +98,8 @@ function Trading({ loggedIn, market, gettingMarket, tradeState, setTab, onChange
         <Hr />
 
         <Row TopL>
-          <Button onClick={isSell ? toggleIsSell : undefined} label='BUY' icon={Trade} backgroundColor={!isSell && theme.green} color={isSell && theme.green} width='100px' />
-          <Button onClick={isSell ? undefined : toggleIsSell} label='SELL' icon={Trade} backgroundColor={isSell && theme.red} color={!isSell && theme.red} width='100px' MarginLeftS />
+          <Button onClick={isSell ? toggleIsSell : undefined} label='BUY' icon={Trade} backgroundColor={!isSell ? theme.green : undefined} color={isSell ? theme.green : undefined} width='100px' />
+          <Button onClick={isSell ? undefined : toggleIsSell} label='SELL' icon={Trade} backgroundColor={isSell ? theme.red : undefined} color={!isSell ? theme.red : undefined} width='100px' MarginLeftS />
         </Row>
 
         <Text S center note VM>{lang.trading.tradeText[currentLang]}</Text>
