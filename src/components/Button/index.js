@@ -21,6 +21,9 @@ const Button = styled.button`
   ${p => p.primary && css`background-color: ${p.theme.colorPrimary}; color: ${p.theme.colorDark}; fill: ${p.theme.colorDark};`}  
   ${p => p.light && css`color: ${p.theme.white}; fill: ${p.theme.white};`}  
   ${p => p.primary && p.outline && css`background-color: transparent; color: ${p.theme.colorPrimary}; border: 1px solid ${p.theme.colorPrimary}`}  
+  
+  ${p => p.backgroundColor && css`background-color: ${p.backgroundColor};`}  
+  ${p => p.color && css`color: ${p.color}; fill: ${p.color}; border: 1px solid ${p.color}`}  
   :disabled {
     opacity: .5;
   }

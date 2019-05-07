@@ -16,7 +16,6 @@ import Text from '../../components/Text'
 import Button from '../../components/Button'
 import Hr from '../../components/Hr'
 import Avatar from '../../components/Avatar'
-import Botton from '../../components/Button'
 import TableFooter from '../../components/TableFooter'
 import ScrollLoader from '../../components/ScrollLoader'
 import smartupIcon from '../../images/smartup.png'
@@ -98,37 +97,25 @@ function Trading({ loggedIn, market, gettingMarket, tradeState, setTab, onChange
         <Text spacingBottomS spacingTopS L center>{lang.trading.tradeTitle[currentLang]}</Text>
         <Hr />
 
-        <Col spacingTopXS spacingBottomL>
-          <Text S center note>{lang.trading.tradeText[currentLang]}</Text>
-          <Text S center note>1,127 SMARTUP  = 1 IDEA(832288)</Text>
-        </Col>
+        <Row TopL>
+          <Button onClick={isSell ? toggleIsSell : undefined} label='BUY' icon={Trade} backgroundColor={!isSell && theme.green} color={isSell && theme.green} width='100px' />
+          <Button onClick={isSell ? undefined : toggleIsSell} label='SELL' icon={Trade} backgroundColor={isSell && theme.red} color={!isSell && theme.red} width='100px' MarginLeftS />
+        </Row>
+
+        <Text S center note VM>{lang.trading.tradeText[currentLang]}</Text>
 
         <Col maxWidth='1000px' width='100%'>
-          <Row center spacingBottomL>
-            
-            <Avatar icon={market.avatar} style={{ 'borderRadius':'50%'}}/>
-            <Col>
-              <Text S note>{lang.trading[isSell ? 'tradePay' : 'tradeReceive'][currentLang]}</Text>
-              <Text S>{market.name}</Text>
-            </Col>
-            <Col spacingLeftS spacingTopS flex={1}>
-              <Input underline L center fullWidth disabled={isTrading} value={ct} onChange={onChangeCT} number />
-              {notEnoughCt && <Text error XS>You don't have enough token to sell.</Text>}
-            </Col>
+          <Col center>
+            <Row BottomL>
+              <Avatar icon={market.avatar} username={market.name} />
+              <Col spacingLeftS>
+                <Input background L center size='30' disabled={isTrading} value={ct} onChange={onChangeCT} number />
+                {notEnoughCt && <Text error XS>You don't have enough token to sell.</Text>}
+                </Col>
+            </Row>
+          </Col>
+          <Text S center note BottomM>Cost {sut ? (+sut).toFixed(4) : 0} SMARTUP</Text>
 
-            <Trade disabled={isTrading} spacingLeftM spacingRightM onClick={toggleIsSell} leftActive={!isSell} rightActive={isSell} />
-
-            <Image source={smartupIcon} M rightText/>
-            <Col>
-              <Text S note>{lang.trading[isSell ? 'tradeReceive' : 'tradePay'][currentLang]}</Text>
-              <Text S>SMARTUP</Text>
-            </Col>
-            <Col spacingLeftS spacingTopS flex={1}>
-              <Input underline L center fullWidth disabled={true} value={sut && (+sut).toFixed(4)} onChange={onChangeSUT} number />
-              {notEnoughSut && <Text error XS>You need more SmartUp to make this trade.</Text>}
-            </Col>
-            
-          </Row>
 
           <Row spaceBetween>
             <Row centerVertical>
@@ -136,7 +123,7 @@ function Trading({ loggedIn, market, gettingMarket, tradeState, setTab, onChange
               <Text S note underline lineHeight onClick={() => console.log('Get T&C')}>{'Teams & Conditions'}</Text>
             </Row>
             <Col right>
-              <Botton label='Trade' icon={Trade} primary onClick={() => onTrade(market.id)} disabled={isTrading || !agreeTnc || !ct | notEnoughSut || notEnoughCt} />
+              <Button label='Trade' icon={Trade} primary onClick={() => onTrade(market.id)} disabled={isTrading || !agreeTnc || !ct | notEnoughSut || notEnoughCt} />
               {tradingError && <Text error XS>{tradingError.message}</Text>}
             </Col>
           </Row>
