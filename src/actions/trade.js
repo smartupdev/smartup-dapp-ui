@@ -128,6 +128,12 @@ export function onTrade() {
     const ctAmount = toWei(ct);
     const encodeCtAmount = encodeParam(ctAmount);
 
+    if(!address) return dispatch({
+      type: TRADE_FAILED,
+      payload: new Error('No market address'),
+      error: true
+    })
+
     const [error, response] = await dispatch(callbackFunction(
       smartupWeb3.eth.sendTransaction,
       TRADE_REQUESTED, TRADE_SUCCEEDED, TRADE_FAILED,
