@@ -87,14 +87,15 @@ const CreateMarket = ({
         :
           activeIndex === 1 ? 
           <>
-            <Label>Price equation of the market token</Label>
+            <Label>Price equation of idea token</Label>
             <Col spacingBottomXS>
               <Input background L disabled value={'f(x) = 0.074999921875 * ln(x) + 0.000000015625 * x'} />
             </Col>
-            <Label>Preview price movement</Label>
+            <Label>Preview</Label>
             <Col spacingLeftL spacingRightL spacingTopM>
               <Chart />
             </Col>
+            <Label>Preview</Label>
             <Row spacingTopL spaceBetween>
               <Back />
               <Next />

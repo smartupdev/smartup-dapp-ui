@@ -16,8 +16,8 @@ import { getUserTransactionList, reset } from '../../../actions/personalCenter'
 
 
 const typeHelper = {
-  BuyCT:        { label: 'Trade placed (Buy)', title: (ct, sut) => `Bought ${ct} community token from ${toToken(sut)} SmartUp token` },
-  SellCT:       { label: 'Trade placed (Sell)', title: (ct, sut) => `Sold ${ct} community token to ${toToken(sut)} SmartUp token` },
+  BuyCT:        { label: 'Trade placed (Buy)', title: (ct, sut) => `Bought ${ct} idea token from ${toToken(sut)} SmartUp token` },
+  SellCT:       { label: 'Trade placed (Sell)', title: (ct, sut) => `Sold ${ct} idea token to ${toToken(sut)} SmartUp token` },
   CreateMarket: { label: 'Market created', title: (ct, sut) => `Paid ${sut} SmartUp token` },
 }
 

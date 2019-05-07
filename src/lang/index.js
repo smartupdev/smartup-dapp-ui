@@ -96,7 +96,7 @@ export default {
     price: name('LAST PRICE'),
     volume: name('24H VOLUME'),
     cap: name('FUNDING POOL'),
-    ct: name('NUMBER OF COMMUNITY TOKEN'),
+    ct: name('NUMBER OF IDEA TOKEN MINTED'),
     tradeTitle: name('Trade Token(s)'),
     tradeText: name('You are performing token trading.'),
     tradePay: name('PAY With'),
