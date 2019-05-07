@@ -81,12 +81,15 @@ export function getList(isLoadMore) {
     if(!isAll && sortBy) return dispatch({
       type: GET_MARKET_LIST_SUCCEEDED,
       payload: {
-        list: [...markets].sort( (a, b) => 
-          (orderBy === 'asc' ? 1 : -1) *
-          (typeof a[sortBy] === 'string' || typeof b[sortBy] === 'string' ?
-          a[sortBy].localeCompare(b[sortBy]) :
-          a[sortBy] - b[sortBy])
-        )
+        list: [...markets].sort( (a, b) => {
+          const A = a[sortBy], B = b[sortBy]
+          if(A === null) return 1
+          if(B === null) return -1
+          return (orderBy === 'asc' ? 1 : -1) *
+          (typeof A === 'string' || typeof B === 'string' ?
+          A.localeCompare(B) :
+          A - B)
+        })
       }
     })
     
