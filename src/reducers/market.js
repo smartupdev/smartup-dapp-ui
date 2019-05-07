@@ -11,6 +11,7 @@ import {
 } from '../actions/actionTypes';
 
 import { ipfsHost } from '../actions/ipfs'
+import { changeArrayById } from '../lib/util/reducerHelper'
 
 export function marketMassage(m) {
   return {
@@ -195,18 +196,14 @@ export default (state = initialState, action) => {
         ...state,
         addingCollect: true,
       };
+    // TODO: Refactor
     case USER_COLLECT_ADD_SUCCEEDED: {
-      const { id } = action.payload;
-      const currentMarkets = state.markets;
-      let tempMarkets = currentMarkets.map(market => market.id === id ? {
-        ...market, following: true,
-      } : market);
       return {
         ...state,
-        markets: tempMarkets,
+        markets: changeArrayById(state.markets, action.payload.id, r => ({ following: true })),
         currentMarket: {
           ...state.currentMarket,
-          following: state.currentMarket && !state.currentMarket.following
+          following: true
         },
         addingCollect: false,
         addCollectError: initialState.addCollectError,
@@ -224,17 +221,12 @@ export default (state = initialState, action) => {
         addingCollect: true,
       };
     case USER_COLLECT_DEL_SUCCEEDED: {
-      const { id } = action.payload;
-      const currentMarkets = state.markets;
-      let tempMarkets = currentMarkets.map(market => market.id === id ? {
-        ...market, following: false,
-      } : market);
       return {
         ...state,
-        markets: tempMarkets,
+        markets: changeArrayById(state.markets, action.payload.id, r => ({ following: false })),
         currentMarket: {
           ...state.currentMarket,
-          following: !state.currentMarket.following
+          following: false
         },
         delingCollect: false,
         delCollectError: initialState.delCollectError,
