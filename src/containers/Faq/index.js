@@ -5,9 +5,8 @@ import Panel from '../../components/Panel'
 import { Row, Col } from '../../components/Layout'
 import lang, { currentLang } from '../../lang'
 import theme from '../../theme'
-import { Information } from '../../components/Icon'
+import { Faq,More } from '../../components/Icon'
 import Table from '../../components/Table'
-import { More } from '../../components/Icon'
 import smartupIcon from '../../images/smartup.png'
 
 const faqText = lang.faq
@@ -62,7 +61,7 @@ export default function () {
   return (
     <Col>
       <Row center centerVertical flex={1} >
-        <Information S color={theme.white} style={{marginBottom:-10,marginTop:10}}/>
+        <Faq S color={theme.white} style={{marginBottom:-10,marginTop:10}}/>
         <Text LeftS M center wordSpaceS style={{marginBottom:-10,marginTop:10}}>{faqText.title[currentLang]}</Text>
       </Row>
       <Table
