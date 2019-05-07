@@ -5,7 +5,7 @@
 import { withRouter } from 'react-router-dom'
 import { toParams } from './lib/util/fetch'
 
-import { MainPageButton as Menu1, ViewMarketButton as Menu2, CreateMarketButton as Menu3, FindMarketButton as Menu4 } from './components/Icon/index'
+import { MainPageButton as Menu1, ViewMarketButton as Menu2, CreateMarketButton as Menu3, FindMarketButton as Menu4, Faq as FaqButton, FeedbackEmail as FeedbackButton } from './components/Icon/index'
 
 import Home from './containers/Home'
 import CreateMarket from './containers/CreateMarket'
@@ -26,16 +26,16 @@ import AccountPost from './containers/Account/Post'
 import AccountComment from './containers/Account/Comment'
 import AccountSaved from './containers/Account/Saved'
 
-
 import Dispute from './containers/Dispute'
+import Faq from './containers/Faq'
 
 import { connect } from 'react-redux'
 
 // ORDER MATTER
 // if has Icon, show in menu 
 let routes = [
-  { id: 'home', path: '/', component: Home, icon: Menu1, iconLabel: 'Home', selected: true, exact: true },  
-  { id: 'createMarket', path: '/create/market', component: CreateMarket, icon: Menu2, iconLabel: 'Create Market' },
+  { id: 'home', path: '/', component: Home, icon: Menu1, iconLabel: 'Home', selected: true, exact: true, isHeader: true },  
+  { id: 'createMarket', path: '/create/market', component: CreateMarket, icon: Menu2, iconLabel: 'Create Market', isHeader: true },
   { id: 'account', path: '/account', component: Account },
 
   // market, must have id as params
@@ -49,13 +49,14 @@ let routes = [
   { id: 'flag', path: '/market/flag', component: Flag, from: 'home' },
 
   // account
-  { id: 'accountTransaction', label: 'Transaction', path: '/account/transaction', component: AccountTransaction, icon: Menu3, iconLabel: 'Personal Center' },
+  { id: 'accountTransaction', label: 'Transaction', path: '/account/transaction', component: AccountTransaction, icon: Menu3, iconLabel: 'Personal Center', isHeader: true },
   { id: 'accountMarket', label: 'Market', path: '/account/market', component: AccountMarket, from: 'accountTransaction' },
   { id: 'accountPost', label: 'Post', path: '/account/post', component: AccountPost, from: 'accountTransaction' },
   { id: 'accountComment', label: 'Comment', path: '/account/comment', component: AccountComment, from: 'accountTransaction' },
   { id: 'accountSaved', label: 'Saved', path: '/account/saved', component: AccountSaved, from: 'accountTransaction' },
 
-  { id: 'dispute', path: '/dispute', component: Dispute, icon: Menu4, iconLabel: 'Dispute' },
+  { id: 'dispute', path: '/dispute', component: Dispute, icon: Menu4, iconLabel: 'Dispute', isHeader: true },
+  { id: 'faq', path: '/faq', component: Faq, icon: FaqButton, iconLabel: 'FAQ', isFooter: true },
 ]
 
 routes = routes.map(r => ({
