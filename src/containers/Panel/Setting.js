@@ -9,7 +9,7 @@ import { connect } from 'react-redux'
 import { onChangeAvatar, updateUserAvatar, updateUserName, onChangeName, onChangeNameSubmit } from '../../actions/user';
 
 const Setting = ({ realUserName, avatarUploading, avatarHash, updateUserAvatar,
-  updateUserName, onChangeAvatar, updateNameError, updateAvatarError, onChangeName, submittingName, onChangeNameSubmit }) => {
+  updateUserName, onChangeAvatar, updateNameError, updateAvatarError, onChangeName, nameHasChanged,submittingName, onChangeNameSubmit }) => {
   return (
     <Col>
       <Text MarginLeftXS S VXS>{'Avatar photo'}</Text>
@@ -20,21 +20,23 @@ const Setting = ({ realUserName, avatarUploading, avatarHash, updateUserAvatar,
         {/* <Button MarginLeftXS LeftM RightM style={{backgroundColor:'#8F9497'}}  label='Cancel' onClick={() => { }} /> */}
       </Row>
       <Text MarginLeftXS S VXS>{'User Name'}</Text>
-      <Input value={realUserName} placeholder='User Name' onChange={onChangeName} />
+      <Input value={realUserName} placeholder='User Name' disabled={nameHasChanged} onChange={onChangeName} />
       <Text right error={updateNameError}>{
         typeof updateNameError === 'string' ? updateNameError :
-          'Capital sensitive, 6-15 characters.'
+          (!nameHasChanged ? 'Capital sensitive, 6-15 characters.' : 'Username is confirmed and locked.')
       } </Text>
-      {!submittingName ?
-        <Row center MarginTopXS>
-          <Button primary LeftM RightM label='Submit' onClick={()=>{onChangeNameSubmit(true)}}/>
-        </Row>
-        :
-        <Row center MarginTopXS>
-        <Button primary LeftM RightM label='Confirm' onClick={updateUserName} />
-        <Button MarginLeftXS LeftM RightM style={{backgroundColor:'#8F9497'}}  label='Cancel' onClick={() => {onChangeNameSubmit(false)}} />
-      </Row>
+      {
+        !nameHasChanged && (!submittingName ?
+          <Row center MarginTopXS>
+            <Button primary LeftM RightM label='Submit' onClick={() => { onChangeNameSubmit(true) }} />
+          </Row>
+          :
+          <Row center MarginTopXS>
+            <Button primary LeftM RightM label='Confirm' onClick={updateUserName} />
+            <Button MarginLeftXS LeftM RightM style={{ backgroundColor: '#8F9497' }} label='Cancel' onClick={() => { onChangeNameSubmit(false) }} />
+          </Row>)
       }
+
     </Col>
   )
 }
@@ -46,6 +48,7 @@ const mapStateToProps = state => ({
   updateAvatarError: state.user.updateAvatarError,
   updateNameError: state.user.updateNameError,
   submittingName: state.user.submittingName,
+  nameHasChanged: state.user.nameHasChanged,
 });
 
 const mapDispatchToProps = {
