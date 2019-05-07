@@ -56,6 +56,7 @@ let routes = [
   { id: 'accountSaved', label: 'Saved', path: '/account/saved', component: AccountSaved, from: 'accountTransaction' },
 
   { id: 'dispute', path: '/dispute', component: Dispute, icon: Menu4, iconLabel: 'Dispute', isHeader: true },
+  { id: 'feedback', path: '/feedback', component: Faq, icon: FeedbackButton, isFooter: true, onClick: () => {  window.location.href = "mailto:support@smartup.global?subject=See my feedback for SmartUp!"; } },
   { id: 'faq', path: '/faq', component: Faq, icon: FaqButton, iconLabel: 'FAQ', isFooter: true },
 ]
 
