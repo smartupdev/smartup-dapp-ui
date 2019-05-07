@@ -49,8 +49,8 @@ const CreateMarket = ({
     tab === 0 && setActiveIndex(tab) ||
     tab === 1 && page1Ready && setActiveIndex(tab) ||
     tab === 2 && page2Ready && setActiveIndex(tab)
-  
-  return (
+
+    return (
     <Col>
       <Text center BottomS TopS L>CREATE MARKET</Text>
       <Hr />
@@ -89,7 +89,12 @@ const CreateMarket = ({
           <>
             <Label>Price equation of the market token</Label>
             <Col spacingBottomXS>
-              <Input background L disabled value={'f(x) = 0.074999921875 * ln(x) + 0.000000015625 * x'} />
+              <Input background L disabled value={'\
+7.4999921875 × 10⁻²{ \
+(𝑦 + 1 + 𝑥)[In(𝑦 + 1 + 𝑥) - 1] - \
+(𝑦 + 1)[In(𝑦 + 1 ) - 1] \
+} + \
+7.8125 × 10⁻⁹[(𝑦 + 1 + 𝑥)² - (𝑦 + 1)²]'} />
             </Col>
             <Label>Preview price movement</Label>
             <Col spacingLeftL spacingRightL spacingTopM>
