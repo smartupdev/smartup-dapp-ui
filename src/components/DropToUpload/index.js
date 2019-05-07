@@ -87,8 +87,8 @@ export default function ({
 
   return (
     <>
-      <ImageBox show={value} center relative>
-        <Col relative>
+      <ImageBox show={value} center relative fitHeight>
+        <Col relative fitHeight>
           <Image source={value && (ipfsHost + value)} cover width={imageWidth} height={imageHeight} actualSize={actualSize} />
           <TextWrapper centerVertical center onClick={() => onChoose()}>
             {/* <Text center>Click here to delete</Text> */}

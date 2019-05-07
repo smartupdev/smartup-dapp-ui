@@ -45,8 +45,8 @@ const Image =  styled.img`
     min-height: ${p => p.size};
     min-width: ${p => p.size};  
   `}
-  ${p => p.height && css`height: ${p => p.height};`}
-  ${p => p.width && css`width: ${p => p.width};`}
+  ${p => p.height && css`height: ${p => p.height}; min-height: ${p => p.height};`}
+  ${p => p.width && css`width: ${p => p.width}; min-width: ${p => p.width};`}
   ${p => p.round && css`
     border-radius: ${
       p.size ? p.size :
