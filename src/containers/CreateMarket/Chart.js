@@ -1,8 +1,15 @@
 import React, {Component} from 'react'
 import ChartJS from 'chart.js'
 
-function f(x) {
-  return 1000 * (0.000074999921875 * Math.log(x) + 0.000000000015625 * x)
+function f(x, y) {
+  const xy1 = x + y + 1, y1 = y + 1
+  return (
+    0.074999921875 * (
+      xy1*( Math.log(xy1)-1 ) - 
+      y1 *( Math.log(y1 )-1 )
+    ) + 
+    0.0000000078125 * ( xy1^2- y1^2 )
+  )
 }
 
 function getRange(min_x, max_x, step) {
@@ -13,9 +20,10 @@ function getRange(min_x, max_x, step) {
   return arr
 }
 
-const range = getRange(0, 10000, 100)
+const step = 10000
+const range = getRange(0, 1000000, step)
 const data = range.map(x => {
-  let y = f(x)
+  let y = f(step, x)
   return y < 0 ? 0 : y
 })
 

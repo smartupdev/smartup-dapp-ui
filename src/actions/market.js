@@ -145,6 +145,7 @@ export function getMarketGlobal() {
     )
 }
 
+// TODO: refactor
 //收藏
 export function collectMarket(record) {
   const requestParams = {
@@ -171,11 +172,6 @@ export function collectMarket(record) {
   } else {
     //取消收藏
     return async (dispatch, getState) => {
-      const requestParams = {
-        type: 'market',
-        objectMark: record.id,
-      }
-
       let [error, response] = await dispatch(asyncFunction(
         fetch.post,
         USER_COLLECT_DEL_REQUESTED, USER_COLLECT_DEL_SUCCEEDED, USER_COLLECT_DEL_FAILED,
