@@ -1,3 +1,6 @@
+// version control
+// export const API_GET_HASH = '/node/get/ipfs/hash'
+
 //collect-controller
 export const API_USER_COLLECT_ADD = '/api/user/collect/add';
 export const API_USER_COLLECT_DEL = '/api/user/collect/del';

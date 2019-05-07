@@ -1,4 +1,5 @@
-const apiBaseUrl = 'http://39.105.101.248:86';
+export const apiBaseUrl = 'http://39.105.101.248:86';
+export const webUrl = 'http://39.105.101.248';
 // const apiBaseUrl = 'https://jsonplaceholder.typicode.com';
 const fetchTimeout = 20000
 
@@ -13,8 +14,8 @@ export function toParams(params = {}) {
     , '')
 }
 
-export function get(api, params) {
-  return cmFetch('GET', api + toParams(params))
+export function get(api, params, isWebUrl) {
+  return cmFetch('GET', api + toParams(params), null, isWebUrl)
 }
 
 export function post(api, params) {
@@ -42,8 +43,8 @@ function timeoutWrapper (promise, timeout = fetchTimeout) {
 
 export const NOT_LOGIN = 'You had not logged in yet.'
 
-async function cmFetch(method, api, params) {
-  const r = await timeoutWrapper( () => fetch(apiBaseUrl + (api[0] === '/' ? api : '/'+api), getOptions(method, params)) )
+async function cmFetch(method, api, params, isWebUrl) {
+  const r = await timeoutWrapper( () => fetch((isWebUrl ? webUrl : apiBaseUrl) + (api[0] === '/' ? api : '/'+api), getOptions(method, params)) )
   if(!r.ok) throw new Error(r.status)
   const json = await r.json()
   if(json.code === '1') throw new Error('System Error')
