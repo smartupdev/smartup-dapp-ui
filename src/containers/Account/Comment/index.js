@@ -5,6 +5,7 @@ import DiscussionComment from '../../Market/Discussion/Comment'
 import Text from '../../../components/Text'
 import Hr from '../../../components/Hr'
 import Panel from '../../../components/Panel'
+import ScrollLoader from '../../../components/ScrollLoader'
 
 import { Link } from '../../../routes'
 
@@ -14,7 +15,8 @@ import { getCollectedReplys, getCreatedReplys, reset } from '../../../actions/pe
 function Index({
   collectedReplys, gettingCollectedReplys, collectedReplysError,
   createdReplys, gettingCreatedReplys, createdReplysError,
-  getCollectedReplys, getCreatedReplys, reset
+  getCollectedReplys, getCreatedReplys, reset,
+  createdReplysHasNextPage, collectedReplysHasNextPage
 }) {
   const [expandCreated, setExpandCreated] = useState(true)
   const [expandSaved, setExpandSaved] = useState(false)
@@ -48,12 +50,17 @@ function Index({
         loading={gettingCreatedReplys}
         header='Created comments'
         body={
-          createdReplys.map(reply =>             
-            <Fragment key={reply.id}>
-              <DiscussionComment reply={reply} />
-              <Hr />
-            </Fragment>
-          )
+          <>
+          {
+            createdReplys.map(reply =>             
+              <Fragment key={reply.id}>
+                <DiscussionComment reply={reply} />
+                <Hr />
+              </Fragment>
+            )
+          }
+          <ScrollLoader isButton loadMore={getCreatedReplys} hasMore={createdReplysHasNextPage} isLoading={gettingCreatedReplys} />
+          </>
         } />
       <Panel
         maxHeight='1000vh'
@@ -64,24 +71,31 @@ function Index({
         loading={gettingCollectedReplys}
         header='Saved comments'
         body={
-          collectedReplys.map(reply => 
-            <Fragment key={reply.id}>
-              <DiscussionComment reply={reply} />
-              <Hr />
-            </Fragment>
-          )
+          <>
+          {
+            collectedReplys.map(reply => 
+              <Fragment key={reply.id}>
+                <DiscussionComment reply={reply} />
+                <Hr />
+              </Fragment>
+            )
+          }
+          <ScrollLoader isButton loadMore={getCollectedReplys} hasMore={collectedReplysHasNextPage} isLoading={gettingCollectedReplys} />
+          </>
         } />
     </Col>
   )
 } 
 
 const mapStateToProps = state => ({
-  collectedReplys: state.personalCenterPost.collectedReplys,
-  gettingCollectedReplys: state.personalCenterPost.gettingCollectedReplys,
-  collectedReplysError: state.personalCenterPost.collectedReplysError,
   createdReplys: state.personalCenterPost.createdReplys,
   gettingCreatedReplys: state.personalCenterPost.gettingCreatedReplys,
   createdReplysError: state.personalCenterPost.createdReplysError,
+  createdReplysHasNextPage: state.personalCenterPost.createdReplysHasNextPage,
+  collectedReplys: state.personalCenterPost.collectedReplys,
+  gettingCollectedReplys: state.personalCenterPost.gettingCollectedReplys,
+  collectedReplysError: state.personalCenterPost.collectedReplysError,
+  collectedReplysHasNextPage: state.personalCenterPost.collectedReplysHasNextPage,
 });
 
 const mapDispatchToProps = {

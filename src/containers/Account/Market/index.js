@@ -9,9 +9,9 @@ import { connect } from 'react-redux'
 import { getCreatedMarkets, getTradedMarkets, getCollectedMarkets, reset } from '../../../actions/personalCenter'
 
 function Market({
-  createdMarkets, gettingCreatedMarmkets, createdMarketsError,
-  tradedMarkets, gettingTradedMarmkets, tradedMarketsError,
-  collectedMarkets, gettingCollectedMarmkets, collectedMarketsError,
+  createdMarkets, gettingCreatedMarmkets, createdMarketsError, createdMarketsHasNextPage,
+  tradedMarkets, gettingTradedMarmkets, tradedMarketsError, tradedMarketsHasNextPage,
+  collectedMarkets, gettingCollectedMarmkets, collectedMarketsError, collectedMarketsHasNextPage,
   getCreatedMarkets, getTradedMarkets, getCollectedMarkets, reset
 }) {
   const [expandCreated, setExpandCreated] = useState(true)
@@ -20,8 +20,8 @@ function Market({
 
   useEffect(() => {
     getCreatedMarkets()
-    getTradedMarkets()
     getCollectedMarkets()
+    getTradedMarkets()
     return reset
   }, [])
 
@@ -34,7 +34,7 @@ function Market({
         error={createdMarketsError}
         loading={gettingCreatedMarmkets}
         header='Created markets'
-        body={<MarketTable markets={createdMarkets} />} />
+        body={<MarketTable markets={createdMarkets} hasMore={createdMarketsHasNextPage} loadMore={getCreatedMarkets} isLoading={gettingCreatedMarmkets} />} />
       {expandCreated && <Hr />}
       <Panel
         expandedDark
@@ -43,8 +43,8 @@ function Market({
         error={collectedMarketsError}
         loading={gettingCollectedMarmkets}
         header='Saved markets'
-        body={<MarketTable markets={collectedMarkets} />} />
-      {expandCreated && <Hr />}
+        body={<MarketTable markets={collectedMarkets} hasMore={collectedMarketsHasNextPage} loadMore={getCollectedMarkets} isLoading={gettingCollectedMarmkets} />} />
+      {expandSaved && <Hr />}
       <Panel
         expandedDark
         expanded={expandTraded}
@@ -52,7 +52,7 @@ function Market({
         error={tradedMarketsError}
         loading={gettingTradedMarmkets}
         header='Subscribed markets'
-        body={<MarketTable markets={tradedMarkets} />} />
+        body={<MarketTable markets={tradedMarkets} hasMore={tradedMarketsHasNextPage} loadMore={getTradedMarkets} isLoading={gettingTradedMarmkets} />} />
     </Col>
   )
 }
@@ -61,12 +61,17 @@ const mapStateToProps = state => ({
   createdMarkets: state.personalCenterMarket.createdMarkets,
   gettingCreatedMarmkets: state.personalCenterMarket.gettingCreatedMarmkets,
   createdMarketsError: state.personalCenterMarket.createdMarketsError,
+  createdMarketsHasNextPage: state.personalCenterMarket.createdMarketsHasNextPage,
+
   tradedMarkets: state.personalCenterMarket.tradedMarkets,
   gettingTradedMarmkets: state.personalCenterMarket.gettingTradedMarmkets,
   tradedMarketsError: state.personalCenterMarket.tradedMarketsError,
+  tradedMarketsHasNextPage: state.personalCenterMarket.tradedMarketsHasNextPage,
+
   collectedMarkets: state.personalCenterMarket.collectedMarkets,
   gettingCollectedMarmkets: state.personalCenterMarket.gettingCollectedMarmkets,
   collectedMarketsError: state.personalCenterMarket.collectedMarketsError,
+  collectedMarketsHasNextPage: state.personalCenterMarket.collectedMarketsHasNextPage,
 });
 
 const mapDispatchToProps = {

@@ -8,14 +8,15 @@ import { Row, Col } from '../../../components/Layout'
 import Text from '../../../components/Text'
 import Panel from '../../../components/Panel'
 import Hr from '../../../components/Hr'
+import ScrollLoader from '../../../components/ScrollLoader'
 
 import { connect } from 'react-redux'
 import { getCollectedPosts, getCollectedReplys, getCollectedMarkets, reset } from '../../../actions/personalCenter'
 
 function Index({
-  collectedPosts, gettingCollectedPosts, collectedPostsError,
-  collectedMarkets, gettingCollectedMarmkets, collectedMarketsError,
-  collectedReplys, gettingCollectedReplys, collectedReplysError,
+  collectedPosts, gettingCollectedPosts, collectedPostsError, collectedPostsHasNextPage,
+  collectedMarkets, gettingCollectedMarmkets, collectedMarketsError, collectedMarketsHasNextPage,
+  collectedReplys, gettingCollectedReplys, collectedReplysError, collectedReplysHasNextPage,
   getCollectedPosts, getCollectedReplys, getCollectedMarkets, reset
 }) {
   useEffect(() => {
@@ -38,7 +39,7 @@ function Index({
         error={collectedMarketsError}
         loading={gettingCollectedMarmkets}
         body={
-          <MarketTable markets={collectedMarkets} />
+          <MarketTable markets={collectedMarkets} hasMore={collectedMarketsHasNextPage} loadMore={getCollectedMarkets} isLoading={gettingCollectedMarmkets} />
         } />
       {expandMarket && <Hr />}
       <Panel
@@ -48,12 +49,19 @@ function Index({
         error={collectedPostsError}
         loading={gettingCollectedPosts}
         header='Saved posts'
-        body={collectedPosts.map(post =>
-          <Fragment key={post.postId}>
-            <DiscussionItem post={post} />
-            <Hr />
-          </Fragment>
-        )}/>
+        body={
+          <>
+          {
+            collectedPosts.map(post =>
+              <Fragment key={post.postId}>
+                <DiscussionItem post={post} />
+                <Hr />
+              </Fragment>
+            )
+          }
+          <ScrollLoader isButton loadMore={getCollectedPosts} hasMore={collectedPostsHasNextPage} isLoading={gettingCollectedPosts} />
+          </>
+        }/>
       <Panel
         expandedDark
         expanded={expandReply}
@@ -62,12 +70,17 @@ function Index({
         error={collectedReplysError}
         loading={gettingCollectedReplys}
         body={
-          collectedReplys.map(reply => 
-            <Fragment key={reply.id}>
-              <DiscussionComment reply={reply} />
-              <Hr />
-            </Fragment>
-          )
+          <>
+          {
+            collectedReplys.map(reply => 
+              <Fragment key={reply.id}>
+                <DiscussionComment reply={reply} />
+                <Hr />
+              </Fragment>
+            )
+          }
+          <ScrollLoader isButton loadMore={getCollectedReplys} hasMore={collectedReplysHasNextPage} isLoading={gettingCollectedReplys} />
+          </>
         } />
     </Col>
   )  
@@ -77,14 +90,17 @@ const mapStateToProps = state => ({
   collectedReplys: state.personalCenterPost.collectedReplys,
   gettingCollectedReplys: state.personalCenterPost.gettingCollectedReplys,
   collectedReplysError: state.personalCenterPost.collectedReplysError,
+  collectedReplysHasNextPage: state.personalCenterPost.collectedReplysHasNextPage,
 
   collectedPosts: state.personalCenterPost.collectedPosts,
   gettingCollectedPosts: state.personalCenterPost.gettingCollectedPosts,
   collectedPostsError: state.personalCenterPost.collectedPostsError,
+  collectedPostsHasNextPage: state.personalCenterPost.collectedPostsHasNextPage,
 
   collectedMarkets: state.personalCenterMarket.collectedMarkets,
   gettingCollectedMarmkets: state.personalCenterMarket.gettingCollectedMarmkets,
   collectedMarketsError: state.personalCenterMarket.collectedMarketsError,
+  collectedMarketsHasNextPage: state.personalCenterMarket.collectedMarketsHasNextPage,
 });
 
 const mapDispatchToProps = {

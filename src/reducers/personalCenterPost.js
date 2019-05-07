@@ -17,26 +17,26 @@ export const initialState = {
     collectedPosts: [],
     gettingCollectedPosts: false,
     collectedPostsError: null,
-    collectedPostsPageNumb: 0,
-    collectedPostsHasNextPage: true,
+    collectedPostsPageNumb: 1,
+    collectedPostsHasNextPage: false,
   
     createdPosts: [],
     gettingCreatedPosts: false,
     createdPostsError: null,
-    createdPostsPageNumb: 0,
-    createdPostsHasNextPage: true,
+    createdPostsPageNumb: 1,
+    createdPostsHasNextPage: false,
   
     collectedReplys: [],
     gettingCollectedReplys: false,
     collectedReplysError: null,
-    collectedReplysPageNumb: 0,
-    collectedReplysHasNextPage: true,
+    collectedReplysPageNumb: 1,
+    collectedReplysHasNextPage: false,
   
     createdReplys: [],
     gettingCreatedReplys: false,
     createdReplysError: null,
-    createdReplysPageNumb: 0,
-    createdReplysHasNextPage: true,
+    createdReplysPageNumb: 1,
+    createdReplysHasNextPage: false,
 }
 
 
@@ -48,11 +48,11 @@ export default (state = initialState, action) => {
           gettingCollectedPosts: true,
         }
       case USER_POST_COLLECTED_SUCCEEDED: {
-        const { list: postList, pageNumb, hasNextPage } = action.payload;
-        let tempPosts = state.collectedPosts.concat(postList.map(postMassage));
+        const { list, pageNumb, hasNextPage } = action.payload
+        const postList = list.map(postMassage)
         return {
           ...state,
-          collectedPosts: tempPosts,
+          collectedPosts: action.meta.isLoadMore ? [...state.collectedPosts, ...postList] : postList,
           gettingCollectedPosts: false,
           collectedPostsPageNumb: pageNumb,
           collectedPostsHasNextPage: hasNextPage,
@@ -71,11 +71,11 @@ export default (state = initialState, action) => {
           gettingCreatedPosts: true,
         }
       case USER_POST_CREATED_SUCCEEDED: {
-        const { list: postList, pageNumb, hasNextPage } = action.payload;
-        let tempPosts = state.createdPosts.concat(postList.map(postMassage));
+        const { list, pageNumb, hasNextPage } = action.payload
+        const postList = list.map(postMassage)
         return {
           ...state,
-          createdPosts: tempPosts,
+          createdPosts: action.meta.isLoadMore ? [...state.createdPosts, ...postList] : postList,
           gettingCreatedPosts: false,
           createdPostsPageNumb: pageNumb,
           createdPostsHasNextPage: hasNextPage,
@@ -94,11 +94,11 @@ export default (state = initialState, action) => {
           gettingCollectedReplys: true,
         }
       case USER_REPLY_COLLECTED_SUCCEEDED: {
-        const { list: replyList, pageNumb, hasNextPage } = action.payload;
-        let tempReplys = state.collectedReplys.concat(replyList.map(replyMassage));
+        const { list, pageNumb, hasNextPage } = action.payload
+        const replyList = list.map(replyMassage)
         return {
           ...state,
-          collectedReplys: tempReplys,
+          collectedReplys: action.meta.isLoadMore ? [...state.collectedReplys, ...replyList] : replyList,
           gettingCollectedReplys: false,
           collectedReplysPageNumb: pageNumb,
           collectedReplysHasNextPage: hasNextPage,
@@ -117,11 +117,11 @@ export default (state = initialState, action) => {
           gettingCreatedReplys: true,
         }
       case USER_REPLY_CREATED_SUCCEEDED: {
-        const { list: replyList, pageNumb, hasNextPage } = action.payload;
-        let tempReplys = state.createdReplys.concat(replyList.map(replyMassage));
+        const { list, pageNumb, hasNextPage } = action.payload
+        const replyList = list.map(replyMassage)
         return {
           ...state,
-          createdReplys: tempReplys,
+          createdReplys: action.meta.isLoadMore ? [...state.createdReplys, ...replyList] : replyList,
           gettingCreatedReplys: false,
           createdReplysPageNumb: pageNumb,
           createdReplysHasNextPage: hasNextPage,

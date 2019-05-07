@@ -23,7 +23,8 @@ const LabelBox = styled(Col)`
   width: 0;
   ${Link}:hover & {
     display: block;
-  }
+  };
+  z-index: 99;
 `
 
 const Label = styled(Col)`
