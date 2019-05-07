@@ -11,7 +11,10 @@ const ORDER_BY = {
 
 const Table = styled(Col)`
   overflow-x: auto
-  overflow-y: ${p => p.autoHeight ? 'visible' : 'auto'}
+`
+
+const TableWrappper = styled(Col)`
+  overflow-y: visible
 `
 
 const TD = styled(Col)`
@@ -44,6 +47,7 @@ const TableRecord = styled(Col)`
 // noBorderCol is for no border in column
 export default ({ model, values, sortBy, orderBy, onClickHeader, onClick, expandedRecords = [], expandCompoent: ExpandCompoent, minWidth, S, inset, noBorderCol, autoHeight }) => {
   return (
+    <TableWrappper>
     <Table minWidth={minWidth} autoHeight={autoHeight}>
       <TableTitle inset={inset}>
       {
@@ -83,5 +87,7 @@ export default ({ model, values, sortBy, orderBy, onClickHeader, onClick, expand
         })
       }
     </Table>
+    </TableWrappper>
+
   )
 }
