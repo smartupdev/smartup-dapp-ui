@@ -42,6 +42,7 @@ const IconWrapper = styled(Col)`
 export default function ({ 
   height = '200px', imageWidth = '100%', imageHeight = '200px', actualSize,
   value, onChoose = console.log, isLoading = false, 
+  error,
   ...rest }) {
   let dragCounter = 0
   const boxRef = useRef(null)
@@ -84,7 +85,6 @@ export default function ({
       target.removeEventListener('drop', handleDrop)
     }
   }, [])
-
   return (
     <>
       <ImageBox show={value} center relative fitHeight>
@@ -112,7 +112,8 @@ export default function ({
             <>
               <Text BottomS note>Drag a file here</Text>
               <Button primary LeftXL RightXL label='Choose file to upload' onClick={(e) => inputRef.current.click()} />
-              <HiddenFile type='file' id="browse" name="browse" ref={inputRef} value={''} onChange={e => onChoose(e.target.files)} />
+              <HiddenFile accept="image/x-png,image/gif,image/jpeg,image/png" type='file' id="browse" name="browse" ref={inputRef} value={''} onChange={e => onChoose(e.target.files)} />
+              {error && <Text error S TopS>{error.message}</Text>}
             </>
         }
       </Box>

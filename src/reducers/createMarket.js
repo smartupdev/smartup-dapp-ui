@@ -43,41 +43,42 @@ export default (state = initialState, action) => {
       return {
         ...state,
         coverUploading: true,
+        error: action.payload 
+          ? { ...state.error, cover: initialState.error.cover }
+          : state.error
       } 
     case CREATE_MARKET_COVER_CHANGE_SUCCEEDED:
       return {
         ...state,
         coverUploading: false,
         coverHash: action.payload,
-        error: action.payload 
-          ? { ...state.error, cover: initialState.error.cover }
-          : state.error
       } 
     case CREATE_MARKET_COVER_CHANGE_FAILED:
       return {
         ...state,
         coverUploading: false,
+        error: { ...state.error, cover: action.payload }
       }
 
     case CREATE_MARKET_AVATAR_CHANGE_REQUESTED:
       return {
         ...state,
-        avatarUploading: true
+        avatarUploading: true,
+        error: action.payload 
+        ? { ...state.error, avatar: initialState.error.avatar }
+        : state.error
       }
     case CREATE_MARKET_AVATAR_CHANGE_SUCCEEDED:
       return {
         ...state,
         avatarUploading: false,
         avatarHash: action.payload,
-        error: action.payload 
-        ? { ...state.error, avatar: initialState.error.avatar }
-        : state.error
-
       }
     case CREATE_MARKET_AVATAR_CHANGE_FAILED:
       return {
         ...state,
-        avatarUploading: false
+        avatarUploading: false,
+        error: { ...state.error, avatar: action.payload }
       }
 
 
