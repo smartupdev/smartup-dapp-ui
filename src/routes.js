@@ -70,6 +70,11 @@ export default routes
 
 export const routeMap = routes.reduce((p, c) => ({...p, [c.id]: c}), {})
 
+export function getPath() {
+  return window.location.hash.replace(/#/, '').replace(/\?.+/, '')
+}
+
+
 export function getUrlParams() {
   return window.location.hash.replace(/#.+\?/, '')
     .split('&')
