@@ -118,7 +118,6 @@ export function getCollectedPosts(isLoadMore) {
 export function getCreatedPosts(isLoadMore) {
   return (dispatch, getState) => {
     const { createdPostsPageNumb: pageNumb, pageSize } = getState().personalCenterPost
-    console.log(pageNumb)
     return dispatch(
       asyncFunction(
         fetch.post,

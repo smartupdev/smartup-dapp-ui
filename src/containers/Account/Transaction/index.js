@@ -29,7 +29,7 @@ const STAGE = {
   fail: 'fail',
 }
  
-function Transaction({ getUserTransactionList, transactions, gettingTrancation, transHasNextPage, reset }) {
+function Transaction({ getUserTransactionList, transactions, gettingTrancation, transHasNextPage, trancationError, reset }) {
   useEffect(() => {
     getUserTransactionList()
     return reset
@@ -37,6 +37,7 @@ function Transaction({ getUserTransactionList, transactions, gettingTrancation, 
   const [expands, setExpands] = useState([])
   return (
     <>
+      {trancationError && <Text TopS center error>{trancationError.message}</Text>}
       {transactions.map( ({ 
         txHash, type, detail: {ct, sut}, marketName, marketAddress, createTime, stage, blockTime
       }, index) => {
@@ -87,7 +88,8 @@ function Transaction({ getUserTransactionList, transactions, gettingTrancation, 
 const mapStateToProps = state => ({
   transactions: state.personalCenterMarket.transactions,
   gettingTrancation: state.personalCenterMarket.gettingTrancation,
-  transHasNextPage: state.personalCenterMarket.transHasNextPage
+  transHasNextPage: state.personalCenterMarket.transHasNextPage,
+  trancationError: state.personalCenterMarket.trancationError
 });
 
 const mapDispatchToProps = {

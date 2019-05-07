@@ -16,7 +16,7 @@ export const initialState = {
   gettingTrancation: false,
   trancationError: null,
   transPageNumb: 0,
-  transHasNextPage: true,
+  transHasNextPage: false,
   /*交易列表
   type = CreateMarket, detail = {sut}
  type = BuyCT, detail = {sut, ct}
@@ -43,19 +43,19 @@ export const initialState = {
   gettingCreatedMarmkets: false,
   createdMarketsError: null,
   createdMarketsPageNumb: 1,
-  createdMarketsHasNextPage: true,
+  createdMarketsHasNextPage: false,
 
   tradedMarkets: [],
   gettingTradedMarmkets: false,
   tradedMarketsError: null,
   tradedMarketsPageNumb: 1,
-  tradedMarketsHasNextPage: true,
+  tradedMarketsHasNextPage: false,
 
   collectedMarkets: [],
   gettingCollectedMarmkets: false,
   collectedMarketsError: null,
   collectedMarketsPageNumb: 1,
-  collectedMarketsHasNextPage: true,
+  collectedMarketsHasNextPage: false,
 }
 
 export default (state = initialState, action) => {
