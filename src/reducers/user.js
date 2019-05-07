@@ -214,7 +214,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         updatingUserInfo: false,
-        updateNameError: 'User name can not change',
+        updateNameError: 'Username can only be changed once.',
       }
 
     case USER_CURRENT_INFO_REQUESTED:
