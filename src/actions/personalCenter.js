@@ -26,15 +26,17 @@ export function reset() {
 }
 
 //get user transactions
-export function getUserTransactionList() {
+export function getUserTransactionList(isLoadMore) { // isLoadMore can be event
   return (dispatch, getState) => {
+    const { transPageNumb: pageNumb, pageSize } = getState().personalCenterMarket
     return dispatch(
       asyncFunction(
         fetch.post,
         USER_TRANSACTION_LIST_REQUESTED, USER_TRANSACTION_LIST_SUCCEEDED, USER_TRANSACTION_LIST_FAIL,
         {
           params: API_USER_TRANSACTION_LIST,
-          params2: { pageNumb: getState().personalCenterMarket.transPageNumb + 1, pageSize: getState().personalCenterMarket.pageSize }
+          params2: { pageNumb: isLoadMore ? pageNumb + 1 : 1, pageSize },
+          meta: { isLoadMore }
         }
       )
     )
@@ -42,15 +44,17 @@ export function getUserTransactionList() {
 }
 
 //用户创建的市场
-export function getCreatedMarkets() {
+export function getCreatedMarkets(isLoadMore) {
   return (dispatch, getState) => {
+    const { createdMarketsPageNumb: pageNumb, pageSize } = getState().personalCenterMarket
     return dispatch(
       asyncFunction(
         fetch.post,
         USER_MARKET_CREATED_REQUESTED, USER_MARKET_CREATED_SUCCEEDED, USER_MARKET_CREATED_FAIL,
         {
           params: API_USER_MARKET_CREATED,
-          params2: { pageNumb: getState().personalCenterMarket.createdMarketsPageNumb + 1, pageSize: getState().personalCenterMarket.pageSize }
+          params2: { pageNumb: isLoadMore ? pageNumb + 1 : 1, pageSize },
+          meta: { isLoadMore }
         }
       )
     )
@@ -58,30 +62,34 @@ export function getCreatedMarkets() {
 }
 
 //用户交易的市场
-export function getTradedMarkets() {
+export function getTradedMarkets(isLoadMore) {
   return (dispatch, getState) => {
+    const { tradedMarketsPageNumb: pageNumb, pageSize } = getState().personalCenterMarket
     return dispatch(
       asyncFunction(
         fetch.post,
         USER_MARKET_TRADED_REQUESTED, USER_MARKET_TRADED_SUCCEEDED, USER_MARKET_TRADED_FAIL,
         {
           params: API_USER_MARKET_TRADED,
-          params2: { pageNumb: getState().personalCenterMarket.tradedMarketsPageNumb + 1, pageSize: getState().personalCenterMarket.pageSize }
+          params2: { pageNumb: isLoadMore ? pageNumb + 1 : 1, pageSize },
+          meta: { isLoadMore }
         }
       )
     )
   }
 }
 
-export function getCollectedMarkets() {
+export function getCollectedMarkets(isLoadMore) {
   return (dispatch, getState) => {
+    const { collectedMarketsPageNumb: pageNumb, pageSize } = getState().personalCenterMarket
     return dispatch(
       asyncFunction(
         fetch.post,
         USER_MARKET_COLLECTED_REQUESTED, USER_MARKET_COLLECTED_SUCCEEDED, USER_MARKET_COLLECTED_FAIL,
         {
           params: API_USER_MARKET_COLLECTED,
-          params2: { pageNumb: getState().personalCenterMarket.tradedMarketsPageNumb + 1, pageSize: getState().personalCenterMarket.pageSize }
+          params2: { pageNumb: isLoadMore ? pageNumb + 1 : 1, pageSize },
+          meta: { isLoadMore }
         }
       )
     )
@@ -89,15 +97,17 @@ export function getCollectedMarkets() {
 }
 
 //用户收藏的帖子
-export function getCollectedPosts() {
+export function getCollectedPosts(isLoadMore) {
   return (dispatch, getState) => {
+    const { collectedPostsPageNumb: pageNumb, pageSize } = getState().personalCenterPost
     return dispatch(
       asyncFunction(
         fetch.post,
         USER_POST_COLLECTED_REQUESTED, USER_POST_COLLECTED_SUCCEEDED, USER_POST_COLLECTED_FAIL,
         {
           params: API_USER_POST_COLLECTED,
-          params2: { pageNumb: getState().personalCenterPost.collectedPostsPageNumb + 1, pageSize: getState().personalCenterPost.pageSize }
+          params2: { pageNumb: isLoadMore ? pageNumb + 1 : 1, pageSize },
+          meta: { isLoadMore }
         }
       )
     )
@@ -105,15 +115,18 @@ export function getCollectedPosts() {
 }
 
 //用户创建的帖子
-export function getCreatedPosts() {
+export function getCreatedPosts(isLoadMore) {
   return (dispatch, getState) => {
+    const { createdPostsPageNumb: pageNumb, pageSize } = getState().personalCenterPost
+    console.log(pageNumb)
     return dispatch(
       asyncFunction(
         fetch.post,
         USER_POST_CREATED_REQUESTED, USER_POST_CREATED_SUCCEEDED, USER_POST_CREATED_FAIL,
         {
           params: API_USER_POST_CREATED,
-          params2: { pageNumb: getState().personalCenterPost.createdPostsPageNumb + 1, pageSize: getState().personalCenterPost.pageSize }
+          params2: { pageNumb: isLoadMore ? pageNumb + 1 : 1, pageSize },
+          meta: { isLoadMore }
         }
       )
     )
@@ -121,15 +134,17 @@ export function getCreatedPosts() {
 }
 
 //用户收藏的回复
-export function getCollectedReplys() {
+export function getCollectedReplys(isLoadMore) {
   return (dispatch, getState) => {
+    const { collectedReplysPageNumb: pageNumb, pageSize } = getState().personalCenterPost
     return dispatch(
       asyncFunction(
         fetch.post,
         USER_REPLY_COLLECTED_REQUESTED, USER_REPLY_COLLECTED_SUCCEEDED, USER_REPLY_COLLECTED_FAIL,
         {
           params: API_USER_REPLY_COLLECTED,
-          params2: { pageNumb: getState().personalCenterPost.collectedReplysPageNumb + 1, pageSize: getState().personalCenterPost.pageSize }
+          params2: { pageNumb: isLoadMore ? pageNumb + 1 : 1, pageSize },
+          meta: { isLoadMore }
         }
       )
     )
@@ -137,15 +152,17 @@ export function getCollectedReplys() {
 }
 
 //用户创建的回复
-export function getCreatedReplys() {
+export function getCreatedReplys(isLoadMore) {
   return (dispatch, getState) => {
+    const { createdReplysPageNumb: pageNumb, pageSize } = getState().personalCenterPost
     return dispatch(
       asyncFunction(
         fetch.post,
         USER_REPLY_CREATED_REQUESTED, USER_REPLY_CREATED_SUCCEEDED, USER_REPLY_CREATED_FAIL,
         {
           params: API_USER_REPLY_CREATED,
-          params2: { pageNumb: getState().personalCenterPost.createdReplysPageNumb + 1, pageSize: getState().personalCenterPost.pageSize }
+          params2: { pageNumb: isLoadMore ? pageNumb + 1 : 1, pageSize },
+          meta: { isLoadMore }
         }
       )
     )

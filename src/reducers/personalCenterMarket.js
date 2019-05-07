@@ -42,19 +42,19 @@ export const initialState = {
   createdMarkets: [],
   gettingCreatedMarmkets: false,
   createdMarketsError: null,
-  createdMarketsPageNumb: 0,
+  createdMarketsPageNumb: 1,
   createdMarketsHasNextPage: true,
 
   tradedMarkets: [],
   gettingTradedMarmkets: false,
   tradedMarketsError: null,
-  tradedMarketsPageNumb: 0,
+  tradedMarketsPageNumb: 1,
   tradedMarketsHasNextPage: true,
 
   collectedMarkets: [],
   gettingCollectedMarmkets: false,
   collectedMarketsError: null,
-  collectedMarketsPageNumb: 0,
+  collectedMarketsPageNumb: 1,
   collectedMarketsHasNextPage: true,
 }
 
@@ -66,11 +66,10 @@ export default (state = initialState, action) => {
         gettingTrancation: true,
       }
     case USER_TRANSACTION_LIST_SUCCEEDED: {
-      const { list: trancationList, pageNumb, hasNextPage } = action.payload;
-      let tempTransactions = state.transactions.concat(trancationList);
+      const { list, pageNumb, hasNextPage } = action.payload;
       return {
         ...state,
-        transactions: tempTransactions,
+        transactions: action.meta.isLoadMore ? [...state.transactions, ...list] : list,
         gettingTrancation: false,
         transPageNumb: pageNumb,
         transHasNextPage: hasNextPage,
@@ -89,11 +88,11 @@ export default (state = initialState, action) => {
         gettingCreatedMarmkets: true,
       }
     case USER_MARKET_CREATED_SUCCEEDED: {
-      const { list: marketList, pageNumb, hasNextPage } = action.payload;
-      let tempMarkets = state.createdMarkets.concat(marketList.map(marketMassage));
+      const { list, pageNumb, hasNextPage } = action.payload
+      const markets = list.map(marketMassage)
       return {
         ...state,
-        createdMarkets: tempMarkets,
+        createdMarkets: action.meta.isLoadMore ? [...state.createdMarkets, ...markets] : markets,
         gettingCreatedMarmkets: false,
         createdMarketsPageNumb: pageNumb,
         createdMarketsHasNextPage: hasNextPage,
@@ -113,13 +112,11 @@ export default (state = initialState, action) => {
       }
     case USER_MARKET_COLLECTED_SUCCEEDED: {
       const { list, pageNumb, hasNextPage } = action.payload;
+      const markets = list.map(marketMassage)
       return {
         ...state,
         gettingCollectedMarmkets: false,
-        collectedMarkets: [
-          ...state.collectedMarkets,
-          ...list.map(marketMassage)
-        ],
+        collectedMarkets: action.meta.isLoadMore ? [...state.collectedMarkets, ...markets] : markets,
         collectedMarketsPageNumb: pageNumb,
         collectedMarketsHasNextPage: hasNextPage,
         collectedMarketsError: initialState.collectedMarketsError
@@ -139,11 +136,11 @@ export default (state = initialState, action) => {
         gettingTradedMarmkets: true,
       }
     case USER_MARKET_TRADED_SUCCEEDED: {
-      const { list: marketList, pageNumb, hasNextPage } = action.payload;
-      let tempMarkets = state.tradedMarkets.concat(marketList.map(marketMassage));
+      const { list, pageNumb, hasNextPage } = action.payload;
+      const markets = list.map(marketMassage)
       return {
         ...state,
-        tradedMarkets: tempMarkets,
+        tradedMarkets: action.meta.isLoadMore ? [...state.tradedMarkets, ...markets] : markets,
         gettingTradedMarmkets: false,
         tradedMarketsPageNumb: pageNumb,
         tradedMarketsHasNextPage: hasNextPage,

@@ -9,6 +9,8 @@ import Panel from '../../../components/Panel'
 import Hr from '../../../components/Hr'
 import Expand from '../../../components/Expand'
 
+import ScrollLoader from '../../../components/ScrollLoader'
+
 import { toFullDate, toToken } from '../../../lib/util'
 
 import { connect } from 'react-redux'
@@ -27,58 +29,65 @@ const STAGE = {
   fail: 'fail',
 }
  
-function Transaction({ getUserTransactionList, transactions, reset }) {
+function Transaction({ getUserTransactionList, transactions, gettingTrancation, transHasNextPage, reset }) {
   useEffect(() => {
     getUserTransactionList()
     return reset
   }, [])
   const [expands, setExpands] = useState([])
-  return transactions.map( ({ 
-    txHash, type, detail: {ct, sut}, marketName, marketAddress, createTime, stage, blockTime
-  }, index) => {
-    function onClick() {
-      const newExpands = [...expands]
-      newExpands[index] = !newExpands[index] 
-      setExpands(newExpands)
-    }
-    return (
-      <Col key={txHash} fitHeight>
-        <Row spacingM fitHeight onClick={onClick}>
-          <Col flex={1}>
-            <Text BottomS L>{typeHelper[type].title(ct, sut)}</Text>
-            <Text BottomXS note>{marketName}</Text>
-            <Text note S>{toFullDate(createTime)}</Text>
-          </Col>
-          <Col spaceBetween right>
-            <Text S green={stage===STAGE.success} red={stage===STAGE.fail} primary={stage===STAGE.pending}>{stage.toUpperCase()}</Text>
-            <More color='#ffffff' XS reverse={expands[index]} />
-          </Col>
-        </Row>
-        <Expand isOpen={expands[index]}>
-          <Col backgroundColor={theme.bgColorDark} HL VM>
-          {[
-            { label: 'TXHASH', value: txHash },
-            { label: 'Type', value: typeHelper[type].label },
-            { label: 'Market', value: `${marketName} ${marketAddress}` },
-            { label: 'Number of Idea token', value: ct || 'N/A' },
-            { label: 'Created on', value: toFullDate(createTime) },
-            { label: 'Last update', value: toFullDate(blockTime) },
-          ].map( ({label, value}) => 
-            <Row key={label} VXS>
-              <Text width='250px'>{label}</Text>
-              <Text>{value}</Text>
+  return (
+    <>
+      {transactions.map( ({ 
+        txHash, type, detail: {ct, sut}, marketName, marketAddress, createTime, stage, blockTime
+      }, index) => {
+        function onClick() {
+          const newExpands = [...expands]
+          newExpands[index] = !newExpands[index] 
+          setExpands(newExpands)
+        }
+        return (
+          <Col key={txHash} fitHeight>
+            <Row spacingM fitHeight onClick={onClick}>
+              <Col flex={1}>
+                <Text BottomS L>{typeHelper[type].title(ct, sut)}</Text>
+                <Text BottomXS note>{marketName}</Text>
+                <Text note S>{toFullDate(createTime)}</Text>
+              </Col>
+              <Col spaceBetween right>
+                <Text S green={stage===STAGE.success} red={stage===STAGE.fail} primary={stage===STAGE.pending}>{stage.toUpperCase()}</Text>
+                <More color='#ffffff' XS reverse={expands[index]} />
+              </Col>
             </Row>
-          )}
+            <Expand isOpen={expands[index]}>
+              <Col backgroundColor={theme.bgColorDark} HL VM>
+              {[
+                { label: 'TXHASH', value: txHash },
+                { label: 'Type', value: typeHelper[type].label },
+                { label: 'Market', value: `${marketName} ${marketAddress}` },
+                { label: 'Number of Idea token', value: ct || 'N/A' },
+                { label: 'Created on', value: toFullDate(createTime) },
+                { label: 'Last update', value: toFullDate(blockTime) },
+              ].map( ({label, value}) => 
+                <Row key={label} VXS>
+                  <Text width='250px'>{label}</Text>
+                  <Text>{value}</Text>
+                </Row>
+              )}
+              </Col>
+            </Expand>
+            <Hr />
           </Col>
-        </Expand>
-        <Hr />
-      </Col>
-    )
-  })
+        )
+      })}
+      <ScrollLoader isButton loadMore={getUserTransactionList} hasMore={transHasNextPage} isLoading={gettingTrancation} />
+    </>    
+  )
 }
 
 const mapStateToProps = state => ({
-  transactions: state.personalCenterMarket.transactions
+  transactions: state.personalCenterMarket.transactions,
+  gettingTrancation: state.personalCenterMarket.gettingTrancation,
+  transHasNextPage: state.personalCenterMarket.transHasNextPage
 });
 
 const mapDispatchToProps = {
