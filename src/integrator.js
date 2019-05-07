@@ -2,7 +2,7 @@ import Web3 from 'web3'
 import { NOT_LOGIN } from './lib/util/fetch'
 import { USER_PERSON_SIGN_FAILED } from './actions/actionTypes'
 
-export const smartupContractAddress = '0x251f33ffac9b764911b06dffc2e4a668db02288f';
+export const smartupContractAddress = '0x184a3dad8912a81ab393b83892f2039ec0297132';
 export const sutContractAddress = '0xf1899c6eb6940021c1ae4e9c3a8e29ee93704b03'
 export const nttContractAddress = '0x846ce03199a759a183cccb35146124cd3f120548'
 export const smartupWeb3 = window.web3 && new Web3(window.web3.currentProvider)
