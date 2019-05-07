@@ -56,7 +56,6 @@ function Trading({ loggedIn, market, gettingMarket, tradeState, setTab, onChange
 
   const notEnoughSut = !isSell && +userSut < +sut && loggedIn
   const notEnoughCt = isSell && +ct > +userCt && loggedIn
-
   return (
     <>
       <Row TopXL BottomS LeftL color={theme.bgColorDark}>
@@ -84,7 +83,7 @@ function Trading({ loggedIn, market, gettingMarket, tradeState, setTab, onChange
           <Text XL price spacingTopS>{toPrice(market.last, 2)}</Text>
           <Text note S>{lang.trading.price[currentLang]}</Text>
 
-          <Text XL primary spacingTopS>{toPrice(market.lately_volume, 2)}</Text>
+          <Text XL primary spacingTopS>{toPrice(highLowData.length > 0 ? highLowData[highLowData.length - 1].amount : '', 2)}</Text>
           <Text note S>{lang.trading.volume[currentLang]}</Text>
 
           <Text XL spacingTopS>{toPrice(market.amount, 2)}</Text>
