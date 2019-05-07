@@ -14,7 +14,7 @@ const Table = styled(Col)`
 `
 
 const TableWrappper = styled(Col)`
-  overflow-y: visible
+  overflow-y: auto
 `
 
 const TD = styled(Col)`
