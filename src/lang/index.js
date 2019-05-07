@@ -85,7 +85,7 @@ export default {
     general: name('General'),
     discussion: name('Discussions'),
     proposal: name('Proposals'),
-    flag: name('Flag'),
+    flag: name('Dispute'),
     search: name('Search'),
   },
   trading: {

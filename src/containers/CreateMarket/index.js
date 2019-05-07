@@ -145,12 +145,12 @@ const CreateMarket = ({
             <Col center centerVertical height={'80vh'}>
               <Image source={successImg} size={'150px'} />
               <Col spacingTopL spacingBottomL>
-                <Text XL wordSpaceL center>MAKRET IS CREATED SUCCESSFULLY!</Text>
+                <Text XL wordSpaceL center>MAKRET IS CREATING!</Text>
               </Col>
               <Link>
                 {
                   ({goto}) =>
-                <Button label='Go To New Market' primary onClick={()=>goto.trading({id: marketId})} extended />
+                <Button label='Preview The New Market' primary onClick={()=>goto.trading({id: marketId})} extended />
                 }
               </Link>
             </Col>

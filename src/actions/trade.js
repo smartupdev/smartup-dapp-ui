@@ -130,7 +130,7 @@ export function onTrade() {
 
     if(!address) return dispatch({
       type: TRADE_FAILED,
-      payload: new Error('No market address'),
+      payload: new Error('It is for preview, please refresh when the market is successfully created, you will receive a notification soon!'),
       error: true
     })
 

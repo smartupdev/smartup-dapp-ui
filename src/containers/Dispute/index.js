@@ -33,7 +33,7 @@ export default () => {
   // }
   return (
     <Col>
-      <Text center VM note>This page is currently under development. Please check back again later.</Text>
+      <Text center VM note>Dispute function is under development, coming soon in later 2019!</Text>
       {/* {array.map((a, i) => <Text key={i}>{a}</Text>)}
       <ScrollLoader id={id} loadMore={loadMore} hasNextPage={hasNextPage} isLoading={loading} /> */}
     </Col>
