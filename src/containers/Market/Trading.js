@@ -3,7 +3,7 @@ import { Link } from '../../routes'
 
 import { connect } from 'react-redux'
 import { setTab, onChangeCT, onChangeSUT, onTrade, toggleIsSell, toggleTnc, reset, getTradeList, getKlineList, getHighLowList,} from '../../actions/trade';
-
+import { onClickTnc } from '../../actions/ipfs'
 
 import theme from '../../theme'
 import { Row, Col } from '../../components/Layout'
@@ -120,7 +120,7 @@ function Trading({ loggedIn, market, gettingMarket, tradeState, setTab, onChange
           <Row spaceBetween>
             <Row centerVertical>
               <Checkbox checked={agreeTnc} onChange={toggleTnc} disabled={isTrading} label={<Text S note lineHeight>Agree to&nbsp;</Text>} />
-              <Text S note underline lineHeight onClick={() => console.log('Get T&C')}>{'Terms of Service'}</Text>
+              <Text S note underline lineHeight onClick={onClickTnc}>{'Terms of Service'}</Text>
             </Row>
             <Col right>
               <Button label='Trade' icon={Trade} primary onClick={() => onTrade(market.id)} disabled={isTrading || !agreeTnc || !ct | notEnoughSut || notEnoughCt} />

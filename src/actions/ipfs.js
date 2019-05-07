@@ -4,6 +4,9 @@ import toBuffer from 'blob-to-buffer';
 const client = ipfsClient('ipfs-api.smartup.global', '80', { protocol: 'http' });
 
 export const ipfsHost = 'https://ipfs.smartup.global/ipfs/';
+export function onClickTnc() {
+  window.open(ipfsHost + 'QmWsxWygt8khjBkWwUoniLFPq5HU9nteJRxarPGUbWLJFV', '_blank');
+}
 
 //IPFS写入图片
 export function postIpfsImg(file) {

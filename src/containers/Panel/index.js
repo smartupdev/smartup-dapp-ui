@@ -20,6 +20,7 @@ import { shorten } from '../../lib/util'
 import { connect } from 'react-redux'
 import { setActiveTab } from '../../actions/panel'
 import { loginMetaMask } from '../../actions/user'
+import { onClickTnc } from '../../actions/ipfs'
 import { watch as watchNotification } from '../../actions/notification'
 
 const PANEL_WIDTH = 300
@@ -39,7 +40,7 @@ const Top = styled(Row)`
 const Terms = () =>
   <Col flex={1} bottom center>
     <Hr />
-    <Text underline S VM onClick={() => console.log('Get terms of services')}>Terms of Service</Text>
+    <Text underline S VM onClick={onClickTnc}>Terms of Service</Text>
   </Col>
 
 
