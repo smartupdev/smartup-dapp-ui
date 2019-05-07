@@ -12,7 +12,7 @@ function toPercent(number) {
 function toPrice(number, decimal = 2) {
   return [undefined, null, ''].includes(number) 
   ? '-' 
-  : formatter.format(number).slice(0, decimal === 0 ? -3 : decimal === 1 ? -1 : undefined).slice(1)
+  : formatter.format(number).slice(0, decimal === 0 ? -3 : decimal === 1 ? -1 : undefined).replace('$', '')
 }
 
 function toToken(number, decimal = 4) {
