@@ -111,6 +111,7 @@ function Trading({ loggedIn, market, gettingMarket, tradeState, setTab, onChange
               <Col spacingLeftS>
                 <Input background L center size='30' disabled={isTrading} value={ct} onChange={onChangeCT} number />
                 {notEnoughCt && <Text error XS>You don't have enough token to sell.</Text>}
+                {notEnoughSut && <Text error XS>You need more SmartUp to buy Idea tokens.</Text>}
                 </Col>
             </Row>
           </Col>
