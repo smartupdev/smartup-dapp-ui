@@ -63,7 +63,7 @@ const Panel = ({
             <Avatar icon={userAvatar} username={userName} />
             <Col>
               <Text S note>{shorten(account)}</Text>
-              <Text right S note>200 honours</Text>
+              {/* <Text right S note>200 honours</Text> */}
               <Text right S note>{nttBalance} NTT</Text>
             </Col>
           </Top>
