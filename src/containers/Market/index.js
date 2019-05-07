@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react'
 
+import { ToastConsumer } from 'react-toast-notifications'
+
 import { Link, getUrlParams, routeMap, getPath } from '../../routes'
 
 import { connect } from 'react-redux'
@@ -40,7 +42,6 @@ const copyToClipboard = str => {
 };
 
 const Market = ({ get, collectMarket, getting, location, market, getMarketPost, onChangeKeyword, postKeyword, resetDetail }) => {
-  const [copied, setCopy] = useState(false)
   const id = getUrlParams().id
   useEffect(() => {
     get(id)
@@ -58,7 +59,12 @@ const Market = ({ get, collectMarket, getting, location, market, getMarketPost, 
         <Row centerVertical>
           <Avatar icon={market.avatar} style={{ 'borderRadius':'50%'}}/>
           <Text>{`${market.name} (${market.id})`}</Text>
-          <Copy S MarginLeftXS color={copied ? '#aaa' : '#fff'} onClick={() => { setCopy(true); copyToClipboard(market.address) }} />
+          <ToastConsumer>
+            {
+              ({add}) => 
+                <Copy S MarginLeftXS color='#fff' onClick={() => { add(`Copied Market address to clipboard.`, { appearance: 'info', autoDismiss: true }); copyToClipboard(market.address) }} />
+            }
+          </ToastConsumer>
         </Row>
         <Row centerVertical>
           <Link>

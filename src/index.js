@@ -9,11 +9,15 @@ import { HashRouter as Router } from "react-router-dom";
 import { ThemeProvider } from './components/Theme'
 import theme from './theme'
 
+import { ToastProvider } from 'react-toast-notifications';
+
 const Index = () =>
     <Provider store={store}>
       <Router>
         <ThemeProvider defaultTheme={theme}>
-          <App />
+          <ToastProvider autoDismissTimeout={3000}>
+            <App />
+          </ToastProvider>
         </ThemeProvider>
       </Router>
     </Provider>
