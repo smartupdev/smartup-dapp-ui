@@ -147,7 +147,7 @@ class DrawChart extends Component {
             clamp={false}
             >
 
-            <Chart id={1} yExtents={d => [d.high*1.1, d.low/1.2]}>
+            <Chart id={1} yExtents={d => [d.high*1.1, d.low/1.4]}>
               <XAxis axisAt="bottom" orient="bottom" ticks={10} {...this.axiaStyle} {...xGrid} />
               <YAxis axisAt="right" orient="right" ticks={9} {...this.axiaStyle} {...yGrid} />
               <MouseCoordinateX at="bottom" orient="bottom" displayFormat={timeFormat("%H:%M")} />
