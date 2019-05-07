@@ -71,9 +71,7 @@ export default routes
 export const routeMap = routes.reduce((p, c) => ({...p, [c.id]: c}), {})
 
 export function getUrlParams() {
-  const search = window.location.search
-  if(!search) return {}
-  return window.location.search.slice(1)
+  return window.location.hash.replace(/#.+\?/, '')
     .split('&')
     .reduce( (p, keyVal) => {
       const [key, val] = keyVal.split('=')

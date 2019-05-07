@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 
-import { Route } from "react-router-dom"
+import { Route } from 'react-router-dom'
 import routes from '../../routes'
 
 import Header from '../../components/Header'

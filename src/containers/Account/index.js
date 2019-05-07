@@ -16,7 +16,7 @@ export default () => {
       value: r.id,
       path: r.path
     }))
-  const activeIndex = TABS.findIndex(t => window.location.pathname.includes(t.path))
+  const activeIndex = TABS.findIndex(t => window.location.hash.includes(t.path))
   return (
     <Col>
       <Text center VS L>PERSONAL CENTER</Text>
