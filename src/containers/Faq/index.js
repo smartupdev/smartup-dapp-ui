@@ -34,7 +34,10 @@ const faqs = [
     ansTitle: null, 
     ansContent: `Startup dreamers who are an artist, musician, product designer or entrepreneur, can make ideas and dreams a reality by raising fund, finding resources and support on SmartUp Incubator Platform. 
 If you are finding potential and creative projects for investment or speculation, you can also search the market on SmartUp Incubator Platform, and make use of the Trade function in different market to make benefits. 
-SmartUp Incubator Platform is available to individuals who are 18 years of age or older. `, 
+SmartUp Incubator Platform is available to individuals who are 18 years of age or older.
+You may see more guidelines clicking on the following links:
+•	Startuppers/ Startup dreamer
+•	Investors/ Speculators`, 
     image: null
   },
   {
@@ -149,7 +152,8 @@ Deposit for creatinf the market. Fix 2500 SmartUp Token deposit.`,
   {
     title: 'How do I earn the idea tokens?',
     ansTitle: null, 
-    ansContent: `You can only buy more idea tokens with SmartUp Tokens at this moment. `, 
+    ansContent: `You can only buy more idea tokens with SmartUp Tokens at this moment. 
+    You can buy the tokens at the lower price (the quantity of the token in the market is small at that time) and sell them at the higher price (the quantity of the token in the market is larger at that time).`, 
     image: null
   },
   {
@@ -173,13 +177,13 @@ Deposit for creatinf the market. Fix 2500 SmartUp Token deposit.`,
   {
     title: 'How do I communicate with the community members?',
     ansTitle: null, 
-    ansContent: 'i am content', 
+    ansContent: 'You can communicate with the community members in discussion of each market. Posts can be created and comments can be made in the discussion page.', 
     image: null
   },
   {
     title: 'Can I edit the rules/ information of my project?',
     ansTitle: null, 
-    ansContent: 'i am content', 
+    ansContent: 'You cannot edit the information of the market once the market is created because of the immutability of blockchain based platform.', 
     image: null
   },
   {
@@ -191,79 +195,90 @@ Deposit for creatinf the market. Fix 2500 SmartUp Token deposit.`,
   {
     title: 'What is the project/market community?',
     ansTitle: null, 
-    ansContent: 'i am content', 
+    ansContent: 'Everyone who has invested in the market is the community member. They can discuss the development and make decisions of the project and market.', 
     image: null
   },
   {
     title: 'How do I find out the project that I interested in?',
     ansTitle: null, 
-    ansContent: 'i am content', 
+    ansContent: `You make use of the search function in the main page of the platform to find out the potential project you interested in. You may use any keywords to find any related market and evaluate if that is worth to invest.
+  Can't find the related idea? Move to create your own market!`, 
     image: null
   },
   {
     title: 'How do I invest into a project as a community member?',
     ansTitle: null, 
-    ansContent: 'i am content', 
+    ansContent: 'You can simply buy the idea tokens and you will become the community member. Check on the quantity and the price of the idea tokens. Buy low, sell high to make profits. ', 
+    image: null
+  },
+  {
+    title: 'What is the idea token?',
+    ansTitle: null, 
+    ansContent: 'Each market issues its own tokens individually. Investors can invest in the project by buying the tokens. As the spot price of the idea tokens is proportional to the quantity of the idea tokens, more investors buying the tokens and more tokens issued, the price will be higher. By selling the tokens at a higher price, investors can be benefited.', 
     image: null
   },
   {
     title: 'What can I do as a community member?',
     ansTitle: null, 
-    ansContent: 'i am content', 
+    ansContent: `You can buy the idea tokens to support the project and sell the idea tokens to make profit. You may also contribute the project by creating constructive discussion that determining the development of the project.
+    Greater community makes the project to be more potential to invest.  `, 
     image: null
   },
   {
     title: 'How do I get more idea tokens?',
     ansTitle: null, 
-    ansContent: 'i am content', 
+    ansContent: 'You can only buy more idea tokens with SmartUp Tokens at this moment.', 
     image: null
   },
   {
     title: 'How can I be benefited from the project I invested?',
     ansTitle: null, 
-    ansContent: 'i am content', 
+    ansContent: `As the price of the idea tokens is proportional to the quantity of the idea tokens. The idea tokens buy at the beginning after the market usually have the lowest cost. 
+    To benefit from the project, firstly, find out the potential project. Then, invest in the targeted market when the quantity of the tokens is low. After that, you may sell your tokens when more investors buy the tokens and sell to get profits.
+    `, 
     image: null
   },
   {
     title: 'Can I withdraw my investment, and how?',
     ansTitle: null, 
-    ansContent: 'i am content', 
+    ansContent: 'Yes, you can withdraw your investment by selling the idea tokens.', 
     image: null
   },
   {
     title: 'How do I communicate with the project creator and community members?',
     ansTitle: null, 
-    ansContent: 'i am content', 
+    ansContent: 'You can communicate with the community members in discussion of each market. Posts can be created and comments can be made in the discussion page.', 
     image: null
   },
   {
     title: 'How do I trade with SmartUp Token?',
     ansTitle: null, 
-    ansContent: 'i am content', 
+    ansContent: 'You can trade the SmartUp Token in exchange, like Coinbene: https://www.coinbene.com/exchange.html#/exchange?pairId=SMARTUPETH', 
     image: null
   },
   {
     title: 'How do I know if the trading of idea tokens is succeed?',
     ansTitle: null, 
-    ansContent: 'i am content', 
+    ansContent: 'Every trading, no matter successful trade or failed trade, the platform will generate notifications to inform users the status of the trade.', 
     image: null
   },
   {
     title: 'Why did the trading fail?',
     ansTitle: null, 
-    ansContent: 'i am content', 
+    ansContent: `Failed trade may be caused by the insufficient amount of ETH (for transaction fee), Smart Tokens or idea tokens. You can check the balance in the Portfolio, MetaMask and Market Wallet.
+While a new market is creating, buy action may fail because the market address has not yet built up. Please try again later. `, 
     image: null
   },
   {
-    title: 'How can I find my trading records?',
+    title: 'How can I find my trading records? ',
     ansTitle: null, 
-    ansContent: 'i am content', 
+    ansContent: 'You may find all the trading records in the personal center.', 
     image: null
   },
   {
-    title: 'What is gas fee? ',
+    title: 'What is gas fee?  ',
     ansTitle: null, 
-    ansContent: 'i am content', 
+    ansContent: 'SmartUp is using the Ethernet, therefore every transaction cost gas fee. Please make sure you have sufficient ETH for transaction fee.', 
     image: null
   }
 ];
