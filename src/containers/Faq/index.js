@@ -17,7 +17,7 @@ function Ans({ ansTitle, ansContent, image }) {
     <Col>
       <Text L bold wordSpaceL>{ansTitle}</Text>
       { image && <Image source={image} TopS actualSize /> }
-      <Text XS wordSpaceS TopS BottomS>{ansContent}</Text>
+      <Text newline XS wordSpaceS TopS BottomS>{ansContent}</Text>
     </Col>
   )
 }
