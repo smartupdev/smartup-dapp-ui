@@ -48,7 +48,7 @@ const Market = ({ get, collectMarket, getting, location, market, getMarketPost, 
     <Col>
       <Row spaceBetween spacingTopXS spacingBottomXS spacingRightS spacingLeftS color={theme.bgColorLight}>
         <Row centerVertical>
-          <Avatar icon={market.avatar} style={{ 'borderRadius':'50%'}}/>
+          <Avatar icon={market.avatar} />
           <Text>{`${market.name} (${market.id})`}</Text>
           <ToastConsumer>
             {
