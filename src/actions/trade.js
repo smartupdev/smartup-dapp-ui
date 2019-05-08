@@ -10,7 +10,7 @@ import {
   TRADE_KLINE_REQUESTED, TRADE_KLINE_SUCCEEDED, TRADE_KLINE_FAILED,
   TRADE_HIGH_LOW_REQUESTED,TRADE_HIGH_LOW_SUCCEEDED,TRADE_HIGH_LOW_FAILED,
 } from '../actions/actionTypes';
-import fetch from '../lib/util/fetch';
+import fetch, {delay} from '../lib/util/fetch';
 import {
   API_MARKET_TRADE_LIST, API_USER_TRADE_DETAIL,API_KLINE_DATA, API_USER_TRADE_SAVE
 } from './api';
@@ -263,14 +263,17 @@ export function getHighLowList(){
 }
 
 export function watchKline() {
-  return (dispatch, getState) => {
-    let klineInterval = setInterval(() => {
+  return async (dispatch, getState) => {
+    while(true) {
       const { market: {currentMarket}} = getState()
       if(!!currentMarket){
-        dispatch(getKlineList());
-        dispatch(getHighLowList());
+        await Promise.all([
+          dispatch(getKlineList()),
+          dispatch(getHighLowList())
+        ]);
       }
-    }, 10000)
+      await delay(10000)
+    }
   }
 }
 
