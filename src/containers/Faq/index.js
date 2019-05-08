@@ -17,7 +17,7 @@ function Ans({ ansTitle, ansContent, image }) {
     <Col>
       <Text L bold wordSpaceL>{ansTitle}</Text>
       { image && <Image source={image} TopS actualSize /> }
-      <Text M wordSpaceL TopS BottomS>{ansContent}</Text>
+      <Text XS wordSpaceS TopS BottomS>{ansContent}</Text>
     </Col>
   )
 }
@@ -269,7 +269,17 @@ Deposit for creatinf the market. Fix 2500 SmartUp Token deposit.`,
 ];
 
 export default function () {
-  const [expandedRecord, setExpandedRecord] = useState(0)
+  const [expandedRecord, setExpandedRecord] = useState([0])
+  const onRecordClick = (index)=>{
+    let tempRecords = [...expandedRecord];
+    let tempIndex = tempRecords.indexOf(index);
+    if(tempIndex > -1){
+      tempRecords.splice(tempIndex,1);
+    }else{
+      tempRecords.push(index);
+    }
+    setExpandedRecord(tempRecords);
+  }
   return (
     <Col>
       <Row center centerVertical VS >
@@ -284,8 +294,8 @@ export default function () {
             header={faq.title}
             body={<Ans {...faq} />}
             expandedDark
-            expanded={expandedRecord === index}
-            onClick={() => setExpandedRecord(index)}
+            expanded={expandedRecord.includes(index)}
+            onClick={() => onRecordClick(index)}
           />
         )
       }
