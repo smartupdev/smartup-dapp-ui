@@ -27,7 +27,17 @@ const faqs = [
     title: 'What is SmartUp?',
     ansTitle: null, 
     ansContent: 'SmartUp Incubator is a platform to realize your dreams! SmartUp Incubator provide a blockchain based platform for creators to build up their project. This platform connects projects, investors and service providers around the world. With distributed ledger technology and smart contracts, we can help project teams access to capital and resources with greater efficiency and help investors gain transparency throughout the investment cycle like never before. ', 
-    image: null
+    image: null,
+    body: (
+      <Col>
+        <Text bold>I am good</Text>
+        <Text>SmartUp Incubator is a platform to realize your dreams! SmartUp Incubator provide a blockchain based platform for creators to build up their project. This platform connects projects, investors and service providers around the world. With distributed ledger technology and smart contracts, we can help project teams access to capital and resources with greater efficiency and help investors gain transparency throughout the investment cycle like never before.</Text>
+        <Text TopS>1. hi</Text>
+        <Text LeftM>2. bye</Text>
+        <Text underline>2. bye</Text>
+        <Image source={smartupIcon} actualSize TopXL /> 
+      </Col>
+    )
   },
   {
     title: 'Who can use SmartUp platform?',
@@ -307,7 +317,10 @@ export default function () {
           <Panel
             key={index}
             header={faq.title}
-            body={<Ans {...faq} />}
+            body={faq.body ? 
+              <Col spacingM>{faq.body}</Col> :
+              <Ans {...faq} />
+            }
             expandedDark
             expanded={expandedRecord.includes(index)}
             onClick={() => onRecordClick(index)}
