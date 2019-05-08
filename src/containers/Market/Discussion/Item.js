@@ -63,7 +63,7 @@ function DiscussionItem ({ loggedIn, post, isDetailView, toggleLikePost, toggleD
               {
                 ({add}) => <Share S color={theme.white} MarginRightS onClick={(e) => {
                   e.preventDefault(); e.stopPropagation();
-                  add(`Link copied to clipboard.`, { appearance: 'info', autoDismiss: true })
+                  add(`Link copied to clipboard. ${share({postId: id, id: marketId})}`,{ appearance: 'info', autoDismiss: true })
                 }} />
               }
             </ToastConsumer>
