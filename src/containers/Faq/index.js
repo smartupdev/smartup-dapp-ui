@@ -14,10 +14,10 @@ const faqText = lang.faq
 
 function Ans({ ansTitle, ansContent, image }) {
   return (
-    <Col>
+    <Col left>
       <Text L bold wordSpaceL>{ansTitle}</Text>
-      { image && <Image source={image} TopS actualSize /> }
-      <Text XS wordSpaceS TopS BottomS>{ansContent}</Text>
+      { image && <Image source={image} LeftS TopS actualSize /> }
+      <Text LeftS XS wordSpaceS TopS BottomS>{ansContent}</Text>
     </Col>
   )
 }
