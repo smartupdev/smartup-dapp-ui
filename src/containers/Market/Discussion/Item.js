@@ -12,6 +12,9 @@ import { connect } from 'react-redux'
 import { toggleLikePost, toggleDislikePost, toggleFollowPost } from '../../../actions/post'
 import { ipfsHost } from '../../../actions/ipfs'
 
+import { ToastConsumer } from 'react-toast-notifications'
+import { share } from '../../../alphaWebService'
+
 function DiscussionItem ({ loggedIn, post, isDetailView, toggleLikePost, toggleDislikePost, toggleFollowPost }) {
   const { id, authorName,username,userAddress, time, title, content, photo, isCollect, isLiked, isDisliked, numberOfLike = 1000, numberOfDislike = 2000, numberOfComment = 3000, marketId, lastReply } = post
   function like(e) {
@@ -56,7 +59,14 @@ function DiscussionItem ({ loggedIn, post, isDetailView, toggleLikePost, toggleD
             </Row>
           </Col>
           <Row>
-            <Share S color={theme.white} MarginRightS />
+            <ToastConsumer>
+              {
+                ({add}) => <Share S color={theme.white} MarginRightS onClick={(e) => {
+                  e.preventDefault(); e.stopPropagation();
+                  add(`Copied link(${share({postId: id, id: marketId})}) to clipboard.`, { appearance: 'info', autoDismiss: true })
+                }} />
+              }
+            </ToastConsumer>
             <Bookmarked S color={theme.white} checked={isCollect} disabled={!loggedIn} onClick={(e) => loggedIn && toggleFollowPost(e, id, isCollect)} />
           </Row>
         </Row>
