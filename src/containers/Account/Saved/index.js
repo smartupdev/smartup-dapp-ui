@@ -3,6 +3,7 @@ import React, { Fragment, useEffect, useState } from 'react'
 import DiscussionItem from '../../Market/Discussion/Item'
 import DiscussionComment from '../../Market/Discussion/Comment'
 import MarketTable from '../../Market/Table/ListView'
+import { ReplyBody } from '../Comment'
 
 import { Row, Col } from '../../../components/Layout'
 import Text from '../../../components/Text'
@@ -69,19 +70,7 @@ function Index({
         header='Saved comments'
         error={collectedReplysError}
         loading={gettingCollectedReplys}
-        body={
-          <>
-          {
-            collectedReplys.map(reply => 
-              <Fragment key={reply.id}>
-                <DiscussionComment reply={reply} />
-                <Hr />
-              </Fragment>
-            )
-          }
-          <ScrollLoader isButton loadMore={getCollectedReplys} hasMore={collectedReplysHasNextPage} isLoading={gettingCollectedReplys} />
-          </>
-        } />
+        body={<ReplyBody replys={collectedReplys} loadMore={getCollectedReplys} hasMore={collectedReplysHasNextPage} isLoading={gettingCollectedReplys} />} />
     </Col>
   )  
 }

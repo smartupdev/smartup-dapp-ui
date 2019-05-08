@@ -5,6 +5,7 @@ export function delay(ms = 1000) {
   return new Promise(resolve => setTimeout(resolve, ms))
 }
 
+// TODO: if the first params is null or undefined, there is error
 export function toParams(params = {}) {
   return Object.keys(params).reduce((p, key, i) =>
     [null, undefined].includes(params[key]) ? p :
