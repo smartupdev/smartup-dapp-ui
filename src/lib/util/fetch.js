@@ -1,6 +1,4 @@
 export const apiBaseUrl = 'http://39.105.101.248:86';
-export const webUrl = 'http://39.105.101.248';
-// const apiBaseUrl = 'https://jsonplaceholder.typicode.com';
 const fetchTimeout = 20000
 
 export function delay(ms = 1000) {
@@ -14,20 +12,20 @@ export function toParams(params = {}) {
     , '')
 }
 
-export function get(api, params, isWebUrl) {
-  return cmFetch('GET', api + toParams(params), null, isWebUrl)
+export function get(api, params, host) {
+  return cmFetch('GET', api + toParams(params), null, host)
 }
 
-export function post(api, params) {
-  return cmFetch('POST', api, params)
+export function post(api, params, host) {
+  return cmFetch('POST', api, params, host)
 }
 
-export function put(api, params) {
-  return cmFetch('PUT', api, params)
+export function put(api, params, host) {
+  return cmFetch('PUT', api, params, host)
 }
 
-export function remove(api, params) {
-  return cmFetch('DELETE', api, params)
+export function remove(api, params, host) {
+  return cmFetch('DELETE', api, params, host)
 }
 
 export default { get, post, put, remove }
@@ -43,8 +41,8 @@ function timeoutWrapper (promise, timeout = fetchTimeout) {
 
 export const NOT_LOGIN = 'You had not logged in yet.'
 
-async function cmFetch(method, api, params, isWebUrl) {
-  const r = await timeoutWrapper( () => fetch((isWebUrl ? webUrl : apiBaseUrl) + (api[0] === '/' ? api : '/'+api), getOptions(method, params)) )
+async function cmFetch(method, api, params, host) {
+  const r = await timeoutWrapper( () => fetch((host || apiBaseUrl) + (api[0] === '/' ? api : '/'+api), getOptions(method, params)) )
   if(!r.ok) throw new Error(r.status)
   const json = await r.json()
   if(json.code === '1') throw new Error('System Error')

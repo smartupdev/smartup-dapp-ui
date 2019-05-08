@@ -38,7 +38,7 @@ function DiscussionComment({
         </Row>
       </Col>
       <Row flex={1} right TopXS LeftXS>
-        <Share S color={theme.white} MarginRightS />
+        {/* <Share S color={theme.white} MarginRightS /> */}
         <Bookmarked S color={theme.white} checked={isCollect} onClick={(e) => toggleFollowReply(e, id, isCollect)} />
       </Row>
     </Row>
