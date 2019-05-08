@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react'
 
-import { ToastConsumer } from 'react-toast-notifications'
-
 import { Link, getUrlParams, routeMap, getPath } from '../../routes'
 
 import { connect } from 'react-redux'
@@ -20,6 +18,10 @@ import Hr from '../../components/Hr'
 import Button from '../../components/Button'
 import Avatar from '../../components/Avatar'
 
+import { ToastConsumer } from 'react-toast-notifications'
+import { copy } from '../../lib/util'
+import { share } from '../../alphaWebService'
+
 import lang, { currentLang } from '../../lang'
 
 const TABS = [
@@ -29,17 +31,6 @@ const TABS = [
   { label: lang.marketTab.proposal[currentLang], value: 'proposal' },
   { label: lang.marketTab.flag[currentLang], value: 'flag' },
 ]
-const copyToClipboard = str => {
-  const el = document.createElement('textarea');
-  el.value = str;
-  el.setAttribute('readonly', '');
-  el.style.position = 'absolute';
-  el.style.left = '-9999px';
-  document.body.appendChild(el);
-  el.select();
-  document.execCommand('copy');
-  document.body.removeChild(el);
-};
 
 const Market = ({ get, collectMarket, getting, location, market, getMarketPost, onChangeKeyword, postKeyword, resetDetail }) => {
   const id = getUrlParams().id
@@ -62,7 +53,7 @@ const Market = ({ get, collectMarket, getting, location, market, getMarketPost, 
           <ToastConsumer>
             {
               ({add}) => 
-                <Copy S MarginLeftXS color='#fff' onClick={() => { add(`Copied Market address to clipboard.`, { appearance: 'info', autoDismiss: true }); copyToClipboard(market.address) }} />
+                <Copy S MarginLeftXS color='#fff' onClick={() => { add(`Copied Market address to clipboard.`, { appearance: 'info', autoDismiss: true }); copy(market.address) }} />
             }
           </ToastConsumer>
         </Row>
@@ -79,8 +70,13 @@ const Market = ({ get, collectMarket, getting, location, market, getMarketPost, 
                 <Button label={market.numberOfSub} icon={People} onClick={() => console.debug} />
             }
           </Link>
-          {/* <Button label={market.numberOfSub} icon={People} /> */}
-          <Share S color={theme.white} onClick={() => console.log(market.id)} />
+          <ToastConsumer>
+            {
+              ({add}) => // TODO: Clear up 
+                <Share S color={theme.white} onClick={() => add(`Copied link(${share()}) to clipboard.`, { appearance: 'info', autoDismiss: true })} />
+            }
+          </ToastConsumer>
+
           <Bookmarked S MarginLeftS onClick={() => collectMarket(market)} checked={market.following} />
         </Row>
       </Row>

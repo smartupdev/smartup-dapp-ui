@@ -55,6 +55,7 @@ const theme = {
   fontSizeL: '16px',
   fontSizeXL: '20px',
 
+  fontSpacingXS: '1px',
   fontSpacingS: '2px',
   fontSpacingM: '4px',
   fontSpacingL: '6px',

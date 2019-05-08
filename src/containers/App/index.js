@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
 
 import { Route } from 'react-router-dom'
 import routes from '../../routes'
 
-import fetch, { webUrl } from '../../lib/util/fetch'
+import { checkVersion } from '../../alphaWebService'
 
 import Header from '../../components/Header'
 import Panel from '../Panel'
@@ -23,12 +23,7 @@ const Container = styled(Row)`
 
 const App = ({ watchMetamask, checkLogin }) => {
   useEffect( () => {
-    process.env.NODE_ENV === 'production' &&
-    fetch.get('/node/get/ipfs/hash', {}, true)
-      .then(r => 
-        !window.location.pathname.includes(r) && 
-        (window.location.href = `${webUrl}/node/share/medium?url=/#/`) 
-      )
+    checkVersion()
     watchMetamask()
     checkLogin()
   }, [])
@@ -48,9 +43,6 @@ const App = ({ watchMetamask, checkLogin }) => {
     </Container>
   )
 }
-
-// export default App;
-
 
 const mapDispatchToProps = {
   watchMetamask, checkLogin
