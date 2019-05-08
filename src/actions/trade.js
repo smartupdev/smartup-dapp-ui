@@ -262,6 +262,18 @@ export function getHighLowList(){
   }
 }
 
+export function watchKline() {
+  return (dispatch, getState) => {
+    let klineInterval = setInterval(() => {
+      const { market: {currentMarket}} = getState()
+      if(!!currentMarket){
+        dispatch(getKlineList());
+        dispatch(getHighLowList());
+      }
+    }, 10000)
+  }
+}
+
 
 
 

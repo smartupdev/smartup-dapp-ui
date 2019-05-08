@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { Link } from '../../routes'
 
 import { connect } from 'react-redux'
-import { setTab, onChangeCT, onChangeSUT, onTrade, toggleIsSell, toggleTnc, reset, getTradeList, getKlineList, getHighLowList,} from '../../actions/trade';
+import { setTab, onChangeCT, onChangeSUT, onTrade, toggleIsSell, toggleTnc, reset, getTradeList, watchKline,getKlineList, getHighLowList,} from '../../actions/trade';
 import { onClickTnc } from '../../actions/ipfs'
 
 import theme from '../../theme'
@@ -40,12 +40,13 @@ const klineTabs = [
   { label: '1week' },
 ]
 
-function Trading({ loggedIn, market, gettingMarket, tradeState, setTab, onChangeCT, onChangeSUT, toggleIsSell, toggleTnc, onTrade, reset, userSut, getTradeList, getKlineList, getHighLowList }) {
+function Trading({ loggedIn, market, gettingMarket, tradeState, setTab, onChangeCT, onChangeSUT, toggleIsSell,watchKline, toggleTnc, onTrade, reset, userSut, getTradeList, getKlineList, getHighLowList }) {
   useEffect(() => {
     if(market) {
       getTradeList()
       getKlineList()
       getHighLowList()
+      watchKline()
     }
     return reset
   }, [market])
@@ -176,6 +177,7 @@ const mapDispatchToProps = {
   getTradeList,
   getKlineList,
   getHighLowList,
+  watchKline,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Trading);
