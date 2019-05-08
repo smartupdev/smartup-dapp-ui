@@ -29,7 +29,7 @@ const TableExpand = ({ record, history, collectMarket }) => {
           <ToastConsumer>
             {
               ({add}) => // TODO: Clear up 
-                <Share S color={theme.white} onClick={() => add(`Copied link(${share({id: record.id})}) to clipboard.`, { appearance: 'info', autoDismiss: true })} />
+                <Share S color={theme.white} onClick={() => add(`Link copied to clipboard.`, { appearance: 'info', autoDismiss: true })} />
             }
           </ToastConsumer>
           <Bookmarked S MarginLeftS onClick={() => collectMarket(record)} checked={record.following} /> 
