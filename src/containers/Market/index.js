@@ -73,7 +73,7 @@ const Market = ({ get, collectMarket, getting, location, market, getMarketPost, 
           <ToastConsumer>
             {
               ({add}) => // TODO: Clear up 
-                <Share S color={theme.white} onClick={() => add(`Link copied to clipboard.`, { appearance: 'info', autoDismiss: true })} />
+                <Share S color={theme.white} onClick={() => add(`Link copied to clipboard. (${share()})`, { appearance: 'info', autoDismiss: true })} />
             }
           </ToastConsumer>
 
