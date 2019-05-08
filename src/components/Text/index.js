@@ -28,6 +28,7 @@ export const Text = styled.p`
   ${p => p.wordSpaceL && css`letter-spacing: ${p => p.theme.fontSpacingL}`}
   ${p => p.wordSpaceM && css`letter-spacing: ${p => p.theme.fontSpacingM}`}
   ${p => p.wordSpaceS && css`letter-spacing: ${p => p.theme.fontSpacingS}`}
+  ${p => p.wordSpaceXS && css`letter-spacing: ${p => p.theme.fontSpacingXS}`}
 
   ${p => p.note && css`color: ${p => p.theme.colorSecondary}`}
   ${p => p.price && css`color: ${p => p.theme.colorPrice}`}
