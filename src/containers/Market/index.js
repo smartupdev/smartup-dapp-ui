@@ -48,7 +48,7 @@ const Market = ({ get, collectMarket, getting, location, market, getMarketPost, 
     <Col>
       <Row spaceBetween spacingTopXS spacingBottomXS spacingRightS spacingLeftS color={theme.bgColorLight}>
         <Row centerVertical>
-          <Avatar icon={market.avatar} style={{ 'borderRadius':'50%'}}/>
+          <Avatar icon={market.avatar} />
           <Text>{`${market.name} (${market.id})`}</Text>
           <ToastConsumer>
             {
@@ -73,7 +73,10 @@ const Market = ({ get, collectMarket, getting, location, market, getMarketPost, 
           <ToastConsumer>
             {
               ({add}) => // TODO: Clear up 
-                <Share S color={theme.white} onClick={() => add(`Link copied to clipboard. (${share()})`, { appearance: 'info', autoDismiss: true })} />
+                <Share S color={theme.white} onClick={() => {
+                  share({id: market.id}, routeMap.trading.path)
+                  add(`Link copied to clipboard.`, { appearance: 'info', autoDismiss: true })
+                }} />
             }
           </ToastConsumer>
 

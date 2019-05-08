@@ -14,14 +14,18 @@ export function checkVersion() {
   }
 }
 
-export function share(params) {
+export function share(params, path) {
   let hash = window.location.hash
   if(params) {
-    hash = window.location.hash.replace(/\?.+/, '')
+    hash = hash.replace(/\?.+/, '')
     hash += toParams(params)
+  }
+  if(path) {
+    hash = hash.replace(/[^?#]+/, path)
   }
   const shareText = `${webUrl}${shareUrl}${hash}`
   copy(shareText)
   console.log(shareText)
+  console.log(path)
   return shareText
 }

@@ -4,7 +4,7 @@ import Text from '../../../components/Text'
 import Avatar from '../../../components/Avatar'
 import Image from '../../../components/Image'
 import { Bookmarked, Share, Like, Dislike, Reply } from '../../../components/Icon'
-import { Link } from '../../../routes'
+import { Link, routeMap } from '../../../routes'
 
 import { toToken, toAgo, toFullDate, shorten } from '../../../lib/util'
 import theme from '../../../theme'
@@ -63,7 +63,8 @@ function DiscussionItem ({ loggedIn, post, isDetailView, toggleLikePost, toggleD
               {
                 ({add}) => <Share S color={theme.white} MarginRightS onClick={(e) => {
                   e.preventDefault(); e.stopPropagation();
-                  add(`Link copied to clipboard. ${share({postId: id, id: marketId})}`,{ appearance: 'info', autoDismiss: true })
+                  share({postId: id, id: marketId}, routeMap.discussionDetail.path)
+                  add('Link copied to clipboard.',{ appearance: 'info', autoDismiss: true })
                 }} />
               }
             </ToastConsumer>

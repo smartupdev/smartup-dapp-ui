@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from '../../../routes'
+import { Link, routeMap } from '../../../routes'
 import { Row, Col } from '../../../components/Layout'
 import theme from '../../../theme'
 import { Comment, Trade, People, Bookmarked, Share } from '../../../components/Icon'
@@ -29,7 +29,10 @@ const TableExpand = ({ record, history, collectMarket }) => {
           <ToastConsumer>
             {
               ({add}) => // TODO: Clear up 
-                <Share S color={theme.white} onClick={() => add(`Link copied to clipboard. (${share({id: record.id})})`, { appearance: 'info', autoDismiss: true })} />
+                <Share S color={theme.white} onClick={() => {
+                  share({id: record.id}, routeMap.trading.path)
+                  add(`Link copied to clipboard.`, { appearance: 'info', autoDismiss: true })
+                }} />
             }
           </ToastConsumer>
           <Bookmarked S MarginLeftS onClick={() => collectMarket(record)} checked={record.following} /> 
