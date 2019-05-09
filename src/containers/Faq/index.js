@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState, Fragment } from 'react'
 import Image from '../../components/Image'
 import Text from '../../components/Text'
 import Panel from '../../components/Panel'
@@ -485,7 +485,7 @@ While a new market is creating, buy action may fail because the market address h
 ];
 
 export default function () {
-  const [expandedRecord, setExpandedRecord] = useState([0,15])
+  const [expandedRecord, setExpandedRecord] = useState([0])
   const onRecordClick = (index)=>{
     let tempRecords = [...expandedRecord];
     let tempIndex = tempRecords.indexOf(index);
@@ -504,18 +504,25 @@ export default function () {
       </Row>
       <Hr />
       {
-        faqs.map( (faq, index) => 
-          <Panel
-            key={index}
-            header={faq.title}
-            body={faq.body ? 
-              <Col VM HXL>{faq.body}</Col> :
-              <Ans {...faq} />
-            }
-            expandedDark
-            expanded={expandedRecord.includes(index)}
-            onClick={() => onRecordClick(index)}
-          />
+        faqs.map( (faq, index) => {
+          const isExpanded = expandedRecord.includes(index)
+          return (
+            <Fragment key={index}>
+              <Panel
+                headerLeft
+                header={faq.title}
+                body={faq.body ? 
+                  <Col VM HXL>{faq.body}</Col> :
+                  <Ans {...faq} />
+                }
+                expandedDark
+                expanded={isExpanded}
+                onClick={() => onRecordClick(index)}
+              />
+              { isExpanded && <Hr /> }
+            </Fragment>
+          )
+        }
         )
       }
     </Col>
