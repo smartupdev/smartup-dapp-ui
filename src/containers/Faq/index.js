@@ -54,7 +54,7 @@ You may see more guidelines clicking on the following links:
     title: 'What can I do with SmartUp?',
     ansTitle: null, 
     ansContent: `For a Startuppers, you can create a market to realize your idea. After created the market, you can buy the idea tokens at the starting point with the lowest price. With more investors joining the market, more idea tokens are generated that caused higher spot price. You may sell the tokens to earn the capital to realize your idea. 
-    As an Investors, you can find the potential and creative projects to invest. The price of the idea token is proportional to the quantity of the idea token. Earlier investment in a potential projects make greater opportunity to earn more benefits because the potential project can keep attracting investors. `, 
+As an Investors, you can find the potential and creative projects to invest. The price of the idea token is proportional to the quantity of the idea token. Earlier investment in a potential projects make greater opportunity to earn more benefits because the potential project can keep attracting investors. `, 
     image: null
   },
   {
@@ -109,7 +109,7 @@ You may see more guidelines clicking on the following links:
   {
     title: 'What is NTT?',
     ansTitle: null, 
-    ansContent: 'i am content', 
+    ansContent: 'NTT is the creditability system of the platform, used to reward or punish user’s behaviour when they took up some responsibilities or duties from platform like being a juror etc. in a market. It is also a factor for users to do peer review and evaluation. Every new user will be rewarded +100 NTT. The function will be developed in future version of the platform.', 
     image: null
   },
   {
@@ -144,7 +144,7 @@ Deposit for creatinf the market. Fix 2500 SmartUp Token deposit.`,
   {
     title: 'How can I manage my project/ business?',
     ansTitle: null, 
-    ansContent: 'i am content', 
+    ansContent: 'You can create discussion posts, or suggest any idea in discussion page to collect comments for manage your prject.', 
     image: null
   },
   {
@@ -154,9 +154,9 @@ Deposit for creatinf the market. Fix 2500 SmartUp Token deposit.`,
     image: null
   },
   {
-    title: 'What is the difference between SmartUp token and the community token?',
+    title: 'What is the difference between SmartUp token and the idea token?',
     ansTitle: null, 
-    ansContent: 'i am content', 
+    ansContent: 'SmartUp token is the cryptocurrency that is used on the platform for creating market and trading idea tokens. Idea token is issued when each market is created for trading and fundraising.', 
     image: null
   },
   {
@@ -175,7 +175,7 @@ Deposit for creatinf the market. Fix 2500 SmartUp Token deposit.`,
   {
     title: 'How can I attract more people to invest into my project?',
     ansTitle: null, 
-    ansContent: 'i am content', 
+    ansContent: 'Investor can be attracted by potential and profitable projects. You can think about how investor to be benefit from your project. ', 
     image: null
   },
   {
@@ -199,7 +199,7 @@ Deposit for creatinf the market. Fix 2500 SmartUp Token deposit.`,
   {
     title: 'Can I shut down my project?',
     ansTitle: null, 
-    ansContent: 'i am content', 
+    ansContent: 'It is not able to shut down the projects now.', 
     image: null
   },
   {
