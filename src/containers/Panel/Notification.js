@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React, {useEffect, useCallback} from 'react'
 import { Row, Col } from '../../components/Layout'
 import NotificationItem from '../../components/Notification'
 import Search from '../../components/Search'
@@ -8,7 +8,7 @@ import Text from '../../components/Text'
 import { Expand, Tick } from '../../components/Icon'
 import Hr from '../../components/Hr'
 import ScrollLoader from '../../components/ScrollLoader'
-import { Link } from '../../routes'
+import { Link, withLink } from '../../routes'
 import theme from '../../theme'
 import ethIcon from '../../images/eth.png';
 import smartupIcon from '../../images/smartup.png';
@@ -30,15 +30,13 @@ const TYPES = {
   },
 }
 
-// const typeValueToImage = Object.keys(TYPES).reduce((p, t) => ({
-//   ...p,
-//   [TYPES[t].value]: TYPES[t].image
-// }), {})
 function noop() {}
 const Notification = ({
   notification: { notifications, showUnreadOnly, unreadCount, gettingNotifications, keyword, hasNextPage },
   getList,
   read,
+  goto,
+  history,
   readAll,
   userAvatar,
   toggleShowUnread,
@@ -49,6 +47,10 @@ const Notification = ({
   }, [showUnreadOnly])
   const disabled = gettingNotifications
   const readAllDisabled = !unreadCount || disabled
+  const onClick = useCallback( n => {
+    n.marketId && goto.trading({id: n.marketId})
+    n.unread && read(n.id)
+  }, [])
   return (
     <Col overflowAuto>
       <Row relative centerVertical>
@@ -58,16 +60,13 @@ const Notification = ({
         { gettingNotifications && <DonutLoader S /> }
         <Search id='notification' backgroundColor={theme.bgColor} onChange={onChangeKeyword} value={keyword} onSearch={getList} />
       </Row>
-      <Link>
-      { ({ goto }) =>
+      {
         notifications.map(n =>
           <NotificationItem
+            marketId={n.content && n.content.marketId}
             key={n.notificationId}
             id={n.notificationId}
-            onClick={() => {
-              n.content && n.content.marketId && goto.trading({id: n.content.marketId})
-              !n.isRead && read(n.notificationId)
-            }}
+            onClick={onClick}
             image={n.style === TYPES.system.value ? TYPES.system.image : userAvatar}
             sender={n.style === TYPES.system.value ? 'SmartUp' : 'Me'}
             title={n.title}
@@ -77,7 +76,6 @@ const Notification = ({
           />
         )
       }
-      </Link>
       <Hr />
       <ScrollLoader isButton hasMore={hasNextPage} loadMore={getList} isLoading={gettingNotifications}  />
     </Col>
@@ -93,4 +91,4 @@ const mapDispatchToProps = {
   getList, read, readAll, toggleShowUnread, onChangeKeyword
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Notification);
+export default withLink(connect(mapStateToProps, mapDispatchToProps)(Notification));

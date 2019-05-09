@@ -1,3 +1,4 @@
+import React, { memo } from 'react'
 // import Icon1 from './images/menu1.svg'
 // import Icon2 from './images/menu2.svg'
 // import Icon3 from './images/menu3.svg'
@@ -89,13 +90,26 @@ const mapStateToProps = state => ({
   marketId: state.market.currentMarketId,
 });
 
-export const Link = connect(mapStateToProps)(withRouter( 
-  ({ history, location, children, marketId }) => children({
+function linkProps(history, location, marketId) {
+  return {
     goto: routes.reduce( (p, c) => ({
       ...p,
       [c.id]: (params) => history.push(c.path + toParams({id: marketId, ...params}) )
     }), {}),
     history,
     location
-  }) 
+  }
+}
+
+export function withLink(Component) {
+  return connect(mapStateToProps)(withRouter( 
+    memo(
+      ({ history, location, marketId, ...props }) => 
+        <Component {...props} {...linkProps(history, location, marketId)} />
+    ))  
+  )
+}
+
+export const Link = connect(mapStateToProps)(withRouter( 
+  ({ history, location, children, marketId }) => children(linkProps(history, location, marketId)) 
 ))

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import { Row, Col } from '../Layout'
 import Text from '../Text'
 import Image from '../Image'
@@ -28,14 +28,20 @@ const Dot = styled.div`
 const Main = styled(Col)`
   flex: 1;
 `
-export default ({ image, sender, title, content, date, unread, expanded, onClick, id }) => 
-  <Container top spaceBetween unread={unread} onClick={onClick && (() => onClick(id))}>
-    <Dot unread={unread} />
-    <Avatar icon={image} size='18px' />
-    <Main expanded={expanded}>
-      <Text spaceBottom>{sender}</Text>
-      <Text S bold>{title}</Text>
-      <Text S>{content}</Text>
-    </Main>
-    <Text S nowrap right>{toAgo(date)}</Text>
-  </Container>
+
+
+export default memo((notification) => {
+  const { image, sender, title, content, date, unread, expanded, onClick, id } = notification
+  return (
+    <Container top spaceBetween unread={unread} onClick={onClick && (() => onClick(notification))}>
+      <Dot unread={unread} />
+      <Avatar icon={image} size='18px' />
+      <Main expanded={expanded}>
+        <Text spaceBottom>{sender}</Text>
+        <Text S bold>{title}</Text>
+        <Text S>{content}</Text>
+      </Main>
+      <Text S nowrap right>{toAgo(date)}</Text>
+    </Container>
+  )
+})
