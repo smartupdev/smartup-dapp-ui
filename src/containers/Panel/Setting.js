@@ -13,15 +13,14 @@ const Setting = ({ realUserName, avatarUploading, avatarHash, updateUserAvatar,
   return (
     <Col>
       <Text MarginLeftXS S VXS>{'Avatar photo'}</Text>
-      <DropToUpload MarginBottomXS MarginLeftXS MarginRightXS onChoose={onChangeAvatar} isLoading={avatarUploading} value={avatarHash} imageHeight='100px' imageWidth='100px' />
-      {updateAvatarError && <Text right error={true}>{updateAvatarError}</Text>}
+      <DropToUpload MarginBottomXS MarginLeftXS MarginRightXS onChoose={onChangeAvatar} isLoading={avatarUploading} value={avatarHash} error={updateAvatarError} imageHeight='100px' imageWidth='100px' />
       <Row center MarginTopXS>
         <Button primary LeftM RightM label='Submit' onClick={updateUserAvatar} />
         {/* <Button MarginLeftXS LeftM RightM style={{backgroundColor:'#8F9497'}}  label='Cancel' onClick={() => { }} /> */}
       </Row>
       <Text MarginLeftXS S VXS>{'User Name'}</Text>
       <Input value={realUserName} placeholder='User Name' disabled={nameHasChanged} onChange={onChangeName} />
-      <Text right error={updateNameError}>{
+      <Text S right note error={updateNameError}>{
         typeof updateNameError === 'string' ? updateNameError :
           (!nameHasChanged ? 'Capital sensitive, 6-15 characters.' : 'Username is confirmed and locked.')
       } </Text>

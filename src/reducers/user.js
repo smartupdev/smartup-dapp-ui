@@ -61,7 +61,7 @@ function userInfo(user) {
     userAvatar: user.avatarIpfsHash,
     userAddress: user.userAddress,
     userName: user.name ? user.name : user.userAddress,
-    realUserName: user.name,
+    realUserName: user.name || '',
     nameHasChanged: !!user.name,
   }
 }
