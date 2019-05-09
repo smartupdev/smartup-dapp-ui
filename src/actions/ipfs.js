@@ -12,7 +12,7 @@ export function onClickTnc() {
 export function postIpfsImg(file) {
   return new Promise((resolve, reject) => {
     if(!['image/png', 'image/x-png','image/gif','image/jpeg'].includes(file.type)) 
-      return reject(new Error('Invalid file type. Only png, git, jpg is allowed.'))
+      return reject(new Error('Invalid file type. Only png, gif, jpg is allowed.'))
     const blob = new Blob([file], { type: file.type });
     toBuffer(blob, (bufferError, buffer) => {
       if (bufferError) {
