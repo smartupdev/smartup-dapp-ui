@@ -23,7 +23,7 @@ import {
 import {
   API_USER_LOGIN, API_USER_CURRENT, API_USER_UPDATE, API_USER_AUTH,
 } from './api';
-import fetch from '../lib/util/fetch';
+import fetch, { delay } from '../lib/util/fetch';
 import { postIpfsImg } from './ipfs'
 
 const STORAGE_KEY_TOKEN = 'token'
@@ -58,13 +58,11 @@ export function checkLogin() {
 }
 
 export function watchMetamask() {
-  return (dispatch, getState) => {
-    let accountInterval = setInterval(() => {
+  return async(dispatch, getState) => {
+    while(true) {
       const storedAccount = getStorageAccount()
       const currentAccount = getAccount()
-
-      if (currentAccount) dispatch(getAllBalance())
-
+      if (currentAccount) await dispatch(getAllBalance())
       if (storedAccount != currentAccount) {
         if (!currentAccount || storedAccount && currentAccount) {
           window.localStorage.clear()
@@ -73,7 +71,8 @@ export function watchMetamask() {
           setStorageToken()
         }
       }
-    }, 1000)
+      await delay(1000)
+    }
   }
 }
 
