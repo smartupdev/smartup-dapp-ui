@@ -30,12 +30,8 @@ const faqs = [
     image: null,
     body: (
       <Col>
-        <Text bold>I am good</Text>
-        <Text>SmartUp Incubator is a platform to realize your dreams! SmartUp Incubator provide a blockchain based platform for creators to build up their project. This platform connects projects, investors and service providers around the world. With distributed ledger technology and smart contracts, we can help project teams access to capital and resources with greater efficiency and help investors gain transparency throughout the investment cycle like never before.</Text>
-        <Text TopS>1. hi</Text>
-        <Text LeftM>2. bye</Text>
-        <Text underline>2. bye</Text>
-        <Image source={smartupIcon} actualSize TopXL /> 
+         <Text >Stigmergy</Text>
+        <Text  TopXS lineHeight S>SmartUp Incubator is a platform to realize your dreams! SmartUp Incubator provide a blockchain based platform for creators to build up their project. This platform connects projects, investors and service providers around the world. With distributed ledger technology and smart contracts, we can help project teams access to capital and resources with greater efficiency and help investors gain transparency throughout the investment cycle like never before.</Text>
       </Col>
     )
   },
@@ -48,20 +44,41 @@ SmartUp Incubator Platform is available to individuals who are 18 years of age o
 You may see more guidelines clicking on the following links:
 •	Startuppers/ Startup dreamer
 •	Investors/ Speculators`, 
-    image: null
+    image: null,
+    body: (
+      <Col>
+         <Text TopXS lineHeight S >Startup dreamers who are an artist, musician, product designer or entrepreneur, can make ideas and dreams a reality by raising fund, finding resources and support on SmartUp Incubator Platform.</Text>
+         <Text TopXS lineHeight S>If you are finding potential and creative projects for investment or speculation, you can also search the market on SmartUp Incubator Platform, and make use of the Trade function in different market to make benefits.</Text>
+         <Text TopXS lineHeight S>SmartUp Incubator Platform is available to individuals who are 18 years of age or older.</Text>
+         <Text TopXS lineHeight S>You may see more guidelines clicking on the following links:</Text>
+         <Text lineHeight S>•	Startuppers/ Startup dreamer</Text>
+         <Text lineHeight S>•	Investors/ Speculators</Text>
+      </Col>
+    )
   },
   {
     title: 'What can I do with SmartUp?',
     ansTitle: null, 
     ansContent: `For a Startuppers, you can create a market to realize your idea. After created the market, you can buy the idea tokens at the starting point with the lowest price. With more investors joining the market, more idea tokens are generated that caused higher spot price. You may sell the tokens to earn the capital to realize your idea. 
-As an Investors, you can find the potential and creative projects to invest. The price of the idea token is proportional to the quantity of the idea token. Earlier investment in a potential projects make greater opportunity to earn more benefits because the potential project can keep attracting investors. `, 
-    image: null
+    As an Investors, you can find the potential and creative projects to invest. The price of the idea token is proportional to the quantity of the idea token. Earlier investment in a potential projects make greater opportunity to earn more benefits because the potential project can keep attracting investors. `, 
+    image: null,
+    body: (
+      <Col>
+         <Text lineHeight S>For a Startuppers, you can create a market to realize your idea. After created the market, you can buy the idea tokens at the starting point with the lowest price. With more investors joining the market, more idea tokens are generated that caused higher spot price. You may sell the tokens to earn the capital to realize your idea.</Text>
+        <Text  TopXS lineHeight S>As an Investors, you can find the potential and creative projects to invest. The price of the idea token is proportional to the quantity of the idea token. Earlier investment in a potential projects make greater opportunity to earn more benefits because the potential project can keep attracting investors.</Text>
+      </Col>
+    )
   },
   {
     title: 'Is SmartUp available in the country I stayed?',
     ansTitle: null, 
     ansContent: 'People all over the world can use SmartUp Incubator Platform.', 
-    image: null
+    image: null,
+    body: (
+      <Col>
+         <Text lineHeight S>People all over the world can use SmartUp Incubator Platform.</Text>
+      </Col>
+    )
   },
   {
     title: 'What should I prepare before using SmartUp Incubator Platform? ',
@@ -73,50 +90,97 @@ As an Investors, you can find the potential and creative projects to invest. The
    Install Metamask Chrome extension at this link: https://metamask.io/ 
 3. Ensure there is enough ETH & SmartUp Tokens in MetaMask Wallet
 4. Lastly, you can start by clicking on "creating market"! `, 
-    image: null
+    image: null,
+    body: (
+      <Col>
+         <Text >The followings are required for using SmartUp:</Text>
+         <Text TopXS lineHeight S>1. Google Chrome Browser</Text>
+         <Text lineHeight S>Download the Chrome at this link: <a style={{ color: '#fff' }} href='https://www.google.com/chrome/'>https://www.google.com/chrome/ </a></Text>
+         <Text TopXS lineHeight S>2.	Metamask</Text>
+         <Text lineHeight S>Install Metamask Chrome extension at this link: <a style={{ color: '#fff' }} href='https://metamask.io/'>https://metamask.io/ </a></Text>
+         <Text TopXS lineHeight S>3.	Ensure there is enough ETH & SmartUp Tokens in MetaMask Wallet</Text>
+         <Text TopXS lineHeight S>4.	Lastly, you can start by ‘creating market’!</Text>
+      </Col>
+    )
   },
   {
     title: 'What is Metamask? ',
     ansTitle: null, 
     ansContent: `MetaMask is a 3rd party bridge that allows you to visit the distributed web and dapp like SmartUp Incubator Platform in Google Chrome Browser. It allows you to run Ethereum dApps right in your browser without running a full Ethereum node. 
     You may see it as an ETH wallet where ETH and SmartUp Token are stored. Simply install the MetaMask extension, click on connecting with SmartUp Incubator Platform, then you can start make good use of the SmartUp Incubator Platform. `, 
-    image: null
+    image: null,
+    body: (
+      <Col>
+         <Text  lineHeight S>MetaMask is a 3rd party bridge that allows you to visit the distributed web and dapp like SmartUp Incubator Platform in Google Chrome Browser. It allows you to run Ethereum dApps right in your browser without running a full Ethereum node.</Text>
+         <Text TopXS lineHeight S>You may see it as an ETH wallet where ETH and SmartUp Token are stored. Simply install the MetaMask extension, click on connecting with SmartUp Incubator Platform, then you can start make good use of the SmartUp Incubator Platform.</Text>
+      </Col>
+    )
   },
   {
     title: 'How do I buy SmartUp Token?',
     ansTitle: null, 
     ansContent: 'SmartUp Token is now can be traded on CoinBene.https://www.coinbene.com/exchange.html#/exchange?pairId=SMARTUPETH ', 
-    image: null
+    image: null,
+    body: (
+      <Col>
+         <Text lineHeight S>SmartUp Token is now can be traded on CoinBene.</Text>
+         <Text lineHeight S><a style={{ color: '#fff' }} href='https://www.coinbene.com/exchange.html#/exchange?pairId=SMARTUPETH'>https://www.coinbene.com/exchange.html#/exchange?pairId=SMARTUPETH </a></Text>
+      </Col>
+    )
   },
   {
     title: 'What can SmartUp Token be used for?',
     ansTitle: null, 
     ansContent: 'SmartUp Token can be used for creating market (cost 2500 SmartUp Token), and buy for idea tokens. ', 
-    image: null
+    image: null,
+    body: (
+      <Col>
+         <Text  lineHeight S>SmartUp Token can be used for creating market (cost 2500 SmartUp Token), and buy for idea tokens.</Text>
+      </Col>
+    )
   },
   {
     title: 'How do I top up my Metamask wallet?',
     ansTitle: null, 
     ansContent: 'You may open a new wallet and send the SmartUp Token and ETH to your wallet, or you may export a private key from your ERC20 wallet and import the wallet into your metamask, see more in this link. https://metamask.zendesk.com/hc/en-us/articles/360015489331-Importing-an-Account', 
-    image: null
+    image: null,
+    body: (
+      <Col>
+         <Text  lineHeight S>You may open a new wallet and send the SmartUp Token and ETH to your wallet, or
+You may export a private key from your ERC20 wallet and import the wallet into your metamask, see more in this link:<a style={{ color: '#fff' }} href=' https://metamask.zendesk.com/hc/en-us/articles/360015489331-Importing-an-Account '> https://metamask.zendesk.com/hc/en-us/articles/360015489331-Importing-an-Account  </a>
+</Text>
+      </Col>
+    )
   },
   {
     title: 'Can I use my own cryptocurrency wallet?',
     ansTitle: null, 
     ansContent: 'Yes, you can export your Private Key from your wallet and import the private key to Metamask , see more in this link: https://metamask.zendesk.com/hc/en-us/articles/360015489331-Importing-an-Account ', 
-    image: null
+    image: null,
+    body: (
+      <Col>
+         <Text  lineHeight S>Yes, you can export your Private Key from your wallet and import the private key to Metamask , see more in this link:<a style={{ color: '#fff' }} href=' https://metamask.zendesk.com/hc/en-us/articles/360015489331-Importing-an-Account'> https://metamask.zendesk.com/hc/en-us/articles/360015489331-Importing-an-Account </a>
+</Text>
+      </Col>
+    )
   },
   {
     title: 'What is NTT?',
     ansTitle: null, 
-    ansContent: 'NTT is the creditability system of the platform, used to reward or punish user’s behaviour when they took up some responsibilities or duties from platform like being a juror etc. in a market. It is also a factor for users to do peer review and evaluation. Every new user will be rewarded +100 NTT. The function will be developed in future version of the platform.', 
+    ansContent: 'i am content', 
     image: null
   },
   {
     title: 'What kind of project or market I can create?',
     ansTitle: null, 
     ansContent: 'You can create any kind of appropriate projects, including product designing and manufacturing, providing commercial services, establishing a conceptual café, etc. Nearly everything you think you can do, you can make it true on SmartUp Incubator Platform. ', 
-    image: null
+    image: null,
+    body: (
+      <Col>
+         <Text lineHeight S>You can create any kind of appropriate projects, including product designing and manufacturing, providing commercial services, establishing a conceptual café, etc. Nearly everything you think you can do, you can make it true on SmartUp Incubator Platform.
+</Text>
+      </Col>
+    )
   },
   {
     title: 'What should I prepare for creating a market?',
@@ -124,7 +188,14 @@ As an Investors, you can find the potential and creative projects to invest. The
     ansContent: `Firstly, you should prepare the software for running the platform, including Chrome Browser and MetaMask, and ETH and SmartUp Tokens for create market and trading tokens. Click here to see more details. #link to previous question.
 Second, establishing the plan of your project and business, including background, aims, timeline and rules that your investors and community member need to know. You also need to think about how to the attract investors to invest in your market. 
 Lastly, click on ‘Create Market’, step forward to your dream! `, 
-    image: null
+    image: null,
+    body: (
+      <Col>
+         <Text lineHeight S>Firstly, you should prepare the software for running the platform, including Chrome Browser and MetaMask, and ETH and SmartUp Tokens for create market and trading tokens. Click here to see more details. #link to previous question.</Text>
+         <Text TopXS lineHeight S>Second, establishing the plan of your project and business, including background, aims, timeline and rules that your investors and community member need to know. You also need to think about how to the attract investors to invest in your market.</Text>
+         <Text TopXS lineHeight S>Lastly, click on ‘Create Market’, step forward to your dream!</Text>
+      </Col>
+    )
   },
   {
     title: 'How do I create a project?',
@@ -133,30 +204,48 @@ Lastly, click on ‘Create Market’, step forward to your dream! `,
 Enter the market name and description, upload the photos for market icon and cover, click on "next".
 Preview the price curve of the idea token, then click on "Next".
 Deposit for creatinf the market. Fix 2500 SmartUp Token deposit.`, 
-    image: null
+    image: null,
+    body: (
+      <Col>
+         <Text lineHeight S>Click on the second icon of the navigation bar in the left-hand side of the Main Page. </Text>
+         <Text TopXS lineHeight S>Enter the market name and description, upload the photos for market icon and cover, click on "next".</Text>
+         <Text TopXS lineHeight S>Preview the price curve of the idea token, then click on "Next".</Text>
+         <Text TopXS lineHeight S>Deposit for creatinf the market. Fix 2500 SmartUp Token deposit.</Text>
+      </Col>
+    )
   },
   {
     title: 'How much SUT is needed for creating a market?',
     ansTitle: null, 
     ansContent: '2500 SmartUp Token is needed for creating a market. ', 
-    image: null
+    image: null,
+    body: (
+      <Col>
+         <Text lineHeight S>2500 SmartUp Token is needed for creating a market. </Text>
+      </Col>
+    )
   },
   {
     title: 'How can I manage my project/ business?',
     ansTitle: null, 
-    ansContent: 'You can create discussion posts, or suggest any idea in discussion page to collect comments for manage your prject.', 
+    ansContent: 'i am content', 
     image: null
   },
   {
     title: 'What is the idea token of my project?',
     ansTitle: null, 
     ansContent: 'Each market issues its own tokens individually. Investors can invest in the project by buying the tokens. As the price of the idea tokens is proportional to the quantity of the idea tokens, more investors buying the tokens and more tokens issued, the price will be higher. By selling the tokens at a higher price, investors can be benefited. ', 
-    image: null
+    image: null,
+    body: (
+      <Col>
+         <Text lineHeight S>Each market issues its own tokens individually. Investors can invest in the project by buying the tokens. As the price of the idea tokens is proportional to the quantity of the idea tokens, more investors buying the tokens and more tokens issued, the price will be higher. By selling the tokens at a higher price, investors can be benefited. </Text>
+      </Col>
+    )
   },
   {
-    title: 'What is the difference between SmartUp token and the idea token?',
+    title: 'What is the difference between SmartUp token and the community token?',
     ansTitle: null, 
-    ansContent: 'SmartUp token is the cryptocurrency that is used on the platform for creating market and trading idea tokens. Idea token is issued when each market is created for trading and fundraising.', 
+    ansContent: 'i am content', 
     image: null
   },
   {
@@ -164,81 +253,139 @@ Deposit for creatinf the market. Fix 2500 SmartUp Token deposit.`,
     ansTitle: null, 
     ansContent: `You can only buy more idea tokens with SmartUp Tokens at this moment. 
     You can buy the tokens at the lower price (the quantity of the token in the market is small at that time) and sell them at the higher price (the quantity of the token in the market is larger at that time).`, 
-    image: null
+    image: null,
+    body: (
+      <Col>
+         <Text lineHeight S>You can only buy more idea tokens with SmartUp Tokens at this moment.  </Text>
+         <Text TopXS lineHeight S>You can buy the tokens at the lower price (the quantity of the token in the market is small at that time) and sell them at the higher price (the quantity of the token in the market is larger at that time).</Text>
+      </Col>
+    )
   },
   {
     title: 'How can I benefit from my project and make use of the money to move on my start-up? ',
     ansTitle: null, 
     ansContent: 'The price of the idea token is lowest at the beginning of the market because the quantity of issued tokens is 0 at the beginning. To benefit from your project, you should invest in your own market once your market is created. After that, you may sell your tokens when more investors buy the token and get profit.  ', 
-    image: null
+    image: null,
+    body: (
+      <Col>
+         <Text lineHeight S>The price of the idea token is lowest at the beginning of the market because the quantity of issued tokens is 0 at the beginning. To benefit from your project, you should invest in your own market once your market is created. After that, you may sell your tokens when more investors buy the token and get profit. </Text>
+      </Col>
+    )
   },
   {
     title: 'How can I attract more people to invest into my project?',
     ansTitle: null, 
-    ansContent: 'Investor can be attracted by potential and profitable projects. You can think about how investor to be benefit from your project. ', 
+    ansContent: 'i am content', 
     image: null
   },
   {
     title: 'What can we do with the community token?',
     ansTitle: null, 
     ansContent: 'You can buy the tokens at the lower price (the quantity of the token in the market is small at that time) and sell them at the higher price (the quantity of the token in the market is larger at that time) to earn a profit', 
-    image: null
+    image: null,
+    body: (
+      <Col>
+         <Text lineHeight S>You can buy the tokens at the lower price (the quantity of the token in the market is small at that time) and sell them at the higher price (the quantity of the token in the market is larger at that time) to earn a profit. </Text>
+      </Col>
+    )
   },
   {
     title: 'How do I communicate with the community members?',
     ansTitle: null, 
     ansContent: 'You can communicate with the community members in discussion of each market. Posts can be created and comments can be made in the discussion page.', 
-    image: null
+    image: null,
+    body: (
+      <Col>
+         <Text lineHeight S>You can communicate with the community members in discussion of each market. Posts can be created and comments can be made in the discussion page.</Text>
+      </Col>
+    )
   },
   {
     title: 'Can I edit the rules/ information of my project?',
     ansTitle: null, 
     ansContent: 'You cannot edit the information of the market once the market is created because of the immutability of blockchain based platform.', 
-    image: null
+    image: null,
+    body: (
+      <Col>
+         <Text lineHeight S>You cannot edit the information of the market once the market is created because of the immutability of blockchain based platform.</Text>
+      </Col>
+    )
   },
   {
     title: 'Can I shut down my project?',
     ansTitle: null, 
-    ansContent: 'It is not able to shut down the projects now.', 
+    ansContent: 'i am content', 
     image: null
   },
   {
     title: 'What is the project/market community?',
     ansTitle: null, 
     ansContent: 'Everyone who has invested in the market is the community member. They can discuss the development and make decisions of the project and market.', 
-    image: null
+    image: null,
+    body: (
+      <Col>
+         <Text lineHeight S>Everyone who has invested in the market is the community member. They can discuss the development and make decisions of the project and market.</Text>
+      </Col>
+    )
   },
   {
     title: 'How do I find out the project that I interested in?',
     ansTitle: null, 
     ansContent: `You make use of the search function in the main page of the platform to find out the potential project you interested in. You may use any keywords to find any related market and evaluate if that is worth to invest.
   Can't find the related idea? Move to create your own market!`, 
-    image: null
+    image: null,
+    body: (
+      <Col>
+         <Text lineHeight S>You make use of the search function in the main page of the platform to find out the potential project you interested in. You may use any keywords to find any related market and evaluate if that is worth to invest. </Text>
+         <Text TopXS lineHeight S>Can’t find the related idea? Move to create your own market!</Text>
+      </Col>
+    )
   },
   {
     title: 'How do I invest into a project as a community member?',
     ansTitle: null, 
     ansContent: 'You can simply buy the idea tokens and you will become the community member. Check on the quantity and the price of the idea tokens. Buy low, sell high to make profits. ', 
-    image: null
+    image: null,
+    body: (
+      <Col>
+         <Text lineHeight S>You can simply buy the idea tokens and you will become the community member. Check on the quantity and the price of the idea tokens. Buy low, sell high to make profits.</Text>
+      </Col>
+    )
   },
   {
     title: 'What is the idea token?',
     ansTitle: null, 
     ansContent: 'Each market issues its own tokens individually. Investors can invest in the project by buying the tokens. As the spot price of the idea tokens is proportional to the quantity of the idea tokens, more investors buying the tokens and more tokens issued, the price will be higher. By selling the tokens at a higher price, investors can be benefited.', 
-    image: null
+    image: null,
+    body: (
+      <Col>
+         <Text lineHeight S>Each market issues its own tokens individually. Investors can invest in the project by buying the tokens. As the spot price of the idea tokens is proportional to the quantity of the idea tokens, more investors buying the tokens and more tokens issued, the price will be higher. By selling the tokens at a higher price, investors can be benefited.</Text>
+      </Col>
+    )
   },
   {
     title: 'What can I do as a community member?',
     ansTitle: null, 
     ansContent: `You can buy the idea tokens to support the project and sell the idea tokens to make profit. You may also contribute the project by creating constructive discussion that determining the development of the project.
     Greater community makes the project to be more potential to invest.  `, 
-    image: null
+    image: null,
+    body: (
+      <Col>
+         <Text lineHeight S>You can buy the idea tokens to support the project and sell the idea tokens to make profit. You may also contribute the project by creating constructive discussion that determining the development of the project.</Text>
+         <Text TopXS lineHeight S>Greater community makes the project to be more potential to invest. </Text>
+      </Col>
+    )
   },
   {
     title: 'How do I get more idea tokens?',
     ansTitle: null, 
     ansContent: 'You can only buy more idea tokens with SmartUp Tokens at this moment.', 
-    image: null
+    image: null,
+    body: (
+      <Col>
+         <Text lineHeight S>You can only buy more idea tokens with SmartUp Tokens at this moment.</Text>
+      </Col>
+    )
   },
   {
     title: 'How can I be benefited from the project I invested?',
@@ -246,55 +393,99 @@ Deposit for creatinf the market. Fix 2500 SmartUp Token deposit.`,
     ansContent: `As the price of the idea tokens is proportional to the quantity of the idea tokens. The idea tokens buy at the beginning after the market usually have the lowest cost. 
     To benefit from the project, firstly, find out the potential project. Then, invest in the targeted market when the quantity of the tokens is low. After that, you may sell your tokens when more investors buy the tokens and sell to get profits.
     `, 
-    image: null
+    image: null,
+    body: (
+      <Col>
+         <Text lineHeight S>As the price of the idea tokens is proportional to the quantity of the idea tokens. The idea tokens buy at the beginning after the market usually have the lowest cost. 
+    To benefit from the project, firstly, find out the potential project. Then, invest in the targeted market when the quantity of the tokens is low. After that, you may sell your tokens when more investors buy the tokens and sell to get profits.
+    </Text>
+      </Col>
+    )
   },
   {
     title: 'Can I withdraw my investment, and how?',
     ansTitle: null, 
     ansContent: 'Yes, you can withdraw your investment by selling the idea tokens.', 
-    image: null
+    image: null,
+    body: (
+      <Col>
+         <Text lineHeight S>Yes, you can withdraw your investment by selling the idea tokens.</Text>
+      </Col>
+    )
   },
   {
     title: 'How do I communicate with the project creator and community members?',
     ansTitle: null, 
     ansContent: 'You can communicate with the community members in discussion of each market. Posts can be created and comments can be made in the discussion page.', 
-    image: null
+    image: null,
+    body: (
+      <Col>
+         <Text lineHeight S>You can communicate with the community members in discussion of each market. Posts can be created and comments can be made in the discussion page.</Text>
+      </Col>
+    )
   },
   {
     title: 'How do I trade with SmartUp Token?',
     ansTitle: null, 
     ansContent: 'You can trade the SmartUp Token in exchange, like Coinbene: https://www.coinbene.com/exchange.html#/exchange?pairId=SMARTUPETH', 
-    image: null
+    image: null,
+    body: (
+      <Col>
+         <Text lineHeight S>You can trade the SmartUp Token in exchange, like Coinbene: </Text>
+         <Text lineHeight S><a style={{ color: '#fff' }} href='https://www.coinbene.com/exchange.html#/exchange?pairId=SMARTUPETH'>https://www.coinbene.com/exchange.html#/exchange?pairId=SMARTUPETH </a></Text>
+      </Col>
+    )
   },
   {
     title: 'How do I know if the trading of idea tokens is succeed?',
     ansTitle: null, 
     ansContent: 'Every trading, no matter successful trade or failed trade, the platform will generate notifications to inform users the status of the trade.', 
-    image: null
+    image: null,
+    body: (
+      <Col>
+         <Text lineHeight S>Every trading, no matter successful trade or failed trade, the platform will generate notifications to inform users the status of the trade.</Text>
+      </Col>
+    )
   },
   {
     title: 'Why did the trading fail?',
     ansTitle: null, 
     ansContent: `Failed trade may be caused by the insufficient amount of ETH (for transaction fee), Smart Tokens or idea tokens. You can check the balance in the Portfolio, MetaMask and Market Wallet.
 While a new market is creating, buy action may fail because the market address has not yet built up. Please try again later. `, 
-    image: null
+    image: null,
+    body: (
+      <Col>
+         <Text lineHeight S>Failed trade may be caused by the insufficient amount of ETH (for transaction fee), Smart Tokens or idea tokens. You can check the balance in the Portfolio, MetaMask and Market Wallet.</Text>
+         <Text TopXS lineHeight S>While a new market is creating, buy action may fail because the market address has not yet built up. Please try again later.  </Text>
+      </Col>
+    )
   },
   {
     title: 'How can I find my trading records? ',
     ansTitle: null, 
     ansContent: 'You may find all the trading records in the personal center.', 
-    image: null
+    image: null,
+    body: (
+      <Col>
+         <Text lineHeight S>You may find all the trading records in the personal center.</Text>
+      </Col>
+    )
   },
   {
     title: 'What is gas fee?  ',
     ansTitle: null, 
     ansContent: 'SmartUp is using the Ethernet, therefore every transaction cost gas fee. Please make sure you have sufficient ETH for transaction fee.', 
-    image: null
+    image: null,
+    body: (
+      <Col>
+         <Text lineHeight S>SmartUp is using the Ethernet, therefore every transaction cost gas fee. Please make sure you have sufficient ETH for transaction fee.</Text>
+      </Col>
+    )
   }
 ];
 
 export default function () {
-  const [expandedRecord, setExpandedRecord] = useState([0])
+  const [expandedRecord, setExpandedRecord] = useState([0,15])
   const onRecordClick = (index)=>{
     let tempRecords = [...expandedRecord];
     let tempIndex = tempRecords.indexOf(index);
@@ -318,7 +509,7 @@ export default function () {
             key={index}
             header={faq.title}
             body={faq.body ? 
-              <Col spacingM>{faq.body}</Col> :
+              <Col VM HXL>{faq.body}</Col> :
               <Ans {...faq} />
             }
             expandedDark
