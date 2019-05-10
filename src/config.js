@@ -4,7 +4,7 @@ export const ENV_MAP = {
   dev:        { id: 'dev',        apiHost: 'http://39.105.101.248:86',         alphaUrl: 'http://39.105.101.248',      shareApi: '/node/share/medium?url=/', versionApi: '/node/get/ipfs/hash' }, 
 }
 
-export const TNC_HASH = 'QmWsxWygt8khjBkWwUoniLFPq5HU9nteJRxarPGUbWLJF'
+export const TNC_HASH = 'QmUXE6LhAVCJKFYY3DsRYnxwopp5Ub94sAjVfgx73zp7zr'
 // export const ENV = ENV_MAP.dev
 
 // api: https://node-beta.smartup.global/
