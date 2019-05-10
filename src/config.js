@@ -19,3 +19,4 @@ export const ENV_MAP = {
 export const fetchTimeout = 20000
 export const TNC_HASH = 'QmUXE6LhAVCJKFYY3DsRYnxwopp5Ub94sAjVfgx73zp7zr'
 export const ENV = ENV_MAP.dev
+console.log(`Using ${ENV.id}, apiHost: ${ENV.apiHost}, alphaUrl: ${ENV.alphaUrl}`)
