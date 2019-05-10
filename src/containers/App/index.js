@@ -32,14 +32,14 @@ const App = ({ checkLogin }) => {
       <Header routes={routes} />
       <Hr vertical />
       <Main id='main'>
-        <Switch>
+        {/* <Switch> */}
           {
             routes.map(({id, path, component, exact}) =>
               <Route key={id} exact={exact} path={path} component={component} />
             )
           }
-          <Route path="*" component={NotFound} />
-        </Switch>
+          {/* <Route path="*" component={NotFound} /> */}
+        {/* </Switch> */}
       </Main>
       <Hr vertical />
       <Panel />

@@ -101,7 +101,7 @@ const Market = ({ get, collectMarket, getting, location, market, getMarketPost, 
               <Link>
                 { ({ goto }) => 
                 <Col absolute absRight='0' absTop='1px' absBottom='1px' HS backgroundColor={theme.bgColor} centerVertical>
-                  <Add primary S onClick={() => goto.discussionCreate()} />
+                  <Add primary={!!market.address} S color={market.address ? undefined : theme.colorSecondary} disabled={!market.address} onClick={() => market.address && goto.discussionCreate()} />
                 </Col>
                 }
               </Link>

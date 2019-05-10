@@ -11,7 +11,7 @@ import DiscussionItem from './Item'
 import { connect } from 'react-redux'
 import { getMarketPost } from '../../../actions/post'
 
-function Disussion({ getMarketPost, post }) {
+function Disussion({ getMarketPost, post, market }) {
   const { posts, gettingPost, getPostError, keyword, hasNextPage, } = post
   useEffect( () => {
     getMarketPost()
@@ -32,6 +32,9 @@ function Disussion({ getMarketPost, post }) {
             </>
         }
       </Row>
+      {!(market && market.address) &&
+       <Text HS>(Function will be enabled after market created successfully)</Text>
+      }
     </Col>
   )
   return (
@@ -52,6 +55,7 @@ function Disussion({ getMarketPost, post }) {
 
 const mapStateToProps = state => ({
   post: state.post,
+  market: state.market.currentMarket,
 });
 const mapDispatchToProps = {
   getMarketPost
