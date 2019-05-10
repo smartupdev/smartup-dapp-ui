@@ -66,8 +66,6 @@ const Home = ({
         sortBy={sortBy}
         orderBy={orderBy}
         expandedRecords={expandedRecords}
-        // hasNextPage={hasNextPage}
-        // getMore={moreMarketClick}
       />
       <ScrollLoader id='Home-Table' hasMore={hasNextPage} loadMore={getList} isLoading={gettingMarketList} isButton />
     </Col>

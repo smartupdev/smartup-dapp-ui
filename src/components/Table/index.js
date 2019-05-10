@@ -1,8 +1,10 @@
-import React from 'react'
+import React, { memo } from 'react'
 import styled, { css } from 'styled-components'
 import { Row, Col } from '../Layout'
 import Text from '../Text'
 import Expand from '../Expand'
+
+const emptyArr = []
 
 const ORDER_BY = {
   asc: 'asc',
@@ -29,23 +31,53 @@ const TableTitle = styled(Row)`
   padding-right: ${p => p.inset ? p.theme.spacingS : 0}
 `
 
-const TableRecord = styled(Col)`
+const TableRecordBox = styled(Col)`
   ${p => p.isExpanded && css`background-color: ${p.theme.bgColorDark}`}
   ${p => p.hasBorder && css`border-top: 1px solid ${p.theme.borderColor}`}
   padding-left: ${p => p.inset ? p.theme.spacingXS : 0}
   padding-right: ${p => p.inset ? p.theme.spacingS : 0}
 `
 
+const TableRecord = memo(
+  ({ record, index, expandedRecords, noBorderCol, inset, model, S, onClick, ExpandCompoent }) => {
+    const isExpanded = expandedRecords.includes(record.id)
+    return (
+      <TableRecordBox isExpanded={isExpanded} hasBorder={!index || !noBorderCol} inset={inset} fitWidth>
+        <Row>
+          {
+            model.map(({ value: key, component: Component, layoutStyle = { flex: 1 } }, j) =>
+              <TD key={j} {...layoutStyle} borderTop centerVertical onClick={onClick && (() => onClick({ record, key, index, isExpanded }))}>
+                {
+                  Component ?
+                    <Component record={record} value={record[key]} index={index} isExpanded={isExpanded} />
+                    :
+                    <Text S={S}>{record[key]}</Text>
+                }
+              </TD>
+            )
+          }
+        </Row>
+        {
+          <Expand isOpen={isExpanded}>
+            {ExpandCompoent && <ExpandCompoent record={record} />}
+          </Expand>
+        }
+      </TableRecordBox>
+    )
+  }
+)
+
+
 // model: Array { label, value, layoutStyle, component<record, value, id> }
 // values: Array { id }
 // orderBy: asc, desc, null => showing arrow only
 // sortBy: <model.value> => highlight header
 // onClickHeader: (<model.value>, index) => function
-// onClick: (<recond>, index) => function
+// onClick: (<record>, index) => function
 // expandedRecords: Array <id>
 // S for small font size
 // noBorderCol is for no border in column
-export default ({ model, values, sortBy, orderBy, onClickHeader, onClick, expandedRecords = [], expandCompoent: ExpandCompoent, minWidth, S, inset, noBorderCol, autoHeight }) => {
+export default ({ model, values, sortBy, orderBy, onClickHeader, onClick, expandedRecords = emptyArr, expandCompoent: ExpandCompoent, minWidth, S, inset, noBorderCol, autoHeight }) => {
   return (
     <TableWrappper>
       <Table minWidth={minWidth} autoHeight={autoHeight}>
@@ -59,32 +91,19 @@ export default ({ model, values, sortBy, orderBy, onClickHeader, onClick, expand
           }
         </TableTitle>
         {
-          values.map((record, index) => {
-            const isExpanded = expandedRecords.includes(record.id)
-            return (
-              <TableRecord key={record.id} isExpanded={isExpanded} hasBorder={!index || !noBorderCol} inset={inset} fitWidth>
-                <Row>
-                  {
-                    model.map(({ value: key, component: Component, layoutStyle = { flex: 1 } }, j) =>
-                      <TD key={j} {...layoutStyle} borderTop centerVertical onClick={onClick && (() => onClick({ record, key, index, isExpanded }))}>
-                        {
-                          Component ?
-                            <Component record={record} value={record[key]} index={index} isExpanded={isExpanded} />
-                            :
-                            <Text S={S}>{record[key]}</Text>
-                        }
-                      </TD>
-                    )
-                  }
-                </Row>
-                {
-                  <Expand isOpen={isExpanded}>
-                    {ExpandCompoent && <ExpandCompoent record={record} />}
-                  </Expand>
-                }
-              </TableRecord>
-            )
-          })
+          values.map((record, index) =>
+            <TableRecord
+              key={record.id} 
+              record={record} 
+              index={index} 
+              expandedRecords={expandedRecords} 
+              noBorderCol={noBorderCol} 
+              inset={inset} 
+              model={model} 
+              S={S} 
+              onClick={onClick} 
+              ExpandCompoent={ExpandCompoent} />
+          )
         }
       </Table>
     </TableWrappper>

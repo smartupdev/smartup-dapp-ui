@@ -43,7 +43,6 @@ export default function({
   sortBy, orderBy, 
   onClickHeader, onClick, 
   expandedRecords, noExpand,
-  hasNextPage, getMore,
   autoHeight,
   minWidth = '1000px'  }) {
   return (
@@ -60,7 +59,6 @@ export default function({
         orderBy={orderBy}
         expandedRecords={expandedRecords}
         expandCompoent={TableExpand}
-        footer={()=>{ return(<TableFooter hasNextPage={hasNextPage} loadMore={getMore}/>) }}
       />
   )
 }
