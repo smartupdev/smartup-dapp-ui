@@ -1,10 +1,10 @@
 import ipfsClient from 'ipfs-http-client'
 import toBuffer from 'blob-to-buffer'
-import { TNC_HASH } from '../config'
+import { TNC_HASH, ENV } from '../config'
 
 const client = ipfsClient('ipfs-api.smartup.global', '80', { protocol: 'http' })
 
-export const ipfsHost = 'https://ipfs.smartup.global/ipfs/';
+export const ipfsHost = ENV.ipfsHost;
 export function onClickTnc() {
   window.open(ipfsHost + TNC_HASH, '_blank')
 }
