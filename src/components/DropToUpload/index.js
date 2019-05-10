@@ -84,7 +84,7 @@ export default function ({
       target.removeEventListener('dragover', nohandle)
       target.removeEventListener('drop', handleDrop)
     }
-  }, [])
+  }, [disabled])
   return (
     <>
       <ImageBox show={value} center relative fitHeight>
