@@ -104,18 +104,21 @@ export function getPostReplyChildrenList(requestParam) {
 主题下回复列表
 requestParam: postId
 */
-export function getReplyList(postId) {
-  return (dispatch, getState) =>
-    dispatch(
+export function getReplyList(postId, isLoadMore) {
+  return (dispatch, getState) => {
+    const { pageNumbReply: pageNumb, pageSize } = getState().post
+    return dispatch(
       asyncFunction(
         fetch.post,
         POST_REPLY_LIST_REQUESTED, POST_REPLY_LIST_SUCCEEDED, POST_REPLY_LIST_FAILED,
         {
           params: API_POST_REPLY_LIST,
-          params2: { postId },
+          params2: { postId, pageNumb: isLoadMore ? pageNumb + 1 : 1, pageSize },
+          meta: { isLoadMore }
         }
       )
     )
+  }
 }
 
 /*

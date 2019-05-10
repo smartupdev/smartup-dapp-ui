@@ -8,14 +8,12 @@ import TextInput from '../../../components/Input'
 import Avatar from '../../../components/Avatar'
 import Button from '../../../components/Button'
 import { DonutLoader } from '../../../components/Loader'
-import { Bookmarked, Share, Like, Dislike, Reply } from '../../../components/Icon'
 
-import { shorten, toAgo } from '../../../lib/util'
-import theme from '../../../theme'
+import ScrollLoader from '../../../components/ScrollLoader'
 
 import { getUrlParams } from '../../../routes'
 import { connect } from 'react-redux'
-import { getPost, onChangeNewComment, reply, getReplyList, toggleLikeReply, toggleDislikeReply } from '../../../actions/post'
+import { getPost, onChangeNewComment, reply, getReplyList, } from '../../../actions/post'
 
 function DiscussionDetail({
   post, gettingDetail, getDetailError, 
@@ -23,7 +21,7 @@ function DiscussionDetail({
   gettingReply, replys,
   getPost, getReplyList, reply, onChangeNewComment,
   loggedIn, username, userAvatar,
-  toggleLikeReply, toggleDislikeReply,
+  replyHasMore
 }) {
   const { postId } = getUrlParams()
   useEffect( () => {
@@ -57,6 +55,7 @@ function DiscussionDetail({
       {!!replys.length && 
         replys.map(reply => <DiscussionComment reply={reply} key={reply.id} />)
       }
+      <ScrollLoader loadMore={() => getReplyList(postId, true)} isLoading={gettingReply} hasMore={replyHasMore} />
     </Col>
   )
 }
@@ -66,18 +65,20 @@ const mapStateToProps = state => {
     newComment, replying, replyError,
     replys, gettingReply, getReplyError, 
     detail: post, gettingDetail, getDetailError, 
+    replyHasMore,
   } = state.post
   const { loggedIn, userName: username, userAvatar } = state.user
   return {
     newComment, replying, replyError,
     replys, gettingReply, getReplyError,
     post, gettingDetail, getDetailError,
-    loggedIn, username, userAvatar
+    loggedIn, username, userAvatar,
+    replyHasMore
   }
 }
 
 const mapDispatchToProps = {
-  getPost, onChangeNewComment, reply, getReplyList, toggleLikeReply, toggleDislikeReply
+  getPost, onChangeNewComment, reply, getReplyList, 
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(DiscussionDetail);

@@ -113,6 +113,7 @@ export const initialState = {
   // replyChildrenError: null,
 
   replys: [],
+  pageNumbReply: 1,
   replyHasMore: false,
   gettingReply: false,
   getReplyError: null,
@@ -280,7 +281,7 @@ export default (state = initialState, action) => {
     case POST_REPLY_LIST_SUCCEEDED:
       return {
         ...state,
-        replys: action.payload.list.map(replyMassage),
+        replys: updateLoadMore(state.replys, action.payload.list.map(replyMassage), action.meta.isLoadMore, 'replyId'),
         replyHasMore: action.payload.hasNextPage,
         gettingReply: false,
         getReplyError: initialState.getReplyError
