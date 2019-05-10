@@ -43,15 +43,13 @@ export default (state = initialState, action) => {
       return {
         ...state,
         coverUploading: true,
-        error: action.payload 
-          ? { ...state.error, cover: initialState.error.cover }
-          : state.error
       } 
     case CREATE_MARKET_COVER_CHANGE_SUCCEEDED:
       return {
         ...state,
         coverUploading: false,
         coverHash: action.payload,
+        error: { ...state.error, cover: initialState.error.cover }
       } 
     case CREATE_MARKET_COVER_CHANGE_FAILED:
       return {
@@ -64,15 +62,13 @@ export default (state = initialState, action) => {
       return {
         ...state,
         avatarUploading: true,
-        error: action.payload 
-        ? { ...state.error, avatar: initialState.error.avatar }
-        : state.error
       }
     case CREATE_MARKET_AVATAR_CHANGE_SUCCEEDED:
       return {
         ...state,
         avatarUploading: false,
         avatarHash: action.payload,
+        error: { ...state.error, avatar: initialState.error.avatar }
       }
     case CREATE_MARKET_AVATAR_CHANGE_FAILED:
       return {
@@ -180,8 +176,8 @@ export default (state = initialState, action) => {
 
     case CREATE_MARKET_SET_TAB: {
       const error = {...state.error}
-      if(!state.avatarHash) error.avatar = true
-      if(!state.coverHash) error.cover = true
+      if(!state.avatarHash) error.avatar = new Error('This is required')
+      if(!state.coverHash) error.cover =  new Error('This is required')
       const block = error.name || error.desc || error.avatar || error.cover
       return {
         ...state,
