@@ -3,7 +3,7 @@ import {
   HOME_RESET,
 } from './actionTypes';
 
-import { getMarketList, markerSearch, getList } from '../actions/market';
+import {  getList } from '../actions/market';
 
 export function reset() {
   return {

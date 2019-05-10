@@ -10,7 +10,7 @@ import {
 } from '../actions/actionTypes';
 
 import { marketMassage } from './market'
-import { changeArrayById } from '../lib/util/reducerHelper'
+import { changeArrayById, updateLoadMore } from '../lib/util/reducerHelper'
 
 export const initialState = {
   expandedRecords: [], // ids
@@ -98,13 +98,12 @@ export default (state = initialState, action) => {
       };
     case GET_MARKET_LIST_SUCCEEDED: {
       const {list, pageNumb, hasNextPage, rowCount} = action.payload;
-      const marketList = list.map(marketMassage)
       return {
         ...state,
         gettingMarketList: false,
         marketListError: initialState.marketListError,
-        markets: action.meta && action.meta.isLoadMore === true ? [...state.markets, ...marketList] : marketList,
-        totalResults: rowCount || marketList.length,
+        markets: updateLoadMore(state.markets, list.map(marketMassage), action.meta && action.meta.isLoadMore),
+        totalResults: rowCount || list.length,
         hasNextPage: hasNextPage || false,
         pageNumb: pageNumb || 1,
       };

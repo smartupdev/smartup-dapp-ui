@@ -12,7 +12,7 @@ import {
   POST_USER_REPLAY_ADD_REQUESTED, POST_USER_REPLAY_ADD_SUCCEEDED, POST_USER_REPLAY_ADD_FAILED
 } from '../actions/actionTypes';
 
-import { changeArrayById } from '../lib/util/reducerHelper'
+import { changeArrayById, updateLoadMore } from '../lib/util/reducerHelper'
 
 export function toggleFollow(r) {
   return {...r, isCollect: !r.isCollect}
@@ -221,7 +221,7 @@ export default (state = initialState, action) => {
       const posts = postList.map(postMassage)
       return {
         ...state,
-        posts: action.meta.isLoadMore ? [...state.posts, ...posts] : posts,
+        posts: updateLoadMore(state.posts, posts, action.meta.isLoadMore, 'postId'),
         pageNumb,
         pageSize,
         hasNextPage,

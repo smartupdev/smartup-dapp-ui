@@ -18,6 +18,7 @@ import {
   MARKET_DETAIL_GET_CT_REQUESTED, MARKET_DETAIL_GET_CT_SUCCEEDED, MARKET_DETAIL_GET_CT_FAILED,
   TRADE_SAVE_SUCCEEDED,
 } from '../actions/actionTypes';
+import { updateLoadMore } from '../lib/util/reducerHelper';
 
 function tradeMassage(trade) {
   return {
@@ -300,7 +301,7 @@ export default (state = initialState, action) => {
       const tradeList = list.map(tradeMassage).filter(t => t.stage === 'success' || t.stage === 'pending')
       return {
         ...state,
-        trades: action.meta.isLoadMore ? [...state.trades, ...tradeList] : tradeList,
+        trades: updateLoadMore(state.trades, tradeList, action.meta.isLoadMore),
         pageNumb, pageSize, hasNextPage,
         gettingTrades: false,
         getTradesError: initialState.getTradesError

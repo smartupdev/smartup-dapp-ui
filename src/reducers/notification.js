@@ -5,7 +5,7 @@ import {
   USER_NOTIFICATION_UNREAD_REQUESTED, USER_NOTIFICATION_UNREAD_SUCCEEDED, USER_NOTIFICATION_UNREAD_FAILED
 } from '../actions/actionTypes';
 
-import { changeArrayById } from '../lib/util/reducerHelper'
+import { updateLoadMore } from '../lib/util/reducerHelper'
 
 export const initialState = {
 
@@ -51,7 +51,7 @@ export default (state = initialState, action) => {
     case USER_NOTIFICATION_LIST_SUCCEEDED:
       return {
         ...state,
-        notifications: action.meta.isLoadMore ? [...state.notifications, ...action.payload.list] : action.payload.list,
+        notifications: updateLoadMore(state.notifications, action.payload.list, action.meta.isLoadMore, 'notificationId'),
         hasNextPage: action.payload.hasNextPage,
         pageNumb: action.meta.isLoadMore ? state.pageNumb + 1 : 1, 
         gettingNotifications: false,

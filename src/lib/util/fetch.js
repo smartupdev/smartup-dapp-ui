@@ -1,5 +1,5 @@
-export const apiBaseUrl = 'http://39.105.101.248:86';
-const fetchTimeout = 20000
+import { ENV, fetchTimeout } from '../../config'
+export const apiBaseUrl = ENV.apiHost
 
 export function delay(ms = 1000) {
   return new Promise(resolve => setTimeout(resolve, ms))

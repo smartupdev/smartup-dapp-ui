@@ -48,45 +48,45 @@ const TableRecord = styled(Col)`
 export default ({ model, values, sortBy, orderBy, onClickHeader, onClick, expandedRecords = [], expandCompoent: ExpandCompoent, minWidth, S, inset, noBorderCol, autoHeight }) => {
   return (
     <TableWrappper>
-    <Table minWidth={minWidth} autoHeight={autoHeight}>
-      <TableTitle inset={inset}>
-      {
-        model.map( ({ value, label, layoutStyle = { flex: 1 }, sortable }, index) => 
-          <TD key={value} {...layoutStyle} header centerVertical highlight={value === sortBy} onClick={sortable && onClickHeader ? (() => onClickHeader(value, index)) : null}>
-            <Text S={S}>{label}{value === sortBy ? orderBy === ORDER_BY.asc ? ' ↑' : orderBy === ORDER_BY.desc && ' ↓' : ''}</Text>
-          </TD>
-        )
-      }
-      </TableTitle>
-      {
-        values.map( (record, index) => {
-          const isExpanded = expandedRecords.includes(record.id)
-          return (
-            <TableRecord key={record.id} isExpanded={isExpanded} hasBorder={!index || !noBorderCol} inset={inset} fitWidth>
-              <Row>
+      <Table minWidth={minWidth} autoHeight={autoHeight}>
+        <TableTitle inset={inset}>
+          {
+            model.map(({ value, label, layoutStyle = { flex: 1 }, sortable }, index) =>
+              <TD key={value} {...layoutStyle} header centerVertical highlight={value === sortBy} onClick={sortable && onClickHeader ? (() => onClickHeader(value, index)) : null}>
+                <Text S={S}>{label}{value === sortBy ? orderBy === ORDER_BY.asc ? ' ↑' : orderBy === ORDER_BY.desc && ' ↓' : ''}</Text>
+              </TD>
+            )
+          }
+        </TableTitle>
+        {
+          values.map((record, index) => {
+            const isExpanded = expandedRecords.includes(record.id)
+            return (
+              <TableRecord key={record.id} isExpanded={isExpanded} hasBorder={!index || !noBorderCol} inset={inset} fitWidth>
+                <Row>
+                  {
+                    model.map(({ value: key, component: Component, layoutStyle = { flex: 1 } }, j) =>
+                      <TD key={j} {...layoutStyle} borderTop centerVertical onClick={onClick && (() => onClick({ record, key, index, isExpanded }))}>
+                        {
+                          Component ?
+                            <Component record={record} value={record[key]} index={index} isExpanded={isExpanded} />
+                            :
+                            <Text S={S}>{record[key]}</Text>
+                        }
+                      </TD>
+                    )
+                  }
+                </Row>
                 {
-                  model.map( ({ value: key, component: Component, layoutStyle = { flex: 1 } }, j) =>
-                    <TD key={j} {...layoutStyle} borderTop centerVertical onClick={onClick && (() => onClick({record, key, index, isExpanded}))}>
-                      {
-                        Component ? 
-                          <Component record={record} value={record[key]} index={index} isExpanded={isExpanded} />
-                        :
-                          <Text S={S}>{record[key]}</Text>
-                      }
-                    </TD>
-                  )
+                  <Expand isOpen={isExpanded}>
+                    {ExpandCompoent && <ExpandCompoent record={record} />}
+                  </Expand>
                 }
-              </Row>
-              {
-                <Expand isOpen={isExpanded}>
-                  {ExpandCompoent && <ExpandCompoent record={record} />}
-                </Expand>
-              }
-            </TableRecord>
-          )
-        })
-      }
-    </Table>
+              </TableRecord>
+            )
+          })
+        }
+      </Table>
     </TableWrappper>
 
   )

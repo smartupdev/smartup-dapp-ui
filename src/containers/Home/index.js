@@ -10,7 +10,7 @@ import lang, { currentLang } from '../../lang'
 import theme from '../../theme'
 import { connect } from 'react-redux'
 import { reset, setExpandedRecords, setActiveTab, onTableHeaderClick, onSearchChange } from '../../actions/home'
-import { getList, getListMore } from '../../actions/market'
+import { getList } from '../../actions/market'
 
 const Top = styled(Row)`
   padding: 0 ${p => p.theme.spacingXS}
@@ -42,7 +42,6 @@ const Home = ({
 
   reset,
   getList,
-  getListMore,
  }) => {
   useEffect(() => {
     getList()
@@ -56,7 +55,7 @@ const Home = ({
         <Tab activeIndex={activeTabIndex} tabs={FILTERS} onClick={setActiveTab} type='simple' />
         <Row centerVertical>
           <Text HS S note>{activeTabIndex ? filteredMarket.length : totalResults} RESULTS</Text>
-          <Search backgroundColor={theme.bgColorLight} id='home' value={searchContent} onChange={onSearchChange} onSearch={getList} />
+          <Search backgroundColor={theme.bgColorLight} id='home' value={searchContent} onChange={onSearchChange} onSearch={() => getList()} />
         </Row>
       </Top>
       <MarketTable
@@ -70,7 +69,7 @@ const Home = ({
         // hasNextPage={hasNextPage}
         // getMore={moreMarketClick}
       />
-      <ScrollLoader id='Home-Table' hasMore={hasNextPage} loadMore={getListMore} isLoading={gettingMarketList} isButton />
+      <ScrollLoader id='Home-Table' hasMore={hasNextPage} loadMore={getList} isLoading={gettingMarketList} isButton />
     </Col>
   )
 }
@@ -97,7 +96,6 @@ const mapDispatchToProps = {
   setActiveTab,
   onTableHeaderClick,
   onSearchChange,
-  getListMore,
   // moreMarketClick,
 }
 

@@ -9,7 +9,7 @@ import {
 } from '../actions/actionTypes';
 
 import { postMassage, replyMassage, toggleLike, toggleDislike, toggleFollow } from './post'
-import { changeArrayById } from '../lib/util/reducerHelper'
+import { changeArrayById, updateLoadMore } from '../lib/util/reducerHelper'
 
 export const initialState = {
     pageSize: 10,
@@ -52,7 +52,7 @@ export default (state = initialState, action) => {
         const postList = list.map(postMassage)
         return {
           ...state,
-          collectedPosts: action.meta.isLoadMore ? [...state.collectedPosts, ...postList] : postList,
+          collectedPosts: updateLoadMore(state.collectedPosts, postList, action.meta.isLoadMore, 'postId'),
           gettingCollectedPosts: false,
           collectedPostsPageNumb: pageNumb,
           collectedPostsHasNextPage: hasNextPage,
@@ -75,7 +75,7 @@ export default (state = initialState, action) => {
         const postList = list.map(postMassage)
         return {
           ...state,
-          createdPosts: action.meta.isLoadMore ? [...state.createdPosts, ...postList] : postList,
+          createdPosts: updateLoadMore(state.createdPosts, postList, action.meta.isLoadMore, 'postId'),
           gettingCreatedPosts: false,
           createdPostsPageNumb: pageNumb,
           createdPostsHasNextPage: hasNextPage,
@@ -98,7 +98,7 @@ export default (state = initialState, action) => {
         const replyList = list.map(replyMassage)
         return {
           ...state,
-          collectedReplys: action.meta.isLoadMore ? [...state.collectedReplys, ...replyList] : replyList,
+          collectedReplys: updateLoadMore(state.collectedReplys, replyList, action.meta.isLoadMore, 'replyId'),
           gettingCollectedReplys: false,
           collectedReplysPageNumb: pageNumb,
           collectedReplysHasNextPage: hasNextPage,
@@ -121,7 +121,7 @@ export default (state = initialState, action) => {
         const replyList = list.map(replyMassage)
         return {
           ...state,
-          createdReplys: action.meta.isLoadMore ? [...state.createdReplys, ...replyList] : replyList,
+          createdReplys: updateLoadMore(state.createdReplys, replyList, action.meta.isLoadMore, 'replyId'),
           gettingCreatedReplys: false,
           createdReplysPageNumb: pageNumb,
           createdReplysHasNextPage: hasNextPage,

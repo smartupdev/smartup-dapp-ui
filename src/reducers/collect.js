@@ -1,6 +1,7 @@
 import {
   USER_COLLECT_LIST_REQUESTED, USER_COLLECT_LIST_SUCCEEDED, USER_COLLECT_LIST_FAILED
 } from '../actions/actionTypes';
+import { updateLoadMore } from '../lib/util/reducerHelper'
 export const initialState = {
   collects: [],
   gettingCollects: false,
@@ -20,7 +21,7 @@ export default (state = initialState, action) => {
     case USER_COLLECT_LIST_SUCCEEDED:
       return {
         ...state,
-        collects: action.meta.isLoadMore ? [...state.collects, ...action.payload.list] : action.payload.list,
+        collects: updateLoadMore(state.collects, action.payload.list, action.meta.isLoadMore, 'marketId'),
         gettingCollects: false,
         hasNextPage: action.payload.hasNextPage,
         collectsError: initialState.collectsError,

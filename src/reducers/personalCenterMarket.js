@@ -7,6 +7,7 @@ import {
 } from '../actions/actionTypes';
 
 import {marketMassage} from './market'
+import { updateLoadMore } from '../lib/util/reducerHelper'
 
 export const initialState = {
 
@@ -69,7 +70,7 @@ export default (state = initialState, action) => {
       const { list, pageNumb, hasNextPage } = action.payload;
       return {
         ...state,
-        transactions: action.meta.isLoadMore ? [...state.transactions, ...list] : list,
+        transactions: updateLoadMore(state.transactions, list, action.meta.isLoadMore, 'txHash'),
         gettingTrancation: false,
         transPageNumb: pageNumb,
         transHasNextPage: hasNextPage,
@@ -92,7 +93,7 @@ export default (state = initialState, action) => {
       const markets = list.map(marketMassage)
       return {
         ...state,
-        createdMarkets: action.meta.isLoadMore ? [...state.createdMarkets, ...markets] : markets,
+        createdMarkets: updateLoadMore(state.createdMarkets, markets, action.meta.isLoadMore),
         gettingCreatedMarmkets: false,
         createdMarketsPageNumb: pageNumb,
         createdMarketsHasNextPage: hasNextPage,
@@ -116,7 +117,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         gettingCollectedMarmkets: false,
-        collectedMarkets: action.meta.isLoadMore ? [...state.collectedMarkets, ...markets] : markets,
+        collectedMarkets: updateLoadMore(state.collectedMarkets, markets, action.meta.isLoadMore),
         collectedMarketsPageNumb: pageNumb,
         collectedMarketsHasNextPage: hasNextPage,
         collectedMarketsError: initialState.collectedMarketsError
@@ -140,7 +141,7 @@ export default (state = initialState, action) => {
       const markets = list.map(marketMassage)
       return {
         ...state,
-        tradedMarkets: action.meta.isLoadMore ? [...state.tradedMarkets, ...markets] : markets,
+        tradedMarkets: updateLoadMore(state.tradedMarkets, markets, action.meta.isLoadMore),
         gettingTradedMarmkets: false,
         tradedMarketsPageNumb: pageNumb,
         tradedMarketsHasNextPage: hasNextPage,

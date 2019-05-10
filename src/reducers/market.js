@@ -11,7 +11,7 @@ import {
 } from '../actions/actionTypes';
 
 import { ipfsHost } from '../actions/ipfs'
-import { changeArrayById } from '../lib/util/reducerHelper'
+import { changeArrayById, updateLoadMore } from '../lib/util/reducerHelper'
 
 export function marketMassage(m) {
   return {
@@ -155,12 +155,11 @@ export default (state = initialState, action) => {
       };
     case CT_ACCOUNT_IN_MARKET_SUCCEEDED: {
       const { list, pageNumb, pageSize, hasNextPage } = action.payload
-      const ctList = list.map(c => ({ ...c, id: c.marketId }))
       return {
         ...state,
         gettingCtInMarket: false,
         ctInMarketError: initialState.ctInMarketError,
-        ctInMarket: action.meta.isLoadMore ? [...state.ctInMarket, ...ctList] : ctList,
+        ctInMarket: updateLoadMore(state.ctInMarket, list.map(c => ({ ...c, id: c.marketId })), action.meta.isLoadMore),
         ctInMarketPageNumb: pageNumb,
         ctInMarketPageSize: pageSize,
         ctInMarketHasNextPage: hasNextPage,
