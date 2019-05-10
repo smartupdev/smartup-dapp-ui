@@ -54,13 +54,13 @@ export function checkLogin() {
     const token = getStorageToken()
     if (token) {
       const [error] = await dispatch(loginMetaMask(true))
-      dispatch(watchMetamask())
       if (!error) {
         dispatch({
           type: USER_AUTH_SMARTUP_SUCCEEDED
         })
       }
     }
+    dispatch(watchMetamask())
   }
 }
 
