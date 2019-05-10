@@ -42,8 +42,8 @@ const Line = styled.div`
     background-color: ${p => p.theme.colorPrimary}
 `
 
-export default ({ icon: Icon, iconLabel, image, fixed, selected }) => 
-  <Link fixed={fixed} selected={selected} center centerVertical related>
+export default ({ icon: Icon, iconLabel, image, fixed, selected, ...rest }) => 
+  <Link fixed={fixed} selected={selected} center centerVertical related {...rest}>
     { selected && <Line /> }
     { Icon && <Icon color={theme.colorSecondary} M /> }
     { image && <Image L source={image} /> }

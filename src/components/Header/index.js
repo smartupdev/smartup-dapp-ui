@@ -22,7 +22,10 @@ function renderMenu({ path, icon, includePaths, iconLabel, onClick }, i) {
       path={path}
       exact={true}
       children={({ match, location }) => (
-        <Link to={onClick ? undefined : path} onClick={onClick}>
+        onClick ? // TODO
+          <Menu onClick={onClick} selected={match || (includePaths && includePaths.includes(location.pathname))} icon={icon} iconLabel={iconLabel} />
+        :
+        <Link to={path}>
           <Menu selected={match || (includePaths && includePaths.includes(location.pathname))} icon={icon} iconLabel={iconLabel} />
         </Link>
       )}
