@@ -17,7 +17,7 @@ export default ({ id = 'id', hasMore, loadMore, isLoading, isButton }) => {
   //   loadMore()
   // }
   return (
-    <Row id={id} center>
+    <Row id={id} center VS>
       {
         hasMore ? 
           <Button label='Load More' primary outline disabled={isLoading} onClick={loadMore} />
