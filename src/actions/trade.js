@@ -262,16 +262,16 @@ export function getHighLowList(){
   }
 }
 
+// TODO: don't loop if not in trading
 export function watchKline() {
   return async (dispatch, getState) => {
     while(true) {
       const { market: {currentMarket}} = getState()
-      if(!!currentMarket){
-        await Promise.all([
-          dispatch(getKlineList()),
-          dispatch(getHighLowList())
-        ]);
-      }
+      if(!currentMarket) break;
+      await Promise.all([
+        dispatch(getKlineList()),
+        dispatch(getHighLowList())
+      ]);
       await delay(10000)
     }
   }
