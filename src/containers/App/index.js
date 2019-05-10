@@ -13,7 +13,7 @@ import Hr from '../../components/Hr'
 import { Row } from '../../components/Layout'
 
 import { connect } from 'react-redux';
-import { watchMetamask, checkLogin } from '../../actions/user'
+import { checkLogin } from '../../actions/user'
 
 const Container = styled(Row)`
   background-color: ${p => p.theme.bgColor};
@@ -21,10 +21,9 @@ const Container = styled(Row)`
   height: 100vh;
 `
 
-const App = ({ watchMetamask, checkLogin }) => {
+const App = ({ checkLogin }) => {
   useEffect( () => {
     checkVersion()
-    watchMetamask()
     checkLogin()
   }, [])
   return (
@@ -45,6 +44,6 @@ const App = ({ watchMetamask, checkLogin }) => {
 }
 
 const mapDispatchToProps = {
-  watchMetamask, checkLogin
+  checkLogin
 } 
 export default connect(null, mapDispatchToProps)(App);
