@@ -18,8 +18,8 @@ import { getUserTransactionList, reset } from '../../../actions/personalCenter'
 
 
 const typeHelper = {
-  BuyCT:        { label: 'Trade placed (Buy)', title: (ct, sut) => `Bought ${ct} idea token from ${toToken(sut)} SmartUp token` },
-  SellCT:       { label: 'Trade placed (Sell)', title: (ct, sut) => `Sold ${ct} idea token to ${toToken(sut)} SmartUp token` },
+  BuyCT:        { label: 'Trade placed (Buy)', title: (ct, sut) => `Bought ${ct} market token from ${toToken(sut)} SmartUp token` },
+  SellCT:       { label: 'Trade placed (Sell)', title: (ct, sut) => `Sold ${ct} market token to ${toToken(sut)} SmartUp token` },
   CreateMarket: { label: 'Market created', title: (ct, sut) => `Paid ${sut} SmartUp token` },
 }
 
@@ -65,7 +65,7 @@ function Transaction({ getUserTransactionList, transactions, gettingTrancation, 
                 { label: 'TXHASH', value: txHash },
                 { label: 'Type', value: typeHelper[type].label },
                 { label: 'Market', value: `${marketName} ${marketAddress}` },
-                { label: 'Number of Idea token', value: ct || 'N/A' },
+                { label: 'Number of market token', value: ct || 'N/A' },
                 { label: 'Created on', value: toFullDate(createTime) },
                 { label: 'Last update', value: toFullDate(blockTime) },
               ].map( ({label, value}) => 

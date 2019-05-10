@@ -83,7 +83,7 @@ const CreateMarket = ({
         :
           activeIndex === 1 ? 
           <>
-            <Label>Price equation of idea token</Label>
+            <Label>Price equation of market token</Label>
             <Col spacingBottomXS>
               <Input background L disabled value={'\
 7.4999921875 × 10⁻²{ \
