@@ -1,11 +1,12 @@
-import ipfsClient from 'ipfs-http-client';
-import toBuffer from 'blob-to-buffer';
+import ipfsClient from 'ipfs-http-client'
+import toBuffer from 'blob-to-buffer'
+import { TNC_HASH } from '../config'
 
-const client = ipfsClient('ipfs-api.smartup.global', '80', { protocol: 'http' });
+const client = ipfsClient('ipfs-api.smartup.global', '80', { protocol: 'http' })
 
 export const ipfsHost = 'https://ipfs.smartup.global/ipfs/';
 export function onClickTnc() {
-  window.open(ipfsHost + 'QmWsxWygt8khjBkWwUoniLFPq5HU9nteJRxarPGUbWLJFV', '_blank');
+  window.open(ipfsHost + TNC_HASH, '_blank')
 }
 
 //IPFS写入图片
