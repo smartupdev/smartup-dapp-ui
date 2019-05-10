@@ -147,7 +147,7 @@ const faqs = [
     image: null,
     body: (
       <Col>
-         <Text  lineHeight S>SmartUp Token can be used for creating market (cost 2500 SmartUp Token) and buying idea tokens in SmartUp Incubator platform.</Text>
+         <Text  lineHeight S>SmartUp Token can be used for creating market (cost 2500 SmartUp Token) and buying market tokens in SmartUp Incubator platform.</Text>
       </Col>
     )
   },
@@ -249,7 +249,7 @@ const faqs = [
     ansTitle: null, 
     ansContent: `Click on the second icon of the navigation bar in the left-hand side of the Main Page. 
 Enter the market name and description, upload the photos for market icon and cover, click on "next".
-Preview the price curve of the idea token, then click on "Next".
+Preview the price curve of the market token, then click on "Next".
 Deposit for creatinf the market. Fix 2500 SmartUp Token deposit.`, 
     image: null,
     body: (
@@ -283,7 +283,7 @@ Deposit for creatinf the market. Fix 2500 SmartUp Token deposit.`,
     image: null
   }, */
   {
-    title: 'What is the idea token of my project?',
+    title: 'What is the market token of my project?',
     ansTitle: null, 
     ansContent: '', 
     image: null,
@@ -306,7 +306,7 @@ Deposit for creatinf the market. Fix 2500 SmartUp Token deposit.`,
     )
   },
   {
-    title: 'How do I earn the idea tokens?',
+    title: 'How do I earn the market tokens?',
     ansTitle: null, 
     ansContent: ``, 
     image: null,
@@ -319,11 +319,11 @@ Deposit for creatinf the market. Fix 2500 SmartUp Token deposit.`,
 /*   {
     title: 'How can I benefit from my project and make use of the money to move on my start-up? ',
     ansTitle: null, 
-    ansContent: 'The price of the idea token is lowest at the beginning of the market because the quantity of issued tokens is 0 at the beginning. To benefit from your project, you should invest in your own market once your market is created. After that, you may sell your tokens when more investors buy the token and get profit.  ', 
+    ansContent: 'The price of the market token is lowest at the beginning of the market because the quantity of issued tokens is 0 at the beginning. To benefit from your project, you should invest in your own market once your market is created. After that, you may sell your tokens when more investors buy the token and get profit.  ', 
     image: null,
     body: (
       <Col>
-         <Text lineHeight S>The price of the idea token is lowest at the beginning of the market because the quantity of issued tokens is 0 at the beginning. To benefit from your project, you should invest in your own market once your market is created. After that, you may sell your tokens when more investors buy the token and get profit. </Text>
+         <Text lineHeight S>The price of the market token is lowest at the beginning of the market because the quantity of issued tokens is 0 at the beginning. To benefit from your project, you should invest in your own market once your market is created. After that, you may sell your tokens when more investors buy the token and get profit. </Text>
       </Col>
     )
   },
@@ -334,7 +334,7 @@ Deposit for creatinf the market. Fix 2500 SmartUp Token deposit.`,
     image: null
   },
   {
-    title: 'What can we do with the community token?',
+    title: 'What can we do with the market token?',
     ansTitle: null, 
     ansContent: 'You can buy the tokens at the lower price (the quantity of the token in the market is small at that time) and sell them at the higher price (the quantity of the token in the market is larger at that time) to earn a profit', 
     image: null,
@@ -345,7 +345,7 @@ Deposit for creatinf the market. Fix 2500 SmartUp Token deposit.`,
     )
   }, */
   {
-    title: 'How do I communicate with the community members?',
+    title: 'How do I communicate with the market follower members?',
     ansTitle: null, 
     ansContent: '', 
     image: null,
@@ -398,7 +398,7 @@ Deposit for creatinf the market. Fix 2500 SmartUp Token deposit.`,
   {
     title: 'How do I invest into a project as a market follower?',
     ansTitle: null, 
-    ansContent: 'You can simply buy the idea tokens and you will become the community member. Check on the quantity and the price of the idea tokens. Buy low, sell high to make profits. ', 
+    ansContent: 'You can simply buy the market tokens and you will become the market follower. Check on the quantity and the price of the market tokens. Buy low, sell high to make profits. ', 
     image: null,
     body: (
       <Col>
@@ -413,13 +413,13 @@ Deposit for creatinf the market. Fix 2500 SmartUp Token deposit.`,
     )
   },
 /*   {
-    title: 'What is the idea token?',
+    title: 'What is the market token?',
     ansTitle: null, 
-    ansContent: 'Each market issues its own tokens individually. Investors can invest in the project by buying the tokens. As the spot price of the idea tokens is proportional to the quantity of the idea tokens, more investors buying the tokens and more tokens issued, the price will be higher. By selling the tokens at a higher price, investors can be benefited.', 
+    ansContent: 'Each market issues its own tokens individually. Investors can invest in the project by buying the tokens. As the spot price of the market tokens is proportional to the quantity of the market tokens, more investors buying the tokens and more tokens issued, the price will be higher. By selling the tokens at a higher price, investors can be benefited.', 
     image: null,
     body: (
       <Col>
-         <Text lineHeight S>Each market issues its own tokens individually. Investors can invest in the project by buying the tokens. As the spot price of the idea tokens is proportional to the quantity of the idea tokens, more investors buying the tokens and more tokens issued, the price will be higher. By selling the tokens at a higher price, investors can be benefited.</Text>
+         <Text lineHeight S>Each market issues its own tokens individually. Investors can invest in the project by buying the tokens. As the spot price of the market tokens is proportional to the quantity of the market tokens, more investors buying the tokens and more tokens issued, the price will be higher. By selling the tokens at a higher price, investors can be benefited.</Text>
       </Col>
     )
   }, */
@@ -437,26 +437,26 @@ Deposit for creatinf the market. Fix 2500 SmartUp Token deposit.`,
     )
   },
 /*   {
-    title: 'How do I get more idea tokens?',
+    title: 'How do I get more market tokens?',
     ansTitle: null, 
-    ansContent: 'You can only buy more idea tokens with SmartUp Tokens at this moment.', 
+    ansContent: 'You can only buy more market tokens with SmartUp Tokens at this moment.', 
     image: null,
     body: (
       <Col>
-         <Text lineHeight S>You can only buy more idea tokens with SmartUp Tokens at this moment.</Text>
+         <Text lineHeight S>You can only buy more market tokens with SmartUp Tokens at this moment.</Text>
       </Col>
     )
   },
   {
     title: 'How can I be benefited from the project I invested?',
     ansTitle: null, 
-    ansContent: `As the price of the idea tokens is proportional to the quantity of the idea tokens. The idea tokens buy at the beginning after the market usually have the lowest cost. 
+    ansContent: `As the price of the market tokens is proportional to the quantity of the market tokens. The market tokens buy at the beginning after the market usually have the lowest cost. 
     To benefit from the project, firstly, find out the potential project. Then, invest in the targeted market when the quantity of the tokens is low. After that, you may sell your tokens when more investors buy the tokens and sell to get profits.
     `, 
     image: null,
     body: (
       <Col>
-         <Text lineHeight S>As the price of the idea tokens is proportional to the quantity of the idea tokens. The idea tokens buy at the beginning after the market usually have the lowest cost. 
+         <Text lineHeight S>As the price of the market tokens is proportional to the quantity of the market tokens. The market tokens buy at the beginning after the market usually have the lowest cost. 
     To benefit from the project, firstly, find out the potential project. Then, invest in the targeted market when the quantity of the tokens is low. After that, you may sell your tokens when more investors buy the tokens and sell to get profits.
     </Text>
       </Col>
@@ -504,7 +504,7 @@ Deposit for creatinf the market. Fix 2500 SmartUp Token deposit.`,
     )
   }, */
 /*   {
-    title: 'How do I know if the trading of idea tokens is succeed?',
+    title: 'How do I know if the trading of market tokens is succeed?',
     ansTitle: null, 
     ansContent: 'Every trading, no matter successful trade or failed trade, the platform will generate notifications to inform users the status of the trade.', 
     image: null,
