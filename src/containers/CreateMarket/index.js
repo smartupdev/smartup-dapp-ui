@@ -69,9 +69,9 @@ const CreateMarket = ({
               'Capital sensitive, 3-40 characters, market name cannot be changed.'
               } 
             </Text>
-            <Label>Market description</Label>
+            <Label>Market Overview</Label>
             <Input background L line={3} value={desc} onChange={onChangeDesc} disabled={isFetching} />
-            <Text S right error={error.desc}>150 characters to help new members get to know your market. Description cannot be changed.</Text>
+            <Text S right error={error.desc}>150 characters to help new members get to know your market. Overview cannot be changed.</Text>
             <Label>Market Avatar</Label>
             <DropToUpload MarginBottomM onChoose={onChangeAvatar} isLoading={avatarUploading} error={error.avatar} value={avatarHash} imageHeight='100px' imageWidth='100px' />
             <Label>Market Cover Photo</Label>
