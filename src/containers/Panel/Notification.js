@@ -3,21 +3,15 @@ import { Row, Col } from '../../components/Layout'
 import NotificationItem from '../../components/Notification'
 import Search from '../../components/Search'
 import { DonutLoader } from '../../components/Loader'
-import Button from '../../components/Button'
-import Text from '../../components/Text'
 import { Expand, Tick } from '../../components/Icon'
 import Hr from '../../components/Hr'
 import ScrollLoader from '../../components/ScrollLoader'
-import { Link, withLink } from '../../routes'
+import { withLink } from '../../routes'
 import theme from '../../theme'
-import ethIcon from '../../images/eth.png';
 import smartupIcon from '../../images/smartup.png';
-
-import { shorten } from '../../lib/util';
 
 import { connect } from 'react-redux'
 import { getList, read, readAll, toggleShowUnread, onChangeKeyword } from '../../actions/notification'
-import { ipfsHost } from '../../actions/ipfs'
 
 const TYPES = {
   personal: {

@@ -23,7 +23,7 @@ import { last } from "react-stockcharts/lib/utils";
 
 import {
   OHLCTooltip,
-  MovingAverageTooltip
+  // MovingAverageTooltip
 } from "react-stockcharts/lib/tooltip";
 
 import dumpData from './dumpData'

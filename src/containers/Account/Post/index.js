@@ -1,8 +1,8 @@
 import React, { Fragment, useEffect, useState } from 'react'
 
-import { Row, Col } from '../../../components/Layout'
+import { Col } from '../../../components/Layout'
 import DiscussionItem from '../../Market/Discussion/Item'
-import Text from '../../../components/Text'
+// import Text from '../../../components/Text'
 import Hr from '../../../components/Hr'
 import Panel from '../../../components/Panel'
 import ScrollLoader from '../../../components/ScrollLoader'

@@ -20,7 +20,7 @@ const MoreIcon = styled(More)`
 `
 
 export default ({ body, header, loading, error, expanded, dark, expandedDark, onClick, maxHeight, headerLeft }) => 
-  <Container dark={dark || expandedDark && expanded} fitHeight>
+  <Container dark={dark || (expandedDark && expanded)} fitHeight>
     <Row onClick={onClick} center={!headerLeft} centerVertical flex={1} relative HL={headerLeft}>
       <Text M center={!headerLeft} VXS wordSpaceS>{header}</Text>
       { loading && <DonutLoader S /> }

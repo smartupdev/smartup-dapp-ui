@@ -37,7 +37,7 @@ export function check() {
 export function create() {
   return async (dispatch, getState) => {
     const { name, desc: description, avatarHash, coverHash } = getState().createMarket
-    const [error, response] = await dispatch(
+    const [error] = await dispatch(
       asyncFunction(
         fetch.post,
         CREATE_MARKET_SAVE_REQUESTED, CREATE_MARKET_SAVE_SUCCEEDED, CREATE_MARKET_SAVE_FAILED,

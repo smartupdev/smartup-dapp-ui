@@ -1,8 +1,6 @@
 import React from 'react'
 
-import Avatar from '../../components/Avatar'
-import Hr from '../../components/Hr'
-import Table from '../../components/Table'
+// import Table from '../../components/Table'
 import Image from '../../components/Image'
 import Text from '../../components/Text'
 import Panel from '../../components/Panel'
@@ -15,23 +13,23 @@ import { toggleExpandedInfo, toggleExpandedRule, toggleExpandedSub } from '../..
 import moment from 'moment';
 const generalText = lang.general
 
-const subs = [{ rank: 1, name: 'Tony', ct: '180.29' }, { rank: 2, name: 'Tony', ct: '180.29' }, { rank: 3, name: 'Tony', ct: '180.29' },
-{ rank: 4, name: 'Tony', ct: '180.29' }, { rank: 5, name: 'Tony', ct: '180.29' }]
+// const subs = [{ rank: 1, name: 'Tony', ct: '180.29' }, { rank: 2, name: 'Tony', ct: '180.29' }, { rank: 3, name: 'Tony', ct: '180.29' },
+// { rank: 4, name: 'Tony', ct: '180.29' }, { rank: 5, name: 'Tony', ct: '180.29' }]
 
-const SubTableName = [
-  { label: generalText.table.rank[currentLang], value: 'rank', layoutStyle: { width: '80px', center: true }, component: ({ value }) => <Text S>{`${value}`}</Text> },
-  { label: generalText.table.name[currentLang], value: 'name', layoutStyle: { width: '80px', center: true }, component: ({ value }) => <Text S>{`${value}`}</Text> },
-  { label: generalText.table.ct[currentLang], value: 'ct', layoutStyle: { width: '160px', center: true }, component: ({ value }) => <Text S>{`${value}`}</Text> },
-]
+// const SubTableName = [
+//   { label: generalText.table.rank[currentLang], value: 'rank', layoutStyle: { width: '80px', center: true }, component: ({ value }) => <Text S>{`${value}`}</Text> },
+//   { label: generalText.table.name[currentLang], value: 'name', layoutStyle: { width: '80px', center: true }, component: ({ value }) => <Text S>{`${value}`}</Text> },
+//   { label: generalText.table.ct[currentLang], value: 'ct', layoutStyle: { width: '160px', center: true }, component: ({ value }) => <Text S>{`${value}`}</Text> },
+// ]
 
-const rules = [
-  {id:1, title: '1.NO US Internal News or Policies', desc: '' },
-  {id:2, title: '2.NO Memes, Gifs, unlabeled NSFW images', desc: 'NO Memes, Gifs, unlabeled NSFW imagesNO Memes, Gifs, unlabeled NSFW imagesNO Memes, Gifs, unlabeled NSFW imagesNO Memes, Gifs, unlabeled NSFW imagesNO Memes, Gifs, unlabeled NSFW imagesNO Memes, Gifs, unlabeled NSFW images' },
-]
+// const rules = [
+//   {id:1, title: '1.NO US Internal News or Policies', desc: '' },
+//   {id:2, title: '2.NO Memes, Gifs, unlabeled NSFW images', desc: 'NO Memes, Gifs, unlabeled NSFW imagesNO Memes, Gifs, unlabeled NSFW imagesNO Memes, Gifs, unlabeled NSFW imagesNO Memes, Gifs, unlabeled NSFW imagesNO Memes, Gifs, unlabeled NSFW imagesNO Memes, Gifs, unlabeled NSFW images' },
+// ]
 
-const ruleTableName = [
-  { label: '', value: 'title', component: ({ value }) => <Text S>{`${value}`}</Text> },
-]
+// const ruleTableName = [
+//   { label: '', value: 'title', component: ({ value }) => <Text S>{`${value}`}</Text> },
+// ]
 
 const InfoBody = ({ info }) => {
   return (
@@ -59,31 +57,31 @@ const InfoBody = ({ info }) => {
   )
 }
 
-const TableExpand = ({record})=>{
-  return(
-    <Text S>{record.desc}</Text>
-  );
-}
+// const TableExpand = ({record})=>{
+//   return(
+//     <Text S>{record.desc}</Text>
+//   );
+// }
 
-const RuleBody = ({ rules,expandedRecords }) => {
-  return (<Row BottomXS LeftS RightS spaceBetween>
-    <Table
-      S
-      inset
-      model={ruleTableName} 
-      values={rules}
-      expandedRecords={expandedRecords}
-      expandCompoent={TableExpand} />
-  </Row>);
-}
+// const RuleBody = ({ rules,expandedRecords }) => {
+//   return (<Row BottomXS LeftS RightS spaceBetween>
+//     <Table
+//       S
+//       inset
+//       model={ruleTableName} 
+//       values={rules}
+//       expandedRecords={expandedRecords}
+//       expandCompoent={TableExpand} />
+//   </Row>);
+// }
 
-const SubBody = ({ subs }) => {
-  return (<Row BottomXS LeftS RightS spaceBetween>
-    <Table S model={SubTableName} values={subs} />
-    <Table S model={SubTableName} values={subs} />
-    <Table S model={SubTableName} values={subs} />
-  </Row>);
-}
+// const SubBody = ({ subs }) => {
+//   return (<Row BottomXS LeftS RightS spaceBetween>
+//     <Table S model={SubTableName} values={subs} />
+//     <Table S model={SubTableName} values={subs} />
+//     <Table S model={SubTableName} values={subs} />
+//   </Row>);
+// }
 
 const TitleIcon = ({ title }) => {
   return (

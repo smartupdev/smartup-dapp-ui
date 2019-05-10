@@ -4,7 +4,7 @@ import Text from '../../../components/Text'
 import TextInput from '../../../components/Input'
 import DropToUpload from '../../../components/DropToUpload'
 import Button from '../../../components/Button'
-import { postIpfsImg, ipfsHost } from '../../../actions/ipfs'
+import { postIpfsImg } from '../../../actions/ipfs'
 
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'

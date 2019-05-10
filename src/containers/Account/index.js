@@ -1,11 +1,11 @@
 import React from 'react'
 
-import { Row, Col } from '../../components/Layout'
+import { Col } from '../../components/Layout'
 import Tab from '../../components/Tab'
 import Text from '../../components/Text'
-import Hr from '../../components/Hr'
+// import Hr from '../../components/Hr'
 
-import routes, { Link, getUrlParams, routeMap } from '../../routes'
+import routes, { Link } from '../../routes'
 
 
 export default () => {

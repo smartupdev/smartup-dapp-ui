@@ -1,14 +1,14 @@
-import React, { useEffect, useRef, useState, Fragment } from 'react'
+import React, { useState, Fragment } from 'react'
 import Image from '../../components/Image'
 import Text from '../../components/Text'
 import Panel from '../../components/Panel'
 import { Row, Col } from '../../components/Layout'
 import lang, { currentLang } from '../../lang'
 import theme from '../../theme'
-import { Faq, More } from '../../components/Icon'
-import Table from '../../components/Table'
+import { Faq } from '../../components/Icon'
+// import Table from '../../components/Table'
 import Hr from '../../components/Hr'
-import smartupIcon from '../../images/smartup.png'
+// import smartupIcon from '../../images/smartup.png'
 
 const faqText = lang.faq
 

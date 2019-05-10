@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
 
 import styled from 'styled-components'
-import Image from '../../components/Image'
 import Avatar from '../../components/Avatar'
 import { People } from '../../components/Icon'
 import Button from '../../components/Button'

@@ -1,6 +1,6 @@
-import React, { Fragment, useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 
-import { Row, Col } from '../../../components/Layout'
+import { Col } from '../../../components/Layout'
 import MarketTable from '../../Market/Table/ListView'
 import Hr from '../../../components/Hr'
 import Panel from '../../../components/Panel'

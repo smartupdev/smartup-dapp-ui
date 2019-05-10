@@ -34,10 +34,10 @@ const TextWrapper = styled(Col)`
   background-color: rgba(100, 100, 100, .5)
 `
 
-const IconWrapper = styled(Col)`
-  position: absolute;
-  right: -6px; top: -6px;
-`
+// const IconWrapper = styled(Col)`
+//   position: absolute;
+//   right: -6px; top: -6px;
+// `
 
 export default function ({ 
   height = '200px', imageWidth = '100%', imageHeight = '200px', actualSize,

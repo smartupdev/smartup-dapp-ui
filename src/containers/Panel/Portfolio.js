@@ -6,7 +6,6 @@ import { toggleExpandedBookmark, toggleExpandedMarket, toggleExpandedWallet } fr
 import { getMarketGlobal, getCtAccountInMarket, getCtAccountInMarketMore, collectMarket } from '../../actions/market'
 import { getUserCollectLists } from '../../actions/collect'
 
-import CommentIcon from '../../images/018-planet-earth-2.svg'
 import Avatar from '../../components/Avatar'
 import Hr from '../../components/Hr'
 import Panel from '../../components/Panel'

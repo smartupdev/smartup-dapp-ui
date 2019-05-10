@@ -1,12 +1,10 @@
 import React, { Fragment, useEffect, useState } from 'react'
 
 import DiscussionItem from '../../Market/Discussion/Item'
-import DiscussionComment from '../../Market/Discussion/Comment'
 import MarketTable from '../../Market/Table/ListView'
 import { ReplyBody } from '../Comment'
 
-import { Row, Col } from '../../../components/Layout'
-import Text from '../../../components/Text'
+import { Col } from '../../../components/Layout'
 import Panel from '../../../components/Panel'
 import Hr from '../../../components/Hr'
 import ScrollLoader from '../../../components/ScrollLoader'

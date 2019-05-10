@@ -6,7 +6,7 @@ import Image from '../../../components/Image'
 import { Bookmarked, Share, Like, Dislike, Reply } from '../../../components/Icon'
 import { Link, routeMap } from '../../../routes'
 
-import { toToken, toAgo, toFullDate, shorten } from '../../../lib/util'
+import { toAgo, shorten } from '../../../lib/util'
 import theme from '../../../theme'
 import { connect } from 'react-redux'
 import { toggleLikePost, toggleDislikePost, toggleFollowPost } from '../../../actions/post'
@@ -16,7 +16,7 @@ import { ToastConsumer } from 'react-toast-notifications'
 import { share } from '../../../alphaWebService'
 
 function DiscussionItem ({ loggedIn, post, isDetailView, toggleLikePost, toggleDislikePost, toggleFollowPost }) {
-  const { id, authorName,username,userAddress, time, title, content, photo, isCollect, isLiked, isDisliked, numberOfLike = 1000, numberOfDislike = 2000, numberOfComment = 3000, marketId, lastReply } = post
+  const { id, username,userAddress, time, title, content, photo, isCollect, isLiked, isDisliked, numberOfLike = 1000, numberOfDislike = 2000, numberOfComment = 3000, marketId, lastReply } = post
   function like(e) {
     loggedIn &&
     toggleLikePost(e, {id, isLiked, isDisliked})

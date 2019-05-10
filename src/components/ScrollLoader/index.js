@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Row } from '../Layout'
 import Button from '../Button'
-import { DonutLoader } from '../Loader'
-import { useAppear } from '../../lib/react'
+// import { DonutLoader } from '../Loader'
+// import { useAppear } from '../../lib/react'
 
 // id is required if more than one ScrollLoader in a page
 export default ({ id = 'id', hasMore, loadMore, isLoading, isButton }) => {

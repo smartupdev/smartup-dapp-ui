@@ -1,17 +1,23 @@
 import {
   LOGIN_METAMASK_REQUESTED, LOGIN_METAMASK_SUCCEEDED, LOGIN_METAMASK_FAILED,
-  METAMASK_ETH_BALANCE_REQUESTED, METAMASK_ETH_BALANCE_SUCCEEDED, METAMASK_ETH_BALANCE_FAILED,
-  METAMASK_SUT_BALANCE_REQUESTED, METAMASK_SUT_BALANCE_SUCCEEDED, METAMASK_SUT_BALANCE_FAILED,
-  METAMASK_NTT_BALANCE_REQUESTED, METAMASK_NTT_BALANCE_SUCCEEDED, METAMASK_NTT_BALANCE_FAILED,
+  // METAMASK_ETH_BALANCE_REQUESTED, 
+  METAMASK_ETH_BALANCE_SUCCEEDED,
+  // METAMASK_ETH_BALANCE_FAILED,
+  // METAMASK_SUT_BALANCE_REQUESTED, 
+  METAMASK_SUT_BALANCE_SUCCEEDED,
+  // METAMASK_SUT_BALANCE_FAILED,
+  // METAMASK_NTT_BALANCE_REQUESTED, 
+  METAMASK_NTT_BALANCE_SUCCEEDED,
+  // METAMASK_NTT_BALANCE_FAILED,
   USER_LOGIN_SMARTUP_REQUESTED, USER_LOGIN_SMARTUP_SUCCEEDED, USER_LOGIN_SMARTUP_FAILED,
   USER_PERSON_SIGN_REQUESTED, USER_PERSON_SIGN_SUCCEEDED, USER_PERSON_SIGN_FAILED,
   USER_AUTH_SMARTUP_REQUESTED, USER_AUTH_SMARTUP_SUCCEEDED, USER_AUTH_SMARTUP_FAILED,
-  METAMASK_RESET,
+  // METAMASK_RESET,
   USER_AVATAR_CHANGE_REQUESTED, USER_AVATAR_CHANGE_SUCCEEDED, USER_AVATAR_CHANGE_FAIL,
   USER_UPDATE_AVATAR_REQUESTED, USER_UPDATE_AVATAR_SUCCEEDED, USER_UPDATE_AVATAR_FAIL,
   USER_UPDATE_NAME_REQUESTED, USER_UPDATE_NAME_SUCCEEDED, USER_UPDATE_NAME_FAIL,
   USER_CURRENT_INFO_REQUESTED, USER_CURRENT_INFO_SUCCEEDED, USER_CURRENT_INFO_FAIL,
-  USER_NAME_CHANGE,USER_NAME_SUBMITTING,
+  USER_NAME_CHANGE, USER_NAME_SUBMITTING,
 } from './actionTypes'
 import {
   asyncFunction, callbackFunction,
@@ -47,7 +53,7 @@ export function checkLogin() {
   return async dispatch => {
     const token = getStorageToken()
     if (token) {
-      const [error, response] = await dispatch(loginMetaMask(true))
+      const [error] = await dispatch(loginMetaMask(true))
       if (!error) {
         dispatch({
           type: USER_AUTH_SMARTUP_SUCCEEDED
@@ -58,13 +64,14 @@ export function checkLogin() {
 }
 
 export function watchMetamask() {
-  return async(dispatch, getState) => {
-    while(true) {
+  return async (dispatch, getState) => {
+    while (true) {
       const storedAccount = getStorageAccount()
       const currentAccount = getAccount()
       if (currentAccount) await dispatch(getAllBalance())
+      // eslint-disable-next-line
       if (storedAccount != currentAccount) {
-        if (!currentAccount || storedAccount && currentAccount) {
+        if ( !currentAccount || (storedAccount && currentAccount) ) {
           window.localStorage.clear()
           window.location.reload()
         } else {
@@ -139,7 +146,7 @@ function getEthBalance() {
         responsePayload: formatToken
       }
     )
-  )
+    )
   .then( ([error, response]) => 
     !error && response !== getState().user.ethBalance && dispatch({
       type: METAMASK_ETH_BALANCE_SUCCEEDED,
@@ -160,7 +167,7 @@ function getSutBalance() {
         responsePayload: formatToken
       }
     )
-  )
+    )
   .then( ([error, response]) => 
     !error && response !== getState().user.sutBalance && dispatch({
       type: METAMASK_SUT_BALANCE_SUCCEEDED,
@@ -180,8 +187,8 @@ function getNttBalance() {
         params: { to: nttContractAddress, data: getCredit(getAccount()) },
         responsePayload: formatCredit
       }
-    )
-    )
+  )
+      )
   .then( ([error, response]) => 
     !error && response !== getState().user.nttBalance && dispatch({
       type: METAMASK_NTT_BALANCE_SUCCEEDED,

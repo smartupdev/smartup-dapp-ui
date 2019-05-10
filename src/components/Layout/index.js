@@ -1,6 +1,6 @@
 // import React from 'react'
 import styled, { css } from 'styled-components'
-import { spacingCss, onClickCss, expandCss } from '../Theme'
+import { spacingCss, onClickCss } from '../Theme'
 const Flex = styled.div`
   display: flex;
   

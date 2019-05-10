@@ -3,13 +3,12 @@ import { Link } from '../../routes'
 // import styled from 'styled-components'
 import Text from '../../components/Text'
 import { DonutLoader } from '../../components/Loader'
-import Input, { Selector } from '../../components/Input'
+import Input from '../../components/Input'
 import Hr from '../../components/Hr'
 import Button from '../../components/Button'
 import Image from '../../components/Image'
 import ProgressBar from '../../components/ProgressBar'
 import { Row, Col } from '../../components/Layout'
-import ethIcon from '../../images/eth.png';
 import smartupIcon from '../../images/smartup.png';
 import successImg from '../../images/market_success.png';
 import Chart from './Chart'
@@ -21,7 +20,7 @@ import { setActiveIndex, onChangeName, onChangeDesc, reset, get, create, onChang
 // import { createMarket } from '../../actions/market'
 
 const options = ['Basic Information', 'Price Equation', 'Deposit']
-const optionsSpeed = ['Slow', 'Standard', 'Fast']
+// const optionsSpeed = ['Slow', 'Standard', 'Fast']
 const CreateMarket = ({
   createMarketState: { 
     activeIndex, name, desc, error, isFetching, isReady, marketId, 
@@ -45,8 +44,8 @@ const CreateMarket = ({
   const page1Ready = !(error.name || error.desc || !name || !desc)
   const page2Ready = page1Ready
   const onChangeProgress = tab => 
-    tab === 0 && setActiveIndex(tab) ||
-    tab === 1 && page1Ready && setActiveIndex(tab) ||
+    tab === 0 ? setActiveIndex(tab) :
+    tab === 1 ? page1Ready && setActiveIndex(tab) :
     tab === 2 && page2Ready && setActiveIndex(tab)
 
     return (

@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 
 export default function eventListener(event, handler, targetId) { // event: e.g. resize, handler: function, MUST return this in useEffect
   // handler()

@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import styled, { css } from 'styled-components'
+// import styled, { css } from 'styled-components'
 import theme from '../../../theme'
 
 import { More } from '../../../components/Icon'
 import { Row, Col } from '../../../components/Layout'
 import Text from '../../../components/Text'
-import Panel from '../../../components/Panel'
+// import Panel from '../../../components/Panel'
 import Hr from '../../../components/Hr'
 import Expand from '../../../components/Expand'
 

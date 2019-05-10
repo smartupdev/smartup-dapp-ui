@@ -5,9 +5,9 @@ import { Link } from '../../../routes'
 import { Row, Col } from '../../../components/Layout'
 import Text from '../../../components/Text'
 import Avatar from '../../../components/Avatar'
-import { Bookmarked, Share, Like, Dislike, Reply } from '../../../components/Icon'
+import { Bookmarked, Like, Dislike } from '../../../components/Icon'
 
-import { shorten, toAgo } from '../../../lib/util'
+import { toAgo } from '../../../lib/util'
 import theme from '../../../theme'
 
 import { connect } from 'react-redux'

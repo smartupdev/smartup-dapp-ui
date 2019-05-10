@@ -7,8 +7,8 @@ import {
   USER_COLLECT_DEL_REQUESTED, USER_COLLECT_DEL_SUCCEEDED, USER_COLLECT_DEL_FAILED,
   GET_MARKET_DETAIL_REQUESTED, GET_MARKET_DETAIL_SUCCEEDED, GET_MARKET_DETAIL_FAILED,
   MARKET_DETAIL_GET_CT_REQUESTED, MARKET_DETAIL_GET_CT_SUCCEEDED, MARKET_DETAIL_GET_CT_FAILED,
-  MARKET_SEARCH_REQUESTED, MARKET_SEARCH_SUCCEEDED, MARKET_SEARCH_FAILED,
-  MARKET_TOP_REQUESTED, MARKET_TOP_SUCCEEDED, MARKET_TOP_FAILED, HOME_SET_SORTING
+  // MARKET_SEARCH_REQUESTED, MARKET_SEARCH_SUCCEEDED, MARKET_SEARCH_FAILED,
+  // MARKET_TOP_REQUESTED, MARKET_TOP_SUCCEEDED, MARKET_TOP_FAILED, HOME_SET_SORTING
 } from './actionTypes'
 import {
   API_MARKET_LIST, API_CT_ACCOUNT_IN_MARKET, API_MARKET_GLOBAL,
@@ -155,7 +155,7 @@ export function collectMarket(record) {
   if (!record.following) {
     //收藏
     return async (dispatch, getState) => {
-      let [error, response] = await dispatch(asyncFunction(
+      let [error] = await dispatch(asyncFunction(
         fetch.post,
         USER_COLLECT_ADD_REQUESTED, USER_COLLECT_ADD_SUCCEEDED, USER_COLLECT_ADD_FAILED,
         {
@@ -172,7 +172,7 @@ export function collectMarket(record) {
   } else {
     //取消收藏
     return async (dispatch, getState) => {
-      let [error, response] = await dispatch(asyncFunction(
+      let [error] = await dispatch(asyncFunction(
         fetch.post,
         USER_COLLECT_DEL_REQUESTED, USER_COLLECT_DEL_SUCCEEDED, USER_COLLECT_DEL_FAILED,
         {
@@ -187,9 +187,4 @@ export function collectMarket(record) {
       }
     }
   }
-
 }
-
-
-
-

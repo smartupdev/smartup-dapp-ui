@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Text from '../../components/Text'
 import { Col } from '../../components/Layout'
 // import ScrollLoader from '../../components/ScrollLoader'

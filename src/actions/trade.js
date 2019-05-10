@@ -244,7 +244,7 @@ export function getHighLowList(){
   return (dispatch, getState) => {
     const { 
       market: { currentMarket: {address: marketAddress} },
-      trade: { tabIndex }
+      // trade: { tabIndex }
     } = getState()
     let requestParams = {
       marketAddress,

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 
 import { Link, getUrlParams, routeMap, getPath } from '../../routes'
 
@@ -11,7 +11,7 @@ import theme from '../../theme'
 import { DonutLoader } from '../../components/Loader'
 import { Row, Col } from '../../components/Layout'
 import Tab from '../../components/Tab'
-import Icon, { Comment, Trade, People, More, Bookmarked, Share, Copy, Add } from '../../components/Icon'
+import { Comment, People, Bookmarked, Share, Copy, Add } from '../../components/Icon'
 import Text from '../../components/Text'
 import Search from '../../components/Search'
 import Hr from '../../components/Hr'

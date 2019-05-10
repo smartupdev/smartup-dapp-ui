@@ -1,9 +1,7 @@
 import React, { memo } from 'react'
 import { Row, Col } from '../Layout'
 import Text from '../Text'
-import Image from '../Image'
 import Avatar from '../Avatar'
-import { People } from '../Icon'
 // import theme from '../../theme'
 import { toAgo } from '../../lib/util/datatime'
 import styled, { css } from 'styled-components'
@@ -31,7 +29,7 @@ const Main = styled(Col)`
 
 
 export default memo((notification) => {
-  const { image, sender, title, content, date, unread, expanded, onClick, id } = notification
+  const { image, sender, title, content, date, unread, expanded, onClick } = notification
   return (
     <Container top spaceBetween unread={unread} onClick={onClick && (() => onClick(notification))}>
       <Dot unread={unread} />
