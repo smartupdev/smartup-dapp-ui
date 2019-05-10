@@ -2,7 +2,7 @@ import React from 'react'
 import { Link, routeMap } from '../../../routes'
 import { Row, Col } from '../../../components/Layout'
 import theme from '../../../theme'
-import { Comment, Trade, People, Bookmarked, Share } from '../../../components/Icon'
+import { Comment, Trade, Bookmarked, Share, CommunityMember } from '../../../components/Icon'
 import Text from '../../../components/Text'
 import lang, { currentLang } from '../../../lang'
 import Button from '../../../components/Button'
@@ -41,7 +41,7 @@ const TableExpand = ({ record, history, collectMarket }) => {
       <Row centerVertical spaceBetween>
         <Row>
           <Button label={record.numberOfComments} icon={Comment} />
-          <Button label={record.numberOfSub} icon={People} />
+          <Button label={record.numberOfSub} icon={CommunityMember} iconSize='14px' />
         </Row>
         <Link>
           { ({goto}) =>

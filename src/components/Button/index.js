@@ -31,10 +31,10 @@ const Button = styled.button`
   ${onClickCss}
 `
 
-export default ({ label, icon: Icon, primary, light, condensed, extended, outline, verticalMargin, ...rest }) => {
+export default ({ label, icon: Icon, primary, light, condensed, extended, outline, verticalMargin, iconSize, ...rest }) => {
   return (
     <Button primary={primary} light={light} condensed={condensed} VBase={extended} HL={extended} outline={outline} verticalMargin={verticalMargin} {...rest}>
-      { Icon && <Icon XS RightBase={!!label} />}
+      { Icon && <Icon XS RightBase={!!label} size={iconSize} />}
       { label && <Text>{label}</Text>}
     </Button>
   )

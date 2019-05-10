@@ -11,7 +11,7 @@ import theme from '../../theme'
 import { DonutLoader } from '../../components/Loader'
 import { Row, Col } from '../../components/Layout'
 import Tab from '../../components/Tab'
-import { Comment, People, Bookmarked, Share, Copy, Add } from '../../components/Icon'
+import { Comment, CommunityMember, Bookmarked, Share, Copy, Add } from '../../components/Icon'
 import Text from '../../components/Text'
 import Search from '../../components/Search'
 import Hr from '../../components/Hr'
@@ -67,7 +67,7 @@ const Market = ({ get, collectMarket, getting, location, market, getMarketPost, 
           <Link>
             {
               ({ goto, location }) =>
-                <Button label={market.numberOfSub} icon={People} onClick={() => console.debug} />
+                <Button label={market.numberOfSub} icon={CommunityMember} iconSize='14px' onClick={console.debug} />
             }
           </Link>
           <ToastConsumer>
