@@ -10,27 +10,8 @@ import {
   GET_MARKET_DETAIL_REQUESTED, GET_MARKET_DETAIL_SUCCEEDED, GET_MARKET_DETAIL_FAILED,
 } from '../actions/actionTypes';
 
-import { ipfsHost } from '../actions/ipfs'
-import { changeArrayById, updateLoadMore } from '../lib/util/reducerHelper'
-
-export function marketMassage(m) {
-  return {
-    ...m,
-    ...m.data,
-    id: m.marketId,
-    address: m.marketAddress,
-    cover: m.cover && (ipfsHost + m.cover),
-    avatar: m.photo,
-    numberOfComments: m.data ? m.data.postCount || 0 : '-',
-    numberOfSub: m.data ? m.data.userCount || 0 : '-',
-    lately_volume: m.data && m.data.latelyVolume,
-    lately_change: m.data && m.data.latelyChange,
-    priceIn7d: m.sevenDayNode,
-    following: m.isCollected,
-    overview: m.description,
-    icon: null,
-  }
-}
+import { changeArrayById } from '../lib/util/reducerHelper'
+import { marketMassage, updateLoadMore } from '../integrator/massager'
 
 export const initialState = {
 

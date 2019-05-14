@@ -19,18 +19,8 @@ import {
   MARKET_DETAIL_GET_CT_SUCCEEDED, 
   // MARKET_DETAIL_GET_CT_FAILED,
   TRADE_SAVE_SUCCEEDED,
-} from '../actions/actionTypes';
-import { updateLoadMore } from '../lib/util/reducerHelper';
-
-function tradeMassage(trade) {
-  return {
-    ...trade, 
-    id: trade.txHash,
-    avgAmount: trade.sutAmount / trade.ctAmount,
-    userIcon: trade.user.avatarIpfsHash,
-    username: trade.user.name || trade.user.userAddress
-  }
-}
+} from '../actions/actionTypes'
+import { tradeMassage, updateLoadMore } from '../integrator/massager'
 
 export const initialState = {
   tabIndex: 0,
@@ -43,7 +33,7 @@ export const initialState = {
   sutError: null,
   getSUTCount: 0,
 
-  userCt: 0, // TODO, change when trade
+  userCt: 0,
   ct: '',
   gettingCT: false,
   ctError: null,
@@ -165,24 +155,9 @@ export default (state = initialState, action) => {
       }
     case TRADE_SUCCEEDED: {
       const { ct, sut, tradingError, isTrading } = initialState
-      // const { hash, isSell, username, userIcon, sut: sutAmount , ct: ctAmount } = action.payload
-
       return {
         ...state, ct, sut, tradingError, isTrading,
         userCt: state.isSell ? state.userCt - state.ct : state.userCt + +state.ct
-        // trades: [
-        //   {
-        //     id: hash,
-        //     type: isSell ? 'sell' : 'buy',
-        //     avgAmount: sutAmount / ctAmount,
-        //     sutAmount,
-        //     ctAmount,
-        //     userIcon,
-        //     username,
-        //     createTime: Date.now()  
-        //   },
-        //   ...state.trades
-        // ]
       }
     }
     case TRADE_FAILED:

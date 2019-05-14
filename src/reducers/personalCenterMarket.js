@@ -6,8 +6,7 @@ import {
   USER_MARKET_COLLECTED_REQUESTED, USER_MARKET_COLLECTED_SUCCEEDED, USER_MARKET_COLLECTED_FAIL,
 } from '../actions/actionTypes';
 
-import {marketMassage} from './market'
-import { updateLoadMore } from '../lib/util/reducerHelper'
+import { marketMassage, updateLoadMore } from '../integrator/massager'
 
 export const initialState = {
 

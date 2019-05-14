@@ -8,8 +8,8 @@ import {
     USER_REPLY_CREATED_REQUESTED, USER_REPLY_CREATED_SUCCEEDED, USER_REPLY_CREATED_FAIL,
 } from '../actions/actionTypes';
 
-import { postMassage, replyMassage, toggleLike, toggleDislike, toggleFollow } from './post'
-import { changeArrayById, updateLoadMore } from '../lib/util/reducerHelper'
+import { postMassage, replyMassage, toggleLike, toggleDislike, toggleFollow, updateLoadMore } from '../integrator/massager'
+import { changeArrayById } from '../lib/util/reducerHelper'
 
 export const initialState = {
     pageSize: 10,

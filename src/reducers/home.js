@@ -10,8 +10,8 @@ import {
   // MARKET_TOP_REQUESTED, MARKET_TOP_SUCCEEDED, MARKET_TOP_FAILED,MARKET_TOP_SORT,
 } from '../actions/actionTypes';
 
-import { marketMassage } from './market'
-import { changeArrayById, updateLoadMore } from '../lib/util/reducerHelper'
+import { marketMassage, updateLoadMore } from '../integrator/massager'
+import { changeArrayById } from '../lib/util/reducerHelper'
 
 export const initialState = {
   expandedRecords: [], // ids

@@ -9,7 +9,7 @@ import {
   // USER_NOTIFICATION_UNREAD_FAILED
 } from '../actions/actionTypes';
 
-import { updateLoadMore } from '../lib/util/reducerHelper'
+import { updateLoadMore } from '../integrator/massager'
 
 export const initialState = {
 

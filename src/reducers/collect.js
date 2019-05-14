@@ -1,7 +1,7 @@
 import {
   USER_COLLECT_LIST_REQUESTED, USER_COLLECT_LIST_SUCCEEDED, USER_COLLECT_LIST_FAILED
 } from '../actions/actionTypes';
-import { updateLoadMore } from '../lib/util/reducerHelper'
+import { updateLoadMore } from '../integrator/massager'
 export const initialState = {
   collects: [],
   gettingCollects: false,

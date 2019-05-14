@@ -19,6 +19,7 @@ import {
   USER_UPDATE_NAME_REQUESTED, USER_UPDATE_NAME_SUCCEEDED, USER_UPDATE_NAME_FAIL,
   USER_NAME_CHANGE,USER_NAME_SUBMITTING,
 } from '../actions/actionTypes';
+import { userMassage } from  '../integrator/massager'
 
 export const initialState = {
   ethBalance: null,
@@ -60,17 +61,6 @@ export const initialState = {
   updateNameError: null,
   submittingName: false,
   nameHasChanged: false,
-}
-
-function userInfo(user) {
-  return {
-    avatarHash: user.avatarIpfsHash,
-    userAvatar: user.avatarIpfsHash,
-    userAddress: user.userAddress,
-    userName: user.name ? user.name : user.userAddress,
-    realUserName: user.name || '',
-    nameHasChanged: !!user.name,
-  }
 }
 
 export default (state = initialState, action) => {
@@ -233,7 +223,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         gettingUserInfo: false,
-        ...userInfo(action.payload),
+        ...userMassage(action.payload),
         userInfoError: initialState.userInfoError,
       }
     case USER_CURRENT_INFO_FAIL:

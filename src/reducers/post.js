@@ -12,81 +12,8 @@ import {
   POST_USER_REPLAY_ADD_REQUESTED, POST_USER_REPLAY_ADD_SUCCEEDED, POST_USER_REPLAY_ADD_FAILED
 } from '../actions/actionTypes';
 
-import { changeArrayById, updateLoadMore } from '../lib/util/reducerHelper'
-
-export function toggleFollow(r) {
-  return {...r, isCollect: !r.isCollect}
-}
-
-export function toggleLike(r) {
-  if(!r) return r
-  if(r.isLiked) return { // unmark like
-    ...r,
-    isLiked: !r.isLiked,
-    numberOfLike: r.numberOfLike - 1
-  }
-  return { 
-    ...r, 
-    isLiked: !r.isLiked, 
-    isDisliked: false,
-    numberOfLike: r.numberOfLike + 1,
-    numberOfDislike: r.isDisliked ? r.numberOfDislike - 1 : r.numberOfDislike
-  }
-}
-export function toggleDislike(r) {
-  if(!r) return r
-  if(r.isDisliked) return { // ummark dislike
-    ...r, 
-    isDisliked: !r.isDisliked,
-    numberOfDislike: r.numberOfDislike - 1
-  }
-  return { // mark dislike
-    ...r,
-    isLiked: false,
-    isDisliked: !r.isDisliked,
-    numberOfDislike: r.numberOfDislike + 1,
-    numberOfLike: r.isLiked ? r.numberOfLike - 1 : r.numberOfLike
-  }
-}
-
-function userMassage(u) {
-  return {
-    userAvatar: u.avatarIpfsHash, 
-    username: u.name, 
-    userAddress: u.userAddress
-  }
-}
-
-export function replyMassage(r) {
-  return {
-    ...r, 
-    id: r.replyId, 
-    isCollect: r.isCollected,
-    numberOfLike: r.data && r.data.likeCount, 
-    numberOfDislike: r.data && r.data.dislikeCount, 
-    ...userMassage(r.user)
-   }
-}
-
-export function postMassage(p) {
-  return {
-    ...p,
-    id: p.postId,
-    authorName: p.username || p.userAddress,
-    time: p.createTime,
-    // title, 
-    content: p.description,
-    numberOfLike: p.data && p.data.likeCount, 
-    numberOfDislike: p.data && p.data.dislikeCount, 
-    numberOfComment: p.data && p.data.replyCount, 
-    isCollect: p.isCollected,
-    lastReply: p.lastReply && {
-      ...p.lastReply,
-      ...userMassage(p.lastReply.user)
-    },
-    ...userMassage(p.user)
-  }
-}
+import { changeArrayById } from '../lib/util/reducerHelper'
+import { toggleFollow, toggleLike, toggleDislike, replyMassage, postMassage, updateLoadMore } from '../integrator/massager'
 
 export const initialState = {
 
