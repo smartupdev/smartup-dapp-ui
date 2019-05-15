@@ -8,12 +8,12 @@ import lang, { currentLang } from '../../../lang'
 import Button from '../../../components/Button'
 import Image from '../../../components/Image'
 import { connect } from 'react-redux'
-import { collectMarket } from '../../../actions/market'
+import { toggleSavedMarket } from '../../../actions/market'
 
 import { ToastConsumer } from 'react-toast-notifications'
 import { share } from '../../../alphaWebService'
 
-const TableExpand = ({ record, history, collectMarket }) => {
+const TableExpand = ({ record, toggleSavedMarket }) => {
   return (
   <Row BottomS TopS>
     <Col LeftXS RightL>
@@ -35,7 +35,7 @@ const TableExpand = ({ record, history, collectMarket }) => {
                 }} />
             }
           </ToastConsumer>
-          <Bookmarked S MarginLeftS onClick={() => collectMarket(record)} checked={record.following} /> 
+          <Bookmarked S MarginLeftS onClick={() => toggleSavedMarket(record)} checked={record.following} /> 
         </Row>
       </Row>
       <Row centerVertical spaceBetween>
@@ -55,7 +55,7 @@ const TableExpand = ({ record, history, collectMarket }) => {
 }
 
 const mapDispatchToProps = {
-  collectMarket
+  toggleSavedMarket
 }
 
 export default connect(null, mapDispatchToProps)(TableExpand);

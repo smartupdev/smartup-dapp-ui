@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react'
 import styled from 'styled-components'
 
-import { Route, Switch } from 'react-router-dom'
-import routes from '../../routes'
+import { MainRoutes, mainRoutes } from '../../routes'
 
 import { checkVersion } from '../../alphaWebService'
 
@@ -29,17 +28,10 @@ const App = ({ checkLogin }) => {
   }, [])
   return (
     <Container>
-      <Header routes={routes} />
+      <Header routes={mainRoutes} />
       <Hr vertical />
       <Main id='main'>
-        {/* <Switch> */}
-          {
-            routes.map(({id, path, component, exact}) =>
-              <Route key={id} exact={exact} path={path} component={component} />
-            )
-          }
-          {/* <Route path="*" component={NotFound} /> */}
-        {/* </Switch> */}
+        <MainRoutes />
       </Main>
       <Hr vertical />
       <Panel />

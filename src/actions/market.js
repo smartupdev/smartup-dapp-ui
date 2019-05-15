@@ -1,10 +1,11 @@
 import {
   MARKET_DETAIL_RESET,
   GET_MARKET_LIST_REQUESTED, GET_MARKET_LIST_SUCCEEDED, GET_MARKET_LIST_FAILED,
-  CT_ACCOUNT_IN_MARKET_REQUESTED, CT_ACCOUNT_IN_MARKET_SUCCEEDED, CT_ACCOUNT_IN_MARKET_FAILED,
-  GET_MARKET_GLOBAL_REQUESTED, GET_MARKET_GLOBAL_SUCCEEDED, GET_MARKET_GLOBAL_FAILED,
-  USER_COLLECT_ADD_REQUESTED, USER_COLLECT_ADD_SUCCEEDED, USER_COLLECT_ADD_FAILED,
-  USER_COLLECT_DEL_REQUESTED, USER_COLLECT_DEL_SUCCEEDED, USER_COLLECT_DEL_FAILED,
+
+  MARKET_GET_TRADED_MARKET_WITH_CT_REQUESTED, MARKET_GET_TRADED_MARKET_WITH_CT_SUCCEEDED, MARKET_GET_TRADED_MARKET_WITH_CT_FAILED,
+
+  MARKET_ADD_SAVED_MARKET, MARKET_DEL_SAVED_MARKET,
+
   GET_MARKET_DETAIL_REQUESTED, GET_MARKET_DETAIL_SUCCEEDED, GET_MARKET_DETAIL_FAILED,
   MARKET_DETAIL_GET_CT_REQUESTED, MARKET_DETAIL_GET_CT_SUCCEEDED, MARKET_DETAIL_GET_CT_FAILED,
   // MARKET_SEARCH_REQUESTED, MARKET_SEARCH_SUCCEEDED, MARKET_SEARCH_FAILED,
@@ -17,7 +18,11 @@ import {
 } from './api'
 import fetch from '../lib/util/fetch'
 import { asyncFunction, callbackFunction, getBalance, getAccount, smartupWeb3, decodeResult } from '../integrator'
-import { getUserCollectLists } from '../actions/collect'
+import { addCollect, delCollect } from './bookmark'
+
+import { 
+  apiGetTradedMarketCt, 
+} from '../integrator/api'
 
 const topIndexToValueMap = [
   null, 
@@ -109,21 +114,15 @@ export function getList(isLoadMore) {
   }
 }
 
-//CT账户和市场信息
-export function getCtAccountInMarketMore() {
-  return getCtAccountInMarket(true)
-}
-
-export function getCtAccountInMarket(isLoadMore) {
+// DONE
+export function getMarketWallet(isLoadMore) {
   return (dispatch, getState) => {
-    const {ctInMarketPageNumb, ctInMarketPageSize} = getState().market;
+    const { pageSize, pageNumb } = getState().userMarketWallet;
     dispatch(
       asyncFunction(
-        fetch.post,
-        CT_ACCOUNT_IN_MARKET_REQUESTED, CT_ACCOUNT_IN_MARKET_SUCCEEDED, CT_ACCOUNT_IN_MARKET_FAILED,
+        apiGetTradedMarketCt({ pageSize, pageNumb, isLoadMore }),
+        MARKET_GET_TRADED_MARKET_WITH_CT_REQUESTED, MARKET_GET_TRADED_MARKET_WITH_CT_SUCCEEDED, MARKET_GET_TRADED_MARKET_WITH_CT_FAILED,
         {
-          params: API_CT_ACCOUNT_IN_MARKET,
-          params2: { pageNumb: isLoadMore ? ctInMarketPageNumb + 1 : 1, pageSize: ctInMarketPageSize },
           meta: { isLoadMore }
         }
       )
@@ -131,60 +130,69 @@ export function getCtAccountInMarket(isLoadMore) {
   }
 }
 
-//全部市场数据
-export function getMarketGlobal() {
-  return (dispatch, getState) =>
-    dispatch(
-      asyncFunction(
-        fetch.post,
-        GET_MARKET_GLOBAL_REQUESTED, GET_MARKET_GLOBAL_SUCCEEDED, GET_MARKET_GLOBAL_FAILED,
-        {
-          params: API_MARKET_GLOBAL,
-        }
-      )
-    )
+export function toggleSavedMarket(market) {
+  return market.following ? delSavedMarket(market) : addSavedMarket(market)
+}
+
+export function addSavedMarket(market) {
+  return dispatch => {
+    dispatch({
+      type: MARKET_ADD_SAVED_MARKET,
+      payload: market
+    })
+    return dispatch(addCollect('market', market.id))
+  }
+}
+export function delSavedMarket(market) {
+  return dispatch => {
+    dispatch({
+      type: MARKET_DEL_SAVED_MARKET,
+      payload: market
+    })
+    return dispatch(delCollect('market', market.id))
+  }
 }
 
 // TODO: refactor
 //收藏
-export function collectMarket(record) {
-  const requestParams = {
-    type: 'market',
-    objectMark: record.id,
-  }
-  if (!record.following) {
-    //收藏
-    return async (dispatch, getState) => {
-      let [error] = await dispatch(asyncFunction(
-        fetch.post,
-        USER_COLLECT_ADD_REQUESTED, USER_COLLECT_ADD_SUCCEEDED, USER_COLLECT_ADD_FAILED,
-        {
-          params: API_USER_COLLECT_ADD,
-          params2: requestParams,
-          responsePayload: reps => record
-        }
-      )
-      )
-      if (!error) {
-        dispatch(getUserCollectLists())
-      }
-    }
-  } else {
-    //取消收藏
-    return async (dispatch, getState) => {
-      let [error] = await dispatch(asyncFunction(
-        fetch.post,
-        USER_COLLECT_DEL_REQUESTED, USER_COLLECT_DEL_SUCCEEDED, USER_COLLECT_DEL_FAILED,
-        {
-          params: API_USER_COLLECT_DEL,
-          params2: requestParams,
-          responsePayload: reps => record
-        }
-      )
-      )
-      if (!error) {
-        dispatch(getUserCollectLists())
-      }
-    }
-  }
-}
+// export function collectMarket(record) {
+//   const requestParams = {
+//     type: 'market',
+//     objectMark: record.id,
+//   }
+//   if (!record.following) {
+//     //收藏
+//     return async (dispatch, getState) => {
+//       let [error] = await dispatch(asyncFunction(
+//         fetch.post,
+//         USER_COLLECT_ADD_REQUESTED, USER_COLLECT_ADD_SUCCEEDED, USER_COLLECT_ADD_FAILED,
+//         {
+//           params: API_USER_COLLECT_ADD,
+//           params2: requestParams,
+//           responsePayload: reps => record
+//         }
+//       )
+//       )
+//       if (!error) {
+//         // dispatch(getBookmarkMarketList())
+//       }
+//     }
+//   } else {
+//     //取消收藏
+//     return async (dispatch, getState) => {
+//       let [error] = await dispatch(asyncFunction(
+//         fetch.post,
+//         USER_COLLECT_DEL_REQUESTED, USER_COLLECT_DEL_SUCCEEDED, USER_COLLECT_DEL_FAILED,
+//         {
+//           params: API_USER_COLLECT_DEL,
+//           params2: requestParams,
+//           responsePayload: reps => record
+//         }
+//       )
+//       )
+//       if (!error) {
+//         // dispatch(getBookmarkMarketList())
+//       }
+//     }
+//   }
+// }

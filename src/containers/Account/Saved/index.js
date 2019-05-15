@@ -13,9 +13,9 @@ import { connect } from 'react-redux'
 import { getCollectedPosts, getCollectedReplys, getCollectedMarkets, reset } from '../../../actions/personalCenter'
 
 function Index({
-  collectedPosts, gettingCollectedPosts, collectedPostsError, collectedPostsHasNextPage,
-  collectedMarkets, gettingCollectedMarmkets, collectedMarketsError, collectedMarketsHasNextPage,
-  collectedReplys, gettingCollectedReplys, collectedReplysError, collectedReplysHasNextPage,
+  collectedPost: { posts: collectedPosts, getting: gettingCollectedPosts, error: collectedPostsError, hasNextPage: collectedPostsHasNextPage, },
+  collectedMarket: { markets: collectedMarkets, getting: gettingCollectedMarmkets, error: collectedMarketsError, hasNextPage: collectedMarketsHasNextPage, },
+  collectedReply: { replys: collectedReplys, getting: gettingCollectedReplys, error: collectedReplysError, hasNextPage: collectedReplysHasNextPage, },
   getCollectedPosts, getCollectedReplys, getCollectedMarkets, reset
 }) {
   useEffect(() => {
@@ -38,9 +38,11 @@ function Index({
         error={collectedMarketsError}
         loading={gettingCollectedMarmkets}
         body={
-          <MarketTable markets={collectedMarkets} hasMore={collectedMarketsHasNextPage} loadMore={getCollectedMarkets} isLoading={gettingCollectedMarmkets} />
+          <>
+            <MarketTable markets={collectedMarkets} hasMore={collectedMarketsHasNextPage} loadMore={getCollectedMarkets} isLoading={gettingCollectedMarmkets} />
+            <Hr />
+          </>
         } />
-      {expandMarket && <Hr />}
       <Panel
         expandedDark
         expanded={expandPost}
@@ -74,20 +76,9 @@ function Index({
 }
 
 const mapStateToProps = state => ({
-  collectedReplys: state.personalCenterPost.collectedReplys,
-  gettingCollectedReplys: state.personalCenterPost.gettingCollectedReplys,
-  collectedReplysError: state.personalCenterPost.collectedReplysError,
-  collectedReplysHasNextPage: state.personalCenterPost.collectedReplysHasNextPage,
-
-  collectedPosts: state.personalCenterPost.collectedPosts,
-  gettingCollectedPosts: state.personalCenterPost.gettingCollectedPosts,
-  collectedPostsError: state.personalCenterPost.collectedPostsError,
-  collectedPostsHasNextPage: state.personalCenterPost.collectedPostsHasNextPage,
-
-  collectedMarkets: state.personalCenterMarket.collectedMarkets,
-  gettingCollectedMarmkets: state.personalCenterMarket.gettingCollectedMarmkets,
-  collectedMarketsError: state.personalCenterMarket.collectedMarketsError,
-  collectedMarketsHasNextPage: state.personalCenterMarket.collectedMarketsHasNextPage,
+  collectedReply: state.userSavedReply,
+  collectedPost: state.userSavedPost,
+  collectedMarket: state.userSavedMarket,  
 });
 
 const mapDispatchToProps = {

@@ -9,9 +9,9 @@ import { connect } from 'react-redux'
 import { getCreatedMarkets, getTradedMarkets, getCollectedMarkets, reset } from '../../../actions/personalCenter'
 
 function Market({
-  createdMarkets, gettingCreatedMarmkets, createdMarketsError, createdMarketsHasNextPage,
-  tradedMarkets, gettingTradedMarmkets, tradedMarketsError, tradedMarketsHasNextPage,
-  collectedMarkets, gettingCollectedMarmkets, collectedMarketsError, collectedMarketsHasNextPage,
+  createdMarket: { markets: createdMarkets, getting: gettingCreatedMarmkets, error: createdMarketsError, hasNextPage: createdMarketsHasNextPage }, 
+  tradedMarket: { markets: tradedMarkets, getting: gettingTradedMarmkets, error: tradedMarketsError, hasNextPage: tradedMarketsHasNextPage }, 
+  collectedMarket: { markets: collectedMarkets, getting: gettingCollectedMarmkets, error: collectedMarketsError, hasNextPage: collectedMarketsHasNextPage },   
   getCreatedMarkets, getTradedMarkets, getCollectedMarkets, reset
 }) {
   const [expandCreated, setExpandCreated] = useState(true)
@@ -58,20 +58,9 @@ function Market({
 }
 
 const mapStateToProps = state => ({
-  createdMarkets: state.personalCenterMarket.createdMarkets,
-  gettingCreatedMarmkets: state.personalCenterMarket.gettingCreatedMarmkets,
-  createdMarketsError: state.personalCenterMarket.createdMarketsError,
-  createdMarketsHasNextPage: state.personalCenterMarket.createdMarketsHasNextPage,
-
-  tradedMarkets: state.personalCenterMarket.tradedMarkets,
-  gettingTradedMarmkets: state.personalCenterMarket.gettingTradedMarmkets,
-  tradedMarketsError: state.personalCenterMarket.tradedMarketsError,
-  tradedMarketsHasNextPage: state.personalCenterMarket.tradedMarketsHasNextPage,
-
-  collectedMarkets: state.personalCenterMarket.collectedMarkets,
-  gettingCollectedMarmkets: state.personalCenterMarket.gettingCollectedMarmkets,
-  collectedMarketsError: state.personalCenterMarket.collectedMarketsError,
-  collectedMarketsHasNextPage: state.personalCenterMarket.collectedMarketsHasNextPage,
+  createdMarket: state.userCreatedMarket,
+  tradedMarket: state.userTradedMarket,
+  collectedMarket: state.userSavedMarket,
 });
 
 const mapDispatchToProps = {

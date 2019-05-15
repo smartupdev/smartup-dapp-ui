@@ -1,27 +1,12 @@
-// Create a class helper
-// export function to(state, updateObj) {
-//   return {
-//     ...state,
-//     ...updateObj
-//   }
-// }
-
-export function updateLoadMore(currentDatas, newDatas, isloadMore, key = 'id') {
-  return isloadMore ? 
-  newDatas.reduce((currentArray, newRecord) => {
-    // check if the record already exists. If yes, update thd old one. If no, append to the end.
-    const existIndex = currentArray.findIndex(a => a[key] === newRecord[key])  
-    return existIndex < 0 ? [...currentArray, newRecord] : changeArrayByIndex(currentArray, existIndex, () => newRecord)
-  }, currentDatas)
-  : newDatas
+function modifier(r) {
+  return r
 }
-
-export function changeArrayById(array, id, modifier, key = 'id') {
+export function changeArrayById(array, id, modifier = modifier, key = 'id') {
   const index = array.findIndex(e => e[key] === id)
   return changeArrayByIndex(array, index, r => ({...r, ...modifier(r)}))
 }
 
-export function changeArrayByIndex(array, index, modifier = r => r) {
+export function changeArrayByIndex(array, index, modifier = modifier) {
   if(typeof index !== 'number') return new Error('[changeArrayByIndex] index must be number')
   if(index < 0 || array.length < index + 1) return array
   return [
@@ -29,4 +14,11 @@ export function changeArrayByIndex(array, index, modifier = r => r) {
     modifier(array[index]),
     ...array.slice(index + 1)
   ]
+}
+
+export function addArrayById(array, id, ele, key) {
+  return [ ele, ...removeArrayById(array, id, key) ]
+}
+export function removeArrayById(array, id, key = 'id') {
+  return array.filter(a => a[key] !== id)
 }

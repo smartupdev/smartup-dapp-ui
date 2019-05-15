@@ -29,7 +29,15 @@ const STAGE = {
   fail: 'fail',
 }
  
-function Transaction({ getUserTransactionList, transactions, gettingTrancation, transHasNextPage, trancationError, reset }) {
+function Transaction({ 
+  getUserTransactionList, reset, 
+  userTransaction: {
+    transactions,
+    getting,
+    error,
+    hasNextPage,
+  } 
+}) {
   useEffect(() => {
     getUserTransactionList()
     return reset
@@ -37,7 +45,7 @@ function Transaction({ getUserTransactionList, transactions, gettingTrancation, 
   const [expands, setExpands] = useState([])
   return (
     <>
-      {trancationError && <Text TopS center error>{trancationError.message}</Text>}
+      {error && <Text TopS center error>{error.message}</Text>}
       {transactions.map( ({ 
         txHash, type, detail: {ct, sut}, marketName, marketAddress, createTime, stage, blockTime
       }, index) => {
@@ -80,16 +88,13 @@ function Transaction({ getUserTransactionList, transactions, gettingTrancation, 
           </Col>
         )
       })}
-      <ScrollLoader isButton loadMore={getUserTransactionList} hasMore={transHasNextPage} isLoading={gettingTrancation} />
+      <ScrollLoader isButton loadMore={getUserTransactionList} hasMore={hasNextPage} isLoading={getting} />
     </>    
   )
 }
 
 const mapStateToProps = state => ({
-  transactions: state.personalCenterMarket.transactions,
-  gettingTrancation: state.personalCenterMarket.gettingTrancation,
-  transHasNextPage: state.personalCenterMarket.transHasNextPage,
-  trancationError: state.personalCenterMarket.trancationError
+  userTransaction: state.userTransaction,
 });
 
 const mapDispatchToProps = {

@@ -3,29 +3,31 @@ import React from 'react'
 import { Col } from '../../components/Layout'
 import Tab from '../../components/Tab'
 import Text from '../../components/Text'
-// import Hr from '../../components/Hr'
 
-import routes, { Link } from '../../routes'
+import { withUser } from './connectUser'
 
+import { Link, accountRoutes, getPath, AccountRoutes } from '../../routes'
 
-export default () => {
-  const TABS = routes
-    .filter(r => r.path.includes('/account/'))
-    .map(r => ({
-      label: r.label,
-      value: r.id,
-      path: r.path
-    }))
-  const activeIndex = TABS.findIndex(t => window.location.hash.includes(t.path))
+function Index({ loggedIn }) {
+  const currentPath = getPath()
+  let activeIndex = accountRoutes.findIndex(t => t.path === currentPath)
+  if(activeIndex < 0) activeIndex = 0
   return (
     <Col>
       <Text center VS L>PERSONAL CENTER</Text>
       <Link>
         {
           ({ goto }) => 
-            <Tab tabs={TABS} activeIndex={activeIndex} width='100px' onClick={(i, value) => goto[value]()} />
+            <Tab tabs={accountRoutes} activeIndex={activeIndex} width='100px' onClick={(i, value) => goto[value]()} />
         }
       </Link>
+      {
+        loggedIn ?
+          <AccountRoutes />
+        : <Text VS center note>You have to connect to Metamask.</Text>
+      }
     </Col>
   )
 }
+
+export default withUser(Index)
