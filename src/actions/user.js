@@ -116,10 +116,11 @@ export function getAllBalance() {
       => getAllBalance
       => NO loginSmartUp
       => getUserInfo
-  watchMetamask [if account change]
-    => Clear token
-    => Update account
-    => Reset
+      => watchMetamask
+        watchMetamask [if account change]
+          => Clear token
+          => Update account
+          => Reset
 */
 export function loginMetaMask(skipLogin) {
   return async (dispatch) => {

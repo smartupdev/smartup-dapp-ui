@@ -26,10 +26,9 @@ export function ReplyBody({ replys, loadMore, hasMore, isLoading }) {
   )
 }
 function Index({
-  collectedReplys, gettingCollectedReplys, collectedReplysError,
-  createdReplys, gettingCreatedReplys, createdReplysError,
+  createdReply: { replys: createdReplys, getting: gettingCreatedReplys, error: createdReplysError, hasNextPage: createdReplysHasNextPage },
+  collectedReply: { replys: collectedReplys, getting: gettingCollectedReplys, error: collectedReplysError, hasNextPage: collectedReplysHasNextPage },
   getCollectedReplys, getCreatedReplys, reset,
-  createdReplysHasNextPage, collectedReplysHasNextPage
 }) {
   const [expandCreated, setExpandCreated] = useState(true)
   const [expandSaved, setExpandSaved] = useState(false)
@@ -64,14 +63,8 @@ function Index({
 } 
 
 const mapStateToProps = state => ({
-  createdReplys: state.personalCenterPost.createdReplys,
-  gettingCreatedReplys: state.personalCenterPost.gettingCreatedReplys,
-  createdReplysError: state.personalCenterPost.createdReplysError,
-  createdReplysHasNextPage: state.personalCenterPost.createdReplysHasNextPage,
-  collectedReplys: state.personalCenterPost.collectedReplys,
-  gettingCollectedReplys: state.personalCenterPost.gettingCollectedReplys,
-  collectedReplysError: state.personalCenterPost.collectedReplysError,
-  collectedReplysHasNextPage: state.personalCenterPost.collectedReplysHasNextPage,
+  createdReply: state.userCreatedReply,
+  collectedReply: state.userSavedReply,
 });
 
 const mapDispatchToProps = {

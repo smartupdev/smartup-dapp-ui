@@ -1,8 +1,12 @@
 import {
   MARKET_DETAIL_RESET,
   GET_MARKET_LIST_REQUESTED, GET_MARKET_LIST_SUCCEEDED, GET_MARKET_LIST_FAILED,
-  CT_ACCOUNT_IN_MARKET_REQUESTED, CT_ACCOUNT_IN_MARKET_SUCCEEDED, CT_ACCOUNT_IN_MARKET_FAILED,
-  GET_MARKET_GLOBAL_REQUESTED, GET_MARKET_GLOBAL_SUCCEEDED, GET_MARKET_GLOBAL_FAILED,
+
+  MARKET_GET_TRADED_MARKET_WITH_CT_REQUESTED, MARKET_GET_TRADED_MARKET_WITH_CT_SUCCEEDED, MARKET_GET_TRADED_MARKET_WITH_CT_FAILED,
+  USER_MARKET_CREATED_REQUESTED, USER_MARKET_CREATED_SUCCEEDED, USER_MARKET_CREATED_FAIL,
+  USER_MARKET_TRADED_REQUESTED, USER_MARKET_TRADED_SUCCEEDED, USER_MARKET_TRADED_FAIL,
+  USER_MARKET_COLLECTED_REQUESTED, USER_MARKET_COLLECTED_SUCCEEDED, USER_MARKET_COLLECTED_FAIL,
+
   USER_COLLECT_ADD_REQUESTED, USER_COLLECT_ADD_SUCCEEDED, USER_COLLECT_ADD_FAILED,
   USER_COLLECT_DEL_REQUESTED, USER_COLLECT_DEL_SUCCEEDED, USER_COLLECT_DEL_FAILED,
   GET_MARKET_DETAIL_REQUESTED, GET_MARKET_DETAIL_SUCCEEDED, GET_MARKET_DETAIL_FAILED,
@@ -17,7 +21,11 @@ import {
 } from './api'
 import fetch from '../lib/util/fetch'
 import { asyncFunction, callbackFunction, getBalance, getAccount, smartupWeb3, decodeResult } from '../integrator'
-import { getUserCollectLists } from '../actions/collect'
+import { getList as getBookmarkMarketList } from './bookmark'
+
+import { 
+  apiGetTradedMarketCt, 
+} from '../integrator/api'
 
 const topIndexToValueMap = [
   null, 
@@ -109,21 +117,15 @@ export function getList(isLoadMore) {
   }
 }
 
-//CT账户和市场信息
-export function getCtAccountInMarketMore() {
-  return getCtAccountInMarket(true)
-}
-
-export function getCtAccountInMarket(isLoadMore) {
+// DONE
+export function getMarketWallet(isLoadMore) {
   return (dispatch, getState) => {
-    const {ctInMarketPageNumb, ctInMarketPageSize} = getState().market;
+    const { pageSize, pageNumb } = getState().userMarketWallet;
     dispatch(
       asyncFunction(
-        fetch.post,
-        CT_ACCOUNT_IN_MARKET_REQUESTED, CT_ACCOUNT_IN_MARKET_SUCCEEDED, CT_ACCOUNT_IN_MARKET_FAILED,
+        apiGetTradedMarketCt({ pageSize, pageNumb, isLoadMore }),
+        MARKET_GET_TRADED_MARKET_WITH_CT_REQUESTED, MARKET_GET_TRADED_MARKET_WITH_CT_SUCCEEDED, MARKET_GET_TRADED_MARKET_WITH_CT_FAILED,
         {
-          params: API_CT_ACCOUNT_IN_MARKET,
-          params2: { pageNumb: isLoadMore ? ctInMarketPageNumb + 1 : 1, pageSize: ctInMarketPageSize },
           meta: { isLoadMore }
         }
       )
@@ -131,19 +133,6 @@ export function getCtAccountInMarket(isLoadMore) {
   }
 }
 
-//全部市场数据
-export function getMarketGlobal() {
-  return (dispatch, getState) =>
-    dispatch(
-      asyncFunction(
-        fetch.post,
-        GET_MARKET_GLOBAL_REQUESTED, GET_MARKET_GLOBAL_SUCCEEDED, GET_MARKET_GLOBAL_FAILED,
-        {
-          params: API_MARKET_GLOBAL,
-        }
-      )
-    )
-}
 
 // TODO: refactor
 //收藏
@@ -166,7 +155,7 @@ export function collectMarket(record) {
       )
       )
       if (!error) {
-        dispatch(getUserCollectLists())
+        dispatch(getBookmarkMarketList())
       }
     }
   } else {
@@ -183,7 +172,7 @@ export function collectMarket(record) {
       )
       )
       if (!error) {
-        dispatch(getUserCollectLists())
+        dispatch(getBookmarkMarketList())
       }
     }
   }

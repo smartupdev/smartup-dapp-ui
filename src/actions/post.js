@@ -19,7 +19,7 @@ import {
 } from './api';
 import fetch from '../lib/util/fetch';
 import { asyncFunction } from '../integrator'
-import { addCollect, delCollect } from './collect'
+import { addCollect, delCollect } from './bookmark'
 
 export function onChangeKeyword(value) {
   return {

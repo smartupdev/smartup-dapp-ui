@@ -3,8 +3,10 @@ import styled, { css } from 'styled-components'
 
 import { connect } from 'react-redux'
 import { toggleExpandedBookmark, toggleExpandedMarket, toggleExpandedWallet } from '../../actions/panel'
-import { getMarketGlobal, getCtAccountInMarket, getCtAccountInMarketMore, collectMarket } from '../../actions/market'
-import { getUserCollectLists } from '../../actions/collect'
+import { getMarketWallet, collectMarket } from '../../actions/market'
+import { getCollectedMarketsPanel } from '../../actions/personalCenter'
+import { getGlobalMarket } from '../../actions/globalInfo'
+// import { getList } from '../../actions/bookmark'
 
 import Avatar from '../../components/Avatar'
 import Hr from '../../components/Hr'
@@ -64,18 +66,21 @@ const TableName = [
 ]
 
 const Portfolio = ({
-  gettingCollects, collectsHasNextPage,
-  ethBalance, sutBalance, marketGlobal, collects, ctInMarket,ctInMarketHasNextPage, gettingCtInMarket,
+  userSavedMarketPanel,
+  ethBalance, sutBalance, 
   expandedWallet, expandedMarket, expandedBookmark,
   toggleExpandedBookmark, toggleExpandedMarket, toggleExpandedWallet,
-  getMarketGlobal, getUserCollectLists, getCtAccountInMarket, getCtAccountInMarketMore, collectMarket
+  getCollectedMarketsPanel, 
+  userMarketWallet, getMarketWallet, 
+  globalInfo, getGlobalMarket,
+  collectMarket
 }) => {
   useEffect(() => {
-    getMarketGlobal()
-    getUserCollectLists()
-    getCtAccountInMarket()
+    getGlobalMarket()
+    getCollectedMarketsPanel()
+    getMarketWallet()
   }, [])
-  const { sutAmount, marketCount, latelyPostCount } = marketGlobal
+  const { sutAmount, marketCount, latelyPostCount } = globalInfo.globalMarket
   return (
     <Col overflowAuto>
       <Col center>
@@ -94,25 +99,29 @@ const Portfolio = ({
       </Col>
       <Hr />
       <Panel
-        dark={expandedWallet}
+        expandedDark
         expanded={expandedWallet}
         onClick={toggleExpandedWallet}
         header={portfolioText.wallet.title[currentLang]}
+        error={userMarketWallet.error}
+        loading={userMarketWallet.getting}
         body={
           <>
             <Col BottomXS LeftS RightS>
-              <Table S noBorderCol model={TableName} values={ctInMarket} />
-              <ScrollLoader isButton hasMore={ctInMarketHasNextPage} id='market-wallet' isLoading={gettingCtInMarket} loadMore={getCtAccountInMarketMore} />
+              <Table S noBorderCol model={TableName} values={userMarketWallet.markets} />
+              <ScrollLoader isButton hasMore={userMarketWallet.hasNextPage} id='market-wallet' isLoading={userMarketWallet.getting} loadMore={getMarketWallet} />
             </Col>
             <Hr />
           </>
         }
       />
       <Panel
+        expandedDark
         expanded={expandedMarket}
-        dark={expandedMarket}
         onClick={toggleExpandedMarket}
         header={portfolioText.marketInfo.title[currentLang]}
+        error={globalInfo.error}
+        loading={globalInfo.getting}
         body={
           <>
             <Col>
@@ -134,14 +143,16 @@ const Portfolio = ({
         }
       />
       <Panel
+        expandedDark
         expanded={expandedBookmark}
-        dark={expandedBookmark}
         onClick={toggleExpandedBookmark}
         header={portfolioText.bookmark.title[currentLang]}
+        error={userSavedMarketPanel.error}
+        loading={userSavedMarketPanel.getting}
         body={
           <Col>
             {
-              collects.map(({ name, marketId }, index) =>
+              userSavedMarketPanel.markets.map(({ name, marketId }, index) =>
                 <BookmarkBlock spaceBetween centerVertical key={index}>
                   <Link>
                     {({ goto }) =>
@@ -152,7 +163,7 @@ const Portfolio = ({
                 </BookmarkBlock>
               )
             }
-            <ScrollLoader isButton hasMore={collectsHasNextPage} id='bookmarked' isLoading={gettingCollects} loadMore={() => getUserCollectLists(true)} />
+            <ScrollLoader isButton hasMore={userSavedMarketPanel.hasLoadMore} id='bookmarked' isLoading={userSavedMarketPanel.getting} loadMore={getCollectedMarketsPanel} />
           </Col>
         }
       />
@@ -161,23 +172,22 @@ const Portfolio = ({
 }
 
 const mapStateToProps = state => ({
+  userMarketWallet: state.userMarketWallet,
+  globalInfo: state.globalInfo,
+  userSavedMarketPanel: state.userSavedMarketPanel,
+
   ethBalance: state.user.ethBalance,
   sutBalance: state.user.sutBalance,
+
   expandedWallet: state.panel.expandedWallet,
   expandedMarket: state.panel.expandedMarket,
   expandedBookmark: state.panel.expandedBookmark,
-  marketGlobal: state.market.marketGlobal,
-  collects: state.collect.collects,
-  gettingCollects: state.collect.gettingCollects,
-  collectsHasNextPage: state.collect.hasNextPage,
-  ctInMarket: state.market.ctInMarket,
-  ctInMarketHasNextPage:state.market.ctInMarketHasNextPage,
-  gettingCtInMarket:state.market.gettingCtInMarket,
 });
 
 const mapDispatchToProps = {
   toggleExpandedBookmark, toggleExpandedMarket, toggleExpandedWallet,
-  getMarketGlobal, getUserCollectLists, getCtAccountInMarket, getCtAccountInMarketMore,
+  getGlobalMarket, 
+  getCollectedMarketsPanel, getMarketWallet,
   collectMarket,
 }
 

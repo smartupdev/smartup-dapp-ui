@@ -11,10 +11,9 @@ import { connect } from 'react-redux'
 import { getCollectedPosts, getCreatedPosts, reset } from '../../../actions/personalCenter'
 
 function Index({ 
-  createdPosts, collectedPosts, 
+  createdPost: {posts: createdPosts, getting: gettingCreatedPosts, error: createdPostsError, hasNextPage: createdPostsHasNextPage},
+  collectedPost: {posts: collectedPosts, getting: gettingCollectedPosts, error: collectedPostsError, hasNextPage: collectedPostsHasNextPage},
   reset, getCollectedPosts, getCreatedPosts,
-  gettingCreatedPosts, createdPostsError, createdPostsHasNextPage,
-  gettingCollectedPosts, collectedPostsError, collectedPostsHasNextPage,
  }) {
   const [expandCreated, setExpandCreated] = useState(true)
   const [expandSaved, setExpandSaved] = useState(false)
@@ -68,14 +67,8 @@ function Index({
 } 
 
 const mapStateToProps = state => ({
-  createdPosts: state.personalCenterPost.createdPosts,
-  collectedPosts: state.personalCenterPost.collectedPosts,
-  gettingCreatedPosts: state.personalCenterPost.gettingCreatedPosts,
-  createdPostsHasNextPage: state.personalCenterPost.createdPostsHasNextPage,
-  createdPostsError: state.personalCenterPost.createdPostsError,
-  gettingCollectedPosts: state.personalCenterPost.gettingCollectedPosts,
-  collectedPostsError: state.personalCenterPost.collectedPostsError,
-  collectedPostsHasNextPage: state.personalCenterPost.collectedPostsHasNextPage,
+  createdPost: state.userCreatedPost,
+  collectedPost: state.userSavedPost,
 });
 
 const mapDispatchToProps = {

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 
-import { Link, getUrlParams, routeMap, getPath } from '../../routes'
+import { Link, getUrlParams, routeMap, getPath, MarketRoutes } from '../../routes'
 
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
@@ -110,6 +110,7 @@ const Market = ({ get, collectMarket, getting, location, market, getMarketPost, 
           <Hr />
         </Col>
       </Row>
+      <MarketRoutes />
     </Col>
   )
 }

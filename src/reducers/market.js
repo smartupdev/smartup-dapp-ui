@@ -1,8 +1,6 @@
 import {
   MARKET_DETAIL_RESET,
   CREATE_MARKET_PAY_REQUESTED, CREATE_MARKET_PAY_SUCCEEDED, CREATE_MARKET_PAY_FAILED,
-  CT_ACCOUNT_IN_MARKET_REQUESTED, CT_ACCOUNT_IN_MARKET_SUCCEEDED, CT_ACCOUNT_IN_MARKET_FAILED,
-  GET_MARKET_GLOBAL_REQUESTED, GET_MARKET_GLOBAL_SUCCEEDED, GET_MARKET_GLOBAL_FAILED,
   USER_COLLECT_ADD_REQUESTED, USER_COLLECT_ADD_SUCCEEDED, USER_COLLECT_ADD_FAILED,
   USER_COLLECT_DEL_REQUESTED, USER_COLLECT_DEL_SUCCEEDED, USER_COLLECT_DEL_FAILED,
   // TRADE_SUCCEEDED,
@@ -11,7 +9,7 @@ import {
 } from '../actions/actionTypes';
 
 import { changeArrayById } from '../lib/util/reducerHelper'
-import { marketMassage, updateLoadMore } from '../integrator/massager'
+import { marketMassage } from '../integrator/massager'
 
 export const initialState = {
 
@@ -28,17 +26,6 @@ export const initialState = {
   pageSize: 10,
   pageNumb: 1,
   hasNextPage: true,
-
-  ctInMarket: [],
-  gettingCtInMarket: false,
-  ctInMarketError: null,
-  ctInMarketPageSize: 10,
-  ctInMarketPageNumb: 0,
-  ctInMarketHasNextPage: true,
-
-  marketGlobal: {},
-  gettingMarketGlobal: false,
-  marketGlobalError: null,
 
   addingCollect: false,
   addCollectError: null,
@@ -127,48 +114,6 @@ export default (state = initialState, action) => {
         ...state,
         creatingMarket: false,
         createMarketError: action.payload,
-      };
-
-    case CT_ACCOUNT_IN_MARKET_REQUESTED:
-      return {
-        ...state,
-        gettingCtInMarket: true,
-      };
-    case CT_ACCOUNT_IN_MARKET_SUCCEEDED: {
-      const { list, pageNumb, pageSize, hasNextPage } = action.payload
-      return {
-        ...state,
-        gettingCtInMarket: false,
-        ctInMarketError: initialState.ctInMarketError,
-        ctInMarket: updateLoadMore(state.ctInMarket, list.map(c => ({ ...c, id: c.marketId })), action.meta.isLoadMore),
-        ctInMarketPageNumb: pageNumb,
-        ctInMarketPageSize: pageSize,
-        ctInMarketHasNextPage: hasNextPage,
-      };
-    }
-    case CT_ACCOUNT_IN_MARKET_FAILED:
-      return {
-        ...state,
-        gettingCtInMarket: false,
-        ctInMarketError: action.payload,
-      };
-    case GET_MARKET_GLOBAL_REQUESTED:
-      return {
-        ...state,
-        gettingMarketGlobal: true,
-      };
-    case GET_MARKET_GLOBAL_SUCCEEDED:
-      return {
-        ...state,
-        marketGlobal: action.payload,
-        gettingMarketGlobal: false,
-        marketGlobalError: initialState.marketGlobalError
-      };
-    case GET_MARKET_GLOBAL_FAILED:
-      return {
-        ...state,
-        gettingMarketGlobal: false,
-        marketGlobalError: action.payload,
       };
 
     case USER_COLLECT_ADD_REQUESTED:
