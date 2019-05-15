@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components'
 
 import { connect } from 'react-redux'
 import { toggleExpandedBookmark, toggleExpandedMarket, toggleExpandedWallet } from '../../actions/panel'
-import { getMarketWallet, collectMarket } from '../../actions/market'
+import { getMarketWallet, delSavedMarket } from '../../actions/market'
 import { getCollectedMarketsPanel } from '../../actions/personalCenter'
 import { getGlobalMarket } from '../../actions/globalInfo'
 // import { getList } from '../../actions/bookmark'
@@ -73,7 +73,7 @@ const Portfolio = ({
   getCollectedMarketsPanel, 
   userMarketWallet, getMarketWallet, 
   globalInfo, getGlobalMarket,
-  collectMarket
+  delSavedMarket
 }) => {
   useEffect(() => {
     getGlobalMarket()
@@ -159,7 +159,7 @@ const Portfolio = ({
                       <Text S onClick={() => goto.trading({ id: marketId })}>{name}</Text>
                     }
                   </Link>
-                  <Close XS onClick={() => collectMarket({ id: marketId, following: true })} />
+                  <Close XS onClick={() => delSavedMarket({id: marketId})} />
                 </BookmarkBlock>
               )
             }
@@ -188,7 +188,7 @@ const mapDispatchToProps = {
   toggleExpandedBookmark, toggleExpandedMarket, toggleExpandedWallet,
   getGlobalMarket, 
   getCollectedMarketsPanel, getMarketWallet,
-  collectMarket,
+  delSavedMarket,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Portfolio);

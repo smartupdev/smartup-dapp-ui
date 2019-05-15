@@ -3,12 +3,9 @@ import {
   GET_MARKET_LIST_REQUESTED, GET_MARKET_LIST_SUCCEEDED, GET_MARKET_LIST_FAILED,
 
   MARKET_GET_TRADED_MARKET_WITH_CT_REQUESTED, MARKET_GET_TRADED_MARKET_WITH_CT_SUCCEEDED, MARKET_GET_TRADED_MARKET_WITH_CT_FAILED,
-  USER_MARKET_CREATED_REQUESTED, USER_MARKET_CREATED_SUCCEEDED, USER_MARKET_CREATED_FAIL,
-  USER_MARKET_TRADED_REQUESTED, USER_MARKET_TRADED_SUCCEEDED, USER_MARKET_TRADED_FAIL,
-  USER_MARKET_COLLECTED_REQUESTED, USER_MARKET_COLLECTED_SUCCEEDED, USER_MARKET_COLLECTED_FAIL,
 
-  USER_COLLECT_ADD_REQUESTED, USER_COLLECT_ADD_SUCCEEDED, USER_COLLECT_ADD_FAILED,
-  USER_COLLECT_DEL_REQUESTED, USER_COLLECT_DEL_SUCCEEDED, USER_COLLECT_DEL_FAILED,
+  MARKET_ADD_SAVED_MARKET, MARKET_DEL_SAVED_MARKET,
+
   GET_MARKET_DETAIL_REQUESTED, GET_MARKET_DETAIL_SUCCEEDED, GET_MARKET_DETAIL_FAILED,
   MARKET_DETAIL_GET_CT_REQUESTED, MARKET_DETAIL_GET_CT_SUCCEEDED, MARKET_DETAIL_GET_CT_FAILED,
   // MARKET_SEARCH_REQUESTED, MARKET_SEARCH_SUCCEEDED, MARKET_SEARCH_FAILED,
@@ -21,7 +18,7 @@ import {
 } from './api'
 import fetch from '../lib/util/fetch'
 import { asyncFunction, callbackFunction, getBalance, getAccount, smartupWeb3, decodeResult } from '../integrator'
-import { getList as getBookmarkMarketList } from './bookmark'
+import { addCollect, delCollect } from './bookmark'
 
 import { 
   apiGetTradedMarketCt, 
@@ -133,47 +130,69 @@ export function getMarketWallet(isLoadMore) {
   }
 }
 
+export function toggleSavedMarket(market) {
+  return market.following ? delSavedMarket(market) : addSavedMarket(market)
+}
+
+export function addSavedMarket(market) {
+  return dispatch => {
+    dispatch({
+      type: MARKET_ADD_SAVED_MARKET,
+      payload: market
+    })
+    return dispatch(addCollect('market', market.id))
+  }
+}
+export function delSavedMarket(market) {
+  return dispatch => {
+    dispatch({
+      type: MARKET_DEL_SAVED_MARKET,
+      payload: market
+    })
+    return dispatch(delCollect('market', market.id))
+  }
+}
 
 // TODO: refactor
 //收藏
-export function collectMarket(record) {
-  const requestParams = {
-    type: 'market',
-    objectMark: record.id,
-  }
-  if (!record.following) {
-    //收藏
-    return async (dispatch, getState) => {
-      let [error] = await dispatch(asyncFunction(
-        fetch.post,
-        USER_COLLECT_ADD_REQUESTED, USER_COLLECT_ADD_SUCCEEDED, USER_COLLECT_ADD_FAILED,
-        {
-          params: API_USER_COLLECT_ADD,
-          params2: requestParams,
-          responsePayload: reps => record
-        }
-      )
-      )
-      if (!error) {
-        dispatch(getBookmarkMarketList())
-      }
-    }
-  } else {
-    //取消收藏
-    return async (dispatch, getState) => {
-      let [error] = await dispatch(asyncFunction(
-        fetch.post,
-        USER_COLLECT_DEL_REQUESTED, USER_COLLECT_DEL_SUCCEEDED, USER_COLLECT_DEL_FAILED,
-        {
-          params: API_USER_COLLECT_DEL,
-          params2: requestParams,
-          responsePayload: reps => record
-        }
-      )
-      )
-      if (!error) {
-        dispatch(getBookmarkMarketList())
-      }
-    }
-  }
-}
+// export function collectMarket(record) {
+//   const requestParams = {
+//     type: 'market',
+//     objectMark: record.id,
+//   }
+//   if (!record.following) {
+//     //收藏
+//     return async (dispatch, getState) => {
+//       let [error] = await dispatch(asyncFunction(
+//         fetch.post,
+//         USER_COLLECT_ADD_REQUESTED, USER_COLLECT_ADD_SUCCEEDED, USER_COLLECT_ADD_FAILED,
+//         {
+//           params: API_USER_COLLECT_ADD,
+//           params2: requestParams,
+//           responsePayload: reps => record
+//         }
+//       )
+//       )
+//       if (!error) {
+//         // dispatch(getBookmarkMarketList())
+//       }
+//     }
+//   } else {
+//     //取消收藏
+//     return async (dispatch, getState) => {
+//       let [error] = await dispatch(asyncFunction(
+//         fetch.post,
+//         USER_COLLECT_DEL_REQUESTED, USER_COLLECT_DEL_SUCCEEDED, USER_COLLECT_DEL_FAILED,
+//         {
+//           params: API_USER_COLLECT_DEL,
+//           params2: requestParams,
+//           responsePayload: reps => record
+//         }
+//       )
+//       )
+//       if (!error) {
+//         // dispatch(getBookmarkMarketList())
+//       }
+//     }
+//   }
+// }

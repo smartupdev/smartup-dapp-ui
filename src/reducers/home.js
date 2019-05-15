@@ -3,7 +3,7 @@ import {
   // HOME_PAGE_LOADED, 
   SET_EXPANDED_RECORDS, SET_ACTIVE_TAB, HOME_SET_SORTING, SEARCH_CONTENT_CHANGE,
 
-  USER_COLLECT_ADD_SUCCEEDED, USER_COLLECT_DEL_SUCCEEDED,
+  MARKET_ADD_SAVED_MARKET, MARKET_DEL_SAVED_MARKET,
 
   GET_MARKET_LIST_REQUESTED, GET_MARKET_LIST_SUCCEEDED, GET_MARKET_LIST_FAILED,
   // MARKET_SEARCH_REQUESTED, MARKET_SEARCH_SUCCEEDED, MARKET_SEARCH_FAILED,
@@ -38,12 +38,12 @@ export default (state = initialState, action) => {
     //     ...state,
     //     tags: action.payload[0].tags
     //   }
-    case USER_COLLECT_ADD_SUCCEEDED: 
+    case MARKET_ADD_SAVED_MARKET: 
       return {
         ...state,
         markets: changeArrayById(state.markets, action.payload.id, () => ({ following: true }))
       }
-    case USER_COLLECT_DEL_SUCCEEDED: 
+    case MARKET_DEL_SAVED_MARKET: 
       return {
         ...state,
         markets: changeArrayById(state.markets, action.payload.id, () => ({ following: false }))

@@ -4,7 +4,7 @@ import { Link, getUrlParams, routeMap, getPath, MarketRoutes } from '../../route
 
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
-import { get, collectMarket, resetDetail } from '../../actions/market'
+import { get, toggleSavedMarket, resetDetail } from '../../actions/market'
 import { onChangeKeyword, getMarketPost } from '../../actions/post'
 
 import theme from '../../theme'
@@ -32,7 +32,7 @@ const TABS = [
   { label: lang.marketTab.flag[currentLang], value: 'flag' },
 ]
 
-const Market = ({ get, collectMarket, getting, location, market, getMarketPost, onChangeKeyword, postKeyword, resetDetail }) => {
+const Market = ({ get, toggleSavedMarket, getting, location, market, getMarketPost, onChangeKeyword, postKeyword, resetDetail }) => {
   const id = getUrlParams().id
   useEffect(() => {
     get(id)
@@ -80,7 +80,7 @@ const Market = ({ get, collectMarket, getting, location, market, getMarketPost, 
             }
           </ToastConsumer>
 
-          <Bookmarked S MarginLeftS onClick={() => collectMarket(market)} checked={market.following} />
+          <Bookmarked S MarginLeftS onClick={() => toggleSavedMarket(market)} checked={market.following} />
         </Row>
       </Row>
       <Row relative>
@@ -122,7 +122,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  get, collectMarket, onChangeKeyword, getMarketPost, resetDetail
+  get, toggleSavedMarket, onChangeKeyword, getMarketPost, resetDetail
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Market))
