@@ -1,4 +1,3 @@
-import theme from './reducers/theme';
 import user from './reducers/user';
 import home from './reducers/home';
 import market from './reducers/market';
@@ -23,7 +22,6 @@ import userCreatedReply from './reducers/userCreatedReply'
 import userSavedReply from './reducers/userSavedReply'
 
 import { combineReducers } from 'redux';
-import { routerReducer } from 'react-router-redux';
 
 export default combineReducers({
     globalInfo,
@@ -38,7 +36,6 @@ export default combineReducers({
     userCreatedReply,
     userSavedReply,
 
-    theme,
     user,
     home,
     market,
@@ -49,5 +46,4 @@ export default combineReducers({
     createMarket,
     trade,
     panel,
-    router: routerReducer
 });
