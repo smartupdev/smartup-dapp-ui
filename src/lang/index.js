@@ -10,7 +10,7 @@ const main = {
   dispute: {
     notReady: name('Dispute function is under development, coming soon in later 2019!', 'XXX'),
   },
-  result: name('RESULTS', '結果', '结果'),
+  result: name('RESULTS', '個搜尋結果', '个搜寻结果'),
   search: name('Search', '搜尋', '搜寻'),
   trade: name('Trade', '交易', '交易'),
   loadMore: name('Load More', '更多'),

@@ -6,7 +6,7 @@ import Text from '../../components/Text'
 import ScrollLoader from '../../components/ScrollLoader'
 import { Row, Col } from '../../components/Layout'
 import Search from '../../components/Search'
-import lang, { currentLang } from '../../lang'
+// import lang, { currentLang } from '../../lang'
 import theme from '../../theme'
 import { useLang } from '../../language'
 import { connect } from 'react-redux'
@@ -18,13 +18,6 @@ const Top = styled(Row)`
   background-color: ${p => p.theme.bgColorLight}
 `
 
-const FILTERS = [
-  { label: lang.home.tab.all[currentLang], value: null },
-  { label: lang.home.tab.hot[currentLang], value: 'hottest' },
-  { label: lang.home.tab.new[currentLang], value: 'newest' },
-  { label: lang.home.tab.pop[currentLang], value: 'populous' },
-  { label: lang.home.tab.rich[currentLang], value: 'richest' },
-]
 
 const Home = ({ 
   markets, 
@@ -51,6 +44,13 @@ const Home = ({
 
   const filteredMarket = markets.filter(m => activeTabIndex ? m.name.toLowerCase().includes(searchContent.toLowerCase()) : true )
   const [lang] = useLang()
+  const FILTERS = [
+    { label: lang.home.tab.all, value: null },
+    { label: lang.home.tab.hot, value: 'hottest' },
+    { label: lang.home.tab.new, value: 'newest' },
+    { label: lang.home.tab.pop, value: 'populous' },
+    { label: lang.home.tab.rich, value: 'richest' },
+  ]
   return (
     <Col>
       <Top flex={1} spaceBetween relative>
