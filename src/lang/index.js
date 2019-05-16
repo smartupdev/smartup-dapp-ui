@@ -65,16 +65,19 @@ const main = {
         checkMetamash: name('Please check Metamask.', '請檢查MetaMask。', '请检查MetaMask。')
       },
     },
+    
+    setting: {
+      avatar: name('Avatar photo', '個人圖片', '个人图片'),
+      dragFile: name('Drag file here', '拖放圖片至此', '拖放图片至此'),
+      changeFile: name('Change file to upload', '上載更改圖片', '上载更改图片'),
+      userName: name('User Name', '用戶名稱', '用户名称'),
+      languages: name('Languages', '語言','语言'),
+      submit: name('Submit', '提交'),
+      cancel: name('Cancel', '取消'),
+      deactivate: name('Deactivate account', '停用帳戶', '停用帐户')
+    },
+    
     connectButton: name('Connect', '連接', '连接'),
-  },
-
-  setting: {
-    avatar: name('Avatar photo', '個人圖片', '个人图片'),
-    dragFile: name('Drag file here', '拖放圖片至此', '拖放图片至此'),
-    changeFile: name('Change file to upload', '上載更改圖片', '上载更改图片'),
-    submit: name('Submit', '提交'),
-    cancel: name('Cancel', '取消'),
-    deactivate: name('Deactivate account', '停用帳戶', '停用帐户')
   },
 
   
