@@ -71,8 +71,11 @@ const main = {
       dragFile: name('Drag file here', '拖放圖片至此', '拖放图片至此'),
       changeFile: name('Change file to upload', '上載更改圖片', '上载更改图片'),
       userName: name('User Name', '用戶名稱', '用户名称'),
+      nameReq: name('Capital sensitive, 6-15 characters.', '區分大小寫，6-15字符。', '区分大小写，6-15字符。'),
+      nameLock: name('Username is confirmed and locked.', '用戶名稱已更改並鎖定。', '用户名称已更改并锁定。'),
       languages: name('Languages', '語言','语言'),
       submit: name('Submit', '提交'),
+      confirm: name('Confirm', '確定', '确定'),
       cancel: name('Cancel', '取消'),
       deactivate: name('Deactivate account', '停用帳戶', '停用帐户')
     },
