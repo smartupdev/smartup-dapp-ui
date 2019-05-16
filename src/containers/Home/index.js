@@ -8,6 +8,7 @@ import { Row, Col } from '../../components/Layout'
 import Search from '../../components/Search'
 import lang, { currentLang } from '../../lang'
 import theme from '../../theme'
+import { useLang } from '../../language'
 import { connect } from 'react-redux'
 import { reset, setExpandedRecords, setActiveTab, onTableHeaderClick, onSearchChange } from '../../actions/home'
 import { getList } from '../../actions/market'
@@ -49,12 +50,13 @@ const Home = ({
   }, [])
 
   const filteredMarket = markets.filter(m => activeTabIndex ? m.name.toLowerCase().includes(searchContent.toLowerCase()) : true )
+  const [lang] = useLang()
   return (
     <Col>
       <Top flex={1} spaceBetween relative>
         <Tab activeIndex={activeTabIndex} tabs={FILTERS} onClick={setActiveTab} type='simple' />
         <Row centerVertical>
-          <Text HS S note>{activeTabIndex ? filteredMarket.length : totalResults} RESULTS</Text>
+          <Text HS S note>{activeTabIndex ? filteredMarket.length : totalResults} {lang.result}</Text>
           <Search backgroundColor={theme.bgColorLight} id='home' value={searchContent} onChange={onSearchChange} onSearch={() => getList()} />
         </Row>
       </Top>

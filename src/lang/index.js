@@ -191,8 +191,8 @@ function f(o, keys = []) {
   }
 }
 f(main)
-export { en, tc, sc }
+export const languages = { en, tc, sc }
 export const currentLang = 'en' // TODO
-export const initialLang = sc
+export const initialLang = 'en'
 
 export default main

@@ -9,5 +9,6 @@ export default styled.div`
     margin-right: ${p.theme.spacingM};
     width: calc( 100% - ${p.theme.spacingM} * 2 );
   `}
-  background-color: ${p => p.theme.borderColor}
+  background-color: ${p => p.theme.borderColor};
+  ${p => p.primary && css`background-color: ${p.theme.colorPrimary}`};
 `
