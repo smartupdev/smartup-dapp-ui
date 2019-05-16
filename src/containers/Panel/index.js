@@ -13,7 +13,8 @@ import Setting from './Setting'
 import theme from '../../theme'
 import { Col, Row } from '../../components/Layout'
 
-import lang, { currentLang } from '../../lang'
+// import lang, { currentLang } from '../../lang'
+import { useLang } from '../../language'
 import { shorten } from '../../lib/util'
 
 import { connect } from 'react-redux'
@@ -24,11 +25,12 @@ import { watch as watchNotification } from '../../actions/notification'
 
 const PANEL_WIDTH = 300
 
-function getTabs(unreadCount) {
+function getTabs(unreadCount){
+  const [lang] = useLang() 
   return [
-    { label: lang.panel.tab.portfolio[currentLang], component: Portfolio },
-    { label: lang.panel.tab.notification[currentLang], dot: !!unreadCount, component: Notification },
-    { label: lang.panel.tab.setting[currentLang], component: Setting },
+    { label: lang.panel.tab.portfolio, component: Portfolio },
+    { label: lang.panel.tab.notification, dot: !!unreadCount, component: Notification },
+    { label: lang.panel.tab.setting, component: Setting },
   ]
 }
 
@@ -55,6 +57,7 @@ const Panel = ({
   useEffect(() => {
     watchNotification()
   }, [])
+  const [lang] = useLang()
   return (
     <Col width={`${PANEL_WIDTH}px`} center={!loggedIn} centerVertical={!loggedIn}>
       {loggedIn ?
@@ -74,7 +77,7 @@ const Panel = ({
         :
         <Col center>
           <People XL round color={theme.white} />
-          <Button primary outline verticalMargin label={lang.panel.connectButton[currentLang]} onClick={loginMetaMask} disabled={isLoading} />
+          <Button primary outline verticalMargin label={lang.panel.connectButton} onClick={loginMetaMask} disabled={isLoading} />
           <Text note>{isLoading ? 'Please check Metamask' : metaMaskHint}</Text>
             <Row width={`${PANEL_WIDTH*.8}px`} spacingTopXS>
               { metaMaskEableError &&

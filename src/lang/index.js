@@ -10,10 +10,17 @@ const main = {
   dispute: {
     notReady: name('Dispute function is under development, coming soon in later 2019!', 'XXX'),
   },
+
   result: name('RESULTS', '個搜尋結果', '个搜寻结果'),
   search: name('Search', '搜尋', '搜寻'),
   trade: name('Trade', '交易', '交易'),
   loadMore: name('Load More', '更多'),
+
+  timeAgo: {
+    day: name('d ago', '日前'),
+    hour: name('h ago', '小時前', '小时前')
+  },
+
   home: {
     tab: {
       all: name('All', '全部'),
@@ -26,11 +33,12 @@ const main = {
       name: name('NAME', '名稱', '名称'),
       change: name('24H CHANGE', '24小時漲跌', '24小时涨跌'),
       price: name('SPOT PRICE', '現貨價格', '现货价格'),
-      volume: name('24H VOLUME', '24小時成交量','24小时成交量'),
+      volume: name('24H VOLUME', '24小時成交量', '24小时成交量'),
       cap: name('FUNDING POOL', '總資金量', '总资金量'),
       graph: name('7D GRAPH', '7天圖表', '7天图表')
     }
   },
+
   panel: {
     tab: {
       portfolio: name('Portfolio', '資料', '资料'),
@@ -39,7 +47,7 @@ const main = {
     },
     portfolio: {
       wallet: {
-        title: name('Market Wallet','巿場錢包','巿场钱包'),
+        title: name('Market Wallet', '巿場錢包', '巿场钱包'),
         id: name('IDEA', '巿場', '巿场'),
         ct: name('TOKENS', '代幣'),
         volume: name('CHANGE', '漲跌', '涨跌')
@@ -52,28 +60,14 @@ const main = {
       },
       bookmark: {
         title: name('Bookmarks', '書籤', '书签')
-      }
+      },
+      login: {
+        checkMetamash: name('Please check Metamask.', '請檢查MetaMask。', '请检查MetaMask。')
+      },
     },
     connectButton: name('Connect', '連接', '连接'),
-    term: name('Terms of Service', '服務條款', '服务条款'),
   },
-  portfolio: {
-    wallet: name('Market Wallet', '巿場錢包', '巿场钱包'),
-    table: {
-      idea: name('IDEA', '巿場', '巿场'),
-      ct: name('TOKEN', '代幣', '代币'),
-      volumn: name('VOLUME', '漲跌', '涨跌')
-    },
-    global: name('Global Market Information', '全部巿場資訊', '全部巿场信息'),
-    sutInv: name('Total SMARTUP invested', '總SMARTUP投資額', '总SMARTUP投资额'),
-    mktNumber: name ('Total number of markets','全部巿場總數', '全部巿场总数'),
-    disNumber: name('Total number of ongoing discussions', '正在討論的帖子數', '正在讨论的帖子数'),
-    bookmark: name('Bookmarks', '書籤', '书签')
-  },
-  notification:{
-    day: name('d ago', '日前'),
-    hour: name('h ago', '小時前', '小时前')
-  },
+
   setting: {
     avatar: name('Avatar photo', '個人圖片', '个人图片'),
     dragFile: name('Drag file here', '拖放圖片至此', '拖放图片至此'),
@@ -82,6 +76,11 @@ const main = {
     cancel: name('Cancel', '取消'),
     deactivate: name('Deactivate account', '停用帳戶', '停用帐户')
   },
+
+  
+  term: name('Terms of Service', '服務條款', '服务条款'),
+
+
   marketTab: {
     trade: name('Trading', '交易'),
     general: name('General', '一般'),
@@ -90,6 +89,7 @@ const main = {
     flag: name('Dispute', '檢舉', '检举'),
     search: name('Search', '搜尋', '搜寻'),
   },
+
   trading: {
     period: name('7D', '7天'),
     low: name('low', '低位'),
@@ -102,9 +102,10 @@ const main = {
     tradeTitle: name('Trade Token(s)', '代幣交易', '代币交易'),
     tradeText: name('You are performing token trading.', '你正在進行交易', '你正在进行交易'),
     tradePay: name('PAY With', '付款'),
-    tradeReceive: name('RECEIVE' ,'收取'),
+    tradeReceive: name('RECEIVE', '收取'),
     tradeButton: name('Trade', '交易'),
-    trans: name('Recent Transactions' ,'最新交易'),
+    trans: name('Recent Transactions', '最新交易'),
+
     table: {
       buySell: name('BUY/ SELL', '買入/賣出', '买入/卖出'),
       user: name('USER', '用戶', '用户'),
@@ -116,6 +117,7 @@ const main = {
       stage: name('STATUS', '狀態', '状态')
     }
   },
+
   discussion: {
     post: name('Posted by', '發布自', '发布自'),
     day: name('d ago', '日前'),
@@ -129,6 +131,7 @@ const main = {
     replies: name('more replies', '更多回覆', '更多回复'),
     vote: name('VOTE', '投票'),
   },
+
   general: {
     info: name('Information', '資訊', '信息'),
     createTime: name('Create time', '創建時間', '创建时间'),
@@ -143,6 +146,7 @@ const main = {
       ct: name('TOKEN OWNED', '持有代幣', '持有代币'),
     }
   },
+
   proposal: {
     createTime: name('Create time', '創建時間', '创建时间'),
     creator: name('Creator', '創建者', '创建者'),
@@ -157,6 +161,7 @@ const main = {
     from: name('from', '由'),
     to: name('to', '至'),
   },
+
   faq: {
     title: name('FAQ', '常見問題', '常见问题'),
   }
@@ -168,8 +173,8 @@ const tc = JSON.parse(stringMain)
 const sc = JSON.parse(stringMain)
 
 function setObjectValueByKeys(o, keys = [], value) {
-  keys.reduce( (p, c, i, arr) => {
-    if(arr.length === i + 1) {
+  keys.reduce((p, c, i, arr) => {
+    if (arr.length === i + 1) {
       p[c] = value
       return p
     }
@@ -182,7 +187,7 @@ function setObjectValueByKeys(o, keys = [], value) {
 function f(o, keys = []) {
   for (const [key, value] of Object.entries(o)) {
     const cKey = [...keys, key]
-    if('en' in value && 'tc' in value && 'sc' in value) {
+    if ('en' in value && 'tc' in value && 'sc' in value) {
       setObjectValueByKeys(en, cKey, value.en)
       setObjectValueByKeys(tc, cKey, value.tc)
       setObjectValueByKeys(sc, cKey, value.sc)
