@@ -1,5 +1,5 @@
 import React, {createContext, useContext, useState} from 'react'
-import lang, { initialLang } from './lang'
+import { initialLang } from './lang'
 
 export const LangContext = createContext()
 
@@ -13,4 +13,3 @@ export const LangProvider = ({children}) => {
 }
 
 export const useLang = () => useContext(LangContext)
-export {lang}

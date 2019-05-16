@@ -1,6 +1,3 @@
-export const currentLang = 'en' // TODO
-export const initialLang = 'en' // TODO
-
 function name(en, tc, sc) {
   return {
     en,
@@ -9,7 +6,10 @@ function name(en, tc, sc) {
   }
 }
 
-export default {
+const main = {
+  dispute: {
+    notReady: name('Dispute function is under development, coming soon in later 2019!', 'XXX'),
+  },
   result: name('RESULTS', '結果', '结果'),
   search: name('Search', '搜尋', '搜寻'),
   trade: name('Trade', '交易', '交易'),
@@ -160,3 +160,39 @@ export default {
     title: name('FAQ', '常見問題', '常见问题'),
   }
 }
+
+const stringMain = JSON.stringify(main)
+const en = JSON.parse(stringMain)
+const tc = JSON.parse(stringMain)
+const sc = JSON.parse(stringMain)
+
+function setObjectValueByKeys(o, keys = [], value) {
+  keys.reduce( (p, c, i, arr) => {
+    if(arr.length === i + 1) {
+      p[c] = value
+      return p
+    }
+    return p[c]
+  }, o)
+  return o
+}
+
+
+function f(o, keys = []) {
+  for (const [key, value] of Object.entries(o)) {
+    const cKey = [...keys, key]
+    if('en' in value && 'tc' in value && 'sc' in value) {
+      setObjectValueByKeys(en, cKey, value.en)
+      setObjectValueByKeys(tc, cKey, value.tc)
+      setObjectValueByKeys(sc, cKey, value.sc)
+    } else {
+      f(value, cKey)
+    }
+  }
+}
+f(main)
+export { en, tc, sc }
+export const currentLang = 'en' // TODO
+export const initialLang = sc
+
+export default main

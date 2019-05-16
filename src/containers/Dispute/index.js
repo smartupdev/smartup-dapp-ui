@@ -4,15 +4,15 @@ import Image from '../../components/Image'
 import { Col } from '../../components/Layout'
 import coming from '../../images/coming_soon.png'
 
-import { useLang, lang } from '../../language'
+import { useLang } from '../../language'
 
 export default () => {
-  const [currentLang] = useLang()
-  console.log(lang)
+  const [lang] = useLang()
+  console.log(lang.dispute.notReady)
   return (
     <Col center centerVertical height={'80vh'}>
       <Image source={coming} size={'250px'} />
-      <Text center VM note>Dispute function is under development, coming soon in later 2019!</Text>
+      <Text center VM note>{lang.dispute.notReady}</Text>
     </Col>
   )
 }
