@@ -17,7 +17,8 @@ import Text from '../../components/Text'
 import Button from '../../components/Button'
 import ScrollLoader from '../../components/ScrollLoader'
 import { Row, Col } from '../../components/Layout'
-import lang, { currentLang } from '../../lang'
+// import lang, { currentLang } from '../../lang'
+import { useLang } from '../../language'
 import { Link } from '../../routes'
 import { toToken, toPercent } from '../../lib/util'
 import theme from '../../theme';
@@ -25,7 +26,7 @@ import ethIcon from '../../images/eth.png';
 import smartupIcon from '../../images/smartup.png';
 import { Close, Trade } from '../../components/Icon';
 
-const portfolioText = lang.panel.portfolio
+
 
 const InfoBlock = styled(Col)`
   margin: 0 ${p => p.theme.spacingS};
@@ -49,21 +50,7 @@ const BookmarkBlock = styled(Row)`
 //   { id: 245462, icon: CommentIcon, ct: 87.22, volume: 0.02313 },
 // ]
 
-const TableName = [
-  { label: '', value: 'marketPhoto', layoutStyle: { width: '18px' }, component: ({ value }) => <Avatar XS icon={value} /> },
-  { label: portfolioText.wallet.id[currentLang], value: 'marketName', layoutStyle: { width: '80px' }, component: ({value}) => <Text S textOverflow>{value}</Text> },
-  { label: portfolioText.wallet.ct[currentLang], value: 'ctAmount' },
-  {
-    label: portfolioText.wallet.volume[currentLang], value: 'latelyChange', component: ({ value }) =>
-      <Text S style={{ color: value >= 0 ? theme.green : theme.red }}>{toPercent(value)}</Text>
-  },
-  {
-    label: '', value: 'action', layoutStyle: { width: '40px' }, component: ({ record }) =>
-      <Link>
-        {({ goto }) => <Button icon={Trade} primary light condensed onClick={() => goto.trading({ id: record.id })} />}
-      </Link>
-  },
-]
+
 
 const Portfolio = ({
   userSavedMarketPanel,
@@ -81,6 +68,23 @@ const Portfolio = ({
     getMarketWallet()
   }, [])
   const { sutAmount, marketCount, latelyPostCount } = globalInfo.globalMarket
+  const [lang] = useLang()
+  const portfolioText = lang.panel.portfolio
+  const TableName = [
+    { label: '', value: 'marketPhoto', layoutStyle: { width: '18px' }, component: ({ value }) => <Avatar XS icon={value} /> },
+    { label: portfolioText.wallet.id, value: 'marketName', layoutStyle: { width: '80px' }, component: ({value}) => <Text S textOverflow>{value}</Text> },
+    { label: portfolioText.wallet.ct, value: 'ctAmount' },
+    {
+      label: portfolioText.wallet.volume, value: 'latelyChange', component: ({ value }) =>
+        <Text S style={{ color: value >= 0 ? theme.green : theme.red }}>{toPercent(value)}</Text>
+    },
+    {
+      label: '', value: 'action', layoutStyle: { width: '40px' }, component: ({ record }) =>
+        <Link>
+          {({ goto }) => <Button icon={Trade} primary light condensed onClick={() => goto.trading({ id: record.id })} />}
+        </Link>
+    },
+  ]
   return (
     <Col overflowAuto>
       <Col center>
@@ -102,7 +106,7 @@ const Portfolio = ({
         expandedDark
         expanded={expandedWallet}
         onClick={toggleExpandedWallet}
-        header={portfolioText.wallet.title[currentLang]}
+        header={portfolioText.wallet.title}
         error={userMarketWallet.error}
         loading={userMarketWallet.getting}
         body={
@@ -119,22 +123,22 @@ const Portfolio = ({
         expandedDark
         expanded={expandedMarket}
         onClick={toggleExpandedMarket}
-        header={portfolioText.marketInfo.title[currentLang]}
+        header={portfolioText.marketInfo.title}
         error={globalInfo.error}
         loading={globalInfo.getting}
         body={
           <>
             <Col>
               <InfoBlock first>
-                <Text S spaceBottom>{portfolioText.marketInfo.totalSmartup[currentLang]}</Text>
+                <Text S spaceBottom>{portfolioText.marketInfo.totalSmartup}</Text>
                 <Text L wordSpaceM bold>{sutAmount}</Text>
               </InfoBlock>
               <InfoBlock>
-                <Text S spaceBottom>{portfolioText.marketInfo.totalMarket[currentLang]}</Text>
+                <Text S spaceBottom>{portfolioText.marketInfo.totalMarket}</Text>
                 <Text L wordSpaceM bold>{marketCount}</Text>
               </InfoBlock>
               <InfoBlock>
-                <Text S spaceBottom>{portfolioText.marketInfo.totalDiscussion[currentLang]}</Text>
+                <Text S spaceBottom>{portfolioText.marketInfo.totalDiscussion}</Text>
                 <Text L wordSpaceM bold>{latelyPostCount}</Text>
               </InfoBlock>
             </Col>
@@ -146,7 +150,7 @@ const Portfolio = ({
         expandedDark
         expanded={expandedBookmark}
         onClick={toggleExpandedBookmark}
-        header={portfolioText.bookmark.title[currentLang]}
+        header={portfolioText.bookmark.title}
         error={userSavedMarketPanel.error}
         loading={userSavedMarketPanel.getting}
         body={
