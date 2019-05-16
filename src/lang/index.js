@@ -13,6 +13,7 @@ const main = {
   result: name('RESULTS', '結果', '结果'),
   search: name('Search', '搜尋', '搜寻'),
   trade: name('Trade', '交易', '交易'),
+  loadMore: name('Load More', '更多'),
   home: {
     tab: {
       all: name('All', '全部'),
