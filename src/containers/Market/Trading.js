@@ -20,25 +20,11 @@ import Avatar from '../../components/Avatar'
 import ScrollLoader from '../../components/ScrollLoader'
 // import smartupIcon from '../../images/smartup.png'
 
-import lang, { currentLang } from '../../lang'
+//import lang, { currentLang } from '../../lang'
+import { useLang } from '../../language'
 import { toPrice, toAgo, toFullDate, shorten,upperOne } from '../../lib/util'
 
 import Chart from './Chart'
-
-const model = [
-  { label: lang.trading.table.buySell[currentLang], value: 'type', layoutStyle: { flex: 1, center: true }, component: ({ value }) => <Text red={value === 'sell'} green={value !== 'sell'}>{value === 'sell' ? lang.trading.table.sell[currentLang] : lang.trading.table.buy[currentLang]}</Text> },
-  { label: lang.trading.table.user[currentLang], value: 'userAddress', layoutStyle: { flex: 1 }, component: ({ record }) => <Row centerVertical><Avatar icon={record.userIcon} /><Text>{shorten(record.username)}</Text></Row> },
-  { label: lang.trading.table.time[currentLang], value: 'createTime', layoutStyle: { flex: 1, center: true }, component: ({ value }) => <Text>{toAgo(value)}</Text> },
-  { label: lang.trading.table.avgPrice[currentLang], value: 'avgAmount', layoutStyle: { flex: 1, center: true }, component: ({ value }) => <Text>{toPrice(value)}</Text> },
-  { label: lang.trading.table.ct[currentLang], value: 'ctAmount', layoutStyle: { flex: 1, center: true }, },
-  { label: lang.trading.table.stage[currentLang], value: 'stage', layoutStyle: { flex: 1, center: true }, component: ({ value }) => <Text>{upperOne(value)}</Text> },
-]
-
-const klineTabs = [
-  { label: '1hour' },
-  { label: '1day' },
-  { label: '1week' },
-]
 
 function Trading({ loggedIn, market, gettingMarket, tradeState, setTab, onChangeCT, onChangeSUT, toggleIsSell,watchKline, toggleTnc, onTrade, reset, userSut, getTradeList, getKlineList, getHighLowList }) {
   useEffect(() => {
@@ -51,7 +37,21 @@ function Trading({ loggedIn, market, gettingMarket, tradeState, setTab, onChange
     return reset
   }, [market])
   const { tabIndex, userCt, ct, sut, isSell, isTrading, trades, gettingTrades, hasNextPage, klineData,highLowData, agreeTnc, tradingError } = tradeState
-  
+  const [lang] = useLang()
+  const model = [
+    { label: lang.trading.table.buySell, value: 'type', layoutStyle: { flex: 1, center: true }, component: ({ value }) => <Text red={value === 'sell'} green={value !== 'sell'}>{value === 'sell' ? lang.trading.table.sell : lang.trading.table.buy }</Text> },
+    { label: lang.trading.table.user, value: 'userAddress', layoutStyle: { flex: 1 }, component: ({ record }) => <Row centerVertical><Avatar icon={record.userIcon} /><Text>{shorten(record.username)}</Text></Row> },
+    { label: lang.trading.table.time, value: 'createTime', layoutStyle: { flex: 1, center: true }, component: ({ value }) => <Text>{toAgo(value)}</Text> },
+    { label: lang.trading.table.avgPrice, value: 'avgAmount', layoutStyle: { flex: 1, center: true }, component: ({ value }) => <Text>{toPrice(value)}</Text> },
+    { label: lang.trading.table.ct, value: 'ctAmount', layoutStyle: { flex: 1, center: true }, },
+    { label: lang.trading.table.stage, value: 'stage', layoutStyle: { flex: 1, center: true }, component: ({ value }) => <Text>{upperOne(value)}</Text> },
+  ]
+
+  const klineTabs = [
+    { label: lang.trading.hour },
+    { label: lang.trading.day },
+    { label: lang.trading.week },
+  ]
   if(!market || gettingMarket) return null
 
   const notEnoughSut = !isSell && +userSut < +sut && loggedIn
@@ -78,32 +78,32 @@ function Trading({ loggedIn, market, gettingMarket, tradeState, setTab, onChange
           <Row bottom>
             <Text XL>{toPrice(highLowData.length > 0 ? highLowData[highLowData.length - 1].high : '', 2)}</Text><Text green S>&nbsp;&nbsp;high</Text>
           </Row>
-          <Text note S>{lang.trading.change[currentLang]}</Text>
+          <Text note S>{lang.trading.change}</Text>
 
           <Text XL price spacingTopS>{toPrice(market.last, 2)}</Text>
-          <Text note S>{lang.trading.price[currentLang]}</Text>
+          <Text note S>{lang.trading.price}</Text>
 
           <Text XL primary spacingTopS>{toPrice(highLowData.length > 0 ? highLowData[highLowData.length - 1].amount : '', 2)}</Text>
-          <Text note S>{lang.trading.volume[currentLang]}</Text>
+          <Text note S>{lang.trading.volume}</Text>
 
           <Text XL spacingTopS>{toPrice(market.amount, 2)}</Text>
-          <Text note S>{lang.trading.cap[currentLang]}</Text>
+          <Text note S>{lang.trading.cap}</Text>
 
           <Text XL spacingTopS>{toPrice(market.ctTopAmount, 2)}</Text>
-          <Text note S>{lang.trading.ct[currentLang]}</Text>
+          <Text note S>{lang.trading.ct}</Text>
         </Col>
       </Row>
 
       <Col spacingLeftS spacingRightS spacingBottomS center>
-        <Text spacingBottomS spacingTopS L center>{lang.trading.tradeTitle[currentLang]}</Text>
+        <Text spacingBottomS spacingTopS L center>{lang.trading.tradeTitle}</Text>
         <Hr />
 
         <Row TopL>
-          <Button onClick={isSell ? toggleIsSell : undefined} label='BUY' icon={Trade} backgroundColor={!isSell ? theme.green : undefined} color={isSell ? theme.green : undefined} width='100px' />
-          <Button onClick={isSell ? undefined : toggleIsSell} label='SELL' icon={Trade} backgroundColor={isSell ? theme.red : undefined} color={!isSell ? theme.red : undefined} width='100px' MarginLeftS />
+          <Button onClick={isSell ? toggleIsSell : undefined} label={lang.trading.table.buy} icon={Trade} backgroundColor={!isSell ? theme.green : undefined} color={isSell ? theme.green : undefined} width='100px' />
+          <Button onClick={isSell ? undefined : toggleIsSell} label={lang.trading.table.sell} icon={Trade} backgroundColor={isSell ? theme.red : undefined} color={!isSell ? theme.red : undefined} width='100px' MarginLeftS />
         </Row>
 
-        <Text S center note VM>{lang.trading.tradeText[currentLang]}</Text>
+        <Text S center note VM>{lang.trading.tradeText}</Text>
 
         <Col maxWidth='1000px' width='100%'>
           <Col center>
@@ -116,16 +116,16 @@ function Trading({ loggedIn, market, gettingMarket, tradeState, setTab, onChange
                 </Col>
             </Row>
           </Col>
-          <Text S center note BottomM>{`${isSell ? 'To receive' : 'Cost'} ${sut ? (+sut).toFixed(4) : 0} SMARTUP`}</Text>
+          <Text S center note BottomM>{`${isSell ? lang.trading.toReceive : lang.trading.cost} ${sut ? (+sut).toFixed(4) : 0} SMARTUP`}</Text>
 
 
           <Row spaceBetween>
             <Row centerVertical>
-              <Checkbox checked={agreeTnc} onChange={toggleTnc} disabled={isTrading} label={<Text S note lineHeight>Agree to&nbsp;</Text>} />
-              <Text S note underline lineHeight onClick={onClickTnc}>{'Terms of Service'}</Text>
+              <Checkbox checked={agreeTnc} onChange={toggleTnc} disabled={isTrading} label={<Text S note lineHeight> {lang.trading.agreeTo} </Text>} />
+              <Text S note underline lineHeight onClick={onClickTnc}>{ lang.term }</Text>
             </Row>
             <Col right>
-              <Button label='Trade' icon={Trade} primary onClick={() => onTrade(market.id)} disabled={isTrading || !agreeTnc || !ct | notEnoughSut || notEnoughCt} />
+              <Button label= {lang.trading.tradeButton} icon={Trade} primary onClick={() => onTrade(market.id)} disabled={isTrading || !agreeTnc || !ct | notEnoughSut || notEnoughCt} />
               {tradingError && <Text error XS>{tradingError.message}</Text>}
             </Col>
           </Row>
@@ -135,7 +135,7 @@ function Trading({ loggedIn, market, gettingMarket, tradeState, setTab, onChange
       </Col>
       <Hr />
       <Col spacingLeftM spacingRightM>
-        <Text L center spacingBottomS spacingTopS>{lang.trading.trans[currentLang]}</Text>
+        <Text L center spacingBottomS spacingTopS>{lang.trading.trans}</Text>
         <Hr />
         <Table
           model={model}

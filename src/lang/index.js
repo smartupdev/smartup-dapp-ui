@@ -111,6 +111,12 @@ const main = {
     tradeReceive: name('RECEIVE', '收取'),
     tradeButton: name('Trade', '交易'),
     trans: name('Recent Transactions', '最新交易'),
+    hour: name('1hour', '1小時', '1小时'),
+    day: name('1day', '1天'),
+    week: name('1week', '1周'),
+    cost: name('Cost', '支付'),
+    toReceive: name('To receive', '收取'),
+    agreeTo: name('Agree to ', '同意 '),
 
     table: {
       buySell: name('BUY/ SELL', '買入/賣出', '买入/卖出'),

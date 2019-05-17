@@ -5,13 +5,14 @@ import Image from '../../components/Image'
 import Text from '../../components/Text'
 import Panel from '../../components/Panel'
 import { Row, Col } from '../../components/Layout'
-import lang, { currentLang } from '../../lang'
+// import lang, { currentLang } from '../../lang'
+import { useLang } from '../../language'
 import theme from '../../theme';
 import { Information } from '../../components/Icon';
 import { connect } from 'react-redux'
 import { toggleExpandedInfo, toggleExpandedRule, toggleExpandedSub } from '../../actions/general';
 import moment from 'moment';
-const generalText = lang.general
+
 
 // const subs = [{ rank: 1, name: 'Tony', ct: '180.29' }, { rank: 2, name: 'Tony', ct: '180.29' }, { rank: 3, name: 'Tony', ct: '180.29' },
 // { rank: 4, name: 'Tony', ct: '180.29' }, { rank: 5, name: 'Tony', ct: '180.29' }]
@@ -32,7 +33,9 @@ const generalText = lang.general
 // ]
 
 const InfoBody = ({ info }) => {
-  return (
+  const [lang] = useLang()
+  const generalText = lang.general
+    return (
     <Row BottomS TopS>
       <Col LeftXS RightXS>
         <Image source={info.cover} photo cover />
@@ -40,16 +43,16 @@ const InfoBody = ({ info }) => {
       <Col centerVertical>
         <Row BottomM>
           <Col RightM>
-            <Text XS note>{generalText.createTime[currentLang]}</Text>
+            <Text XS note>{generalText.createTime}</Text>
             <Text M wordSpaceM spacingTopBase>{moment(info.createTime).format('DD MMM YYYY')}</Text>
           </Col>
           <Col>
-            <Text XS note>{generalText.creator[currentLang]}</Text>
+            <Text XS note>{generalText.creator}</Text>
             <Text M wordSpaceM spacingTopBase>{info.creator.name || info.creator.userAddress}</Text>
           </Col>
         </Row>
         <Col>
-          <Text XS note>{generalText.overview[currentLang]}</Text>
+          <Text XS note>{generalText.overview}</Text>
           <Text M spacingTopBase>{info.description}</Text>
         </Col>
       </Col>
@@ -94,6 +97,8 @@ const TitleIcon = ({ title }) => {
 
 const General = ({ expandedInfo, expandedRule, expandedSub, toggleExpandedInfo, 
   toggleExpandedRule, toggleExpandedSub,market,gettingMarket }) => {
+    const [lang] = useLang()
+    const generalText = lang.general
   if(!market || gettingMarket) return null
   return (
     <Col>
@@ -101,7 +106,7 @@ const General = ({ expandedInfo, expandedRule, expandedSub, toggleExpandedInfo,
         dark={expandedInfo}
         expanded={expandedInfo}
         onClick={toggleExpandedInfo}
-        header={<TitleIcon title={generalText.info[currentLang]} />}
+        header={<TitleIcon title={generalText.info} />}
         body={<InfoBody info={market} />}
       />
       {/* <Panel
