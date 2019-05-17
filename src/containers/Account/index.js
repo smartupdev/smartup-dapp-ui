@@ -8,13 +8,16 @@ import { withUser } from './connectUser'
 
 import { Link, accountRoutes, getPath, AccountRoutes } from '../../routes'
 
+import { useLang } from '../../language'
+
 function Index({ loggedIn }) {
+  const [lang] = useLang()
   const currentPath = getPath()
   let activeIndex = accountRoutes.findIndex(t => t.path === currentPath)
   if(activeIndex < 0) activeIndex = 0
   return (
     <Col>
-      <Text center VS L>PERSONAL CENTER</Text>
+      <Text center VS L>{lang.personalCentre.personalCentre}</Text>
       <Link>
         {
           ({ goto }) => 
@@ -24,7 +27,7 @@ function Index({ loggedIn }) {
       {
         loggedIn ?
           <AccountRoutes />
-        : <Text VS center note>You have to connect to Metamask.</Text>
+        : <Text VS center note> {lang.personalCentre.connectMetaMask} </Text>
       }
     </Col>
   )

@@ -13,13 +13,12 @@ import smartupIcon from '../../images/smartup.png';
 import successImg from '../../images/market_success.png';
 import Chart from './Chart'
 import DropToUpload from '../../components/DropToUpload'
-
+import { useLang } from '../../language'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux';
 import { setActiveIndex, onChangeName, onChangeDesc, reset, get, create, onChangeAvatar, onChangeCover } from '../../actions/createMarket'
 // import { createMarket } from '../../actions/market'
 
-const options = ['Basic Information', 'Price Equation', 'Deposit']
 // const optionsSpeed = ['Slow', 'Standard', 'Fast']
 const CreateMarket = ({
   createMarketState: { 
@@ -39,18 +38,19 @@ const CreateMarket = ({
   function next() { setActiveIndex(activeIndex + 1) }
   function back() { setActiveIndex(activeIndex - 1) }
   const Label = ({ children }) => <Text S VXS>{children}</Text>
-  const Next = ({disabled}) =>  <Button label='Next' primary extended onClick={next} disabled={disabled || isFetching} />
-  const Back = () =>  <Button label='Back' primary extended onClick={back} disabled={isFetching} />
+  const Next = ({disabled}) =>  <Button label={lang.createMarket.next} primary extended onClick={next} disabled={disabled || isFetching} />
+  const Back = () =>  <Button label={lang.createMarket.back} primary extended onClick={back} disabled={isFetching} />
   const page1Ready = !(error.name || error.desc || !name || !desc)
   const page2Ready = page1Ready
   const onChangeProgress = tab => 
     tab === 0 ? setActiveIndex(tab) :
     tab === 1 ? page1Ready && setActiveIndex(tab) :
     tab === 2 && page2Ready && setActiveIndex(tab)
-
+  const [lang] = useLang()
+  const options = [lang.createMarket.tab.basicInfo, lang.createMarket.tab.equation, lang.createMarket.tab.deposit]
     return (
     <Col>
-      <Text center BottomS TopS L>CREATE MARKET</Text>
+      <Text center BottomS TopS L>{lang.createMarket.createMarket}</Text>
       <Hr />
       {
         activeIndex >= 0 && 
@@ -61,20 +61,20 @@ const CreateMarket = ({
       {
         activeIndex === 0 ? 
           <>
-            <Label>Market Name</Label>
+            <Label>{lang.createMarket.marketName}</Label>
             <Input background XL value={name} onChange={onChangeName} disabled={isFetching} />
             <Text S right error={error.name}>
               {
                 typeof error.name === 'string' ? error.name :
-              'Capital sensitive, 3-40 characters, market name cannot be changed.'
+              lang.createMarket.nameDes
               } 
             </Text>
-            <Label>Market Overview</Label>
+            <Label>{lang.createMarket.marketOverview}</Label>
             <Input background L line={3} value={desc} onChange={onChangeDesc} disabled={isFetching} />
-            <Text S right error={error.desc}>150 characters to help new members get to know your market. Overview cannot be changed.</Text>
-            <Label>Market Avatar</Label>
+            <Text S right error={error.desc}>{lang.createMarket.overviewDes}.</Text>
+            <Label>{lang.createMarket.marketAvatar}</Label>
             <DropToUpload MarginBottomM onChoose={onChangeAvatar} isLoading={avatarUploading} error={error.avatar} value={avatarHash} imageHeight='100px' imageWidth='100px' />
-            <Label>Market Cover Photo</Label>
+            <Label>{lang.createMarket.marketCover}</Label>
             <DropToUpload MarginBottomM onChoose={onChangeCover} isLoading={coverUploading} error={error.cover} value={coverHash} imageHeight='300px' imageWidth='450px' />
             <Row spacingTopL right>
               <Next disabled={!page1Ready} />
@@ -105,7 +105,7 @@ const CreateMarket = ({
         :
           activeIndex === 2 ? 
           <>
-            <Label>Market creation deposit</Label>
+            <Label>{lang.createMarket.createDes}</Label>
             <Row centerVertical>
               <Image source={smartupIcon} M />
               <Col flex={1} spacingRightXS spacingLeftXS>
@@ -130,7 +130,7 @@ const CreateMarket = ({
             </Col> */}
             <Row spacingTopL spaceBetween>
               <Back />
-              <Button label='Create' primary onClick={create} extended disabled={isFetching} />
+              <Button label= {lang.createMarket.create} primary onClick={create} extended disabled={isFetching} />
             </Row>
             <Col right>
               { error.api && <Text S error>{error.api}</Text> }
@@ -141,12 +141,12 @@ const CreateMarket = ({
             <Col center centerVertical height={'80vh'}>
               <Image source={successImg} size={'150px'} />
               <Col spacingTopL spacingBottomL>
-                <Text XL wordSpaceL center>MAKRET IS CREATING!</Text>
+                <Text XL wordSpaceL center> {lang.createMarket.creating} </Text>
               </Col>
               <Link>
                 {
                   ({goto}) =>
-                <Button label='Preview The New Market' primary onClick={()=>goto.trading({id: marketId})} extended />
+                <Button label={lang.createMarket.preview} primary onClick={()=>goto.trading({id: marketId})} extended />
                 }
               </Link>
             </Col>

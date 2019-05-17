@@ -22,17 +22,20 @@ import { ToastConsumer } from 'react-toast-notifications'
 import { copy } from '../../lib/util'
 import { share } from '../../alphaWebService'
 
-import lang, { currentLang } from '../../lang'
+// import lang, { currentLang } from '../../lang'
+import { useLang } from '../../language'
 
-const TABS = [
-  { label: lang.marketTab.trade[currentLang], value: 'trading' },
-  { label: lang.marketTab.general[currentLang], value: 'general' },
-  { label: lang.marketTab.discussion[currentLang], value: 'discussion' },
-  { label: lang.marketTab.proposal[currentLang], value: 'proposal' },
-  { label: lang.marketTab.flag[currentLang], value: 'flag' },
-]
+
 
 const Market = ({ get, toggleSavedMarket, getting, location, market, getMarketPost, onChangeKeyword, postKeyword, resetDetail }) => {
+  const [lang] = useLang()
+  const TABS = [
+    { label: lang.marketTab.trade, value: 'trading' },
+    { label: lang.marketTab.general, value: 'general' },
+    { label: lang.marketTab.discussion, value: 'discussion' },
+    { label: lang.marketTab.proposal, value: 'proposal' },
+    { label: lang.marketTab.flag, value: 'flag' },
+  ]
   const id = getUrlParams().id
   useEffect(() => {
     get(id)
@@ -44,6 +47,7 @@ const Market = ({ get, toggleSavedMarket, getting, location, market, getMarketPo
   if (!market) return null
 
   const activeIndex = TABS.findIndex(t => location.pathname.includes(t.value))
+  
   return (
     <Col>
       <Row spaceBetween spacingTopXS spacingBottomXS spacingRightS spacingLeftS color={theme.bgColorLight}>

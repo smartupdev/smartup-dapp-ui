@@ -11,7 +11,7 @@ import ScrollLoader from '../../../components/ScrollLoader'
 
 import { connect } from 'react-redux'
 import { getCollectedPosts, getCollectedReplys, getCollectedMarkets, reset } from '../../../actions/personalCenter'
-
+import { useLang } from '../../../language'
 function Index({
   collectedPost: { posts: collectedPosts, getting: gettingCollectedPosts, error: collectedPostsError, hasNextPage: collectedPostsHasNextPage, },
   collectedMarket: { markets: collectedMarkets, getting: gettingCollectedMarmkets, error: collectedMarketsError, hasNextPage: collectedMarketsHasNextPage, },
@@ -28,13 +28,14 @@ function Index({
   const [expandMarket, setExpandMarket] = useState(true)
   const [expandPost, setExpandPost] = useState(false)
   const [expandReply, setExpandReply] = useState(false)
+  const [lang] = useLang()
   return (
     <Col>
       <Panel
         expandedDark
         expanded={expandMarket}
         onClick={() => setExpandMarket(!expandMarket)}
-        header='Saved markets'
+        header={lang.personalCentre.inMarket.saved}
         error={collectedMarketsError}
         loading={gettingCollectedMarmkets}
         body={
@@ -49,7 +50,7 @@ function Index({
         onClick={() => setExpandPost(!expandPost)}
         error={collectedPostsError}
         loading={gettingCollectedPosts}
-        header='Saved posts'
+        header={lang.personalCentre.inPost.saved}
         body={
           <>
           {
@@ -67,7 +68,7 @@ function Index({
         expandedDark
         expanded={expandReply}
         onClick={() => setExpandReply(!expandReply)}
-        header='Saved comments'
+        header={lang.personalCentre.inComment.saved}
         error={collectedReplysError}
         loading={gettingCollectedReplys}
         body={<ReplyBody replys={collectedReplys} loadMore={getCollectedReplys} hasMore={collectedReplysHasNextPage} isLoading={gettingCollectedReplys} />} />

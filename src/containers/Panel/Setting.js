@@ -18,35 +18,35 @@ const Setting = ({ realUserName, avatarUploading, avatarHash, updateUserAvatar,
     const [lang, langText, setLang] = useLang()
   return (
     <Col>
-      <Text MarginLeftXS VXS>{'Avatar photo'}</Text>
+      <Text MarginLeftXS VXS>{lang.panel.setting.avatar}</Text>
       <DropToUpload MarginBottomXS MarginLeftXS MarginRightXS onChoose={onChangeAvatar} isLoading={avatarUploading} value={avatarHash} error={updateAvatarError} imageHeight='100px' imageWidth='100px' />
       <Row center MarginTopXS>
-        <Button primary LeftM RightM label='Submit' onClick={updateUserAvatar} />
+        <Button primary LeftM RightM label={lang.panel.setting.submit} onClick={updateUserAvatar} />
       </Row>
-      <Text MarginLeftXS VXS>{'User Name'}</Text>
-      <Input value={realUserName} placeholder='User Name' disabled={nameHasChanged} onChange={onChangeName} />
+      <Text MarginLeftXS VXS>{lang.panel.setting.userName}</Text>
+      <Input value={realUserName} placeholder={lang.panel.setting.userName} disabled={nameHasChanged} onChange={onChangeName} />
       <Text S right note error={updateNameError}>{
         typeof updateNameError === 'string' ? updateNameError :
-          (!nameHasChanged ? 'Capital sensitive, 6-15 characters.' : 'Username is confirmed and locked.')
+          (!nameHasChanged ? lang.panel.setting.nameReq : lang.panel.setting.nameLock )
       } </Text>
       {
         !nameHasChanged && (!submittingName ?
           <Row center MarginTopXS>
-            <Button primary LeftM RightM label='Submit' onClick={() => { onChangeNameSubmit(true) }} />
+            <Button primary LeftM RightM label= { lang.panel.setting.submit } onClick={() => { onChangeNameSubmit(true) }} />
           </Row>
           :
           <Row center MarginTopXS>
-            <Button primary LeftM RightM label='Confirm' onClick={updateUserName} />
-            <Button MarginLeftXS LeftM RightM style={{ backgroundColor: '#8F9497' }} label='Cancel' onClick={() => { onChangeNameSubmit(false) }} />
+            <Button primary LeftM RightM label={ lang.panel.setting.confirm } onClick={updateUserName} />
+            <Button MarginLeftXS LeftM RightM style={{ backgroundColor: '#8F9497' }} label={ lang.panel.setting.cancel } onClick={() => { onChangeNameSubmit(false) }} />
           </Row>)
       }
-      <Text LeftXS VXS>Language</Text>
+      <Text LeftXS VXS> { lang.panel.setting.languages } </Text>
       <Row spaceAround TopS>
       {
         [ 
           { label: 'English', value: 'en' },
           { label: '繁體中文', value: 'tc' },
-          { label: '簡體中文', value: 'sc' },
+          { label: '简体中文', value: 'sc' },
         ].map(({ label, value }) =>
           <Col key={value}>
             <Text 

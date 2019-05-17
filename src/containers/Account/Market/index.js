@@ -7,7 +7,8 @@ import Panel from '../../../components/Panel'
 
 import { connect } from 'react-redux'
 import { getCreatedMarkets, getTradedMarkets, getCollectedMarkets, reset } from '../../../actions/personalCenter'
-
+import { useLang } from '../../../language'
+import { lang } from 'moment';
 function Market({
   createdMarket: { markets: createdMarkets, getting: gettingCreatedMarmkets, error: createdMarketsError, hasNextPage: createdMarketsHasNextPage }, 
   tradedMarket: { markets: tradedMarkets, getting: gettingTradedMarmkets, error: tradedMarketsError, hasNextPage: tradedMarketsHasNextPage }, 
@@ -24,7 +25,7 @@ function Market({
     getTradedMarkets()
     return reset
   }, [])
-
+  const [lang] = useLang()
   return (
     <Col>
       <Panel
@@ -33,7 +34,7 @@ function Market({
         onClick={() => setExpandCreated(!expandCreated)}
         error={createdMarketsError}
         loading={gettingCreatedMarmkets}
-        header='Created markets'
+        header={lang.personalCentre.inMarket.created}
         body={<MarketTable markets={createdMarkets} hasMore={createdMarketsHasNextPage} loadMore={getCreatedMarkets} isLoading={gettingCreatedMarmkets} />} />
       {expandCreated && <Hr />}
       <Panel
@@ -42,7 +43,7 @@ function Market({
         onClick={() => setExpandSaved(!expandSaved)}
         error={collectedMarketsError}
         loading={gettingCollectedMarmkets}
-        header='Saved markets'
+        header={lang.personalCentre.inMarket.saved}
         body={<MarketTable markets={collectedMarkets} hasMore={collectedMarketsHasNextPage} loadMore={getCollectedMarkets} isLoading={gettingCollectedMarmkets} />} />
       {expandSaved && <Hr />}
       <Panel
@@ -51,7 +52,7 @@ function Market({
         onClick={() => setExpandTraded(!expandTraded)}
         error={tradedMarketsError}
         loading={gettingTradedMarmkets}
-        header='Subscribed markets'
+        header={lang.personalCentre.inMarket.subscribed}
         body={<MarketTable markets={tradedMarkets} hasMore={tradedMarketsHasNextPage} loadMore={getTradedMarkets} isLoading={gettingTradedMarmkets} />} />
     </Col>
   )

@@ -9,6 +9,7 @@ import { postIpfsImg } from '../../../actions/ipfs'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { addMarketPost } from '../../../actions/post'
+import { useLang } from '../../../language'
 
 function DiscussionCreate({ addApi, history }) {
   const [title, setTitle] = useState('')
@@ -35,17 +36,18 @@ function DiscussionCreate({ addApi, history }) {
     if(e) return setError(e)
     history.goBack()
   }
+  const [lang] = useLang()
   return (
     <Col spacingM>
-      <Text BottomBase>Title</Text>
+      <Text BottomBase> {lang.discussion.create.title} </Text>
       <TextInput background disabled={loading} value={title} onChange={setTitle} />
-      <Text TopS BottomBase>Text</Text>
+      <Text TopS BottomBase> {lang.discussion.create.text} </Text>
       <TextInput background line={5} disabled={loading} value={text} onChange={setText} />
-      <Text TopS BottomBase>Photo</Text>
+      <Text TopS BottomBase> {lang.discussion.create.photo} </Text>
       <DropToUpload actualSize disabled={loading} value={photo || null} error={photoError} onChoose={uploadPhoto} />
       <Row right TopXL>
-        <Button primary HL label='Submit' disabled={loading} onClick={add} />
-        <Button HL label='Cancel' disabled={loading} onClick={history.goBack} />
+        <Button primary HL label= {lang.discussion.create.submit} disabled={loading} onClick={add} />
+        <Button HL label= {lang.discussion.create.cancel} disabled={loading} onClick={history.goBack} />
       </Row>
       {error && 
         <Row right TopS>

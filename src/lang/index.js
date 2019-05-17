@@ -1,3 +1,5 @@
+import { nextTick } from "q";
+
 function name(en, tc, sc) {
   return {
     en,
@@ -8,11 +10,29 @@ function name(en, tc, sc) {
 
 const main = {
   dispute: {
-    notReady: name('Dispute function is under development, coming soon in later 2019!', 'XXX'),
+    notReady: name('Dispute function is under development, coming soon in later 2019!', '檢舉功能正在建設中，將於2019年底推出。', '检举功能正在建设中，将于2019年底推出。'),
   },
-  result: name('RESULTS', '結果', '结果'),
+
+  result: name('RESULTS', '個搜尋結果', '个搜寻结果'),
   search: name('Search', '搜尋', '搜寻'),
   trade: name('Trade', '交易', '交易'),
+  loadMore: name('Load More', '更多'),
+
+  dragFile: {
+    dragFile: name('Drag file here', '拖放圖片至此', '拖放图片至此'),
+    chooseFile: name('Choose file to upload', '上載更改圖片', '上载更改图片'),
+    uploading: name('Uploading file', '上載中', '上载中')
+  },
+
+  time: {
+    min: name('m ago', '分鐘前'),
+    day: name('d ago', '日前'),
+    hour: name('h ago', '小時前', '小时前'),
+    now: name('now', '剛剛', '刚刚'),
+    months: name(['Jan', 'Feb' , 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'], ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月']),
+    weekdays: name(['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'], ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'])
+  },
+
   home: {
     tab: {
       all: name('All', '全部'),
@@ -25,11 +45,12 @@ const main = {
       name: name('NAME', '名稱', '名称'),
       change: name('24H CHANGE', '24小時漲跌', '24小时涨跌'),
       price: name('SPOT PRICE', '現貨價格', '现货价格'),
-      volume: name('24H VOLUME', '24小時成交量','24小时成交量'),
+      volume: name('24H VOLUME', '24小時成交量', '24小时成交量'),
       cap: name('FUNDING POOL', '總資金量', '总资金量'),
       graph: name('7D GRAPH', '7天圖表', '7天图表')
     }
   },
+
   panel: {
     tab: {
       portfolio: name('Portfolio', '資料', '资料'),
@@ -38,7 +59,7 @@ const main = {
     },
     portfolio: {
       wallet: {
-        title: name('Market Wallet','巿場錢包','巿场钱包'),
+        title: name('Market Wallet', '巿場錢包', '巿场钱包'),
         id: name('IDEA', '巿場', '巿场'),
         ct: name('TOKENS', '代幣'),
         volume: name('CHANGE', '漲跌', '涨跌')
@@ -51,36 +72,59 @@ const main = {
       },
       bookmark: {
         title: name('Bookmarks', '書籤', '书签')
-      }
+      },
+      login: {
+        checkMetamash: name('Please check Metamask.', '請檢查MetaMask。', '请检查MetaMask。')
+      },
     },
+    
+    setting: {
+      avatar: name('Avatar photo', '個人圖片', '个人图片'),
+      userName: name('User Name', '用戶名稱', '用户名称'),
+      nameReq: name('Capital sensitive, 6-15 characters.', '區分大小寫，6-15字符。', '区分大小写，6-15字符。'),
+      nameLock: name('Username is confirmed and locked.', '用戶名稱已更改並鎖定。', '用户名称已更改并锁定。'),
+      languages: name('Languages', '語言','语言'),
+      submit: name('Submit', '提交'),
+      confirm: name('Confirm', '確定', '确定'),
+      cancel: name('Cancel', '取消'),
+      deactivate: name('Deactivate account', '停用帳戶', '停用帐户')
+    },
+    
     connectButton: name('Connect', '連接', '连接'),
-    term: name('Terms of Service', '服務條款', '服务条款'),
   },
-  portfolio: {
-    wallet: name('Market Wallet', '巿場錢包', '巿场钱包'),
-    table: {
-      idea: name('IDEA', '巿場', '巿场'),
-      ct: name('TOKEN', '代幣', '代币'),
-      volumn: name('VOLUME', '漲跌', '涨跌')
+
+  createMarket: {
+    tab: {
+      basicInfo: name('Basic Information', '基本資料', '基本资料'),
+      equation: name('Price Equation', '價格方程', '价格方程'),
+      deposit: name('Deposit', '按金')
     },
-    global: name('Global Market Information', '全部巿場資訊', '全部巿场信息'),
-    sutInv: name('Total SMARTUP invested', '總SMARTUP投資額', '总SMARTUP投资额'),
-    mktNumber: name ('Total number of markets','全部巿場總數', '全部巿场总数'),
-    disNumber: name('Total number of ongoing discussions', '正在討論的帖子數', '正在讨论的帖子数'),
-    bookmark: name('Bookmarks', '書籤', '书签')
+    createMarket: name('CREATE MARKET', '創建巿場', '创建巿场'),
+    createDeposit: name('Market creation deposit', '創建巿場按金', '创建巿场按金'),
+    marketName: name('Market Name', '巿場名稱', '巿场名称'),
+    marketOverview: name('Market Overview', '巿場概要', '巿场概要'),
+    nameDes: name('Capital sensitive, 3-40 characters, market name cannot be changed.', '區分大小寫，3-40字符。創建後不可更改。', '区分大小写，3-40字符。创建后不可更改。'),
+    overviewDes: name('150 characters to help new members get to know your market. Overview cannot be changed.', '以150字簡單介紹你的項目。巿場概要在創建巿場後無法更改。', '以150字简单介绍你的项目。巿场概要在创建巿场后无法更改。'),
+    marketAvatar: name('Market Avatar', '巿場圖像' , '巿场图像'),
+    marketCover: name('Market Cover Photo', '巿場封面圖', '巿场封面图'),
+    creating: name('MAKRET IS CREATING!', '巿場正在創建！', '巿场正在创建！'),
+    preview: name('Preview The New Market', '預覽新巿場', '预览新巿场'),
+    next: name('Next', '下一步'),
+    back: name('Back', '返回'),
+    create: name('Create', '創建', '创建')
   },
-  notification:{
-    day: name('d ago', '日前'),
-    hour: name('h ago', '小時前', '小时前')
+  
+  term: name('Terms of Service', '服務條款', '服务条款'),
+
+  mainpageTab: {
+    home: name('Home', '主頁', '主页'),
+    createMarket: name('Create Martket', '創建巿場'),
+    personalCentre: name('Personal Centre', '個人中心', '个人中心'),
+    dispute: name('Dispute', '檢舉'),
+    feedbackUs: name('Feedback Us', '意見回饋'),
+    faq: name('FAQ', '常見問題')
   },
-  setting: {
-    avatar: name('Avatar photo', '個人圖片', '个人图片'),
-    dragFile: name('Drag file here', '拖放圖片至此', '拖放图片至此'),
-    changeFile: name('Change file to upload', '上載更改圖片', '上载更改图片'),
-    submit: name('Submit', '提交'),
-    cancel: name('Cancel', '取消'),
-    deactivate: name('Deactivate account', '停用帳戶', '停用帐户')
-  },
+
   marketTab: {
     trade: name('Trading', '交易'),
     general: name('General', '一般'),
@@ -89,6 +133,7 @@ const main = {
     flag: name('Dispute', '檢舉', '检举'),
     search: name('Search', '搜尋', '搜寻'),
   },
+
   trading: {
     period: name('7D', '7天'),
     low: name('low', '低位'),
@@ -101,9 +146,16 @@ const main = {
     tradeTitle: name('Trade Token(s)', '代幣交易', '代币交易'),
     tradeText: name('You are performing token trading.', '你正在進行交易', '你正在进行交易'),
     tradePay: name('PAY With', '付款'),
-    tradeReceive: name('RECEIVE' ,'收取'),
+    tradeReceive: name('RECEIVE', '收取'),
     tradeButton: name('Trade', '交易'),
-    trans: name('Recent Transactions' ,'最新交易'),
+    trans: name('Recent Transactions', '最新交易'),
+    hour: name('1hour', '1小時', '1小时'),
+    day: name('1day', '1天'),
+    week: name('1week', '1周'),
+    cost: name('Cost', '支付'),
+    toReceive: name('To receive', '收取'),
+    agreeTo: name('Agree to ', '同意 '),
+
     table: {
       buySell: name('BUY/ SELL', '買入/賣出', '买入/卖出'),
       user: name('USER', '用戶', '用户'),
@@ -115,10 +167,10 @@ const main = {
       stage: name('STATUS', '狀態', '状态')
     }
   },
+
   discussion: {
     post: name('Posted by', '發布自', '发布自'),
-    day: name('d ago', '日前'),
-    hour: name('h ago', '小時前', '小时前'),
+    about: name('about', '約'),
     reply: name('reply', '回覆', '回复'),
     feedback: name('feedback', '回應', '回应'),
     like: name('like', '讚好', '赞好'),
@@ -127,7 +179,15 @@ const main = {
     save: name('save', '存儲', '存储'),
     replies: name('more replies', '更多回覆', '更多回复'),
     vote: name('VOTE', '投票'),
+    create: {
+      title: name('Title', '標題', '标题'),
+      text: name('Text','內文'),
+      photo: name('Photo', '圖片', '图片'),
+      submit: name('Submit', '提交'),
+      cancel: name('Cancel', '取消')
+    }
   },
+
   general: {
     info: name('Information', '資訊', '信息'),
     createTime: name('Create time', '創建時間', '创建时间'),
@@ -142,6 +202,7 @@ const main = {
       ct: name('TOKEN OWNED', '持有代幣', '持有代币'),
     }
   },
+
   proposal: {
     createTime: name('Create time', '創建時間', '创建时间'),
     creator: name('Creator', '創建者', '创建者'),
@@ -155,7 +216,34 @@ const main = {
     para: name('Parameters', '參數', '参数'),
     from: name('from', '由'),
     to: name('to', '至'),
+    notReady: name('Proposal function is under development, coming soon in later 2019!', '提案功能正在建設中，將於2019年底推出。', '提案功能正在建设中，将于2019年底推出。'),
   },
+
+  personalCentre: {
+    tab: {
+      transaction: name('Transaction', '交易'),
+      market: name('Market', '巿場', '巿场'),
+      post: name('Post', '帖子'),
+      comment: name('Comment', '留言'),
+      saved: name('Saved', '保存'),
+    },
+    inMarket: {
+      created: name('Created Markets', '已創建的巿場', '已创建的巿场'),
+      saved:name('Saved Markets', '已保存的巿場', '已保存的巿场'),
+      subscribed:name('Subscribed Markets', '已參與的巿場', '已参与的巿场'),
+    },
+    inPost: {
+      created: name('Created Posts', '已創建的帖子', '已创建的帖子'),
+      saved: name('Saved Posts', '已保存的帖子', '已保存的帖子'),
+    },
+    inComment: {
+      created: name('Created Comments', '已創建的留言', '已创建的留言'),
+      saved: name('Saved Comments', '已保存的留言'),
+    },
+    connectMetaMask: name('You have to connect to Metamask.', '請先連接MetaMask錢包。', '请先连接MetaMask钱包。'),
+    personalCentre: name('Personal Centre', '個人中心', '个人中心'),
+  },
+
   faq: {
     title: name('FAQ', '常見問題', '常见问题'),
   }
@@ -167,8 +255,8 @@ const tc = JSON.parse(stringMain)
 const sc = JSON.parse(stringMain)
 
 function setObjectValueByKeys(o, keys = [], value) {
-  keys.reduce( (p, c, i, arr) => {
-    if(arr.length === i + 1) {
+  keys.reduce((p, c, i, arr) => {
+    if (arr.length === i + 1) {
       p[c] = value
       return p
     }
@@ -181,7 +269,7 @@ function setObjectValueByKeys(o, keys = [], value) {
 function f(o, keys = []) {
   for (const [key, value] of Object.entries(o)) {
     const cKey = [...keys, key]
-    if('en' in value && 'tc' in value && 'sc' in value) {
+    if ('en' in value && 'tc' in value && 'sc' in value) {
       setObjectValueByKeys(en, cKey, value.en)
       setObjectValueByKeys(tc, cKey, value.tc)
       setObjectValueByKeys(sc, cKey, value.sc)
