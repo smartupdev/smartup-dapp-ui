@@ -14,8 +14,10 @@ import { ipfsHost } from '../../../actions/ipfs'
 
 import { ToastConsumer } from 'react-toast-notifications'
 import { share } from '../../../alphaWebService'
+import { useLang } from '../../../language'
 
 function DiscussionItem ({ loggedIn, post, isDetailView, toggleLikePost, toggleDislikePost, toggleFollowPost }) {
+  const [lang] = useLang()
   const { id, username,userAddress, time, title, content, photo, isCollect, isLiked, isDisliked, numberOfLike = 1000, numberOfDislike = 2000, numberOfComment = 3000, marketId, lastReply } = post
   function like(e) {
     loggedIn &&
@@ -30,7 +32,7 @@ function DiscussionItem ({ loggedIn, post, isDetailView, toggleLikePost, toggleD
       {({ goto }) => 
         <Row spaceBetween spacingM onClick={isDetailView ? undefined : () => goto.discussionDetail({ postId: id, id: marketId })}>
           <Col flex={1} overflowHidden RightXL>
-            <Text S note>{`Posted by ${shorten(username || userAddress)}, about ${toAgo(time)}`}</Text>
+            <Text S note>{lang.discussion.post} {shorten(username || userAddress)}, {lang.discussion.about} {toAgo(time)}</Text>
             <Text VXS>{title}</Text>
             {
               isDetailView ?

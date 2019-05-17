@@ -1,3 +1,5 @@
+import { nextTick } from "q";
+
 function name(en, tc, sc) {
   return {
     en,
@@ -8,7 +10,7 @@ function name(en, tc, sc) {
 
 const main = {
   dispute: {
-    notReady: name('Dispute function is under development, coming soon in later 2019!', 'XXX'),
+    notReady: name('Dispute function is under development, coming soon in later 2019!', '檢舉功能正在建設中，將於2019年底推出。', '检举功能正在建设中，将于2019年底推出。'),
   },
 
   result: name('RESULTS', '個搜尋結果', '个搜寻结果'),
@@ -16,9 +18,19 @@ const main = {
   trade: name('Trade', '交易', '交易'),
   loadMore: name('Load More', '更多'),
 
-  timeAgo: {
+  dragFile: {
+    dragFile: name('Drag file here', '拖放圖片至此', '拖放图片至此'),
+    chooseFile: name('Choose file to upload', '上載更改圖片', '上载更改图片'),
+    uploading: name('Uploading file', '上載中', '上载中')
+  },
+
+  time: {
+    min: name('m ago', '分鐘前'),
     day: name('d ago', '日前'),
-    hour: name('h ago', '小時前', '小时前')
+    hour: name('h ago', '小時前', '小时前'),
+    now: name('now', '剛剛', '刚刚'),
+    months: name(['Jan', 'Feb' , 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'], ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月']),
+    weekdays: name(['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'], ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'])
   },
 
   home: {
@@ -68,8 +80,6 @@ const main = {
     
     setting: {
       avatar: name('Avatar photo', '個人圖片', '个人图片'),
-      dragFile: name('Drag file here', '拖放圖片至此', '拖放图片至此'),
-      changeFile: name('Change file to upload', '上載更改圖片', '上载更改图片'),
       userName: name('User Name', '用戶名稱', '用户名称'),
       nameReq: name('Capital sensitive, 6-15 characters.', '區分大小寫，6-15字符。', '区分大小写，6-15字符。'),
       nameLock: name('Username is confirmed and locked.', '用戶名稱已更改並鎖定。', '用户名称已更改并锁定。'),
@@ -82,6 +92,28 @@ const main = {
     
     connectButton: name('Connect', '連接', '连接'),
   },
+
+  createMarket: {
+    tab: {
+      basicInfo: name('Basic Information', '基本資料', '基本资料'),
+      equation: name('Price Equation', '價格方程', '价格方程'),
+      deposit: name('Deposit', '按金')
+    },
+    createMarket: name('CREATE MARKET', '創建巿場', '创建巿场'),
+    createDeposit: name('Market creation deposit', '創建巿場按金', '创建巿场按金'),
+    marketName: name('Market Name', '巿場名稱', '巿场名称'),
+    marketOverview: name('Market Overview', '巿場概要', '巿场概要'),
+    nameDes: name('Capital sensitive, 3-40 characters, market name cannot be changed.', '區分大小寫，3-40字符。創建後不可更改。', '区分大小写，3-40字符。创建后不可更改。'),
+    overviewDes: name('150 characters to help new members get to know your market. Overview cannot be changed.', '以150字簡單介紹你的項目。巿場概要在創建巿場後無法更改。', '以150字简单介绍你的项目。巿场概要在创建巿场后无法更改。'),
+    marketAvatar: name('Market Avatar', '巿場圖像' , '巿场图像'),
+    marketCover: name('Market Cover Photo', '巿場封面圖', '巿场封面图'),
+    creating: name('MAKRET IS CREATING!', '巿場正在創建！', '巿场正在创建！'),
+    preview: name('Preview The New Market', '預覽新巿場', '预览新巿场'),
+    next: name('Next', '下一步'),
+    back: name('Back', '返回'),
+    create: name('Create', '創建', '创建')
+  },
+
 
   
   term: name('Terms of Service', '服務條款', '服务条款'),
@@ -132,8 +164,7 @@ const main = {
 
   discussion: {
     post: name('Posted by', '發布自', '发布自'),
-    day: name('d ago', '日前'),
-    hour: name('h ago', '小時前', '小时前'),
+    about: name('about', '約'),
     reply: name('reply', '回覆', '回复'),
     feedback: name('feedback', '回應', '回应'),
     like: name('like', '讚好', '赞好'),
@@ -142,6 +173,13 @@ const main = {
     save: name('save', '存儲', '存储'),
     replies: name('more replies', '更多回覆', '更多回复'),
     vote: name('VOTE', '投票'),
+    create: {
+      title: name('Title', '標題', '标题'),
+      text: name('Text','內文'),
+      photo: name('Photo', '圖片', '图片'),
+      submit: name('Submit', '提交'),
+      cancel: name('Cancel', '取消')
+    }
   },
 
   general: {
@@ -172,6 +210,7 @@ const main = {
     para: name('Parameters', '參數', '参数'),
     from: name('from', '由'),
     to: name('to', '至'),
+    notReady: name('Proposal function is under development, coming soon in later 2019!', '提案功能正在建設中，將於2019年底推出。', '提案功能正在建设中，将于2019年底推出。'),
   },
 
   faq: {

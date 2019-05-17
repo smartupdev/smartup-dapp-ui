@@ -8,7 +8,7 @@ import { DonutLoader } from '../Loader'
 import theme from '../../theme'
 import styled, { css } from 'styled-components'
 import { ipfsHost } from '../../actions/ipfs'
-
+import { useLang } from '../../language'
 const Box = styled(Col)`
   border: dashed 1px ${p => p.theme.borderColor};
   height: ${p => p.height};
@@ -85,6 +85,7 @@ export default function ({
       target.removeEventListener('drop', handleDrop)
     }
   }, [disabled])
+  const [lang] = useLang()
   return (
     <>
       <ImageBox show={value} center relative fitHeight>
@@ -106,12 +107,12 @@ export default function ({
           isLoading ?
             <>
               <DonutLoader page />
-              <Text note TopS>Uploading file</Text>
+              <Text note TopS> {lang.dragFile.uploading} </Text>
             </>
             :
             <>
-              <Text BottomS note>Drag a file here</Text>
-              <Button primary LeftXL RightXL label='Choose file to upload' onClick={(e) => inputRef.current.click()} />
+              <Text BottomS note> {lang.dragFile.dragFile} </Text>
+              <Button primary LeftXL RightXL label= {lang.dragFile.chooseFile} onClick={(e) => inputRef.current.click()} />
               <HiddenFile accept="image/x-png,image/gif,image/jpeg,image/png" type='file' id="browse" name="browse" ref={inputRef} value={''} onChange={e => onChoose(e.target.files)} />
               {error && <Text error S TopS>{error.message}</Text>}
             </>
