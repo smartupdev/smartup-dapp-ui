@@ -9,7 +9,7 @@ import ScrollLoader from '../../../components/ScrollLoader'
 
 import { connect } from 'react-redux'
 import { getCollectedReplys, getCreatedReplys, reset } from '../../../actions/personalCenter'
-
+import { useLang } from '../../../language'
 export function ReplyBody({ replys, loadMore, hasMore, isLoading }) {
   return (
     <>
@@ -37,7 +37,7 @@ function Index({
     getCreatedReplys()
     return reset
   }, [])
-
+  const [lang] = useLang()
   return (
     <Col>
       <Panel
@@ -47,7 +47,7 @@ function Index({
         onClick={() => setExpandCreated(!expandCreated)}
         error={createdReplysError}
         loading={gettingCreatedReplys}
-        header='Created comments'
+        header={lang.personalCentre.inComment.created}
         body={<ReplyBody replys={createdReplys} loadMore={getCreatedReplys} hasMore={createdReplysHasNextPage} isLoading={gettingCreatedReplys} />} />
       <Panel
         maxHeight='1000vh'
@@ -56,7 +56,7 @@ function Index({
         onClick={() => setExpandSaved(!expandSaved)}
         error={collectedReplysError}
         loading={gettingCollectedReplys}
-        header='Saved comments'
+        header={lang.personalCentre.inComment.saved}
         body={<ReplyBody replys={collectedReplys} loadMore={getCollectedReplys} hasMore={collectedReplysHasNextPage} isLoading={gettingCollectedReplys} />} />
     </Col>
   )

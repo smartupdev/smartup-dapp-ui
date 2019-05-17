@@ -38,12 +38,14 @@ const Top = styled(Row)`
   padding: ${p => `${p.theme.spacingS} ${p.theme.spacingM}`};
 `
 
-const Terms = () =>
+const Terms = () => {
+  const [lang] = useLang()
+  return [
   <Col flex={1} bottom center>
     <Hr />
-    <Text underline S VM onClick={onClickTnc}>Terms of Service</Text>
+    <Text underline S VM onClick={onClickTnc}>{lang.term}</Text>
   </Col>
-
+]}
 
 const Panel = ({ 
   nttBalance,

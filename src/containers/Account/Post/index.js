@@ -9,7 +9,7 @@ import ScrollLoader from '../../../components/ScrollLoader'
 
 import { connect } from 'react-redux'
 import { getCollectedPosts, getCreatedPosts, reset } from '../../../actions/personalCenter'
-
+import { useLang } from '../../../language'
 function Index({ 
   createdPost: {posts: createdPosts, getting: gettingCreatedPosts, error: createdPostsError, hasNextPage: createdPostsHasNextPage},
   collectedPost: {posts: collectedPosts, getting: gettingCollectedPosts, error: collectedPostsError, hasNextPage: collectedPostsHasNextPage},
@@ -22,6 +22,7 @@ function Index({
     getCreatedPosts()
     return reset
   }, [])
+  const [lang] = useLang()
   return (
     <Col>
       <Panel
@@ -31,7 +32,7 @@ function Index({
         onClick={() => setExpandCreated(!expandCreated)}
         error={createdPostsError}
         loading={gettingCreatedPosts}
-        header='Created posts'
+        header={lang.personalCentre.inPost.created}
         body={
           <>
             {createdPosts.map(post => 
@@ -50,7 +51,7 @@ function Index({
         onClick={() => setExpandSaved(!expandSaved)}
         error={collectedPostsError}
         loading={gettingCollectedPosts}
-        header='Saved posts'
+        header={lang.personalCentre.inPost.saved}
         body={
           <>
             {collectedPosts.map(post => 

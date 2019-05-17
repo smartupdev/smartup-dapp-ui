@@ -113,11 +113,17 @@ const main = {
     back: name('Back', '返回'),
     create: name('Create', '創建', '创建')
   },
-
-
   
   term: name('Terms of Service', '服務條款', '服务条款'),
 
+  mainpageTab: {
+    home: name('Home', '主頁', '主页'),
+    createMarket: name('Create Martket', '創建巿場'),
+    personalCentre: name('Personal Centre', '個人中心', '个人中心'),
+    dispute: name('Dispute', '檢舉'),
+    feedbackUs: name('Feedback Us', '意見回饋'),
+    faq: name('FAQ', '常見問題')
+  },
 
   marketTab: {
     trade: name('Trading', '交易'),
@@ -211,6 +217,31 @@ const main = {
     from: name('from', '由'),
     to: name('to', '至'),
     notReady: name('Proposal function is under development, coming soon in later 2019!', '提案功能正在建設中，將於2019年底推出。', '提案功能正在建设中，将于2019年底推出。'),
+  },
+
+  personalCentre: {
+    tab: {
+      transaction: name('Transaction', '交易'),
+      market: name('Market', '巿場', '巿场'),
+      post: name('Post', '帖子'),
+      comment: name('Comment', '留言'),
+      saved: name('Saved', '保存'),
+    },
+    inMarket: {
+      created: name('Created Markets', '已創建的巿場', '已创建的巿场'),
+      saved:name('Saved Markets', '已保存的巿場', '已保存的巿场'),
+      subscribed:name('Subscribed Markets', '已參與的巿場', '已参与的巿场'),
+    },
+    inPost: {
+      created: name('Created Posts', '已創建的帖子', '已创建的帖子'),
+      saved: name('Saved Posts', '已保存的帖子', '已保存的帖子'),
+    },
+    inComment: {
+      created: name('Created Comments', '已創建的留言', '已创建的留言'),
+      saved: name('Saved Comments', '已保存的留言'),
+    },
+    connectMetaMask: name('You have to connect to Metamask.', '請先連接MetaMask錢包。', '请先连接MetaMask钱包。'),
+    personalCentre: name('Personal Centre', '個人中心', '个人中心'),
   },
 
   faq: {
