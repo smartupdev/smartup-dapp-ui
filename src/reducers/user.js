@@ -1,48 +1,30 @@
 import {
-  LOGIN_METAMASK_REQUESTED, LOGIN_METAMASK_SUCCEEDED, LOGIN_METAMASK_FAILED,
-  // METAMASK_ETH_BALANCE_REQUESTED, 
-  METAMASK_ETH_BALANCE_SUCCEEDED, 
-  // METAMASK_ETH_BALANCE_FAILED,
-  // METAMASK_SUT_BALANCE_REQUESTED, 
-  METAMASK_SUT_BALANCE_SUCCEEDED, 
-  // METAMASK_SUT_BALANCE_FAILED,
-  // METAMASK_NTT_BALANCE_REQUESTED, 
-  METAMASK_NTT_BALANCE_SUCCEEDED, 
-  // METAMASK_NTT_BALANCE_FAILED,
   METAMASK_RESET,
-  USER_AUTH_SMARTUP_SUCCEEDED,
-  // USER_PERSON_SIGN_REQUESTED, USER_PERSON_SIGN_SUCCEEDED, 
-  USER_PERSON_SIGN_FAILED,
+  METAMASK_UPDATE,
+
+  LOGIN_METAMASK_REQUESTED, USER_AUTH_SMARTUP_SUCCEEDED,
+  LOGIN_METAMASK_FAILED, USER_LOGIN_SMARTUP_FAILED, USER_PERSON_SIGN_FAILED, USER_AUTH_SMARTUP_FAILED,
+
+  METAMASK_ETH_BALANCE_SUCCEEDED, METAMASK_SUT_BALANCE_SUCCEEDED, METAMASK_NTT_BALANCE_SUCCEEDED, 
+  
   USER_AVATAR_CHANGE_REQUESTED, USER_AVATAR_CHANGE_SUCCEEDED, USER_AVATAR_CHANGE_FAIL,
-  USER_CURRENT_INFO_REQUESTED, USER_CURRENT_INFO_SUCCEEDED, USER_CURRENT_INFO_FAIL,
   USER_UPDATE_AVATAR_REQUESTED, USER_UPDATE_AVATAR_SUCCEEDED, USER_UPDATE_AVATAR_FAIL,
   USER_UPDATE_NAME_REQUESTED, USER_UPDATE_NAME_SUCCEEDED, USER_UPDATE_NAME_FAIL,
-  USER_NAME_CHANGE,USER_NAME_SUBMITTING,
+  USER_NAME_CHANGE, USER_NAME_SUBMITTING,
 } from '../actions/actionTypes';
 import { userMassage } from  '../integrator/massager'
 
 export const initialState = {
   ethBalance: null,
-  gettingEth: false,
-  ethError: null,
-
   sutBalance: null,
-  gettingSut: false,
-  sutError: null,
-
   nttBalance: null,
-  gettingNtt: false,
-  nttError: null,
-
-  // metaMaskEnabled: false,
 
   account: undefined,
   loggedIn: false,
   isLoading: false,
-  metaMaskEableError: null,
-  metaMaskSignError: null,
+  loginError: null, 
 
-  metaMaskHint: 'MetaMask',
+  metaMaskHint: 'MetaMask', // TODO: remvoe
 
   userName: '',
   realUserName: '',
@@ -67,90 +49,52 @@ export default (state = initialState, action) => {
   switch (action.type) {
     case METAMASK_RESET:
       return initialState
+    case METAMASK_UPDATE:
+      return {
+        ...state,
+        account: action.payload.selectedAddress
+      }
+    // login related
     case LOGIN_METAMASK_REQUESTED:
       return {
         ...state,
-        loggedIn: false,
         isLoading: true,
       };
-    case LOGIN_METAMASK_SUCCEEDED:
-      return {
-        ...state,
-        account: action.payload,
-        metaMaskEableError: initialState.metaMaskEableError
-      };
     case LOGIN_METAMASK_FAILED:
+    case USER_LOGIN_SMARTUP_FAILED:
+    case USER_PERSON_SIGN_FAILED:
+    case USER_AUTH_SMARTUP_FAILED:
       return {
         ...state,
         isLoading: false,
-        loggedIn: false,
-        metaMaskEableError: true,
+        loginError: action.type
       };
     case USER_AUTH_SMARTUP_SUCCEEDED:
       return {
         ...state,
         isLoading: false,
         loggedIn: true,
-        metaMaskSignError: initialState.metaMaskSignError
+        ...userMassage(action.payload.user),
+        loginError: initialState.loginError
       }
-    case USER_PERSON_SIGN_FAILED:
-      return {
-        ...state,
-        isLoading: false,
-        loggedIn: false,
-        metaMaskSignError: true
-      }
-    // case METAMASK_ETH_BALANCE_REQUESTED:
-    //   return {
-    //     ...state,
-    //     gettingEth: true
-    //   }
+
+    // balance related
     case METAMASK_ETH_BALANCE_SUCCEEDED:
       return {
         ...state,
-        // gettingEth: false,
         ethBalance: action.payload,
       };
-    // case METAMASK_ETH_BALANCE_FAILED:
-    //   return {
-    //     ...state,
-    //     gettingEth: false,
-    //     ethError: action.payload
-    //   };
-    // case METAMASK_SUT_BALANCE_REQUESTED:
-    //   return {
-    //     ...state,
-    //     gettingSut: true
-    //   }
     case METAMASK_SUT_BALANCE_SUCCEEDED:
       return {
         ...state,
-        // gettingSut: false,
         sutBalance: action.payload,
       };
-    // case METAMASK_SUT_BALANCE_FAILED:
-    //   return {
-    //     ...state,
-    //     gettingSut: false,
-    //     sutError: action.payload
-    //   };
-    // case METAMASK_NTT_BALANCE_REQUESTED:
-    //   return {
-    //     ...state,
-    //     gettingNtt: true
-    //   }
     case METAMASK_NTT_BALANCE_SUCCEEDED:
       return {
         ...state,
-        // gettingNtt: false,
         nttBalance: action.payload,
       };
-    // case METAMASK_NTT_BALANCE_FAILED:
-    //   return {
-    //     ...state,
-    //     gettingNtt: false,
-    //     nttError: action.payload,
-    //   }
+
     case USER_AVATAR_CHANGE_REQUESTED:
       return {
         ...state,
@@ -187,7 +131,7 @@ export default (state = initialState, action) => {
         updatingUserInfo: false,
         updateAvatarError: action.payload,
       }
-      case USER_NAME_SUBMITTING:
+    case USER_NAME_SUBMITTING:
       return {
         ...state,
         updateNameError: action.payload ? 'Username can only be changed once.' : initialState.updateNameError,
@@ -212,25 +156,6 @@ export default (state = initialState, action) => {
         ...state,
         updatingUserInfo: false,
         updateNameError: 'Username can only be changed once.',
-      }
-
-    case USER_CURRENT_INFO_REQUESTED:
-      return {
-        ...state,
-        gettingUserInfo: true
-      }
-    case USER_CURRENT_INFO_SUCCEEDED:
-      return {
-        ...state,
-        gettingUserInfo: false,
-        ...userMassage(action.payload),
-        userInfoError: initialState.userInfoError,
-      }
-    case USER_CURRENT_INFO_FAIL:
-      return {
-        ...state,
-        gettingUserInfo: false,
-        userInfoError: action.payload,
       }
     case USER_NAME_CHANGE: {
       const error = action.payload.length < 6 || action.payload.length > 15

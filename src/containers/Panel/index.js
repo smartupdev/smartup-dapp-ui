@@ -17,6 +17,7 @@ import lang, { currentLang } from '../../lang'
 import { shorten } from '../../lib/util'
 
 import { connect } from 'react-redux'
+import { LOGIN_METAMASK_FAILED, USER_LOGIN_SMARTUP_FAILED, USER_PERSON_SIGN_FAILED, USER_AUTH_SMARTUP_FAILED } from '../../actions/actionTypes'
 import { setActiveTab } from '../../actions/panel'
 import { loginMetaMask } from '../../actions/user'
 import { onClickTnc } from '../../actions/ipfs'
@@ -43,11 +44,17 @@ const Terms = () =>
   </Col>
 
 
+const networkName = {
+  3: 'Ropsten Test Network',
+  4: 'Rinkeby Test Network'
+}
+
 const Panel = ({ 
+  metamask,
   nttBalance,
   metaMaskHint, account, 
   userAvatar, userName, loginMetaMask, 
-  loggedIn, isLoading, metaMaskEableError, metaMaskSignError,
+  loggedIn, isLoading, loginError,
   setActiveTab, activeTabIndex,
   watchNotification, unreadCount }) => {
   const TABS = getTabs(unreadCount)
@@ -55,6 +62,15 @@ const Panel = ({
   useEffect(() => {
     watchNotification()
   }, [])
+  console.log(metamask)
+  const metamaskError = 
+      metamask.isEnabled === undefined ? <Text error S>Please install or enable the MetaMask browser plug-in from <A XS error href='https://metamask.io/' target="_blank">Metamask.io</A></Text> 
+    : !metamask.isUnlocked ? <Text error S>Please login your MetaMask</Text>
+    : !metamask.isTargetNetwork ? <Text error S>Please change MetaMask network to {networkName[metamask.networkVersion] || 'Main Ethereum Network'}</Text> 
+    : loginError === USER_PERSON_SIGN_FAILED ? <Text error S>Please sign the message for login purpose</Text> 
+    : loginError === LOGIN_METAMASK_FAILED ? <Text error S>Please enable MetaMask</Text> 
+    : loginError ? <Text error S>Login failed. Please try again later</Text> :
+    ''
   return (
     <Col width={`${PANEL_WIDTH}px`} center={!loggedIn} centerVertical={!loggedIn}>
       {loggedIn ?
@@ -74,15 +90,10 @@ const Panel = ({
         :
         <Col center>
           <People XL round color={theme.white} />
-          <Button primary outline verticalMargin label={lang.panel.connectButton[currentLang]} onClick={loginMetaMask} disabled={isLoading} />
+          <Button primary outline verticalMargin label={lang.panel.connectButton[currentLang]} onClick={loginMetaMask} disabled={isLoading || metamaskError && !loginError} />
           <Text note>{isLoading ? 'Please check Metamask' : metaMaskHint}</Text>
-            <Row width={`${PANEL_WIDTH*.8}px`} spacingTopXS>
-              { metaMaskEableError &&
-                <Text error S>Please install or enable the MetaMask browser plug-in from <A XS error href='https://metamask.io/' target="_blank">Metamask.io</A></Text>
-              }
-              { metaMaskSignError &&
-                <Text error S>Please sign the message for login purpose.</Text>
-              }
+            <Row width={`${PANEL_WIDTH*.8}px`} spacingTopXS center>
+              {metamaskError}
             </Row>
         </Col>
       }
@@ -91,17 +102,20 @@ const Panel = ({
 }
 
 const mapStateToProps = state => ({
-  nttBalance: state.user.nttBalance,
-  account: state.user.account,
-  loginError: state.user.loginError,
-  metaMaskHint: state.user.metaMaskHint,
-  userName: state.user.userName,
-  userAvatar: state.user.userAvatar,
-  activeTabIndex: state.panel.activeTabIndex,
+  metamask: state.metamask,
+
+  metaMaskHint: state.user.metaMaskHint, // TODO: remove
+
   loggedIn: state.user.loggedIn,
   isLoading: state.user.isLoading,
-  metaMaskEableError: state.user.metaMaskEableError,
-  metaMaskSignError: state.user.metaMaskSignError,
+  loginError: state.user.loginError,
+  account: state.user.account,
+  nttBalance: state.user.nttBalance,
+  
+  userName: state.user.userName,
+  userAvatar: state.user.userAvatar,
+
+  activeTabIndex: state.panel.activeTabIndex,
   unreadCount: state.notification.unreadCount
 });
 

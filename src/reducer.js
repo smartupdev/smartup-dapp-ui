@@ -9,6 +9,7 @@ import createMarket from './reducers/createMarket';
 import panel from './reducers/panel';
 import trade from './reducers/trade';
 
+import metamask from './reducers/metamask'
 import globalInfo from './reducers/globalInfo'
 import userMarketWallet from './reducers/userMarketWallet'
 import userTransaction from './reducers/userTransaction'
@@ -24,6 +25,7 @@ import userSavedReply from './reducers/userSavedReply'
 import { combineReducers } from 'redux';
 
 export default combineReducers({
+    metamask,
     globalInfo,
     userMarketWallet,
     userTransaction,

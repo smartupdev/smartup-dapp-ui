@@ -13,7 +13,7 @@ import { Row } from '../../components/Layout'
 import NotFound from '../NotFound'
 
 import { connect } from 'react-redux';
-import { checkLogin } from '../../actions/user'
+import { checkLogin, watchMetamask } from '../../actions/user'
 
 const Container = styled(Row)`
   background-color: ${p => p.theme.bgColor};
@@ -21,10 +21,11 @@ const Container = styled(Row)`
   height: 100vh;
 `
 
-const App = ({ checkLogin }) => {
+const App = ({ checkLogin, watchMetamask }) => {
   useEffect( () => {
     checkVersion()
-    checkLogin()
+    watchMetamask()
+    // checkLogin()
   }, [])
   return (
     <Container>
@@ -40,6 +41,6 @@ const App = ({ checkLogin }) => {
 }
 
 const mapDispatchToProps = {
-  checkLogin
+  watchMetamask
 } 
 export default connect(null, mapDispatchToProps)(App);

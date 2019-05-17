@@ -141,7 +141,7 @@ export function onTrade() {
         isWeb3: true,
         loginRequired: true,
         params: {
-          from: getAccount(),
+          from: await getAccount(),
           to: isSell ? address : sutContractAddress,
           value: '0x0',
           data: isSell ? createAskCtData(encodeCtAmount) : createBidCtData({ marketAddress: address, encodeCtPrice, encodeCtAmount })

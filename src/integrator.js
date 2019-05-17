@@ -2,23 +2,27 @@ import Web3 from 'web3'
 import { NOT_LOGIN } from './lib/util/fetch'
 import { USER_PERSON_SIGN_FAILED } from './actions/actionTypes'
 
-export const smartupContractAddress = '0x184a3dad8912a81ab393b83892f2039ec0297132';
+import { ENV } from './config'
+
+const { smartupContractAddress, networkVersion } = ENV 
 export const sutContractAddress = '0xf1899c6eb6940021c1ae4e9c3a8e29ee93704b03'
 export const nttContractAddress = '0x846ce03199a759a183cccb35146124cd3f120548'
-export const smartupWeb3 = window.web3 && new Web3(window.web3.currentProvider)
-window.sut = smartupWeb3
+const provider = Web3.givenProvider // || window.ethereum || window.web3 && window.web3.currentProvider
+export const smartupWeb3 = provider ? new Web3(provider) : null
 
 const NO_ACCOUNT = 'Please connect to metamask.'
+window.sut = smartupWeb3
+window.web9 = Web3
 
-export const getAccount = () => {
-  if (window.web3) {
-    return window.web3.eth.accounts[0];
+export function getAccount() {
+  if(smartupWeb3) {
+    return smartupWeb3.eth.getAccounts().then(a => a[0].toLocaleLowerCase()) // MM bug
   }
   return undefined;
 };
 
 export function checkIsSupportWeb3() {
-  return typeof window.ethereum !== 'undefined' && typeof window.web3 !== 'undefined'
+  return !!smartupWeb3
 }
 export function formatToken(r) {
   return `${window.web3.fromWei(r)}`
@@ -146,7 +150,7 @@ export function asyncFunction(
     requestType && dispatch({ type: requestType, meta: options.meta })
     try {
       if (options.isWeb3 && !checkIsSupportWeb3()) throw new Error('Web3 or ethereum is not supported.')
-      if(options.loginRequired && !getAccount()) throw new Error(NO_ACCOUNT)
+      if(options.loginRequired && !await getAccount()) throw new Error(NO_ACCOUNT)
       let response = await func(...[options.params, options.params2])
       response = options.responsePayload ? options.responsePayload(response) : response
       responseType && dispatch({
@@ -157,6 +161,7 @@ export function asyncFunction(
       return [null, response]
     }
     catch (error) {
+      console.error(error, options.params)
       if(error.message === NOT_LOGIN || error.message === NO_ACCOUNT) dispatch({ type: USER_PERSON_SIGN_FAILED, meta: options.meta, payload: error, error: true })
       errorType && dispatch({
         type: errorType,
@@ -186,4 +191,25 @@ export function callbackFunction(
     )
     return await dispatch(asyncFunction(promise, requestType, responseType, errorType, options))
   }
+}
+
+// ========= my new start =========
+function noop() {}
+
+function metamaskMassage(r) {
+  return { ...r, isTargetNetwork: r.networkVersion === networkVersion } // '3' old, '4' new
+}
+
+// callback = ({ isEnabled<bool>, isUnlocked<bool>, networkVersion<string>, onboardingcomplete<bool>, selectedAddress<string>, }) => { do sth }
+export function metamaskListener(callback = console.log) {
+  provider.publicConfigStore.on('update', r => callback(metamaskMassage(r)))
+}
+export function getMetamaskInfo() {
+  return metamaskMassage(provider.publicConfigStore.getState())
+}
+export function enableMetamask() {
+  return window.ethereum && window.ethereum.enable().then( accounts => { 
+    if(!accounts) throw new Error('No account')
+    return accounts
+  })
 }

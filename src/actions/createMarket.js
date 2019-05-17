@@ -72,7 +72,7 @@ export function pay() {
           isWeb3: true,
           loginRequired: true,
           params: {
-            from: getAccount(),
+            from: await getAccount(),
             to: sutContractAddress,
             value: '0x0',
             data: createMarketData()

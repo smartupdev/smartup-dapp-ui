@@ -39,7 +39,7 @@ export function resetDetail() {
 }
 
 export function getCtBalance() {
-  return (dispatch, getState) => 
+  return async (dispatch, getState) => 
     dispatch(
       callbackFunction(
         smartupWeb3 && smartupWeb3.eth.call,
@@ -47,7 +47,7 @@ export function getCtBalance() {
         {
           isWeb3: true,
           params: { 
-            data:  getBalance( getAccount() ), 
+            data:  getBalance( await getAccount() ), 
             to: getState().market.currentMarket.address 
           },
           responsePayload: decodeResult
@@ -152,47 +152,3 @@ export function delSavedMarket(market) {
     return dispatch(delCollect('market', market.id))
   }
 }
-
-// TODO: refactor
-//收藏
-// export function collectMarket(record) {
-//   const requestParams = {
-//     type: 'market',
-//     objectMark: record.id,
-//   }
-//   if (!record.following) {
-//     //收藏
-//     return async (dispatch, getState) => {
-//       let [error] = await dispatch(asyncFunction(
-//         fetch.post,
-//         USER_COLLECT_ADD_REQUESTED, USER_COLLECT_ADD_SUCCEEDED, USER_COLLECT_ADD_FAILED,
-//         {
-//           params: API_USER_COLLECT_ADD,
-//           params2: requestParams,
-//           responsePayload: reps => record
-//         }
-//       )
-//       )
-//       if (!error) {
-//         // dispatch(getBookmarkMarketList())
-//       }
-//     }
-//   } else {
-//     //取消收藏
-//     return async (dispatch, getState) => {
-//       let [error] = await dispatch(asyncFunction(
-//         fetch.post,
-//         USER_COLLECT_DEL_REQUESTED, USER_COLLECT_DEL_SUCCEEDED, USER_COLLECT_DEL_FAILED,
-//         {
-//           params: API_USER_COLLECT_DEL,
-//           params2: requestParams,
-//           responsePayload: reps => record
-//         }
-//       )
-//       )
-//       if (!error) {
-//         // dispatch(getBookmarkMarketList())
-//       }
-//     }
-//   }
-// }
