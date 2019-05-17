@@ -45,7 +45,8 @@ const Terms = () => {
     <Hr />
     <Text underline S VM onClick={onClickTnc}>{lang.term}</Text>
   </Col>
-]}
+  ]
+}
 
 const Panel = ({ 
   nttBalance,
