@@ -5,7 +5,7 @@ import { Link, Route } from "react-router-dom";
 import Menu from './Menu'
 import {Col} from '../Layout'
 
-import Logo from '../../images/logo.png'
+import { ENV } from '../../config'
 import { useLang } from '../../language'
 
 const Header = styled.header`
@@ -30,17 +30,8 @@ function renderMenu({ id, path, icon, includePaths, onClick, menuComponent, star
           onClick={onClick} component={menuComponent} 
           startFromBottom={startFromBottom}
           />
-        return (
-          path ? 
-          <Link to={path}>
-            {IconMenu}
-          </Link>
-          :
-            IconMenu
-        )
-      }
-      
-      }
+        return path ? <Link to={path}>{IconMenu}</Link> : IconMenu
+      }}
     />
   )
 }
@@ -48,7 +39,7 @@ function renderMenu({ id, path, icon, includePaths, onClick, menuComponent, star
 export default ({ routes }) =>
   <Header>
     <Link to={routes[0].path}>
-      <Menu image={Logo} fixed />
+      <Menu image={ENV.logo} fixed />
     </Link>
     { routes.filter(r => r.isHeader).map(renderMenu) }
     <Col flex={1}/>
