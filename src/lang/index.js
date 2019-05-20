@@ -1,4 +1,4 @@
-import { nextTick } from "q";
+import { toToken, clone } from '../lib/util'
 
 function name(en, tc, sc) {
   return {
@@ -241,17 +241,24 @@ const main = {
 
   personalCentre: {
     inTransaction: {
-      createMarket: name('Paid 2500 SmartUp token to create a market', '支付2500個SmartUp幣創建巿場', '支付2500个SmartUp币创建巿场'),
-      buyCT: name('Bought ${ct} market token from ${toToken(sut)} SmartUp token', '賣出${ct}巿場代幣，兌換成${toToken(sut)}SmartUp幣', '卖出${ct}巿场代币，兑换成${toToken（SUT）} SmartUp币'),
-      sellCT: name('Sold ${ct} market token to ${toToken(sut)} SmartUp token', '買入${ct}巿場代幣，兌換自${toToken(sut)}SmartUp幣', '买入${ct}巿场代币，兑换自${toToken（SUT）} SmartUp币'),
+      typeTitle: { // MUST match with type
+        CreateMarket: name((ct, sut) => `Paid ${sut} SmartUp token to create a market`, (ct, sut) => `支付 ${sut} 個SmartUp幣創建巿場`, (ct, sut) => `支付 ${sut} 个SmartUp币创建巿场`),
+        BuyCT: name((ct, sut) => `Bought ${ct} market token from ${toToken(sut)} SmartUp token`, (ct, sut) => `賣出 ${ct} 巿場代幣，兌換成 ${toToken(sut)} SmartUp幣`, (ct, sut) => `卖出 ${ct} 巿场代币，兑换成 ${toToken(sut)} SmartUp币`),
+        SellCT: name((ct, sut) => `Sold ${ct} market token to ${toToken(sut)} SmartUp token`, (ct, sut) => `買入 ${ct} 巿場代幣，兌換自 ${toToken(sut)} SmartUp幣`, (ct, sut) => `买入 ${ct} 巿场代币，兑换自 ${toToken(sut)} SmartUp币`),
+      },
+      typeLabel: { // MUST match with type
+        CreateMarket: name('Market created', '創建巿場', '创建巿场'),
+        BuyCT: name('Trade placed (Buy)', '交易(買入)', '交易（买入）'),
+        SellCT: name('Trade placed (Sell)', '交易(賣出)', '交易（卖出）'),
+      },
       pending: name('PENDING', '處理中', '处理中'),
       success: name('SUCCESS', '成功'),
       fail: name('FAIL', '失敗', '失败'),
-      TXHASH: name('TXHASH'),
-      Type: name('Type', '種類', '种类'),
-      Market: name('Market', '巿場', '巿场'),
-      NumCT: name('Number of market token', '巿場代幣數目', '巿场代币数目'),
-      CreateTime: name('Created on', '創建時間', '创建时间'),
+      txhash: name('TXHASH'),
+      type: name('Type', '種類', '种类'),
+      market: name('Market', '巿場', '巿场'),
+      ct: name('Number of market token', '巿場代幣數目', '巿场代币数目'),
+      createTime: name('Created on', '創建時間', '创建时间'),
       lastUpdate: name('Last update', '更新時間', '更新时间')
     },
     inMarket: {
@@ -276,10 +283,10 @@ const main = {
   }
 }
 
-const stringMain = JSON.stringify(main)
-const en = JSON.parse(stringMain)
-const tc = JSON.parse(stringMain)
-const sc = JSON.parse(stringMain)
+// const stringMain = JSON.stringify(main)
+const en = clone(main)
+const tc = clone(main)
+const sc = clone(main)
 
 function setObjectValueByKeys(o, keys = [], value) {
   keys.reduce((p, c, i, arr) => {

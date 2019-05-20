@@ -17,13 +17,6 @@ import { useLang } from '../../../language'
 import { connect } from 'react-redux'
 import { getUserTransactionList, reset } from '../../../actions/personalCenter'
 
-
-const typeHelper = {
-  BuyCT:        { label: 'Trade placed (Buy)', title: (ct, sut) => `Bought ${ct} market token from ${toToken(sut)} SmartUp token` },
-  SellCT:       { label: 'Trade placed (Sell)', title: (ct, sut) => `Sold ${ct} market token to ${toToken(sut)} SmartUp token` },
-  CreateMarket: { label: 'Market created', title: (ct, sut) => `Paid ${sut} SmartUp token` },
-}
-
 const STAGE = {
   pending: 'pending',
   success: 'success',
@@ -44,7 +37,7 @@ function Transaction({
     return reset
   }, [])
   const [expands, setExpands] = useState([])
-  const [{ time: { weekdays, months } }] = useLang()
+  const [{ time: { weekdays, months }, personalCentre: { inTransaction } }] = useLang()
   return (
     <>
       {error && <Text TopS center error>{error.message}</Text>}
@@ -60,24 +53,24 @@ function Transaction({
           <Col key={txHash} fitHeight>
             <Row spacingM fitHeight onClick={onClick}>
               <Col flex={1}>
-                <Text BottomS L>{typeHelper[type].title(ct, sut)}</Text>
+                <Text BottomS L>{inTransaction.typeTitle[type](ct, sut)}</Text>
                 <Text BottomXS note>{marketName}</Text>
                 <Text note S>{toFullDate(createTime, weekdays, months)}</Text>
               </Col>
               <Col spaceBetween right>
-                <Text S green={stage===STAGE.success} red={stage===STAGE.fail} primary={stage===STAGE.pending}>{stage.toUpperCase()}</Text>
+                <Text S green={stage===STAGE.success} red={stage===STAGE.fail} primary={stage===STAGE.pending}>{inTransaction[stage]}</Text>
                 <More color='#ffffff' XS reverse={expands[index]} />
               </Col>
             </Row>
             <Expand isOpen={expands[index]}>
               <Col backgroundColor={theme.bgColorDark} HL VM>
               {[
-                { label: 'TXHASH', value: txHash },
-                { label: 'Type', value: typeHelper[type].label },
-                { label: 'Market', value: `${marketName} ${marketAddress}` },
-                { label: 'Number of market token', value: ct || 'N/A' },
-                { label: 'Created on', value: toFullDate(createTime, weekdays, months) },
-                { label: 'Last update', value: toFullDate(blockTime, weekdays, months) },
+                { label: inTransaction.txhash, value: txHash },
+                { label: inTransaction.type, value: inTransaction.typeLabel[type] },
+                { label: inTransaction.market, value: `${marketName} ${marketAddress}` },
+                { label: inTransaction.ct, value: ct || 'N/A' },
+                { label: inTransaction.createTime, value: toFullDate(createTime, weekdays, months) },
+                { label: inTransaction.lastUpdate, value: toFullDate(blockTime, weekdays, months) },
               ].map( ({label, value}) => 
                 <Row key={label} VXS>
                   <Text width='250px'>{label}</Text>

@@ -21,7 +21,7 @@ export const ENV_MAP = {
     apiHost:  'http://39.105.101.248:86', ipfsHost: 'https://ipfs.smartup.global/ipfs/', protocol: 'http',
     alphaUrl: 'http://39.105.101.248',    shareApi: '/node/share/medium??type=beta&url=/', versionApi: '/node/get/ipfs/hash?type=beta',
     smartupContractAddress: '0x184a3dad8912a81ab393b83892f2039ec0297132', networkVersion: '3',
-    logo: Logo
+    logo: LogoGif
   }, 
   // uni: { 
   //   id: 'dev', 
