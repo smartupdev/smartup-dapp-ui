@@ -23,8 +23,8 @@ const main = {
     dragFile: name('Drag file here', '拖放圖片至此', '拖放图片至此'),
     chooseFile: name('Choose file to upload', '上載更改圖片', '上载更改图片'),
     uploading: name('Uploading file', '上載中', '上载中'),
-    fileSize: name('File size exceeds the limit allowed(5MB).', '檔案大小超過5MB限制。', '档案大小超过5MB限制'),
-    fileType: name('Invalid file type. Only png, gif and jpg is allowed.', '上載檔案只限png, gif 及jpg。', '上载档案只限png，gif和jpg。'),
+    fileSizeError: name('File size exceeds the limit allowed(5MB).', '檔案大小超過5MB限制。', '档案大小超过5MB限制'),
+    fileTypeError: name('Invalid file type. Only png, gif and jpg is allowed.', '上載檔案只限png, gif 及jpg。', '上载档案只限png，gif和jpg。'),
   },
 
   time: {
@@ -169,7 +169,7 @@ const main = {
     needMoreSUT: name('You need more SmartUp to buy Idea tokens.', 'SmartUp幣餘額不足，無法交易。', 'SmartUp币余额不足，无法交易。'), 
     needMoreCT: name('You do not have enough token to sell.', '你的巿場代幣餘額不足，無法交易。', '你的巿场代币余额不足，无法交易。'),
     transactionRecord: name('Transaction record will be available after the first transaction made.', '交易紀錄於第一單交易完成後顯示。', '交易纪录于第一单交易完成后显示。'),
-    chart: name('Graph will be vailable after transactions made', '交易圖表將於交易完成後顯示', '交易图表将于交易完成后显示'),
+    chartNoAvailable: name('Graph will be available after transactions made', '交易圖表將於交易完成後顯示', '交易图表将于交易完成后显示'),
 
     table: {
       buySell: name('BUY/ SELL', '買入/賣出', '买入/卖出'),

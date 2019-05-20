@@ -44,6 +44,7 @@ export default function ({
   value, onChoose = console.log, isLoading = false, 
   error,
   ...rest }) {
+  const [{ dragFile }] = useLang()
   let dragCounter = 0
   const boxRef = useRef(null)
   const inputRef = useRef(null)
@@ -85,7 +86,6 @@ export default function ({
       target.removeEventListener('drop', handleDrop)
     }
   }, [disabled])
-  const [lang] = useLang()
   return (
     <>
       <ImageBox show={value} center relative fitHeight>
@@ -107,12 +107,12 @@ export default function ({
           isLoading ?
             <>
               <DonutLoader page />
-              <Text note TopS> {lang.dragFile.uploading} </Text>
+              <Text note TopS> {dragFile.uploading} </Text>
             </>
             :
             <>
-              <Text BottomS note> {lang.dragFile.dragFile} </Text>
-              <Button primary LeftXL RightXL label= {lang.dragFile.chooseFile} onClick={(e) => inputRef.current.click()} />
+              <Text BottomS note> {dragFile.dragFile} </Text>
+              <Button primary LeftXL RightXL label= {dragFile.chooseFile} onClick={(e) => inputRef.current.click()} />
               <HiddenFile accept="image/x-png,image/gif,image/jpeg,image/png" type='file' id="browse" name="browse" ref={inputRef} value={''} onChange={e => onChoose(e.target.files)} />
               {error && <Text error S TopS>{error.message}</Text>}
             </>

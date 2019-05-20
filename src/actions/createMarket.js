@@ -116,11 +116,8 @@ export function onChangeAvatar(files) {
     type: CREATE_MARKET_AVATAR_CHANGE_SUCCEEDED,
   }
   return asyncFunction(
-    postIpfsImg,
+    () => postIpfsImg(files[0]),
     CREATE_MARKET_AVATAR_CHANGE_REQUESTED, CREATE_MARKET_AVATAR_CHANGE_SUCCEEDED, CREATE_MARKET_AVATAR_CHANGE_FAILED,
-    {
-      params: files[0]
-    }
   )
 }
 
@@ -129,11 +126,8 @@ export function onChangeCover(files) {
     type: CREATE_MARKET_COVER_CHANGE_SUCCEEDED,
   }
   return asyncFunction(
-    postIpfsImg,
+    () => postIpfsImg(files[0]),
     CREATE_MARKET_COVER_CHANGE_REQUESTED, CREATE_MARKET_COVER_CHANGE_SUCCEEDED, CREATE_MARKET_COVER_CHANGE_FAILED,
-    {
-      params: files[0]
-    }
   )
 }
 

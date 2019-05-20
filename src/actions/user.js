@@ -240,11 +240,8 @@ export function onChangeAvatar(files) {
     type: USER_AVATAR_CHANGE_SUCCEEDED,
   }
   return asyncFunction(
-    postIpfsImg,
+    () => postIpfsImg(files[0]),
     USER_AVATAR_CHANGE_REQUESTED, USER_AVATAR_CHANGE_SUCCEEDED, USER_AVATAR_CHANGE_FAIL,
-    {
-      params: files[0]
-    }
   )
 }
 

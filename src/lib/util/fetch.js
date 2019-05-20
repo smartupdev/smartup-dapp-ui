@@ -52,6 +52,11 @@ async function cmFetch(method, api, params, host) {
   return json.obj
 }
 
+const langMap = {
+  en: 'en',
+  tc: 'zh-TW',
+  sc: 'zh-CN',
+}
 function getOptions(method = 'GET', params) {
   const r =  {
     method,
@@ -60,7 +65,9 @@ function getOptions(method = 'GET', params) {
       'Content-Type': 'application/x-www-form-urlencoded',
       // Origin: 'http://localhost:3000',
       // baseURL: apiBaseUrl,
-      'token': window.localStorage.getItem('token')
+      // import { useLang, getLang } from '../../language'
+      'sn-language': langMap[window.localStorage.getItem('lang')], // TODO: Remove
+      'token': window.localStorage.getItem('token') // TODO: Remove
     },
     mode: 'cors',
     // credentials: 'include',
