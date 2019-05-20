@@ -45,9 +45,9 @@ const Line = styled.div`
 `
 
 export function LanguageMenu() {
-  const [_1, _2, setLang] = useLang()
+  const [_1, lang, setLang] = useLang()
   return languageOptions.map( ({ label, value }) =>
-    <LabelText key={value} label={label} onClick={() => setLang(value)} width='60px' />
+    <LabelText key={value} label={label} onClick={() => setLang(value)} width='60px' primary={lang === value} />
   )
 }
 
