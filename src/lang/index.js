@@ -119,13 +119,19 @@ const main = {
   
   term: name('Terms of Service', '服務條款', '服务条款'),
 
-  mainpageTab: {
+  routes: { // must match with src/routes
     home: name('Home', '主頁', '主页'),
     createMarket: name('Create Martket', '創建巿場'),
-    personalCentre: name('Personal Centre', '個人中心', '个人中心'),
+    account: name('Personal Centre', '個人中心', '个人中心'),
     dispute: name('Dispute', '檢舉'),
-    feedbackUs: name('Feedback Us', '意見回饋'),
-    faq: name('FAQ', '常見問題')
+    faq: name('FAQ', '常見問題'),
+    feedback: name('Feedback Us', '意見回饋'),
+
+    accountTransaction: name('Transaction', '交易'),
+    accountMarket: name('Market', '巿場', '巿场'),
+    accountPost: name('Post', '帖子'),
+    accountComment: name('Comment', '留言'),
+    accountSaved: name('Saved', '保存'),
   },
 
   marketTab: {
@@ -232,13 +238,6 @@ const main = {
   },
 
   personalCentre: {
-    tab: {
-      transaction: name('Transaction', '交易'),
-      market: name('Market', '巿場', '巿场'),
-      post: name('Post', '帖子'),
-      comment: name('Comment', '留言'),
-      saved: name('Saved', '保存'),
-    },
     inMarket: {
       created: name('Created Markets', '已創建的巿場', '已创建的巿场'),
       saved:name('Saved Markets', '已保存的巿場', '已保存的巿场'),

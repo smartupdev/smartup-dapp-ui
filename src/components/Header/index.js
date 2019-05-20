@@ -6,6 +6,7 @@ import Menu from './Menu'
 import {Col} from '../Layout'
 
 import Logo from '../../images/logo.png'
+import { useLang } from '../../language'
 
 const Header = styled.header`
   background-color: ${p => p.theme.bgColorDark};
@@ -15,7 +16,8 @@ const Header = styled.header`
   flex-direction: column;
 `
 
-function renderMenu({ path, icon, includePaths, iconLabel, onClick, isFooter, component }, i) {
+function renderMenu({ id, path, icon, includePaths, iconLabel, onClick, isFooter, component }, i) {
+  const [{routes}] = useLang()
   return (
     <Route
       key={i}
@@ -23,10 +25,10 @@ function renderMenu({ path, icon, includePaths, iconLabel, onClick, isFooter, co
       exact={true}
       children={({ match, location }) => (
         isFooter ? // TODO
-          <Menu onClick={onClick} icon={icon} iconLabel={iconLabel} component={component} />
+          <Menu onClick={onClick} icon={icon} iconLabel={routes[id]} component={component} />
         :
         <Link to={path}>
-          <Menu selected={match || (includePaths && includePaths.includes(location.pathname))} icon={icon} iconLabel={iconLabel} />
+          <Menu selected={match || (includePaths && includePaths.includes(location.pathname))} icon={icon} iconLabel={routes[id]} />
         </Link>
       )}
     />
