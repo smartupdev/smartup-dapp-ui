@@ -67,15 +67,16 @@ const Panel = ({
   useEffect(() => {
     watchNotification()
   }, [])
-  const metamaskError = 
-      metamask.isEnabled === undefined ? <Text error S>Please install or enable the MetaMask browser plug-in from <A XS error href='https://metamask.io/' target="_blank">Metamask.io</A></Text> 
-    : !metamask.isUnlocked ? <Text error S>Please login your MetaMask</Text>
-    : !metamask.isTargetNetwork ? <Text error S>Please change MetaMask network to {networkName[metamask.networkVersion] || 'Main Ethereum Network'}</Text> 
-    : loginError === USER_PERSON_SIGN_FAILED ? <Text error S>Please sign the message for login purpose</Text> 
-    : loginError === LOGIN_METAMASK_FAILED ? <Text error S>Please enable MetaMask</Text> 
-    : loginError ? <Text error S>Login failed. Please try again later</Text> :
-    ''
   const [lang] = useLang()
+  const metamaskError = 
+      metamask.isEnabled === undefined ? <Text error S>{lang.panel.login.installMetamask} <A XS error href='https://metamask.io/' target="_blank">Metamask.io</A></Text> 
+    : !metamask.isUnlocked ? <Text error S>{lang.panel.login.login}</Text>
+    : !metamask.isTargetNetwork ? <Text error S>{lang.panel.login.changeNetwork} {networkName[metamask.networkVersion] || 'Main Ethereum Network'}</Text> 
+    : loginError === USER_PERSON_SIGN_FAILED ? <Text error S>{lang.panel.login.sign}</Text> 
+    : loginError === LOGIN_METAMASK_FAILED ? <Text error S>{lang.panel.login.enable}</Text> 
+    : loginError ? <Text error S>{lang.panel.login.fail}</Text> :
+    ''
+  
   return (
     <Col width={`${PANEL_WIDTH}px`} center={!loggedIn} centerVertical={!loggedIn}>
       {loggedIn ?
@@ -96,7 +97,7 @@ const Panel = ({
         <Col center>
           <People XL round color={theme.white} />
           <Button primary outline verticalMargin label={lang.panel.connectButton} onClick={loginMetaMask} disabled={isLoading || metamaskError && !loginError} />
-          <Text note>{isLoading ? 'Please check Metamask' : metaMaskHint}</Text>
+          <Text note>{isLoading ? lang.panel.login.checkMetamask : metaMaskHint}</Text>
             <Row width={`${PANEL_WIDTH*.8}px`} spacingTopXS center>
               {metamaskError}
             </Row>
