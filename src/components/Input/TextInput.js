@@ -19,7 +19,7 @@ const TextStyle = css`
 
   ${p => p.center && css`text-align: center`};
 
-  color: ${p => p.theme.colorSecondary}
+  color: ${p => p.theme.colorSecondary};
   :focus {
     border: 0px;
     box-shadow: 0;
@@ -29,6 +29,12 @@ const TextStyle = css`
   ${onClickCss}
   ${fontCss}
   ${spacingCss}
+  ${p => p.backgroundColor && css`
+    &:-webkit-autofill {
+      box-shadow: 0 0 0px 1000px ${p.backgroundColor} inset;
+      -webkit-text-fill-color: ${p.theme.colorSecondary};
+    }
+  `}
 `
 const TextInput = styled.input`
   ${TextStyle}

@@ -131,9 +131,6 @@ const CreateMarket = ({
               <Back />
               <Button label= {lang.createMarket.create} primary onClick={create} extended disabled={isFetching} />
             </Row>
-            <Col right>
-              { error.api && <Text S error>{error.api}</Text> }
-            </Col>
           </>
         :
         <>
@@ -151,6 +148,9 @@ const CreateMarket = ({
             </Col>
           </>
       }
+        <Col right>
+          { error.api && <Text S error>{error.api}</Text> }
+        </Col>
       </Col>
     </Col>
   )

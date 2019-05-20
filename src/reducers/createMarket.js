@@ -30,6 +30,7 @@ export const initialState = {
   coverUploading: false,
   marketId: '',
   error: {
+    apiError: null,
     name: null,
     desc: null,
     cover: null,
@@ -112,7 +113,11 @@ export default (state = initialState, action) => {
     case CREATE_MARKET_CHECK_REQUESTED: 
       return {
         ...state,
-        isFetching: true
+        isFetching: true,
+        error: {
+          ...state.error,
+          api: initialState.error.api
+        },
       }
     case CREATE_MARKET_CHECK_SUCCEEDED: 
       return {
@@ -125,7 +130,7 @@ export default (state = initialState, action) => {
         isFetching: false,
         error: {
           ...state.error,
-          name: action.payload.message
+          api: action.payload.message
         }
       }  
 

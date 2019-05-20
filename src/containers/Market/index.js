@@ -101,7 +101,7 @@ const Market = ({ get, toggleSavedMarket, getting, location, market, getMarketPo
           {
             getPath() === routeMap.discussion.path && 
             <Row right centerVertical>
-              <Search backgroundColor={theme.bgColor} bottom='1px' top='1px' right='30px' value={postKeyword} onChange={onChangeKeyword} onSearch={() => getMarketPost()} />
+              <Search id='discussion' backgroundColor={theme.bgColor} bottom='1px' top='1px' right='30px' value={postKeyword} onChange={onChangeKeyword} onSearch={() => getMarketPost()} />
               <Link>
                 { ({ goto }) => 
                 <Col absolute absRight='0' absTop='1px' absBottom='1px' HS backgroundColor={theme.bgColor} centerVertical>
