@@ -14,7 +14,6 @@ import ScrollLoader from '../../../components/ScrollLoader'
 import { getUrlParams } from '../../../routes'
 import { connect } from 'react-redux'
 import { getPost, onChangeNewComment, reply, getReplyList, } from '../../../actions/post'
-import { lang } from 'moment';
 import { useLang } from '../../../language'
 
 function DiscussionDetail({
@@ -30,10 +29,10 @@ function DiscussionDetail({
     getPost(postId)
     getReplyList(postId)
   }, [])
+  const [lang] =useLang()
 
   if(getDetailError) return <Text>{getDetailError.message}</Text>
   if(gettingDetail || !post) return <DonutLoader page />
-  const [lang] =useLang()
     return (
     <Col>
       <DiscussionItem post={post} isDetailView />
