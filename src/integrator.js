@@ -202,12 +202,16 @@ function metamaskMassage(r) {
 
 // callback = ({ isEnabled<bool>, isUnlocked<bool>, networkVersion<string>, onboardingcomplete<bool>, selectedAddress<string>, }) => { do sth }
 export function metamaskListener(callback = console.log) {
-  provider.publicConfigStore.on('update', r => callback(metamaskMassage(r)))
+  if(!provider) return null
+  provider.publicConfigStore
+  .on('update', r => callback(metamaskMassage(r)))
 }
 export function getMetamaskInfo() {
+  if(!provider) return {}
   return metamaskMassage(provider.publicConfigStore.getState())
 }
 export function enableMetamask() {
+  if(!provider) return null
   return window.ethereum && window.ethereum.enable().then( accounts => { 
     if(!accounts) throw new Error('No account')
     return accounts
