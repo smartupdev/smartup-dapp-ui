@@ -65,7 +65,7 @@ const faqs = [
       <Col>
         <Text bold>Create Market</Text>
         <Text  TopXS lineHeight S>For a Startuppers, you can create a market to realize your idea. After created the market, you can buy market tokens at the starting point with the lowest price. With more investors joining the market, more market tokens are generated and the price will go up. By that time, you can request to withdraw raised fund to realize your idea.</Text>
-        <Text  TopXS lineHeight S>1.	Click on the second icon ‘Create Market’ of the navigation bar at your left-hand side </Text>
+        <Text  TopXS lineHeight S>1.	Click on the second icon ‘Create Market’ of the navigation bar at your left-hand side. Or, you can click on <a style={{ color: '#fff' }} href='https://ipfs.smartup.global/ipfs/QmXR4x6snQ9EME6SNLNMcGmTje4sYzMeJb7xRHTHB1Jiqi/#/create/market'> here </a> to create your market.</Text>
         <Text  TopXS lineHeight S>2.	Input market name and overview, upload the market icon and photo</Text>
         <Text  TopXS lineHeight S>3.	Click “Next”</Text>
         <Text  TopXS lineHeight S>4.	Review the price curve of market token</Text>
@@ -233,7 +233,7 @@ const faqs = [
          <Text TopXS lineHeight S>•	<Text inline S bold>Descriptive Overview</Text> to let your followers know what you wanna do!</Text>
          <Text TopXS lineHeight S>•	<Text inline S bold>Intuitive icon</Text> to distinguish your market from others!</Text>
          <Text TopXS lineHeight S>•	<Text inline S bold>Market Photo</Text> to demonstrate how your product or idea look like, including background, aims and timeline that your investors and market followers need to know!</Text>
-         <Text  TopXS lineHeight S>3.	Lastly, click on the second icon ‘Create Market’ of the navigation bar at your left-hand side </Text>
+         <Text  TopXS lineHeight S>3.	Lastly, click on the second icon ‘Create Market’ of the navigation bar at your left-hand side Or, you can click on <a style={{ color: '#fff' }} href='https://ipfs.smartup.global/ipfs/QmXR4x6snQ9EME6SNLNMcGmTje4sYzMeJb7xRHTHB1Jiqi/#/create/market'> here </a> to create your market.</Text>
          <Text  TopXS lineHeight S>4.	Input market name and overview, upload the market icon and photo</Text>
          <Text  TopXS lineHeight S>5.	Click “Next”</Text>
          <Text  TopXS lineHeight S>6.	Review the price curve of market token</Text>
@@ -254,7 +254,7 @@ Deposit for creatinf the market. Fix 2500 SmartUp Token deposit.`,
     image: null,
     body: (
       <Col>
-         <Text lineHeight S>1.	Click on the second icon ‘Create Market’ of the navigation bar at your left-hand side </Text>
+         <Text lineHeight S>1.	Click on the second icon ‘Create Market’ of the navigation bar at your left-hand side (Or, you can click on <a style={{ color: '#fff' }} href='https://ipfs.smartup.global/ipfs/QmXR4x6snQ9EME6SNLNMcGmTje4sYzMeJb7xRHTHB1Jiqi/#/create/market'> here </a> to create your market.)</Text>
          <Text  TopXS lineHeight S>2.	Input market name and overview, upload the market icon and photo</Text>
          <Text  TopXS lineHeight S>3.	Click “Next”</Text>
          <Text  TopXS lineHeight S>4.	Review the price curve of market token</Text>
@@ -538,6 +538,7 @@ Deposit for creatinf the market. Fix 2500 SmartUp Token deposit.`,
     body: (
       <Col>
          <Text lineHeight S>You may find all trading records in the “Transaction” tab in “Personal Center”.</Text>
+         <Text lineHeight S>Personal Center: <a style={{ color: '#fff' }} href='https://ipfs.smartup.global/ipfs/QmXR4x6snQ9EME6SNLNMcGmTje4sYzMeJb7xRHTHB1Jiqi/#/account/transaction'>https://ipfs.smartup.global/ipfs/QmXR4x6snQ9EME6SNLNMcGmTje4sYzMeJb7xRHTHB1Jiqi/#/account/transaction</a></Text>
       </Col>
     )
   },
