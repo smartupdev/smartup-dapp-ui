@@ -77,7 +77,7 @@ const TableRecord = memo(
 // expandedRecords: Array <id>
 // S for small font size
 // noBorderCol is for no border in column
-export default ({ model, values, sortBy, orderBy, onClickHeader, onClick, expandedRecords = emptyArr, expandCompoent: ExpandCompoent, minWidth, S, inset, noBorderCol, autoHeight }) => {
+export default ({ recordKey = 'id' , model, values, sortBy, orderBy, onClickHeader, onClick, expandedRecords = emptyArr, expandCompoent: ExpandCompoent, minWidth, S, inset, noBorderCol, autoHeight, noResultText }) => {
   return (
     <TableWrappper>
       <Table minWidth={minWidth} autoHeight={autoHeight}>
@@ -91,19 +91,22 @@ export default ({ model, values, sortBy, orderBy, onClickHeader, onClick, expand
           }
         </TableTitle>
         {
-          values.map((record, index) =>
-            <TableRecord
-              key={record.id} 
-              record={record} 
-              index={index} 
-              expandedRecords={expandedRecords} 
-              noBorderCol={noBorderCol} 
-              inset={inset} 
-              model={model} 
-              S={S} 
-              onClick={onClick} 
-              ExpandCompoent={ExpandCompoent} />
-          )
+          values && values[0] ? 
+            values.map((record, index) => 
+              <TableRecord
+                key={record[recordKey]} 
+                record={record} 
+                index={index} 
+                expandedRecords={expandedRecords} 
+                noBorderCol={noBorderCol} 
+                inset={inset} 
+                model={model} 
+                S={S} 
+                onClick={onClick} 
+                ExpandCompoent={ExpandCompoent} />
+            )
+          : 
+            <Text>{noResultText}</Text>
         }
       </Table>
     </TableWrappper>

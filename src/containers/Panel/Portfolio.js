@@ -112,7 +112,7 @@ const Portfolio = ({
         body={
           <>
             <Col BottomXS LeftS RightS>
-              <Table S noBorderCol model={TableName} values={userMarketWallet.markets} />
+              <Table S noBorderCol model={TableName} values={userMarketWallet.markets} recordKey='marketId' />
               <ScrollLoader isButton hasMore={userMarketWallet.hasNextPage} id='market-wallet' isLoading={userMarketWallet.getting} loadMore={getMarketWallet} />
             </Col>
             <Hr />
