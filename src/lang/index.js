@@ -10,7 +10,7 @@ function name(en, tc, sc) {
 
 const main = {
   dispute: {
-    notReady: name('Dispute function is under development, coming soon in later 2019!', '檢舉功能正在建設中，將於2019年底推出。', '检举功能正在建设中，将于2019年底推出。'),
+    notReady: name('Dispute function is under development, coming soon in later 2019!', '檢舉功能正在開發中，將於2019年底推出。', '检举功能正在开发中，将于2019年底推出。'),
   },
 
   result: name('RESULTS', '個搜尋結果', '个搜寻结果'),
@@ -123,11 +123,11 @@ const main = {
 
   routes: { // must match with src/routes
     home: name('Home', '主頁', '主页'),
-    createMarket: name('Create Martket', '創建巿場'),
+    createMarket: name('Create Martket', '創建巿場', '创建巿场'),
     account: name('Personal Centre', '個人中心', '个人中心'),
-    dispute: name('Dispute', '檢舉'),
-    faq: name('FAQ', '常見問題'),
-    feedback: name('Feedback Us', '意見回饋'),
+    dispute: name('Dispute', '檢舉', '检举'),
+    faq: name('FAQ', '常見問題', '常见问题'),
+    feedback: name('Feedback Us', '意見回饋', '意见回馈'),
 
     accountTransaction: name('Transaction', '交易'),
     accountMarket: name('Market', '巿場', '巿场'),
@@ -236,12 +236,17 @@ const main = {
     para: name('Parameters', '參數', '参数'),
     from: name('from', '由'),
     to: name('to', '至'),
-    notReady: name('Proposal function is under development, coming soon in later 2019!', '提案功能正在建設中，將於2019年底推出。', '提案功能正在建设中，将于2019年底推出。'),
+    notReady: name('Proposal function is under development, coming soon in later 2019!', '提案功能正在開發中，將於2019年底推出。', '提案功能正在开发中，将于2019年底推出。'),
   },
 
   personalCentre: {
     inTransaction: {
       createMarket: name('Paid 2500 SmartUp token to create a market', '支付2500個SmartUp幣創建巿場', '支付2500个SmartUp币创建巿场'),
+      buyCT: name('Bought ${ct} market token from ${toToken(sut)} SmartUp token', '賣出${ct}巿場代幣，兌換成${toToken(sut)}SmartUp幣', '卖出${ct}巿场代币，兑换成${toToken（SUT）} SmartUp币'),
+      sellCT: name('Sold ${ct} market token to ${toToken(sut)} SmartUp token', '買入${ct}巿場代幣，兌換自${toToken(sut)}SmartUp幣', '买入${ct}巿场代币，兑换自${toToken（SUT）} SmartUp币'),
+      pending: name('PENDING', '處理中', '处理中'),
+      success: name('SUCCESS', '成功'),
+      fail: name('FAIL', '失敗', '失败')
     },
     inMarket: {
       created: name('Created Markets', '已創建的巿場', '已创建的巿场'),
