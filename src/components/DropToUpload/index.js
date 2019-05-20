@@ -68,7 +68,7 @@ export default function ({
     nohandle(e)
     setDragging(false)
     if (e.dataTransfer.files && e.dataTransfer.files.length > 0 && !disabled) {
-      onChoose(e.dataTransfer.files, dragFile.fileSizeError, dragFile.fileTypeError)
+      onChoose(e.dataTransfer.files)
       e.dataTransfer.clearData()
       dragCounter = 0
     }
@@ -113,7 +113,7 @@ export default function ({
             <>
               <Text BottomS note> {dragFile.dragFile} </Text>
               <Button primary LeftXL RightXL label= {dragFile.chooseFile} onClick={(e) => inputRef.current.click()} />
-              <HiddenFile accept="image/x-png,image/gif,image/jpeg,image/png" type='file' id="browse" name="browse" ref={inputRef} value={''} onChange={e => onChoose(e.target.files, dragFile.fileSizeError, dragFile.fileTypeError)} />
+              <HiddenFile accept="image/x-png,image/gif,image/jpeg,image/png" type='file' id="browse" name="browse" ref={inputRef} value={''} onChange={e => onChoose(e.target.files)} />
               {error && <Text error S TopS>{error.message}</Text>}
             </>
         }
