@@ -43,7 +43,7 @@ export default ({ id = '', backgroundColor, value, onChange, onSearch, top, bott
       <Dump />
       <Container backgroundColor={backgroundColor} top={top} bottom={bottom} right={right}>
         <Row centerVertical fullHeight spaceBetween>
-          <Input id={id + "search"} value={value} placeholder={lang.search} onChange={onChange} onBlur={onSearch} />
+          <Input id={id + "search"} value={value} placeholder={lang.search} onChange={onChange} onBlur={onSearch} S />
           {/* <Text note>Search</Text> */}
           <label htmlFor={id + "search"}>
             <Search S RightXS />
