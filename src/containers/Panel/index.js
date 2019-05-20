@@ -41,12 +41,12 @@ const Top = styled(Row)`
 
 const Terms = () => {
   const [lang] = useLang()
-  return [
-  <Col flex={1} bottom center>
-    <Hr />
-    <Text underline S VM onClick={onClickTnc}>{lang.term}</Text>
-  </Col>
-  ]
+  return (
+    <Col flex={1} bottom center>
+      <Hr />
+      <Text underline S VM onClick={onClickTnc}>{lang.term}</Text>
+    </Col>
+  )  
 }
 
 const networkName = {
