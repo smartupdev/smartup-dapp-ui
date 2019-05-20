@@ -83,7 +83,7 @@ const CreateMarket = ({
         :
           activeIndex === 1 ? 
           <>
-            <Label>Price equation of market token</Label>
+            <Label>{lang.createMarket.priceEquation}</Label>
             <Col spacingBottomXS>
               <Input background L disabled value={'\
 7.4999921875 × 10⁻²{ \
@@ -92,7 +92,7 @@ const CreateMarket = ({
 } + \
 7.8125 × 10⁻⁹[(𝑦 + 1 + 𝑥)² - (𝑦 + 1)²]'} />
             </Col>
-            <Label>Preview</Label>
+            <Label>{lang.createMarket.previewCurve}</Label>
             <Col spacingLeftL spacingRightL spacingTopM>
               <Chart />
             </Col>
@@ -104,7 +104,7 @@ const CreateMarket = ({
         :
           activeIndex === 2 ? 
           <>
-            <Label>{lang.createMarket.createDes}</Label>
+            <Label>{lang.createMarket.createDeposit}</Label>
             <Row centerVertical>
               <Image source={smartupIcon} M />
               <Col flex={1} spacingRightXS spacingLeftXS>
