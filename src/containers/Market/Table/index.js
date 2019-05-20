@@ -6,7 +6,6 @@ import Text from '../../../components/Text'
 import SimpleLineChart from '../../../components/SimpleLineChart'
 import Avatar from '../../../components/Avatar'
 import { Col } from '../../../components/Layout'
-// import lang, { currentLang } from '../../../lang'
 import { useLang } from '../../../language'
 import theme from '../../../theme'
 import { toPrice, toAgo, toPercent } from '../../../lib/util'
@@ -17,11 +16,15 @@ const colWidth = '130px'
 //TODO field match
 const _Icon = ({ value }) => <Avatar icon={value} />
 const _More = ({ isExpanded }) => <More reverse={isExpanded} XS color={theme.white} />
-const _Name = ({ value, record }) =>
-  <Col>
-    <Text>{value}</Text>
-    <Text note S>{toAgo(record.createTime)}</Text>
-  </Col>
+const _Name = ({ value, record }) => {
+  const [{ time: { now, min, hour, day } }] = useLang()
+  return (
+    <Col>
+      <Text>{value}</Text>
+      <Text note S>{toAgo(record.createTime, now, min, hour, day)}</Text>
+    </Col>
+  )
+}
 const _Percent = ({ value }) => <Text>{toPercent(value)}</Text>
 const _Price = ({ value }) => <Text price>{toPrice(value)}</Text>
 const _Volume = ({ value }) => <Text primary>{toPrice(value)}</Text>
@@ -35,8 +38,7 @@ export default function({
   expandedRecords, noExpand,
   autoHeight,
   minWidth = '1000px'  }) {
-  const [lang] = useLang()
-  const tableLang = lang.home.table
+  const [{ home: {table: tableLang} }] = useLang()
   const TableName = [
     { label: '',                            value: 'avatar',        sortable: false,  component: _Icon,           layoutStyle: { width: `calc( ${theme.iconSizeM} + 15px )`, center: true } },
     { label: tableLang.name,   value: 'name',          sortable: false,   component: _Name,           layoutStyle: { flex: 1, width: colWidth } },
