@@ -60,6 +60,15 @@ const main = {
       notification: name('Notifications', '通知'),
       setting: name('Settings', '設定', '设定')
     },
+    login: {
+      installMetamask: name('Please install or enable the MetaMask browser plug-in from', '請安裝及啟用MetaMask瀏覽器擴充程式:','请安装及启用MetaMask浏览器扩充程式:'),
+      login: name('Please login your MetaMask', '請登入MetaMask', '请登入MetaMask'),
+      changeNetwork: name('Please change MetaMask network to', '請更改MetaMask網絡至','请更改MetaMask网络至'),
+      sign: name('Please sign the message for login purpose', '請在MetaMask簽署登入', '请在MetaMask签署登入'),
+      enable: name('Please enable MetaMask', '請啟用MetaMask', '请启用MetaMask'),
+      fail: name('Login failed. Please try again later', '無法登入，請稍後再試', '无法登入，请稍后再试'),
+      checkMetamask: name('Please check Metamask.', '請查看MetaMask。', '请查看MetaMask。')
+    },
     portfolio: {
       wallet: {
         title: name('Market Wallet', '巿場錢包', '巿场钱包'),
@@ -75,10 +84,8 @@ const main = {
       },
       bookmark: {
         title: name('Bookmarks', '書籤', '书签')
-      },
-      login: {
-        checkMetamash: name('Please check Metamask.', '請檢查MetaMask。', '请检查MetaMask。')
-      },
+      }
+
     },
     
     setting: {
