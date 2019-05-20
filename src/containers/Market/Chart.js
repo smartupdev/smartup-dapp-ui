@@ -1,5 +1,6 @@
 import React, { Component, useRef, useEffect } from 'react'
 import theme from '../../theme'
+import { LangConsumer } from '../../language'
 
 import { format } from "d3-format";
 import { timeFormat } from "d3-time-format";
@@ -52,7 +53,7 @@ const BlockPageScroll = ({ children }) => {
   }, [])
   const stopScroll = e => e.preventDefault()
   return (
-    <div ref={scrollRef} style={{position: 'relative'}}>
+    <div ref={scrollRef} style={{ position: 'relative' }}>
       {children}
     </div>
   )
@@ -128,7 +129,7 @@ class DrawChart extends Component {
 
     return (
       <BlockPageScroll>
-        <div style={{opacity: noData ? 0.2 : 1}}>
+        <div style={{ opacity: noData ? 0.2 : 1 }}>
           <ChartCanvas
             height={HEIGHT}
             width={width}
@@ -145,9 +146,9 @@ class DrawChart extends Component {
             panEvent={!noData}
             zoomEvent={!noData}
             clamp={false}
-            >
+          >
 
-            <Chart id={1} yExtents={d => [d.high*1.1, d.low/1.4]}>
+            <Chart id={1} yExtents={d => [d.high * 1.1, d.low / 1.4]}>
               <XAxis axisAt="bottom" orient="bottom" ticks={10} {...this.axiaStyle} {...xGrid} />
               <YAxis axisAt="right" orient="right" ticks={9} {...this.axiaStyle} {...yGrid} />
               <MouseCoordinateX at="bottom" orient="bottom" displayFormat={timeFormat("%H:%M")} />
@@ -166,7 +167,7 @@ class DrawChart extends Component {
               <CandlestickSeries {...candlesAppearance} />
               <OHLCTooltip textFill={theme.green} ohlcFormat={format(".5f")} forChart={1} origin={[20, 0]} />
             </Chart>
-            <Chart id={2} origin={(w, h) => [0, h - 100]} height={100} yExtents={d => [d.volume,0]}>
+            <Chart id={2} origin={(w, h) => [0, h - 100]} height={100} yExtents={d => [d.volume, 0]}>
               {/* <YAxis axisAt="left" orient="left" ticks={5} tickFormat={format(".2s")}/> */}
               <BarSeries yAccessor={d => d.volume} fill={fill} />
             </Chart>
@@ -175,10 +176,14 @@ class DrawChart extends Component {
 
         </div>
         {
-          !!noData && 
-          <div style={{ width: width, textAlign: 'center', position: 'absolute', top: HEIGHT/2 - 18, zIndex: 1100, opacity: .6, fontSize: 18, fontFamily: 'Quicksand, sans-serif' }}>
-            Graph will be vailable after transactions made
-          </div> 
+          !!noData &&
+          <LangConsumer>
+            {([{ trading: { chartNoAvailable } }]) =>
+              <div style={{ width: width, textAlign: 'center', position: 'absolute', top: HEIGHT / 2 - 18, zIndex: 1100, opacity: .6, fontSize: 18, fontFamily: 'Quicksand, sans-serif' }}>
+                {chartNoAvailable}
+              </div>
+            }
+          </LangConsumer>
         }
       </BlockPageScroll>
     )

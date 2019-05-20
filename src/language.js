@@ -33,3 +33,4 @@ export const LangProvider = ({children}) => {
 }
 
 export const useLang = () => useContext(LangContext)
+export const LangConsumer = LangContext.Consumer
