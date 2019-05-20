@@ -77,7 +77,7 @@ const TableRecord = memo(
 // expandedRecords: Array <id>
 // S for small font size
 // noBorderCol is for no border in column
-export default ({ recordKey = 'id' , model, values, sortBy, orderBy, onClickHeader, onClick, expandedRecords = emptyArr, expandCompoent: ExpandCompoent, minWidth, S, inset, noBorderCol, autoHeight, noResultText }) => {
+export default ({ recordKey = 'id' , model, values, sortBy, orderBy, onClickHeader, onClick, expandedRecords = emptyArr, expandCompoent: ExpandCompoent, minWidth, S, inset, noBorderCol, autoHeight, noResultText = 'No result found' }) => {
   return (
     <TableWrappper>
       <Table minWidth={minWidth} autoHeight={autoHeight}>
@@ -106,7 +106,7 @@ export default ({ recordKey = 'id' , model, values, sortBy, orderBy, onClickHead
                 ExpandCompoent={ExpandCompoent} />
             )
           : 
-            <Text>{noResultText}</Text>
+            <Text center note>{noResultText}</Text>
         }
       </Table>
     </TableWrappper>
