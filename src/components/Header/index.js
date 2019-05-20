@@ -16,21 +16,31 @@ const Header = styled.header`
   flex-direction: column;
 `
 
-function renderMenu({ id, path, icon, includePaths, iconLabel, onClick, isFooter, component }, i) {
+function renderMenu({ id, path, icon, includePaths, onClick, menuComponent, startFromBottom }, i) {
   const [{routes}] = useLang()
   return (
     <Route
       key={i}
       path={path}
       exact={true}
-      children={({ match, location }) => (
-        isFooter ? // TODO
-          <Menu onClick={onClick} icon={icon} iconLabel={routes[id]} component={component} />
-        :
-        <Link to={path}>
-          <Menu selected={match || (includePaths && includePaths.includes(location.pathname))} icon={icon} iconLabel={routes[id]} />
-        </Link>
-      )}
+      children={({ match, location }) => {
+        const IconMenu = <Menu 
+          selected={path && (match || (includePaths && includePaths.includes(location.pathname)))} 
+          icon={icon} iconLabel={routes[id]}
+          onClick={onClick} component={menuComponent} 
+          startFromBottom={startFromBottom}
+          />
+        return (
+          path ? 
+          <Link to={path}>
+            {IconMenu}
+          </Link>
+          :
+            IconMenu
+        )
+      }
+      
+      }
     />
   )
 }

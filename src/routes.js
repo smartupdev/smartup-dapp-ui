@@ -31,7 +31,7 @@ import Dispute from './containers/Dispute'
 import Faq from './containers/Faq'
 import NotFound from './containers/NotFound'
 
-import { LanguageMenu } from './components/Header/Menu'
+import { LanguageMenu, FeedbackMenu } from './components/Header/Menu'
 
 import { connect } from 'react-redux'
 
@@ -44,8 +44,8 @@ let mainRoutes = [ // main routes, excludsive, using switch
   { id: 'dispute', path: '/dispute', component: Dispute, icon: Menu4, iconLabel: 'Dispute', isHeader: true },
   { id: 'faq', path: '/faq', component: Faq, icon: FaqButton, iconLabel: 'FAQ', isHeader: true },
 
-  { id: 'language', icon: Language, isFooter: true, component: LanguageMenu },
-  { id: 'feedback', icon: FeedbackButton, iconLabel: 'Feedback us', isFooter: true, onClick: () => {  window.location.href = "mailto:support@smartup.global?subject=See my feedback for SmartUp!"; } },
+  { id: 'language', icon: Language, isFooter: true, menuComponent: LanguageMenu },
+  { id: 'feedback', icon: FeedbackButton, isFooter: true, menuComponent: FeedbackMenu, startFromBottom: true },
   { id: 'notFound', path: '*', component: NotFound, },
 ]
 

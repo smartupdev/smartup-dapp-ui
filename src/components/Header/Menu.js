@@ -22,6 +22,7 @@ const LabelBox = styled(Col)`
   position: absolute;
   right: 0;
   width: 0;
+  ${p => p.startFromBottom && css`bottom: 0`}
   ${Link}:hover & {
     display: block;
   };
@@ -51,6 +52,23 @@ export function LanguageMenu() {
   )
 }
 
+function onClickEmail() {
+  window.location.href = "mailto:support@smartup.global?subject=See my feedback for SmartUp!"
+}
+
+function onClickGithub() {
+  window.open('https://github.com/smartupdev/smartup-dapp-ui/issues', '_blank');
+}
+
+export function FeedbackMenu() {
+  return (
+    <>
+      <LabelText label='Email' onClick={onClickEmail} width='60px' />
+      <LabelText label='GitHub' onClick={onClickGithub} width='60px' />
+    </>
+  )
+}
+
 export function LabelText({ label, onClick, selected, width, primary }) {
   return (
     <Label HM fitWidth centerVertical selected={selected} onClick={onClick} width={width}>
@@ -59,13 +77,13 @@ export function LabelText({ label, onClick, selected, width, primary }) {
   )
 }
 
-export default ({ icon: Icon, iconLabel, image, fixed, selected, component: Component, ...rest }) => 
+export default ({ icon: Icon, iconLabel, image, fixed, selected, component: Component, startFromBottom, ...rest }) => 
   <Link fixed={fixed} selected={selected} center centerVertical related {...rest}>
     { selected && <Line /> }
     { Icon && <Icon color={theme.colorSecondary} M /> }
     { image && <Image L source={image} /> }
     { (iconLabel || Component)  && 
-      <LabelBox>
+      <LabelBox startFromBottom={startFromBottom}>
         {Component ? 
           <Component />
           :  
