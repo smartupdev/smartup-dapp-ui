@@ -31,7 +31,7 @@ const LabelBox = styled(Col)`
 const Label = styled(Col)`
   height: ${p => p.theme.headerWidth};
   background-color: ${p => p.theme.bgColorDark}
-  ${props => props.selected && css`background: ${p => p.theme.bgColor}`};
+  ${props => props.selected && css`background-color: ${p => p.theme.bgColor}`};
   ${props => props.width && css`width: ${p => p.width}`};
 `
 
@@ -51,10 +51,10 @@ export function LanguageMenu() {
   )
 }
 
-export function LabelText({ label, onClick, selected, width }) {
+export function LabelText({ label, onClick, selected, width, primary }) {
   return (
     <Label HM fitWidth centerVertical selected={selected} onClick={onClick} width={width}>
-      <Text nowrap primary center>{label}</Text>
+      <Text nowrap primary={primary} center>{label}</Text>
     </Label>
   )
 }
@@ -69,7 +69,7 @@ export default ({ icon: Icon, iconLabel, image, fixed, selected, component: Comp
         {Component ? 
           <Component />
           :  
-          <LabelText selected={selected} label={iconLabel} />
+          <LabelText selected={selected} label={iconLabel} primary />
         }
       </LabelBox> 
     }
