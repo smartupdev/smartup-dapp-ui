@@ -11,23 +11,24 @@ import { Link, accountRoutes, getPath, AccountRoutes } from '../../routes'
 import { useLang } from '../../language'
 
 function Index({ loggedIn }) {
-  const [lang] = useLang()
+  const [{personalCentre: {personalCentre, connectMetaMask}, routes}] = useLang()
   const currentPath = getPath()
+  const tabs = accountRoutes.map(r => ({...r, label: routes[r.id]}) )
   let activeIndex = accountRoutes.findIndex(t => t.path === currentPath)
   if(activeIndex < 0) activeIndex = 0
   return (
     <Col>
-      <Text center VS L>{lang.personalCentre.personalCentre}</Text>
+      <Text center VS L>{personalCentre}</Text>
       <Link>
         {
           ({ goto }) => 
-            <Tab tabs={accountRoutes} activeIndex={activeIndex} width='100px' onClick={(i, value) => goto[value]()} />
+            <Tab tabs={tabs} activeIndex={activeIndex} width='100px' onClick={(i, value) => goto[value]()} />
         }
       </Link>
       {
         loggedIn ?
           <AccountRoutes />
-        : <Text VS center note> {lang.personalCentre.connectMetaMask} </Text>
+        : <Text VS center note> {connectMetaMask} </Text>
       }
     </Col>
   )
