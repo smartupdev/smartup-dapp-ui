@@ -6,7 +6,7 @@ import React, { memo } from 'react'
 import { withRouter, Route, Switch, Redirect } from 'react-router-dom'
 import { toParams } from './lib/util/fetch'
 
-import { MainPageButton as Menu1, ViewMarketButton as Menu2, CreateMarketButton as Menu3, FindMarketButton as Menu4, Faq as FaqButton, FeedbackEmail as FeedbackButton } from './components/Icon/index'
+import { MainPageButton as Menu1, ViewMarketButton as Menu2, CreateMarketButton as Menu3, FindMarketButton as Menu4, Faq as FaqButton, FeedbackEmail as FeedbackButton, Language } from './components/Icon/index'
 
 import Home from './containers/Home'
 import CreateMarket from './containers/CreateMarket'
@@ -31,6 +31,8 @@ import Dispute from './containers/Dispute'
 import Faq from './containers/Faq'
 import NotFound from './containers/NotFound'
 
+import { LanguageMenu } from './components/Header/Menu'
+
 import { connect } from 'react-redux'
 
 // ORDER MATTER
@@ -40,9 +42,10 @@ let mainRoutes = [ // main routes, excludsive, using switch
   { id: 'createMarket', path: '/create/market', component: CreateMarket, icon: Menu2, iconLabel: 'Create Market', isHeader: true },
   { id: 'account', path: '/account', component: Account, icon: Menu3, iconLabel: 'Personal Center', isHeader: true },
   { id: 'dispute', path: '/dispute', component: Dispute, icon: Menu4, iconLabel: 'Dispute', isHeader: true },
+  { id: 'faq', path: '/faq', component: Faq, icon: FaqButton, iconLabel: 'FAQ', isHeader: true },
 
-  { id: 'feedback', path: '/feedback', component: Faq, icon: FeedbackButton, iconLabel: 'Feedback us', isFooter: true, onClick: () => {  window.location.href = "mailto:support@smartup.global?subject=See my feedback for SmartUp!"; } },
-  { id: 'faq', path: '/faq', component: Faq, icon: FaqButton, iconLabel: 'FAQ', isFooter: true },
+  { id: 'language', icon: Language, isFooter: true, component: LanguageMenu },
+  { id: 'feedback', icon: FeedbackButton, iconLabel: 'Feedback us', isFooter: true, onClick: () => {  window.location.href = "mailto:support@smartup.global?subject=See my feedback for SmartUp!"; } },
   { id: 'notFound', path: '*', component: NotFound, },
 ]
 

@@ -15,15 +15,15 @@ const Header = styled.header`
   flex-direction: column;
 `
 
-function renderMenu({ path, icon, includePaths, iconLabel, onClick }, i) {
+function renderMenu({ path, icon, includePaths, iconLabel, onClick, isFooter, component }, i) {
   return (
     <Route
       key={i}
       path={path}
       exact={true}
       children={({ match, location }) => (
-        onClick ? // TODO
-          <Menu onClick={onClick} selected={match || (includePaths && includePaths.includes(location.pathname))} icon={icon} iconLabel={iconLabel} />
+        isFooter ? // TODO
+          <Menu onClick={onClick} icon={icon} iconLabel={iconLabel} component={component} />
         :
         <Link to={path}>
           <Menu selected={match || (includePaths && includePaths.includes(location.pathname))} icon={icon} iconLabel={iconLabel} />
