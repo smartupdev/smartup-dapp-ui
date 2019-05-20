@@ -8,6 +8,8 @@ import Avatar from '../../../components/Avatar'
 import { Bookmarked, Like, Dislike } from '../../../components/Icon'
 
 import { toAgo } from '../../../lib/util'
+import { useLang } from '../../../language'
+
 import theme from '../../../theme'
 
 import { connect } from 'react-redux'
@@ -19,6 +21,7 @@ function DiscussionComment({
   reply: {id, userAvatar, username, userAddress, content, isDisliked, isLiked, createTime, isCollect, numberOfLike, numberOfDislike },
   toggleLikeReply, toggleDislikeReply, toggleFollowReply
 }) {
+  const [{ time: { now, min, hour, day } }] = useLang()
   return (
     <Row key={id} spacingM>
       <Col>
@@ -46,7 +49,7 @@ function DiscussionComment({
                 <Dislike S color={isDisliked ? theme.red : theme.white} MarginRightBase />
                 <Text RightM>{numberOfDislike || 0}</Text>
               </Row>
-              <Text note>{toAgo(createTime)}</Text>
+              <Text note>{toAgo(createTime, now, min, hour, day)}</Text>
             </Row>
           </Col>
         </Row>

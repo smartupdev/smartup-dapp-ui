@@ -26,6 +26,11 @@ import { toPrice, toAgo, toFullDate, shorten,upperOne } from '../../lib/util'
 
 import Chart from './Chart'
 
+function TimeComponent({ value }) {
+  const [{ time: { now, min, hour, day } }] = useLang()
+  return <Text>{toAgo(value, now, min, hour, day)}</Text>
+}
+
 function Trading({ loggedIn, market, gettingMarket, tradeState, setTab, onChangeCT, onChangeSUT, toggleIsSell,watchKline, toggleTnc, onTrade, reset, userSut, getTradeList, getKlineList, getHighLowList }) {
   useEffect(() => {
     if(market) {
@@ -41,7 +46,7 @@ function Trading({ loggedIn, market, gettingMarket, tradeState, setTab, onChange
   const model = [
     { label: lang.trading.table.buySell, value: 'type', layoutStyle: { flex: 1, center: true }, component: ({ value }) => <Text red={value === 'sell'} green={value !== 'sell'}>{value === 'sell' ? lang.trading.table.sell : lang.trading.table.buy }</Text> },
     { label: lang.trading.table.user, value: 'userAddress', layoutStyle: { flex: 1 }, component: ({ record }) => <Row centerVertical><Avatar icon={record.userIcon} /><Text>{shorten(record.username)}</Text></Row> },
-    { label: lang.trading.table.time, value: 'createTime', layoutStyle: { flex: 1, center: true }, component: ({ value }) => <Text>{toAgo(value)}</Text> },
+    { label: lang.trading.table.time, value: 'createTime', layoutStyle: { flex: 1, center: true }, component: TimeComponent },
     { label: lang.trading.table.avgPrice, value: 'avgAmount', layoutStyle: { flex: 1, center: true }, component: ({ value }) => <Text>{toPrice(value)}</Text> },
     { label: lang.trading.table.ct, value: 'ctAmount', layoutStyle: { flex: 1, center: true }, },
     { label: lang.trading.table.stage, value: 'stage', layoutStyle: { flex: 1, center: true }, component: ({ value }) => <Text>{upperOne(value)}</Text> },

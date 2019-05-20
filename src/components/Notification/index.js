@@ -4,6 +4,7 @@ import Text from '../Text'
 import Avatar from '../Avatar'
 // import theme from '../../theme'
 import { toAgo } from '../../lib/util/datatime'
+import { useLang } from '../../language'
 import styled, { css } from 'styled-components'
 
 const Container = styled(Row)`
@@ -30,6 +31,7 @@ const Main = styled(Col)`
 
 export default memo((notification) => {
   const { image, sender, title, content, date, unread, expanded, onClick } = notification
+  const [{ time: { now, min, hour, day } }] = useLang()
   return (
     <Container top spaceBetween unread={unread} onClick={onClick && (() => onClick(notification))}>
       <Dot unread={unread} />
@@ -39,7 +41,7 @@ export default memo((notification) => {
         <Text S bold>{title}</Text>
         <Text S>{content}</Text>
       </Main>
-      <Text S nowrap right>{toAgo(date)}</Text>
+      <Text S nowrap right>{toAgo(date, now, min, hour, day)}</Text>
     </Container>
   )
 })
