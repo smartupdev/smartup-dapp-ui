@@ -22,7 +22,9 @@ const main = {
   dragFile: {
     dragFile: name('Drag file here', '拖放圖片至此', '拖放图片至此'),
     chooseFile: name('Choose file to upload', '上載更改圖片', '上载更改图片'),
-    uploading: name('Uploading file', '上載中', '上载中')
+    uploading: name('Uploading file', '上載中', '上载中'),
+    fileSize: name('File size exceeds the limit allowed(5MB).', '檔案大小超過5MB限制。', '档案大小超过5MB限制'),
+    fileType: name('Invalid file type. Only png, gif and jpg is allowed.', '上載檔案只限png, gif 及jpg。', '上载档案只限png，gif和jpg。'),
   },
 
   time: {
@@ -30,7 +32,7 @@ const main = {
     day: name('d ago', '日前'),
     hour: name('h ago', '小時前', '小时前'),
     now: name('now', '剛剛', '刚刚'),
-    months: name(['Jan', 'Feb' , 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'], ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月']),
+    months: name(['Jan', 'Feb' , 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'], ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月']),
     weekdays: name(['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'], ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'])
   },
 
@@ -238,6 +240,9 @@ const main = {
   },
 
   personalCentre: {
+    inTransaction: {
+      createMarket: name('Paid 2500 SmartUp token to create a market', '支付2500個SmartUp幣創建巿場', '支付2500个SmartUp币创建巿场'),
+    },
     inMarket: {
       created: name('Created Markets', '已創建的巿場', '已创建的巿场'),
       saved:name('Saved Markets', '已保存的巿場', '已保存的巿场'),

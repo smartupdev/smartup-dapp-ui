@@ -12,8 +12,10 @@ import { toggleSavedMarket } from '../../../actions/market'
 
 import { ToastConsumer } from 'react-toast-notifications'
 import { share } from '../../../alphaWebService'
+import { useLang } from '../../../language'
 
 const TableExpand = ({ record, toggleSavedMarket }) => {
+  const [lang] = useLang()
   return (
   <Row BottomS TopS>
     <Col LeftXS RightL>
@@ -45,7 +47,7 @@ const TableExpand = ({ record, toggleSavedMarket }) => {
         </Row>
         <Link>
           { ({goto}) =>
-            <Button primary label={lang.trade[currentLang]} icon={Trade} onClick={()=>goto.trading({id: record.id})} />
+            <Button primary label={lang.trade} icon={Trade} onClick={()=>goto.trading({id: record.id})} />
           }
         </Link>
       </Row>
