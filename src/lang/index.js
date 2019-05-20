@@ -246,7 +246,13 @@ const main = {
       sellCT: name('Sold ${ct} market token to ${toToken(sut)} SmartUp token', '買入${ct}巿場代幣，兌換自${toToken(sut)}SmartUp幣', '买入${ct}巿场代币，兑换自${toToken（SUT）} SmartUp币'),
       pending: name('PENDING', '處理中', '处理中'),
       success: name('SUCCESS', '成功'),
-      fail: name('FAIL', '失敗', '失败')
+      fail: name('FAIL', '失敗', '失败'),
+      TXHASH: name('TXHASH'),
+      Type: name('Type', '種類', '种类'),
+      Market: name('Market', '巿場', '巿场'),
+      NumCT: name('Number of market token', '巿場代幣數目', '巿场代币数目'),
+      CreateTime: name('Created on', '創建時間', '创建时间'),
+      lastUpdate: name('Last update', '更新時間', '更新时间')
     },
     inMarket: {
       created: name('Created Markets', '已創建的巿場', '已创建的巿场'),
