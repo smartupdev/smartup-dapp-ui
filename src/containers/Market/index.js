@@ -49,7 +49,7 @@ const Market = ({ get, toggleSavedMarket, getting, location, market, getMarketPo
   const activeIndex = TABS.findIndex(t => location.pathname.includes(t.value))
   
   return (
-    <Col>
+    <Col flex={1}>
       <Row spaceBetween spacingTopXS spacingBottomXS spacingRightS spacingLeftS color={theme.bgColorLight}>
         <Row centerVertical>
           <Avatar icon={market.avatar} />
