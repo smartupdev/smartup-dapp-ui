@@ -10,12 +10,15 @@ import DiscussionItem from './Item'
 
 import { connect } from 'react-redux'
 import { getMarketPost } from '../../../actions/post'
+import { useLang } from '../../../language'
 
 function Disussion({ getMarketPost, post, market }) {
   const { posts, gettingPost, getPostError, keyword, hasNextPage, } = post
   useEffect( () => {
     getMarketPost()
   }, [])
+  const [lang] = useLang()
+
   // if(gettingPost) return <DonutLoader page />
   if(getPostError) return <Text>{getPostError.messsage}</Text>
   if(!posts.length) return (
@@ -23,17 +26,17 @@ function Disussion({ getMarketPost, post, market }) {
       <Row centerVertical>
         {
           keyword ? 
-            <Text>No result found.</Text> 
+            <Text>{lang.discussion.noResult}</Text> 
           : 
             <>
-              <Text>Click</Text>
+              <Text>{lang.discussion.create.click}</Text>
               <Add primary LeftS RightS S />
-              <Text>to create a new post.</Text>
+              <Text>{lang.discussion.create.newPost}</Text>
             </>
         }
       </Row>
       {!(market && market.address) &&
-       <Text HS>(Function will be enabled after market created successfully)</Text>
+       <Text HS>{lang.discussion.preview} </Text>
       }
     </Col>
   )

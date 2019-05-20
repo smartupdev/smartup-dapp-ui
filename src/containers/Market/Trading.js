@@ -111,8 +111,8 @@ function Trading({ loggedIn, market, gettingMarket, tradeState, setTab, onChange
               <Avatar icon={market.avatar} username={market.name} />
               <Col spacingLeftS>
                 <Input background L center size='30' disabled={isTrading} value={ct} onChange={onChangeCT} number />
-                {notEnoughCt && <Text error XS>You don't have enough token to sell.</Text>}
-                {notEnoughSut && <Text error XS>You need more SmartUp to buy Idea tokens.</Text>}
+                {notEnoughCt && <Text error XS>{lang.trading.needMoreCT}</Text>}
+                {notEnoughSut && <Text error XS>{lang.trading.needMoreSUT}</Text>}
                 </Col>
             </Row>
           </Col>
@@ -148,7 +148,7 @@ function Trading({ loggedIn, market, gettingMarket, tradeState, setTab, onChange
           <>
             <Hr />
             <Col center spacingTopS spacingBottomL>
-              <Text note>Transaction record will be available after the first transaction made</Text>
+              <Text note>{lang.trading.transactionRecord}</Text>
             </Col>
           </>
         }
