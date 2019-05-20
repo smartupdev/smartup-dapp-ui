@@ -155,6 +155,9 @@ const main = {
     cost: name('Cost', '支付'),
     toReceive: name('To receive', '收取'),
     agreeTo: name('Agree to ', '同意 '),
+    needMoreSUT: name('You need more SmartUp to buy Idea tokens.', 'SmartUp幣餘額不足，無法交易。', 'SmartUp币余额不足，无法交易。'), 
+    needMoreCT: name('You do not have enough token to sell.', '你的巿場代幣餘額不足，無法交易。', '你的巿场代币余额不足，无法交易。'),
+    transactionRecord: name('Transaction record will be available after the first transaction made.', '交易紀錄於第一單交易完成後顯示。', '交易纪录于第一单交易完成后显示。'),
 
     table: {
       buySell: name('BUY/ SELL', '買入/賣出', '买入/卖出'),
@@ -179,12 +182,16 @@ const main = {
     save: name('save', '存儲', '存储'),
     replies: name('more replies', '更多回覆', '更多回复'),
     vote: name('VOTE', '投票'),
+    noResult: name('No result found.', '找不到搜尋結果。', '找不到搜寻结果。'),
+    preview: name('(Function will be enabled after market created successfully)', '功能將於巿場成功創建後開通。', '功能将于巿场成功创建后开通。'),
     create: {
       title: name('Title', '標題', '标题'),
       text: name('Text','內文'),
       photo: name('Photo', '圖片', '图片'),
       submit: name('Submit', '提交'),
-      cancel: name('Cancel', '取消')
+      cancel: name('Cancel', '取消'),
+      click: name('Click', '按'),
+      newPost: name('to create a new post.', '發布新帖子。', '发布新帖子。'),
     }
   },
 
