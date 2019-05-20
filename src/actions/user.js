@@ -235,16 +235,13 @@ function getNttBalance(account) {
 }
 
 //upload image
-export function onChangeAvatar(files) {
+export function onChangeAvatar(files, fileSizeError, fileTypeError) {
   if (!files) return {
     type: USER_AVATAR_CHANGE_SUCCEEDED,
   }
   return asyncFunction(
-    postIpfsImg,
+    () => postIpfsImg(files[0], fileSizeError, fileTypeError),
     USER_AVATAR_CHANGE_REQUESTED, USER_AVATAR_CHANGE_SUCCEEDED, USER_AVATAR_CHANGE_FAIL,
-    {
-      params: files[0]
-    }
   )
 }
 

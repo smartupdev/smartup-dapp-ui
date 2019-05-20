@@ -111,29 +111,23 @@ export function onChangeDesc(text) {
   })
 }
 
-export function onChangeAvatar(files) {
+export function onChangeAvatar(files, fileSizeError, fileTypeError) {
   if(!files) return {
     type: CREATE_MARKET_AVATAR_CHANGE_SUCCEEDED,
   }
   return asyncFunction(
-    postIpfsImg,
+    () => postIpfsImg(files[0], fileSizeError, fileTypeError),
     CREATE_MARKET_AVATAR_CHANGE_REQUESTED, CREATE_MARKET_AVATAR_CHANGE_SUCCEEDED, CREATE_MARKET_AVATAR_CHANGE_FAILED,
-    {
-      params: files[0]
-    }
   )
 }
 
-export function onChangeCover(files) {
+export function onChangeCover(files, fileSizeError, fileTypeError) {
   if(!files) return {
     type: CREATE_MARKET_COVER_CHANGE_SUCCEEDED,
   }
   return asyncFunction(
-    postIpfsImg,
+    () => postIpfsImg(files[0], fileSizeError, fileTypeError),
     CREATE_MARKET_COVER_CHANGE_REQUESTED, CREATE_MARKET_COVER_CHANGE_SUCCEEDED, CREATE_MARKET_COVER_CHANGE_FAILED,
-    {
-      params: files[0]
-    }
   )
 }
 

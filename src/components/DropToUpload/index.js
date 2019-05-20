@@ -44,6 +44,7 @@ export default function ({
   value, onChoose = console.log, isLoading = false, 
   error,
   ...rest }) {
+  const [{ dragFile }] = useLang()
   let dragCounter = 0
   const boxRef = useRef(null)
   const inputRef = useRef(null)
@@ -67,7 +68,7 @@ export default function ({
     nohandle(e)
     setDragging(false)
     if (e.dataTransfer.files && e.dataTransfer.files.length > 0 && !disabled) {
-      onChoose(e.dataTransfer.files)
+      onChoose(e.dataTransfer.files, dragFile.fileSizeError, dragFile.fileTypeError)
       e.dataTransfer.clearData()
       dragCounter = 0
     }
@@ -85,7 +86,6 @@ export default function ({
       target.removeEventListener('drop', handleDrop)
     }
   }, [disabled])
-  const [lang] = useLang()
   return (
     <>
       <ImageBox show={value} center relative fitHeight>
@@ -107,13 +107,13 @@ export default function ({
           isLoading ?
             <>
               <DonutLoader page />
-              <Text note TopS> {lang.dragFile.uploading} </Text>
+              <Text note TopS> {dragFile.uploading} </Text>
             </>
             :
             <>
-              <Text BottomS note> {lang.dragFile.dragFile} </Text>
-              <Button primary LeftXL RightXL label= {lang.dragFile.chooseFile} onClick={(e) => inputRef.current.click()} />
-              <HiddenFile accept="image/x-png,image/gif,image/jpeg,image/png" type='file' id="browse" name="browse" ref={inputRef} value={''} onChange={e => onChoose(e.target.files)} />
+              <Text BottomS note> {dragFile.dragFile} </Text>
+              <Button primary LeftXL RightXL label= {dragFile.chooseFile} onClick={(e) => inputRef.current.click()} />
+              <HiddenFile accept="image/x-png,image/gif,image/jpeg,image/png" type='file' id="browse" name="browse" ref={inputRef} value={''} onChange={e => onChoose(e.target.files, dragFile.fileSizeError, dragFile.fileTypeError)} />
               {error && <Text error S TopS>{error.message}</Text>}
             </>
         }

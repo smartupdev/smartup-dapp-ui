@@ -23,8 +23,8 @@ const main = {
     dragFile: name('Drag file here', '拖放圖片至此', '拖放图片至此'),
     chooseFile: name('Choose file to upload', '上載更改圖片', '上载更改图片'),
     uploading: name('Uploading file', '上載中', '上载中'),
-    fileSize: name('File size exceeds the limit allowed(5MB).', '檔案大小超過5MB限制。', '档案大小超过5MB限制'),
-    fileType: name('Invalid file type. Only png, gif and jpg is allowed.', '上載檔案只限png, gif 及jpg。', '上载档案只限png，gif和jpg。'),
+    fileSizeError: name('File size exceeds the limit allowed(5MB).', '檔案大小超過5MB限制。', '档案大小超过5MB限制'),
+    fileTypeError: name('Invalid file type. Only png, gif and jpg is allowed.', '上載檔案只限png, gif 及jpg。', '上载档案只限png，gif和jpg。'),
   },
 
   time: {

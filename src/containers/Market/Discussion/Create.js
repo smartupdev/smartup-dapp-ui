@@ -18,11 +18,11 @@ function DiscussionCreate({ addApi, history }) {
   const [photoError, setPhotoError] = useState(null)
   const [error, setError] = useState(null)
   const [loading, setLoading] = useState(false)
-  async function uploadPhoto(files) {
+  async function uploadPhoto(files, fileSizeError, fileTypeError) {
     setPhotoError(null)
     if(!files) return setPhoto(null)
     try {
-      const hash = await postIpfsImg(files[0])
+      const hash = await postIpfsImg(files[0], fileSizeError, fileTypeError)
       setPhoto(hash)
     } 
     catch(error) {

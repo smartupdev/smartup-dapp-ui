@@ -10,12 +10,12 @@ export function onClickTnc() {
 }
 
 //IPFS写入图片
-export function postIpfsImg(file) {
+export function postIpfsImg(file, fileSizeErrorText, fileTypeErrorText) {
   return new Promise((resolve, reject) => {
     if(file.size > 5e+6) 
-      return reject(new Error('File size exceeds the limit allowed(5MB).'))
+      return reject(new Error(fileSizeErrorText || 'File size exceeds the limit allowed(5MB).'))
     if(!['image/png', 'image/x-png','image/gif','image/jpeg'].includes(file.type)) 
-      return reject(new Error('Invalid file type. Only png, gif, jpg is allowed.'))
+      return reject(new Error(fileTypeErrorText || 'Invalid file type. Only png, gif, jpg is allowed.'))
     const blob = new Blob([file], { type: file.type });
     toBuffer(blob, (bufferError, buffer) => {
       if (bufferError) {
