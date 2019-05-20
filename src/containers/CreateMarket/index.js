@@ -33,6 +33,7 @@ const CreateMarket = ({
     get()
     return reset
   }, [])
+  const [lang] = useLang()
   if(!isReady) return <DonutLoader page />  
 
   function next() { setActiveIndex(activeIndex + 1) }
@@ -46,7 +47,6 @@ const CreateMarket = ({
     tab === 0 ? setActiveIndex(tab) :
     tab === 1 ? page1Ready && setActiveIndex(tab) :
     tab === 2 && page2Ready && setActiveIndex(tab)
-  const [lang] = useLang()
   const options = [lang.createMarket.tab.basicInfo, lang.createMarket.tab.equation, lang.createMarket.tab.deposit]
     return (
     <Col>
@@ -96,7 +96,6 @@ const CreateMarket = ({
             <Col spacingLeftL spacingRightL spacingTopM>
               <Chart />
             </Col>
-            <Label>Preview</Label>
             <Row spacingTopL spaceBetween>
               <Back />
               <Next />
