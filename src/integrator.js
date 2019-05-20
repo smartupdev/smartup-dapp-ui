@@ -16,7 +16,7 @@ window.web9 = Web3
 
 export function getAccount() {
   if(smartupWeb3) {
-    return smartupWeb3.eth.getAccounts().then(a => a[0].toLocaleLowerCase()) // MM bug
+    return smartupWeb3.eth.getAccounts().then(a => a[0] && a[0].toLocaleLowerCase()) // MM bug
   }
   return undefined;
 };
