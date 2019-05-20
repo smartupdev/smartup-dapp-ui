@@ -15,6 +15,7 @@ const main = {
 
   result: name('RESULTS', '個搜尋結果', '个搜寻结果'),
   search: name('Search', '搜尋', '搜寻'),
+  noResult: name('No result found.', '找不到搜尋結果。', '找不到搜寻结果。'),
   trade: name('Trade', '交易', '交易'),
   loadMore: name('Load More', '更多'),
 
@@ -107,6 +108,8 @@ const main = {
     overviewDes: name('150 characters to help new members get to know your market. Overview cannot be changed.', '以150字簡單介紹你的項目。巿場概要在創建巿場後無法更改。', '以150字简单介绍你的项目。巿场概要在创建巿场后无法更改。'),
     marketAvatar: name('Market Avatar', '巿場圖像' , '巿场图像'),
     marketCover: name('Market Cover Photo', '巿場封面圖', '巿场封面图'),
+    priceEquation: name('Price equation of idea token', '巿場代幣方程', '巿场代币方程'),
+    previewCurve: name('Preview', '預覽', '预览'),
     creating: name('MAKRET IS CREATING!', '巿場正在創建！', '巿场正在创建！'),
     preview: name('Preview The New Market', '預覽新巿場', '预览新巿场'),
     next: name('Next', '下一步'),
@@ -158,6 +161,7 @@ const main = {
     needMoreSUT: name('You need more SmartUp to buy Idea tokens.', 'SmartUp幣餘額不足，無法交易。', 'SmartUp币余额不足，无法交易。'), 
     needMoreCT: name('You do not have enough token to sell.', '你的巿場代幣餘額不足，無法交易。', '你的巿场代币余额不足，无法交易。'),
     transactionRecord: name('Transaction record will be available after the first transaction made.', '交易紀錄於第一單交易完成後顯示。', '交易纪录于第一单交易完成后显示。'),
+    chart: name('Graph will be vailable after transactions made', '交易圖表將於交易完成後顯示', '交易图表将于交易完成后显示'),
 
     table: {
       buySell: name('BUY/ SELL', '買入/賣出', '买入/卖出'),
@@ -183,7 +187,8 @@ const main = {
     replies: name('more replies', '更多回覆', '更多回复'),
     vote: name('VOTE', '投票'),
     noResult: name('No result found.', '找不到搜尋結果。', '找不到搜寻结果。'),
-    preview: name('(Function will be enabled after market created successfully)', '功能將於巿場成功創建後開通。', '功能将于巿场成功创建后开通。'),
+    loginToComment: name('Please login to comment.', '請先登入回覆主題。', '请先登入回覆主题。'),
+    preview: name('(Function will be enabled after market created successfully)', '(功能將於巿場成功創建後開通。)', '(功能将于巿场成功创建后开通。)'),
     create: {
       title: name('Title', '標題', '标题'),
       text: name('Text','內文'),

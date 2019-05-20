@@ -14,6 +14,8 @@ import ScrollLoader from '../../../components/ScrollLoader'
 import { getUrlParams } from '../../../routes'
 import { connect } from 'react-redux'
 import { getPost, onChangeNewComment, reply, getReplyList, } from '../../../actions/post'
+import { lang } from 'moment';
+import { useLang } from '../../../language'
 
 function DiscussionDetail({
   post, gettingDetail, getDetailError, 
@@ -31,8 +33,8 @@ function DiscussionDetail({
 
   if(getDetailError) return <Text>{getDetailError.message}</Text>
   if(gettingDetail || !post) return <DonutLoader page />
-
-  return (
+  const [lang] =useLang()
+    return (
     <Col>
       <DiscussionItem post={post} isDetailView />
       <Col spacingM>
@@ -43,13 +45,13 @@ function DiscussionDetail({
             <Col flex={1} LeftS>
               <TextInput background value={newComment} onChange={onChangeNewComment} disabled={replying} line={4} />
               <Col right TopBase>
-                <Button primary HXL label='Reply' onClick={reply} disabled={replying} />
+                <Button primary HXL label= {lang.discussion.reply} onClick={reply} disabled={replying} />
                 {replyError && <Text S error>{replyError.message}</Text>}
               </Col>
             </Col>
           </Row>
         :
-          <Text center note>Please login to comment</Text>
+          <Text center note>{lang.discussion.loginToComment}</Text>
       }
       </Col>
       {!!replys.length && 
