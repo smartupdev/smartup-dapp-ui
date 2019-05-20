@@ -7,7 +7,7 @@ import Hr from '../../components/Hr'
 import DropToUpload from '../../components/DropToUpload'
 
 
-import { useLang } from '../../language'
+import { useLang, languageOptions } from '../../language'
 import theme from '../../theme'
 
 import { connect } from 'react-redux'
@@ -43,11 +43,7 @@ const Setting = ({ realUserName, avatarUploading, avatarHash, updateUserAvatar,
       <Text LeftXS VXS> { lang.panel.setting.languages } </Text>
       <Row spaceAround TopS>
       {
-        [ 
-          { label: 'English', value: 'en' },
-          { label: '繁體中文', value: 'tc' },
-          { label: '简体中文', value: 'sc' },
-        ].map(({ label, value }) =>
+        languageOptions.map(({ label, value }) =>
           <Col key={value}>
             <Text 
               key={value} 

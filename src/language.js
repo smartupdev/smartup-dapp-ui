@@ -1,6 +1,12 @@
 import React, {createContext, useContext, useState} from 'react'
 import { initialLang, languages } from './lang'
 
+export const languageOptions = [
+  { label: 'English', value: 'en' },
+  { label: '繁體中文', value: 'tc' },
+  { label: '简体中文', value: 'sc' },
+]
+
 const LANG_STORAGE_KEY = 'lang'
 const tcList = ['zh-TW', 'zh-HK', 'zh']
 const scList = ['zh-CN', 'zh-SG']
