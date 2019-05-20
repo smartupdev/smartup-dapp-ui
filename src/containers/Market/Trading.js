@@ -74,7 +74,7 @@ function Trading({ loggedIn, market, gettingMarket, tradeState, setTab, onChange
         <Col flex={1} spacingRightL>
           <Chart data={klineData} />
         </Col>
-        <Col spacingLeftXL spacingRightL>
+        <Col spacingLeftXL spacingRightL width={'200px'}>
           <Text nowrap spacingBottomS>{toFullDate(Date.now(), weekdays, months)}</Text>
 
           <Row bottom spacingTopS>
