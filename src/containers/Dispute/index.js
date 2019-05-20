@@ -8,7 +8,6 @@ import { useLang } from '../../language'
 
 export default () => {
   const [lang] = useLang()
-  console.log(lang.dispute.notReady)
   return (
     <Col center centerVertical height={'80vh'}>
       <Image source={coming} size={'250px'} />
