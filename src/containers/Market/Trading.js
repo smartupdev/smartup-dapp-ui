@@ -42,20 +42,20 @@ function Trading({ loggedIn, market, gettingMarket, tradeState, setTab, onChange
     return reset
   }, [market])
   const { tabIndex, userCt, ct, sut, isSell, isTrading, trades, gettingTrades, hasNextPage, klineData,highLowData, agreeTnc, tradingError } = tradeState
-  const [lang] = useLang()
+  const [{ trading: tradingText, term, time: {months, weekdays} }] = useLang()
   const model = [
-    { label: lang.trading.table.buySell, value: 'type', layoutStyle: { flex: 1, center: true }, component: ({ value }) => <Text red={value === 'sell'} green={value !== 'sell'}>{value === 'sell' ? lang.trading.table.sell : lang.trading.table.buy }</Text> },
-    { label: lang.trading.table.user, value: 'userAddress', layoutStyle: { flex: 1 }, component: ({ record }) => <Row centerVertical><Avatar icon={record.userIcon} /><Text>{shorten(record.username)}</Text></Row> },
-    { label: lang.trading.table.time, value: 'createTime', layoutStyle: { flex: 1, center: true }, component: TimeComponent },
-    { label: lang.trading.table.avgPrice, value: 'avgAmount', layoutStyle: { flex: 1, center: true }, component: ({ value }) => <Text>{toPrice(value)}</Text> },
-    { label: lang.trading.table.ct, value: 'ctAmount', layoutStyle: { flex: 1, center: true }, },
-    { label: lang.trading.table.stage, value: 'stage', layoutStyle: { flex: 1, center: true }, component: ({ value }) => <Text>{upperOne(value)}</Text> },
+    { label: tradingText.table.buySell, value: 'type', layoutStyle: { flex: 1, center: true }, component: ({ value }) => <Text red={value === 'sell'} green={value !== 'sell'}>{value === 'sell' ? tradingText.table.sell : tradingText.table.buy }</Text> },
+    { label: tradingText.table.user, value: 'userAddress', layoutStyle: { flex: 1 }, component: ({ record }) => <Row centerVertical><Avatar icon={record.userIcon} /><Text>{shorten(record.username)}</Text></Row> },
+    { label: tradingText.table.time, value: 'createTime', layoutStyle: { flex: 1, center: true }, component: TimeComponent },
+    { label: tradingText.table.avgPrice, value: 'avgAmount', layoutStyle: { flex: 1, center: true }, component: ({ value }) => <Text>{toPrice(value)}</Text> },
+    { label: tradingText.table.ct, value: 'ctAmount', layoutStyle: { flex: 1, center: true }, },
+    { label: tradingText.table.stage, value: 'stage', layoutStyle: { flex: 1, center: true }, component: ({ value }) => <Text>{upperOne(value)}</Text> },
   ]
 
   const klineTabs = [
-    { label: lang.trading.hour },
-    { label: lang.trading.day },
-    { label: lang.trading.week },
+    { label: tradingText.hour },
+    { label: tradingText.day },
+    { label: tradingText.week },
   ]
   if(!market || gettingMarket) return null
 
@@ -75,7 +75,7 @@ function Trading({ loggedIn, market, gettingMarket, tradeState, setTab, onChange
           <Chart data={klineData} />
         </Col>
         <Col spacingLeftXL spacingRightL>
-          <Text nowrap spacingBottomS>{toFullDate(Date.now())}</Text>
+          <Text nowrap spacingBottomS>{toFullDate(Date.now(), weekdays, months)}</Text>
 
           <Row bottom spacingTopS>
             <Text XL>{toPrice(highLowData.length > 0 ? highLowData[highLowData.length - 1].low : '', 2)}</Text><Text red S>&nbsp;&nbsp;low</Text>
@@ -83,32 +83,32 @@ function Trading({ loggedIn, market, gettingMarket, tradeState, setTab, onChange
           <Row bottom>
             <Text XL>{toPrice(highLowData.length > 0 ? highLowData[highLowData.length - 1].high : '', 2)}</Text><Text green S>&nbsp;&nbsp;high</Text>
           </Row>
-          <Text note S>{lang.trading.change}</Text>
+          <Text note S>{tradingText.change}</Text>
 
           <Text XL price spacingTopS>{toPrice(market.last, 2)}</Text>
-          <Text note S>{lang.trading.price}</Text>
+          <Text note S>{tradingText.price}</Text>
 
           <Text XL primary spacingTopS>{toPrice(highLowData.length > 0 ? highLowData[highLowData.length - 1].amount : '', 2)}</Text>
-          <Text note S>{lang.trading.volume}</Text>
+          <Text note S>{tradingText.volume}</Text>
 
           <Text XL spacingTopS>{toPrice(market.amount, 2)}</Text>
-          <Text note S>{lang.trading.cap}</Text>
+          <Text note S>{tradingText.cap}</Text>
 
           <Text XL spacingTopS>{toPrice(market.ctTopAmount, 2)}</Text>
-          <Text note S>{lang.trading.ct}</Text>
+          <Text note S>{tradingText.ct}</Text>
         </Col>
       </Row>
 
       <Col spacingLeftS spacingRightS spacingBottomS center>
-        <Text spacingBottomS spacingTopS L center>{lang.trading.tradeTitle}</Text>
+        <Text spacingBottomS spacingTopS L center>{tradingText.tradeTitle}</Text>
         <Hr />
 
         <Row TopL>
-          <Button onClick={isSell ? toggleIsSell : undefined} label={lang.trading.table.buy} icon={Trade} backgroundColor={!isSell ? theme.green : undefined} color={isSell ? theme.green : undefined} width='100px' />
-          <Button onClick={isSell ? undefined : toggleIsSell} label={lang.trading.table.sell} icon={Trade} backgroundColor={isSell ? theme.red : undefined} color={!isSell ? theme.red : undefined} width='100px' MarginLeftS />
+          <Button onClick={isSell ? toggleIsSell : undefined} label={tradingText.table.buy} icon={Trade} backgroundColor={!isSell ? theme.green : undefined} color={isSell ? theme.green : undefined} width='100px' />
+          <Button onClick={isSell ? undefined : toggleIsSell} label={tradingText.table.sell} icon={Trade} backgroundColor={isSell ? theme.red : undefined} color={!isSell ? theme.red : undefined} width='100px' MarginLeftS />
         </Row>
 
-        <Text S center note VM>{lang.trading.tradeText}</Text>
+        <Text S center note VM>{tradingText.tradeText}</Text>
 
         <Col maxWidth='1000px' width='100%'>
           <Col center>
@@ -116,21 +116,21 @@ function Trading({ loggedIn, market, gettingMarket, tradeState, setTab, onChange
               <Avatar icon={market.avatar} username={market.name} />
               <Col spacingLeftS>
                 <Input background L center size='30' disabled={isTrading} value={ct} onChange={onChangeCT} number />
-                {notEnoughCt && <Text error XS>{lang.trading.needMoreCT}</Text>}
-                {notEnoughSut && <Text error XS>{lang.trading.needMoreSUT}</Text>}
+                {notEnoughCt && <Text error XS>{tradingText.needMoreCT}</Text>}
+                {notEnoughSut && <Text error XS>{tradingText.needMoreSUT}</Text>}
                 </Col>
             </Row>
           </Col>
-          <Text S center note BottomM>{`${isSell ? lang.trading.toReceive : lang.trading.cost} ${sut ? (+sut).toFixed(4) : 0} SMARTUP`}</Text>
+          <Text S center note BottomM>{`${isSell ? tradingText.toReceive : tradingText.cost} ${sut ? (+sut).toFixed(4) : 0} SMARTUP`}</Text>
 
 
           <Row spaceBetween>
             <Row centerVertical>
-              <Checkbox checked={agreeTnc} onChange={toggleTnc} disabled={isTrading} label={<Text S note lineHeight> {lang.trading.agreeTo} </Text>} />
-              <Text S note underline lineHeight onClick={onClickTnc}>{ lang.term }</Text>
+              <Checkbox checked={agreeTnc} onChange={toggleTnc} disabled={isTrading} label={<Text S note lineHeight> {tradingText.agreeTo} </Text>} />
+              <Text S note underline lineHeight onClick={onClickTnc}>{term}</Text>
             </Row>
             <Col right>
-              <Button label= {lang.trading.tradeButton} icon={Trade} primary onClick={() => onTrade(market.id)} disabled={isTrading || !agreeTnc || !ct | notEnoughSut || notEnoughCt} />
+              <Button label= {tradingText.tradeButton} icon={Trade} primary onClick={() => onTrade(market.id)} disabled={isTrading || !agreeTnc || !ct | notEnoughSut || notEnoughCt} />
               {tradingError && <Text error XS>{tradingError.message}</Text>}
             </Col>
           </Row>
@@ -140,7 +140,7 @@ function Trading({ loggedIn, market, gettingMarket, tradeState, setTab, onChange
       </Col>
       <Hr />
       <Col spacingLeftM spacingRightM>
-        <Text L center spacingBottomS spacingTopS>{lang.trading.trans}</Text>
+        <Text L center spacingBottomS spacingTopS>{tradingText.trans}</Text>
         <Hr />
         <Table
           model={model}
@@ -153,7 +153,7 @@ function Trading({ loggedIn, market, gettingMarket, tradeState, setTab, onChange
           <>
             <Hr />
             <Col center spacingTopS spacingBottomL>
-              <Text note>{lang.trading.transactionRecord}</Text>
+              <Text note>{tradingText.transactionRecord}</Text>
             </Col>
           </>
         }

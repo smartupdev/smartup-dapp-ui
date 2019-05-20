@@ -12,6 +12,7 @@ import Expand from '../../../components/Expand'
 import ScrollLoader from '../../../components/ScrollLoader'
 
 import { toFullDate, toToken } from '../../../lib/util'
+import { useLang } from '../../../language'
 
 import { connect } from 'react-redux'
 import { getUserTransactionList, reset } from '../../../actions/personalCenter'
@@ -43,6 +44,7 @@ function Transaction({
     return reset
   }, [])
   const [expands, setExpands] = useState([])
+  const [{ time: { weekdays, months } }] = useLang()
   return (
     <>
       {error && <Text TopS center error>{error.message}</Text>}
@@ -60,7 +62,7 @@ function Transaction({
               <Col flex={1}>
                 <Text BottomS L>{typeHelper[type].title(ct, sut)}</Text>
                 <Text BottomXS note>{marketName}</Text>
-                <Text note S>{toFullDate(createTime)}</Text>
+                <Text note S>{toFullDate(createTime, weekdays, months)}</Text>
               </Col>
               <Col spaceBetween right>
                 <Text S green={stage===STAGE.success} red={stage===STAGE.fail} primary={stage===STAGE.pending}>{stage.toUpperCase()}</Text>
@@ -74,8 +76,8 @@ function Transaction({
                 { label: 'Type', value: typeHelper[type].label },
                 { label: 'Market', value: `${marketName} ${marketAddress}` },
                 { label: 'Number of market token', value: ct || 'N/A' },
-                { label: 'Created on', value: toFullDate(createTime) },
-                { label: 'Last update', value: toFullDate(blockTime) },
+                { label: 'Created on', value: toFullDate(createTime, weekdays, months) },
+                { label: 'Last update', value: toFullDate(blockTime, weekdays, months) },
               ].map( ({label, value}) => 
                 <Row key={label} VXS>
                   <Text width='250px'>{label}</Text>
