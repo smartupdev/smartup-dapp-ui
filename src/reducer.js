@@ -1,42 +1,42 @@
-import user from './reducers/user';
-import home from './reducers/home';
-import market from './reducers/market';
-import proposal from './reducers/proposal';
-import general from './reducers/general';
-import post from './reducers/post';
-import notification from './reducers/notification';
-import createMarket from './reducers/createMarket';
-import panel from './reducers/panel';
-import trade from './reducers/trade';
+import createMarket from './reducers/createMarket'
+import general from './reducers/general'
+import home from './reducers/home'
+import market from './reducers/market'
+import notification from './reducers/notification'
+import panel from './reducers/panel'
+import post from './reducers/post'
+import proposal from './reducers/proposal'
+import trade from './reducers/trade'
+import user from './reducers/user'
 
-import metamask from './reducers/metamask'
 import globalInfo from './reducers/globalInfo'
-import userMarketWallet from './reducers/userMarketWallet'
-import userTransaction from './reducers/userTransaction'
+import metamask from './reducers/metamask'
 import userCreatedMarket from './reducers/userCreatedMarket'
-import userSavedMarket from './reducers/userSavedMarket'
-import userSavedMarketPanel from './reducers/userSavedMarketPanel';
-import userTradedMarket from './reducers/userTradedMarket'
 import userCreatedPost from './reducers/userCreatedPost'
-import userSavedPost from './reducers/userSavedPost'
 import userCreatedReply from './reducers/userCreatedReply'
+import userMarketWallet from './reducers/userMarketWallet'
+import userSavedMarket from './reducers/userSavedMarket'
+import userSavedMarketPanel from './reducers/userSavedMarketPanel'
+import userSavedPost from './reducers/userSavedPost'
 import userSavedReply from './reducers/userSavedReply'
+import userTradedMarket from './reducers/userTradedMarket'
+import userTransaction from './reducers/userTransaction'
 
 import { combineReducers } from 'redux';
 
 export default combineReducers({
-    metamask,
     globalInfo,
-    userMarketWallet,
-    userTransaction,
+    metamask,
     userCreatedMarket,
+    userCreatedPost,
+    userCreatedReply,
+    userMarketWallet,
     userSavedMarket,
     userSavedMarketPanel,
-    userTradedMarket,
-    userCreatedPost,
     userSavedPost,
-    userCreatedReply,
     userSavedReply,
+    userTradedMarket,
+    userTransaction,
 
     user,
     home,
