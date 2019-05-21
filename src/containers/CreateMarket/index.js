@@ -24,14 +24,14 @@ const CreateMarket = ({
   createMarketState: { 
     activeIndex, name, desc, error, isFetching, isReady, marketId, 
     avatarHash, avatarUploading,
-    coverHash, coverUploading  
+    coverHash, coverUploading
   }, 
   setActiveIndex, create, onChangeName, onChangeDesc, reset, get, 
   onChangeAvatar, onChangeCover
 }) => {
   useEffect( () => {
-    get()
-    return reset
+    !isReady && get()
+    // return reset
   }, [])
   const [lang] = useLang()
   if(!isReady) return <DonutLoader page />  

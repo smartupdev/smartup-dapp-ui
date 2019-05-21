@@ -92,7 +92,6 @@ export default (state = initialState, action) => {
       const { marketId, description: desc, name, status, photo, cover } = action.payload
       return {
         ...state,
-        // isFetching: false,
         isReady: true,
         ...marketId && {
           marketId, 
@@ -106,7 +105,6 @@ export default (state = initialState, action) => {
     case CREATE_MARKET_GET_FAILED: 
       return {
         ...state,
-        // isFetching: false,
         isReady: true
       }
       

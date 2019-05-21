@@ -32,11 +32,11 @@ export function formatCredit(r) {
 }
 
 export function toWei(r) {
-  return `${smartupWeb3.utils.toWei(r)}`
+  return smartupWeb3 ? `${smartupWeb3.utils.toWei(r)}` : null
 }
 
 export function encodeParam(r) {
-  return `${smartupWeb3.eth.abi.encodeParameter('uint256', r)}`
+  return smartupWeb3 ? `${smartupWeb3.eth.abi.encodeParameter('uint256', r)}` : null
 }
 
 export function decodeResult(r){

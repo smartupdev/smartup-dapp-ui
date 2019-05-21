@@ -4,6 +4,7 @@ import { Search } from '../../components/Icon'
 import Input from '../../components/Input'
 import { Row } from '../../components/Layout'
 import { useLang } from '../../language'
+import { length } from '../../lib/util'
 import styled, { css } from 'styled-components'
 
 const Container = styled.div`
@@ -27,23 +28,24 @@ const Container = styled.div`
     :focus {
       width: 2000px;
     }
-    width: 44px;
+    // width: 44px;
   }
 `
 const Dump = styled.div`
   height: ${p => p.theme.imageSizeL};
-  width: 80px; 
-` // margin number
+  width: 70px; 
+` // margic number
 
 // MUST set relative outside
 export default ({ id = '', backgroundColor, value, onChange, onSearch, top, bottom, right }) => {
   const [lang] = useLang()
+  const size = Math.min( Math.max(length(lang.search), length(value)), 20 )
   return (
     <>
       <Dump />
       <Container backgroundColor={backgroundColor} top={top} bottom={bottom} right={right}>
         <Row centerVertical fullHeight spaceBetween>
-          <Input id={id + "search"} value={value} placeholder={lang.search} onChange={onChange} onBlur={onSearch} S backgroundColor={backgroundColor} />
+          <Input id={id + "search"} value={value} size={size} placeholder={lang.search} onChange={onChange} onBlur={onSearch} S backgroundColor={backgroundColor} style={{ paddingRight: 2 }} />
           {/* <Text note>Search</Text> */}
           <label htmlFor={id + "search"}>
             <Search S RightXS />

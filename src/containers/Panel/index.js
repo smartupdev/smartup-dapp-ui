@@ -15,6 +15,7 @@ import { Col, Row } from '../../components/Layout'
 
 // import lang, { currentLang } from '../../lang'
 import { useLang } from '../../language'
+import { ENV } from '../../config'
 import { shorten } from '../../lib/util'
 
 import { connect } from 'react-redux'
@@ -71,7 +72,7 @@ const Panel = ({
   const metamaskError = 
       metamask.isEnabled === undefined ? <Text error S>{lang.panel.login.installMetamask} <A XS error href='https://metamask.io/' target="_blank">Metamask.io</A></Text> 
     : !metamask.isUnlocked ? <Text error S>{lang.panel.login.login}</Text>
-    : !metamask.isTargetNetwork ? <Text error S>{lang.panel.login.changeNetwork} {networkName[metamask.networkVersion] || 'Main Ethereum Network'}</Text> 
+    : !metamask.isTargetNetwork ? <Text error S>{lang.panel.login.changeNetwork} {networkName[ENV.networkVersion] || 'Main Ethereum Network'}</Text> 
     : loginError === USER_PERSON_SIGN_FAILED ? <Text error S>{lang.panel.login.sign}</Text> 
     : loginError === LOGIN_METAMASK_FAILED ? <Text error S>{lang.panel.login.enable}</Text> 
     : loginError ? <Text error S>{lang.panel.login.fail}</Text> :
