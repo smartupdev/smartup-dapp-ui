@@ -1,7 +1,7 @@
 ---
-name: Feature request
+name: Feature request/功能申請
 about: Suggest an idea for this project
-title: "[Domain] Feature title"
+title: ''
 labels: enhancement
 assignees: cmngan
 
