@@ -16,6 +16,8 @@ import {
   CREATE_MARKET_COVER_CHANGE_REQUESTED, CREATE_MARKET_COVER_CHANGE_SUCCEEDED, CREATE_MARKET_COVER_CHANGE_FAILED,
 } from '../actions/actionTypes';
 
+import { length } from '../lib/util'
+
 export const initialState = {
   activeIndex: 0,
   isFetching: false,
@@ -155,7 +157,7 @@ export default (state = initialState, action) => {
       }
 
     case CREATE_MARKET_NAME_CHANGE: {
-      const error = action.payload.length < 3 || action.payload.length > 40 
+      const error = length(action.payload) < 3 || length(action.payload) > 40 
       return {
         ...state,
         name: action.payload,
@@ -166,7 +168,7 @@ export default (state = initialState, action) => {
       }
     }
     case CREATE_MARKET_DESC_CHANGE: {
-      const error = action.payload.length < 1 || action.payload.length > 150 
+      const error = length(action.payload) < 1 || length(action.payload) > 500 
       return {
         ...state,
         desc: action.payload,
