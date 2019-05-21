@@ -71,16 +71,16 @@ const main = {
     },
     portfolio: {
       wallet: {
-        title: name('Market Wallet', '巿場錢包', '巿场钱包'),
+        title: name('Market Wallet', '我的錢包', '我的钱包'),
         id: name('IDEA', '巿場', '巿场'),
         ct: name('TOKENS', '代幣'),
         volume: name('CHANGE', '漲跌', '涨跌')
       },
       marketInfo: {
-        title: name('Global Market Information', '全部巿場資訊', '全部巿场信息'),
+        title: name('Global Market Information', '平台巿場資訊', '平台巿场信息'),
         totalSmartup: name('Total SMARTUP invested', '總SMARTUP投資額', '总SMARTUP投资额'),
-        totalMarket: name('Total number of markets', '全部巿場總數', '全部巿场总数'),
-        totalDiscussion: name('Total number of ongoing discussions', '正在討論的帖子數', '正在讨论的帖子数')
+        totalMarket: name('Total number of markets', '巿場數目', '巿场总数目'),
+        totalDiscussion: name('Total number of ongoing discussions', '正在討論的帖子', '正在讨论的帖子')
       },
       bookmark: {
         title: name('Bookmarks', '書籤', '书签')
@@ -270,17 +270,17 @@ const main = {
       lastUpdate: name('Last update', '更新時間', '更新时间')
     },
     inMarket: {
-      created: name('Created Markets', '已創建的巿場', '已创建的巿场'),
-      saved:name('Saved Markets', '已保存的巿場', '已保存的巿场'),
-      subscribed:name('Subscribed Markets', '已參與的巿場', '已参与的巿场'),
+      created: name('Created Markets', '你的巿場', '你的巿场'),
+      saved:name('Saved Markets', '保存巿場', '保存市场'),
+      subscribed:name('Subscribed Markets', '買入巿場', '买入巿场'),
     },
     inPost: {
-      created: name('Created Posts', '已創建的帖子', '已创建的帖子'),
-      saved: name('Saved Posts', '已保存的帖子', '已保存的帖子'),
+      created: name('Your Posts', '你的帖子', '你的帖子'),
+      saved: name('Saved Posts', '保存帖子', '保存帖子'),
     },
     inComment: {
-      created: name('Created Comments', '已創建的留言', '已创建的留言'),
-      saved: name('Saved Comments', '已保存的留言'),
+      created: name('Your Comments', '你的留言', '你的留言'),
+      saved: name('Saved Comments', '保存留言'),
     },
     connectMetaMask: name('You have to connect to Metamask.', '請先連接MetaMask錢包。', '请先连接MetaMask钱包。'),
     personalCentre: name('Personal Centre', '個人中心', '个人中心'),
