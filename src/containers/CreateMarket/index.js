@@ -71,7 +71,7 @@ const CreateMarket = ({
             </Text>
             <Label>{lang.createMarket.marketOverview}</Label>
             <Input background L line={3} value={desc} onChange={onChangeDesc} disabled={isFetching} />
-            <Text S right error={error.desc}>{lang.createMarket.overviewDes}.</Text>
+            <Text S right error={error.desc}>{lang.createMarket.overviewDes}</Text>
             <Label>{lang.createMarket.marketAvatar}</Label>
             <DropToUpload MarginBottomM onChoose={onChangeAvatar} isLoading={avatarUploading} error={error.avatar} value={avatarHash} imageHeight='100px' imageWidth='100px' />
             <Label>{lang.createMarket.marketCover}</Label>
