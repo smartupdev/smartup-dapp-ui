@@ -131,7 +131,7 @@ const Portfolio = ({
             <Col>
               <InfoBlock first>
                 <Text S spaceBottom>{portfolioText.marketInfo.totalSmartup}</Text>
-                <Text L wordSpaceM bold>{sutAmount}</Text>
+                <Text L wordSpaceM bold>{toToken(sutAmount)}</Text>
               </InfoBlock>
               <InfoBlock>
                 <Text S spaceBottom>{portfolioText.marketInfo.totalMarket}</Text>
