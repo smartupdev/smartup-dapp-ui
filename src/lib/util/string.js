@@ -32,4 +32,12 @@ const shorten = (s, start = 8, end = 6) => s ?
   s.length <= start + end + 3 ? s : `${s.slice(0, start)}...${s.slice(-end)}`
 : '-'
 
-export { upper, upperAll, upperEach, plural, shorten,upperOne }
+function length(str) {
+  var count = 0;
+  for (var i = 0, len = str.length; i < len; i++) {
+      count += str.charCodeAt(i) < 256 ? 1 : 2;
+  }
+  return count;
+}
+
+export { upper, upperAll, upperEach, plural, shorten, upperOne, length }
