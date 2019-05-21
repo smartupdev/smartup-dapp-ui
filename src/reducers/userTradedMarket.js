@@ -25,7 +25,7 @@ export default (state = initialState, action) => {
       const { list, pageNumb, hasNextPage } = action.payload
       return {
         ...state,
-        tradedMarkets: updateLoadMore(state.tradedMarkets, list.map(marketMassage), action.meta.isLoadMore),
+        markets: updateLoadMore(state.markets, list.map(marketMassage), action.meta.isLoadMore),
         getting: false,
         pageNumb,
         hasNextPage,
