@@ -23,7 +23,7 @@ const now = () =>  Date.now()
 
 const toDate = (d = now()) => `${getYear(d)}-${getMonth(d)}-${getDate(d)}`
 const toDateTime = (d = now()) => `${toDate(d)} ${getHour(d)}:${getMinute(d)}:${getSecond(d)}`
-const toFullDate = (d = now(), dayText, monthText) => `${getDay(d, dayText)}, ${getMonthString(d, monthText)} ${getDate(d)}, ${getHour(d)}:${getMinute(d)}`
+const toFullDate = (d = now(), dayText, monthText) => d ? `${getDay(d, dayText)}, ${getMonthString(d, monthText)} ${getDate(d)}, ${getHour(d)}:${getMinute(d)}` : '-'
 
 // d is a number
 const toAgo = (date, nowText = 'now', minText = 'm ago', hourText = 'h ago', dayText = 'd ago') => {
