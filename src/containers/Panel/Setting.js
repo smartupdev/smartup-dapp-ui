@@ -24,7 +24,7 @@ const Setting = ({ realUserName, avatarUploading, avatarHash, updateUserAvatar,
         <Button primary LeftM RightM label={lang.panel.setting.submit} onClick={updateUserAvatar} />
       </Row>
       <Text MarginLeftXS VXS>{lang.panel.setting.userName}</Text>
-      <Input value={realUserName} placeholder={lang.panel.setting.userName} disabled={nameHasChanged} onChange={onChangeName} />
+      <Input value={realUserName} background disabled={nameHasChanged} onChange={onChangeName} />
       <Text S right note error={updateNameError}>{
         typeof updateNameError === 'string' ? updateNameError :
           (!nameHasChanged ? lang.panel.setting.nameReq : lang.panel.setting.nameLock )
