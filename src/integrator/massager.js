@@ -1,4 +1,3 @@
-import { ENV } from '../config'
 import { changeArrayByIndex } from '../lib/util/reducerHelper'
 
 export function tradeMassage(trade) {
@@ -103,7 +102,7 @@ export function marketMassage(m) {
     ...m.data,
     id: m.marketId,
     address: m.marketAddress,
-    cover: m.cover && (ENV.ipfsHost + m.cover),
+    cover: m.cover,
     avatar: m.photo,
     numberOfComments: m.data ? m.data.postCount || 0 : '-',
     numberOfSub: m.data ? m.data.userCount || 0 : '-',
@@ -116,12 +115,12 @@ export function marketMassage(m) {
   }
 }
 
-export function updateLoadMore(currentDatas, newDatas, isloadMore, key = 'id') {
-  return isloadMore ? 
-  newDatas.reduce((currentArray, newRecord) => {
+export function updateLoadMore(currentList, newList, isLoadMore, key = 'id') {
+  return isLoadMore ? 
+  newList.reduce((currentArray, newRecord) => {
     // check if the record already exists. If yes, update thd old one. If no, append to the end.
     const existIndex = currentArray.findIndex(a => a[key] === newRecord[key])  
     return existIndex < 0 ? [...currentArray, newRecord] : changeArrayByIndex(currentArray, existIndex, () => newRecord)
-  }, currentDatas)
-  : newDatas
+  }, currentList)
+  : newList
 }

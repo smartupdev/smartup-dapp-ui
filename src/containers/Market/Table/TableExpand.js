@@ -4,7 +4,7 @@ import { Row, Col } from '../../../components/Layout'
 import theme from '../../../theme'
 import { Comment, Trade, Bookmarked, Share, CommunityMember } from '../../../components/Icon'
 import Text from '../../../components/Text'
-import lang, { currentLang } from '../../../lang'
+import { ENV } from '../../../config'
 import Button from '../../../components/Button'
 import Image from '../../../components/Image'
 import { connect } from 'react-redux'
@@ -19,7 +19,7 @@ const TableExpand = ({ record, toggleSavedMarket }) => {
   return (
   <Row BottomS TopS>
     <Col LeftXS RightL>
-      <Image source={record.cover} photo cover />
+      <Image source={ENV.ipfsHost + record.cover} photo cover />
     </Col>
     <Col spaceBetween flex={1}>
       <Row spaceBetween> 
