@@ -20,7 +20,8 @@ import {
 } from '../integrator'
 
 import { getYear, getMonth, getDate, getHour } from '../lib/util'
-
+import { getLang } from '../language'
+import language from '../lang'
 export function reset() {
   return { type: TRADE_RESET }
 }
@@ -121,16 +122,17 @@ function getSUT() {
 }
 
 export function onTrade() {
+  
   return async (dispatch, getState) => {
     const { trade: {ct, sut, isSell}, market: { currentMarket: {id, address} } } = getState()
-
+    
     const encodeCtPrice = toWei(sut);
     const ctAmount = toWei(ct);
     const encodeCtAmount = encodeParam(ctAmount);
-
+    
     if(!address) return dispatch({
       type: TRADE_FAILED,
-      payload: new Error('It is for preview. Refresh the page upon you received notification "Market is created".'),
+      payload: new Error(language.trading.preview[getLang()]),
       error: true
     })
 
