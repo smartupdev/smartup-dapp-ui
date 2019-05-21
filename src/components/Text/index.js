@@ -3,6 +3,8 @@ import { spacingCss, onClickCss, fontCss } from '../Theme'
 
 export const A = styled.a`
   ${fontCss}
+  cursor: pointer;
+  text-decoration: underline;
   ${p => p.error && css`
     color: ${p.theme.red};
     :visited { 

@@ -140,6 +140,11 @@ const mapStateToProps = state => ({
   marketId: state.market.currentMarketId,
 });
 
+export const goto = routes.reduce( (p, c) => ({
+  ...p, 
+  [c.id]: params => window.location.href = `${window.location.origin}${window.location.pathname}#${c.path}${toParams({params})}`
+}), {})
+
 function linkProps(history, location, marketId) {
   return {
     goto: routes.reduce( (p, c) => ({
