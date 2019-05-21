@@ -90,7 +90,7 @@ const main = {
     
     setting: {
       avatar: name('Avatar photo', '個人圖片', '个人图片'),
-      userName: name('User Name', '用戶名稱', '用户名称'),
+      userName: name('Username', '用戶名稱', '用户名称'),
       nameReq: name('Capital sensitive, 6-15 characters.', '區分大小寫，6-15字符。', '区分大小写，6-15字符。'),
       nameLock: name('Username is confirmed and locked.', '用戶名稱已更改並鎖定。', '用户名称已更改并锁定。'),
       languages: name('Languages', '語言','语言'),
