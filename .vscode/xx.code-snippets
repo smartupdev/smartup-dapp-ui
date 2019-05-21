@@ -1,0 +1,21 @@
+{
+	"action-error": {
+		"prefix": "xxrae",
+		"body": [
+			"{",
+			"\ttype: ${1:string},",
+			"\tpayload: new Error(${2:string}),",
+			"\terror: true,",
+			"}",
+			"$3"
+		],
+		"description": "React action error type"
+	},
+	"console.log": {
+		"prefix": "xxlog",
+		"body": [
+			"console.log(`${1:string}`)",
+			"$2"
+		]
+	},
+}
