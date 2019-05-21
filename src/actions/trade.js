@@ -128,28 +128,27 @@ function getSUT() {
   }
 }
 
+function tradeError(errorText) {
+  return {
+    type: TRADE_FAILED,
+    payload: new Error(errorText),
+    error: true
+  }
+}
+
 export function onTrade() {
-  
   return async (dispatch, getState) => {
     const { trade: {ct, sut, isSell}, market: { currentMarket: {id, address} } } = getState()
     const currentLang = getLang()
-    if(!smartupWeb3)
-      return dispatch({
-        type: TRADE_FAILED,
-        payload: new Error(language.panel.login.installMetamask[currentLang]),
-        error: true
-      })    
+    
+    if(!smartupWeb3) return dispatch(tradeError(language.panel.login.installMetamask[currentLang]))
+    if(!ct || !sut) return dispatch(tradeError(language.trading.invalidTransaction[currentLang]))
+    if(!address) return dispatch(tradeError(language.trading.preview[currentLang]))
     
     const encodeCtPrice = toWei(sut);
     const ctAmount = toWei(ct);
     const encodeCtAmount = encodeParam(ctAmount);
     
-    if(!address) return dispatch({
-      type: TRADE_FAILED,
-      payload: new Error(language.trading.preview[currentLang]),
-      error: true
-    })
-
     const [error, response] = await dispatch(callbackFunction(
       smartupWeb3.eth.sendTransaction,
       TRADE_REQUESTED, TRADE_SUCCEEDED, TRADE_FAILED,
