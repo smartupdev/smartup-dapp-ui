@@ -119,7 +119,7 @@ const main = {
     marketCover: name('Market Cover Photo', '巿場封面圖', '巿场封面图'),
     priceEquation: name('Price equation of idea token', '巿場代幣方程', '巿场代币方程'),
     previewCurve: name('Preview', '預覽', '预览'),
-    creating: name('MAKRET IS CREATING!', '巿場正在創建！', '巿场正在创建！'),
+    creating: name('MAKRET IS CREATING!', '正在創建巿場！', '正在创建巿场！'),
     preview: name('Preview The New Market', '預覽新巿場', '预览新巿场'),
     next: name('Next', '下一步'),
     back: name('Back', '返回'),
