@@ -11,6 +11,8 @@ import {
   TRADE_HIGH_LOW_REQUESTED,TRADE_HIGH_LOW_SUCCEEDED,TRADE_HIGH_LOW_FAILED,
 } from '../actions/actionTypes';
 import fetch, {delay} from '../lib/util/fetch';
+import { getLang } from '../language'
+import language from '../lang'
 import {
   API_MARKET_TRADE_LIST, API_USER_TRADE_DETAIL,API_KLINE_DATA, API_USER_TRADE_SAVE
 } from './api';
@@ -96,12 +98,19 @@ export function onChangeCT(amount) {
 
 function getSUT() {
   return (dispatch, getState) => {
-    const { trade: {isSell, ct, getSUTCount}, market: {currentMarket: {address}} } = getState()
+    const { trade: {isSell, ct}, market: {currentMarket: {address}} } = getState()
+    const currentLang = getLang()
     if(!ct) 
       return dispatch({
         type: TRADE_GET_SUT_SUCCEEDED,
         payload: ''
       })
+    if(!smartupWeb3)
+      return dispatch({
+        type: TRADE_GET_SUT_FAILED,
+        payload: new Error(language.panel.login.installMetamask[currentLang]),
+        error: true
+      })    
     const encodeCtAmount = encodeParam(toWei(ct))
     const data = isSell ? createAskQuoteData(encodeCtAmount) : createBidQuoteData(encodeCtAmount)
     dispatch(callbackFunction(
@@ -113,7 +122,7 @@ function getSUT() {
           to: address,
           data,
         },
-        meta: { getSUTCount: getSUTCount + 1 },
+        meta: { getSUTCount: Math.random() },
         responsePayload: decodeResult
       }
     ))
@@ -123,7 +132,13 @@ function getSUT() {
 export function onTrade() {
   return async (dispatch, getState) => {
     const { trade: {ct, sut, isSell}, market: { currentMarket: {id, address} } } = getState()
-
+    const currentLang = getLang()
+    if(!smartupWeb3)
+      return dispatch({
+        type: TRADE_FAILED,
+        payload: new Error(language.panel.login.installMetamask[currentLang]),
+        error: true
+      })    
     const encodeCtPrice = toWei(sut);
     const ctAmount = toWei(ct);
     const encodeCtAmount = encodeParam(ctAmount);

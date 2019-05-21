@@ -41,7 +41,7 @@ function Trading({ loggedIn, market, gettingMarket, tradeState, setTab, onChange
     }
     return reset
   }, [market])
-  const { tabIndex, userCt, ct, sut, isSell, isTrading, trades, gettingTrades, hasNextPage, klineData,highLowData, agreeTnc, tradingError } = tradeState
+  const { tabIndex, userCt, ct, sut, isSell, isTrading, trades, gettingTrades, hasNextPage, klineData,highLowData, agreeTnc, tradingError, sutError } = tradeState
   const [{ trading: tradingText, term, time: {months, weekdays} }] = useLang()
   const model = [
     { label: tradingText.table.buySell, value: 'type', layoutStyle: { flex: 1, center: true }, component: ({ value }) => <Text red={value === 'sell'} green={value !== 'sell'}>{value === 'sell' ? tradingText.table.sell : tradingText.table.buy }</Text> },
@@ -118,6 +118,7 @@ function Trading({ loggedIn, market, gettingMarket, tradeState, setTab, onChange
                 <Input background L center size='30' disabled={isTrading} value={ct} onChange={onChangeCT} number />
                 {notEnoughCt && <Text error XS>{tradingText.needMoreCT}</Text>}
                 {notEnoughSut && <Text error XS>{tradingText.needMoreSUT}</Text>}
+                {sutError && <Text error XS>{sutError.message}</Text>}
                 </Col>
             </Row>
           </Col>
