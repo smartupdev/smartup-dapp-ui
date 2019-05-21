@@ -61,6 +61,7 @@ function Trading({ loggedIn, market, gettingMarket, tradeState, setTab, onChange
 
   const notEnoughSut = !isSell && +userSut < +sut && loggedIn
   const notEnoughCt = isSell && +ct > +userCt && loggedIn
+  const [lang] = useLang()
   return (
     <>
       <Row TopXL BottomS LeftL color={theme.bgColorDark}>
@@ -78,10 +79,10 @@ function Trading({ loggedIn, market, gettingMarket, tradeState, setTab, onChange
           <Text nowrap spacingBottomS>{toFullDate(Date.now(), weekdays, months)}</Text>
 
           <Row bottom spacingTopS>
-            <Text XL>{toPrice(highLowData.length > 0 ? highLowData[highLowData.length - 1].low : '', 2)}</Text><Text red S>&nbsp;&nbsp;low</Text>
+            <Text XL>{toPrice(highLowData.length > 0 ? highLowData[highLowData.length - 1].low : '', 2)}</Text><Text red S>&nbsp;&nbsp;{lang.trading.low}</Text>
           </Row>
           <Row bottom>
-            <Text XL>{toPrice(highLowData.length > 0 ? highLowData[highLowData.length - 1].high : '', 2)}</Text><Text green S>&nbsp;&nbsp;high</Text>
+            <Text XL>{toPrice(highLowData.length > 0 ? highLowData[highLowData.length - 1].high : '', 2)}</Text><Text green S>&nbsp;&nbsp;{lang.trading.high}</Text>
           </Row>
           <Text note S>{tradingText.change}</Text>
 

@@ -177,7 +177,7 @@ const main = {
     needMoreCT: name('You do not have enough token to sell.', '你的巿場代幣餘額不足，無法交易。', '你的巿场代币余额不足，无法交易。'),
     transactionRecord: name('Transaction record will be available after the first transaction made.', '交易紀錄於第一單交易完成後顯示。', '交易纪录于第一单交易完成后显示。'),
     chartNoAvailable: name('Graph will be available after transactions made', '交易圖表將於交易完成後顯示', '交易图表将于交易完成后显示'),
-
+    preview: name('It is for preview. Refresh the page upon you received notification "Market is created".', '這是預覽頁面。請在收到成功"成功創建巿場"通知後重新整理此頁進行交易。', '这是预览页面。请在收到成功“成功创建巿场”通知后重新整理此页进行交易。'),
     table: {
       buySell: name('BUY/ SELL', '買入/賣出', '买入/卖出'),
       user: name('USER', '用戶', '用户'),
@@ -250,8 +250,8 @@ const main = {
     inTransaction: {
       typeTitle: { // MUST match with type
         CreateMarket: name((ct, sut) => `Paid ${sut} SmartUp token to create a market`, (ct, sut) => `支付 ${sut} 個SmartUp幣創建巿場`, (ct, sut) => `支付 ${sut} 个SmartUp币创建巿场`),
-        BuyCT: name((ct, sut) => `Bought ${ct} market token from ${toToken(sut)} SmartUp token`, (ct, sut) => `賣出 ${ct} 巿場代幣，兌換成 ${toToken(sut)} SmartUp幣`, (ct, sut) => `卖出 ${ct} 巿场代币，兑换成 ${toToken(sut)} SmartUp币`),
-        SellCT: name((ct, sut) => `Sold ${ct} market token to ${toToken(sut)} SmartUp token`, (ct, sut) => `買入 ${ct} 巿場代幣，兌換自 ${toToken(sut)} SmartUp幣`, (ct, sut) => `买入 ${ct} 巿场代币，兑换自 ${toToken(sut)} SmartUp币`),
+        BuyCT: name((ct, sut) => `Bought ${ct} market token from ${toToken(sut)} SmartUp token`, (ct, sut) => `買入 ${ct} 巿場代幣，兌換了 ${toToken(sut)} SmartUp幣`, (ct, sut) => ` 买入 ${ct} 巿场代币，兑换了 ${toToken(sut)} SmartUp币`),
+        SellCT: name((ct, sut) => `Sold ${ct} market token to ${toToken(sut)} SmartUp token`, (ct, sut) => `賣出 ${ct} 巿場代幣，兌換了 ${toToken(sut)} SmartUp幣`, (ct, sut) => `卖出 ${ct} 巿场代币，兑换了 ${toToken(sut)} SmartUp币`),
       },
       typeLabel: { // MUST match with type
         CreateMarket: name('Market created', '創建巿場', '创建巿场'),
