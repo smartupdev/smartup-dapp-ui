@@ -18,15 +18,11 @@ export default ({ id = 'id', hasMore, loadMore, isLoading, isButton }) => {
   //   setDisapper()
   //   loadMore()
   // }
+  if(!hasMore) return null
   return (
     <Row id={id} center VS>
-      {
-        hasMore ? 
-          <Button label={lang.loadMore} primary outline disabled={isLoading} onClick={loadMore} />
-          // <DonutLoader page /> 
-        : null
-      }
+      <Button label={lang.loadMore} primary outline disabled={isLoading} onClick={loadMore} />
     </Row>
-
+    // <DonutLoader page /> 
   )
 };

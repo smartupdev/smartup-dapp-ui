@@ -15,7 +15,7 @@ const Table = styled(Col)`
   overflow-x: auto
 `
 
-const TableWrappper = styled(Col)`
+const TableWrapper = styled(Col)`
   overflow-y: auto
 `
 
@@ -79,7 +79,7 @@ const TableRecord = memo(
 // noBorderCol is for no border in column
 export default ({ recordKey = 'id' , model, values, sortBy, orderBy, onClickHeader, onClick, expandedRecords = emptyArr, expandCompoent: ExpandCompoent, minWidth, S, inset, noBorderCol, autoHeight, noResultText = '' }) => {
   return (
-    <TableWrappper>
+    <TableWrapper>
       <Table minWidth={minWidth} autoHeight={autoHeight}>
         <TableTitle inset={inset}>
           {
@@ -106,10 +106,10 @@ export default ({ recordKey = 'id' , model, values, sortBy, orderBy, onClickHead
                 ExpandCompoent={ExpandCompoent} />
             )
           : 
-            <Text center note>{noResultText}</Text>
+            noResultText && <Text center note>{noResultText}</Text>
         }
       </Table>
-    </TableWrappper>
+    </TableWrapper>
 
   )
 }
