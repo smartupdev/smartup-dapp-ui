@@ -2,6 +2,7 @@ import Logo from './images/logo.png'
 import LogoGif from './images/logo_edu.gif'
 
 export const ENV_MAP = {
+  // Website title in package.json
   production: { 
     id: 'production', 
     apiHost:  'https://node.smartup.global',  ipfsHost: 'https://ipfs.smartup.global/ipfs/', protocol: 'https',
@@ -35,6 +36,8 @@ export const ENV_MAP = {
 export const fetchTimeout = 20000
 export const TNC_HASH = 'QmUXE6LhAVCJKFYY3DsRYnxwopp5Ub94sAjVfgx73zp7zr'
 
-export const ENV = ENV_MAP.dev
+const processEnv = process.env.REACT_APP_ENV
+
+export const ENV =  ENV_MAP[processEnv] || ENV_MAP.dev
 
 console.log(`Using ${ENV.id}, apiHost: ${ENV.apiHost}, alphaUrl: ${ENV.alphaUrl}`)
