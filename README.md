@@ -1,5 +1,8 @@
-Our website is in
-`https://ipfs.smartup.global/ipfs/<hash>/`
+## Version
+Format: `https://ipfs.smartup.global/ipfs/<hash>/`  
+Production: Not ready yet  
+Beta: [https://ipfs.smartup.global/ipfs/QmXR4x6snQ9EME6SNLNMcGmTje4sYzMeJb7xRHTHB1Jiqi/#/](https://ipfs.smartup.global/ipfs/QmXR4x6snQ9EME6SNLNMcGmTje4sYzMeJb7xRHTHB1Jiqi/#/)  
+University: [https://ipfs.smartup.global/ipfs/QmViQ3WYh6MbRpFvUepAzxXHRKaPv5B32NHBTDp8Bspk5s](https://ipfs.smartup.global/ipfs/QmViQ3WYh6MbRpFvUepAzxXHRKaPv5B32NHBTDp8Bspk5s)  
 
 ## Dev
 1. `yarn` or `npm i`   
