@@ -18,7 +18,7 @@ function toPrice(number, decimal = 2) {
 function toToken(number, decimal = 4) {
   if(number === null || number === undefined) return '-'
   const int = ~~number
-  const dec = ~~((number - int)*Math.pow(10, decimal))
+  const dec = Math.round((number - int)*Math.pow(10, decimal))
   return (
     formatter.format(int).slice(0, -3) 
     + (dec ? `.${`${dec}`.padStart(decimal, 0).slice(0, decimal)}` : '')
