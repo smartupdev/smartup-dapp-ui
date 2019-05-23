@@ -34,7 +34,7 @@ const Button = styled.button`
 export default ({ label, icon: Icon, primary, light, condensed, extended, outline, verticalMargin, iconSize, ...rest }) => {
   return (
     <Button primary={primary} light={light} condensed={condensed} VBase={extended} HL={extended} outline={outline} verticalMargin={verticalMargin} {...rest}>
-      { Icon && <Icon XS RightBase={!!label} size={iconSize} />}
+      { Icon && <Icon XS RightBase={label !== null && label !== undefined} size={iconSize} />}
       { label && <Text>{label}</Text>}
     </Button>
   )
