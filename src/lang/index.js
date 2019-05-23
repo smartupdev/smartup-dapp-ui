@@ -67,7 +67,7 @@ const main = {
       sign: name('Please sign the message for login purpose', '請在MetaMask簽署登入', '请在MetaMask签署登入'),
       enable: name('Please enable MetaMask', '請啟用MetaMask', '请启用MetaMask'),
       fail: name('Login failed. Please try again later', '無法登入，請稍後再試', '无法登入，请稍后再试'),
-      checkMetamask: name('Please check Metamask.', '請查看MetaMask。', '请查看MetaMask。')
+      checkMetamask: name('Please check MetaMask.', '請查看MetaMask。', '请查看MetaMask。')
     },
     portfolio: {
       wallet: {
@@ -119,7 +119,7 @@ const main = {
     marketCover: name('Market Cover Photo', '巿場封面圖', '巿场封面图'),
     priceEquation: name('Price equation of idea token', '巿場代幣方程', '巿场代币方程'),
     previewCurve: name('Preview', '預覽', '预览'),
-    creating: name('MAKRET IS CREATING!', '正在創建巿場！', '正在创建巿场！'),
+    creating: name('MARKET IS CREATING!', '正在創建巿場！', '正在创建巿场！'),
     preview: name('Preview The New Market', '預覽新巿場', '预览新巿场'),
     next: name('Next', '下一步'),
     back: name('Back', '返回'),
@@ -130,10 +130,11 @@ const main = {
 
   routes: { // must match with src/routes
     home: name('Home', '主頁', '主页'),
-    createMarket: name('Create Martket', '創建巿場', '创建巿场'),
+    createMarket: name('Create Market', '創建巿場', '创建巿场'),
     account: name('Personal Centre', '個人中心', '个人中心'),
     dispute: name('Dispute', '檢舉', '检举'),
     faq: name('FAQ', '常見問題', '常见问题'),
+    userGuide: name('User Guide', '用戶手冊', '用戶手冊'),
     feedback: name('Feedback Us', '意見回饋', '意见回馈'),
 
     accountTransaction: name('Transaction', '交易'),
@@ -282,7 +283,7 @@ const main = {
       created: name('Your Comments', '你的留言', '你的留言'),
       saved: name('Saved Comments', '保存留言'),
     },
-    connectMetaMask: name('You have to connect to Metamask.', '請先連接MetaMask錢包。', '请先连接MetaMask钱包。'),
+    connectMetaMask: name('You have to connect to MetaMask.', '請先連接MetaMask錢包。', '请先连接MetaMask钱包。'),
     personalCentre: name('Personal Centre', '個人中心', '个人中心'),
   },
 

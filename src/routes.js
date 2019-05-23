@@ -29,6 +29,7 @@ import AccountSaved from './containers/Account/Saved'
 
 import Dispute from './containers/Dispute'
 import Faq from './containers/Faq'
+import userGuide from './containers/userGuide'
 import NotFound from './containers/NotFound'
 
 import { LanguageMenu, FeedbackMenu } from './components/Header/Menu'
@@ -36,13 +37,14 @@ import { LanguageMenu, FeedbackMenu } from './components/Header/Menu'
 import { connect } from 'react-redux'
 
 // ORDER MATTER
-let mainRoutes = [ // main routes, excludsive, using switch
-  { id: 'home', path: '/', component: Home, icon: Menu1, iconLabel: 'Home', selected: true, exact: true, isHeader: true },  
+let mainRoutes = [ // main routes, exclusive, using switch
+  { id: 'home', path: '/', component: Home, icon: Menu1, selected: true, exact: true, isHeader: true },  
   { id: 'market', path: '/market', component: Market, from: 'home', },
-  { id: 'createMarket', path: '/create/market', component: CreateMarket, icon: Menu2, iconLabel: 'Create Market', isHeader: true },
-  { id: 'account', path: '/account', component: Account, icon: Menu3, iconLabel: 'Personal Center', isHeader: true },
-  { id: 'dispute', path: '/dispute', component: Dispute, icon: Menu4, iconLabel: 'Dispute', isHeader: true },
-  { id: 'faq', path: '/faq', component: Faq, icon: FaqButton, iconLabel: 'FAQ', isHeader: true },
+  { id: 'createMarket', path: '/create/market', component: CreateMarket, icon: Menu2, isHeader: true },
+  { id: 'account', path: '/account', component: Account, icon: Menu3, isHeader: true },
+  { id: 'dispute', path: '/dispute', component: Dispute, icon: Menu4, isHeader: true },
+  { id: 'faq', path: '/faq', component: Faq, icon: FaqButton, isHeader: true },
+  { id: 'userGuide', path: '/user-guide', component: userGuide, icon: FaqButton, isHeader: true },
 
   { id: 'language', icon: Language, isFooter: true, menuComponent: LanguageMenu },
   { id: 'feedback', icon: FeedbackButton, isFooter: true, menuComponent: FeedbackMenu, startFromBottom: true },
