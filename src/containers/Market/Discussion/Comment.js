@@ -7,7 +7,7 @@ import Text from '../../../components/Text'
 import Avatar from '../../../components/Avatar'
 import { Bookmarked, Like, Dislike } from '../../../components/Icon'
 
-import { toAgo } from '../../../lib/util'
+import { toAgo, toShortNumber } from '../../../lib/util'
 import { useLang } from '../../../language'
 
 import theme from '../../../theme'
@@ -43,11 +43,11 @@ function DiscussionComment({
             <Row centerVertical TopXS>
               <Row centerVertical disabled={!loggedIn} onClick={(e) => loggedIn && toggleLikeReply(e, { id, isLiked, isDisliked })}>
                 <Like S color={isLiked ? theme.green : theme.white} MarginRightBase />
-                <Text RightM>{numberOfLike || 0}</Text>
+                <Text RightM>{toShortNumber(numberOfLike)}</Text>
               </Row>
               <Row centerVertical disabled={!loggedIn} onClick={(e) => loggedIn && toggleDislikeReply(e, { id, isLiked, isDisliked })}>
                 <Dislike S color={isDisliked ? theme.red : theme.white} MarginRightBase />
-                <Text RightM>{numberOfDislike || 0}</Text>
+                <Text RightM>{toShortNumber(numberOfDislike)}</Text>
               </Row>
               <Text note>{toAgo(createTime, now, min, hour, day)}</Text>
             </Row>

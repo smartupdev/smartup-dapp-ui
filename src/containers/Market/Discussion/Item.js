@@ -6,7 +6,7 @@ import Image from '../../../components/Image'
 import { Bookmarked, Share, Like, Dislike, Reply } from '../../../components/Icon'
 import { Link, routeMap } from '../../../routes'
 
-import { toAgo, shorten } from '../../../lib/util'
+import { toAgo, shorten, toShortNumber } from '../../../lib/util'
 import theme from '../../../theme'
 import { connect } from 'react-redux'
 import { toggleLikePost, toggleDislikePost, toggleFollowPost } from '../../../actions/post'
@@ -18,7 +18,7 @@ import { useLang } from '../../../language'
 
 function DiscussionItem ({ loggedIn, post, isDetailView, toggleLikePost, toggleDislikePost, toggleFollowPost }) {
   const [lang] = useLang()
-  const { id, username,userAddress, time, title, content, photo, isCollect, isLiked, isDisliked, numberOfLike = 1000, numberOfDislike = 2000, numberOfComment = 3000, marketId, lastReply } = post
+  const { id, username,userAddress, time, title, content, photo, isCollect, isLiked, isDisliked, numberOfLike, numberOfDislike, numberOfComment, marketId, lastReply } = post
   function like(e) {
     loggedIn &&
     toggleLikePost(e, {id, isLiked, isDisliked})
@@ -50,14 +50,14 @@ function DiscussionItem ({ loggedIn, post, isDetailView, toggleLikePost, toggleD
             <Row centerVertical>
               <Row onClick={like} disabled={!loggedIn}>
                 <Like S color={isLiked ? theme.green : theme.white} MarginRightBase />
-                <Text RightM>{numberOfLike}</Text>
+                <Text RightM>{toShortNumber(numberOfLike)}</Text>
               </Row>
               <Row onClick={dislike} disabled={!loggedIn}>
                 <Dislike S color={isDisliked ? theme.red : theme.white} MarginRightBase />
-                <Text RightM>{numberOfDislike}</Text>
+                <Text RightM>{toShortNumber(numberOfDislike)}</Text>
               </Row>
                 <Reply S color={theme.white} MarginRightBase />
-                <Text RightM>{numberOfComment}</Text>
+                <Text RightM>{toShortNumber(numberOfComment)}</Text>
             </Row>
           </Col>
           <Row>

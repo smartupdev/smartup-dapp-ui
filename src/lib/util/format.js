@@ -3,6 +3,18 @@ const formatter = new Intl.NumberFormat('en-US', {
   currency: 'USD',
 })
 
+// e.g. toShortNumber(10000, 'k', 1000, 'm', 1000000,)
+// e.g. toShortNumber(123412345556, '千', 1000, '萬', 10000, '億', 100000000)
+function toShortNumber(number, ...wordAndNumbers) {
+  if(typeof number !== 'number') return '-'
+  const list = wordAndNumbers[0] ? wordAndNumbers : ['k', 1000, 'm', 1000000]
+  return list.reduce( (p, c, i, a) => 
+    i%2 ? 
+      number > c ? (number/c).toFixed(1) + a[i-1] : p
+    : p
+  , number)
+}
+
 function toPercent(number) {
   return number ? 
     (number > 0 ? '+' : '') + (number * 100).toFixed(2) + '%'
@@ -25,4 +37,4 @@ function toToken(number, decimal = 4) {
   ).slice(1)
 }
 
-export { toPrice, toToken, toPercent }
+export { toPrice, toToken, toPercent, toShortNumber }
