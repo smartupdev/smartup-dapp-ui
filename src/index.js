@@ -12,16 +12,17 @@ import theme from './theme'
 
 import { ToastProvider } from 'react-toast-notifications';
 
-const Index = () =>
-    <Provider store={store}>
-      <Router>
-        <LangProvider>
-          <ThemeProvider defaultTheme={theme}>
-            <ToastProvider autoDismissTimeout={3000}>
-              <App />
-            </ToastProvider>
-          </ThemeProvider>
-        </LangProvider>
-      </Router>
-    </Provider>
+const Index = () => 
+  <Provider store={store}>
+    <Router>
+      <LangProvider>
+        <ThemeProvider defaultTheme={theme}>
+          <ToastProvider autoDismissTimeout={3000}>
+            <App />
+          </ToastProvider>
+        </ThemeProvider>
+      </LangProvider>
+    </Router>
+  </Provider>
+
 ReactDOM.render(<Index />, document.getElementById('root'));

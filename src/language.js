@@ -1,5 +1,5 @@
 import React, {createContext, useContext, useState} from 'react'
-import { initialLang, languages } from './lang'
+import { languages } from './lang'
 
 export const languageOptions = [
   { label: 'English', value: 'en' },

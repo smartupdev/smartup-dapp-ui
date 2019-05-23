@@ -1,40 +1,34 @@
-import React, { memo } from 'react'
-// import Icon1 from './images/menu1.svg'
-// import Icon2 from './images/menu2.svg'
-// import Icon3 from './images/menu3.svg'
-// import Icon4 from './images/menu4.svg'
+import React, { memo, lazy, Suspense } from 'react'
 import { withRouter, Route, Switch, Redirect } from 'react-router-dom'
 import { toParams } from './lib/util/fetch'
 
 import { MainPageButton as Menu1, ViewMarketButton as Menu2, CreateMarketButton as Menu3, FindMarketButton as Menu4, Faq as FaqButton, FeedbackEmail as FeedbackButton, Language, UserGuide as UserGuideLogo } from './components/Icon/index'
 
-import Home from './containers/Home'
-import CreateMarket from './containers/CreateMarket'
-
-import Market from './containers/Market'
-import Trading from './containers/Market/Trading'
-import General from './containers/Market/General'
-import Discussion from './containers/Market/Discussion'
-import DiscussionDetail from './containers/Market/Discussion/Detail'
-import DiscussionCreate from './containers/Market/Discussion/Create'
-import Proposal from './containers/Market/Proposal'
-import Flag from './containers/Market/Flag'
-
-import Account from './containers/Account'
-import AccountTransaction from './containers/Account/Transaction'
-import AccountMarket from './containers/Account/Market'
-import AccountPost from './containers/Account/Post'
-import AccountComment from './containers/Account/Comment'
-import AccountSaved from './containers/Account/Saved'
-
-import Dispute from './containers/Dispute'
-import Faq from './containers/Faq'
-import userGuide from './containers/userGuide'
-import NotFound from './containers/NotFound'
+import { connect } from 'react-redux'
 
 import { LanguageMenu, FeedbackMenu } from './components/Header/Menu'
 
-import { connect } from 'react-redux'
+// For delaying the component created
+const Home = lazy(() => import('./containers/Home'))
+const CreateMarket = lazy(() => import('./containers/CreateMarket'))
+const Market = lazy(() => import('./containers/Market'))
+const Trading = lazy(() => import('./containers/Market/Trading'))
+const General = lazy(() => import('./containers/Market/General'))
+const Discussion = lazy(() => import('./containers/Market/Discussion'))
+const DiscussionDetail = lazy(() => import('./containers/Market/Discussion/Detail'))
+const DiscussionCreate = lazy(() => import('./containers/Market/Discussion/Create'))
+const Proposal = lazy(() => import('./containers/Market/Proposal'))
+const Flag = lazy(() => import('./containers/Market/Flag'))
+const Account = lazy(() => import('./containers/Account'))
+const AccountTransaction = lazy(() => import('./containers/Account/Transaction'))
+const AccountMarket = lazy(() => import('./containers/Account/Market'))
+const AccountPost = lazy(() => import('./containers/Account/Post'))
+const AccountComment = lazy(() => import('./containers/Account/Comment'))
+const AccountSaved = lazy(() => import('./containers/Account/Saved'))
+const Dispute = lazy(() => import('./containers/Dispute'))
+const Faq = lazy(() => import('./containers/Faq'))
+const userGuide = lazy(() => import('./containers/userGuide'))
+const NotFound = lazy(() => import('./containers/NotFound'))
 
 // ORDER MATTER
 let mainRoutes = [ // main routes, exclusive, using switch
@@ -78,41 +72,31 @@ mainRoutes = mainRoutes.map(r => ({
   includePaths: routes.filter(x => x.from === r.id).map(x => x.path)
 }))
 
-function MainRoutes() {
+function RouteComponent(r, defaultFrom, defaultTo) {
   return (
-    <Switch>
-      {
-        mainRoutes.map(({id, path, component, exact}) =>
-          <Route key={id} exact={exact} path={path} component={component} />
-        )
-      }
-    </Switch>
+    <Suspense fallback={<div />}>
+      <Switch>
+        {
+          r.map(({id, path, component, exact}) =>
+            <Route key={id} exact={exact} path={path} component={component} />
+          )
+        }
+        { defaultFrom && defaultTo && <Redirect from={defaultFrom} to={defaultTo} /> }
+      </Switch>
+    </Suspense>
   )
+}
+
+function MainRoutes() {
+  return RouteComponent(mainRoutes)
 }
 
 function MarketRoutes() {
-  return (
-    <Switch>
-      {
-        marketRoutes.map(({id, path, component, exact}) =>
-          <Route key={id} exact={exact} path={path} component={component} />
-        )
-      }
-    </Switch>
-  )
+  return RouteComponent(marketRoutes)
 }
 
 function AccountRoutes() {
-  return (
-    <Switch>
-      {
-        accountRoutes.map(({ id, exact, path, component }) => 
-          <Route key={id} exact={exact} path={path} component={component} />
-        )
-      }
-      <Redirect from={routeMap.account.path} to={routeMap.accountTransaction.path} />
-    </Switch>
-  )  
+  return RouteComponent(accountRoutes, routeMap.account.path, routeMap.accountTransaction.path)
 }
 
 // mainRoutes from will map to includePaths
@@ -157,15 +141,17 @@ function linkProps(history, location, marketId) {
     location
   }
 }
-
 export function withLink(Component) {
-  return connect(mapStateToProps)(withRouter( 
-    memo(
-      ({ history, location, marketId, ...props }) => 
-        <Component {...props} {...linkProps(history, location, marketId)} />
-    ))  
+  return connect(mapStateToProps)(
+    withRouter( 
+      memo(
+        ({ history, location, marketId, ...props }) => 
+          <Component {...props} {...linkProps(history, location, marketId)} />
+      )
+    )  
   )
 }
+
 
 export const Link = connect(mapStateToProps)(withRouter( 
   ({ history, location, children, marketId }) => children(linkProps(history, location, marketId)) 
