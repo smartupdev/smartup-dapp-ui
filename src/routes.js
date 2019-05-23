@@ -6,7 +6,7 @@ import React, { memo } from 'react'
 import { withRouter, Route, Switch, Redirect } from 'react-router-dom'
 import { toParams } from './lib/util/fetch'
 
-import { MainPageButton as Menu1, ViewMarketButton as Menu2, CreateMarketButton as Menu3, FindMarketButton as Menu4, Faq as FaqButton, FeedbackEmail as FeedbackButton, Language } from './components/Icon/index'
+import { MainPageButton as Menu1, ViewMarketButton as Menu2, CreateMarketButton as Menu3, FindMarketButton as Menu4, Faq as FaqButton, FeedbackEmail as FeedbackButton, Language, UserGuide as UserGuideLogo } from './components/Icon/index'
 
 import Home from './containers/Home'
 import CreateMarket from './containers/CreateMarket'
@@ -44,7 +44,7 @@ let mainRoutes = [ // main routes, exclusive, using switch
   { id: 'account', path: '/account', component: Account, icon: Menu3, isHeader: true },
   { id: 'dispute', path: '/dispute', component: Dispute, icon: Menu4, isHeader: true },
   { id: 'faq', path: '/faq', component: Faq, icon: FaqButton, isHeader: true },
-  { id: 'userGuide', path: '/user-guide', component: userGuide, icon: FaqButton, isHeader: true },
+  { id: 'userGuide', path: '/user-guide', component: userGuide, icon: UserGuideLogo, isHeader: true },
 
   { id: 'language', icon: Language, isFooter: true, menuComponent: LanguageMenu },
   { id: 'feedback', icon: FeedbackButton, isFooter: true, menuComponent: FeedbackMenu, startFromBottom: true },
