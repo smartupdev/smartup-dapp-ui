@@ -7,6 +7,7 @@ import { Expand, Tick } from '../../components/Icon'
 import Hr from '../../components/Hr'
 import ScrollLoader from '../../components/ScrollLoader'
 import { withLink } from '../../routes'
+import { useLang } from '../../language'
 import theme from '../../theme'
 import smartupIcon from '../../images/smartup.png';
 
@@ -36,9 +37,10 @@ const Notification = ({
   toggleShowUnread,
   onChangeKeyword,
 }) => {
+  const [lang] = useLang()
   useEffect(() => {
     getList()
-  }, [showUnreadOnly])
+  }, [showUnreadOnly, lang])
   const disabled = gettingNotifications
   const readAllDisabled = !unreadCount || disabled
   const onClick = useCallback( n => {
