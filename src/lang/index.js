@@ -271,7 +271,7 @@ const main = {
       lastUpdate: name('Last update', '更新時間', '更新时间')
     },
     inMarket: {
-      created: name('Created Markets', '你的巿場', '你的巿场'),
+      created: name('Created Markets', '你創建的巿場', '你创建的巿场'),
       saved:name('Saved Markets', '保存巿場', '保存市场'),
       subscribed:name('Subscribed Markets', '買入巿場', '买入巿场'),
     },
