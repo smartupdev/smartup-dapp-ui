@@ -3,7 +3,7 @@ Format: `https://ipfs.smartup.global/ipfs/<hash>/`
 Production: Not ready yet  
 Beta: [Link](https://ipfs.smartup.global/ipfs/QmXR4x6snQ9EME6SNLNMcGmTje4sYzMeJb7xRHTHB1Jiqi/#/)  
 University: [Link](https://ipfs.smartup.global/ipfs/QmViQ3WYh6MbRpFvUepAzxXHRKaPv5B32NHBTDp8Bspk5s)  
-Dev: [Link](http://ipfs.smartup.global/ipfs/QmVrr5fFfrjYtGKXdmM7dDtmA3ma8hDxa1bfJZP7biQw6o/#/)
+Dev: [Link](http://ipfs.smartup.global/ipfs/QmX5hGMw9qnSLJiUHPath9MHk4hForSEpQK92FoPu4QByB/#/)
 
 ## Dev
 1. `yarn` or `npm i`   
