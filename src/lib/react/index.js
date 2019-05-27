@@ -8,6 +8,28 @@ export default function eventListener(event, handler, targetId) { // event: e.g.
   return () => target.removeEventListener(event, handler)
 }
 
+function getOffset(id) {
+  return document.getElementById(id).getBoundingClientRect().offsetTop
+}
+
+function getElementY(id) {
+  return document.getElementById(id).getBoundingClientRect().top
+}
+
+export function useScroll(id, parentId) {
+  const [y, setY] = useState(0);
+  function handle() {
+    const elePosition = getElementY(id)
+    console.log(elePosition)
+    console.log(getOffset(parentId))
+  }
+  useEffect(() => {
+    return eventListener('scroll', handle, parentId)
+  }, [])
+  // return [appear, () => setAppear(false), handle]
+
+}
+
 // // const [isFetching, setIsFetching] = useInfiniteScroll(fetchMoreListItems);
 // export function useInfiniteScroll(callback) {
 //   const [isFetching, setIsFetching] = useState(false);
