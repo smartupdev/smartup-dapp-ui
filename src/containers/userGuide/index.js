@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import { useScroll } from '../../lib/react'
+import React, { useState, useEffect, Fragment, useRef } from 'react'
+import { useScroll, getElementById } from '../../lib/react'
 import { mainId } from '../../containers/App'
 
 import Text, {TextWithLink} from '../../components/Text'
@@ -67,36 +67,45 @@ const userGuideId = 'user-guide-id'
 
 export default () => {
   const [gifSource] = useState(`${Cover}?a=${Math.random()}`)
-  useScroll(userGuideId, mainId)
-  console.log(gifSource)
+  const [leftMenuY] = useScroll(userGuideId, mainId)
+
+  const refs = sections.map(({ sections }) => ({
+    title: useRef(),
+    sections: sections.map(() => useRef())
+  }))  
+  function scrollTo(index, j) {
+    const ele = typeof j === 'number' ? refs[index].sections[j] : refs[index].title
+    getElementById(mainId).scrollTo(0, ele.current.offsetTop)
+  }
+
   return (
     <Col flex={1} fitHeight style={{ backgroundImage: `url("${BG}")`, backgroundRepeat: 'repeat-y', backgroundSize: `100% auto`}}>
       <Image source={gifSource} style={{ width: '100%', height: 'inherit' }} />
       <Row flex={1}>
-        <Col LeftL RightXL id={userGuideId}>
+        <Col LeftL RightXL id={userGuideId} style={{ paddingTop: leftMenuY < 0 ? Math.abs(leftMenuY) : 0 }}>
           {
-            sections.map( ({title, sections}) => 
-              <>
-                <Text note TopS key={title}>{title}</Text>
-                {sections.map( ({title}) => 
-                  <Text note TopXS LeftL key={title}>{title}</Text>
+            sections.map( ({title, sections}, index) => 
+              <Fragment key={title}>
+                <Text note TopS onClick={() => scrollTo(index)}>{title}</Text>
+                {sections.map( ({title}, j) => 
+                  <Text note TopXS LeftL key={title} onClick={() => scrollTo(index, j)}>{title}</Text>
                 )}
-              </>
+              </Fragment>
             )
           }
         </Col>
         <Col flex={1} LeftXL RightS>
           {
-            sections.map( ({title, sections}) => 
-              <>
-                <Text note XL key={title}>{title}</Text>
-                {sections.map( ({title, body}) => 
-                  <Col key={title}>
+            sections.map( ({title, sections}, index) => 
+              <Fragment key={title}>
+                <Text note XL ref={refs[index].title}>{title}</Text>
+                {sections.map( ({title, body}, j) => 
+                  <Col key={title} ref={refs[index].sections[j]}>
                     <Text primary L TopS>{title}</Text>
                     {typeof body === 'string' ? <TextBody>{body}</TextBody> : body}
                   </Col>
                 )}
-              </>
+              </Fragment>
             )
           }
         </Col>
