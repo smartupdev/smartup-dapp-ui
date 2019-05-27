@@ -1,6 +1,7 @@
 import React from 'react'
 
 // import Table from '../../components/Table'
+import { ENV } from '../../config'
 import Image from '../../components/Image'
 import Text from '../../components/Text'
 import Panel from '../../components/Panel'
@@ -38,7 +39,7 @@ const InfoBody = ({ info }) => {
     return (
     <Row BottomS TopS>
       <Col LeftXS RightXS>
-        <Image source={info.cover} photo cover />
+        <Image source={ENV.ipfsHost + info.cover} photo cover />
       </Col>
       <Col centerVertical>
         <Row BottomM>
