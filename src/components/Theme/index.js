@@ -22,6 +22,11 @@ export const fontSizeCss = css`
 export const fontCss = css`
   font-family: ${p => p.theme.fontFamily};
   ${fontSizeCss}
+  ${p => p.note && css`color: ${p => p.theme.colorSecondary}`}
+  ${p => p.price && css`color: ${p => p.theme.colorPrice}`}
+  ${p => p.primary && css`color: ${p => p.theme.colorPrimary}`}
+  ${p => p.red && css`color: ${p.theme.red}`};
+  ${p => p.green && css`color: ${p.theme.green}`};
 `
 
 export const onClickCss = css`

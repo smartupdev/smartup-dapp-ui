@@ -15,6 +15,8 @@ import NotFound from '../NotFound'
 import { connect } from 'react-redux';
 import { checkLogin, watchMetamask } from '../../actions/user'
 
+export const mainId = 'main'
+
 const Container = styled(Row)`
   background-color: ${p => p.theme.bgColor};
   color: ${p => p.theme.color};
@@ -31,7 +33,7 @@ const App = ({ checkLogin, watchMetamask }) => {
     <Container>
       <Header routes={mainRoutes} />
       <Hr vertical />
-      <Main id='main'>
+      <Main id={mainId}>
         <MainRoutes />
       </Main>
       <Hr vertical />

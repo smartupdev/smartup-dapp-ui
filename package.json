@@ -10,7 +10,8 @@
     "build-dev": "REACT_APP_ENV=dev REACT_APP_WEBSITE_NAME=\"SmartUp Incubator (Dev)\" react-scripts build",
     "build-uni": "REACT_APP_ENV=uni REACT_APP_WEBSITE_NAME=\"SmartUp Incubator (University)\" react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy": ". _private/deploy.sh"
   },
   "eslintConfig": {
     "extends": "react-app"

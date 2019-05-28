@@ -3,9 +3,34 @@ import { useState, useEffect } from 'react'
 export default function eventListener(event, handler, targetId) { // event: e.g. resize, handler: function, MUST return this in useEffect
   // handler()
   // console.log(targetId)
-  const target = targetId ? document.getElementById(targetId) : window
+  const target = getElementById(targetId)
   target.addEventListener(event, handler)
   return () => target.removeEventListener(event, handler)
+}
+
+export function getElementById(targetId) {
+  return targetId ? document.getElementById(targetId) : window
+}
+
+function getOffset(id) {
+  return document.getElementById(id).scrollTop
+}
+
+function getElementY(id) {
+  return document.getElementById(id).getBoundingClientRect().top
+}
+
+export function useScroll(id, parentId) {
+  const [y, setY] = useState(0);
+  function handle() {
+    const elePosition = getElementY(id)
+    // console.log(getOffset(parentId))
+    setY(elePosition)
+  }
+  useEffect(() => {
+    return eventListener('scroll', handle, parentId)
+  }, [])
+  return [y]
 }
 
 // // const [isFetching, setIsFetching] = useInfiniteScroll(fetchMoreListItems);

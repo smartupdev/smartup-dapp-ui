@@ -188,7 +188,12 @@ const main = {
       ct: name('TOKEN', '代幣', '代币'),
       buy: name('BUY', '買入', '买入'),
       sell: name('SELL', '賣出', '卖出'),
-      stage: name('STATUS', '狀態', '状态')
+      stage: name('STATUS', '狀態', '状态'),
+      stageValue: {  
+        pending: name('Pending', '處理中', '处理中'), 
+        success: name('Success', '成功'), 
+        fail: name('Fail', '失敗', '失败')
+      }
     }
   },
 

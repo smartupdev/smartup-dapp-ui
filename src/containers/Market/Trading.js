@@ -49,7 +49,7 @@ function Trading({ loggedIn, market, gettingMarket, tradeState, setTab, onChange
     { label: tradingText.table.time, value: 'createTime', layoutStyle: { flex: 1, center: true }, component: TimeComponent },
     { label: tradingText.table.avgPrice, value: 'avgAmount', layoutStyle: { flex: 1, center: true }, component: ({ value }) => <Text>{toPrice(value)}</Text> },
     { label: tradingText.table.ct, value: 'ctAmount', layoutStyle: { flex: 1, center: true }, },
-    { label: tradingText.table.stage, value: 'stage', layoutStyle: { flex: 1, center: true }, component: ({ value }) => <Text>{upperOne(value)}</Text> },
+    { label: tradingText.table.stage, value: 'stage', layoutStyle: { flex: 1, center: true }, component: ({ value }) => <Text>{tradingText.table.stageValue[value] || value}</Text> },
   ]
 
   const klineTabs = [
