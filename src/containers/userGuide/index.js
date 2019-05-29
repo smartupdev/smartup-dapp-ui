@@ -2,14 +2,14 @@ import React, { useState, useEffect, Fragment, useRef } from 'react'
 import { useScroll, getElementById } from '../../lib/react'
 import { mainId } from '../../containers/App'
 
-import Text, {TextWithLink} from '../../components/Text'
+import Text, {RichText} from '../../components/Text'
 import Image from '../../components/Image'
 import Cover from '../../images/user_guide_cover.gif'
 import BG from '../../images/user_guide_bg.png'
 import { Row, Col } from '../../components/Layout'
 
 
-const TextBody = ({children}) => <TextWithLink newline VXS note>{children}</TextWithLink>
+const TextBody = ({children}) => <RichText newline VXS note>{children}</RichText>
 
 const installChrome = `a.	到 https://www.google.com/chrome/ 
 b.	点撃”Download Chrome”
