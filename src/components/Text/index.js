@@ -64,7 +64,7 @@ export const Text = styled.p`
   `}
 `
 
-export const TextWithLink = ({children, ...rest}) => 
+export const RichText = ({children, ...rest}) => 
   <Text {...rest}>
     {Children.map(children, text => 
       typeof text === 'string' ?
