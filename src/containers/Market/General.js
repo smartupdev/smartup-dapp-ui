@@ -39,9 +39,9 @@ const InfoBody = ({ info }) => {
     return (
     <Row BottomS TopS>
       <Col LeftXS RightXS>
-        <Image source={ENV.ipfsHost + info.cover} photo cover />
+        <Image source={ENV.ipfsHost + info.cover} photo cover style={{ height: 'auto' }} />
       </Col>
-      <Col centerVertical>
+      <Col>
         <Row BottomM>
           <Col RightM>
             <Text XS note>{generalText.createTime}</Text>

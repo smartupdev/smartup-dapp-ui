@@ -36,8 +36,7 @@ const Image =  styled.img`
     min-width: ${p => p.theme.imageSizeXL};  
   `}
   ${p => p.photo && css`
-    min-height: ${p => p.theme.photoSizeHM};
-    height: auto;
+    height: ${p => p.theme.photoSizeHM};
     width: ${p => p.theme.photoSizeWM};
   `}
   ${p => p.size && css`

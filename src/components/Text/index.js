@@ -48,6 +48,12 @@ export const Text = styled.p`
     text-overflow: ellipsis;
     width: 100%;
   `}
+  ${p => p.textMultilineOverflow && css`
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: ${typeof p.textMultilineOverflow === 'number' ? p.textMultilineOverflow : 3};
+    -webkit-box-orient: vertical;  
+  `}
   ${p => p.width && css`width: ${p.width}; min-width: ${p.width};`}
 
   ${p => p.error && css`

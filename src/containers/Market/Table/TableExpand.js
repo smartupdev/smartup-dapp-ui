@@ -25,7 +25,7 @@ function TableExpand({ record, toggleSavedMarket, goto }) {
       <Row spaceBetween> 
         <Col>
           <Text XL wordSpaceL onClick={() => goto.general({id: record.id})}>{record.name}</Text>
-          <Text note>{record.overview}</Text>
+          <Text note newline textMultilineOverflow={2}>{record.overview}</Text>
         </Col>
         <Row>
           <ToastConsumer>
