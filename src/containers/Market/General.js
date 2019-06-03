@@ -54,7 +54,7 @@ const InfoBody = ({ info }) => {
         </Row>
         <Col>
           <Text XS note>{generalText.overview}</Text>
-          <Text M spacingTopBase>{info.description}</Text>
+          <Text M spacingTopBase newline>{info.description}</Text>
         </Col>
       </Col>
     </Row>
