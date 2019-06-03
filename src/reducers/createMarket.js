@@ -168,7 +168,7 @@ export default (state = initialState, action) => {
       }
     }
     case CREATE_MARKET_DESC_CHANGE: {
-      const error = length(action.payload) < 1 || length(action.payload) > 500 
+      const error = length(action.payload) < 1 || length(action.payload) > 2000 
       return {
         ...state,
         desc: action.payload,
