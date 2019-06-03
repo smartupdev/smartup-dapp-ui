@@ -22,6 +22,12 @@ export const fontSizeCss = css`
 export const fontCss = css`
   font-family: ${p => p.theme.fontFamily};
   ${fontSizeCss}
+
+  ${p => p.bold && css`font-weight: bold`}
+  ${p => p.underline && css`text-decoration: underline;`}
+  ${p => p.underlineColor && css`text-decoration-color: ${p.underlineColor};`}
+  ${p => p.newline && css`white-space: pre-wrap;`}  
+
   ${p => p.note && css`color: ${p => p.theme.colorSecondary}`}
   ${p => p.price && css`color: ${p => p.theme.colorPrice}`}
   ${p => p.primary && css`color: ${p => p.theme.colorPrimary}`}

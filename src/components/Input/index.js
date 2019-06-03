@@ -3,3 +3,4 @@ export default TextInput
 
 export { default as Checkbox } from './Checkbox'
 export { default as Selector } from './Selector'
+export { default as RichContent } from './RichContent'

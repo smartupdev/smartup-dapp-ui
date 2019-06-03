@@ -2,16 +2,16 @@ import React, { useState, useEffect, Fragment, useRef } from 'react'
 import { useScroll, getElementById } from '../../lib/react'
 import { mainId } from '../../containers/App'
 
-import Text, {RichText} from '../../components/Text'
+import Text from '../../components/Text'
+import { RichContent } from '../../components/Input'
 import Image from '../../components/Image'
 import Cover from '../../images/user_guide_cover.gif'
 import BG from '../../images/user_guide_bg.png'
 import { Row, Col } from '../../components/Layout'
 
+const TextBody = ({children}) => <RichContent disabled newline VXS note>{children}</RichContent>
 
-const TextBody = ({children}) => <RichText newline VXS note>{children}</RichText>
-
-const installChrome = `a.	到 https://www.google.com/chrome/ 
+const installChrome = `a.	到 https://www.google.com/chrome/
 b.	点撃”Download Chrome”
 c.	下载Chrome后点撃ChromeSetup.exe安装
 `
@@ -85,30 +85,30 @@ b.	在帖子的最下方输入回复内容
 c.	点击”Reply”成功回复
 `
 
-const sections = [
-  { title: '使用前准备', sections: [
-    { title: '安装Google Chrome', body: installChrome },
-    { title: '安装MetaMask', body: installMetamask },
-    { title: '增值ETH', body: addEth },
-    { title: '增值SmartUp', body: addSut },
-  ]},
-  { title: '登入及个人设定', sections: [
-    { title: '登入', body: loginTxt },
-    { title: '个人设定', body: personalCenterTxt },
-    { title: '通知', body: notificationTxt },
-  ]},
-  { title: '使用巿场', sections: [
-    { title: '创建巿场', body: createMktTxt },
-    { title: '巿场交易', body: tradeTxt },
-    { title: '巿场讨论', body: mktDiscussionTxt },
-  ] },
-]
-
 const userGuideId = 'user-guide-id'
 
 export default () => {
   const [gifSource] = useState(`${Cover}?a=${Math.random()}`)
   const [leftMenuY] = useScroll(userGuideId, mainId)
+
+  const sections = [
+    { title: '使用前准备', sections: [
+      { title: '安装Google Chrome', body: installChrome },
+      { title: '安装MetaMask', body: installMetamask },
+      { title: '增值ETH', body: addEth },
+      { title: '增值SmartUp', body: addSut },
+    ]},
+    { title: '登入及个人设定', sections: [
+      { title: '登入', body: loginTxt },
+      { title: '个人设定', body: personalCenterTxt },
+      { title: '通知', body: notificationTxt },
+    ]},
+    { title: '使用巿场', sections: [
+      { title: '创建巿场', body: createMktTxt },
+      { title: '巿场交易', body: tradeTxt },
+      { title: '巿场讨论', body: mktDiscussionTxt },
+    ] },
+  ]
 
   const refs = sections.map(({ sections }) => ({
     title: useRef(),

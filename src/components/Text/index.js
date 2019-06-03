@@ -1,4 +1,3 @@
-import React, {Children} from 'react'
 import styled, { css } from 'styled-components'
 import { spacingCss, onClickCss, fontCss } from '../Theme'
 
@@ -18,7 +17,13 @@ export const A = styled.a`
   `}
 `
 
-export const Text = styled.p`
+export const Span = styled.span`
+  ${spacingCss}
+  ${onClickCss}
+  ${fontCss}
+`
+
+export const Text = styled.div`
   margin: 0;
   padding: 0;
   word-break: break-word;
@@ -37,10 +42,6 @@ export const Text = styled.p`
   ${p => p.wordSpaceS && css`letter-spacing: ${p => p.theme.fontSpacingS}`}
   ${p => p.wordSpaceXS && css`letter-spacing: ${p => p.theme.fontSpacingXS}`}
   
-  ${p => p.bold && css`font-weight: bold`}
-  ${p => p.underline && css`text-decoration: underline;`}
-  ${p => p.underlineColor && css`text-decoration-color: ${p.underlineColor};`}
-  ${p => p.newline && css`white-space: pre-wrap;`}  
   ${p => p.nowrap && css`white-space: nowrap;`}
   ${p => p.textOverflow && css`
     overflow: hidden; 
@@ -70,12 +71,4 @@ export const Text = styled.p`
   `}
 `
 
-export const RichText = ({children, ...rest}) => 
-  <Text {...rest}>
-    {Children.map(children, text => 
-      typeof text === 'string' ?
-      text.split(/ /g).map( t => /^https?:\/\/.+/.test(t) ? <A href={t}>{t}</A> : `${t} ` ) :
-      text
-    )}
-  </Text>
 export default Text

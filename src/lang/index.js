@@ -1,6 +1,7 @@
 import { toToken, clone } from '../lib/util'
+import userGuide from './userGuide'
 
-function name(en, tc, sc) {
+export function name(en, tc, sc) {
   return {
     en,
     tc: tc || sc || en,
@@ -9,6 +10,7 @@ function name(en, tc, sc) {
 }
 
 const main = {
+  userGuide,
   dispute: {
     notReady: name('Dispute function is under development, coming soon in later 2019!', '檢舉功能正在開發中，將於2019年底推出。', '检举功能正在开发中，将于2019年底推出。'),
   },
