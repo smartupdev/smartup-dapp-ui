@@ -12,8 +12,11 @@ const Link = styled(Col)`
   position: relative;
   ${props => props.fixed && css`background: ${p => p.theme.white}`};
   ${props => props.selected && css`background: ${p => p.theme.bgColor}`};
+  fill: ${p => p.theme.colorSecondary};
+  stroke: ${p => p.theme.colorSecondary};
   :hover svg {
-    fill: ${p => p.theme.colorPrimary}
+    fill: ${p => p.theme.colorPrimary};
+    stroke: ${p => p.theme.colorPrimary};
   }
 `
 
@@ -46,7 +49,7 @@ const Line = styled.div`
 `
 
 export function LanguageMenu() {
-  const [_1, lang, setLang] = useLang()
+  const [_, lang, setLang] = useLang()
   return languageOptions.map( ({ label, value }) =>
     <LabelText key={value} label={label} onClick={() => setLang(value)} width='60px' primary={lang === value} />
   )
