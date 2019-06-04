@@ -33,6 +33,6 @@ export const LangProvider = ({children}) => {
     </LangContext.Provider>
   );
 }
-
+export const getRawLang = () => languages[getLang()]
 export const useLang = () => useContext(LangContext)
 export const LangConsumer = LangContext.Consumer

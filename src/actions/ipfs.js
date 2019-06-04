@@ -1,8 +1,7 @@
 import ipfsClient from 'ipfs-http-client'
 import toBuffer from 'blob-to-buffer'
 import { TNC_HASH, ENV } from '../config'
-import { getLang } from '../language'
-import language from '../lang'
+import { getRawLang } from '../language'
 
 const client = ipfsClient('ipfs-api.smartup.global', ENV.protocol === 'http' ? '80' : '443', { protocol: ENV.protocol })
 
@@ -14,11 +13,11 @@ export function onClickTnc() {
 //IPFS写入图片
 export function postIpfsImg(file) {
   return new Promise((resolve, reject) => {
-    const currentLang = getLang()
+    const rawLang = getRawLang()
     if(file.size > 5e+6) 
-      return reject(new Error(language.dragFile.fileSizeError[currentLang]))
+      return reject(new Error(rawLang.dragFile.fileSizeError))
     if(!['image/png', 'image/x-png','image/gif','image/jpeg'].includes(file.type)) 
-      return reject(new Error(language.dragFile.fileTypeError[currentLang]))
+      return reject(new Error(rawLang.dragFile.fileTypeError))
     const blob = new Blob([file], { type: file.type });
     toBuffer(blob, (bufferError, buffer) => {
       if (bufferError) {

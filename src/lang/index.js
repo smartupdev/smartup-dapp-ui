@@ -10,6 +10,11 @@ export function name(en, tc, sc) {
 }
 
 const main = {
+  error: {
+    notLogin: name('You had not logged in yet.', '請先登入'),
+    noAccount: name('Please connect to MetaMask.', '請連結到MetaMask'),
+    requiredPhoto: name('This is required', '必須上載圖片')
+  },
   userGuide,
   dispute: {
     notReady: name('Dispute function is under development, coming soon in later 2019!', '檢舉功能正在開發中，將於2019年底推出。', '检举功能正在开发中，将于2019年底推出。'),
