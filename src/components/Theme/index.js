@@ -10,6 +10,18 @@ export const ThemeProvider = ({defaultTheme = cmTheme, children}) => {
   );
 }
 
+export const media = (...cssArray) => 
+    css`
+      ${cssArray[0]}
+      ${p => p.theme.sizes.map((size, index) =>
+        css`
+          @media (min-width: ${size}px) {
+            ${cssArray[index+1]}
+          }
+        `
+      )}
+    `
+
 export const fontSizeCss = css`
   font-size: ${p => p.theme.fontSizeM};
   ${props => props.XS && css`font-size: ${p => p.theme.fontSizeXS}`}
