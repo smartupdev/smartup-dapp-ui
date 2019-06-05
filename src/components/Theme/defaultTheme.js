@@ -73,6 +73,10 @@ const theme = {
 
   photoSizeWM: '200px',
   photoSizeHM: '100px',
+
+  animation: {
+    slide: 'transition: max-height 0.25s ease-in;'
+  }
 }
 
 export default theme

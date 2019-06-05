@@ -2,9 +2,9 @@ import React, {createContext, useContext, useState} from 'react'
 import { languages } from './lang'
 
 export const languageOptions = [
-  { label: 'English', value: 'en' },
-  { label: '繁體中文', value: 'tc' },
-  { label: '简体中文', value: 'sc' },
+  { label: 'English', labelShort: 'Eng', value: 'en' },
+  { label: '繁體中文', labelShort: '繁體', value: 'tc' },
+  { label: '简体中文', labelShort: '简体', value: 'sc' },
 ]
 
 const LANG_STORAGE_KEY = 'lang'

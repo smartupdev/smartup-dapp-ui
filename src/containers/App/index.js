@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import styled from 'styled-components'
 
 import { MainRoutes, mainRoutes } from '../../routes'
@@ -6,11 +6,11 @@ import { MainRoutes, mainRoutes } from '../../routes'
 import { checkVersion } from '../../alphaWebService'
 
 import Header from '../../components/Header'
+import MobileHeader from '../../components/Header/MobileHeader'
 import Panel from '../Panel'
 import Main from '../../components/Main'
 import Hr from '../../components/Hr'
 import { Row } from '../../components/Layout'
-import NotFound from '../NotFound'
 
 import { connect } from 'react-redux';
 import { checkLogin, watchMetamask } from '../../actions/user'
@@ -24,6 +24,8 @@ const Container = styled(Row)`
 `
 
 const App = ({ checkLogin, watchMetamask }) => {
+  const [menuOpened, setMenuOpen] = useState(false)
+  // const [panelOpened, setPanelOpen] = useState(false)
   useEffect( () => {
     checkVersion()
     watchMetamask()
@@ -31,9 +33,9 @@ const App = ({ checkLogin, watchMetamask }) => {
   }, [])
   return (
     <Container>
-      <Header routes={mainRoutes} />
-      <Hr vertical />
+      <Header routes={mainRoutes} isOpen={menuOpened} close={() => setMenuOpen(false)} />
       <Main id={mainId}>
+        <MobileHeader open={() => setMenuOpen(true)} />
         <MainRoutes />
       </Main>
       <Hr vertical />

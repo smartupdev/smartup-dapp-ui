@@ -47,6 +47,7 @@ const theme = {
   // spacingXL: '60px',
 
   headerWidth: '60px',
+  headerExpandedWidth: '250px',
   // tabWidth: '100px',
 
   fontFamily: 'Quicksand, sans-serif',
@@ -73,6 +74,11 @@ const theme = {
 
   photoSizeWM: '200px',
   photoSizeHM: '100px',
+
+  animation: {
+    slideIn: 'transition: all 0.25s ease-in;',
+    slideOut: 'transition: all 0.15s ease-out;'
+  }
 }
 
 export default theme

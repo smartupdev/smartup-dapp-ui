@@ -12,11 +12,10 @@ export const ThemeProvider = ({defaultTheme = cmTheme, children}) => {
 
 export const media = (...cssArray) => 
     css`
-      ${cssArray[0]}
-      ${p => p.theme.sizes.map((size, index) =>
+      ${p => [0, ...p.theme.sizes].map((size, index, array) =>
         css`
-          @media (min-width: ${size}px) {
-            ${cssArray[index+1]}
+          @media (min-width: ${array[index]}px) and (max-width: ${array[index+1] || 9999}px) {
+            ${cssArray[index]}
           }
         `
       )}

@@ -79,7 +79,7 @@ const Panel = ({
     ''
   
   return (
-    <Col width={`${PANEL_WIDTH}px`} center={!loggedIn} centerVertical={!loggedIn}>
+    <Col width={`${PANEL_WIDTH}px`} center={!loggedIn} centerVertical={!loggedIn} hiddenMobile>
       {loggedIn ?
         <>
           <Top centerVertical spaceBetween>

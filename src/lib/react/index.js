@@ -8,6 +8,13 @@ export default function eventListener(event, handler, targetId) { // event: e.g.
   return () => target.removeEventListener(event, handler)
 }
 
+export function useClickOutside(id, handle) {
+  function handleClick(e) {
+    if(id && id.current && !id.current.contains(e.target)) handle(e)
+  }
+  useEffect( () => eventListener('mousedown', handleClick), [id])
+}
+
 export function getElementById(targetId) {
   return targetId ? document.getElementById(targetId) : window
 }

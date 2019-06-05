@@ -1,8 +1,9 @@
 // import React from 'react'
 import styled, { css } from 'styled-components'
-import { spacingCss, onClickCss } from '../Theme'
+import { spacingCss, onClickCss, media } from '../Theme'
 const Flex = styled.div`
   display: flex;
+  ${p => p.hiddenMobile && media('display: none', 'display: flex')}
   
   ${p => p.relative && css`position: relative;`}
   ${p => p.absolute && css`position: absolute;`}
@@ -55,6 +56,7 @@ const Col = styled(Flex)`
   ${props => props.centerVertical && css`justify-content: center`};
   ${props => props.bottom && css`justify-content: flex-end`};
   ${p => p.spaceBetween && css`justify-content: space-between`};
+  ${p => p.spaceAround && css`justify-content: space-around`};
   `
 
 export {
