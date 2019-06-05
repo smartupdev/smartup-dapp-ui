@@ -29,14 +29,9 @@ export default () => {
   const tradeTxt = lang.userGuide.tradeTxt
   const mktDiscussionTxt = lang.userGuide.mktDiscussionTxt
 
-  const general = `hAHA`
-  const creator = `hAHACCC
-  CCCC
-  `
-  const investor = `hAHAII
-  III
-  II
-  I`
+  const general = lang.userGuide.faqGeneral
+  const creator = lang.userGuide.faqCreator
+  const investor = lang.userGuide.faqInvestor
 
   const sections = [
     { title: lang.userGuide.tab.getstarted, sections: [
