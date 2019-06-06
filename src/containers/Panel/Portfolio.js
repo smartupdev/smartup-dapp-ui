@@ -43,15 +43,6 @@ const BookmarkBlock = styled(Row)`
 
 `
 
-// const walletList = [
-//   { id: 245465, ct: 879.22, volume: 0.009 },
-//   { id: 245463, ct: 39.42, volume: -0.023 },
-//   { id: 245464, ct: 87.22, volume: 0.009 },
-//   { id: 245462, icon: CommentIcon, ct: 87.22, volume: 0.02313 },
-// ]
-
-
-
 const Portfolio = ({
   userSavedMarketPanel,
   ethBalance, sutBalance, 
@@ -72,7 +63,7 @@ const Portfolio = ({
   const portfolioText = lang.panel.portfolio
   const TableName = [
     { label: '', value: 'marketPhoto', layoutStyle: { width: '18px' }, component: ({ value }) => <Avatar XS icon={value} /> },
-    { label: portfolioText.wallet.id, value: 'marketName', layoutStyle: { width: '80px' }, component: ({value}) => <Text S textOverflow>{value}</Text> },
+    { label: portfolioText.wallet.id, value: 'marketName', layoutStyle: { width: '80px', flex: 1 }, component: ({value}) => <Text S textOverflow>{value}</Text> },
     { label: portfolioText.wallet.ct, value: 'ctAmount' },
     {
       label: portfolioText.wallet.volume, value: 'latelyChange', component: ({ value }) =>
