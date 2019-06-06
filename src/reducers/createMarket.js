@@ -17,6 +17,7 @@ import {
 } from '../actions/actionTypes';
 
 import { length } from '../lib/util'
+import { getRawLang } from '../language'
 
 export const initialState = {
   activeIndex: 0,
@@ -180,9 +181,10 @@ export default (state = initialState, action) => {
     }
 
     case CREATE_MARKET_SET_TAB: {
+      const lang = getRawLang()
       const error = {...state.error}
-      if(!state.avatarHash) error.avatar = new Error('This is required')
-      if(!state.coverHash) error.cover =  new Error('This is required')
+      if(!state.avatarHash) error.avatar = new Error(lang.error.requiredPhoto)
+      if(!state.coverHash) error.cover =  new Error(lang.error.requiredPhoto)
       const block = error.name || error.desc || error.avatar || error.cover
       return {
         ...state,

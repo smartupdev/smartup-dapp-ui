@@ -3,6 +3,7 @@ import { NOT_LOGIN } from './lib/util/fetch'
 import { USER_PERSON_SIGN_FAILED } from './actions/actionTypes'
 
 import { ENV } from './config'
+import { getRawLang } from './language'
 
 const { smartupContractAddress, networkVersion } = ENV 
 export const sutContractAddress = '0xf1899c6eb6940021c1ae4e9c3a8e29ee93704b03'
@@ -147,10 +148,11 @@ export function asyncFunction(
   options = {} // isWeb3, params, responsePayload, meta
 ) {
   return async dispatch => {
+    const lang = getRawLang()
     requestType && dispatch({ type: requestType, meta: options.meta })
     try {
       if (options.isWeb3 && !checkIsSupportWeb3()) throw new Error('Web3 or ethereum is not supported.')
-      if(options.loginRequired && !await getAccount()) throw new Error(NO_ACCOUNT)
+      if(options.loginRequired && !await getAccount()) throw new Error(lang.error.noAccount)
       let response = await func(...[options.params, options.params2])
       response = options.responsePayload ? options.responsePayload(response) : response
       responseType && dispatch({
@@ -162,7 +164,14 @@ export function asyncFunction(
     }
     catch (error) {
       console.error(error, options.params)
-      if(error.message === NOT_LOGIN || error.message === NO_ACCOUNT) dispatch({ type: USER_PERSON_SIGN_FAILED, meta: options.meta, payload: error, error: true })
+      if(error.message === NOT_LOGIN || error.message === NO_ACCOUNT) 
+        if(error.message === NOT_LOGIN) error.message = lang.error.notLogin // Update error msg to other language
+        dispatch({ 
+          type: USER_PERSON_SIGN_FAILED, 
+          meta: options.meta, 
+          payload: error, 
+          error: true
+        })
       errorType && dispatch({
         type: errorType,
         payload: error, //error.message.include('{"') ? new Error(JSON.parse(error.message.match(/{.+}/g)[0]).message) : error,
