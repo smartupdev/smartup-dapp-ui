@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
+import { media, fadeIn } from '../../components/Theme'
 import Avatar from '../../components/Avatar'
 import { People } from '../../components/Icon'
 import Button from '../../components/Button'
@@ -26,6 +27,25 @@ import { onClickTnc } from '../../actions/ipfs'
 import { watch as watchNotification } from '../../actions/notification'
 
 const PANEL_WIDTH = 300
+
+// ${p => media(!p.isOpen ? 'max-width: 0vw; width: 0vw;' : 'max-width: 100vw; width: 100vw;')}
+const Box = styled(Col)`
+  width: ${PANEL_WIDTH}px
+  overflow: hidden;
+  ${p => media(css`
+    width: 100vw; 
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    background-color: ${p.theme.bgColor}
+    ${p.isOpen ? 
+      fadeIn(1, 2) : 
+      'opacity: 0; display: none;'
+    }
+  `)}
+  z-index: 10;
+  ${css`${p => p.theme.animation.slideOut}`}
+`
 
 function getTabs(unreadCount){
   const [lang] = useLang() 
@@ -56,6 +76,7 @@ const networkName = {
 }
 
 const Panel = ({ 
+  isOpen,
   metamask,
   nttBalance,
   metaMaskHint, account, 
@@ -79,7 +100,7 @@ const Panel = ({
     ''
   
   return (
-    <Col width={`${PANEL_WIDTH}px`} center={!loggedIn} centerVertical={!loggedIn} hiddenMobile>
+    <Box center={!loggedIn} centerVertical={!loggedIn} isOpen={isOpen}>
       {loggedIn ?
         <>
           <Top centerVertical spaceBetween>
@@ -104,7 +125,7 @@ const Panel = ({
             </Row>
         </Col>
       }
-    </Col>
+    </Box>
   )
 }
 

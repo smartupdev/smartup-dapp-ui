@@ -25,7 +25,7 @@ const Container = styled(Row)`
 
 const App = ({ checkLogin, watchMetamask }) => {
   const [menuOpened, setMenuOpen] = useState(false)
-  // const [panelOpened, setPanelOpen] = useState(false)
+  const [panelOpened, setPanelOpen] = useState(false)
   useEffect( () => {
     checkVersion()
     watchMetamask()
@@ -35,11 +35,11 @@ const App = ({ checkLogin, watchMetamask }) => {
     <Container>
       <Header routes={mainRoutes} isOpen={menuOpened} close={() => setMenuOpen(false)} />
       <Main id={mainId}>
-        <MobileHeader open={() => setMenuOpen(true)} />
+        <MobileHeader panelOpened={panelOpened} openMenu={() => setMenuOpen(true)} setPanel={setPanelOpen} />
         <MainRoutes />
       </Main>
       <Hr vertical />
-      <Panel />
+      <Panel isOpen={panelOpened} />
     </Container>
   )
 }

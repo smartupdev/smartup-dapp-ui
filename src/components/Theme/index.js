@@ -1,6 +1,6 @@
 import React from 'react'
 import cmTheme from './defaultTheme'
-import { ThemeProvider as Provider, css } from 'styled-components'
+import { ThemeProvider as Provider, css, keyframes } from 'styled-components'
 
 export const ThemeProvider = ({defaultTheme = cmTheme, children}) => {
   return (
@@ -11,15 +11,32 @@ export const ThemeProvider = ({defaultTheme = cmTheme, children}) => {
 }
 
 export const media = (...cssArray) => 
-    css`
-      ${p => [0, ...p.theme.sizes].map((size, index, array) =>
-        css`
-          @media (min-width: ${array[index]}px) and (max-width: ${array[index+1] || 9999}px) {
-            ${cssArray[index]}
-          }
-        `
-      )}
-    `
+  css`
+    ${p => [0, ...p.theme.sizes].map((size, index, array) =>
+      css`
+        @media (min-width: ${array[index]}px) and (max-width: ${array[index+1] || 9999}px) {
+          ${ css`${cssArray[index]}` }
+        }
+      `
+    )}
+  `
+
+
+const fadeInAnimation = keyframes`
+  0% {
+    opacity: 0;
+    transform: translate( 0, 5% );
+  }
+  100% {
+    opacity: 1;
+    transform: translate( 0, 0 );
+  }
+`
+
+export const fadeIn = (second = 2, delay = 0) => css`
+  opacity: 0;
+  animation: ${second}s ${delay}s ${fadeInAnimation} ease forwards; 
+`
 
 export const fontSizeCss = css`
   font-size: ${p => p.theme.fontSizeM};
