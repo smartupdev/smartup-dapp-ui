@@ -179,7 +179,7 @@ class DrawChart extends Component {
           !!noData &&
           <LangConsumer>
             {([{ trading: { chartNoAvailable } }]) =>
-              <div style={{ width: width, textAlign: 'center', position: 'absolute', top: HEIGHT / 2 - 18, zIndex: 1100, opacity: .6, fontSize: 18, fontFamily: 'Quicksand, sans-serif' }}>
+              <div style={{ width: width, textAlign: 'center', position: 'absolute', top: HEIGHT / 2 - 18, zIndex: 9, opacity: .6, fontSize: 18, fontFamily: 'Quicksand, sans-serif' }}>
                 {chartNoAvailable}
               </div>
             }
