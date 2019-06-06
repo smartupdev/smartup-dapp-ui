@@ -73,9 +73,11 @@ function MenuIcon(props) {
 }
 
 const Dump = styled.div`
-  min-height: ${p => p.theme.iconSizeM};
-  padding: ${p => p.theme.spacingS};
-  width: 100vw;
+  ${p => media(`
+    min-height: ${p.theme.iconSizeM};
+    padding: ${p.theme.spacingS};
+    width: 100vw;
+  `)}
 `
 
 const panelAnimation = keyframes`
