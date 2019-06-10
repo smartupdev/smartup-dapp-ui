@@ -37,7 +37,7 @@ let mainRoutes = [ // main routes, exclusive, using switch
   { id: 'createMarket', path: '/create/market', component: CreateMarket, icon: Menu2, isHeader: true },
   { id: 'account', path: '/account', component: Account, icon: Menu3, isHeader: true },
   { id: 'dispute', path: '/dispute', component: Dispute, icon: Menu4, isHeader: true },
-  { id: 'faq', path: '/faq', component: Faq, icon: FaqButton, isHeader: true },
+  // { id: 'faq', path: '/faq', component: Faq, icon: FaqButton, isHeader: true },
   { id: 'userGuide', path: '/user-guide', component: userGuide, icon: UserGuideLogo, isHeader: true },
 
   { id: 'language', icon: Language, isFooter: true, menuComponent: LanguageMenu },
