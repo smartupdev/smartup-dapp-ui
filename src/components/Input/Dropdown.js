@@ -43,6 +43,7 @@ const OptionList = styled(Col)`
   left: 0;
   bottom: 0;
   height: 0;
+  z-index: 9;
   display: ${p => p.open ? 'flex' : 'none' }
 `
 
