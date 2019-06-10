@@ -47,16 +47,19 @@ const Option = styled(Text)`
   padding-top: 18px;
 `
 
-export default ({ options, selectedIndex, onClick, showLabel }) =>
-  <>
-  <Box spaceBetween showLabel={showLabel}>
-    {!!showLabel && <Label>{options[selectedIndex]}</Label>}
-    <Bar length={options.length} />
-    <Bar length={options.length} index={selectedIndex} />
-    {
-      options.map( (option, index) =>
-        <Option key={option} onClick={() => onClick(index)}>{option}</Option>
-      )
-    }
-  </Box>
-  </>
+export default ({ options, selectedIndex, onClick, showLabel }) => {
+  return (
+    <>
+    <Box spaceBetween showLabel={showLabel}>
+      {!!showLabel && <Label>{options[selectedIndex]}</Label>}
+      <Bar length={options.length} />
+      <Bar length={options.length} index={selectedIndex} />
+      {
+        options.map( (options, index) =>
+          <Option key={options} onClick={() => onClick(index)}>{options}</Option>
+        )
+      }
+    </Box>
+    </>
+  )
+}

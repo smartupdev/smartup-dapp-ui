@@ -4,6 +4,7 @@ import { spacingCss, onClickCss, media } from '../Theme'
 const Flex = styled.div`
   display: flex;
   ${p => p.hiddenMobile && media('display: none', 'display: flex')}
+  ${p => p.hiddenDesktop && media('display: flex', 'display: none')}
   
   ${p => p.relative && css`position: relative;`}
   ${p => p.absolute && css`position: absolute;`}
@@ -24,7 +25,10 @@ const Flex = styled.div`
 
   ${p => p.round && css`border-radius: ${p.theme.borderRadius}`}
 
-  ${props => typeof props.flex === 'number' && css`flex: ${props.flex}`};
+  ${props => 
+    typeof props.flex === 'number' ? css`flex: ${props.flex}` :
+    props.flex instanceof Array && media(`flex: ${props.flex[0]}`, `flex: ${props.flex[1]}`)
+  };
   ${props => props.maxWidth && css`max-width: ${props.maxWidth}`};
   ${props => props.width && css`width: ${props.width}; min-width: ${props.width}`};
   ${p => p.fitWidth && css`min-width: fit-content;`}

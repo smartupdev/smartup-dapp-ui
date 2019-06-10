@@ -3,6 +3,7 @@ import { Search } from '../../components/Icon'
 // import Text from '../../components/Text'
 import Input from '../../components/Input'
 import { Row } from '../../components/Layout'
+import { media } from '../../components/Theme'
 import { useLang } from '../../language'
 import { length } from '../../lib/util'
 import styled, { css } from 'styled-components'
@@ -10,7 +11,11 @@ import styled, { css } from 'styled-components'
 const Container = styled.div`
   position: absolute;
   cursor: pointer;
-  ${p => p.backgroundColor && css`background-color: ${p.backgroundColor}`};
+  ${p => p.backgroundColor &&
+    p.backgroundColor instanceof Array ?
+    media(`background-color: ${p.backgroundColor[0]}`, `background-color: ${p.backgroundColor[1]}`) :
+    css`background-color: ${p.backgroundColor}`
+  };
   right: 0;
   max-width: 100%;
   transition: 0.3s;

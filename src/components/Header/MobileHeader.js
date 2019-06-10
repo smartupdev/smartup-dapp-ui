@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import styled, { keyframes, css } from 'styled-components'
 import { media } from "../Theme";
+import theme from '../../theme'
 
 import { Row, Col } from '../../components/Layout'
 import Avatar from '../../components/Avatar'
@@ -167,7 +168,7 @@ export default function({ openMenu, setPanel, panelOpened }) {
         <Avatar onClick={() => setPanel(true)} noMargin />
       </PanelBox>
     </Box>
-    <Close open={panelOpened} S color onClick={() => setPanel(false)} />
+    <Close open={panelOpened} S color={theme.colorPrimary} onClick={() => setPanel(false)} />
     </>
   )
 }
