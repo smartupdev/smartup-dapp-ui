@@ -61,10 +61,13 @@ function toRaw(editorState) {
 function toRich(s) {
   return EditorState.createWithContent(
     convertFromRaw(
-      markdownToDraft(s, {
+      markdownToDraft(
+        s.replace(/\n +/g, n => n.replace(/ /g, '&nbsp;')).replace(/[^\n]\n\n/g, n => n + '\n') // TODO
+        , {
         remarkablePreset: {
           linkify: true
-        }
+        },
+        preserveNewlines: true
       })
     ),
     decorator
@@ -74,22 +77,22 @@ function toRich(s) {
 const blockRenderMap = Immutable.Map({
   'unstyled': {
     element: 'div',
-    wrapper: <Text />,
+    wrapper: <Text note />,
   }
 });
 
 const extendedBlockRenderMap = DefaultDraftBlockRenderMap.merge(blockRenderMap);
 
 export default 
-  ({ onChange = console.log, children, disabled, ...rest }) => {
+  ({ onChange = console.log, value, children, disabled, ...rest }) => {
     const ref = React.useRef(null);
-    const editorState = toRich(children)
+    const editorState = toRich(value || children)
     window.e = editorState
     return (
       <Editor
         ref={ref}
         editorState={editorState}
-        onChange={onChange}
+        onChange={(editorState) => onChange( toRaw(editorState) )}
         readOnly={disabled}
         blockRenderMap={extendedBlockRenderMap}
         // blockRendererFn={block => {
