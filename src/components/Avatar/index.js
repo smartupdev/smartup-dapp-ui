@@ -8,7 +8,7 @@ import theme from '../../theme'
 import { ipfsHost } from '../../actions/ipfs'
 import { shorten } from '../../lib/util'
 
-export default ({ icon, username, noMargin, ...rest }) => // size
+export default ({ icon, username, noMargin, long, ...rest }) => // size
   <Row centerVertical>
     {
       icon ? 
@@ -16,6 +16,6 @@ export default ({ icon, username, noMargin, ...rest }) => // size
       <People color={theme.white} round MarginRightXS={!noMargin} {...rest} /> 
     }
     {
-      username && <Text nowrap {...rest}>{shorten(username)}</Text>
+      username && <Text nowrap {...rest}>{long ? username : shorten(username)}</Text>
     }
   </Row>

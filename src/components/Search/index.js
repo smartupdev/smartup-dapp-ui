@@ -30,15 +30,21 @@ const Container = styled.div`
     fill: ${p => p.theme.colorSecondary}
   }
   input {
+    ${media('width: 0;')}
     :focus {
       width: 2000px;
     }
-    // width: 44px;
+    padding-right: 2px;
+    ${media(`
+      ::-webkit-input-placeholder {
+        opacity: 0;
+      }
+    `)}
   }
 `
 const Dump = styled.div`
   height: ${p => p.theme.imageSizeL};
-  width: 70px; 
+  ${media(p => `width: ${p.theme.imageSizeL};`, 'width: 70px;')}
 ` // margic number
 
 // MUST set relative outside
@@ -50,7 +56,7 @@ export default ({ id = '', backgroundColor, value, onChange, onSearch, top, bott
       <Dump />
       <Container backgroundColor={backgroundColor} top={top} bottom={bottom} right={right}>
         <Row centerVertical fullHeight spaceBetween>
-          <Input id={id + "search"} value={value} size={size} placeholder={lang.search} onChange={onChange} onBlur={onSearch} S backgroundColor={backgroundColor} style={{ paddingRight: 2 }} />
+          <Input id={id + "search"} value={value} size={size} placeholder={lang.search} onChange={onChange} onBlur={onSearch} S backgroundColor={backgroundColor} />
           {/* <Text note>Search</Text> */}
           <label htmlFor={id + "search"}>
             <Search S RightXS />

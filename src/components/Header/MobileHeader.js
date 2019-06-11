@@ -11,10 +11,9 @@ const animationSpeed = '1.2s'
 
 const Box = styled(Row)`
   position: absolute;
-  width: 100vw;
+  width: 100%;
   background-color: ${p => p.theme.bgColor};
   ${media(null, 'display: none')};
-  z-index: 10;
 `
 
 const bounceIn = keyframes`
@@ -77,7 +76,6 @@ const Dump = styled.div`
   ${p => media(`
     min-height: ${p.theme.iconSizeM};
     padding: ${p.theme.spacingS};
-    width: 100vw;
   `)}
 `
 
@@ -120,6 +118,7 @@ const panelBgAnimation = keyframes`
 `
 
 const Cover = styled.div`
+  z-index: 10;
   position: absolute;
   left: 50vw;
   top: 50vh;
@@ -137,6 +136,7 @@ const Cover = styled.div`
 `
 
 const PanelBox = styled(Col)`
+  z-index: 10;
   position: absolute;
   right: ${p => p.theme.iconSizeM};
   top: ${p => `calc( ${p.theme.iconSizeM}/2 + ${p.theme.spacingS} )`};
@@ -172,3 +172,15 @@ export default function({ openMenu, setPanel, panelOpened }) {
     </>
   )
 }
+
+export const Header = styled(Row)`
+  position: absolute;
+  top: ${p => p.theme.spacingS};
+  padding: 0 ${p => p.theme.spacingS};
+  left: calc( ${p => `${p.theme.iconSizeM} + ${p.theme.spacingS} * 2`} );
+  right: calc( ${p => `${p.theme.iconSizeM} + ${p.theme.spacingS} * 2`} );
+  height: ${p => p.theme.iconSizeM}
+  align-items: center;
+  overflow: auto;
+  ${media(null, 'display: none')};
+`

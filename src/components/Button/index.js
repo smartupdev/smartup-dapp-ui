@@ -35,7 +35,7 @@ export default ({ label, icon: Icon, primary, light, condensed, extended, outlin
   return (
     <Button primary={primary} light={light} condensed={condensed} VBase={extended} HL={extended} outline={outline} verticalMargin={verticalMargin} {...rest}>
       { Icon && <Icon XS RightBase={label !== null && label !== undefined} size={iconSize} />}
-      { label && <Text>{label}</Text>}
+      { label && <Text nowrap>{label}</Text>}
     </Button>
   )
 }

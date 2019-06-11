@@ -1,6 +1,6 @@
 const theme = {
   // small to large, now we only support mobile and desktop
-  sizes: [992],
+  sizes: [900],
 
   // Color
   bgColor: '#2d3c47', // default bg

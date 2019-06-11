@@ -33,7 +33,7 @@ const Link = styled(Col)`
 
 const LabelBox = styled(Col)`
   position: absolute;
-  right: 0;
+  right: 1px;
   width: 0;
   ${p => media(`display: block;`, "display: none")}
   ${p =>

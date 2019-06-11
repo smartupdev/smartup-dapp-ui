@@ -30,8 +30,8 @@ const MoreIcon = styled(More)`
 `
 
 const Box = styled(Col)`
-  min-width: ${p => p.maxTextLength + 1}em; 
-  width: 30vw;
+  min-width: calc( ${p => p.maxTextLength/2 + 4}em  + ${p => p.theme.imageSizeXS} * 2); 
+  width: ${p => p.width};
 `
 const OptionList = styled(Col)`
   position: absolute;
@@ -47,12 +47,12 @@ const OptionList = styled(Col)`
   display: ${p => p.open ? 'flex' : 'none' }
 `
 
-export default ({ options, onChange, selectedIndex, disabled, ...rest }) => { // TODO
+export default ({ options, onChange, selectedIndex, disabled, width = '30vw', ...rest }) => { // TODO
   const [didOpen, setOpen] = useState(false)
   const ref = useRef('dropdown')
   useClickOutside(ref, () => setOpen(false))
   return (
-    <Box ref={ref} relative maxTextLength={options.reduce((p, c) => Math.max(p, length(c.label)) , 0)} onClick={() => setOpen(!didOpen)} {...rest}>
+    <Box ref={ref} relative width={width} maxTextLength={options.reduce((p, c) => Math.max(p, length(c.label)) , 0)} onClick={() => setOpen(!didOpen)} {...rest}>
       <Text note VS center nowrap>{options[selectedIndex].label}</Text>
       <OptionList open={didOpen}>
         { options.map( ({label, value}, index) =>
