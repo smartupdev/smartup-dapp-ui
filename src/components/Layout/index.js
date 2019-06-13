@@ -3,6 +3,11 @@ import styled, { css } from 'styled-components'
 import { spacingCss, onClickCss, media } from '../Theme'
 const Flex = styled.div`
   display: flex;
+  box-sizing: border-box;
+  ${p => p.directions && media(
+    `flex-direction: ${p.directions[0]};`,
+    `flex-direction: ${p.directions[1]};`
+  )}
   ${p => p.hiddenMobile && media('display: none', 'display: flex')}
   ${p => p.hiddenDesktop && media('display: flex', 'display: none')}
   
@@ -29,13 +34,20 @@ const Flex = styled.div`
     typeof props.flex === 'number' ? css`flex: ${props.flex}` :
     props.flex instanceof Array && media(`flex: ${props.flex[0]}`, `flex: ${props.flex[1]}`)
   };
-  ${props => props.maxWidth && css`max-width: ${props.maxWidth}`};
-  ${props => props.width && css`width: ${props.width}; min-width: ${props.width}`};
+  ${props => props.width && (
+    props.width instanceof Array ?
+    media(
+      `width: ${props.width[0]}; min-width: ${props.width[0]}`, 
+      `width: ${props.width[1]}; min-width: ${props.width[1]}`
+    ) :
+    css`width: ${props.width}; min-width: ${props.width}`
+  )};
+  ${props => props.height && css`height: ${props.height}; min-height: ${props.height}`};
   ${p => p.fitWidth && css`min-width: fit-content;`}
   ${p => p.fitHeight && css`min-height: fit-content;`}
-  ${props => props.height && css`height: ${props.height}; min-height: ${props.height}`};
-  ${props => props.fullHeight && css`height: 100%`};
   ${props => props.fullWidth && css`width: 100%`};
+  ${props => props.fullHeight && css`height: 100%`};
+  ${props => props.maxWidth && css`max-width: ${props.maxWidth}`};
 
   ${onClickCss}
   ${spacingCss}
