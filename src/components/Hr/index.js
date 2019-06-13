@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components'
+import { media } from '../Theme'
 
 export default styled.div`
   min-width: 1px;
@@ -11,4 +12,5 @@ export default styled.div`
   `}
   background-color: ${p => p.theme.borderColor};
   ${p => p.primary && css`background-color: ${p.theme.colorPrimary}`};
+  ${p => p.hiddenDesktop && media(null, 'display: none') }
 `
