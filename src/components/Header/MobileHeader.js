@@ -64,7 +64,7 @@ const MenuBox = styled(Col)`
 
 function MenuIcon(props) {
   return (
-    <MenuBox spaceAround spacingS {...props}>
+    <MenuBox spaceAround MarginAllS {...props}>
       <Line />
       <Line />
       <Line />
