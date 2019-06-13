@@ -84,7 +84,7 @@ const Market = ({
       <Header>
         <MarketName />
       </Header>
-      <Dropdown options={TABS} selectedIndex={activeIndex} onChange={index => goto[TABS[index].value]()} width='100vw' hiddenDesktop  />
+      <Dropdown options={TABS} selectedIndex={activeIndex} onChange={index => goto[TABS[index].value]()} width='100%' hiddenDesktop  />
       <Hr hiddenDesktop />
       <Row hiddenDesktop relative centerVertical spaceBetween>
         <Row>
