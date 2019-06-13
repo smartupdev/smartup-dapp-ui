@@ -32,11 +32,11 @@ function DiscussionComment({
             }
           </Link>
         }
-        <Row>
-          <Col TopXS>
+        <Row directions={['column', 'row']}>
+          <Col TopS RightS>
             <Avatar icon={userAvatar} username={username || userAddress} />
           </Col>
-          <Col LeftS TopBase>
+          <Col TopS>
             <Col bgLight spacingXS round fitWidth>
               <Text note newline>{content}</Text>
             </Col>

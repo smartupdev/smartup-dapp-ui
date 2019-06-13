@@ -39,9 +39,11 @@ function DiscussionDetail({
       <Col spacingM>
       {
         loggedIn ? 
-          <Row top>
-            <Avatar icon={userAvatar} username={username} />
-            <Col flex={1} LeftS>
+          <Row directions={['column', 'row']}>
+            <Col top TopS RightS>
+              <Avatar icon={userAvatar} username={username} />
+            </Col>
+            <Col flex={1} TopS>
               <TextInput background value={newComment} onChange={onChangeNewComment} disabled={replying} line={4} />
               <Col right TopBase>
                 <Button primary HXL label= {lang.discussion.reply} onClick={reply} disabled={replying} />
