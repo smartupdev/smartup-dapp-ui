@@ -70,7 +70,7 @@ export default () => {
     <Col flex={1} fitHeight style={{ backgroundImage: `url("${BG}")`, backgroundRepeat: 'repeat-y', backgroundSize: `100% auto`}}>
       <Image source={gifSource} style={{ width: '100%', height: 'inherit' }} />
       <Row flex={1}>
-        <Col LeftL RightXL id={userGuideId} overflowAuto style={{ maxHeight: '100vh', paddingTop: leftMenuY < 0 ? Math.abs(leftMenuY) : 0 }}>
+        <Col LeftL RightXL id={userGuideId} overflowAuto style={{ paddingTop: leftMenuY < 0 ? Math.abs(leftMenuY) : 0 }}>
           {
             sections.map( ({title, sections}, index) => 
               <Fragment key={title}>
