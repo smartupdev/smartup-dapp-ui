@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react'
-// import { Link } from '../../routes'
+import React, { useEffect, useState } from 'react'
 
 import { connect } from 'react-redux'
 import { setTab, onChangeCT, onChangeSUT, onTrade, toggleIsSell, toggleTnc, reset, getTradeList, watchKline,getKlineList, getHighLowList,} from '../../actions/trade';
@@ -8,23 +7,32 @@ import { onClickTnc } from '../../actions/ipfs'
 import theme from '../../theme'
 import { Row, Col } from '../../components/Layout'
 import Input, { Checkbox } from '../../components/Input'
-// import Tab from '../../components/Tab'
 import Table from '../../components/Table'
-import { Trade } from '../../components/Icon'
-// import Image from '../../components/Image'
+import { Trade, More } from '../../components/Icon'
 import Text from '../../components/Text'
 import Button from '../../components/Button'
 import Hr from '../../components/Hr'
 import Avatar from '../../components/Avatar'
-// import TableFooter from '../../components/TableFooter'
+import Expand from '../../components/Expand'
 import ScrollLoader from '../../components/ScrollLoader'
-// import smartupIcon from '../../images/smartup.png'
 
-//import lang, { currentLang } from '../../lang'
 import { useLang } from '../../language'
-import { toPrice, toAgo, toFullDate, shorten,upperOne } from '../../lib/util'
+import { toPrice, toAgo, toFullDate } from '../../lib/util'
+
+import styled from 'styled-components'
 
 import Chart from './Chart'
+
+
+const KlineMoreBox = styled(Col)`
+  width: 200px;
+  height: 30px;
+  border-radius: 0 0 6px 6px;
+  background-color: ${p => p.dump ? 'initial' : p.theme.bgColorDark};
+  & > svg {
+    fill: ${p => p.theme.colorSecondary}
+  }
+`
 
 function TimeComponent({ value }) {
   const [{ time: { now, min, hour, day } }] = useLang()
@@ -41,15 +49,16 @@ function Trading({ loggedIn, market, gettingMarket, tradeState, setTab, onChange
     }
     return reset
   }, [market])
+  const [klineOpen, setKlineOpen] = useState(false)
   const { tabIndex, userCt, ct, sut, isSell, isTrading, trades, gettingTrades, hasNextPage, klineData,highLowData, agreeTnc, tradingError, sutError } = tradeState
   const [{ trading: tradingText, term, time: {months, weekdays} }] = useLang()
   const model = [
-    { label: tradingText.table.buySell, value: 'type', layoutStyle: { flex: 1, center: true }, component: ({ value }) => <Text red={value === 'sell'} green={value !== 'sell'}>{value === 'sell' ? tradingText.table.sell : tradingText.table.buy }</Text> },
-    { label: tradingText.table.user, value: 'userAddress', layoutStyle: { flex: 1 }, component: ({ record }) => <Row centerVertical><Avatar icon={record.userIcon} /><Text>{shorten(record.username)}</Text></Row> },
-    { label: tradingText.table.time, value: 'createTime', layoutStyle: { flex: 1, center: true }, component: TimeComponent },
-    { label: tradingText.table.avgPrice, value: 'avgAmount', layoutStyle: { flex: 1, center: true }, component: ({ value }) => <Text>{toPrice(value)}</Text> },
-    { label: tradingText.table.ct, value: 'ctAmount', layoutStyle: { flex: 1, center: true }, },
-    { label: tradingText.table.stage, value: 'stage', layoutStyle: { flex: 1, center: true }, component: ({ value }) => <Text>{tradingText.table.stageValue[value] || value}</Text> },
+    { label: tradingText.table.buySell, value: 'type', layoutStyle: { flex: 1, center: true, width: '50px' }, component: ({ value }) => <Text red={value === 'sell'} green={value !== 'sell'}>{value === 'sell' ? tradingText.table.sell : tradingText.table.buy }</Text> },
+    { label: tradingText.table.user, value: 'userAddress', layoutStyle: { flex: 1, width: '160px' }, component: ({ record }) => <Avatar icon={record.userIcon} username={record.username} /> },
+    { label: tradingText.table.time, value: 'createTime', layoutStyle: { flex: 1, width: '80px', center: true }, component: TimeComponent },
+    { label: tradingText.table.avgPrice, value: 'avgAmount', layoutStyle: { flex: 1, width: '80px', center: true }, component: ({ value }) => <Text>{toPrice(value)}</Text> },
+    { label: tradingText.table.ct, value: 'ctAmount', layoutStyle: { flex: 1, width: '80px', center: true }, },
+    { label: tradingText.table.stage, value: 'stage', layoutStyle: { flex: 1, width: '80px', center: true }, component: ({ value }) => <Text>{tradingText.table.stageValue[value] || value}</Text> },
   ]
 
   const klineTabs = [
@@ -62,6 +71,35 @@ function Trading({ loggedIn, market, gettingMarket, tradeState, setTab, onChange
   const notEnoughSut = !isSell && +userSut < +sut && loggedIn
   const notEnoughCt = isSell && +ct > +userCt && loggedIn
   const [lang] = useLang()
+
+  function KlineData() {
+    return (
+      <Col LeftXL RightL BottomL backgroundColor={theme.bgColorDark} width={['100%', '200px']}>
+        <Text nowrap BottomS>{toFullDate(Date.now(), weekdays, months)}</Text>
+
+        <Row bottom spacingTopS>
+          <Text XL>{toPrice(highLowData.length > 0 ? highLowData[highLowData.length - 1].low : '', 2)}</Text><Text red S>&nbsp;&nbsp;{lang.trading.low}</Text>
+        </Row>
+        <Row bottom>
+          <Text XL>{toPrice(highLowData.length > 0 ? highLowData[highLowData.length - 1].high : '', 2)}</Text><Text green S>&nbsp;&nbsp;{lang.trading.high}</Text>
+        </Row>
+        <Text note S>{tradingText.change}</Text>
+
+        <Text XL price spacingTopS>{toPrice(market.last, 2)}</Text>
+        <Text note S>{tradingText.price}</Text>
+
+        <Text XL primary spacingTopS>{toPrice(highLowData.length > 0 ? highLowData[highLowData.length - 1].amount : '', 2)}</Text>
+        <Text note S>{tradingText.volume}</Text>
+
+        <Text XL spacingTopS>{toPrice(market.amount, 2)}</Text>
+        <Text note S>{tradingText.cap}</Text>
+
+        <Text XL spacingTopS>{toPrice(market.ctTopAmount, 2)}</Text>
+        <Text note S>{tradingText.ct}</Text>
+      </Col>
+    )
+  }
+
   return (
     <>
       <Row TopXL BottomS LeftL color={theme.bgColorDark}>
@@ -71,34 +109,24 @@ function Trading({ loggedIn, market, gettingMarket, tradeState, setTab, onChange
           </Col>
         )}
       </Row>
-      <Row color={theme.bgColorDark} spacingLeftL spacingRightL spacingBottomL>
-        <Col flex={1} spacingRightL>
+      <Row color={theme.bgColorDark} HL BottomL>
+        <Col flex={1}>
           <Chart data={klineData} />
         </Col>
-        <Col spacingLeftXL spacingRightL width={'200px'}>
-          <Text nowrap spacingBottomS>{toFullDate(Date.now(), weekdays, months)}</Text>
-
-          <Row bottom spacingTopS>
-            <Text XL>{toPrice(highLowData.length > 0 ? highLowData[highLowData.length - 1].low : '', 2)}</Text><Text red S>&nbsp;&nbsp;{lang.trading.low}</Text>
-          </Row>
-          <Row bottom>
-            <Text XL>{toPrice(highLowData.length > 0 ? highLowData[highLowData.length - 1].high : '', 2)}</Text><Text green S>&nbsp;&nbsp;{lang.trading.high}</Text>
-          </Row>
-          <Text note S>{tradingText.change}</Text>
-
-          <Text XL price spacingTopS>{toPrice(market.last, 2)}</Text>
-          <Text note S>{tradingText.price}</Text>
-
-          <Text XL primary spacingTopS>{toPrice(highLowData.length > 0 ? highLowData[highLowData.length - 1].amount : '', 2)}</Text>
-          <Text note S>{tradingText.volume}</Text>
-
-          <Text XL spacingTopS>{toPrice(market.amount, 2)}</Text>
-          <Text note S>{tradingText.cap}</Text>
-
-          <Text XL spacingTopS>{toPrice(market.ctTopAmount, 2)}</Text>
-          <Text note S>{tradingText.ct}</Text>
-        </Col>
+        <KlineData />
       </Row>
+      
+      <Col hiddenDesktop relative>
+        <Col absolute width='100%' BottomM center style={{ zIndex: 1 }}>
+          <Expand isOpen={klineOpen} width='100%'>
+            <KlineData />
+          </Expand>
+          <KlineMoreBox center centerVertical onClick={() => setKlineOpen(!klineOpen)}>
+            <More S reverse={klineOpen} />
+          </KlineMoreBox>
+        </Col>
+        <KlineMoreBox dump />
+      </Col>
 
       <Col spacingLeftS spacingRightS spacingBottomS center>
         <Text spacingBottomS spacingTopS L center>{tradingText.tradeTitle}</Text>
@@ -114,7 +142,7 @@ function Trading({ loggedIn, market, gettingMarket, tradeState, setTab, onChange
         <Col maxWidth='1000px' width='100%'>
           <Col center>
             <Row BottomL>
-              <Avatar icon={market.avatar} username={market.name} />
+              <Avatar hiddenMobile icon={market.avatar} username={market.name} />
               <Col spacingLeftS>
                 <Input background L center size='30' disabled={isTrading} value={ct} onChange={onChangeCT} number />
                 {notEnoughCt && <Text error XS>{tradingText.needMoreCT}</Text>}
@@ -146,8 +174,7 @@ function Trading({ loggedIn, market, gettingMarket, tradeState, setTab, onChange
         <Hr />
         <Table
           model={model}
-          values={trades || []}
-          // footer={()=>{ return(<TableFooter hasNextPage={hasNextPage} loadMore={getTradeList}/>) }}
+          values={trades}
         />
         <ScrollLoader isButton hasMore={hasNextPage} loadMore={() => getTradeList(true)} isLoading={gettingTrades} />
         {
