@@ -74,7 +74,7 @@ function Trading({ loggedIn, market, gettingMarket, tradeState, setTab, onChange
 
   function KlineData() {
     return (
-      <Col LeftXL RightL BottomL backgroundColor={theme.bgColorDark} width={['100%', '200px']}>
+      <Col LeftXL RightL BottomL backgroundColor={theme.bgColorDark} width={['100%', '250px']}>
         <Text nowrap BottomS>{toFullDate(Date.now(), weekdays, months)}</Text>
 
         <Row bottom spacingTopS>
@@ -113,7 +113,9 @@ function Trading({ loggedIn, market, gettingMarket, tradeState, setTab, onChange
         <Col flex={1}>
           <Chart data={klineData} />
         </Col>
-        <KlineData />
+        <Col hiddenMobile>
+          <KlineData />
+        </Col>
       </Row>
       
       <Col hiddenDesktop relative>
