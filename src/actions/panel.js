@@ -1,14 +1,22 @@
 import {
-  PANEL_SET_ACTIVE_TAB, 
-  PANEL_TOGGLE_EXPANDED_BOOKMARK, 
-  PANEL_TOGGLE_EXPANDED_MARKET, 
-  PANEL_TOGGLE_EXPANDED_WALLET
-} from './actionTypes';
+  PANEL_SET_ACTIVE_TAB,
+  PANEL_TOGGLE_EXPANDED_BOOKMARK,
+  PANEL_TOGGLE_EXPANDED_MARKET,
+  PANEL_TOGGLE_EXPANDED_WALLET,
+  PANEL_SET_OPEN,
+} from './actionTypes'
+
+export function setOpen(value) {
+  return {
+    type: PANEL_SET_OPEN,
+    payload: value,
+  }
+}
 
 export function setActiveTab(activeTabIndex) {
   return {
     type: PANEL_SET_ACTIVE_TAB,
-    payload: activeTabIndex
+    payload: activeTabIndex,
   }
 }
 

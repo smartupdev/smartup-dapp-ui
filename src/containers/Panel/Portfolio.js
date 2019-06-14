@@ -44,6 +44,7 @@ const BookmarkBlock = styled(Row)`
 `
 
 const Portfolio = ({
+  setOpen,
   userSavedMarketPanel,
   ethBalance, sutBalance, 
   expandedWallet, expandedMarket, expandedBookmark,
@@ -72,7 +73,10 @@ const Portfolio = ({
     {
       label: '', value: 'action', layoutStyle: { width: '40px' }, component: ({ record }) =>
         <Link>
-          {({ goto }) => <Button icon={Trade} primary light condensed onClick={() => goto.trading({ id: record.id })} />}
+          {({ goto }) => <Button icon={Trade} primary light condensed onClick={() => {
+            goto.trading({ id: record.id })
+            setOpen(false)
+          }} />}
         </Link>
     },
   ]
@@ -151,7 +155,10 @@ const Portfolio = ({
                 <BookmarkBlock spaceBetween centerVertical key={index}>
                   <Link>
                     {({ goto }) =>
-                      <Text S onClick={() => goto.trading({ id: marketId })}>{name}</Text>
+                      <Text S onClick={() => {
+                        goto.trading({ id: marketId })
+                        setOpen(false)
+                      }}>{name}</Text>
                     }
                   </Link>
                   <Close XS onClick={() => delSavedMarket({id: marketId})} />

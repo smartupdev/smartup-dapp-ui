@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 
 import { MainRoutes, mainRoutes } from '../../routes'
@@ -10,10 +10,11 @@ import MobileHeader from '../../components/Header/MobileHeader'
 import Panel from '../Panel'
 import Main from '../../components/Main'
 import Hr from '../../components/Hr'
-import { Row, Col } from '../../components/Layout'
+import { Row } from '../../components/Layout'
 
-import { connect } from 'react-redux';
-import { checkLogin, watchMetamask } from '../../actions/user'
+import { connect } from 'react-redux'
+import { watchMetamask } from '../../actions/user'
+import { setOpen } from '../../actions/panel'
 
 export const mainId = 'main'
 
@@ -23,25 +24,26 @@ const Container = styled(Row)`
   height: 100vh;
 `
 
-const App = ({ checkLogin, watchMetamask }) => {
+const App = ({ watchMetamask, panelOpened, setPanelOpen }) => {
   const [menuOpened, setMenuOpen] = useState(false)
-  const [panelOpened, setPanelOpen] = useState(false)
-  useEffect( () => {
+  useEffect(() => {
     checkVersion()
     watchMetamask()
-    // checkLogin()
   }, [])
   return (
     <Container>
       <Header routes={mainRoutes} isOpen={menuOpened} close={() => setMenuOpen(false)} />
-      <Main 
+      <Main
         id={mainId}
-        header={<MobileHeader
-          menuOpened={menuOpened}
-          setMenu={setMenuOpen} 
-          panelOpened={panelOpened} 
-          setPanel={setPanelOpen} 
-          />}>
+        header={
+          <MobileHeader
+            menuOpened={menuOpened}
+            setMenu={setMenuOpen}
+            panelOpened={panelOpened}
+            setPanel={setPanelOpen}
+          />
+        }
+      >
         <MainRoutes />
       </Main>
       <Hr vertical />
@@ -50,7 +52,16 @@ const App = ({ checkLogin, watchMetamask }) => {
   )
 }
 
+const mapStateToProps = state => ({
+  panelOpened: state.panel.didOpen,
+})
+
 const mapDispatchToProps = {
-  watchMetamask
-} 
-export default connect(null, mapDispatchToProps)(App);
+  watchMetamask,
+  setPanelOpen: setOpen,
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(App)

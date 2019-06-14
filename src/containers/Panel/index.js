@@ -21,7 +21,7 @@ import { shorten } from '../../lib/util'
 
 import { connect } from 'react-redux'
 import { LOGIN_METAMASK_FAILED, USER_LOGIN_SMARTUP_FAILED, USER_PERSON_SIGN_FAILED, USER_AUTH_SMARTUP_FAILED } from '../../actions/actionTypes'
-import { setActiveTab } from '../../actions/panel'
+import { setActiveTab, setOpen } from '../../actions/panel'
 import { loginMetaMask } from '../../actions/user'
 import { onClickTnc } from '../../actions/ipfs'
 import { watch as watchNotification } from '../../actions/notification'
@@ -76,7 +76,7 @@ const networkName = {
 }
 
 const Panel = ({ 
-  isOpen,
+  setOpen, isOpen,
   metamask,
   nttBalance,
   metaMaskHint, account, 
@@ -112,7 +112,7 @@ const Panel = ({
             </Col>
           </Top>
           <Tab tabs={TABS} activeIndex={activeTabIndex} onClick={setActiveTab} fullWidth />
-          <Main />
+          <Main setOpen={setOpen} />
           <Terms />
         </>
         :
@@ -150,6 +150,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   loginMetaMask,
   setActiveTab,
+  setOpen,
   watchNotification
 }
 

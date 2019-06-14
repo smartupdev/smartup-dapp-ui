@@ -27,6 +27,7 @@ const TYPES = {
 
 function noop() {}
 const Notification = ({
+  setOpen,
   notification: { notifications, showUnreadOnly, unreadCount, gettingNotifications, keyword, hasNextPage },
   getList,
   read,
@@ -46,6 +47,7 @@ const Notification = ({
   const onClick = useCallback( n => {
     n.marketId && goto.trading({id: n.marketId})
     n.unread && read(n.id)
+    setOpen(false)
   }, [])
   return (
     <Col overflowAuto>
