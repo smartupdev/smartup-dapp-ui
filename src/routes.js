@@ -40,9 +40,9 @@ let mainRoutes = [ // main routes, exclusive, using switch
   // { id: 'faq', path: '/faq', component: Faq, icon: FaqButton, isHeader: true },
   { id: 'userGuide', path: '/user-guide', component: userGuide, icon: UserGuideLogo, isHeader: true },
 
-  { id: 'language', icon: Language, isFooter: true, menuComponent: LanguageMenu },
-  { id: 'feedback', icon: FeedbackButton, isFooter: true, menuComponent: FeedbackMenu, startFromBottom: true },
-  { id: 'notFound', path: '*', component: NotFound, },
+  { id: 'language', path: 'lang', icon: Language, isFooter: true, menuComponent: LanguageMenu },
+  { id: 'feedback', path: 'feedback', icon: FeedbackButton, isFooter: true, menuComponent: FeedbackMenu, startFromBottom: true },
+  { id: 'notFound', component: NotFound, },
 ]
 
 let marketRoutes = [
@@ -77,8 +77,8 @@ function RouteComponent(r, defaultFrom, defaultTo) {
     <Suspense fallback={<div />}>
       <Switch>
         {
-          r.map(({id, path, component, exact}) =>
-            <Route key={id} exact={exact} path={path} component={component} />
+          r.map(({id, path, component, exact}) => 
+            <Route key={id} exact={exact} path={path} component={component} />          
           )
         }
         { defaultFrom && defaultTo && <Redirect from={defaultFrom} to={defaultTo} /> }

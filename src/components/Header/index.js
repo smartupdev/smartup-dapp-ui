@@ -40,7 +40,7 @@ const Header = styled.header`
   ${css`${p => p.theme.animation.slideOut}`}
 `
 
-function renderMenu({ id, path, icon, includePaths, onClick, menuComponent, startFromBottom }, i) {
+function renderMenu({ id, path, component, icon, includePaths, onClick, menuComponent, startFromBottom }, i) {
   const [{routes}] = useLang()
   return (
     <Route
@@ -55,7 +55,7 @@ function renderMenu({ id, path, icon, includePaths, onClick, menuComponent, star
           onClick={onClick} component={menuComponent} 
           startFromBottom={startFromBottom}
           />
-        return path ? <StyledLink selected={selected} to={path}>{IconMenu}</StyledLink> : IconMenu
+        return component ? <StyledLink selected={selected} to={path}>{IconMenu}</StyledLink> : IconMenu
       }}
     />
   )
