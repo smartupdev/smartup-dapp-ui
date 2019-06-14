@@ -15,9 +15,9 @@ const Content = styled(Col)`
   scroll-behavior: smooth;
 `
 export default ({header: Header, children, ...rest}) => 
-  <Box {...rest}>
+  <Box>
     {Header}
-    <Content>
+    <Content {...rest}>
       {children}
     </Content>
   </Box>
