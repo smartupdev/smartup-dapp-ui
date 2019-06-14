@@ -39,7 +39,7 @@ const TableRecordBox = styled(Col)`
 `
 
 const TableRecord = memo(
-  ({ record, index, expandedRecords, noBorderCol, inset, model, S, onClick, ExpandCompoent }) => {
+  ({ record, index, expandedRecords, noBorderCol, inset, model, S, onClick, ExpandComponent }) => {
     const isExpanded = expandedRecords.includes(record.id)
     return (
       <TableRecordBox isExpanded={isExpanded} hasBorder={!index || !noBorderCol} inset={inset} fitWidth>
@@ -59,7 +59,7 @@ const TableRecord = memo(
         </Row>
         {
           <Expand isOpen={isExpanded}>
-            {ExpandCompoent && <ExpandCompoent record={record} />}
+            {ExpandComponent && <ExpandComponent record={record} />}
           </Expand>
         }
       </TableRecordBox>
@@ -77,7 +77,7 @@ const TableRecord = memo(
 // expandedRecords: Array <id>
 // S for small font size
 // noBorderCol is for no border in column
-export default ({ recordKey = 'id' , model, values, sortBy, orderBy, onClickHeader, onClick, expandedRecords = emptyArr, expandCompoent: ExpandCompoent, minWidth, S, inset, noBorderCol, autoHeight, noResultText = '' }) => {
+export default ({ recordKey = 'id' , model, values, sortBy, orderBy, onClickHeader, onClick, expandedRecords = emptyArr, expandComponent: ExpandComponent, minWidth, S, inset, noBorderCol, autoHeight, noResultText = '' }) => {
   return (
     <TableWrapper>
       <Table minWidth={minWidth} autoHeight={autoHeight}>
@@ -103,7 +103,7 @@ export default ({ recordKey = 'id' , model, values, sortBy, orderBy, onClickHead
                 model={model} 
                 S={S} 
                 onClick={onClick} 
-                ExpandCompoent={ExpandCompoent} />
+                ExpandComponent={ExpandComponent} />
             )
           : 
             noResultText && <Text center note>{noResultText}</Text>

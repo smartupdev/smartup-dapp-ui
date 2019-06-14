@@ -62,7 +62,7 @@ export default function({
         sortBy={sortBy}
         orderBy={orderBy}
         expandedRecords={expandedRecords}
-        expandCompoent={TableExpand}
+        expandComponent={TableExpand}
       />
   )
 }
