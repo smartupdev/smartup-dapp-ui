@@ -10,7 +10,7 @@ import MobileHeader from '../../components/Header/MobileHeader'
 import Panel from '../Panel'
 import Main from '../../components/Main'
 import Hr from '../../components/Hr'
-import { Row } from '../../components/Layout'
+import { Row, Col } from '../../components/Layout'
 
 import { connect } from 'react-redux';
 import { checkLogin, watchMetamask } from '../../actions/user'
@@ -34,8 +34,14 @@ const App = ({ checkLogin, watchMetamask }) => {
   return (
     <Container>
       <Header routes={mainRoutes} isOpen={menuOpened} close={() => setMenuOpen(false)} />
-      <Main id={mainId}>
-        <MobileHeader panelOpened={panelOpened} openMenu={() => setMenuOpen(true)} setPanel={setPanelOpen} />
+      <Main 
+        id={mainId}
+        header={<MobileHeader
+          menuOpened={menuOpened}
+          setMenu={setMenuOpen} 
+          panelOpened={panelOpened} 
+          setPanel={setPanelOpen} 
+          />}>
         <MainRoutes />
       </Main>
       <Hr vertical />

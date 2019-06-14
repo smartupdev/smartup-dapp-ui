@@ -73,6 +73,9 @@ const Market = ({
   function Bookmarked(props) {
     return <BookmarkedIcon S onClick={() => toggleSavedMarket(market)} checked={market.following} {...props} />
   }
+  function AddDiscussion() {
+    return <Add primary={!!market.address} S color={market.address ? undefined : theme.colorSecondary} disabled={!market.address} onClick={() => market.address && goto.discussionCreate()} />
+  }
 
   const isDiscussion = getPath() === routeMap.discussion.path
   const DiscussionSearch = id => { // please use this by DiscussionSearch(), don't use <DiscussionSearch />. 
@@ -92,7 +95,7 @@ const Market = ({
           <SubButton />
         </Row>
         {DiscussionSearch('discussion-mobile')}
-        <ButtonMore icons={isDiscussion ? [Share, Bookmarked, Add] : [Share, Bookmarked]} />
+        <ButtonMore icons={isDiscussion ? [Share, Bookmarked, AddDiscussion] : [Share, Bookmarked]} />
       </Row>
       <Hr hiddenDesktop />
       <Row hiddenMobile spaceBetween VXS HS color={theme.bgColorLight}>
@@ -114,7 +117,7 @@ const Market = ({
             <Row right centerVertical>
               {DiscussionSearch('discussion-desktop')}
               <Col absolute absRight='0' absTop='1px' absBottom='1px' HS backgroundColor={theme.bgColor} centerVertical>
-                <Add primary={!!market.address} S color={market.address ? undefined : theme.colorSecondary} disabled={!market.address} onClick={() => market.address && goto.discussionCreate()} />
+                <AddDiscussion />
               </Col>
             </Row>          
           }

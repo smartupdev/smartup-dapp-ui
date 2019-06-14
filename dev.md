@@ -21,20 +21,9 @@ For 4 edges, e.g. `spacingS` or `AllS`
 
 ## z-index
 M: Mobile only
-| 10                  | 11                     |
-|:-                   | :-                     |
-| (M) Panel cover     | (M) Panel close button |
-| (M) Menu panel icon |                        |
-| (M) Panel           |                        |
-
-### 10
-cover: 10
-icon: 10
-overlay: 10
-
-### 11
-close: 11
-
+|9                         |10                   | 11                  | 12                     |
+|:-                        |:-                   |:-                   | :-                     |
+| (M) Header in top center | (M) Menu panel icon | (M) Panel cover     | (M) Panel close button |
 
 # Store
 TBC

@@ -14,6 +14,7 @@ const Box = styled(Row)`
   width: 100%;
   background-color: ${p => p.theme.bgColor};
   ${media(null, 'display: none')};
+  z-index: 9;
 `
 
 const bounceIn = keyframes`
@@ -47,7 +48,7 @@ const Close = styled(CloseIcon)`
     p.open ? css`animation: ${bounceIn} 1s ${animationSpeed} forwards; opacity: 0;` : 'display: none', 
     'display: none;'
   )}
-  z-index: 11;
+  z-index: 12;
 `
 
 const Line = styled.div`
@@ -74,8 +75,10 @@ function MenuIcon(props) {
 
 const Dump = styled.div`
   ${p => media(`
+    background-color: ${p.theme.bgColor};
     min-height: ${p.theme.iconSizeM};
-    padding: ${p.theme.spacingS};
+    margin: ${p.theme.spacingS} 0;
+    width: 100%;
   `)}
 `
 
@@ -118,7 +121,7 @@ const panelBgAnimation = keyframes`
 `
 
 const Cover = styled.div`
-  z-index: 10;
+  z-index: 11;
   position: absolute;
   left: 50vw;
   top: 50vh;
@@ -155,19 +158,20 @@ const PanelBox = styled(Col)`
   `}
 `
 
-export default function({ openMenu, setPanel, panelOpened }) {
+export default function({ setMenu, menuOpened, setPanel, panelOpened }) {
   return (
     <>
     <Dump />
     <Box spaceBetween relative>
-      <MenuIcon onClick={openMenu} />
+      <MenuIcon onClick={() => setMenu(true)} />
 
-      <Cover open={panelOpened} />
-
-      <PanelBox open={panelOpened}>
-        <Avatar onClick={() => setPanel(true)} noMargin />
-      </PanelBox>
+      {!menuOpened && 
+        <PanelBox open={panelOpened}>
+          <Avatar onClick={() => setPanel(true)} noMargin />
+        </PanelBox>
+      }
     </Box>
+    <Cover open={panelOpened} />
     <Close open={panelOpened} S color={theme.colorPrimary} onClick={() => setPanel(false)} />
     </>
   )
@@ -183,4 +187,5 @@ export const Header = styled(Row)`
   align-items: center;
   overflow: auto;
   ${media(null, 'display: none')};
+  z-index: 9;
 `

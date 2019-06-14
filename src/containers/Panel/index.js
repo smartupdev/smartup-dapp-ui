@@ -43,7 +43,7 @@ const Box = styled(Col)`
       'opacity: 0; display: none;'
     }
   `)}
-  z-index: 10;
+  z-index: 11;
   ${css`${p => p.theme.animation.slideOut}`}
 `
 
