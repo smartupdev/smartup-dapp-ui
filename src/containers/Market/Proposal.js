@@ -6,9 +6,8 @@ import coming from '../../images/coming_soon.png'
 import { useLang } from '../../language'
 export default function() {
   const [lang] = useLang()
-  console.log(lang.proposal)
   return (
-    <Col center centerVertical height={'80vh'}>
+    <Col center centerVertical flex={1}>
       <Image source={coming} size={'250px'} />
       <Text center VM note> {lang.proposal.notReady} </Text>
     </Col>

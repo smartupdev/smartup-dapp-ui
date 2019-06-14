@@ -6,7 +6,7 @@ import { Col } from '../components/Layout'
 import PageNotFoundImage from '../images/404.png'
 function NotFound() {
   return (
-    <Col center centerVertical height={'80vh'}>
+    <Col center centerVertical flex={1}>
       <Image source={PageNotFoundImage} size={'300px'} />
       <Text XL note VS bold>OH MY GOSH! YOU FOUND IT!!!</Text>
       <Text note>Looks like the page you're trying to visit doesn't exists.</Text>

@@ -7,7 +7,7 @@ import { useLang } from '../../language'
 export default function() {
   const [lang] = useLang()
   return (
-    <Col center centerVertical height={'80vh'}>
+    <Col center centerVertical flex={1}>
       <Image source={coming} size={'250px'} />
       <Text center VM note>{lang.dispute.notReady}</Text>
     </Col>
