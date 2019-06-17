@@ -148,7 +148,7 @@ const CreateMarket = ({
             </Col>
           </>
       }
-        <Col right>
+        <Col right BottomL>
           { error.api && <Text S error>{error.api}</Text> }
         </Col>
       </Col>
