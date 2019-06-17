@@ -49,7 +49,7 @@ const CreateMarket = ({
     tab === 2 && page2Ready && setActiveIndex(tab)
   const options = [lang.createMarket.tab.basicInfo, lang.createMarket.tab.equation, lang.createMarket.tab.deposit]
     return (
-    <Col>
+    <Col flex={1}>
       <Text center BottomS TopS L>{lang.createMarket.createMarket}</Text>
       <Hr />
       {
@@ -57,7 +57,7 @@ const CreateMarket = ({
         <ProgressBar options={options} activeIndex={activeIndex} onClick={!isFetching && onChangeProgress} />
       }
 
-      <Col LeftM RightM>
+      <Col LeftM RightM flex={1}>
       {
         activeIndex === 0 ? 
           <>
@@ -134,7 +134,7 @@ const CreateMarket = ({
           </>
         :
         <>
-            <Col center centerVertical height={'80vh'}>
+            <Col center centerVertical flex={1}>
               <Image source={successImg} size={'150px'} />
               <Col spacingTopL spacingBottomL>
                 <Text XL wordSpaceL center> {lang.createMarket.creating} </Text>
