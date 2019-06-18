@@ -16,44 +16,34 @@ const userGuideId = 'user-guide-id'
 export default () => {
   const [gifSource] = useState(`${Cover}?a=${Math.random()}`)
   const [leftMenuY] = useScroll(userGuideId, mainId)
-  const [lang] = useLang()
-
-  const installChrome = lang.userGuide.installChrome
-  const installMetamask = lang.userGuide.installMetamask  
-  const addEth = lang.userGuide.addEth  
-  const addSut = lang.userGuide.addSut
-  const loginTxt = lang.userGuide.loginTxt
-  const personalCenterTxt = lang.userGuide.personalCenterTxt
-  const notificationTxt = lang.userGuide.notificationTxt
-  const createMktTxt = lang.userGuide.createMktTxt  
-  const tradeTxt = lang.userGuide.tradeTxt
-  const mktDiscussionTxt = lang.userGuide.mktDiscussionTxt
-
-  const general = lang.userGuide.faqGeneral
-  const creator = lang.userGuide.faqCreator
-  const investor = lang.userGuide.faqInvestor
+  const [{ userGuide: { 
+    title,
+    installChrome, installMetamask, addEth, addSut, loginTxt, personalCenterTxt, notificationTxt, createMktTxt, tradeTxt, mktDiscussionTxt,
+    faqGeneral: general, faqCreator: creator, faqInvestor: investor,
+    tab
+  } }] = useLang()
 
   const sections = [
-    { title: lang.userGuide.tab.getstarted, sections: [
-      { title: lang.userGuide.tab.installChrome, body: installChrome },
-      { title: lang.userGuide.tab.installMetamask, body: installMetamask },
-      { title: lang.userGuide.tab.addEth, body: addEth },
-      { title: lang.userGuide.tab.addSut, body: addSut },
+    { title: tab.getstarted, sections: [
+      { title: tab.installChrome, body: installChrome },
+      { title: tab.installMetamask, body: installMetamask },
+      { title: tab.addEth, body: addEth },
+      { title: tab.addSut, body: addSut },
     ]},
-    { title: lang.userGuide.tab.loginSetting, sections: [
-      { title: lang.userGuide.tab.login, body: loginTxt },
-      { title: lang.userGuide.tab.setting, body: personalCenterTxt },
-      { title: lang.userGuide.tab.notification, body: notificationTxt },
+    { title: tab.loginSetting, sections: [
+      { title: tab.login, body: loginTxt },
+      { title: tab.setting, body: personalCenterTxt },
+      { title: tab.notification, body: notificationTxt },
     ]},
-    { title: lang.userGuide.tab.market, sections: [
-      { title: lang.userGuide.tab.createMkt, body: createMktTxt },
-      { title: lang.userGuide.tab.trade, body: tradeTxt },
-      { title: lang.userGuide.tab.mktdiscussion, body: mktDiscussionTxt },
+    { title: tab.market, sections: [
+      { title: tab.createMkt, body: createMktTxt },
+      { title: tab.trade, body: tradeTxt },
+      { title: tab.mktdiscussion, body: mktDiscussionTxt },
     ] },
-    { title: lang.userGuide.tab.faq, sections: [
-      { title: lang.userGuide.tab.general, body: general },
-      { title: lang.userGuide.tab.creator, body: creator },
-      { title: lang.userGuide.tab.investor, body: investor },
+    { title: tab.faq, sections: [
+      { title: tab.general, body: general },
+      { title: tab.creator, body: creator },
+      { title: tab.investor, body: investor },
     ] },
   ]
 
@@ -69,8 +59,9 @@ export default () => {
   return (
     <Col flex={1} fitHeight style={{ backgroundImage: `url("${BG}")`, backgroundRepeat: 'repeat-y', backgroundSize: `100% auto`}}>
       <Image source={gifSource} style={{ width: '100%', height: 'inherit' }} />
+      <Text center VXL XL newline>{title}</Text>
       <Row flex={1}>
-        <Col LeftL RightXL id={userGuideId} overflowAuto style={{ paddingTop: leftMenuY < 0 ? Math.abs(leftMenuY) : 0 }}>
+        <Col LeftL RightXL id={userGuideId} hiddenMobile overflowAuto style={{ paddingTop: leftMenuY < 0 ? Math.abs(leftMenuY) : 0 }}>
           {
             sections.map( ({title, sections}, index) => 
               <Fragment key={title}>

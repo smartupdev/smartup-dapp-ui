@@ -1,6 +1,8 @@
 import { name } from './index'
 
 export default {
+  title: name(`使用SmartUp孵化平台
+（測試版）流程`),
   tab: {
     getstarted: name('Get Started', '使用前準備', '使用前准备'),
     installChrome: name('Install Google Chrome', '安裝Google Chrome', '安装Google Chrome'),
