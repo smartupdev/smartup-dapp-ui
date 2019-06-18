@@ -75,7 +75,7 @@ const CreateMarket = ({
             <Label>{lang.createMarket.marketAvatar}</Label>
             <DropToUpload MarginBottomM onChoose={onChangeAvatar} isLoading={avatarUploading} error={error.avatar} value={avatarHash} imageHeight='100px' imageWidth='100px' />
             <Label>{lang.createMarket.marketCover}</Label>
-            <DropToUpload MarginBottomM onChoose={onChangeCover} isLoading={coverUploading} error={error.cover} value={coverHash} imageHeight='300px' imageWidth='450px' />
+            <DropToUpload MarginBottomM onChoose={onChangeCover} isLoading={coverUploading} error={error.cover} value={coverHash} imageHeight={['auto', '300px']} imageWidth={['100%', '450px']} />
             <Row spacingTopL right>
               <Next disabled={!page1Ready} />
             </Row>

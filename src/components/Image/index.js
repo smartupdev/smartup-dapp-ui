@@ -1,6 +1,6 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
-import { spacingCss } from '../Theme'
+import { spacingCss, media } from '../Theme'
 
 const Image =  styled.img`
   ${spacingCss}
@@ -45,8 +45,16 @@ const Image =  styled.img`
     min-height: ${p => p.size};
     min-width: ${p => p.size};  
   `}
-  ${p => p.height && css`height: ${p => p.height}; min-height: ${p => p.height};`}
-  ${p => p.width && css`width: ${p => p.width}; min-width: ${p => p.width};`}
+  ${p => p.height && 
+    (p.height instanceof Array ? 
+      media(`height: ${p.height[0]}; min-height: ${p.height[0]};`, `height: ${p.height[1]}; min-height: ${p.height[1]};`)
+      : css`height: ${p.height}; min-height: ${p.height};` 
+    )}
+  ${p => p.width && (
+    p.width instanceof Array ? 
+      media(`width: ${p.width[0]}; min-width: ${p.width[0]};`, `width: ${p.width[1]}; min-width: ${p.width[1]};`)
+    : css`width: ${p.width}; min-width: ${p.width};`
+  )}
   ${p => p.round && css`
     border-radius: ${
       p.size ? p.size :
