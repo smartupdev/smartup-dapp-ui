@@ -21,6 +21,18 @@ export const media = (...cssArray) =>
     )}
   `
 
+export const responsiveCss = css`
+  ${p => p.hiddenMobile && media('display: none')}
+  ${p => p.hiddenDesktop && media(null, 'display: none')}
+  ${props => props.width && (
+    props.width instanceof Array ?
+    media(
+      `width: ${props.width[0]}; min-width: ${props.width[0]}`, 
+      `width: ${props.width[1]}; min-width: ${props.width[1]}`
+    ) :
+    css`width: ${props.width}; min-width: ${props.width}`
+  )};
+`
 
 const fadeInAnimation = keyframes`
   0% {

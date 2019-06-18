@@ -73,7 +73,7 @@ function Transaction({
                 { label: inTransaction.lastUpdate, value: toFullDate(blockTime, weekdays, months) },
               ].map( ({label, value}) => 
                 <Row key={label} VXS>
-                  <Text width='250px'>{label}</Text>
+                  <Text width={['30%', '250px']}>{label}</Text>
                   <Text>{value}</Text>
                 </Row>
               )}

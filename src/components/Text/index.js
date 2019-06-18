@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components'
-import { spacingCss, onClickCss, fontCss } from '../Theme'
+import { spacingCss, onClickCss, fontCss, responsiveCss } from '../Theme'
 
 export const A = styled.a`
   ${fontCss}
@@ -30,6 +30,7 @@ export const Text = styled.div`
   ${spacingCss}
   ${onClickCss}
   ${fontCss}
+  ${responsiveCss}
 
   ${p => p.inline && css`display: inline`};
   ${p => p.lineHeight && css`line-height: 1.5`};

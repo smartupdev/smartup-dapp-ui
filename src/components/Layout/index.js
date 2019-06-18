@@ -1,13 +1,9 @@
 // import React from 'react'
 import styled, { css } from 'styled-components'
-import { spacingCss, onClickCss, media } from '../Theme'
+import { spacingCss, onClickCss, media, responsiveCss } from '../Theme'
 const Flex = styled.div`
   display: flex;
   box-sizing: border-box;
-  ${p => p.directions && media(
-    `flex-direction: ${p.directions[0]};`,
-    `flex-direction: ${p.directions[1]};`
-  )}
   ${p => p.hiddenMobile && media('display: none', 'display: flex')}
   ${p => p.hiddenDesktop && media('display: flex', 'display: none')}
   
@@ -49,6 +45,7 @@ const Flex = styled.div`
   ${props => props.fullHeight && css`height: 100%`};
   ${props => props.maxWidth && css`max-width: ${props.maxWidth}`};
 
+  ${responsiveCss}
   ${onClickCss}
   ${spacingCss}
 `
