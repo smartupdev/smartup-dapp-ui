@@ -4,8 +4,7 @@ import { spacingCss, onClickCss, media, responsiveCss } from '../Theme'
 const Flex = styled.div`
   display: flex;
   box-sizing: border-box;
-  ${p => p.hiddenMobile && media('display: none', 'display: flex')}
-  ${p => p.hiddenDesktop && media('display: flex', 'display: none')}
+  ${p => p.zIndex && css`z-index: ${p.zIndex}`}
   
   ${p => p.relative && css`position: relative;`}
   ${p => p.absolute && css`position: absolute;`}
