@@ -25,7 +25,7 @@ const Box = styled(Col)`
 
 export function Mobile({ sections, coverPhoto, title, TextBody }) {
   const [selectedIndex, setIndex] = useState(0)
-  const [expanded, setExpanded] = useState([true])
+  const [expanded, setExpanded] = useState([])
   function toggleExpand(index) {
     let t = [...expanded]
     t[index] = !t[index]
