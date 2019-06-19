@@ -6,7 +6,7 @@ import Image from "../Image";
 import Text from "../Text";
 import theme from "../../theme";
 import { languageOptions, useLang } from "../../language";
-import { Col, Row } from "../Layout";
+import { Col } from "../Layout";
 
 const StyledImage = styled(Image)`
   ${p => media(p.expanded && "width: auto")}
@@ -76,7 +76,7 @@ const FooterBox = styled(Col)`
 `
 
 export function LanguageMenu() {
-  const [_, lang, setLang] = useLang();
+  const [, lang, setLang] = useLang();
   return (
     <FooterBox>
       {languageOptions.map(({ label, labelShort, value }) => (
@@ -105,8 +105,8 @@ function onClickGithub() {
 export function FeedbackMenu() {
   return (
     <FooterBox>
-      <LabelText label="Email" onClick={onClickEmail} width="60px" center />
-      <LabelText label="GitHub" onClick={onClickGithub} width="60px" center />
+      <LabelText label="Email" onClick={onClickEmail} width={["50%", "60px"]} center />
+      <LabelText label="GitHub" onClick={onClickGithub} width={["50%", "60px"]} center />
     </FooterBox>
   );
 }
