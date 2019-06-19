@@ -31,10 +31,14 @@ export function Mobile({ sections, coverPhoto, title, TextBody }) {
     t[index] = !t[index]
     setExpanded(t)
   }
+  function onChangeSection(index) {
+    setIndex(index)
+    if(index !== selectedIndex) setExpanded([])
+  }
   const currentSections = sections[selectedIndex].sections
   return (
     <Box hiddenDesktop>
-      <Dropdown absolute absLeft='0' absRight='0' zIndex={1} backgroundColor={theme.bgColor} options={sections.map(({ title }) => ({ label: title, value: title }))} selectedIndex={selectedIndex} onChange={i => setIndex(i)} width="100%" />
+      <Dropdown absolute absLeft='0' absRight='0' zIndex={1} backgroundColor={theme.bgColor} options={sections.map(({ title }) => ({ label: title, value: title }))} selectedIndex={selectedIndex} onChange={onChangeSection} width="100%" />
       <Col MarginVL width='100%' />
       {coverPhoto}
       <Text center VXL XL newline>{title}</Text>
