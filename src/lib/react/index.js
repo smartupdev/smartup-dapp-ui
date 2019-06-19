@@ -1,4 +1,12 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
+
+export function usePrevious(value) {
+  const ref = useRef(value)
+  useEffect(() => {
+    ref.current = value
+  }, [value])
+  return ref.current
+}
 
 export default function eventListener(event, handler, targetId) { // event: e.g. resize, handler: function, MUST return this in useEffect
   // handler()
