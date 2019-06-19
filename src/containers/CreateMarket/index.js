@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react'
 import { Link } from '../../routes'
+
+import { Header } from '../../components/Header/MobileHeader'
 // import styled from 'styled-components'
 import Text from '../../components/Text'
 import { DonutLoader } from '../../components/Loader'
@@ -50,7 +52,8 @@ const CreateMarket = ({
   const options = [lang.createMarket.tab.basicInfo, lang.createMarket.tab.equation, lang.createMarket.tab.deposit]
     return (
     <Col flex={1}>
-      <Text center BottomS TopS L>{lang.createMarket.createMarket}</Text>
+      <Text hiddenMobile center BottomS TopS L>{lang.createMarket.createMarket}</Text>
+      <Header center><Text>{lang.createMarket.createMarket}</Text></Header>
       <Hr />
       {
         activeIndex >= 0 && 
