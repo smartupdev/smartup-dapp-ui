@@ -4,6 +4,10 @@ import { spacingCss, onClickCss, media, responsiveCss } from '../Theme'
 const Flex = styled.div`
   display: flex;
   box-sizing: border-box;
+  ${p => p.directions && media(	
+    `flex-direction: ${p.directions[0]};`,	
+    `flex-direction: ${p.directions[1]};`	
+  )}
   ${p => p.zIndex && css`z-index: ${p.zIndex}`}
   
   ${p => p.relative && css`position: relative;`}
