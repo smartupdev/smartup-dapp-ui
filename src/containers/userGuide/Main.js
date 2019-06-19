@@ -1,5 +1,5 @@
-import React, { useState, useEffect, Fragment, useRef } from 'react'
-import styled, { css } from 'styled-components'
+import React, { useState, Fragment, useRef } from 'react'
+import styled from 'styled-components'
 import theme from '../../theme'
 // import { spacingCss, onClickCss, fontCss, responsiveCss } from '../../components/Theme'
 
@@ -8,12 +8,9 @@ import { mainId } from '../App'
 
 import Panel from '../../components/Panel'
 import Text from '../../components/Text'
-import { RichContent, Dropdown } from '../../components/Input'
-import Image from '../../components/Image'
-import Cover from '../../images/user_guide_cover.gif'
+import { Dropdown } from '../../components/Input'
 import BG from '../../images/user_guide_bg.png'
 import { Row, Col } from '../../components/Layout'
-import { useLang } from '../../language'
 
 const Box = styled(Col)`
   flex: 1;

@@ -16,9 +16,9 @@
   videos:         [![IMAGE ALT TEXT HERE](img.jpg)](http://vidoes)
 */
 
-import React, { useRef } from 'react'
+import React from 'react'
 import Text, { A } from '../Text'
-import { Editor, convertFromRaw, convertToRaw, EditorState, CompositeDecorator, RichUtils, DefaultDraftBlockRenderMap } from 'draft-js'
+import { Editor, convertFromRaw, convertToRaw, EditorState, CompositeDecorator, DefaultDraftBlockRenderMap } from 'draft-js'
 import Immutable from 'immutable'
 import { markdownToDraft, draftToMarkdown } from 'markdown-draft-js';
 // const linkRegex = /https?:\/\/\S+/g

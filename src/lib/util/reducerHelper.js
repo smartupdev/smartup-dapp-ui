@@ -1,12 +1,12 @@
-function modifier(r) {
+function modifierDefault(r) {
   return r
 }
-export function changeArrayById(array, id, modifier = modifier, key = 'id') {
+export function changeArrayById(array, id, modifier = modifierDefault, key = 'id') {
   const index = array.findIndex(e => e[key] === id)
   return changeArrayByIndex(array, index, r => ({...r, ...modifier(r)}))
 }
 
-export function changeArrayByIndex(array, index, modifier = modifier) {
+export function changeArrayByIndex(array, index, modifier = modifierDefault) {
   if(typeof index !== 'number') return new Error('[changeArrayByIndex] index must be number')
   if(index < 0 || array.length < index + 1) return array
   return [

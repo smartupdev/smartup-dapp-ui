@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React from 'react'
 import styled, { keyframes, css } from 'styled-components'
 import { media } from "../Theme";
 import theme from '../../theme'

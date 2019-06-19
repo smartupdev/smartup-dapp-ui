@@ -3,7 +3,7 @@ import {
     USER_REPLY_COLLECTED_REQUESTED, USER_REPLY_COLLECTED_SUCCEEDED, USER_REPLY_COLLECTED_FAIL,
 } from '../actions/actionTypes';
 
-import { postMassage, replyMassage, toggleLike, toggleDislike, toggleFollow, updateLoadMore } from '../integrator/massager'
+import { replyMassage, toggleLike, toggleDislike, toggleFollow, updateLoadMore } from '../integrator/massager'
 import { changeArrayById } from '../lib/util/reducerHelper'
 
 export const initialState = {

@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react'
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 import theme from '../../theme'
 // import { fontCss } from '../Theme'
 import { Col } from '../Layout'

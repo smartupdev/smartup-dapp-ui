@@ -76,6 +76,8 @@ const IconBox = styled.div`
   ${p => p.open &&
     fadeIn(.5, p.index/2)
   }
+  ${spacingCss}
+  ${onClickCss}
 `
 export default ({ icons }) => {
   const [didOpen, setOpen] = useState(false)

@@ -2,7 +2,15 @@ import React, { memo, lazy, Suspense } from 'react'
 import { withRouter, Route, Switch, Redirect } from 'react-router-dom'
 import { toParams } from './lib/util/fetch'
 
-import { MainPageButton as Menu1, ViewMarketButton as Menu2, CreateMarketButton as Menu3, FindMarketButton as Menu4, Faq as FaqButton, FeedbackEmail as FeedbackButton, Language, UserGuide as UserGuideLogo } from './components/Icon/index'
+import { 
+  MainPageButton as Menu1, 
+  ViewMarketButton as Menu2, 
+  CreateMarketButton as Menu3, 
+  FindMarketButton as Menu4, 
+  // Faq as FaqButton, 
+  FeedbackEmail as FeedbackButton, 
+  Language, 
+  UserGuide as UserGuideLogo } from './components/Icon/index'
 
 import { connect } from 'react-redux'
 
@@ -26,7 +34,7 @@ const AccountPost = lazy(() => import('./containers/Account/Post'))
 const AccountComment = lazy(() => import('./containers/Account/Comment'))
 const AccountSaved = lazy(() => import('./containers/Account/Saved'))
 const Dispute = lazy(() => import('./containers/Dispute'))
-const Faq = lazy(() => import('./containers/Faq'))
+// const Faq = lazy(() => import('./containers/Faq'))
 const userGuide = lazy(() => import('./containers/userGuide'))
 const NotFound = lazy(() => import('./containers/NotFound'))
 

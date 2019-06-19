@@ -8,7 +8,6 @@ import Panel from '../../../components/Panel'
 import { connect } from 'react-redux'
 import { getCreatedMarkets, getTradedMarkets, getCollectedMarkets, reset } from '../../../actions/personalCenter'
 import { useLang } from '../../../language'
-import { lang } from 'moment';
 function Market({
   createdMarket: { markets: createdMarkets, getting: gettingCreatedMarmkets, error: createdMarketsError, hasNextPage: createdMarketsHasNextPage }, 
   tradedMarket: { markets: tradedMarkets, getting: gettingTradedMarmkets, error: tradedMarketsError, hasNextPage: tradedMarketsHasNextPage }, 

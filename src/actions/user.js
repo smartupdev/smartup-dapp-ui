@@ -11,7 +11,6 @@ import {
   USER_AVATAR_CHANGE_REQUESTED, USER_AVATAR_CHANGE_SUCCEEDED, USER_AVATAR_CHANGE_FAIL,
   USER_UPDATE_AVATAR_REQUESTED, USER_UPDATE_AVATAR_SUCCEEDED, USER_UPDATE_AVATAR_FAIL,
   USER_UPDATE_NAME_REQUESTED, USER_UPDATE_NAME_SUCCEEDED, USER_UPDATE_NAME_FAIL,
-  USER_CURRENT_INFO_REQUESTED, USER_CURRENT_INFO_SUCCEEDED, USER_CURRENT_INFO_FAIL,
   USER_NAME_CHANGE, USER_NAME_SUBMITTING,
 } from './actionTypes'
 import {
@@ -24,11 +23,9 @@ import {
   enableMetamask,
 } from '../integrator'
 
-import { apiLogin, apiAuth, apiGetUser, apiUpdateUser } from '../integrator/api'
+import { apiLogin, apiAuth, apiGetUser } from '../integrator/api'
 
-import {
-  API_USER_LOGIN, API_USER_CURRENT, API_USER_UPDATE, API_USER_AUTH,
-} from './api';
+import { API_USER_UPDATE } from './api';
 import fetch, { delay } from '../lib/util/fetch';
 import { postIpfsImg } from './ipfs'
 
@@ -96,7 +93,7 @@ export function watchMetamask() {
     function updateMetamask(info) {
       const storedAccount = getStorageAccount()
       const currentAccount = info.selectedAddress
-      if(!currentAccount && storedAccount || currentAccount !== storedAccount && storedAccount) {
+      if((!currentAccount && storedAccount) || (currentAccount !== storedAccount && storedAccount)) {
         console.debug('clear storage because of logout or change ac1 to ac2')
         clearAccountAndToken()
         window.location.reload()
@@ -132,7 +129,7 @@ export function enableEthereum() {
 
 export function loginMetaMask() {
   return async (dispatch) => {
-    const [error, response] = await dispatch(enableEthereum())
+    const [error] = await dispatch(enableEthereum())
     if (!error) {
       await Promise.all([
         dispatch(getAllBalance()),

@@ -27,9 +27,9 @@ export function getElementById(targetId) {
   return targetId ? document.getElementById(targetId) : window
 }
 
-function getOffset(id) {
-  return document.getElementById(id).scrollTop
-}
+// function getOffset(id) {
+//   return document.getElementById(id).scrollTop
+// }
 
 function getElementY(id) {
   return document.getElementById(id).getBoundingClientRect().top

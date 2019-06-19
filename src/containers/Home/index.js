@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 import { media } from '../../components/Theme'
 
 import MarketTable from '../Market/Table'

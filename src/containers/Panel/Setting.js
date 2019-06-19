@@ -8,7 +8,6 @@ import DropToUpload from '../../components/DropToUpload'
 
 
 import { useLang, languageOptions } from '../../language'
-import theme from '../../theme'
 
 import { connect } from 'react-redux'
 import { onChangeAvatar, updateUserAvatar, updateUserName, onChangeName, onChangeNameSubmit } from '../../actions/user';

@@ -4,7 +4,7 @@ import fetch from '../lib/util/fetch'
   params order:
     address > type > id > name > hash > asc > { pageNumb, pageSize, isLoadMore } 
 */
-const pageNumb = 1, pageSize = 20 // default at the end of the query
+const pageNumbDefault = 1, pageSizeDefault = 20 // default at the end of the query
 
 function pageHelper(pageNumb, pageSize, isLoadMore) {
   return {
@@ -26,18 +26,18 @@ export const apiDelCollect =         (type, id) => () => fetch.post('/api/user/c
 export const apiAddCollect =         (type, id) => () => fetch.post('/api/user/collect/add', { type, objectMark: id })
 
 /* ====== GET PERSONAL CENTER DATA ====== START */
-export const apiGetCreatedMarket =   ({pageNumb = pageNumb, pageSize = pageSize, isLoadMore = false}) => () => fetch.get('/api/user/market/created',      pageHelper(pageNumb, pageSize, isLoadMore) ) // return list of details markets
-export const apiGetCollectedMarket = ({pageNumb = pageNumb, pageSize = pageSize, isLoadMore = false}) => () => fetch.get('/api/user/market/collected',    pageHelper(pageNumb, pageSize, isLoadMore) ) // return list of details markets
-export const apiGetTradedMarket =    ({pageNumb = pageNumb, pageSize = pageSize, isLoadMore = false}) => () => fetch.get('/api/user/market/traded',       pageHelper(pageNumb, pageSize, isLoadMore) ) // return list of details markets
-export const apiGetTradedMarketCt =  ({pageNumb = pageNumb, pageSize = pageSize, isLoadMore = false}) => () => fetch.get('/api/user/ct/account/in/market',pageHelper(pageNumb, pageSize, isLoadMore) ) // return list of markets with ct !important
+export const apiGetCreatedMarket =   ({pageNumb = pageNumbDefault, pageSize = pageSizeDefault, isLoadMore = false}) => () => fetch.get('/api/user/market/created',      pageHelper(pageNumb, pageSize, isLoadMore) ) // return list of details markets
+export const apiGetCollectedMarket = ({pageNumb = pageNumbDefault, pageSize = pageSizeDefault, isLoadMore = false}) => () => fetch.get('/api/user/market/collected',    pageHelper(pageNumb, pageSize, isLoadMore) ) // return list of details markets
+export const apiGetTradedMarket =    ({pageNumb = pageNumbDefault, pageSize = pageSizeDefault, isLoadMore = false}) => () => fetch.get('/api/user/market/traded',       pageHelper(pageNumb, pageSize, isLoadMore) ) // return list of details markets
+export const apiGetTradedMarketCt =  ({pageNumb = pageNumbDefault, pageSize = pageSizeDefault, isLoadMore = false}) => () => fetch.get('/api/user/ct/account/in/market',pageHelper(pageNumb, pageSize, isLoadMore) ) // return list of markets with ct !important
 
-export const apiGetCreatedPost =     ({pageNumb = pageNumb, pageSize = pageSize, isLoadMore = false}) => () => fetch.get('/api/user/post/created',     pageHelper(pageNumb, pageSize, isLoadMore) )
-export const apiGetCollectedPost =   ({pageNumb = pageNumb, pageSize = pageSize, isLoadMore = false}) => () => fetch.get('/api/user/post/collected',   pageHelper(pageNumb, pageSize, isLoadMore) )
+export const apiGetCreatedPost =     ({pageNumb = pageNumbDefault, pageSize = pageSizeDefault, isLoadMore = false}) => () => fetch.get('/api/user/post/created',     pageHelper(pageNumb, pageSize, isLoadMore) )
+export const apiGetCollectedPost =   ({pageNumb = pageNumbDefault, pageSize = pageSizeDefault, isLoadMore = false}) => () => fetch.get('/api/user/post/collected',   pageHelper(pageNumb, pageSize, isLoadMore) )
 
-export const apiGetCreatedReply =    ({pageNumb = pageNumb, pageSize = pageSize, isLoadMore = false}) => () => fetch.get('/api/user/reply/created',    pageHelper(pageNumb, pageSize, isLoadMore) )
-export const apiGetCollectedReply =  ({pageNumb = pageNumb, pageSize = pageSize, isLoadMore = false}) => () => fetch.get('/api/user/reply/collected',  pageHelper(pageNumb, pageSize, isLoadMore) )
+export const apiGetCreatedReply =    ({pageNumb = pageNumbDefault, pageSize = pageSizeDefault, isLoadMore = false}) => () => fetch.get('/api/user/reply/created',    pageHelper(pageNumb, pageSize, isLoadMore) )
+export const apiGetCollectedReply =  ({pageNumb = pageNumbDefault, pageSize = pageSizeDefault, isLoadMore = false}) => () => fetch.get('/api/user/reply/collected',  pageHelper(pageNumb, pageSize, isLoadMore) )
 
-export const apiGetTransaction =     ({pageNumb = pageNumb, pageSize = pageSize, isLoadMore = false}) => () => fetch.get('/api/user/transaction/list', pageHelper(pageNumb, pageSize, isLoadMore) )
+export const apiGetTransaction =     ({pageNumb = pageNumbDefault, pageSize = pageSizeDefault, isLoadMore = false}) => () => fetch.get('/api/user/transaction/list', pageHelper(pageNumb, pageSize, isLoadMore) )
 /* ====== GET PERSONAL CENTER DATA ====== END */
 
 /* ====== USER AUTH ====== START */

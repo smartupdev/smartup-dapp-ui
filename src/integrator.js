@@ -203,7 +203,7 @@ export function callbackFunction(
 }
 
 // ========= my new start =========
-function noop() {}
+// function noop() {}
 
 function metamaskMassage(r) {
   return { ...r, isTargetNetwork: r.networkVersion === networkVersion } // '3' old, '4' new

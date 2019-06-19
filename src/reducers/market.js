@@ -5,7 +5,6 @@ import {
   GET_MARKET_DETAIL_REQUESTED, GET_MARKET_DETAIL_SUCCEEDED, GET_MARKET_DETAIL_FAILED,
 } from '../actions/actionTypes';
 
-import { changeArrayById } from '../lib/util/reducerHelper'
 import { marketMassage } from '../integrator/massager'
 
 export const initialState = {

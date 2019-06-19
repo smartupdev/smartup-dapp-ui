@@ -20,7 +20,7 @@ import { ENV } from '../../config'
 import { shorten } from '../../lib/util'
 
 import { connect } from 'react-redux'
-import { LOGIN_METAMASK_FAILED, USER_LOGIN_SMARTUP_FAILED, USER_PERSON_SIGN_FAILED, USER_AUTH_SMARTUP_FAILED } from '../../actions/actionTypes'
+import { LOGIN_METAMASK_FAILED, USER_PERSON_SIGN_FAILED } from '../../actions/actionTypes'
 import { setActiveTab, setOpen } from '../../actions/panel'
 import { loginMetaMask } from '../../actions/user'
 import { onClickTnc } from '../../actions/ipfs'
@@ -118,7 +118,7 @@ const Panel = ({
         :
         <Col center>
           <People XL round color={theme.white} />
-          <Button primary outline verticalMargin label={lang.panel.connectButton} onClick={loginMetaMask} disabled={isLoading || metamaskError && !loginError} />
+          <Button primary outline verticalMargin label={lang.panel.connectButton} onClick={loginMetaMask} disabled={isLoading || (metamaskError && !loginError)} />
           <Text note>{isLoading ? lang.panel.login.checkMetamask : metaMaskHint}</Text>
             <Row width={`${PANEL_WIDTH*.8}px`} spacingTopXS center>
               {metamaskError}

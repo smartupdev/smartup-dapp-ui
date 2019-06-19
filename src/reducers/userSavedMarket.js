@@ -4,7 +4,7 @@ import {
 } from '../actions/actionTypes';
 
 import { marketMassage, updateLoadMore } from '../integrator/massager'
-import { changeArrayById, addArrayById, removeArrayById } from '../lib/util/reducerHelper'
+import { addArrayById, removeArrayById } from '../lib/util/reducerHelper'
 
 export const initialState = {
   markets: [],

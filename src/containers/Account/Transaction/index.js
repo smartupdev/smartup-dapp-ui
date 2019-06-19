@@ -11,7 +11,7 @@ import Expand from '../../../components/Expand'
 
 import ScrollLoader from '../../../components/ScrollLoader'
 
-import { toFullDate, toToken } from '../../../lib/util'
+import { toFullDate } from '../../../lib/util'
 import { useLang } from '../../../language'
 
 import { connect } from 'react-redux'
