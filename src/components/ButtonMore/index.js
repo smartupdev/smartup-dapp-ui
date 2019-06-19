@@ -74,7 +74,7 @@ const IconBox = styled.div`
     fill: ${p => p.theme.colorSecondary}
   }
   ${p => p.open &&
-    fadeIn(2, p.index/2)
+    fadeIn(.5, p.index/2)
   }
 `
 export default ({ icons }) => {
