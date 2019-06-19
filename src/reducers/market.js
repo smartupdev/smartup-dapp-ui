@@ -3,6 +3,7 @@ import {
   MARKET_ADD_SAVED_MARKET, MARKET_DEL_SAVED_MARKET,
   POST_ADD_SUCCEEDED,
   GET_MARKET_DETAIL_REQUESTED, GET_MARKET_DETAIL_SUCCEEDED, GET_MARKET_DETAIL_FAILED,
+  USER_NOTIFICATION_LIST_SUCCEEDED,
 } from '../actions/actionTypes';
 
 import { marketMassage } from '../integrator/massager'
@@ -19,6 +20,19 @@ export const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    case USER_NOTIFICATION_LIST_SUCCEEDED: {
+      const { marketIndex, list } = action.payload
+      return marketIndex >= 0 && list[marketIndex].type === 'MarketCreateFinish' && list[marketIndex].content.isSuccess ?
+        {
+          ...state,
+          currentMarket: {
+            ...state.currentMarket,
+            address: action.payload.content.marketAddress,
+            marketAddress: action.payload.content.marketAddress,
+          }
+        } 
+      : state
+    }
     case MARKET_DETAIL_RESET:
       return {
         ...state,

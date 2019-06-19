@@ -19,8 +19,10 @@ import {
   MARKET_DETAIL_GET_CT_SUCCEEDED, 
   // MARKET_DETAIL_GET_CT_FAILED,
   TRADE_SAVE_SUCCEEDED,
+  USER_NOTIFICATION_LIST_SUCCEEDED,
 } from '../actions/actionTypes'
 import { tradeMassage, updateLoadMore } from '../integrator/massager'
+import {changeArrayByIndex} from '../lib/util/reducerHelper'
 
 export const initialState = {
   tabIndex: 0,
@@ -290,6 +292,17 @@ export default (state = initialState, action) => {
         gettingTrades: false,
         getTradesError: action.payload,
       };
+    case USER_NOTIFICATION_LIST_SUCCEEDED: {
+      const { marketIndex, list } = action.payload
+      if(marketIndex >= 0 && list[marketIndex].type === 'TradeFinish') {
+        const tradeIndex = state.trades.findIndex(t => t.txHash === list[marketIndex].content.txHash)
+        if(tradeIndex >= 0) return {
+          ...state,
+          trades: changeArrayByIndex(state.trades, tradeIndex, t => ({...t, stage: list[marketIndex].content.isSuccess ? 'success' : 'fail' }))
+        }
+      }
+      return state
+    }  
     default:
       return state;
   }

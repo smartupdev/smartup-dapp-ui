@@ -49,6 +49,7 @@ export function getList(isLoadMore) { // isLoadMore can be event
           params2: keyword 
           ? { query: keyword, pageNumb: isLoadMore ? pageNumb + 1 : 1, pageSize } 
           : { pageNumb: isLoadMore ? pageNumb + 1 : 1, pageSize, unread: showUnreadOnly ? true : null },
+          responsePayload: r => ({...r, marketIndex: r.list.findIndex( n => n.content.marketId === getState().market.currentMarketId )}),
           meta: { isLoadMore }
           // responsePayload: reps => reps.list
         }
