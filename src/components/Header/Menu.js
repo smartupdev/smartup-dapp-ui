@@ -22,13 +22,15 @@ const Link = styled(Col)`
     media(`width: ${props.theme.headerExpandedWidth}`, "display: none")};
   fill: ${p => p.theme.colorSecondary};
   stroke: ${p => p.theme.colorSecondary};
-  :hover div {
-    color: ${p => p.theme.colorPrimary};
-  }
-  :hover svg {
-    fill: ${p => p.theme.colorPrimary};
-    stroke: ${p => p.theme.colorPrimary};
-  }
+  ${p => !p.Component && css`
+    :hover div {
+      color: ${p => p.theme.colorPrimary};
+    }
+    :hover svg {
+      fill: ${p => p.theme.colorPrimary};
+      stroke: ${p => p.theme.colorPrimary};
+    }
+  `}
 `;
 
 const LabelBox = styled(Col)`
@@ -49,12 +51,7 @@ const LabelBox = styled(Col)`
 
 const Label = styled(Col)`
   height: ${p => p.theme.headerWidth};
-  ${p => media(null, `background-color: ${p.theme.bgColorDark}`)}
-  ${props =>
-    props.selected &&
-    css`
-      background-color: ${p => p.theme.bgColor};
-    `};
+  ${p => media(null, `background-color: ${p.selected ? p.theme.bgColor : p.theme.bgColorDark}`)}
   ${p =>
     p.width &&
     css`
@@ -148,6 +145,7 @@ export default ({
     center
     centerVertical
     related
+    Component={Component}
     {...rest}
   >
     {selected && <Line />}
