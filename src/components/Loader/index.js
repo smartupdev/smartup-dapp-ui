@@ -49,7 +49,7 @@ const DcStyle = styled.div`
 `
 export function DonutLoader({ page, size='30px', ...rest }) {
   if(page) return (
-    <Col center spacingTopXL>
+    <Col center VXL>
       <DonutLoader size={size} {...rest} />
     </Col>
   )

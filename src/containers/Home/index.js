@@ -71,8 +71,12 @@ const Home = ({
         sortBy={sortBy}
         orderBy={orderBy}
         expandedRecords={expandedRecords}
+
+        hasMore={hasNextPage}
+        loadMore={getList}
+        isLoading={gettingMarketList}
       />
-      <ScrollLoader id='Home-Table' hasMore={hasNextPage} loadMore={getList} isLoading={gettingMarketList} isButton />
+      {/* <ScrollLoader id='Home-Table' hasMore={hasNextPage} loadMore={getList} isLoading={gettingMarketList} /> */}
     </Col>
   )
 }

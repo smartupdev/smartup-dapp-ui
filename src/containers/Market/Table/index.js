@@ -36,6 +36,7 @@ export default function({
   sortBy, orderBy, 
   onClickHeader, onClick, 
   expandedRecords, noExpand,
+  hasMore, loadMore, isLoading
   }) {
   const [{ home: {table: tableLang} }] = useLang()
   const TableName = [
@@ -52,6 +53,9 @@ export default function({
       <Table
         S
         inset
+        hasMore={hasMore}
+        loadMore={loadMore}
+        isLoading={isLoading}
         onClickHeader={onClickHeader}
         onClick={onClick}
         model={noExpand ? TableName.slice(0, -1) : TableName}

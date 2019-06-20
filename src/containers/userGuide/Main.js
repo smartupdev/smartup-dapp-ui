@@ -55,8 +55,7 @@ export function Mobile({ sections, coverPhoto, title, TextBody }) {
 }
 
 export function Desktop({ sections, coverPhoto, title, TextBody }) {
-  const userGuideId = 'user-guide-id'
-  const [leftMenuY] = useScroll(userGuideId, mainId)
+  const [ref, {top: leftMenuY}] = useScroll(mainId)
   const refs = sections.map(({ sections }) => ({
     title: useRef(),
     sections: sections.map(() => useRef())
@@ -71,7 +70,7 @@ export function Desktop({ sections, coverPhoto, title, TextBody }) {
       {coverPhoto}
       <Text center VXL XL newline>{title}</Text>
       <Row flex={1}>
-        <Col LeftL RightXL id={userGuideId} overflowAuto style={{ paddingTop: leftMenuY < 0 ? Math.abs(leftMenuY) : 0 }}>
+        <Col LeftL RightXL ref={ref} overflowAuto style={{ paddingTop: leftMenuY < 0 ? Math.abs(leftMenuY) : 0 }}>
           {sections.map(({ title, sections }, index) => (
             <Fragment key={title}>
               <Text note TopS onClick={() => scrollTo(index)}>

@@ -24,28 +24,36 @@ export function useClickOutside(id, handle) {
 }
 
 export function getElementById(targetId) {
-  return targetId ? document.getElementById(targetId) : window
+  return targetId ? 
+    typeof targetId === 'string' ?
+    document.getElementById(targetId) 
+    : targetId.current
+  : window
 }
 
 // function getOffset(id) {
 //   return document.getElementById(id).scrollTop
 // }
 
-function getElementY(id) {
-  return document.getElementById(id).getBoundingClientRect().top
+function getElementY(element) {
+  return element ? element.getBoundingClientRect() : {}
 }
 
-export function useScroll(id, parentId) {
-  const [y, setY] = useState(0);
+export function useScroll(parentId) {
+  const [position, setPosition] = useState(0)
+  const ref = useRef()
+  const prev = usePrevious(ref.current)
   function handle() {
-    const elePosition = getElementY(id)
-    // console.log(getOffset(parentId))
-    setY(elePosition)
+    setPosition(getElementY(ref.current))
   }
+  useEffect(() => eventListener('scroll', handle, parentId), [])
   useEffect(() => {
-    return eventListener('scroll', handle, parentId)
-  }, [])
-  return [y]
+    if(ref.current !== prev) {
+      handle()
+    }
+  })
+  return [ref, position, getElementY(parentId && parentId.current)]
+  // position includes: y, x, top, bottom, etc
 }
 
 // // const [isFetching, setIsFetching] = useInfiniteScroll(fetchMoreListItems);

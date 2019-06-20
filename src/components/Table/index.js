@@ -1,9 +1,10 @@
-import React, { memo } from 'react'
+import React, { memo, useRef } from 'react'
 import styled, { css } from 'styled-components'
 import { Row, Col } from '../Layout'
 import Text from '../Text'
 import Expand from '../Expand'
 import FixComponent from '../FixComponent'
+import ScrollLoader from '../ScrollLoader'
 
 const emptyArr = []
 
@@ -83,7 +84,16 @@ const TableRecord = memo(
 // expandedRecords: Array <id>
 // S for small font size
 // noBorderCol is for no border in column
-export default ({ recordKey = 'id' , model, values, sortBy, orderBy, onClickHeader, onClick, expandedRecords = emptyArr, expandComponent: ExpandComponent, S, inset, noBorderCol, noResultText = '' }) => {
+export default ({ 
+  recordKey = 'id' , 
+  model, values, 
+  sortBy, orderBy, 
+  onClickHeader, onClick, 
+  expandedRecords = emptyArr, expandComponent: ExpandComponent, 
+  S, inset, noBorderCol, noResultText = '', 
+  hasMore, loadMore, isLoading
+}) => {
+  const tableRef = useRef()
   return (
     <TableWrapper>
       <FixComponent>
@@ -97,7 +107,7 @@ export default ({ recordKey = 'id' , model, values, sortBy, orderBy, onClickHead
           }
         </TableTitle>
       </FixComponent>
-      <Table>
+      <Table ref={tableRef}>
         {
           values && values[0] ? 
             values.map((record, index) => 
@@ -115,7 +125,8 @@ export default ({ recordKey = 'id' , model, values, sortBy, orderBy, onClickHead
             )
           : 
             noResultText && <Text center note>{noResultText}</Text>
-        }
+          }
+          <ScrollLoader target={tableRef} hasMore={hasMore} loadMore={loadMore} isLoading={isLoading} />
       </Table>
     </TableWrapper>
 
