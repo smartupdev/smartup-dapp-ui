@@ -3,6 +3,8 @@ import styled, { css } from 'styled-components'
 import { Row, Col } from '../Layout'
 import Text from '../Text'
 import Expand from '../Expand'
+import theme from '../../theme'
+import FixComponent from '../FixComponent'
 
 const emptyArr = []
 
@@ -12,11 +14,13 @@ const ORDER_BY = {
 }
 
 const Table = styled(Col)`
-  overflow-x: auto
+  overflow: auto;
+  min-width: fit-content;
 `
 
 const TableWrapper = styled(Col)`
-  overflow-y: auto
+  overflow: auto;
+  position: relative;
 `
 
 const TD = styled(Col)`
@@ -27,13 +31,16 @@ const TD = styled(Col)`
 `
 
 const TableTitle = styled(Row)`
+  width: 100%;
+  min-width: fit-content;
+  border-bottom: 1px solid ${p => p.theme.borderColor}
   padding-left: ${p => p.inset ? p.theme.spacingXS : 0}
   padding-right: ${p => p.inset ? p.theme.spacingS : 0}
 `
 
 const TableRecordBox = styled(Col)`
   ${p => p.isExpanded && css`background-color: ${p.theme.bgColorDark}`}
-  ${p => p.hasBorder && css`border-top: 1px solid ${p.theme.borderColor}`}
+  ${p => p.hasBorder && css`border-bottom: 1px solid ${p.theme.borderColor}`}
   padding-left: ${p => p.inset ? p.theme.spacingXS : 0}
   padding-right: ${p => p.inset ? p.theme.spacingS : 0}
 `
@@ -42,7 +49,7 @@ const TableRecord = memo(
   ({ record, index, expandedRecords, noBorderCol, inset, model, S, onClick, ExpandComponent }) => {
     const isExpanded = expandedRecords.includes(record.id)
     return (
-      <TableRecordBox isExpanded={isExpanded} hasBorder={!index || !noBorderCol} inset={inset} fitWidth>
+      <TableRecordBox isExpanded={isExpanded} hasBorder={!noBorderCol} inset={inset} fitWidth>
         <Row>
           {
             model.map(({ value: key, component: Component, layoutStyle = { flex: 1 } }, j) =>
@@ -77,10 +84,10 @@ const TableRecord = memo(
 // expandedRecords: Array <id>
 // S for small font size
 // noBorderCol is for no border in column
-export default ({ recordKey = 'id' , model, values, sortBy, orderBy, onClickHeader, onClick, expandedRecords = emptyArr, expandComponent: ExpandComponent, minWidth, S, inset, noBorderCol, autoHeight, noResultText = '' }) => {
+export default ({ recordKey = 'id' , model, values, sortBy, orderBy, onClickHeader, onClick, expandedRecords = emptyArr, expandComponent: ExpandComponent, minWidth, S, inset, noBorderCol, autoHeight, backgroundColor = theme.bgColor, noResultText = '' }) => {
   return (
     <TableWrapper>
-      <Table minWidth={minWidth} autoHeight={autoHeight}>
+      <FixComponent>
         <TableTitle inset={inset}>
           {
             model.map(({ value, label, layoutStyle = { flex: 1 }, sortable }, index) =>
@@ -90,6 +97,8 @@ export default ({ recordKey = 'id' , model, values, sortBy, orderBy, onClickHead
             )
           }
         </TableTitle>
+      </FixComponent>
+      <Table autoHeight={autoHeight}>
         {
           values && values[0] ? 
             values.map((record, index) => 
