@@ -3,7 +3,6 @@ import styled, { css } from 'styled-components'
 import { Row, Col } from '../Layout'
 import Text from '../Text'
 import Expand from '../Expand'
-import theme from '../../theme'
 import FixComponent from '../FixComponent'
 
 const emptyArr = []
@@ -84,7 +83,7 @@ const TableRecord = memo(
 // expandedRecords: Array <id>
 // S for small font size
 // noBorderCol is for no border in column
-export default ({ recordKey = 'id' , model, values, sortBy, orderBy, onClickHeader, onClick, expandedRecords = emptyArr, expandComponent: ExpandComponent, minWidth, S, inset, noBorderCol, autoHeight, backgroundColor = theme.bgColor, noResultText = '' }) => {
+export default ({ recordKey = 'id' , model, values, sortBy, orderBy, onClickHeader, onClick, expandedRecords = emptyArr, expandComponent: ExpandComponent, S, inset, noBorderCol, noResultText = '' }) => {
   return (
     <TableWrapper>
       <FixComponent>
@@ -98,7 +97,7 @@ export default ({ recordKey = 'id' , model, values, sortBy, orderBy, onClickHead
           }
         </TableTitle>
       </FixComponent>
-      <Table autoHeight={autoHeight}>
+      <Table>
         {
           values && values[0] ? 
             values.map((record, index) => 

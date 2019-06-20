@@ -32,12 +32,11 @@ const _Cap = ({ value }) => <Text>{toPrice(value)}</Text>
 
 
 export default function({ 
-    markets, 
+  markets, 
   sortBy, orderBy, 
   onClickHeader, onClick, 
   expandedRecords, noExpand,
-  autoHeight,
-  minWidth = '1000px'  }) {
+  }) {
   const [{ home: {table: tableLang} }] = useLang()
   const TableName = [
     { label: '',                            value: 'avatar',        sortable: false,  component: _Icon,           layoutStyle: { width: `calc( ${theme.iconSizeM} + 15px )`, center: true } },
@@ -53,8 +52,6 @@ export default function({
       <Table
         S
         inset
-        autoHeight={autoHeight}
-        minWidth={minWidth}
         onClickHeader={onClickHeader}
         onClick={onClick}
         model={noExpand ? TableName.slice(0, -1) : TableName}

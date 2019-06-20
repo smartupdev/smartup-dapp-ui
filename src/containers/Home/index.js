@@ -65,7 +65,6 @@ const Home = ({
         </Row>
       </Top>
       <MarketTable
-        autoHeight
         onClickHeader={onTableHeaderClick}
         onClick={setExpandedRecords}
         markets={filteredMarket}
