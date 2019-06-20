@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from 'react'
+import React, { Fragment, useEffect, useRef } from 'react'
 
 import { Row, Col } from '../../../components/Layout'
 import Text from '../../../components/Text'
@@ -18,7 +18,7 @@ function Disussion({ getMarketPost, post, market }) {
     getMarketPost()
   }, [])
   const [lang] = useLang()
-
+  const ref = useRef()
   // if(gettingPost) return <DonutLoader page />
   if(getPostError) return <Text>{getPostError.messsage}</Text>
   if(!posts.length) return (
@@ -41,7 +41,7 @@ function Disussion({ getMarketPost, post, market }) {
     </Col>
   )
   return (
-    <>
+    <Col ref={ref} flex={1} overflowAuto>
       {
         posts.map( post =>
           <Fragment key={post.id}>
@@ -50,8 +50,8 @@ function Disussion({ getMarketPost, post, market }) {
           </Fragment>
         )
       }
-      <ScrollLoader isButton isLoading={gettingPost} loadMore={() => getMarketPost(true)} hasMore={hasNextPage} />
-    </>
+      <ScrollLoader target={ref} isLoading={gettingPost} loadMore={() => getMarketPost(true)} hasMore={hasNextPage} />
+    </Col>
 
   )  
 }
