@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 
 import DiscussionItem from './Item'
 import DiscussionComment from './Comment'
@@ -29,12 +29,12 @@ function DiscussionDetail({
     getPost(postId)
     getReplyList(postId)
   }, [])
-  const [lang] =useLang()
-
+  const [lang] = useLang()
+  const ref = useRef()
   if(getDetailError) return <Text>{getDetailError.message}</Text>
   if(gettingDetail || !post) return <DonutLoader page />
     return (
-    <Col>
+    <Col overflowAuto ref={ref} flex={1}>
       <DiscussionItem post={post} isDetailView />
       <Col spacingM>
       {
@@ -58,7 +58,7 @@ function DiscussionDetail({
       {!!replys.length && 
         replys.map(reply => <DiscussionComment reply={reply} key={reply.id} />)
       }
-      <ScrollLoader loadMore={() => getReplyList(postId, true)} isLoading={gettingReply} hasMore={replyHasMore} />
+      <ScrollLoader target={ref} loadMore={() => getReplyList(postId, true)} isLoading={gettingReply} hasMore={replyHasMore} />
     </Col>
   )
 }
