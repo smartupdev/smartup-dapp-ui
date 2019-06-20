@@ -48,7 +48,6 @@ const MoreIcon = styled.div`
 `
 
 function More(props) {
-  console.log(props)
   return (
     <MoreIcon {...props}>
       <div />
