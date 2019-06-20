@@ -22,7 +22,7 @@ export const Expanded = styled(Col)`
   overflow: hidden;
   ${p => p.isExpanded && css`
     max-height: fit-content;
-    ${p.changed && css`animation: ${expandAnimation} .5s ease-in;`}
+    ${p.changed && css`animation: ${expandAnimation} .5s ease-out;`}
   `}
 `
 
