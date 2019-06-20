@@ -12,7 +12,7 @@ import { connect } from 'react-redux'
 import { getMarketPost } from '../../../actions/post'
 import { useLang } from '../../../language'
 
-function Disussion({ getMarketPost, post, market }) {
+function Discussion({ getMarketPost, post, market }) {
   const { posts, gettingPost, getPostError, keyword, hasNextPage, } = post
   useEffect( () => {
     getMarketPost()
@@ -64,4 +64,4 @@ const mapDispatchToProps = {
   getMarketPost
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Disussion);
+export default connect(mapStateToProps, mapDispatchToProps)(Discussion);
