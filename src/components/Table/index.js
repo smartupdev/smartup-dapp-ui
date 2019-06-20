@@ -1,10 +1,11 @@
-import React, { memo, useRef } from 'react'
+import React, { memo, useRef, useEffect } from 'react'
 import styled, { css } from 'styled-components'
 import { Row, Col } from '../Layout'
 import Text from '../Text'
 import Expand from '../Expand'
 import FixComponent from '../FixComponent'
 import ScrollLoader from '../ScrollLoader'
+import { usePrevious } from '../../lib/react'
 
 const emptyArr = []
 
@@ -94,8 +95,16 @@ export default ({
   hasMore, loadMore, isLoading
 }) => {
   const tableRef = useRef()
+  const tableWrapRef = useRef()
+  const prev0 = usePrevious(values[0])
+  useEffect( () => {
+    if(values[0] !== prev0) {
+      tableRef.current.scrollTo(0, 0)
+      tableWrapRef.current.scrollTo(0, 0)
+    }
+  }, [sortBy, orderBy, values[0]])
   return (
-    <TableWrapper>
+    <TableWrapper ref={tableWrapRef}>
       <FixComponent>
         <TableTitle inset={inset}>
           {
