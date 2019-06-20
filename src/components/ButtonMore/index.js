@@ -14,6 +14,7 @@ const lineCss = (index, deg) => css`
     width: ${p => p.theme.imageSizeS}; 
     height: 3px; 
     transform: rotate(${deg}deg); 
+    transition: all .2s ease-in-out;
   }
 `
 
@@ -33,6 +34,7 @@ const MoreIcon = styled.div`
     ` :
     css`
       & > div {
+        transition: all .2s ease-in-out;
         width: 4px;
         height: 4px;
         margin: 2px;
@@ -45,7 +47,8 @@ const MoreIcon = styled.div`
   position: relative;
 `
 
-function More({props}) {
+function More(props) {
+  console.log(props)
   return (
     <MoreIcon {...props}>
       <div />
