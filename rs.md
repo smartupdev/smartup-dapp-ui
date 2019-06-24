@@ -202,8 +202,8 @@ TBC
   - Duration(14d)
 
 # Account
-- Account restore(TBC)
-Include: 
+Account restore(TBC)  
+Info: 
 - Image
 - Nickname
 - Email
