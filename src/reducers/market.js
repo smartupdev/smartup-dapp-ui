@@ -27,8 +27,8 @@ export default (state = initialState, action) => {
           ...state,
           currentMarket: {
             ...state.currentMarket,
-            address: action.payload.content.marketAddress,
-            marketAddress: action.payload.content.marketAddress,
+            address: list[marketIndex].content.marketAddress,
+            marketAddress: list[marketIndex].content.marketAddress,
           }
         } 
       : state
