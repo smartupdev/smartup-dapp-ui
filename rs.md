@@ -84,7 +84,7 @@ $ - with 1% CT burning??
 ## Trading
 - advertisement fee(TBC)
 - Gas speed(Slow, standard, fast)(TBC)
-- 0.01 to 100,000 per trading(TBC)
+- ~~0.01 to 100,000 per trading(TBC)~~
 - Not enough SUT, teach user how to buy(TODO)
 - Not enough CT, tell user how many CT his has/owns(TODO)
 - Click traction, go to https://etherscan.io/(TODO)
@@ -102,8 +102,36 @@ TBC
 ### Request funding
 
 ## Flag
+### Process
+T: voting result yes  
+F: voting result no  
+?: voting result draw  
+0: no one vote  
+
++D: Get back deposit  
+-D: Lost deposit  
+
+MC: Market creator  
+A1, A2: Appeal1, Appeal2  
+J1, J2, J3: Round1, Round2, Round3 Juror  
+JT: Vote T   
+JF: Vote F  
+JV: Voted J 
+|     | Result     | Flagger          | Member                   | Juror                                          |  
+| :-  | :-         | :-               | :-                       | :-                                             |
+| TTT | Dissolve   | +D               | A1: -D, A2: -D, MC: -D   | J1: JT share D, J2: JT share D, J3: JT share D | 
+| TTF | X Dissolve | -D               | A1: -D, A2: +D           | J1: JT share D, J2: JT share D, J3: JF share D | 
+| TF  | X Dissolve | -D               | A1: +D                   | J1: JT share D, J2: JF share D                 | 
+| F   | X Dissolve | -D               |                          | J1: JF share D                                 | 
+| ?   | X Dissolve | -D               |                          | J1: JV share D                                 | 
+| T?  | X Dissolve | -D               | A1: +D                   | J1: JT share D, J2: JV share D                 | 
+| TT? | X Dissolve | -D               | A1: -D, A2: +D           | J1: JT share D, J2: JT share D, J3: JV share D | 
+| 0   | X Dissolve | +D               |                          |                                                | 
+| T0T | Dissolve   | +D               | A1: +D, A2: -D, MC: -D   | J1: JT share D, J2: -,          J3: JT share D | 
+| T0F | X Dissolve | -D               | A1: +D, A2: +D           | J1: JT share D, J2: -,          J3: JF share D | 
+| T00 | X Dissolve | -D               | A1: +D, A2: +D           | J1: JT share D                                 | 
+
 ### Juror
-- +NTT
 - Not member, flag-er
 - Not repeated in the whole process
 - More NTT and SUT in platform wallet, high chance. Formula: (TBC)
@@ -120,13 +148,13 @@ TBC
 - Member can't flag(TBC)
 - 100 SUT - market deposit
 - 3d, finish once deposit enough
-- \> 100 NTT, account created over 30 days
+- \> 100 NTT, account created over 30 days //, did buy CT(TBC)
 - Proof in text/photo/video
 - lock market: can't buy/sell(TBC: proposal?)
 - Return Flag deposit after 3d expired
 ### Stage 2 - Verify the flag 
 - Create a post for a flag created(TBC)
-- 3d (TBC: 3d for noti + 3d for voting)
+- 3d
 - 10 jurors
 - Result
   - Position: to Stage 3 - Appeal System
@@ -160,8 +188,8 @@ TBC
 
 # Proposal
 - CT = votes
-- Votes among proposal are not shared
-- When vote, 100% votes, not black vote
+- Votes among proposal are not shared???
+- When vote, 100% votes, not black vote??
 - Locked CT, until proposal ended
 ## Types
 ### Options
