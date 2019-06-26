@@ -66,6 +66,7 @@ C - create,
 U - reply/comment,   
 $ - with 1% CT burning??
 (TBC) Hide post? Close thread? Band user, unband user, retrieve others' comment, vote proposal, quit market??
+
 | Functions | non-member | Member | >5% member | >10% member
 | :- | :- | :- | :- | :- |
 | Public post | R | RU | A | A | 
@@ -117,6 +118,7 @@ J1, J2, J3: Round1, Round2, Round3 Juror
 JT: Vote T   
 JF: Vote F  
 JV: Voted J 
+
 |     | Result     | Flagger          | Member                   | Juror                                          |  
 | :-  | :-         | :-               | :-                       | :-                                             |
 | TTT | Dissolve   | +D               | A1: -D, A2: -D, MC: -D   | J1: JT share D, J2: JT share D, J3: JT share D | 
