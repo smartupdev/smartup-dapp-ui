@@ -20,7 +20,7 @@ function Discussion({ getMarketPost, post, market }) {
   const [lang] = useLang()
   const ref = useRef()
   // if(gettingPost) return <DonutLoader page />
-  if(getPostError) return <Text>{getPostError.messsage}</Text>
+  if(getPostError) return <Text>{getPostError.message}</Text>
   if(!posts.length) return (
     <Col center centerVertical flex={1} >
       <Row centerVertical>

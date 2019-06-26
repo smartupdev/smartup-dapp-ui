@@ -205,6 +205,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         replys: updateLoadMore(state.replys, action.payload.list.map(replyMassage), action.meta.isLoadMore, 'replyId'),
+        pageNumbReply: action.payload.pageNumb,
         replyHasMore: action.payload.hasNextPage,
         gettingReply: false,
         getReplyError: initialState.getReplyError
