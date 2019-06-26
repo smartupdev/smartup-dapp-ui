@@ -127,9 +127,10 @@ JV: Voted J
 | T?  | X Dissolve | -D               | A1: +D                   | J1: JT share D, J2: JV share D                 | 
 | TT? | X Dissolve | -D               | A1: -D, A2: +D           | J1: JT share D, J2: JT share D, J3: JV share D | 
 | 0   | X Dissolve | +D               |                          |                                                | 
-| T0T | Dissolve   | +D               | A1: +D, A2: -D, MC: -D   | J1: JT share D, J2: -,          J3: JT share D | 
-| T0F | X Dissolve | -D               | A1: +D, A2: +D           | J1: JT share D, J2: -,          J3: JF share D | 
-| T00 | X Dissolve | -D               | A1: +D, A2: +D           | J1: JT share D                                 | 
+| T0T | Dissolve   | +D               | A1: --, A2: -D, MC: -D   | J1: JT share D, J2: --,         J3: JT share D | 
+| T0F | X Dissolve | +D               | A1: --, A2: -D           | J1: JT share D, J2: --,         J3: JF share D | 
+| T00 | X Dissolve | +D               | A1: --, A2: -D           | J1: JT share D                                 | 
+| TT0 | X Dissolve | +D               | A1: -D, A2: -D           | J1: JT share D, J2: JT share D, J3: --         | 
 
 ### Juror
 - Not member, flag-er
