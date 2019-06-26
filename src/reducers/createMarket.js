@@ -92,17 +92,21 @@ export default (state = initialState, action) => {
     // "stage" : "creating"
     // status: "locked"
     // stage: "pending"
-      const { marketId, description: desc, name, status, photo, cover } = action.payload
-      return {
-        ...state,
-        isReady: true,
-        ...marketId && {
+      let updates = initialState
+      if(action.payload) {
+        const { marketId, description: desc, name, status, photo, cover } = action.payload
+        updates = {
           marketId, 
           desc, name, 
           avatarHash: photo,
           coverHash: cover,
           activeIndex: status === 'locked' ? -1 : 2
         }
+      }
+      return {
+        ...state,
+        ...updates,
+        isReady: true,
       }
     } 
     case CREATE_MARKET_GET_FAILED: 

@@ -32,12 +32,11 @@ const CreateMarket = ({
   onChangeAvatar, onChangeCover
 }) => {
   useEffect( () => {
-    !isReady && get()
+    (!isReady || activeIndex < 0) && get()
     // return reset
   }, [])
   const [lang] = useLang()
   if(!isReady) return <DonutLoader page />  
-
   function next() { setActiveIndex(activeIndex + 1) }
   function back() { setActiveIndex(activeIndex - 1) }
   const Label = ({ children }) => <Text S VXS>{children}</Text>
