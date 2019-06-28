@@ -135,30 +135,39 @@ JV: Voted J
 | TT0 | X Dissolve | +D               | A1: -D, A2: -D           | J1: JT share D, J2: JT share D, J3: --         | 
 
 ### Juror
-- Not member, flag-er
+- Not member, not flagger, not doer, >7d login
 - Not repeated in the whole process
 - More NTT and SUT in platform wallet, high chance. Formula: (TBC)
-- Notification + email for juror (TBC: no email)
+- Notification ~~+ email~~ for juror
 - Jurors are confidential
+- 10 Juror + Dummy (TBC)
 - Within the whole process, max 30 jurors
 - Reward
-  - Draw: voted get 250 SUT (Deposit/10)
-  - 0 vote: refunded(TBC)
-  - 
+  - Draw or < 3: voted jurors get 250 SUT (Deposit/10)
+  - 0 vote: refunded
 
+### Stage1 - Create Flag/Collect Flag Deposit
+- Type: 
+  - Type1: Market dissolve
+  - Type2: Proposal doer flag
+  - Type3: Proposal members flag
 
-### Stage 1 - Create Flag
-- Member can't flag(TBC)
-- 100 SUT - market deposit
+- Flagger
+  - Type1: 
+    - Exclude member/<100 NTT/account created less than 30d
+    - \>= 1
+    - \>10% deposit
+  - Type2: 
+    - Doer and member only
+- ~~Create a post for a flag created(TBC)~~ 
+- Discussion(Proof in text/photo/video)
 - 3d, finish once deposit enough
-- \> 100 NTT, account created over 30 days //, did buy CT(TBC)
-- Proof in text/photo/video
-- lock market: can't buy/sell(TBC: proposal?)
-- Return Flag deposit after 3d expired
+- If expired and not enough deposit, Return flag deposit
+
 ### Stage 2 - Verify the flag 
-- Create a post for a flag created(TBC)
-- 3d
+- lock market: can't buy/sell/proposal(Type1)(TBC)
 - 10 jurors
+- 3d
 - Result
   - Position: to Stage 3 - Appeal System
   - No result(Total vote < 3, Draw)
@@ -215,6 +224,19 @@ JV: Voted J
   - CT request
   - Duration(3d, 5d, 7d - default)
 - Result: CT from(TBC), confirm result by creator and 1 member(>5 CT) within 3 days
+
+//
+- $ initial
+- $ / Milestones
+- $ deposit
+- Every milestones, need approval by members
+  - if pass, doer get money
+  - if fail, doer not get money. proposal terminated
+- if proposal pass, doer can flag with deposit(Type2)
+- if proposal fail , members can flag with deposit(Type3)
+- if delay or modification
+  - Terminate proposal
+  - Create a new one - can ref to the previous one
 
 ### Policy(TBC)
 - Includes: (TBC)
