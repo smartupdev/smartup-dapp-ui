@@ -30,7 +30,7 @@ function DiscussionItem ({ loggedIn, post, isDetailView, toggleLikePost, toggleD
   return (
     <Link>
       {({ goto }) => 
-        <Row spaceBetween spacingM onClick={isDetailView ? undefined : () => goto.discussionDetail({ postId: id, id: marketId })}>
+        <Row spaceBetween spacingM fitHeight onClick={isDetailView ? undefined : () => goto.discussionDetail({ postId: id, id: marketId })}>
           <Col flex={1} overflowHidden RightXL>
             <Text S note>{lang.discussion.post} {shorten(username || userAddress)}, {lang.discussion.about} {toAgo(time, lang.time.now, lang.time.min, lang.time.hour, lang.time.day)}</Text>
             <Text VXS>{title}</Text>

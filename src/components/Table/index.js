@@ -44,11 +44,12 @@ const TableRecordBox = styled(Col)`
   ${p => p.hasBorder && css`border-bottom: 1px solid ${p.theme.borderColor}`}
   padding-left: ${p => p.inset ? p.theme.spacingXS : 0}
   padding-right: ${p => p.inset ? p.theme.spacingS : 0}
+  min-height: fit-content;
 `
 
 const TableRecord = memo(
-  ({ record, index, expandedRecords, noBorderCol, inset, model, S, onClick, ExpandComponent }) => {
-    const isExpanded = expandedRecords.includes(record.id)
+  ({ record, index, isExpanded , noBorderCol, inset, model, S, onClick, ExpandComponent }) => {
+    // console.log(1)
     return (
       <TableRecordBox isExpanded={isExpanded} hasBorder={!noBorderCol} inset={inset} fitWidth>
         <Row>
@@ -97,6 +98,23 @@ export default ({
   const tableRef = useRef()
   const tableWrapRef = useRef()
   const prev0 = usePrevious(values[0])
+
+  // const _expandedRecords = usePrevious(expandedRecords)
+  // const _noBorderCol = usePrevious(noBorderCol)
+  // const _inset = usePrevious(inset)
+  // const _model = usePrevious(model)
+  // const _S = usePrevious(S)
+  // const _onClick = usePrevious(onClick)
+  // const _ExpandComponent = usePrevious(ExpandComponent)
+
+  // if(expandedRecords !== _expandedRecords) console.log('expandedRecords')
+  // if(noBorderCol !== _noBorderCol) console.log('noBorderCol')
+  // if(inset !== _inset) console.log('inset')
+  // if(model !== _model) console.log('model')
+  // if(S !== _S) console.log('S')
+  // if(onClick !== _onClick) console.log('onClick')
+  // if(ExpandComponent !== _ExpandComponent) console.log('ExpandComponent')
+
   useEffect( () => {
     if(values[0] !== prev0) {
       tableRef.current.scrollTo(0, 0)
@@ -119,19 +137,19 @@ export default ({
       <Table ref={tableRef}>
         {
           values && values[0] ? 
-            values.map((record, index) => 
-              <TableRecord
-                key={record[recordKey]} 
-                record={record} 
-                index={index} 
-                expandedRecords={expandedRecords} 
-                noBorderCol={noBorderCol} 
-                inset={inset} 
-                model={model} 
-                S={S} 
-                onClick={onClick} 
-                ExpandComponent={ExpandComponent} />
-            )
+            values.map((record, index) =>
+                <TableRecord
+                  key={record[recordKey]} 
+                  record={record} 
+                  index={index} 
+                  isExpanded={expandedRecords.includes(record.id)} 
+                  noBorderCol={noBorderCol} 
+                  inset={inset} 
+                  model={model} 
+                  S={S} 
+                  onClick={onClick} 
+                  ExpandComponent={ExpandComponent} />
+              )
           : 
             noResultText && <Text center note>{noResultText}</Text>
           }

@@ -8,6 +8,7 @@ const Button = styled.button`
   border: 0;
   color: ${p => p.theme.white}
   fill: ${p => p.theme.white}
+  min-height: fit-content;
   ${p => p.width && css`width: ${p.width}`}
   border-radius: ${p => p.theme.borderRadius}
   padding: ${p => p.theme.spacingXXS} ${p => p.theme.spacingXS}

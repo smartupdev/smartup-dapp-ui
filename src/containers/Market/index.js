@@ -88,7 +88,7 @@ const Market = ({
       </Header>
       <Dropdown options={TABS} selectedIndex={activeIndex} onChange={index => goto[TABS[index].value]()} width='100%' hiddenDesktop  />
       <Hr hiddenDesktop />
-      <Row hiddenDesktop relative centerVertical spaceBetween>
+      <Row hiddenDesktop relative centerVertical spaceBetween fitHeight>
         <Row>
           <CommentButton />
           <SubButton />
@@ -97,7 +97,7 @@ const Market = ({
         <ButtonMore icons={isDiscussion ? [Share, Bookmarked, AddDiscussion] : [Share, Bookmarked]} />
       </Row>
       <Hr hiddenDesktop />
-      <Row hiddenMobile spaceBetween VXS HS color={theme.bgColorLight}>
+      <Row fitHeight hiddenMobile spaceBetween VXS HS color={theme.bgColorLight}>
         <MarketName />
         <Row centerVertical>
           <CommentButton />
@@ -106,7 +106,7 @@ const Market = ({
           <Bookmarked MarginLeftS />
         </Row>
       </Row>
-      <Row hiddenMobile relative>
+      <Row fitHeight hiddenMobile relative>
         <Col>
           <Tab tabs={TABS} activeIndex={activeIndex} onClick={index => goto[TABS[index].value]()} width='100px' />
         </Col>

@@ -18,6 +18,7 @@ import { getList } from '../../actions/market'
 
 const Top = styled(Row)`
   padding: 0 ${p => p.theme.spacingS}
+  min-height: fit-content;
   ${p => media(`background-color: ${p.theme.bgColor}`, `background-color: ${p.theme.bgColorLight}`)}
 `
 

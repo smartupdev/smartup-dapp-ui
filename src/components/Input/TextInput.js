@@ -42,6 +42,7 @@ const TextInput = styled.input`
 
 const TextArea = styled.textarea`
   ${TextStyle}
+  min-height: fit-content;
   resize: none;
 `
 function _onChange(onChange, number) {

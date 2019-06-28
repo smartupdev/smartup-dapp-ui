@@ -23,7 +23,7 @@ function DiscussionComment({
 }) {
   const [{ time: { now, min, hour, day } }] = useLang()
   return (
-    <Row key={id} spacingM>
+    <Row key={id} spacingM fitHeight>
       <Col>
         {post && 
           <Link>

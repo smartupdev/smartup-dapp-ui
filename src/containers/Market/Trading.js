@@ -101,7 +101,7 @@ function Trading({ loggedIn, market, gettingMarket, tradeState, setTab, onChange
   }
 
   return (
-    <>
+    <Col fitHeight>
       <Row TopXL BottomS LeftL color={theme.bgColorDark}>
         {klineTabs.map( ({ label }, index) =>
           <Col primary={index === tabIndex} secondary={index !== tabIndex} key={label} HXS MarginLeftS onClick={() => setTab(index)}>
@@ -189,7 +189,7 @@ function Trading({ loggedIn, market, gettingMarket, tradeState, setTab, onChange
           </>
         }
       </Col>
-    </>
+    </Col>
   )
 }
 
