@@ -12,6 +12,7 @@ import { toPrice, toAgo, toPercent } from '../../../lib/util'
 
 
 const colWidth = '130px'
+const minColWidth = '70px'
 
 //TODO field match
 const _Icon = ({ value }) => <Avatar icon={value} />
@@ -33,7 +34,7 @@ const _Cap = ({ value }) => <Text>{toPrice(value)}</Text>
 const TableName = [
   { label: '',            value: 'avatar',        sortable: false,  component: _Icon,           layoutStyle: { width: `calc( ${theme.iconSizeM} + 15px )`, center: true } },
   { label: l => l.name,   value: 'name',          sortable: false,  component: _Name,           layoutStyle: { flex: 1, width: colWidth } },
-  { label: l => l.change, value: 'lately_change', sortable: true,   component: _Percent,        layoutStyle: { width: colWidth, right: true } },
+  { label: l => l.change, value: 'lately_change', sortable: true,   component: _Percent,        layoutStyle: { width: minColWidth, right: true } },
   { label: l => l.price,  value: 'last',          sortable: true,   component: _Price,          layoutStyle: { width: colWidth, right: true } },
   { label: l => l.volume, value: 'lately_volume', sortable: true,   component: _Volume,         layoutStyle: { width: colWidth, right: true } },
   { label: l => l.cap,    value: 'amount',        sortable: true,   component: _Cap,            layoutStyle: { width: colWidth, right: true } },
