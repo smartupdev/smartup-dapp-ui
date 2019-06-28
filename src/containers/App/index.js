@@ -22,6 +22,7 @@ const Container = styled(Row)`
   background-color: ${p => p.theme.bgColor};
   color: ${p => p.theme.color};
   height: 100vh;
+  height: -webkit-fill-available;
 `
 
 const App = ({ watchMetamask, panelOpened, setPanelOpen }) => {

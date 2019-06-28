@@ -135,6 +135,7 @@ const Cover = styled.div`
     border-radius: 0;
     width: 100vw;
     height: 100vh;
+    height: -webkit-fill-available;
   `}
 `
 
