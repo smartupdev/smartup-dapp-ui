@@ -22,6 +22,7 @@ const Table = styled(Col)`
 const TableWrapper = styled(Col)`
   overflow: auto;
   position: relative;
+  -webkit-overflow-scrolling: touch;
 `
 
 const TD = styled(Col)`
