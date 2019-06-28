@@ -5,7 +5,6 @@ import { media } from '../../components/Theme'
 import MarketTable from '../Market/Table'
 import Tab from '../../components/Tab'
 import Text from '../../components/Text'
-import ScrollLoader from '../../components/ScrollLoader'
 import { Row, Col } from '../../components/Layout'
 import Search from '../../components/Search'
 import { Dropdown } from '../../components/Input'
@@ -15,6 +14,10 @@ import { useLang } from '../../language'
 import { connect } from 'react-redux'
 import { reset, setExpandedRecords, setActiveTab, onTableHeaderClick, onSearchChange } from '../../actions/home'
 import { getList } from '../../actions/market'
+
+const Box = styled(Col)`
+  max-height: 100%
+`
 
 const Top = styled(Row)`
   padding: 0 ${p => p.theme.spacingS}
@@ -56,7 +59,7 @@ const Home = ({
     { label: lang.home.tab.rich, value: 'richest' },
   ]
   return (
-    <Col>
+    <Box>
       <Top flex={1} spaceBetween relative>
         <Tab activeIndex={activeTabIndex} tabs={FILTERS} onClick={setActiveTab} type='simple' hiddenMobile />
         <Row centerVertical flex={[1, 0]} spaceBetween>
@@ -78,7 +81,7 @@ const Home = ({
         isLoading={gettingMarketList}
       />
       {/* <ScrollLoader id='Home-Table' hasMore={hasNextPage} loadMore={getList} isLoading={gettingMarketList} /> */}
-    </Col>
+    </Box>
   )
 }
 

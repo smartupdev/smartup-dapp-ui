@@ -49,7 +49,7 @@ const TableRecordBox = styled(Col)`
 
 const TableRecord = memo(
   ({ record, index, isExpanded , noBorderCol, inset, model, S, onClick, ExpandComponent }) => {
-    // console.log(1)
+    console.log(1)
     return (
       <TableRecordBox isExpanded={isExpanded} hasBorder={!noBorderCol} inset={inset} fitWidth>
         <Row>
@@ -77,7 +77,7 @@ const TableRecord = memo(
 )
 
 
-// model: Array { label, value, layoutStyle, component<record, value, id> }
+// model: Array { label<String, function>, value, layoutStyle, component<record, value, id> }
 // values: Array { id }
 // orderBy: asc, desc, null => showing arrow only
 // sortBy: <model.value> => highlight header
@@ -88,7 +88,7 @@ const TableRecord = memo(
 // noBorderCol is for no border in column
 export default ({ 
   recordKey = 'id' , 
-  model, values, 
+  model, values, language,
   sortBy, orderBy, 
   onClickHeader, onClick, 
   expandedRecords = emptyArr, expandComponent: ExpandComponent, 
@@ -98,7 +98,6 @@ export default ({
   const tableRef = useRef()
   const tableWrapRef = useRef()
   const prev0 = usePrevious(values[0])
-
   // const _expandedRecords = usePrevious(expandedRecords)
   // const _noBorderCol = usePrevious(noBorderCol)
   // const _inset = usePrevious(inset)
@@ -128,7 +127,7 @@ export default ({
           {
             model.map(({ value, label, layoutStyle = { flex: 1 }, sortable }, index) =>
               <TD key={value} {...layoutStyle} header centerVertical highlight={value === sortBy} onClick={sortable && onClickHeader ? (() => onClickHeader(value, index)) : null}>
-                <Text S={S}>{label}{value === sortBy ? orderBy === ORDER_BY.asc ? ' ↑' : orderBy === ORDER_BY.desc && ' ↓' : ''}</Text>
+                <Text S={S}>{label instanceof Function ? label(language) : label}{value === sortBy ? orderBy === ORDER_BY.asc ? ' ↑' : orderBy === ORDER_BY.desc && ' ↓' : ''}</Text>
               </TD>
             )
           }

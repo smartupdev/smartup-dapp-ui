@@ -30,6 +30,16 @@ const _Price = ({ value }) => <Text price>{toPrice(value)}</Text>
 const _Volume = ({ value }) => <Text primary>{toPrice(value)}</Text>
 const _Cap = ({ value }) => <Text>{toPrice(value)}</Text>
 
+const TableName = [
+  { label: '',            value: 'avatar',        sortable: false,  component: _Icon,           layoutStyle: { width: `calc( ${theme.iconSizeM} + 15px )`, center: true } },
+  { label: l => l.name,   value: 'name',          sortable: false,  component: _Name,           layoutStyle: { flex: 1, width: colWidth } },
+  { label: l => l.change, value: 'lately_change', sortable: true,   component: _Percent,        layoutStyle: { width: colWidth, right: true } },
+  { label: l => l.price,  value: 'last',          sortable: true,   component: _Price,          layoutStyle: { width: colWidth, right: true } },
+  { label: l => l.volume, value: 'lately_volume', sortable: true,   component: _Volume,         layoutStyle: { width: colWidth, right: true } },
+  { label: l => l.cap,    value: 'amount',        sortable: true,   component: _Cap,            layoutStyle: { width: colWidth, right: true } },
+  { label: l => l.graph,  value: 'priceIn7d',     sortable: false,  component: SimpleLineChart, layoutStyle: { width: '200px', center: true, MarginLeftL: true } },
+  { label: '',            value: 'action',        sortable: false,  component: _More,           layoutStyle: { width: `calc( ${theme.iconSizeM} + 15px )`, right: true } },
+]
 
 export default function({ 
   markets, 
@@ -39,16 +49,6 @@ export default function({
   hasMore, loadMore, isLoading
   }) {
   const [{ home: {table: tableLang} }] = useLang()
-  const TableName = [
-    { label: '',               value: 'avatar',        sortable: false,  component: _Icon,           layoutStyle: { width: `calc( ${theme.iconSizeM} + 15px )`, center: true } },
-    { label: tableLang.name,   value: 'name',          sortable: false,  component: _Name,           layoutStyle: { flex: 1, width: colWidth } },
-    { label: tableLang.change, value: 'lately_change', sortable: true,   component: _Percent,        layoutStyle: { width: colWidth, right: true } },
-    { label: tableLang.price,  value: 'last',          sortable: true,   component: _Price,          layoutStyle: { width: colWidth, right: true } },
-    { label: tableLang.volume, value: 'lately_volume', sortable: true,   component: _Volume,         layoutStyle: { width: colWidth, right: true } },
-    { label: tableLang.cap,    value: 'amount',        sortable: true,   component: _Cap,            layoutStyle: { width: colWidth, right: true } },
-    { label: tableLang.graph,  value: 'priceIn7d',     sortable: false,  component: SimpleLineChart, layoutStyle: { width: '200px', center: true, MarginLeftL: true } },
-    { label: '',               value: 'action',        sortable: false,  component: _More,           layoutStyle: { width: `calc( ${theme.iconSizeM} + 15px )`, right: true } },
-  ]
   return (
       <Table
         S
@@ -59,6 +59,7 @@ export default function({
         onClickHeader={onClickHeader}
         onClick={onClick}
         model={noExpand ? TableName.slice(0, -1) : TableName}
+        language={tableLang}
         values={markets}
         sortBy={sortBy}
         orderBy={orderBy}
