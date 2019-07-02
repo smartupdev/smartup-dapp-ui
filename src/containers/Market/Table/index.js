@@ -32,7 +32,7 @@ const _Volume = ({ value }) => <Text primary>{toPrice(value)}</Text>
 const _Cap = ({ value }) => <Text>{toPrice(value)}</Text>
 
 const TableName = [
-  { label: '',            value: 'avatar',        sortable: false,  component: _Icon,           layoutStyle: { width: `calc( ${theme.iconSizeM} + 15px )`, center: true } },
+  { label: '',            value: 'avatar',        sortable: false,  component: _Icon,           layoutStyle: { width: `calc( ${theme.iconSizeM} + 15px )`, center: true, LeftXS: true } },
   { label: l => l.name,   value: 'name',          sortable: false,  component: _Name,           layoutStyle: { flex: 1, width: colWidth } },
   { label: l => l.change, value: 'lately_change', sortable: true,   component: _Percent,        layoutStyle: { width: minColWidth, right: true } },
   { label: l => l.price,  value: 'last',          sortable: true,   component: _Price,          layoutStyle: { width: colWidth, right: true } },
@@ -53,7 +53,8 @@ export default function({
   return (
       <Table
         S
-        inset
+        fixedHeader
+        fixedCol={1}
         hasMore={hasMore}
         loadMore={loadMore}
         isLoading={isLoading}
