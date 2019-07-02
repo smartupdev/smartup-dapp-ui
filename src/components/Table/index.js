@@ -125,7 +125,7 @@ export default ({
         <TableTitle backgroundColor={fixedHeader && backgroundColor} fixedHeader={fixedHeader}>
           {
             model.map(({ value, label, layoutStyle = { flex: 1 }, sortable }, index) =>
-              <TD key={value} {...layoutStyle} header centerVertical highlight={value === sortBy} onClick={sortable && onClickHeader ? (() => onClickHeader(value, index)) : null}>
+              <TD key={value} fixed={index < fixedCol} backgroundColor={!index && backgroundColor} {...layoutStyle} header centerVertical highlight={value === sortBy} onClick={sortable && onClickHeader ? (() => onClickHeader(value, index)) : null}>
                 <Text S={S}>{label instanceof Function ? label(language) : label}{value === sortBy ? orderBy === ORDER_BY.asc ? ' ↑' : orderBy === ORDER_BY.desc && ' ↓' : ''}</Text>
               </TD>
             )
