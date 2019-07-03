@@ -1,5 +1,5 @@
 import Logo from './images/logo.png'
-import LogoLarge from './images/logo_large.png'
+import LogoLarge from './images/logoMobile.svg'
 import LogoGif from './images/logo_edu.gif'
 
 export const ENV_MAP = {
