@@ -17,7 +17,7 @@ import { withLink, routeMap } from '../../../routes'
 function TableExpand({ record, toggleSavedMarket, goto }) {
   const [lang] = useLang()
   return (
-  <Row BottomS TopS>
+  <Row BottomS TopS HXS>
     <Col LeftXS RightL>
       <Image source={ENV.ipfsHost + record.cover} photo cover />
     </Col>
