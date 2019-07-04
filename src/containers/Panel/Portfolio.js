@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled, { css } from 'styled-components'
 
 import { connect } from 'react-redux'
@@ -11,9 +11,11 @@ import { getGlobalMarket } from '../../actions/globalInfo'
 import Avatar from '../../components/Avatar'
 import Hr from '../../components/Hr'
 import Panel from '../../components/Panel'
+import Expand from '../../components/Expand'
 import Table from '../../components/Table'
 import Image from '../../components/Image'
 import Text from '../../components/Text'
+import Input from '../../components/Input'
 import Button from '../../components/Button'
 import ScrollLoader from '../../components/ScrollLoader'
 import { Row, Col } from '../../components/Layout'
@@ -22,9 +24,10 @@ import { useLang } from '../../language'
 import { Link } from '../../routes'
 import { toToken, toPercent } from '../../lib/util'
 import theme from '../../theme';
+import metamask from '../../images/metamask_icon.png';
 import ethIcon from '../../images/eth.png';
-import smartupIcon from '../../images/smartup.png';
-import { Close, Trade } from '../../components/Icon';
+import smartupIcon from '../../images/rocket_icon.png';
+import { Close, Trade, EditPan } from '../../components/Icon';
 
 
 
@@ -43,6 +46,40 @@ const BookmarkBlock = styled(Row)`
 
 `
 
+const Token = ({ icon, label, amount, open, setOpen }) => {
+  const [isBuy, setIsBuy] = useState(true)
+  const [input, inputChange] = useState('')
+  return (
+    <>
+      <Row centerVertical BottomXS TopXS LeftXL MarginLeftL onClick={() => setOpen(!open)}>
+        <Image size={theme.fontSizeXL} rightText source={icon} />
+        <Text L wordSpaceS>{toToken(amount)}</Text>
+        <Text S RightBase><sub>{label}</sub></Text>
+        { open ? <Close secondary XS /> : <EditPan secondary S /> } 
+      </Row>
+      <Expand isOpen={open}>
+        <Col bgDark BottomS>
+          <Row center centerVertical VS>
+            <Avatar icon={metamask} username='MetaMask' vertical noipfs note />
+            <Trade noSelect rightActive={isBuy} leftActive={!isBuy} color={theme.bgColorLight} HS onClick={() => setIsBuy(!isBuy)} />
+            <Avatar icon={smartupIcon} username='Platform' vertical noipfs note />
+          </Row>
+          <Text center note XS BottomS>{`${isBuy ? 'MetaMask' : 'Platform'} Balance: ${toToken(amount)} ${label}`}</Text>
+          <Row HS centerVertical>
+            <Col flex={1} HS>
+              <Input number value={input} onChange={v => inputChange(v)} underline placeholder='0.00' />
+            </Col>
+            <Text note S>{label}</Text>
+          </Row>
+          <Row center TopS>
+            <Button icon={Trade} textProps={{S: true}} primary label={isBuy ? 'Deposit' : 'Withdraw'} />
+          </Row>
+        </Col>
+      </Expand>  
+    </>
+  )
+}
+
 const Portfolio = ({
   setOpen,
   userSavedMarketPanel,
@@ -59,10 +96,12 @@ const Portfolio = ({
     getCollectedMarketsPanel()
     getMarketWallet()
   }, [])
+  const [ethOpen, setEthOpen] = useState(false)
+  const [sutOpen, setSutOpen] = useState(false)
   const { sutAmount, marketCount, latelyPostCount } = globalInfo.globalMarket
   const [lang] = useLang()
   const portfolioText = lang.panel.portfolio
-  const TableName = [
+  const TableName = [ // TODO
     { label: '', value: 'marketPhoto', layoutStyle: { width: '18px' }, component: ({ value }) => <Avatar XS icon={value} /> },
     { label: portfolioText.wallet.id, value: 'marketName', layoutStyle: { width: '80px', flex: 1 }, component: ({value}) => <Text S textOverflow>{value}</Text> },
     { label: portfolioText.wallet.ct, value: 'ctAmount' },
@@ -82,20 +121,8 @@ const Portfolio = ({
   ]
   return (
     <Col overflowAuto>
-      <Col center>
-        <Col TopXS BottomXS>
-          <Row bottom BottomXS>
-            <Image size={theme.fontSizeXL} rightText source={ethIcon} />
-            <Text L wordSpaceS>{toToken(ethBalance)}</Text>
-            <Text S>ETH</Text>
-          </Row>
-          <Row bottom>
-            <Image size={theme.fontSizeXL} rightText source={smartupIcon} />
-            <Text L wordSpaceS>{toToken(sutBalance)}</Text>
-            <Text S>SmartUp</Text>
-          </Row>
-        </Col>
-      </Col>
+      <Token icon={ethIcon} label='ETH' amount={ethBalance} open={ethOpen} setOpen={setEthOpen} />
+      <Token icon={smartupIcon} label='SmartUp' amount={sutBalance} open={sutOpen} setOpen={setSutOpen} />
       <Hr />
       <Panel
         expandedDark

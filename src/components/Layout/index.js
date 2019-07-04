@@ -1,6 +1,6 @@
 // import React from 'react'
 import styled, { css } from 'styled-components'
-import { spacingCss, onClickCss, media, responsiveCss } from '../Theme'
+import { spacingCss, onClickCss, media, responsiveCss, colorCss } from '../Theme'
 const Flex = styled.div`
   display: flex;
   box-sizing: border-box;
@@ -20,13 +20,6 @@ const Flex = styled.div`
   ${p => p.overflowHidden && css`overflow: hidden;`}
   ${p => p.overflowAuto && css`overflow: auto;`}
   
-  ${p => p.color && css`background-color: ${p.color}`}
-  ${p => !!p.primary && css`background-color: ${p.theme.colorPrimary}`}
-  ${p => !!p.secondary && css`background-color: ${p.theme.colorSecondary}`}
-  ${p => !!p.bgDark && css`background-color: ${p.theme.bgColorDark}`}
-  ${p => !!p.bgLight && css`background-color: ${p.theme.bgColorLight}`}
-  ${p => p.backgroundColor && css`background-color: ${p.backgroundColor};`}
-
   ${p => p.round && css`border-radius: ${p.theme.borderRadius}`}
 
   ${props => 
@@ -48,6 +41,7 @@ const Flex = styled.div`
   ${props => props.fullHeight && css`height: 100%`};
   ${props => props.maxWidth && css`max-width: ${props.maxWidth}`};
 
+  ${colorCss}
   ${responsiveCss}
   ${onClickCss}
   ${spacingCss}

@@ -1,9 +1,10 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
-import { spacingCss, media } from '../Theme'
+import { spacingCss, media, colorCss } from '../Theme'
 
 const Image =  styled.img`
   ${spacingCss}
+  ${colorCss}
   # background-color: tomato
   height: ${p => p.theme.imageSizeM};
   width: ${p => p.theme.imageSizeM};

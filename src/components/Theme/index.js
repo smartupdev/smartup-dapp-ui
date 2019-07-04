@@ -59,6 +59,19 @@ export const fontSizeCss = css`
   ${props => props.XL && css`font-size: ${p => p.theme.fontSizeXL}`}
 `
 
+export const colorCss = css`
+  ${p => css`
+    ${p.color && `color: ${p.color}`}
+    ${!!p.primary && `color: ${p.theme.colorPrimary}`}
+    ${!!p.secondary && `color: ${p.theme.colorSecondary}`}
+    ${!!p.bgPrimary && `background-color: ${p.theme.colorPrimary}`}
+    ${!!p.bgSecondary && `background-color: ${p.theme.colorSecondary}`}
+    ${!!p.bgDark && `background-color: ${p.theme.bgColorDark}`}
+    ${!!p.bgLight && `background-color: ${p.theme.bgColorLight}`}
+    ${!!p.bgWhite && `background-color: ${p.theme.white}`}
+  `}
+`
+
 export const fontCss = css`
   font-family: ${p => p.theme.fontFamily};
   ${fontSizeCss}
@@ -76,6 +89,7 @@ export const fontCss = css`
 `
 
 export const onClickCss = css`
+  ${p => p.noSelect && css`user-select: none;`};
   ${p => p.onClick && css`cursor: pointer`};
   ${p => p.disabled && css`cursor: not-allowed;`}
 `

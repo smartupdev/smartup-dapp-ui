@@ -48,6 +48,7 @@ const StyledSvg = styled.svg`
   `}
   transition: transform .3s ease-in-out;
   ${p => p.primary && css`fill: ${p.theme.colorPrimary}`};
+  ${p => p.secondary && css`fill: ${p.theme.colorSecondary}`};
   ${p => p.reverse && css`transform: rotate(180deg)`};
   ${spacingCss}
   ${onClickCss}

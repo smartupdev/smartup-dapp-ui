@@ -3,16 +3,22 @@ import styled, { css } from 'styled-components'
 import { spacingCss, fontCss, onClickCss } from '../Theme'
 
 const TextStyle = css`
+  ${onClickCss}
+  ${fontCss}
+  ${spacingCss}
+
   transition: width 0.25s ease-in;
   border: 0px;
   box-shadow: 0;
   padding: 8px 12px;
   ::placeholder {
     color: ${p => p.theme.colorSecondary};
+    opacity: 0.5;
   }
   background-color: ${p => p.background ? p.theme.bgColorLight : 'transparent'};
   ${p => p.underline && css`
     border-bottom: 1px solid ${p.theme.borderColor};
+    text-decoration: none;
     padding: 0px;
   `}
 
@@ -26,9 +32,7 @@ const TextStyle = css`
     outline: none !important;
     ${p => p.underline && css`border-bottom: 1px solid ${p.theme.borderColor}`}
   }
-  ${onClickCss}
-  ${fontCss}
-  ${spacingCss}
+
   ${p => p.backgroundColor && css`
     &:-webkit-autofill {
       box-shadow: 0 0 0px 1000px ${p.backgroundColor} inset;

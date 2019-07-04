@@ -3,19 +3,24 @@ import React from 'react'
 import { People } from '../../components/Icon'
 import Image from '../../components/Image'
 import Text from '../../components/Text'
-import { Row } from '../../components/Layout'
+import { Row, Col } from '../../components/Layout'
 import theme from '../../theme'
 import { ipfsHost } from '../../actions/ipfs'
 import { shorten } from '../../lib/util'
 
-export default ({ icon, username, noMargin, long, hiddenMobile, ...rest }) => // size
-  <Row centerVertical hiddenMobile={hiddenMobile}>
-    {
-      icon ? 
-      <Image source={ipfsHost + icon} round cover MarginRightXS={!noMargin} {...rest} /> : 
-      <People color={theme.white} round MarginRightXS={!noMargin} {...rest} /> 
-    }
-    {
-      username && <Text nowrap {...rest}>{long ? username : shorten(username)}</Text>
-    }
-  </Row>
+export default ({ icon, username, vertical, noMargin, long, hiddenMobile, noipfs, ...rest }) => { // size
+  const Flex = vertical ? Col : Row
+  return (
+    <Flex centerVertical center hiddenMobile={hiddenMobile}>
+      {
+        icon ? 
+        <Image source={noipfs ? icon : ipfsHost + icon} round cover MarginRightXS={!noMargin} {...rest} /> : 
+        <People color={theme.white} round MarginRightXS={!noMargin} {...rest} /> 
+      }
+      {
+        username && <Text nowrap S={vertical} {...rest}>{long ? username : shorten(username)}</Text>
+      }
+    </Flex>
+  )
+}
+

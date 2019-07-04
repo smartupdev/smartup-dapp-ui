@@ -2,6 +2,7 @@ import React from 'react'
 import styled, { css } from 'styled-components'
 import { spacingCss, onClickCss } from '../Theme'
 import Text from '../Text'
+// import { DonutLoader } from '../Loader'
 
 const Button = styled.button`
   background-color: transparent
@@ -32,11 +33,12 @@ const Button = styled.button`
   ${onClickCss}
 `
 
-export default ({ label, icon: Icon, primary, light, condensed, extended, outline, verticalMargin, iconSize, ...rest }) => {
+export default ({ label, icon: Icon, primary, light, condensed, extended, outline, verticalMargin, iconSize, textProps, ...rest }) => {
   return (
     <Button primary={primary} light={light} condensed={condensed} VBase={extended} HL={extended} outline={outline} verticalMargin={verticalMargin} {...rest}>
+      {/* <DonutLoader size={12} /> */}
       { Icon && <Icon XS RightBase={label !== null && label !== undefined} size={iconSize} />}
-      { label && <Text nowrap>{label}</Text>}
+      { label && <Text nowrap {...textProps}>{label}</Text>}
     </Button>
   )
 }
