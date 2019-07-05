@@ -55,7 +55,9 @@ const Token = ({ icon, label, amount, open, setOpen }) => {
         <Image size={theme.fontSizeXL} rightText source={icon} />
         <Text L wordSpaceS>{toToken(amount)}</Text>
         <Text S RightBase><sub>{label}</sub></Text>
-        { open ? <Close secondary XS /> : <EditPan secondary S /> } 
+        <Col right flex={1} RightS>
+          { open ? <Close secondary XS /> : <EditPan secondary S /> } 
+        </Col>
       </Row>
       <Expand isOpen={open}>
         <Col bgDark BottomS>

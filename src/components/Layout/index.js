@@ -1,6 +1,6 @@
 // import React from 'react'
 import styled, { css } from 'styled-components'
-import { spacingCss, onClickCss, media, responsiveCss, colorCss } from '../Theme'
+import { media, generalCss } from '../Theme'
 const Flex = styled.div`
   display: flex;
   box-sizing: border-box;
@@ -41,10 +41,7 @@ const Flex = styled.div`
   ${props => props.fullHeight && css`height: 100%`};
   ${props => props.maxWidth && css`max-width: ${props.maxWidth}`};
 
-  ${colorCss}
-  ${responsiveCss}
-  ${onClickCss}
-  ${spacingCss}
+  ${generalCss}
 `
 
 const Row = styled(Flex)`

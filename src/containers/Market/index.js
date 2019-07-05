@@ -78,11 +78,12 @@ const Market = ({
 
   const isDiscussion = getPath() === routeMap.discussion.path
   const DiscussionSearch = id => { // please use this by DiscussionSearch(), don't use <DiscussionSearch />. 
-    return isDiscussion && <Search id={id} backgroundColor={theme.bgColor} bottom='1px' top='1px' right='30px' value={postKeyword} onChange={onChangeKeyword} onSearch={() => getMarketPost()} />
+    return isDiscussion && <Search id={id} bgColor bottom='1px' top='1px' right='30px' value={postKeyword} onChange={onChangeKeyword} onSearch={() => getMarketPost()} />
   }
   
   return (
     <Col flex={1}>
+
       <Header>
         <MarketName />
       </Header>
@@ -97,7 +98,7 @@ const Market = ({
         <ButtonMore icons={isDiscussion ? [Share, Bookmarked, AddDiscussion] : [Share, Bookmarked]} />
       </Row>
       <Hr hiddenDesktop />
-      <Row fitHeight hiddenMobile spaceBetween VXS HS color={theme.bgColorLight}>
+      <Row fitHeight hiddenMobile spaceBetween VXS HS bgLight>
         <MarketName />
         <Row centerVertical>
           <CommentButton />
@@ -115,7 +116,7 @@ const Market = ({
           {isDiscussion && 
             <Row right centerVertical>
               {DiscussionSearch('discussion-desktop')}
-              <Col absolute absRight='0' absTop='1px' absBottom='1px' HS backgroundColor={theme.bgColor} centerVertical>
+              <Col absolute absRight='0' absTop='1px' absBottom='1px' HS bgColor centerVertical>
                 <AddDiscussion />
               </Col>
             </Row>          

@@ -74,7 +74,7 @@ function Trading({ loggedIn, market, gettingMarket, tradeState, setTab, onChange
 
   function KlineData() {
     return (
-      <Col LeftXL RightL BottomL backgroundColor={theme.bgColorDark} width={['100%', '250px']}>
+      <Col LeftXL RightL BottomL bgDark width={['100%', '250px']}>
         <Text nowrap BottomS>{toFullDate(Date.now(), weekdays, months)}</Text>
 
         <Row bottom spacingTopS>
@@ -102,14 +102,14 @@ function Trading({ loggedIn, market, gettingMarket, tradeState, setTab, onChange
 
   return (
     <Col fitHeight>
-      <Row TopXL BottomS LeftL color={theme.bgColorDark}>
+      <Row TopXL BottomS LeftL bgDark>
         {klineTabs.map( ({ label }, index) =>
-          <Col primary={index === tabIndex} secondary={index !== tabIndex} key={label} HXS MarginLeftS onClick={() => setTab(index)}>
+          <Col bgPrimary={index === tabIndex} bgSecondary={index !== tabIndex} key={label} HXS MarginLeftS borderRadius='2px' onClick={() => setTab(index)}>
             <Text lineHeight>{label}</Text>
           </Col>
         )}
       </Row>
-      <Row color={theme.bgColorDark} HL BottomL>
+      <Row bgDark HL BottomL>
         <Col flex={1}>
           <Chart data={klineData} />
         </Col>
