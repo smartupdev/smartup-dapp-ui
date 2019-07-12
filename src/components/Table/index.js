@@ -6,6 +6,7 @@ import Expand from '../Expand'
 import ScrollLoader from '../ScrollLoader'
 import { usePrevious } from '../../lib/react'
 import theme from '../../theme'
+import { useLang } from '../../language'
 
 const emptyArr = []
 
@@ -106,9 +107,10 @@ export default ({
   sortBy, orderBy, 
   onClickHeader, onClick, 
   expandedRecords = emptyArr, expandComponent: ExpandComponent, 
-  S, noBorderCol, noResultText = '', 
+  S, noBorderCol, noResultText, 
   hasMore, loadMore, isLoading
 }) => {
+  const [{ noResult }] = useLang()
   const tableRef = useRef()
   const tableWrapRef = useRef()
   const prev0 = usePrevious(values[0])
@@ -148,7 +150,7 @@ export default ({
                   ExpandComponent={ExpandComponent} />
               )
           : 
-            noResultText && <Text center note>{noResultText}</Text>
+            !isLoading && <Text center note VS>{noResultText || noResult}</Text>
           }
       </Table>
       <ScrollLoader target={tableWrapRef} hasMore={hasMore} loadMore={loadMore} isLoading={isLoading} />

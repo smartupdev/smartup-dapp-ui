@@ -22,7 +22,7 @@ const main = {
 
   result: name('RESULTS', '個搜尋結果', '个搜寻结果'),
   search: name('Search', '搜尋', '搜寻'),
-  noResult: name('No result found.', '找不到搜尋結果。', '找不到搜寻结果。'),
+  noResult: name('No record available', '沒有紀錄可顯示', '没有纪录可显示'),
   trade: name('Trade', '交易', '交易'),
   loadMore: name('Load More', '更多'),
 
