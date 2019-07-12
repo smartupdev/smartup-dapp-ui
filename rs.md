@@ -19,8 +19,11 @@ This is just a plan and note. All content here will may be substantially modifie
 - 0 to infinity
 - Badge based on #NTT
 - Add
+  - Vote for proposal
+  - Get daily NTT if NTT is below 100
 - Deduct 
-  - NTT if miss two times or more
+  - market dissolve and have CT 
+  - Miss vote as a juror ~~Juror if miss two times or more~~
 ## Honour(Up Point)(TBC)
 - Activeness
 - Calculated by
@@ -200,9 +203,66 @@ JV: Voted J
 
 # Proposal
 - CT = votes
+- (TBC)After voted, member's CT lock, member can get NTT
 - Votes among proposal are not shared???
 - When vote, 100% votes, not black vote??
 - Locked CT, until proposal ended
+
+## Role
+- Member: Account with CT
+- Moderator: Top 10 members ~~with positive NTT~~
+- Proposer: Member with > 5% CT
+
+## Phase
+### 1. Idea
+- Member create an idea to become a proposer
+- Can discuss and edit
+- Include
+  - Overview
+    - Name
+    - Description
+    - Supporting documents
+    - Initial funding
+  - Milestones
+    - Target
+    - Amount
+    - Deadline  
+- Period: No limit(Until proposer no CT) ~~1M(TBC)~~
+- Result: Proposer decision
+  - Yes => next
+  - No => Close, delete
+### 2. Idea review
+- Moderators vote pass/fail
+- Period: 1M(TBC)
+- Result: Moderators' vote 
+  - Yes => next
+  - No => Archived
+### 3. Proposal
+- Members vote pass/fail
+- Period: 1M(TBC)
+- Result: Members' vote yes
+  - Yes => send initial funding to proposer + next
+  - No => Archived
+### 4. Ongoing
+- Proposer can update status
+- Can edit amount and deadline of un-reviewed milestone
+- Period: Depend on milestone 
+- Result: Proposer
+  - Yes => next
+  - No => Archived
+### 5. Review
+- Vote if the proposer meets the target(Milestone)
+- Period: 
+- Result: Members' vote no
+  - Yes => Proposer get money, next(Ongoing or archived, depend on milestone)
+  - No => Archived(Will add appeal later)
+### 6. Archived
+- Show all completed and failed project
+
+(TBC)
+1. What if proposer/member/moderator sell CT? Should only count when they do the action
+2. 
+
 ## Types
 ### Options
 - Create: \> 5% CT
@@ -267,3 +327,25 @@ Info:
 ## Platform account
 - An account for trading
 - Users need to put money the account from their wallet
+
+
+Lam:
+1. add token from wallet, get token from admin
+  - gas fee pay by user
+  - token you get = request token - gas fee 
+2. Create market
+  - FE: Sign and send a request to node, Wait(A)
+  - node: 
+    - Create market => lock status
+      - Check balance
+        - Pass: Send request to contract, Wait(B)
+        - Fail: saved status
+  - Contract:
+    - Create market via smartUp contract
+      - Initiate market with 
+
+=> admin
+  => lock CT, 10%
+  => unlock, need to freeze a period
+  => get CT as salary
+  => salary from transition
