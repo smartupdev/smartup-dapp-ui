@@ -42,7 +42,7 @@ function Transaction({
     <>
       {error && <Text TopS center error>{error.message}</Text>}
       {transactions.map( ({ 
-        txHash, type, detail: {ct, sut}, marketName, marketAddress, createTime, stage, blockTime
+        txHash, type, detail: {ct, sut, eth}, marketName, marketAddress, createTime, stage, blockTime
       }, index) => {
         function onClick() {
           const newExpands = [...expands]
@@ -53,7 +53,7 @@ function Transaction({
           <Col key={txHash} fitHeight>
             <Row spacingM fitHeight onClick={onClick}>
               <Col flex={1}>
-                <Text BottomS L>{inTransaction.typeTitle[type](ct, sut)}</Text>
+                <Text BottomS L>{inTransaction.typeTitle[type](ct, sut, eth)}</Text>
                 <Text BottomXS note>{marketName}</Text>
                 <Text note S>{toFullDate(createTime, weekdays, months)}</Text>
               </Col>

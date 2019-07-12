@@ -259,18 +259,25 @@ const main = {
     to: name('to', '至'),
     notReady: name('Proposal function is under development, coming soon in later 2019!', '提案功能正在開發中，將於2019年底推出。', '提案功能正在开发中，将于2019年底推出。'),
   },
-
   personalCentre: {
     inTransaction: {
       typeTitle: { // MUST match with type
         CreateMarket: name((ct, sut) => `Paid ${sut} SmartUp token to create a market`, (ct, sut) => `支付 ${sut} 個SmartUp幣創建巿場`, (ct, sut) => `支付 ${sut} 个SmartUp币创建巿场`),
         BuyCT: name((ct, sut) => `Bought ${ct} market token from ${toToken(sut)} SmartUp token`, (ct, sut) => `買入 ${ct} 巿場代幣，兌換了 ${toToken(sut)} SmartUp幣`, (ct, sut) => ` 买入 ${ct} 巿场代币，兑换了 ${toToken(sut)} SmartUp币`),
         SellCT: name((ct, sut) => `Sold ${ct} market token to ${toToken(sut)} SmartUp token`, (ct, sut) => `賣出 ${ct} 巿場代幣，兌換了 ${toToken(sut)} SmartUp幣`, (ct, sut) => `卖出 ${ct} 巿场代币，兑换了 ${toToken(sut)} SmartUp币`),
+        ChargeSut: name( (ct, sut, eth) => `Deposit ${sut}sut` ),
+        ChargeEth: name( (ct, sut, eth) => `Deposit ${eth}eth` ),
+        WithdrawSut: name( (ct, sut, eth) => `Withdraw ${sut}sut` ),
+        WithdrawEth: name( (ct, sut, eth) => `Withdraw ${eth}eth` ),
       },
       typeLabel: { // MUST match with type
         CreateMarket: name('Market created', '創建巿場', '创建巿场'),
         BuyCT: name('Trade placed (Buy)', '交易(買入)', '交易（买入）'),
         SellCT: name('Trade placed (Sell)', '交易(賣出)', '交易（卖出）'),
+        ChargeSut: name(`Deposit sut` ),
+        ChargeEth: name(`Deposit eth` ),
+        WithdrawSut: name(`Withdraw sut` ),
+        WithdrawEth: name(`Withdraw eth` ),
       },
       pending: name('PENDING', '處理中', '处理中'),
       success: name('SUCCESS', '成功'),
