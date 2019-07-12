@@ -67,7 +67,7 @@ function Transaction({
               {[
                 { label: inTransaction.txhash, value: txHash },
                 { label: inTransaction.type, value: inTransaction.typeLabel[type] },
-                { label: inTransaction.market, value: `${marketName} ${marketAddress}` },
+                { label: inTransaction.market, value: marketName ? `${marketName} ${marketAddress}` : 'N/A' },
                 { label: inTransaction.ct, value: ct || 'N/A' },
                 { label: inTransaction.createTime, value: toFullDate(createTime, weekdays, months) },
                 { label: inTransaction.lastUpdate, value: toFullDate(blockTime, weekdays, months) },
