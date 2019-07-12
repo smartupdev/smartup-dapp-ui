@@ -9,6 +9,8 @@ import proposal from './reducers/proposal'
 import trade from './reducers/trade'
 import user from './reducers/user'
 
+import wallet from './reducers/wallet'
+
 import globalInfo from './reducers/globalInfo'
 import metamask from './reducers/metamask'
 import userCreatedMarket from './reducers/userCreatedMarket'
@@ -48,4 +50,6 @@ export default combineReducers({
     createMarket,
     trade,
     panel,
+
+    wallet,
 });

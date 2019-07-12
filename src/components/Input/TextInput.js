@@ -67,8 +67,8 @@ function shouldBlur(e) {
   }
 }
 
-export default ({line, onChange, number, ...rest}) => line ? 
-  <TextArea onChange={_onChange(onChange, number)} {...rest} rows={line} /> 
+export default ({line, onChange, number, inputRef, ...rest}) => line ? 
+  <TextArea onChange={_onChange(onChange, number)} ref={inputRef} {...rest} rows={line} /> 
 : 
-  <TextInput onChange={_onChange(onChange, number)} onKeyDown={shouldBlur} {...rest} />
+  <TextInput onChange={_onChange(onChange, number)} onKeyDown={shouldBlur} ref={inputRef} {...rest} />
 

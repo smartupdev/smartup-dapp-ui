@@ -3,6 +3,7 @@ import { Row, Col } from '../../components/Layout'
 import NotificationItem from '../../components/Notification'
 import Search from '../../components/Search'
 import { DonutLoader } from '../../components/Loader'
+import Text from '../../components/Text'
 import { Expand, Tick } from '../../components/Icon'
 import Hr from '../../components/Hr'
 import ScrollLoader from '../../components/ScrollLoader'
@@ -28,7 +29,7 @@ const TYPES = {
 function noop() {}
 const Notification = ({
   setOpen,
-  notification: { notifications, showUnreadOnly, unreadCount, gettingNotifications, keyword, hasNextPage },
+  notification: { notifications, showUnreadOnly, unreadCount, gettingNotifications, keyword, hasNextPage, notificationsError },
   getList,
   read,
   goto,
@@ -50,7 +51,7 @@ const Notification = ({
     setOpen(false)
   }, [])
   return (
-    <Col overflowAuto>
+    <Col overflowAuto fullHeight>
       <Row relative centerVertical>
         { !keyword && <Expand S LeftS color={showUnreadOnly && !disabled ? theme.colorPrimary : theme.colorSecondary} onClick={(!disabled && toggleShowUnread) || noop} />}
         <Tick S MarginHS color={!readAllDisabled && !disabled ? theme.colorPrimary : theme.colorSecondary} onClick={readAllDisabled ? noop : readAll} disabled={readAllDisabled} />
@@ -59,23 +60,28 @@ const Notification = ({
         <Search id='notification' backgroundColor={theme.bgColor} onChange={onChangeKeyword} value={keyword} onSearch={() => getList()} />
       </Row>
       {
-        notifications.map(n =>
-          <NotificationItem
-            marketId={n.content && n.content.marketId}
-            key={n.notificationId}
-            id={n.notificationId}
-            onClick={onClick}
-            image={n.style === TYPES.system.value ? TYPES.system.image : userAvatar}
-            sender={n.style === TYPES.system.value ? 'SmartUp' : 'Me'}
-            title={n.title}
-            content={n.text}
-            date={n.createTime}
-            unread={!n.isRead}
-          />
-        )
+        notificationsError ? <Text S error center>{notificationsError.message}</Text> :
+        <>
+          {
+            notifications.map(n =>
+              <NotificationItem
+                marketId={n.content && n.content.marketId}
+                key={n.notificationId}
+                id={n.notificationId}
+                onClick={onClick}
+                image={n.style === TYPES.system.value ? TYPES.system.image : userAvatar}
+                sender={n.style === TYPES.system.value ? 'SmartUp' : 'Me'}
+                title={n.title}
+                content={n.text}
+                date={n.createTime}
+                unread={!n.isRead}
+              />
+            )
+          }
+            <Hr />
+            <ScrollLoader isButton hasMore={hasNextPage} loadMore={getList} isLoading={gettingNotifications}  />
+          </>
       }
-      <Hr />
-      <ScrollLoader isButton hasMore={hasNextPage} loadMore={getList} isLoading={gettingNotifications}  />
     </Col>
   )
 }

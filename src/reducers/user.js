@@ -1,11 +1,8 @@
 import {
-  METAMASK_RESET,
   METAMASK_UPDATE,
 
   LOGIN_METAMASK_REQUESTED, USER_AUTH_SMARTUP_SUCCEEDED,
   LOGIN_METAMASK_FAILED, USER_LOGIN_SMARTUP_FAILED, USER_PERSON_SIGN_FAILED, USER_AUTH_SMARTUP_FAILED,
-
-  METAMASK_ETH_BALANCE_SUCCEEDED, METAMASK_SUT_BALANCE_SUCCEEDED, METAMASK_NTT_BALANCE_SUCCEEDED, 
   
   USER_AVATAR_CHANGE_REQUESTED, USER_AVATAR_CHANGE_SUCCEEDED, USER_AVATAR_CHANGE_FAIL,
   USER_UPDATE_AVATAR_REQUESTED, USER_UPDATE_AVATAR_SUCCEEDED, USER_UPDATE_AVATAR_FAIL,
@@ -47,8 +44,6 @@ export const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case METAMASK_RESET:
-      return initialState
     case METAMASK_UPDATE:
       return {
         ...state,
@@ -77,23 +72,6 @@ export default (state = initialState, action) => {
         ...userMassage(action.payload.user),
         loginError: initialState.loginError
       }
-
-    // balance related
-    case METAMASK_ETH_BALANCE_SUCCEEDED:
-      return {
-        ...state,
-        ethBalance: action.payload,
-      };
-    case METAMASK_SUT_BALANCE_SUCCEEDED:
-      return {
-        ...state,
-        sutBalance: action.payload,
-      };
-    case METAMASK_NTT_BALANCE_SUCCEEDED:
-      return {
-        ...state,
-        nttBalance: action.payload,
-      };
 
     case USER_AVATAR_CHANGE_REQUESTED:
       return {

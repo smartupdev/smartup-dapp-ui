@@ -14,7 +14,7 @@ export default ({ icon, username, vertical, noMargin, long, hiddenMobile, noipfs
     <Flex centerVertical center hiddenMobile={hiddenMobile}>
       {
         icon ? 
-        <Image source={noipfs ? icon : ipfsHost + icon} round cover MarginRightXS={!noMargin} {...rest} /> : 
+        <Image source={noipfs ? icon : ipfsHost + icon} round cover MarginRightXS={!noMargin && !vertical} MarginTopXS={vertical} {...rest} /> : 
         <People color={theme.white} round MarginRightXS={!noMargin} {...rest} /> 
       }
       {

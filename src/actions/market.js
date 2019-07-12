@@ -36,7 +36,7 @@ export function resetDetail() {
     type: MARKET_DETAIL_RESET
   }
 }
-
+// TODO
 export function getCtBalance() {
   return async (dispatch, getState) => 
     dispatch(
@@ -46,7 +46,7 @@ export function getCtBalance() {
         {
           isWeb3: true,
           params: { 
-            data:  getBalance( await getAccount() ), 
+            // data:  getBalance( await getAccount() ), 
             to: getState().market.currentMarket.address 
           },
           responsePayload: decodeResult

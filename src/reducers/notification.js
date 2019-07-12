@@ -48,11 +48,25 @@ export default (state = initialState, action) => {
         showUnreadOnly: !state.showUnreadOnly
       }
     case USER_NOTIFICATION_LIST_REQUESTED:
+      if(action.meta.autoFetch) return state
       return {
         ...state,
         gettingNotifications: true,
       };
     case USER_NOTIFICATION_LIST_SUCCEEDED:
+      if(action.meta.autoFetch) {
+        return {
+          ...state, 
+          notifications: [
+            ...action.payload.list.filter( l => // filter out notification is existed or keyword is not matched
+              !state.notifications.some( n => 
+                n.notificationId === l.notificationId || 
+                state.keyword && !(l.title.includes(state.keyword) || l.text.includes(state.keyword))
+              )  ),
+            ...state.notifications
+          ]
+        }
+      }
       return {
         ...state,
         notifications: updateLoadMore(state.notifications, action.payload.list, action.meta.isLoadMore, 'notificationId'),
@@ -64,6 +78,7 @@ export default (state = initialState, action) => {
     case USER_NOTIFICATION_LIST_FAILED:
       return {
         ...state,
+        notifications: initialState.notifications,
         gettingNotifications: false,
         notificationsError: action.payload,
       };

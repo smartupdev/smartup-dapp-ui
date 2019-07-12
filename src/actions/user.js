@@ -2,23 +2,18 @@ import {
   METAMASK_UPDATE,
   LOGIN_METAMASK_REQUESTED, LOGIN_METAMASK_SUCCEEDED, LOGIN_METAMASK_FAILED,
 
-  METAMASK_ETH_BALANCE_SUCCEEDED, METAMASK_SUT_BALANCE_SUCCEEDED, METAMASK_NTT_BALANCE_SUCCEEDED,
-
   USER_LOGIN_SMARTUP_REQUESTED, USER_LOGIN_SMARTUP_SUCCEEDED, USER_LOGIN_SMARTUP_FAILED,
   USER_PERSON_SIGN_REQUESTED, USER_PERSON_SIGN_SUCCEEDED, USER_PERSON_SIGN_FAILED,
   USER_AUTH_SMARTUP_REQUESTED, USER_AUTH_SMARTUP_SUCCEEDED, USER_AUTH_SMARTUP_FAILED,
-  // METAMASK_RESET,
+
   USER_AVATAR_CHANGE_REQUESTED, USER_AVATAR_CHANGE_SUCCEEDED, USER_AVATAR_CHANGE_FAIL,
   USER_UPDATE_AVATAR_REQUESTED, USER_UPDATE_AVATAR_SUCCEEDED, USER_UPDATE_AVATAR_FAIL,
   USER_UPDATE_NAME_REQUESTED, USER_UPDATE_NAME_SUCCEEDED, USER_UPDATE_NAME_FAIL,
   USER_NAME_CHANGE, USER_NAME_SUBMITTING,
 } from './actionTypes'
 import {
-  asyncFunction, callbackFunction,
-  formatToken, formatCredit,
-  getBalance, getCredit,
-  sutContractAddress, nttContractAddress,
-  smartupWeb3, getAccount,
+  asyncFunction, callbackFunction, 
+  getAccount,
   metamaskListener, getMetamaskInfo, 
   enableMetamask,
 } from '../integrator'
@@ -28,6 +23,7 @@ import { apiLogin, apiAuth, apiGetUser } from '../integrator/api'
 import { API_USER_UPDATE } from './api';
 import fetch, { delay } from '../lib/util/fetch';
 import { postIpfsImg } from './ipfs'
+import { getAllBalance } from './wallet'
 
 const STORAGE_KEY_TOKEN = 'token'
 const STORAGE_KEY_ACC = 'acc'
@@ -51,21 +47,6 @@ function getStorageAccount() {
   const r = window.localStorage.getItem(STORAGE_KEY_ACC)
   return r === 'undefined' ? undefined : r
 }
-
-// export function checkLogin() {
-//   return async dispatch => {
-//     const token = getStorageToken()
-//     if (token) {
-//       const [error] = await dispatch(loginMetaMask(true))
-//       if (!error) {
-//         dispatch({
-//           type: USER_AUTH_SMARTUP_SUCCEEDED
-//         })
-//       }
-//     }
-//     // dispatch(watchMetamask())
-//   }
-// }
 
 /* Login process
   loginMetaMask: [MM] Enable
@@ -109,12 +90,6 @@ export function watchMetamask() {
     const {selectedAddress, isEnabled, isUnlocked, isTargetNetwork} = initMetamaskInfo
     if(selectedAddress && isEnabled && isUnlocked && isTargetNetwork && getStorageToken()) {
       dispatch(getUserInfo())
-      dispatch(getAllBalance())
-    }
-
-    while (true) {
-      await dispatch(getAllBalance())
-      await delay(5000)
     }
   }
 }
@@ -131,10 +106,7 @@ export function loginMetaMask() {
   return async (dispatch) => {
     const [error] = await dispatch(enableEthereum())
     if (!error) {
-      await Promise.all([
-        dispatch(getAllBalance()),
-        dispatch(loginSmartUp()),
-      ])
+      dispatch(loginSmartUp())
     }
   }
 }
@@ -171,6 +143,7 @@ function getPersonSign(msg) {
 
 function getUserInfo(signature) {
   return async dispatch => {
+    dispatch(getAllBalance())
     const account = await getAccount()
     const [error, response] = await dispatch(
       asyncFunction(
@@ -183,52 +156,6 @@ function getUserInfo(signature) {
       setStorageToken(response.token, account)
     }
   }
-}
-
-export function getAllBalance() {
-  return async dispatch => {
-    const account = await getAccount()
-    if(account) {
-      return Promise.all([
-        dispatch(getEthBalance(account)),
-        dispatch(getSutBalance(account)),
-        dispatch(getNttBalance(account)),
-      ])      
-    }
-  }
-}
-function getEthBalance(account) {
-  return callbackFunction(
-    smartupWeb3.eth.getBalance,
-    null, METAMASK_ETH_BALANCE_SUCCEEDED, null,
-    {
-      isWeb3: true,
-      params: account,
-      responsePayload: formatToken
-    }
-  )
-}
-function getSutBalance(account) {
-  return callbackFunction(
-    smartupWeb3.eth.call,
-    null, METAMASK_SUT_BALANCE_SUCCEEDED, null,
-    {
-      isWeb3: true,
-      params: { to: sutContractAddress, data: getBalance(account) },
-      responsePayload: formatToken
-    }
-  )
-}
-function getNttBalance(account) {
-  return callbackFunction(
-    smartupWeb3.eth.call,
-    null, METAMASK_NTT_BALANCE_SUCCEEDED, null,
-    {
-      isWeb3: true,
-      params: { to: nttContractAddress, data: getCredit(account) },
-      responsePayload: formatCredit
-    }
-  )
 }
 
 //upload image

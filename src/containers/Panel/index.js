@@ -138,7 +138,7 @@ const mapStateToProps = state => ({
   isLoading: state.user.isLoading,
   loginError: state.user.loginError,
   account: state.user.account,
-  nttBalance: state.user.nttBalance,
+  nttBalance: state.wallet.ntt,
   
   userName: state.user.userName,
   userAvatar: state.user.userAvatar,

@@ -8,13 +8,18 @@ import { API_USER_NOTIFICATION_LIST, API_USER_NOTIFICATION_SEARCH, API_USER_NOTI
 import fetch, {delay} from '../lib/util/fetch';
 import { asyncFunction } from '../integrator'
 
+/*
+=> toggle among type, fetch new data
+=> unreadCount changed, fetch new unread message
+  => add to list if match criteria
+*/
 export function watch() {
   return async (dispatch, getState) => {
     while(true) {
       const { notification: {unreadCount}, user: { loggedIn } } = getState()
       if(loggedIn) {
-        const [error, res] = await dispatch(getUnread())
-        if(!error && res.count !== unreadCount) dispatch(getList())
+        const [error, {count}] = await dispatch(getUnread())
+        if(!error && count !== unreadCount) dispatch(getList(false, true))
       }
       await delay(10000)
     }
@@ -37,7 +42,7 @@ export function toggleShowUnread() {
 }
 
 //通知列表
-export function getList(isLoadMore) { // isLoadMore can be event
+export function getList(isLoadMore, autoFetch) { // isLoadMore can be event
   return (dispatch, getState) => {
     const { showUnreadOnly, keyword, pageNumb, pageSize } = getState().notification
     dispatch(
@@ -45,12 +50,12 @@ export function getList(isLoadMore) { // isLoadMore can be event
         fetch.post,
         USER_NOTIFICATION_LIST_REQUESTED, USER_NOTIFICATION_LIST_SUCCEEDED, USER_NOTIFICATION_LIST_FAILED,
         {
-          params: keyword ? API_USER_NOTIFICATION_SEARCH : API_USER_NOTIFICATION_LIST,
-          params2: keyword 
+          params: keyword && !autoFetch ? API_USER_NOTIFICATION_SEARCH : API_USER_NOTIFICATION_LIST,
+          params2: keyword && !autoFetch
           ? { query: keyword, pageNumb: isLoadMore ? pageNumb + 1 : 1, pageSize } 
           : { pageNumb: isLoadMore ? pageNumb + 1 : 1, pageSize, unread: showUnreadOnly ? true : null },
           responsePayload: r => ({...r, marketIndex: r.list.findIndex( n => n.content.marketId === getState().market.currentMarketId )}),
-          meta: { isLoadMore }
+          meta: { isLoadMore, autoFetch }
           // responsePayload: reps => reps.list
         }
       )

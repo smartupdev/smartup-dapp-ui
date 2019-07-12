@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import styled, { css } from 'styled-components'
 
 import { connect } from 'react-redux'
@@ -6,6 +6,10 @@ import { toggleExpandedBookmark, toggleExpandedMarket, toggleExpandedWallet } fr
 import { getMarketWallet, delSavedMarket } from '../../actions/market'
 import { getCollectedMarketsPanel } from '../../actions/personalCenter'
 import { getGlobalMarket } from '../../actions/globalInfo'
+import { 
+  onChangeEthDeposit, onChangeSutDeposit, onChangeEthWithdraw, onChangeSutWithdraw,
+  onWithdrawEth, onWithdrawSut, onDepositEth, onDepositSut,
+ } from '../../actions/wallet'
 // import { getList } from '../../actions/bookmark'
 
 import Avatar from '../../components/Avatar'
@@ -46,12 +50,25 @@ const BookmarkBlock = styled(Row)`
 
 `
 
-const Token = ({ icon, label, amount, open, setOpen }) => {
+const Token = ({ 
+  icon, label, 
+  amount, walletAmount, 
+  onDeposit, depositAmount, onChangeDeposit, depositStatus,
+  onWithdraw, withdrawAmount, onChangeWithdraw, withdrawStatus,
+  open, setOpen }) => {
   const [isBuy, setIsBuy] = useState(true)
-  const [input, inputChange] = useState('')
+  const inputRef = useRef('input')
+  function toggleBuy() {
+    setIsBuy(!isBuy)
+    inputRef.current.focus()
+  }
+  function toggleOpen() {
+    setOpen(!open)
+    if(!open) inputRef.current.focus()
+  }
   return (
     <>
-      <Row centerVertical BottomXS TopXS LeftXL MarginLeftL onClick={() => setOpen(!open)}>
+      <Row centerVertical BottomXS TopXS LeftXL MarginLeftL onClick={toggleOpen}>
         <Image size={theme.fontSizeXL} rightText source={icon} />
         <Text L wordSpaceS>{toToken(amount)}</Text>
         <Text S RightBase><sub>{label}</sub></Text>
@@ -63,19 +80,20 @@ const Token = ({ icon, label, amount, open, setOpen }) => {
         <Col bgDark BottomS>
           <Row center centerVertical VS>
             <Avatar icon={metamask} username='MetaMask' vertical noipfs note />
-            <Trade noSelect rightActive={isBuy} leftActive={!isBuy} color={theme.bgColorLight} HS onClick={() => setIsBuy(!isBuy)} />
+            <Trade noSelect rightActive={isBuy} leftActive={!isBuy} color={theme.bgColorLight} HS onClick={toggleBuy} />
             <Avatar icon={smartupIcon} username='Platform' vertical noipfs note />
           </Row>
-          <Text center note XS BottomS>{`${isBuy ? 'MetaMask' : 'Platform'} Balance: ${toToken(amount)} ${label}`}</Text>
+          <Text center note XS BottomS>{`MetaMask Balance: ${toToken(walletAmount)} ${label}`}</Text>
           <Row HS centerVertical>
             <Col flex={1} HS>
-              <Input number value={input} onChange={v => inputChange(v)} underline placeholder='0.00' />
+              <Input inputRef={inputRef} number disabled={isBuy ? depositStatus : withdrawStatus} value={isBuy ? depositAmount : withdrawAmount} onChange={isBuy ? onChangeDeposit : onChangeWithdraw} underline placeholder='0.00' />
             </Col>
             <Text note S>{label}</Text>
           </Row>
           <Row center TopS>
-            <Button icon={Trade} textProps={{S: true}} primary label={isBuy ? 'Deposit' : 'Withdraw'} />
+            <Button icon={Trade} textProps={{S: true}} primary disabled={isBuy ? depositStatus : withdrawStatus} label={isBuy ? depositStatus === 2 ? 'Processing' : 'Deposit' : withdrawStatus === 2 ? 'Processing' : 'Withdraw'} onClick={isBuy ? onDeposit : onWithdraw} />
           </Row>
+          {(isBuy ? depositStatus === 1 : withdrawStatus === 1) && <Text error center S>Please check MetaMask</Text>}
         </Col>
       </Expand>  
     </>
@@ -85,13 +103,15 @@ const Token = ({ icon, label, amount, open, setOpen }) => {
 const Portfolio = ({
   setOpen,
   userSavedMarketPanel,
-  ethBalance, sutBalance, 
   expandedWallet, expandedMarket, expandedBookmark,
   toggleExpandedBookmark, toggleExpandedMarket, toggleExpandedWallet,
   getCollectedMarketsPanel, 
   userMarketWallet, getMarketWallet, 
   globalInfo, getGlobalMarket,
-  delSavedMarket
+  delSavedMarket,
+  wallet,
+  onChangeEthDeposit, onChangeSutDeposit, onChangeEthWithdraw, onChangeSutWithdraw,
+  onWithdrawEth, onWithdrawSut, onDepositEth, onDepositSut,
 }) => {
   useEffect(() => {
     getGlobalMarket()
@@ -123,8 +143,16 @@ const Portfolio = ({
   ]
   return (
     <Col overflowAuto>
-      <Token icon={ethIcon} label='ETH' amount={ethBalance} open={ethOpen} setOpen={setEthOpen} />
-      <Token icon={smartupIcon} label='SmartUp' amount={sutBalance} open={sutOpen} setOpen={setSutOpen} />
+      <Token icon={ethIcon} label='ETH' 
+        amount={wallet.eth} walletAmount={wallet.ethWallet} 
+        depositAmount={wallet.ethInputDeposit} onChangeDeposit={onChangeEthDeposit} onDeposit={onDepositEth} depositStatus={wallet.ethDepositStatus}
+        withdrawAmount={wallet.ethInputWithdraw} onChangeWithdraw={onChangeEthWithdraw} onWithdraw={onWithdrawEth} withdrawStatus={wallet.ethWithdrawStatus}
+        open={ethOpen} setOpen={setEthOpen} />
+      <Token icon={smartupIcon} label='SmartUp' 
+        amount={wallet.sut} walletAmount={wallet.sutWallet} 
+        depositAmount={wallet.sutInputDeposit} onChangeDeposit={onChangeSutDeposit} onDeposit={onDepositSut} depositStatus={wallet.sutDepositStatus}
+        withdrawAmount={wallet.sutInputWithdraw} onChangeWithdraw={onChangeSutWithdraw} onWithdraw={onWithdrawSut} withdrawStatus={wallet.sutWithdrawStatus}
+        open={sutOpen} setOpen={setSutOpen} />
       <Hr />
       <Panel
         expandedDark
@@ -207,12 +235,11 @@ const mapStateToProps = state => ({
   globalInfo: state.globalInfo,
   userSavedMarketPanel: state.userSavedMarketPanel,
 
-  ethBalance: state.user.ethBalance,
-  sutBalance: state.user.sutBalance,
-
   expandedWallet: state.panel.expandedWallet,
   expandedMarket: state.panel.expandedMarket,
   expandedBookmark: state.panel.expandedBookmark,
+
+  wallet: state.wallet
 });
 
 const mapDispatchToProps = {
@@ -220,6 +247,8 @@ const mapDispatchToProps = {
   getGlobalMarket, 
   getCollectedMarketsPanel, getMarketWallet,
   delSavedMarket,
+  onChangeEthDeposit, onChangeSutDeposit, onChangeEthWithdraw, onChangeSutWithdraw,
+  onWithdrawEth, onWithdrawSut, onDepositEth, onDepositSut,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Portfolio);

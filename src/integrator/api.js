@@ -47,6 +47,11 @@ export const apiGetUser =            () =>                     () => fetch.get('
 export const apiUpdateUser =         (name, avatarIpfsHash) => () => fetch.post('/api/user/update',  { name, avatarIpfsHash })
 /* ====== USER AUTH ====== END */
 
+/* ====== Transaction ====== START */
+export const transactionType = { depositSut: 'ChargeSut', depositEth: 'ChargeEth', withdrawSut: 'WithdrawSut', withdrawEth: 'WithdrawEth', createMarket: 'CreateMarket', buyCT: 'BuyCT', sellCT: 'SellCT' }
+export const apiGetTransactionList = ({ pageNumb = pageNumbDefault, pageSize = pageSizeDefault, type = '' }) => () => fetch.post('/api/user/transaction/list', { type, pageNumb, pageSize })
+export const apiAddTransaction =     ({ txHash, type, amount }) => () => fetch.post('/api/user/transaction/upload/tx/hash', { txHash, type, amount })
+/* ====== Transaction ====== END */
 
 //notification-controller
 export const API_USER_NOTIFICATION_LIST = '/api/user/notification/list';
