@@ -188,10 +188,10 @@ export default (state = initialState, action) => {
     case CREATE_MARKET_PRICE: 
       return {
         ...state,
-        price: action.payload,
+        unitPrice: action.payload,
         error: {
           ...state.error,
-          price: !+action.payload
+          unitPrice: !+action.payload
         }
 
       }

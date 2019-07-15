@@ -30,7 +30,7 @@ const CreateMarket = ({
   createMarketState: { 
     activeIndex, 
     name, desc, 
-    price, unit, reserveRatio,
+    unitPrice, unit, reserveRatio,
     error, isFetching, isReady, marketId, 
     avatarHash, avatarUploading,
     coverHash, coverUploading
@@ -94,7 +94,7 @@ const CreateMarket = ({
           activeIndex === 1 ? 
           <>
             <Label>{lang.createMarket.issuePrice}</Label>
-            <Input number background L value={price} onChange={onChangePrice} disabled={isFetching} />
+            <Input number background L value={unitPrice} onChange={onChangePrice} disabled={isFetching} />
             <Text S right error={error.price}>{error.price ? lang.createMarket.issuePriceError : lang.createMarket.issuePriceDes}</Text>
             <Label>{lang.createMarket.issueUnit}</Label>
             <Input number background L value={unit} onChange={onChangeUnit} disabled={isFetching} />
