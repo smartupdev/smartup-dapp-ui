@@ -99,16 +99,16 @@ export default (state = initialState, action) => {
       return { ...state, ethWithdrawStatus: 0 }
 
     case USER_NOTIFICATION_LIST_SUCCEEDED:
-      const ethDepositUpdated = action.payload.list.some(l => l.type === transactionType.depositEth && l.content.txHash === state.ethDepositTxHash && l.content.isSuccess)
-      const sutDepositUpdated = action.payload.list.some(l => l.type === transactionType.depositSut && l.content.txHash === state.sutDepositTxHash && l.content.isSuccess)
-      const ethWithdrawUpdated = action.payload.list.some(l => l.type === transactionType.withdrawEth && l.content.txHash === state.ethWithdrawTxHash && l.content.isSuccess)
-      const sutWithdrawUpdated = action.payload.list.some(l => l.type === transactionType.withdrawSut && l.content.txHash === state.sutWithdrawTxHash && l.content.isSuccess)
+      const ethDepositUpdated = action.payload.list.some(l => l.type.includes(transactionType.depositEth) && l.content.txHash === state.ethDepositTxHash && l.content.isSuccess)
+      const sutDepositUpdated = action.payload.list.some(l => l.type.includes(transactionType.depositSut) && l.content.txHash === state.sutDepositTxHash && l.content.isSuccess)
+      const ethWithdrawUpdated = action.payload.list.some(l => l.type.includes(transactionType.withdrawEth) && l.content.txHash === state.ethWithdrawTxHash && l.content.isSuccess)
+      const sutWithdrawUpdated = action.payload.list.some(l => l.type.includes(transactionType.withdrawSut) && l.content.txHash === state.sutWithdrawTxHash && l.content.isSuccess)
       return {
         ...state,
-        ...ethDepositUpdated && { ethDepositTxHash: initialState.ethDepositTxHash, ethDepositStatus: initialState.ethDepositStatus },
-        ...sutDepositUpdated && { sutDepositTxHash: initialState.sutDepositTxHash, sutDepositStatus: initialState.sutDepositStatus },
-        ...ethWithdrawUpdated && { ethWithdrawTxHash: initialState.ethWithdrawTxHash, ethWithdrawStatus: initialState.ethWithdrawStatus },
-        ...sutWithdrawUpdated && { sutWithdrawTxHash: initialState.sutWithdrawTxHash, sutWithdrawStatus: initialState.sutWithdrawStatus },
+        ...ethDepositUpdated && { ethDepositTxHash: initialState.ethDepositTxHash, ethDepositStatus: initialState.ethDepositStatus, ethInputDeposit: initialState.ethInputDeposit },
+        ...sutDepositUpdated && { sutDepositTxHash: initialState.sutDepositTxHash, sutDepositStatus: initialState.sutDepositStatus, sutInputDeposit: initialState.sutInputDeposit },
+        ...ethWithdrawUpdated && { ethWithdrawTxHash: initialState.ethWithdrawTxHash, ethWithdrawStatus: initialState.ethWithdrawStatus, ethInputWithdraw: initialState.ethInputWithdraw },
+        ...sutWithdrawUpdated && { sutWithdrawTxHash: initialState.sutWithdrawTxHash, sutWithdrawStatus: initialState.sutWithdrawStatus, sutInputWithdraw: initialState.sutInputWithdraw },
       }
     default:
       return state
