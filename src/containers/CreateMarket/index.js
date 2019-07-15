@@ -18,18 +18,26 @@ import DropToUpload from '../../components/DropToUpload'
 import { useLang } from '../../language'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux';
-import { setActiveIndex, onChangeName, onChangeDesc, reset, get, create, onChangeAvatar, onChangeCover } from '../../actions/createMarket'
+import { 
+  setActiveIndex, 
+  onChangeName, onChangeDesc, 
+  onChangePrice, onChangeUnit, onChangeReserveRatio, 
+  reset, get, create, onChangeAvatar, onChangeCover } from '../../actions/createMarket'
 // import { createMarket } from '../../actions/market'
 
 // const optionsSpeed = ['Slow', 'Standard', 'Fast']
 const CreateMarket = ({
   createMarketState: { 
-    activeIndex, name, desc, error, isFetching, isReady, marketId, 
+    activeIndex, 
+    name, desc, 
+    price, unit, reserveRatio,
+    error, isFetching, isReady, marketId, 
     avatarHash, avatarUploading,
     coverHash, coverUploading
   }, 
   setActiveIndex, create, onChangeName, onChangeDesc, reset, get, 
-  onChangeAvatar, onChangeCover
+  onChangeAvatar, onChangeCover,
+  onChangePrice, onChangeUnit, onChangeReserveRatio, 
 }) => {
   useEffect( () => {
     (!isReady || activeIndex < 0) && get()
@@ -85,19 +93,15 @@ const CreateMarket = ({
         :
           activeIndex === 1 ? 
           <>
-            <Label>{lang.createMarket.priceEquation}</Label>
-            <Col spacingBottomXS>
-              <Input background L disabled value={'\
-7.4999921875 × 10⁻²{ \
-(𝑦 + 1 + 𝑥)[In(𝑦 + 1 + 𝑥) - 1] - \
-(𝑦 + 1)[In(𝑦 + 1 ) - 1] \
-} + \
-7.8125 × 10⁻⁹[(𝑦 + 1 + 𝑥)² - (𝑦 + 1)²]'} />
-            </Col>
-            <Label>{lang.createMarket.previewCurve}</Label>
-            <Col spacingLeftL spacingRightL spacingTopM>
-              <Chart />
-            </Col>
+            <Label>{lang.createMarket.issuePrice}</Label>
+            <Input number background L value={price} onChange={onChangePrice} disabled={isFetching} />
+            <Text S right error={error.price}>{error.price ? lang.createMarket.issuePriceError : lang.createMarket.issuePriceDes}</Text>
+            <Label>{lang.createMarket.issueUnit}</Label>
+            <Input number background L value={unit} onChange={onChangeUnit} disabled={isFetching} />
+            <Text S right error={error.unit}>{error.unit ? lang.createMarket.issueUnitError : lang.createMarket.issueUnitDes}</Text>
+            <Label>{lang.createMarket.reserveRatio}</Label>
+            <Input number background L value={reserveRatio} onChange={onChangeReserveRatio} disabled={isFetching} />
+            <Text S right error={error.reserveRatio}>{error.reserveRatio ? lang.createMarket.reserveRatioError : lang.createMarket.reserveRatioDes}</Text>
             <Row spacingTopL spaceBetween>
               <Back />
               <Next />
@@ -114,21 +118,6 @@ const CreateMarket = ({
               </Col>
               <Text rightText>SmartUp</Text>
             </Row>
-            {/* <Col spacingTopM>
-              <Label>Trading speed</Label>
-              <Row centerVertical>
-                <Col flex={1} spacingLeftXS>
-                  <Selector showLabel options={optionsSpeed} selectedIndex={1} onClick={console.log} />
-                </Col>
-                <Col spacingRightXS>
-                  <Image source={ethIcon} M />
-                </Col>
-                <Label>ETH needed for trading: </Label>
-                <Col flex={1} spacingLeftXS>
-                  <Input background L />
-                </Col>
-              </Row>
-            </Col> */}
             <Row spacingTopL spaceBetween>
               <Back />
               <Button label= {lang.createMarket.create} primary onClick={create} extended disabled={isFetching} />
@@ -162,7 +151,8 @@ const mapStateToProps = state => ({
   createMarketState: state.createMarket,
 });
 const mapDispatchToProps = {
-  setActiveIndex, create, onChangeName, onChangeDesc, reset, get, onChangeAvatar, onChangeCover
+  setActiveIndex, create, onChangeName, onChangeDesc, reset, get, onChangeAvatar, onChangeCover,
+  onChangePrice, onChangeUnit, onChangeReserveRatio, 
 } 
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(CreateMarket));

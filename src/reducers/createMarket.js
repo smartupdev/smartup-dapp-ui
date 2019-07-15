@@ -14,6 +14,7 @@ import {
 
   CREATE_MARKET_AVATAR_CHANGE_REQUESTED, CREATE_MARKET_AVATAR_CHANGE_SUCCEEDED, CREATE_MARKET_AVATAR_CHANGE_FAILED,
   CREATE_MARKET_COVER_CHANGE_REQUESTED, CREATE_MARKET_COVER_CHANGE_SUCCEEDED, CREATE_MARKET_COVER_CHANGE_FAILED,
+  CREATE_MARKET_PRICE, CREATE_MARKET_UNIT, CREATE_MARKET_RESERVE
 } from '../actions/actionTypes';
 
 import { length } from '../lib/util'
@@ -25,12 +26,13 @@ export const initialState = {
   isReady: false,
   name: '',
   desc: '',
-  // avatarUrl: null,
   avatarHash: '',
   avatarUploading: false,
-  // coverUrl: null,
   coverHash: '',
   coverUploading: false,
+  unit: '',
+  unitPrice: '',
+  reserveRatio: '',
   marketId: '',
   error: {
     apiError: null,
@@ -183,6 +185,34 @@ export default (state = initialState, action) => {
         }
       }
     }
+    case CREATE_MARKET_PRICE: 
+      return {
+        ...state,
+        price: action.payload,
+        error: {
+          ...state.error,
+          price: !+action.payload
+        }
+
+      }
+    case CREATE_MARKET_UNIT: 
+      return {
+        ...state,
+        unit: action.payload,
+        error: {
+          ...state.error,
+          unit: !+action.payload
+        }
+      }
+    case CREATE_MARKET_RESERVE: 
+      return {
+        ...state,
+        reserveRatio: action.payload,
+        error: {
+          ...state.error,
+          reserveRatio: !+action.payload
+        }
+      }
 
     case CREATE_MARKET_SET_TAB: {
       const lang = getRawLang()

@@ -6,11 +6,13 @@ import {
   CREATE_MARKET_LOCK_REQUESTED, CREATE_MARKET_LOCK_SUCCEEDED, CREATE_MARKET_LOCK_FAILED,
   CREATE_MARKET_PAY_REQUESTED, CREATE_MARKET_PAY_SUCCEEDED, CREATE_MARKET_PAY_FAILED,
   CREATE_MARKET_AVATAR_CHANGE_REQUESTED, CREATE_MARKET_AVATAR_CHANGE_SUCCEEDED, CREATE_MARKET_AVATAR_CHANGE_FAILED,
-  CREATE_MARKET_COVER_CHANGE_REQUESTED, CREATE_MARKET_COVER_CHANGE_SUCCEEDED, CREATE_MARKET_COVER_CHANGE_FAILED
+  CREATE_MARKET_COVER_CHANGE_REQUESTED, CREATE_MARKET_COVER_CHANGE_SUCCEEDED, CREATE_MARKET_COVER_CHANGE_FAILED,
+  CREATE_MARKET_PRICE, CREATE_MARKET_UNIT, CREATE_MARKET_RESERVE
 } from './actionTypes';
 import { API_MARKET_CREATE_GET, API_MARKET_CREATE_CHANGE_NAME, API_MARKET_CREATE_SAVE, API_MARKET_CREATE_LOCK } from './api'
 
 import { postIpfsImg } from './ipfs'
+import { action } from './actionHelper'
 
 import fetch from '../lib/util/fetch'
 import { asyncFunction, callbackFunction, getAccount, createMarketData, sutContractAddress, smartupWeb3, } from '../integrator'
@@ -130,6 +132,10 @@ export function onChangeCover(files) {
     CREATE_MARKET_COVER_CHANGE_REQUESTED, CREATE_MARKET_COVER_CHANGE_SUCCEEDED, CREATE_MARKET_COVER_CHANGE_FAILED,
   )
 }
+
+export function onChangePrice(v) { return action(CREATE_MARKET_PRICE, v) }
+export function onChangeUnit(v) { return action(CREATE_MARKET_UNIT, v) }
+export function onChangeReserveRatio(v) { return action(CREATE_MARKET_RESERVE, v) }
 
 export function reset() {
   return {
