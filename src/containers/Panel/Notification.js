@@ -79,7 +79,7 @@ const Notification = ({
             )
           }
             <Hr />
-            <ScrollLoader isButton hasMore={hasNextPage} loadMore={getList} isLoading={gettingNotifications}  />
+            <ScrollLoader isButton hasMore={hasNextPage} loadMore={getList} isLoading={gettingNotifications} noResult={!notifications.length} />
           </>
       }
     </Col>

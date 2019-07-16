@@ -107,10 +107,9 @@ export default ({
   sortBy, orderBy, 
   onClickHeader, onClick, 
   expandedRecords = emptyArr, expandComponent: ExpandComponent, 
-  S, noBorderCol, noResultText, 
+  S, noBorderCol, 
   hasMore, loadMore, isLoading
 }) => {
-  const [{ noResult }] = useLang()
   const tableRef = useRef()
   const tableWrapRef = useRef()
   const prev0 = usePrevious(values[0])
@@ -149,11 +148,11 @@ export default ({
                   onClick={onClick} 
                   ExpandComponent={ExpandComponent} />
               )
-          : 
-            !isLoading && <Text center note VS>{noResultText || noResult}</Text>
+          : null
+            // !isLoading && <Text center note VS>{noResultText || noResult}</Text>
           }
       </Table>
-      <ScrollLoader target={tableWrapRef} hasMore={hasMore} loadMore={loadMore} isLoading={isLoading} />
+      <ScrollLoader target={tableWrapRef} hasMore={hasMore} loadMore={loadMore} isLoading={isLoading} noResult={!values.length} />
     </TableWrapper>
 
   )

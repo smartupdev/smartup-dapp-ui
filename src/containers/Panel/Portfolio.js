@@ -164,8 +164,8 @@ const Portfolio = ({
         body={
           <>
             <Col BottomXS LeftS RightS>
-              <Table S noBorderCol model={TableName} values={userMarketWallet.markets} recordKey='marketId' />
-              <ScrollLoader isButton hasMore={userMarketWallet.hasNextPage} id='market-wallet' isLoading={userMarketWallet.getting} loadMore={getMarketWallet} />
+              <Table S noBorderCol model={TableName} values={userMarketWallet.markets} recordKey='marketId' isLoading={userMarketWallet.getting} loadMore={getMarketWallet}  hasMore={userMarketWallet.hasNextPage} />
+              {/* <ScrollLoader isButton hasMore={userMarketWallet.hasNextPage} id='market-wallet' isLoading={userMarketWallet.getting} loadMore={getMarketWallet} /> */}
             </Col>
             <Hr />
           </>
@@ -222,7 +222,7 @@ const Portfolio = ({
                 </BookmarkBlock>
               )
             }
-            <ScrollLoader isButton hasMore={userSavedMarketPanel.hasLoadMore} id='bookmarked' isLoading={userSavedMarketPanel.getting} loadMore={getCollectedMarketsPanel} />
+            <ScrollLoader isButton hasMore={userSavedMarketPanel.hasLoadMore} id='bookmarked' isLoading={userSavedMarketPanel.getting} loadMore={getCollectedMarketsPanel} noResult={!userSavedMarketPanel.markets.length} />
           </Col>
         }
       />

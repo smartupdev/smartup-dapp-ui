@@ -21,7 +21,7 @@ export function ReplyBody({ replys, loadMore, hasMore, isLoading }) {
         </Fragment>
       )
     }
-    <ScrollLoader isButton loadMore={loadMore} hasMore={hasMore} isLoading={isLoading} />
+    <ScrollLoader isButton loadMore={loadMore} hasMore={hasMore} isLoading={isLoading} noResult={!replys.length} />
     </>
   )
 }
