@@ -11,9 +11,14 @@ export function name(en, tc, sc) {
 
 const main = {
   error: {
-    notLogin: name('You had not logged in yet.', '請先登入'),
+    notLogin: name('You had not logged in yet.', '請先登入', '请先登入'),
     noAccount: name('Please connect to MetaMask.', '請連結到MetaMask'),
-    requiredPhoto: name('This is required', '必須上載圖片')
+    requiredPhoto: name('This is required', '必須上載圖片', '必须上载图片')
+  },
+  notFound: {
+    omg: name('OH MY GOSH! YOU FOUND IT!!!', '來自星際的神秘信號：你在找不明飛行物體嗎？', '噢！你被UFO带到404号星球了！'),
+    notExist: name('Looks like the page you are trying to visit does not exists.', '你所瀏覽的頁面不存在。', '你所浏览的页面不存在。'),
+    tryAgain: name('Please check the URL and try again. May the Force be with you.', '請檢查網址再嘗試吧！', '請检查网址再尝试吧！')
   },
   userGuide,
   dispute: {
@@ -113,24 +118,24 @@ const main = {
   createMarket: {
     tab: {
       basicInfo: name('Basic Information', '基本資料', '基本资料'),
-      equation: name('Price Equation', '價格方程', '价格方程'),
+      equation: name('Token Issue', '代幣發行', '代币发行'),
       deposit: name('Deposit', '按金')
     },
     createMarket: name('CREATE MARKET', '創建巿場', '创建巿场'),
     createDeposit: name('Market creation deposit', '創建巿場按金', '创建巿场按金'),
     marketName: name('Market Name', '巿場名稱', '巿场名称'),
     marketOverview: name('Market Overview', '巿場概要', '巿场概要'),
-    issuePrice: name('Unit Price'),
-    issueUnit: name('Number of Token'),
-    reserveRatio: name('Reserve Ratio'),
+    issuePrice: name('Token Issue Price', '代幣發行價', '代币发行价'),
+    issueUnit: name('Number of Token', '代幣發行量', '代币发行量'),
+    reserveRatio: name('Reserve Ratio', '巿場代幣儲備率', '巿场代币储备率'),
     nameDes: name('Capital sensitive, 3-40 characters, market name cannot be changed.', '區分大小寫，3-40字元，創建後不可更改', '区分大小写，3-40字元，创建后不可更改'),
     overviewDes: name('2000 characters to help new members get to know your market. Overview cannot be changed.', '簡單介紹你的項目，限2000個字元，巿場概要在創建巿場後無法更改', '简单介绍你的项目，限2000个字元，巿场概要在创建巿场后无法更改'),
-    issuePriceDes: name('issuePriceDes'),
+    issuePriceDes: name('The issue price of the market token.(Limitations)'),
     issueUnitDes: name('issueUnitDes'),
     reserveRatioDes: name('reserveRatioDes'),
-    issuePriceError: name('Invalid'),
-    issueUnitError: name('Invalid'),
-    reserveRatioError: name('Invalid'),
+    issuePriceError: name('Invalid', '輸入數值無效', '输入数值无效'),
+    issueUnitError: name('Invalid', '輸入數值無效', '输入数值无效'),
+    reserveRatioError: name('Invalid', '輸入數值無效', '输入数值无效'),
     marketAvatar: name('Market Avatar', '巿場圖像' , '巿场图像'),
     marketCover: name('Market Cover Photo', '巿場封面圖', '巿场封面图'),
     priceEquation: name('Price equation of idea token', '巿場代幣方程', '巿场代币方程'),
