@@ -222,7 +222,7 @@ const Portfolio = ({
                 </BookmarkBlock>
               )
             }
-            <ScrollLoader isButton hasMore={userSavedMarketPanel.hasLoadMore} id='bookmarked' isLoading={userSavedMarketPanel.getting} loadMore={getCollectedMarketsPanel} />
+            <ScrollLoader isButton hasMore={userSavedMarketPanel.hasLoadMore} id='bookmarked' isLoading={userSavedMarketPanel.getting} loadMore={getCollectedMarketsPanel} noResult={!userSavedMarketPanel.markets.length} />
           </Col>
         }
       />

@@ -15,7 +15,7 @@ const Box = styled(Row)`
 `
 
 // id is required if more than one ScrollLoader in a page
-export default ({ target, hasMore, loadMore, isLoading, isButton }) => {
+export default ({ target, hasMore, loadMore, isLoading, isButton, noResult }) => {
   const [lang] = useLang()
   const [ref, {top}, {bottom}] = useScroll(target)
   useEffect( () => {
@@ -24,7 +24,7 @@ export default ({ target, hasMore, loadMore, isLoading, isButton }) => {
     }  
   }, [isLoading, top, bottom])
   if(!hasMore) {
-    return isLoading ? null : <NoResult />
+    return noResult && !isLoading ? <NoResult /> : null
   }
   return (
     <Box center VS ref={ref}>

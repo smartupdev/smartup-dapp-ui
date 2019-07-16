@@ -152,7 +152,7 @@ export default ({
             // !isLoading && <Text center note VS>{noResultText || noResult}</Text>
           }
       </Table>
-      <ScrollLoader target={tableWrapRef} hasMore={hasMore} loadMore={loadMore} isLoading={isLoading} />
+      <ScrollLoader target={tableWrapRef} hasMore={hasMore} loadMore={loadMore} isLoading={isLoading} noResult={!values.length} />
     </TableWrapper>
 
   )

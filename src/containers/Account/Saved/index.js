@@ -61,7 +61,7 @@ function Index({
               </Fragment>
             )
           }
-          <ScrollLoader isButton loadMore={getCollectedPosts} hasMore={collectedPostsHasNextPage} isLoading={gettingCollectedPosts} />
+          <ScrollLoader isButton loadMore={getCollectedPosts} hasMore={collectedPostsHasNextPage} isLoading={gettingCollectedPosts} noResult={!collectedPosts.length} />
           </>
         }/>
       <Panel
