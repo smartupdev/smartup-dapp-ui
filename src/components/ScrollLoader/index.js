@@ -3,6 +3,7 @@ import styled, { css } from 'styled-components'
 import { Row } from '../Layout'
 import { useLang } from '../../language'
 import Button from '../Button'
+import NoResult from '../../containers/NoResult'
 import { DonutLoader } from '../Loader'
 import { useScroll } from '../../lib/react'
 
@@ -22,7 +23,9 @@ export default ({ target, hasMore, loadMore, isLoading, isButton }) => {
       loadMore(true)
     }  
   }, [isLoading, top, bottom])
-  if(!hasMore) return null
+  if(!hasMore) {
+    return isLoading ? null : <NoResult />
+  }
   return (
     <Box center VS ref={ref}>
       { 
