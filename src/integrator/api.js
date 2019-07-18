@@ -53,6 +53,14 @@ export const apiGetTransactionList = ({ pageNumb = pageNumbDefault, pageSize = p
 export const apiAddTransaction =     ({ txHash, type, amount }) => () => fetch.post('/api/user/transaction/upload/tx/hash', { txHash, type, amount })
 /* ====== Transaction ====== END */
 
+/* ====== Market ====== START */
+export const apiCreateMarketCheckInput1 = (name, description, photo, cover) => () => fetch.post('/api/market/create/check/info', { name, description, photo, cover })
+export const apiCreateMarketCheckInput2 = (ctCount, ctPrice, ctRecyclePrice) => () => fetch.post('/api/market/create/check/setting', { ctCount, ctPrice, ctRecyclePrice })
+export const apiGetNewMarketId = () => () => fetch.post('/api/market/create/generate/id')
+export const apiCreateMarket = ({marketId, name, description, photo, cover, ctCount, ctPrice, ctRecyclePrice, gasLimit, gasPrice, sign}) => () => fetch.post('/api/user/market/create', { marketId, name, description, photo, cover, ctCount, ctPrice, ctRecyclePrice, gasLimit, gasPrice, sign })
+export const apiGetSavedMarket = () => () => fetch.post('/api/user/market/creating')
+/* ====== Transaction ====== END */
+
 //notification-controller
 export const API_USER_NOTIFICATION_LIST = '/api/user/notification/list';
 export const API_USER_NOTIFICATION_SEARCH = '/api/user/notification/search';
