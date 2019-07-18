@@ -17,7 +17,7 @@ import {
   API_MARKET_TRADE_LIST, API_USER_TRADE_DETAIL,API_KLINE_DATA, API_USER_TRADE_SAVE
 } from './api';
 import {
-  asyncFunction, toWei, encodeParam, sutContractAddress, smartupWeb3, callbackFunction, getAccount,
+  asyncFunction, toWei, encodeParam, smartupWeb3, callbackFunction, getAccount,
   createBidCtData, createAskCtData, createBidQuoteData, createAskQuoteData, decodeResult,
 } from '../integrator'
 
@@ -157,7 +157,7 @@ export function onTrade() {
         loginRequired: true,
         params: {
           from: await getAccount(),
-          to: isSell ? address : sutContractAddress,
+          // to: isSell ? address : sutContractAddress,
           value: '0x0',
           data: isSell ? createAskCtData(encodeCtAmount) : createBidCtData({ marketAddress: address, encodeCtPrice, encodeCtAmount })
         }

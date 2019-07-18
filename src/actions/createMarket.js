@@ -15,7 +15,7 @@ import { postIpfsImg } from './ipfs'
 import { action } from './actionHelper'
 
 import fetch from '../lib/util/fetch'
-import { asyncFunction, callbackFunction, getAccount, createMarketData, sutContractAddress, smartupWeb3, } from '../integrator'
+import { asyncFunction, callbackFunction, getAccount, createMarketData, smartupWeb3, } from '../integrator'
 
 export function get() {
   return asyncFunction(
@@ -75,7 +75,7 @@ export function pay() {
           loginRequired: true,
           params: {
             from: await getAccount(),
-            to: sutContractAddress,
+            // to: sutContractAddress,
             value: '0x0',
             data: createMarketData()
           }

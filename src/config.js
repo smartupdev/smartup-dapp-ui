@@ -9,6 +9,7 @@ export const ENV_MAP = {
     apiHost:  'https://node.smartup.global',  ipfsHost: 'https://ipfs.smartup.global/ipfs/', protocol: 'https',
     alphaUrl: 'https://www.smartup.global',   shareApi: '/node/share/medium?url=/', versionApi: '/node/get/ipfs/hash',
     smartupContractAddress: '0x184a3dad8912a81ab393b83892f2039ec0297132', networkVersion: '3',
+    gasWeiPrices: [5, 10, 20],
     logo: Logo, logoFull: LogoLarge
   }, 
   beta: { 
@@ -16,6 +17,7 @@ export const ENV_MAP = {
     apiHost:  'https://node-beta.smartup.global', ipfsHost: 'https://ipfs.smartup.global/ipfs/', protocol: 'https',
     alphaUrl: 'https://www.smartup.global',       shareApi: '/node/share/medium?type=beta&url=/', versionApi: '/node/get/ipfs/hash?type=beta',
     smartupContractAddress: '0x184a3dad8912a81ab393b83892f2039ec0297132', networkVersion: '3',
+    gasWeiPrices: [10, 30, 50],
     logo: Logo, logoFull: LogoLarge
   }, 
   dev: { 
@@ -23,6 +25,7 @@ export const ENV_MAP = {
     apiHost:  'http://39.105.101.248:86', ipfsHost: 'https://ipfs.smartup.global/ipfs/', protocol: 'http',
     alphaUrl: 'http://39.105.101.248',    shareApi: '/node/share/medium?type=beta&url=/', versionApi: '/node/get/ipfs/hash?type=beta',
     smartupContractAddress: '0x184a3dad8912a81ab393b83892f2039ec0297132', networkVersion: '3',
+    gasWeiPrices: [10, 30, 50],
     logo: LogoGif, logoFull: LogoLarge
   }, 
   uni: { 
@@ -30,12 +33,18 @@ export const ENV_MAP = {
     apiHost:  'https://node-university.smartup.global', ipfsHost: 'https://ipfs.smartup.global/ipfs/', protocol: 'https',
     alphaUrl: 'https://www.smartup.global',       shareApi: '/node/share/medium?type=university&url=/', versionApi: '/node/get/ipfs/hash?type=university',
     smartupContractAddress: '0xfee003d3cac834b1a8d285252e22c8bb08563b8c', networkVersion: '4',
+    gasWeiPrices: [10, 30, 50],
     logo: LogoGif, logoFull: LogoLarge
   }, 
 }
 
 export const fetchTimeout = 20000
 export const TNC_HASH = 'QmUXE6LhAVCJKFYY3DsRYnxwopp5Ub94sAjVfgx73zp7zr'
+// smartupContractAddress in ENV_MAP
+export const sutContractAddress = '0xf1899c6eb6940021c1ae4e9c3a8e29ee93704b03'
+export const nttContractAddress = '0x846ce03199a759a183cccb35146124cd3f120548'
+export const exchangeContractAddress = '0x7d56a317ceda7083172757e88c2ba4576f9530da'
+export const createMarketGasLimit = 1800000
 
 const processEnv = process.env.REACT_APP_ENV
 

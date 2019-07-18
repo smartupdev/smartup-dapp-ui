@@ -1,10 +1,8 @@
 import Web3 from 'web3'
 import { ENV } from '../config'
+import {sutContractAddress, nttContractAddress, exchangeContractAddress} from '../config'
 
 const { smartupContractAddress, networkVersion } = ENV 
-export const sutContractAddress = '0xf1899c6eb6940021c1ae4e9c3a8e29ee93704b03'
-export const nttContractAddress = '0x846ce03199a759a183cccb35146124cd3f120548'
-export const exchangeContractAddress = '0x7d56a317ceda7083172757e88c2ba4576f9530da'
 const address0x0 = '0x0000000000000000000000000000000000000000'
 const bytes0x0 = '0x0000000000000000000000000000000000000000000000000000000000000000'
 const provider = Web3.givenProvider // || window.ethereum || window.web3 && window.web3.currentProvider
