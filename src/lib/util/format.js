@@ -5,6 +5,9 @@ const formatter = new Intl.NumberFormat('en-US', {
 
 // e.g. toShortNumber(10000, 'k', 1000, 'm', 1000000,)
 // e.g. toShortNumber(123412345556, '千', 1000, '萬', 10000, '億', 100000000)
+function toShortNumberChi(number) {
+  return toShortNumber(number, '千', 1000, '萬', 10000, '億', 100000000)
+}
 function toShortNumber(number, ...wordAndNumbers) {
   if(typeof number !== 'number') return '-'
   const list = wordAndNumbers[0] ? wordAndNumbers : ['k', 1000, 'm', 1000000]
