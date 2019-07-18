@@ -46,7 +46,8 @@ const Notification = ({
   const disabled = gettingNotifications
   const readAllDisabled = !unreadCount || disabled
   const onClick = useCallback( n => {
-    n.marketId && goto.trading({id: n.marketId})
+    if(n.marketId) goto.trading({id: n.marketId})
+    else if(n.txHash) goto.accountTransaction({ txHash: n.txHash })
     n.unread && read(n.id)
     setOpen(false)
   }, [])
@@ -66,6 +67,7 @@ const Notification = ({
             notifications.map(n =>
               <NotificationItem
                 marketId={n.content && n.content.marketId}
+                txHash={n.content && n.content.txHash}
                 key={n.notificationId}
                 id={n.notificationId}
                 onClick={onClick}

@@ -101,3 +101,25 @@ export function useAppear(id, parentId) {
   }, [])
   return [appear, () => setAppear(false), handle]
 }
+
+export function useScrollDirection() {
+  const prevScrollY = useRef(0)
+  const [goingUp, setGoingUp] = useState(false);
+
+  const handleScroll = () => {
+    const currentScrollY = window.scrollY;
+    if (prevScrollY.current < currentScrollY && goingUp) {
+      setGoingUp(false);
+    }
+    if (prevScrollY.current > currentScrollY && !goingUp) {
+      setGoingUp(true);
+    }
+    prevScrollY.current = currentScrollY;
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll, {passive: true});
+    return () => window.removeEventListener("scroll", handleScroll, {passive: true});
+  }, [goingUp]); 
+  return goingUp
+}

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 // import styled, { css } from 'styled-components'
 import theme from '../../../theme'
+import { getUrlParams } from '../../../routes'
 
 import { More } from '../../../components/Icon'
 import { Row, Col } from '../../../components/Layout'
@@ -37,21 +38,28 @@ function Transaction({
     return reset
   }, [])
   const [expands, setExpands] = useState([])
+  function onClickExpand(index) {
+    const newExpands = [...expands]
+    newExpands[index] = !newExpands[index] 
+    setExpands(newExpands)
+  }
   const [{ time: { weekdays, months }, personalCentre: { inTransaction } }] = useLang()
+  const txHash = getUrlParams().txHash
+  useEffect(() => {
+    if(transactions.length) {
+      const findIndex = transactions.findIndex( t => t.txHash === txHash )
+      if(findIndex >= 0 && !expands[findIndex]) onClickExpand(findIndex)
+    }
+  }, [txHash, transactions])
   return (
     <>
       {error && <Text TopS center error>{error.message}</Text>}
-      {transactions.map( ({ 
+      {transactions.map( ({
         txHash, type, detail: {ct, sut, eth}, marketName, marketAddress, createTime, stage, blockTime
       }, index) => {
-        function onClick() {
-          const newExpands = [...expands]
-          newExpands[index] = !newExpands[index] 
-          setExpands(newExpands)
-        }
         return (
           <Col key={txHash} fitHeight>
-            <Row spacingM fitHeight onClick={onClick}>
+            <Row spacingM fitHeight onClick={() => onClickExpand(index)}>
               <Col flex={1}>
                 <Text BottomS L>{inTransaction.typeTitle[type](ct, sut, eth)}</Text>
                 <Text BottomXS note>{marketName}</Text>

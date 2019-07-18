@@ -143,7 +143,7 @@ function linkProps(history, location, marketId) {
   return {
     goto: routes.reduce( (p, c) => ({
       ...p,
-      [c.id]: (params) => history.push(c.path + toParams({id: marketId, ...params}) )
+      [c.id]: (params) => history.push(c.path + toParams({ ...marketId && {id: marketId}, ...params}) )
     }), {}),
     history,
     location
