@@ -344,8 +344,30 @@ Lam:
     - Create market via smartUp contract
       - Initiate market with 
 
-=> admin
-  => lock CT, 10%
-  => unlock, need to freeze a period
-  => get CT as salary
-  => salary from transition
+# admin
+## Right
+- Manage post/reply: close, re-open
+- Approve proposal
+## Join and quit
+- Every Sunday(UTC: 00:00) is a period
+- Join
+  - Can schedule
+  - 10% CT => 1 admin token(AT)
+  - Max 5 AT in the whole market  
+  - One can get more than 1 AT
+- Quit
+  - Can schedule
+  - 1 AT => 10% CT
+## Claim 
+- get CT as salary
+- salary from transition
+
+Case 1;
+  Market: CT => SUT
+  Taker: SUT => CT(+1% sut)
+Case 2;
+  Market: SUT => CT
+  Taker: CT => SUT(-1% sut)
+
+=> Share the transaction pool money of that week
+=> 
