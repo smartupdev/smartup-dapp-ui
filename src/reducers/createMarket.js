@@ -26,10 +26,8 @@ export const initialState = {
   isReady: false,
   name: '',
   desc: '',
-  avatarHash: '',
-  avatarUploading: false,
-  coverHash: '',
-  coverUploading: false,
+  avatarHash: '', avatarUploading: false,
+  coverHash: '', coverUploading: false,
   unit: '',
   unitPrice: '',
   reserveRatio: '',
@@ -38,8 +36,11 @@ export const initialState = {
     apiError: null,
     name: null,
     desc: null,
-    cover: null,
-    avatar: null
+    coverHash: null,
+    avatarHash: null,
+    unit: null,
+    unitPrice: null,
+    reserveRatio: null
   }
 }
 
@@ -55,13 +56,13 @@ export default (state = initialState, action) => {
         ...state,
         coverUploading: false,
         coverHash: action.payload,
-        error: { ...state.error, cover: initialState.error.cover }
+        error: { ...state.error, coverHash: initialState.error.coverHash }
       } 
     case CREATE_MARKET_COVER_CHANGE_FAILED:
       return {
         ...state,
         coverUploading: false,
-        error: { ...state.error, cover: action.payload }
+        error: { ...state.error, coverHash: action.payload }
       }
 
     case CREATE_MARKET_AVATAR_CHANGE_REQUESTED:
@@ -74,21 +75,15 @@ export default (state = initialState, action) => {
         ...state,
         avatarUploading: false,
         avatarHash: action.payload,
-        error: { ...state.error, avatar: initialState.error.avatar }
+        error: { ...state.error, avatarHash: initialState.error.avatarHash }
       }
     case CREATE_MARKET_AVATAR_CHANGE_FAILED:
       return {
         ...state,
         avatarUploading: false,
-        error: { ...state.error, avatar: action.payload }
+        error: { ...state.error, avatarHash: action.payload }
       }
 
-
-    // case CREATE_MARKET_GET_REQUESTED: 
-    //   return {
-    //     ...state,
-    //     isFetching: true
-    //   }
     case CREATE_MARKET_SAVE_SUCCEEDED: 
     case CREATE_MARKET_GET_SUCCEEDED: {
     // "stage" : "creating"
@@ -96,12 +91,14 @@ export default (state = initialState, action) => {
     // stage: "pending"
       let updates = initialState
       if(action.payload) {
-        const { marketId, description: desc, name, status, photo, cover } = action.payload
+        const { marketId, 
+          description: desc, name, status, photo: avatarHash, cover: coverHash, 
+          ctCount: unit, ctPrice: unitPrice, ctRecyclePrice: reserveRatio, } = action.payload
         updates = {
           marketId, 
           desc, name, 
-          avatarHash: photo,
-          coverHash: cover,
+          avatarHash, coverHash,
+          unit, unitPrice, reserveRatio,
           activeIndex: status === 'locked' ? -1 : 2
         }
       }
@@ -123,13 +120,16 @@ export default (state = initialState, action) => {
         isFetching: true,
         error: {
           ...state.error,
-          api: initialState.error.api
+          api: initialState.error.api,
+          ...action.meta && Object.keys(action.meta).reduce( (p, c) => ({
+            ...p, [c]: initialState.error[c]
+          }), {})
         },
       }
     case CREATE_MARKET_CHECK_SUCCEEDED: 
       return {
         ...state,
-        isFetching: false
+        isFetching: false,
       }
     case CREATE_MARKET_CHECK_FAILED: 
       return {
@@ -137,7 +137,15 @@ export default (state = initialState, action) => {
         isFetching: false,
         error: {
           ...state.error,
-          api: action.payload.message
+          ...action.payload.message ? { api: action.payload.message } : {
+            name: action.payload.name,
+            desc: action.payload.description,
+            avatarHash: action.payload.photo,
+            coverHash: action.payload.cover,
+            unit: action.payload.ctCount,
+            unitPrice: action.payload.ctPrice,
+            reserveRatio: action.payload.ctRecyclePrice, 
+          }
         }
       }  
 
@@ -164,7 +172,7 @@ export default (state = initialState, action) => {
       }
 
     case CREATE_MARKET_NAME_CHANGE: {
-      const error = length(action.payload) < 3 || length(action.payload) > 40 
+      const error = length(action.payload) < 3 || length(action.payload) > 40 ? getRawLang().createMarket.nameDes : initialState.error.name
       return {
         ...state,
         name: action.payload,
@@ -175,7 +183,7 @@ export default (state = initialState, action) => {
       }
     }
     case CREATE_MARKET_DESC_CHANGE: {
-      const error = length(action.payload) < 1 || length(action.payload) > 2000 
+      const error = length(action.payload) < 1 || length(action.payload) > 2000 ? getRawLang().createMarket.overviewDes : initialState.error.desc
       return {
         ...state,
         desc: action.payload,
@@ -191,7 +199,7 @@ export default (state = initialState, action) => {
         unitPrice: action.payload,
         error: {
           ...state.error,
-          unitPrice: !+action.payload
+          unitPrice: !+action.payload ? getRawLang().createMarket.issuePriceError : initialState.error.unitPrice
         }
 
       }
@@ -201,7 +209,7 @@ export default (state = initialState, action) => {
         unit: action.payload,
         error: {
           ...state.error,
-          unit: !+action.payload
+          unit: !+action.payload ? getRawLang().createMarket.issueUnitError : initialState.error.unit
         }
       }
     case CREATE_MARKET_RESERVE: 
@@ -210,20 +218,14 @@ export default (state = initialState, action) => {
         reserveRatio: action.payload,
         error: {
           ...state.error,
-          reserveRatio: !+action.payload
+          reserveRatio: +action.payload > 1 || +action.payload < 0 ? getRawLang().createMarket.reserveRatioError : initialState.error.reserveRatio
         }
       }
 
     case CREATE_MARKET_SET_TAB: {
-      const lang = getRawLang()
-      const error = {...state.error}
-      if(!state.avatarHash) error.avatar = new Error(lang.error.requiredPhoto)
-      if(!state.coverHash) error.cover =  new Error(lang.error.requiredPhoto)
-      const block = error.name || error.desc || error.avatar || error.cover
       return {
         ...state,
-        activeIndex: block ? state.activeIndex : action.payload,
-        error
+        activeIndex: Object.keys(state.error).some((key) => state.error[key]) ? state.activeIndex : action.payload
       }
     }
 

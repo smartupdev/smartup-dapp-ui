@@ -50,7 +50,7 @@ const CreateMarket = ({
   const Label = ({ children }) => <Text S VXS>{children}</Text>
   const Next = ({disabled}) =>  <Button label={lang.createMarket.next} primary extended onClick={next} disabled={disabled || isFetching} />
   const Back = () =>  <Button label={lang.createMarket.back} primary extended onClick={back} disabled={isFetching} />
-  const page1Ready = !(error.name || error.desc || !name || !desc)
+  const page1Ready = !(error.name || error.desc)
   const page2Ready = page1Ready
   const onChangeProgress = tab => 
     tab === 0 ? setActiveIndex(tab) :
@@ -73,19 +73,14 @@ const CreateMarket = ({
           <>
             <Label>{lang.createMarket.marketName}</Label>
             <Input background XL value={name} onChange={onChangeName} disabled={isFetching} />
-            <Text S right error={error.name}>
-              {
-                typeof error.name === 'string' ? error.name :
-              lang.createMarket.nameDes
-              } 
-            </Text>
+            <Text S right error={error.name}>{ error.name || lang.createMarket.nameDes }</Text>
             <Label>{lang.createMarket.marketOverview}</Label>
             <Input background L line={3} value={desc} onChange={onChangeDesc} disabled={isFetching} />
-            <Text S right error={error.desc}>{lang.createMarket.overviewDes}</Text>
+            <Text S right error={error.desc}>{error.desc || lang.createMarket.overviewDes}</Text>
             <Label>{lang.createMarket.marketAvatar}</Label>
-            <DropToUpload MarginBottomM onChoose={onChangeAvatar} isLoading={avatarUploading} error={error.avatar} value={avatarHash} imageHeight='100px' imageWidth='100px' />
+            <DropToUpload MarginBottomM onChoose={onChangeAvatar} isLoading={avatarUploading} error={error.avatarHash} value={avatarHash} imageHeight='100px' imageWidth='100px' />
             <Label>{lang.createMarket.marketCover}</Label>
-            <DropToUpload MarginBottomM onChoose={onChangeCover} isLoading={coverUploading} error={error.cover} value={coverHash} imageHeight={['auto', '300px']} imageWidth={['100%', '450px']} />
+            <DropToUpload MarginBottomM onChoose={onChangeCover} isLoading={coverUploading} error={error.coverHash} value={coverHash} imageHeight={['auto', '300px']} imageWidth={['100%', '450px']} />
             <Row spacingTopL right>
               <Next disabled={!page1Ready} />
             </Row>
@@ -95,13 +90,13 @@ const CreateMarket = ({
           <>
             <Label>{lang.createMarket.issuePrice}</Label>
             <Input number background L value={unitPrice} onChange={onChangePrice} disabled={isFetching} />
-            <Text S right error={error.price}>{error.price ? lang.createMarket.issuePriceError : lang.createMarket.issuePriceDes}</Text>
+            <Text S right error={error.unitPrice}>{error.unitPrice || lang.createMarket.issuePriceDes}</Text>
             <Label>{lang.createMarket.issueUnit}</Label>
             <Input number background L value={unit} onChange={onChangeUnit} disabled={isFetching} />
-            <Text S right error={error.unit}>{error.unit ? lang.createMarket.issueUnitError : lang.createMarket.issueUnitDes}</Text>
+            <Text S right error={error.unit}>{error.unit || lang.createMarket.issueUnitDes}</Text>
             <Label>{lang.createMarket.reserveRatio}</Label>
             <Input number background L value={reserveRatio} onChange={onChangeReserveRatio} disabled={isFetching} />
-            <Text S right error={error.reserveRatio}>{error.reserveRatio ? lang.createMarket.reserveRatioError : lang.createMarket.reserveRatioDes}</Text>
+            <Text S right error={error.reserveRatio}>{error.reserveRatio || lang.createMarket.reserveRatioDes}</Text>
             <Row spacingTopL spaceBetween>
               <Back />
               <Next />

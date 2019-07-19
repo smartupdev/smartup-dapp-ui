@@ -49,6 +49,7 @@ async function cmFetch(method, api, params, host) {
   if(json.code === '1') throw new Error('System Error')
   if(json.code === '2') throw new Error(json.msg || 'Custom Error')
   if(json.code === '3') throw new Error(NOT_LOGIN)
+  if(json.code === '4') throw json.obj // can't throw error object with object as argument
   return json.obj
 }
 

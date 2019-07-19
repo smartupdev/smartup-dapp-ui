@@ -9,31 +9,40 @@ import {
   CREATE_MARKET_COVER_CHANGE_REQUESTED, CREATE_MARKET_COVER_CHANGE_SUCCEEDED, CREATE_MARKET_COVER_CHANGE_FAILED,
   CREATE_MARKET_PRICE, CREATE_MARKET_UNIT, CREATE_MARKET_RESERVE
 } from './actionTypes';
-import { API_MARKET_CREATE_GET, API_MARKET_CREATE_CHANGE_NAME, API_MARKET_CREATE_SAVE, API_MARKET_CREATE_LOCK } from './api'
+import { API_MARKET_CREATE_CHANGE_NAME, API_MARKET_CREATE_SAVE, API_MARKET_CREATE_LOCK } from './api'
 
 import { postIpfsImg } from './ipfs'
 import { action } from './actionHelper'
 
 import fetch from '../lib/util/fetch'
-import { asyncFunction, callbackFunction, getAccount, createMarketData, smartupWeb3, } from '../integrator'
+import { 
+  asyncFunction, 
+  callbackFunction, getAccount, createMarketData, smartupWeb3,
+  apiGetSavedMarket,
+  apiCreateMarketCheckInput1, apiCreateMarketCheckInput2,
+  apiCreateMarket
+ } from '../integrator'
 
 export function get() {
   return asyncFunction(
-    fetch.get,
-    CREATE_MARKET_GET_REQUESTED, CREATE_MARKET_GET_SUCCEEDED, CREATE_MARKET_GET_FAILED,
-    { params: API_MARKET_CREATE_GET }
+    apiGetSavedMarket(),
+    null, CREATE_MARKET_GET_SUCCEEDED, CREATE_MARKET_GET_FAILED,
   )
 }
 
 export function check() {
-  return (dispatch, getState) =>
-    dispatch(
+  return (dispatch, getState) => {
+    const {activeIndex, name, desc, avatarHash, coverHash, unit, unitPrice, reserveRatio} = getState().createMarket
+    if(activeIndex !== 0 && activeIndex !== 1) return action(CREATE_MARKET_CHECK_SUCCEEDED)
+    const params = activeIndex === 0 ? {name, desc, avatarHash, coverHash} : {unit, unitPrice, reserveRatio}
+    return dispatch(
       asyncFunction(
-        fetch.get,
+        activeIndex === 0 ? apiCreateMarketCheckInput1(params) : apiCreateMarketCheckInput2(params),
         CREATE_MARKET_CHECK_REQUESTED, CREATE_MARKET_CHECK_SUCCEEDED, CREATE_MARKET_CHECK_FAILED,
-        { params: API_MARKET_CREATE_CHANGE_NAME, params2: { marketName: getState().createMarket.name } }
+        { meta: params }
       )
     )
+  }
 }
 
 export function create() {
@@ -88,10 +97,7 @@ export function pay() {
 
 export function setActiveIndex(changeNumber) {
   return async (dispatch, getState) => {
-    if (!getState().createMarket.activeIndex && changeNumber) {
-      const [error] = await dispatch(check())
-      if (error) return
-    }
+    await dispatch(check())
     dispatch({
       type: CREATE_MARKET_SET_TAB,
       payload: changeNumber,

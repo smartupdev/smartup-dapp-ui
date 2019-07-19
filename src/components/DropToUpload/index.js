@@ -114,7 +114,7 @@ export default function ({
               <Text BottomS note> {dragFile.dragFile} </Text>
               <Button primary LeftXL RightXL label= {dragFile.chooseFile} onClick={(e) => inputRef.current.click()} />
               <HiddenFile accept="image/x-png,image/gif,image/jpeg,image/png" type='file' id="browse" name="browse" ref={inputRef} value={''} onChange={e => onChoose(e.target.files)} />
-              {error && <Text error S TopS>{error.message}</Text>}
+              {error && <Text error S TopS>{error.message || error}</Text>}
             </>
         }
       </Box>
