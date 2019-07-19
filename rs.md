@@ -344,15 +344,63 @@ Lam:
     - Create market via smartUp contract
       - Initiate market with 
 
+
+# EBM
+## Terms
+- FE: website in ipfs
+- BE: smart-up node
+- Contract: Communicate with chain
+- Member: =Market member, who has CT 
+- CT: Community token, i.e. dollar in a market
+- TX$: Transaction fee
+- AT: Admin token
+## Create Market
+1. User: Input   
+  Off-chain: name, description, photo, cover   
+  On-chain: ctPrice, ctCount, recyclePrice, transaction price(fast, average, slow)
+2. User: sign a) on-chain data b) 2500 sut as deposit
+3. FE: Send to BE
+4. BE: do validation
+5. BE: send a request with sign to contract
+6. Contract: use smartup contract to create a market
+7. Contract: once success, initial market(ct price, count, recycle price)
+
+## Stage 1 - Buy CT
+Period: 1 month  
+Admin: Creator  
+Activity:  
+\- Buy CT: with ctPrice  
+\- Discussion  
+End:  
+a. Sold all CT => go to stage 2  
+b. Period end but not ct were sold => go to dissolve market
+## Stage 2 - Exchange CT
+Period: N/A
+Admin: Who has AT. If no one, creator
+Activity:
+- Buy/Sell CT: 1% TX$ (See transaction)
+- Discussion  
+- Proposal (See above)
+- Flag (See above)
+## Dissolve Market
+1. Lock market  
+  \- No sell/buy  
+  \- No post/reply  
+  \- All proposal stop, no one can withdraw money
+2. Send back all market sut to member: Only member can trigger, he/she can get addition sut as gas
+3. 1 ct = (#sut - gas)/#ct   
+(Note: gas is eth, so need to covert to sut)
+
 # admin
-## Right
+## Privilege
 - Manage post/reply: close, re-open
 - Approve proposal
 ## Join and quit
+- Creator is admin if no one has AT 
 - Every Sunday(UTC: 00:00) is a period
 - Join
   - Can schedule
-  - 10% CT => 1 admin token(AT)
+  - 10% CT => 1 AT
   - Max 5 AT in the whole market  
   - One can get more than 1 AT
 - Quit
@@ -370,4 +418,24 @@ Case 2;
   Taker: CT => SUT(-1% sut)
 
 => Share the transaction pool money of that week
-=> 
+- 100sut 5at => 1at get 20sut
+- 100sut 4at => 1at get 25sut
+- 100sut 0at => creator get 100sut
+
+
+<!-- Data include:
+- name, description, photo,
+- 24h change
+- today max, min
+- spot price
+- 24h volume
+- funding pool
+- 7d price
+- total ct(TBC)
+- post count
+- member count
+- 1h, 1d, 1w kline data
+  - max, min price
+  - start, end price
+  - amount, count
+   -->
