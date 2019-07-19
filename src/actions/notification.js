@@ -18,8 +18,8 @@ export function watch() {
     while(true) {
       const { notification: {unreadCount}, user: { loggedIn } } = getState()
       if(loggedIn) {
-        const [error, {count}] = await dispatch(getUnread())
-        if(!error && count !== unreadCount) dispatch(getList(false, true))
+        const [error, response] = await dispatch(getUnread())
+        if(!error && response && response.count !== unreadCount) dispatch(getList(false, true))
       }
       await delay(10000)
     }
