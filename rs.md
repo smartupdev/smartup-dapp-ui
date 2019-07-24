@@ -248,7 +248,7 @@ JV: Voted J
   - No => Archived
 ### 4. Ongoing
 - Proposer can update status
-- Can edit amount and deadline of un-reviewed milestone
+- Can edit amount and deadline of un-reviewed milestone(keep history)
 - Period: Depend on milestone 
 - Result: Proposer
   - Yes => next
@@ -258,7 +258,7 @@ JV: Voted J
 - Period: 14d(TBC)
 - Result: Members' vote(Majority)
   - Yes => Proposer get money, next(Ongoing or archived, depend on milestone)
-  - No => Archived(add appeal later)
+  - No => Archived(add appeal later, phase2)
 ### 6. Archived
 - Show all completed and failed project
 
