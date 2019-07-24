@@ -203,45 +203,48 @@ JV: Voted J
 
 # Proposal
 - CT = votes
-- (TBC)After voted, member's CT lock, member can get NTT
-- Votes among proposal are not shared???
-- When vote, 100% votes, not black vote??
-- Locked CT, until proposal ended
+- (TBC) After voted, member's CT lock, member can get NTT
+- (TBC) Votes among proposal are not shared
+- (TBC) When vote, 100% votes, not black vote
+- ~~Locked CT, until proposal ended~~
 
 ## Role
 - Member: Account with CT
-- Moderator: Top 10 members ~~with positive NTT~~
-- Proposer: Member with > 5% CT
+- Admin: member with AT ~~Top 10 members~~ ~~with positive NTT~~
+- Proposer: Member ~~lock 1% CT~~
 
 ## Phase
-### 1. Idea
-- Member create an idea to become a proposer
-- Can discuss and edit
+### 1. Draft
+- Member create an draft ~~and lock 1% CT~~ => proposer
+- Member can discuss and edit
 - Include
   - Overview
     - Name
     - Description
     - Supporting documents
     - Initial funding
-  - Milestones
+  - Milestones(Optional)
     - Target
     - Amount
     - Deadline  
-- Period: No limit(Until proposer no CT) ~~1M(TBC)~~
+- Proposer can be transferred to another member 
+- Period: No limit ~~(Until proposer no CT)~~ ~~1M(TBC)~~
 - Result: Proposer decision
   - Yes => next
-  - No => Close, delete
-### 2. Idea review
-- Moderators vote pass/fail
-- Period: 1M(TBC)
-- Result: Moderators' vote 
+  - No => close
+- Admin can close draft
+### 2. Idea(phase2)
+- Admin at the starting time: vote pass/fail
+- Period: 7d(TBC)
+- Result: Voting result(Majority) 
   - Yes => next
   - No => Archived
 ### 3. Proposal
-- Members vote pass/fail
-- Period: 1M(TBC)
-- Result: Members' vote yes
-  - Yes => send initial funding to proposer + next
+- Member vote pass/fail
+- lock ct if they voted
+- Period: 14d(TBC)
+- Result: Voting result(Majority) + 5% vote rate
+  - Yes => send initial funding to proposer + next(if has milestone)
   - No => Archived
 ### 4. Ongoing
 - Proposer can update status
@@ -249,22 +252,20 @@ JV: Voted J
 - Period: Depend on milestone 
 - Result: Proposer
   - Yes => next
-  - No => Archived
+  - No(Close) => Archived
 ### 5. Review
 - Vote if the proposer meets the target(Milestone)
-- Period: 
-- Result: Members' vote no
+- Period: 14d(TBC)
+- Result: Members' vote(Majority)
   - Yes => Proposer get money, next(Ongoing or archived, depend on milestone)
-  - No => Archived(Will add appeal later)
+  - No => Archived(add appeal later)
 ### 6. Archived
 - Show all completed and failed project
 
-(TBC)
-1. What if proposer/member/moderator sell CT? Should only count when they do the action
-2. 
+\* What if proposer/member/admin sell CT? Should only count when they do the action
 
 ## Types
-### Options
+<!-- ### Options
 - Create: \> 5% CT
 - Content: 
   - Title
@@ -272,9 +273,9 @@ JV: Voted J
   - 2-5 options
   - Duration(3d, 5d, 7d - default)
   - ~~Number of answer accepted~~
-- Result: Option(s) with highest votes
+- Result: Option(s) with highest votes -->
 
-### Money withdrawal
+<!-- ### Money withdrawal
 - Create: \> 5% CT
 - Content:
   - Title
@@ -296,7 +297,7 @@ JV: Voted J
 - if proposal fail , members can flag with deposit(Type3)
 - if delay or modification
   - Terminate proposal
-  - Create a new one - can ref to the previous one
+  - Create a new one - can ref to the previous one -->
 
 ### Policy(TBC)
 - Includes: (TBC)
@@ -328,23 +329,6 @@ Info:
 - An account for trading
 - Users need to put money the account from their wallet
 
-
-Lam:
-1. add token from wallet, get token from admin
-  - gas fee pay by user
-  - token you get = request token - gas fee 
-2. Create market
-  - FE: Sign and send a request to node, Wait(A)
-  - node: 
-    - Create market => lock status
-      - Check balance
-        - Pass: Send request to contract, Wait(B)
-        - Fail: saved status
-  - Contract:
-    - Create market via smartUp contract
-      - Initiate market with 
-
-
 # EBM
 ## Terms
 - FE: website in ipfs
@@ -354,6 +338,43 @@ Lam:
 - CT: Community token, i.e. dollar in a market
 - TX$: Transaction fee
 - AT: Admin token
+
+## Story - Example
+Z: User Z  
+Y: User Y  
+W: User W
+- Create Market - Z
+  - Set ctPrice(1), ctCount(10,000), basePrice(.4)
+  - Send to BE
+  - Send to contract - pay eth(gas), sut(deposit)
+  - Send to BE  
+  => Z: 0, Y: 0
+- Buy CT - Z
+  - Buy ct - ctCount(2,000), selling price(1.1)
+  - Send to contract - pay eth(gas), sut(ctPrice)
+  - Send to BE  
+    => Z: 2,000 x 1.1, Y: 0
+- Exchange CT
+  - Y Buy ct - ctCount(1,000), buy price(1.15), selling price(1.2)
+  - FE suggest order, Y take Z order
+  - Send to contract - pay eth(gas), sut(1,000 x 1.1)
+  - Send to BE  
+    => Z: 1,000 x 1.1, Y: 1,000 x 1.2
+  - Y change price - ctCount(500), price(1.1)
+  - FE no order can be suggested
+  - Send to contract - pay eth(gas)
+  - Send to BE  
+  => Z: 1,000 x 1.1, Y: 500 x 1.1, 500 x 1.2
+  - W but CT - ctCount(800), buy price(1), selling price(1.3)
+  - FE no order can be suggested
+  - Send to contract - pay eth(gas), sut(800 x 1)
+  - Send to BE  
+    => Z: 1,000 x 1.1, Y: 500 x 1.1, 500 x 1.2, W: -800 x 1(1.3)
+  - Y change price - 1.1 => 1
+  - FE suggest order, Y take Z order
+  - Send to contract - pay eth(gas)
+  - Send to BE  
+    => Z: 1,000 x 1.1, Y: 200 x 1.2, W: 800 x 1.3
 ## Create Market
 1. User: Input   
   Off-chain: name, description, photo, cover   
@@ -375,26 +396,30 @@ End:
 a. Sold all CT => go to stage 2  
 b. Period end but not ct were sold => go to dissolve market
 ## Stage 2 - Exchange CT
-Period: N/A
-Admin: Who has AT. If no one, creator
+Period: N/A  
+Admin: Who has AT. If no one, creator  
 Activity:
-- Buy/Sell CT: 1% TX$ (See transaction)
+- Buy/Sell CT: (phase2) 1% TX$ (See transaction)
 - Discussion  
 - Proposal (See above)
 - Flag (See above)
 ## Dissolve Market
+0. Situation to dissolve market  
+  \- Within buy CT period, CT not sold out  
+  \- Flag and success(after all appeal)
 1. Lock market  
   \- No sell/buy  
   \- No post/reply  
   \- All proposal stop, no one can withdraw money
-2. Send back all market sut to member: Only member can trigger, he/she can get addition sut as gas
-3. 1 ct = (#sut - gas)/#ct   
+2. One member acknowledgement and pay gas to confirm. In return, can get sut(value equivalent to gas) from market 
+3. All member need to claim back their sut according to ct  
+1 ct = (#sut - gas)/#ct   
 (Note: gas is eth, so need to covert to sut)
 
-# admin
+# admin(phase2)
 ## Privilege
-- Manage post/reply: close, re-open
-- Approve proposal
+- Manage post/reply: close, re-open, ban member
+- Manage proposal: close, re-open, ban member, approve
 ## Join and quit
 - Creator is admin if no one has AT 
 - Every Sunday(UTC: 00:00) is a period
@@ -407,14 +432,14 @@ Activity:
   - Can schedule
   - 1 AT => 10% CT
 ## Claim 
-- get CT as salary
+- get sut as salary
 - salary from transition
 
-Case 1;
-  Market: CT => SUT
-  Taker: SUT => CT(+1% sut)
-Case 2;
-  Market: SUT => CT
+Case 1;  
+  Marker: CT => SUT  
+  Taker: SUT => CT(+1% sut)  
+Case 2;  
+  Marker: SUT => CT  
   Taker: CT => SUT(-1% sut)
 
 => Share the transaction pool money of that week
