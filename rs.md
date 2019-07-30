@@ -24,7 +24,7 @@ This is just a plan and note. All content here will may be substantially modifie
 - Deduct 
   - market dissolve and have CT 
   - Miss vote as a juror ~~Juror if miss two times or more~~
-## Honour(Up Point)(TBC)
+## Honour(Up Point)(TBC)(phase2)
 - Activeness
 - Calculated by
   - #Post
@@ -207,6 +207,7 @@ JV: Voted J
 - (TBC) Votes among proposal are not shared
 - (TBC) When vote, 100% votes, not black vote
 - ~~Locked CT, until proposal ended~~
+- Voting period, say 7d
 
 ## Role
 - Member: Account with CT
@@ -240,10 +241,10 @@ JV: Voted J
   - Yes => next
   - No => Archived
 ### 3. Proposal
-- Member vote pass/fail
+- Member not admin vote pass/fail
 - lock ct if they voted
 - Period: 14d(TBC)
-- Result: Voting result(Majority) + 5% vote rate
+- Result: Voting result(Majority) + 30% vote rate
   - Yes => send initial funding to proposer + next(if has milestone)
   - No => Archived
 ### 4. Ongoing
@@ -256,7 +257,7 @@ JV: Voted J
 ### 5. Review
 - Vote if the proposer meets the target(Milestone)
 - Period: 14d(TBC)
-- Result: Members' vote(Majority)
+- Result: Voting result(Majority)+ 30% vote rate
   - Yes => Proposer get money, next(Ongoing or archived, depend on milestone)
   - No => Archived(add appeal later, phase2)
 ### 6. Archived
@@ -299,7 +300,7 @@ JV: Voted J
   - Terminate proposal
   - Create a new one - can ref to the previous one -->
 
-### Policy(TBC)
+### Policy(TBC, phase2)
 - Includes: (TBC)
 - Content:
   - Title
@@ -308,7 +309,7 @@ JV: Voted J
   - Duration(3d, 5d, 7d - default)
 - Result: Option with highest votes
 
-### Market dissolve
+### Market dissolve(phase2)
 - Content:
   - Title
   - Description
@@ -376,15 +377,18 @@ W: User W
   - Send to BE  
     => Z: 1,000 x 1.1, Y: 200 x 1.2, W: 800 x 1.3
 ## Create Market
-1. User: Input   
-  Off-chain: name, description, photo, cover   
-  On-chain: ctPrice, ctCount, recyclePrice, transaction price(fast, average, slow)
-2. User: sign a) on-chain data b) 2500 sut as deposit
-3. FE: Send to BE
-4. BE: do validation
-5. BE: send a request with sign to contract
-6. Contract: use smartup contract to create a market
-7. Contract: once success, initial market(ct price, count, recycle price)
+- \> 100 NTT ~~account created over 30 days~~
+- rules
+- Step:
+  1. User: Input   
+    Off-chain: name, description, photo, cover   
+    On-chain: ctPrice(0.01 - 1k), ctCount(100 - 1M, Integer), recyclePrice(0% - 100%), transaction price(fast, average, slow)
+  2. User: sign a) on-chain data b) 2500 sut as deposit
+  3. FE: Send to BE
+  4. BE: do validation
+  5. BE: send a request with sign to contract
+  6. Contract: use smartup contract to create a market
+  7. Contract: once success, initial market(ct price, count, recycle price)
 
 ## Stage 1 - Buy CT
 Period: 1 month  
@@ -464,3 +468,31 @@ Case 2;
   - start, end price
   - amount, count
    -->
+
+Lam:
+1. In etherScan, user cannot see market info, token
+2. Deposit is needed
+3. Set max gas limit
+4. Price matching method
+
+Make order
+1. User(request) => node
+2. node(message - make order) => user
+3. User(sign) => node 
+4. node(message + sign) => add to order book + balance(-marker) => contract
+5. contract: check message + sign
+
+Take order
+1. User(request) => node
+2. node(message - take order) => user
+3. User(sign) => node 
+4. node(message + sign) => add to order book + balance(-taker, +maker) => contract
+5. contract: check message + sign
+
+Q1
+1. Take multiple orders?
+=> yes
+2. Take and make order?
+=> yes, if not all fulfill
+3. How to ensure the payment is valid?
+=> if not valid in contract, will cancel the order. If the order is took, ...can't solve. So can't trade?
