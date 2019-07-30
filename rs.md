@@ -474,6 +474,9 @@ Lam:
 2. Deposit is needed
 3. Set max gas limit
 4. Price matching method
+5. Symbol: not unique
+6. Market name: unique
+7. Proposal time
 
 Make order
 1. User(request) => node
