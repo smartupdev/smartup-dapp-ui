@@ -115,7 +115,7 @@ const CreateMarket = ({
             </Row>
             <Row spacingTopL spaceBetween>
               <Back />
-              <Button label= {lang.createMarket.create} primary onClick={create} extended disabled={isFetching} />
+              <Button label={lang.createMarket.create} primary onClick={create} extended disabled={isFetching} />
             </Row>
           </>
         :

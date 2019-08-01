@@ -33,7 +33,7 @@ export const initialState = {
   reserveRatio: '',
   marketId: '',
   error: {
-    apiError: null,
+    api: null,
     name: null,
     desc: null,
     coverHash: null,
@@ -223,9 +223,13 @@ export default (state = initialState, action) => {
       }
 
     case CREATE_MARKET_SET_TAB: {
+       const blockChangeTab = 
+        state.activeIndex === 0 ? state.error.name || state.error.desc || state.error.avatarHash || state.error.coverHash || state.error.api :
+        state.activeIndex === 1 ? state.error.unit || state.error.unitPrice || state.error.reserveRatio || state.error.api :
+        null
       return {
         ...state,
-        activeIndex: Object.keys(state.error).some((key) => state.error[key]) ? state.activeIndex : action.payload
+        activeIndex: blockChangeTab ? state.activeIndex : action.payload
       }
     }
 
