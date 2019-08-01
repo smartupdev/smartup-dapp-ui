@@ -50,12 +50,7 @@ const CreateMarket = ({
   const Label = ({ children }) => <Text S VXS>{children}</Text>
   const Next = ({disabled}) =>  <Button label={lang.createMarket.next} primary extended onClick={next} disabled={disabled || isFetching} />
   const Back = () =>  <Button label={lang.createMarket.back} primary extended onClick={back} disabled={isFetching} />
-  const page1Ready = !(error.name || error.desc)
-  const page2Ready = page1Ready
-  const onChangeProgress = tab => 
-    tab === 0 ? setActiveIndex(tab) :
-    tab === 1 ? page1Ready && setActiveIndex(tab) :
-    tab === 2 && page2Ready && setActiveIndex(tab)
+  const onChangeProgress = tab => setActiveIndex(tab)
   const options = [lang.createMarket.tab.basicInfo, lang.createMarket.tab.equation, lang.createMarket.tab.deposit]
     return (
     <Col flex={1}>
@@ -82,7 +77,7 @@ const CreateMarket = ({
             <Label>{lang.createMarket.marketCover}</Label>
             <DropToUpload MarginBottomM onChoose={onChangeCover} isLoading={coverUploading} error={error.coverHash} value={coverHash} imageHeight={['auto', '300px']} imageWidth={['100%', '450px']} />
             <Row spacingTopL right>
-              <Next disabled={!page1Ready} />
+              <Next />
             </Row>
           </>
         :
