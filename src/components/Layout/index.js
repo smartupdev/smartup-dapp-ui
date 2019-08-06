@@ -3,6 +3,7 @@ import styled, { css } from 'styled-components'
 import { media, generalCss } from '../Theme'
 const Flex = styled.div`
   display: flex;
+  ${p => p.wrap && css`flex-wrap: wrap`}
   box-sizing: border-box;
   ${p => p.directions && media(	
     `flex-direction: ${p.directions[0]};`,	

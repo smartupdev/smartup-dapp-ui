@@ -1,11 +1,11 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from '../../routes'
 
 import { Header } from '../../components/Header/MobileHeader'
 // import styled from 'styled-components'
 import Text from '../../components/Text'
 import { DonutLoader } from '../../components/Loader'
-import Input from '../../components/Input'
+import Input, { RichContent } from '../../components/Input'
 import Hr from '../../components/Hr'
 import Button from '../../components/Button'
 import Image from '../../components/Image'
@@ -72,6 +72,9 @@ const CreateMarket = ({
             <Label>{lang.createMarket.marketOverview}</Label>
             <Input background L line={3} value={desc} onChange={onChangeDesc} disabled={isFetching} />
             <Text S right error={error.desc}>{error.desc || lang.createMarket.overviewDes}</Text>
+
+            {/* <RichContent isJs value={detail} onBlur={setDetail} editor /> */}
+
             <Label>{lang.createMarket.marketAvatar}</Label>
             <DropToUpload MarginBottomM onChoose={onChangeAvatar} isLoading={avatarUploading} error={error.avatarHash} value={avatarHash} imageHeight='100px' imageWidth='100px' />
             <Label>{lang.createMarket.marketCover}</Label>

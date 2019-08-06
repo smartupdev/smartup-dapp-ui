@@ -9,15 +9,12 @@ import theme from '../../theme'
 import styled, { css } from 'styled-components'
 import { ipfsHost } from '../../actions/ipfs'
 import { useLang } from '../../language'
+import Uploader from '../Uploader'
 const Box = styled(Col)`
   border: dashed 1px ${p => p.theme.borderColor};
   height: ${p => p.height};
   ${p => p.dragging && css`background-color: ${p.theme.bgColorDark};`}
   ${p => !p.show && css`display: none;`}
-`
-
-const HiddenFile = styled.input`
-  display: none;
 `
 
 const ImageBox = styled(Col)`
@@ -41,51 +38,9 @@ const TextWrapper = styled(Col)`
 
 export default function ({ 
   height = '200px', imageWidth = '100%', imageHeight = '200px', actualSize,
-  value, onChoose = console.log, isLoading = false, 
-  error,
+  value, onChoose = console.log,
   ...rest }) {
   const [{ dragFile }] = useLang()
-  let dragCounter = 0
-  const boxRef = useRef(null)
-  const inputRef = useRef(null)
-  const [dragging, setDragging] = useState(false)
-  const disabled = isLoading || value
-  function nohandle(e) { e.preventDefault(); e.stopPropagation(); }
-  function handleDragIn(e) {
-    nohandle(e)
-    dragCounter++
-    if (e.dataTransfer.items && e.dataTransfer.items.length > 0 && !disabled) {
-      setDragging(true)
-    }
-  }
-  function handleDragOut(e) {
-    nohandle(e)
-    dragCounter--
-    if (dragCounter > 0) return
-    setDragging(false)
-  }
-  function handleDrop(e) {
-    nohandle(e)
-    setDragging(false)
-    if (e.dataTransfer.files && e.dataTransfer.files.length > 0 && !disabled) {
-      onChoose(e.dataTransfer.files)
-      e.dataTransfer.clearData()
-      dragCounter = 0
-    }
-  }
-  useEffect(() => {
-    const target = boxRef.current
-    target.addEventListener('dragenter', handleDragIn)
-    target.addEventListener('dragleave', handleDragOut)
-    target.addEventListener('dragover', nohandle)
-    target.addEventListener('drop', handleDrop)
-    return () => {
-      target.removeEventListener('dragenter', handleDragIn)
-      target.removeEventListener('dragleave', handleDragOut)
-      target.removeEventListener('dragover', nohandle)
-      target.removeEventListener('drop', handleDrop)
-    }
-  }, [disabled])
   return (
     <>
       <ImageBox show={value} center relative fitHeight>
@@ -102,22 +57,25 @@ export default function ({
           </IconWrapper>
         </Col> */}
       </ImageBox>
-      <Box ref={boxRef} dragging={dragging} height={height} center centerVertical show={!value} {...rest}>
-        {
-          isLoading ?
-            <>
-              <DonutLoader page />
-              <Text note TopS> {dragFile.uploading} </Text>
-            </>
-            :
-            <>
-              <Text BottomS note> {dragFile.dragFile} </Text>
-              <Button primary LeftXL RightXL label= {dragFile.chooseFile} onClick={(e) => inputRef.current.click()} />
-              <HiddenFile accept="image/x-png,image/gif,image/jpeg,image/png" type='file' id="browse" name="browse" ref={inputRef} value={''} onChange={e => onChoose(e.target.files)} />
-              {error && <Text error S TopS>{error.message || error}</Text>}
-            </>
+      <Uploader onChoose={onChoose} disabled={value}>
+        { ({ openFinder, error, uploading, dragRef, dragging }) => 
+          <Box ref={dragRef} dragging={dragging} height={height} center centerVertical show={!value} {...rest}>
+            {
+              uploading ?
+                <>
+                  <DonutLoader page />
+                  <Text note TopS> {dragFile.uploading} </Text>
+                </>
+                :
+                <>
+                  <Text BottomS note> {dragFile.dragFile} </Text>
+                  <Button primary LeftXL RightXL label={dragFile.chooseFile} onClick={openFinder} />
+                  {error && <Text error S TopS>{error.message || error}</Text>}
+                </>
+            }
+          </Box>
         }
-      </Box>
+      </Uploader>
     </>
   )
 } 

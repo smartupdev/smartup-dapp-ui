@@ -2,7 +2,7 @@ import React from 'react'
 import styled, { css } from 'styled-components'
 import { spacingCss, fontCss, onClickCss } from '../Theme'
 
-const TextStyle = css`
+export const TextStyle = css`
   ${onClickCss}
   ${fontCss}
   ${spacingCss}

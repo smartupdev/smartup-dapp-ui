@@ -1,3 +1,8 @@
+export function noHandle(e) { 
+  e.preventDefault()
+  e.stopPropagation()
+}
+
 export function copy(str) {
   const el = document.createElement('textarea')
   el.value = str
