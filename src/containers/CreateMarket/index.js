@@ -5,7 +5,7 @@ import { Header } from '../../components/Header/MobileHeader'
 // import styled from 'styled-components'
 import Text from '../../components/Text'
 import { DonutLoader } from '../../components/Loader'
-import Input, { RichContent } from '../../components/Input'
+import Input, { RichContent, Label } from '../../components/Input'
 import Hr from '../../components/Hr'
 import Button from '../../components/Button'
 import Image from '../../components/Image'
@@ -18,24 +18,20 @@ import DropToUpload from '../../components/DropToUpload'
 import { useLang } from '../../language'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux';
-import { 
-  setActiveIndex, 
-  onChangeName, onChangeDesc, 
-  onChangePrice, onChangeUnit, onChangeReserveRatio, 
-  reset, get, create, onChangeAvatar, onChangeCover } from '../../actions/createMarket'
+import * as actions from '../../actions/createMarket'
 // import { createMarket } from '../../actions/market'
 
 // const optionsSpeed = ['Slow', 'Standard', 'Fast']
 const CreateMarket = ({
   createMarketState: { 
     activeIndex, 
-    name, desc, 
+    name, desc, detail,
     unitPrice, unit, reserveRatio,
     error, isFetching, isReady, marketId, 
     avatarHash, avatarUploading,
-    coverHash, coverUploading
+    coverHash, coverUploading,
   }, 
-  setActiveIndex, create, onChangeName, onChangeDesc, reset, get, 
+  setActiveIndex, create, onChangeName, onChangeDesc, onChangeDetail, reset, get, 
   onChangeAvatar, onChangeCover,
   onChangePrice, onChangeUnit, onChangeReserveRatio, 
 }) => {
@@ -47,7 +43,6 @@ const CreateMarket = ({
   if(!isReady) return <DonutLoader page />  
   function next() { setActiveIndex(activeIndex + 1) }
   function back() { setActiveIndex(activeIndex - 1) }
-  const Label = ({ children }) => <Text S VXS>{children}</Text>
   const Next = ({disabled}) =>  <Button label={lang.createMarket.next} primary extended onClick={next} disabled={disabled || isFetching} />
   const Back = () =>  <Button label={lang.createMarket.back} primary extended onClick={back} disabled={isFetching} />
   const onChangeProgress = tab => setActiveIndex(tab)
@@ -66,15 +61,9 @@ const CreateMarket = ({
       {
         activeIndex === 0 ? 
           <>
-            <Label>{lang.createMarket.marketName}</Label>
-            <Input background XL value={name} onChange={onChangeName} disabled={isFetching} />
-            <Text S right error={error.name}>{ error.name || lang.createMarket.nameDes }</Text>
-            <Label>{lang.createMarket.marketOverview}</Label>
-            <Input background L line={3} value={desc} onChange={onChangeDesc} disabled={isFetching} />
-            <Text S right error={error.desc}>{error.desc || lang.createMarket.overviewDes}</Text>
-
-            {/* <RichContent isJs value={detail} onBlur={setDetail} editor /> */}
-
+            <Input background XL value={name} onChange={onChangeName} disabled={isFetching} label={lang.createMarket.marketName} error={error.name} description={lang.createMarket.nameDes}  />
+            <Input background L line={3} value={desc} onChange={onChangeDesc} disabled={isFetching} label={lang.createMarket.marketOverview} error={error.desc} description={lang.createMarket.overviewDes} />
+            <RichContent isJs editor value={detail} onBlur={onChangeDetail} label={lang.createMarket.marketDetail} error={error.detail} description={lang.createMarket.detailDes} />
             <Label>{lang.createMarket.marketAvatar}</Label>
             <DropToUpload MarginBottomM onChoose={onChangeAvatar} isLoading={avatarUploading} error={error.avatarHash} value={avatarHash} imageHeight='100px' imageWidth='100px' />
             <Label>{lang.createMarket.marketCover}</Label>
@@ -144,8 +133,9 @@ const mapStateToProps = state => ({
   createMarketState: state.createMarket,
 });
 const mapDispatchToProps = {
-  setActiveIndex, create, onChangeName, onChangeDesc, reset, get, onChangeAvatar, onChangeCover,
-  onChangePrice, onChangeUnit, onChangeReserveRatio, 
+  ...actions
+  // setActiveIndex, create, onChangeName, onChangeDesc, reset, get, onChangeAvatar, onChangeCover,
+  // onChangePrice, onChangeUnit, onChangeReserveRatio, 
 } 
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(CreateMarket));

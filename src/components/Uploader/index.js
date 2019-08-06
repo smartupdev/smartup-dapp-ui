@@ -11,7 +11,7 @@ export default function({ onChoose, children, disabled, onError, uploadApi = pos
   const openFinder =  () => inputRef.current.click()
 
   // file upload action
-  const [error, setError] = useState(null)
+  const [error, setError] = useState()
   const [uploading, setUploading] = useState(false)
   async function uploadPhoto(files) {
     if(!files) return onChoose(null)
@@ -19,7 +19,7 @@ export default function({ onChoose, children, disabled, onError, uploadApi = pos
       setUploading(true)
       const hash = await uploadApi(files[0])
       setUploading(false)
-      setError(null)
+      setError()
       onChoose(hash)
     } 
     catch(error) {

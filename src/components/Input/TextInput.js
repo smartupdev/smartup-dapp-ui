@@ -1,6 +1,7 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
 import { spacingCss, fontCss, onClickCss } from '../Theme'
+import { InputWrapper } from './Common'
 
 export const TextStyle = css`
   ${onClickCss}
@@ -67,8 +68,12 @@ function shouldBlur(e) {
   }
 }
 
-export default ({line, onChange, number, inputRef, ...rest}) => line ? 
-  <TextArea onChange={_onChange(onChange, number)} ref={inputRef} {...rest} rows={line} /> 
-: 
-  <TextInput onChange={_onChange(onChange, number)} onKeyDown={shouldBlur} ref={inputRef} {...rest} />
+export default ({ label, error, description, line, onChange, number, inputRef, ...rest}) =>  
+  <InputWrapper label={label} error={error} description={description}>
+    { line ?
+      <TextArea onChange={_onChange(onChange, number)} ref={inputRef} {...rest} rows={line} /> 
+    : 
+      <TextInput onChange={_onChange(onChange, number)} onKeyDown={shouldBlur} ref={inputRef} {...rest} />
+    }
+  </InputWrapper>
 

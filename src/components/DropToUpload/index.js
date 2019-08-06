@@ -38,7 +38,7 @@ const TextWrapper = styled(Col)`
 
 export default function ({ 
   height = '200px', imageWidth = '100%', imageHeight = '200px', actualSize,
-  value, onChoose = console.log,
+  value, onChoose = console.log, error: userError,
   ...rest }) {
   const [{ dragFile }] = useLang()
   return (
@@ -58,7 +58,7 @@ export default function ({
         </Col> */}
       </ImageBox>
       <Uploader onChoose={onChoose} disabled={value}>
-        { ({ openFinder, error, uploading, dragRef, dragging }) => 
+        { ({ openFinder, error: _error = userError, uploading, dragRef, dragging }) => 
           <Box ref={dragRef} dragging={dragging} height={height} center centerVertical show={!value} {...rest}>
             {
               uploading ?
@@ -70,7 +70,7 @@ export default function ({
                 <>
                   <Text BottomS note> {dragFile.dragFile} </Text>
                   <Button primary LeftXL RightXL label={dragFile.chooseFile} onClick={openFinder} />
-                  {error && <Text error S TopS>{error.message || error}</Text>}
+                  {_error && <Text error S TopS>{_error.message || _error}</Text>}
                 </>
             }
           </Box>

@@ -7,7 +7,8 @@ import {
   CREATE_MARKET_PAY_REQUESTED, CREATE_MARKET_PAY_SUCCEEDED, CREATE_MARKET_PAY_FAILED,
   CREATE_MARKET_AVATAR_CHANGE_REQUESTED, CREATE_MARKET_AVATAR_CHANGE_SUCCEEDED, CREATE_MARKET_AVATAR_CHANGE_FAILED,
   CREATE_MARKET_COVER_CHANGE_REQUESTED, CREATE_MARKET_COVER_CHANGE_SUCCEEDED, CREATE_MARKET_COVER_CHANGE_FAILED,
-  CREATE_MARKET_PRICE, CREATE_MARKET_UNIT, CREATE_MARKET_RESERVE
+  CREATE_MARKET_PRICE, CREATE_MARKET_UNIT, CREATE_MARKET_RESERVE, 
+  CREATE_MARKET_DETAIL_CHANGE
 } from './actionTypes';
 import { API_MARKET_CREATE_CHANGE_NAME, API_MARKET_CREATE_SAVE, API_MARKET_CREATE_LOCK } from './api'
 
@@ -30,16 +31,17 @@ export function get() {
   )
 }
 
-export function check() {
+export function check(changeNumber) {
   return (dispatch, getState) => {
-    const {activeIndex, name, desc, avatarHash, coverHash, unit, unitPrice, reserveRatio} = getState().createMarket
-    if(activeIndex !== 0 && activeIndex !== 1) return action(CREATE_MARKET_CHECK_SUCCEEDED)
-    const params = activeIndex === 0 ? {name, desc, avatarHash, coverHash} : {unit, unitPrice, reserveRatio}
+    const {activeIndex, name, desc, avatarHash, coverHash, unit, unitPrice, reserveRatio, detail, symbol, period} = getState().createMarket
+    if(activeIndex !== 0 && activeIndex !== 1 || changeNumber < activeIndex) return action(CREATE_MARKET_CHECK_SUCCEEDED)
     return dispatch(
       asyncFunction(
-        activeIndex === 0 ? apiCreateMarketCheckInput1(params) : apiCreateMarketCheckInput2(params),
+        activeIndex === 0 ? 
+          apiCreateMarketCheckInput1({name, desc, avatarHash, coverHash, detail}) 
+        : apiCreateMarketCheckInput2({unit, unitPrice, reserveRatio, symbol, period}),
         CREATE_MARKET_CHECK_REQUESTED, CREATE_MARKET_CHECK_SUCCEEDED, CREATE_MARKET_CHECK_FAILED,
-        { meta: params }
+        // { meta: {activeIndex, name, desc, avatarHash, coverHash, unit, unitPrice, reserveRatio, detail, symbol, period} }
       )
     )
   }
@@ -97,48 +99,17 @@ export function pay() {
 
 export function setActiveIndex(changeNumber) {
   return async (dispatch, getState) => {
-    await dispatch(check())
-    dispatch({
-      type: CREATE_MARKET_SET_TAB,
-      payload: changeNumber,
-    })
+    await dispatch(check(changeNumber))
+    dispatch(action(CREATE_MARKET_SET_TAB, changeNumber))
   }
 }
 
-export function onChangeName(text) {
-  return ({
-    type: CREATE_MARKET_NAME_CHANGE,
-    payload: text,
-  })
-}
-
-export function onChangeDesc(text) {
-  return ({
-    type: CREATE_MARKET_DESC_CHANGE,
-    payload: text,
-  })
-}
-
-export function onChangeAvatar(hash) {
-  return {
-    type: CREATE_MARKET_AVATAR_CHANGE_SUCCEEDED,
-    payload: hash
-  }
-}
-
-export function onChangeCover(hash) {
-  return {
-    type: CREATE_MARKET_COVER_CHANGE_SUCCEEDED,
-    payload: hash
-  }
-}
-
+export function onChangeName(text) { return action(CREATE_MARKET_NAME_CHANGE, text) }
+export function onChangeDesc(text) { return action(CREATE_MARKET_DESC_CHANGE, text) }
+export function onChangeDetail(richText) { return action(CREATE_MARKET_DETAIL_CHANGE, richText) }
+export function onChangeAvatar(hash) { return action(CREATE_MARKET_AVATAR_CHANGE_SUCCEEDED, hash) }
+export function onChangeCover(hash) { return action(CREATE_MARKET_COVER_CHANGE_SUCCEEDED, hash) }
 export function onChangePrice(v) { return action(CREATE_MARKET_PRICE, v) }
 export function onChangeUnit(v) { return action(CREATE_MARKET_UNIT, v) }
 export function onChangeReserveRatio(v) { return action(CREATE_MARKET_RESERVE, v) }
-
-export function reset() {
-  return {
-    type: CREATE_MARKET_RESET,
-  }
-}
+export function reset() { return action(CREATE_MARKET_RESET) }

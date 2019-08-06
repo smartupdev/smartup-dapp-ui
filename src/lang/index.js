@@ -125,11 +125,13 @@ const main = {
     createDeposit: name('Market creation deposit', '創建巿場按金', '创建巿场按金'),
     marketName: name('Market Name', '巿場名稱', '巿场名称'),
     marketOverview: name('Market Overview', '巿場概要', '巿场概要'),
+    marketDetail: name('Detail'),
     issuePrice: name('Token Offering Price', '代幣發行價', '代币发行价'),
     issueUnit: name('Token Issue Volume', '代幣發行量', '代币发行量'),
     reserveRatio: name('Reserve Ratio', '巿場代幣儲備率', '巿场代币储备率'),
     nameDes: name('Capital sensitive, 3-40 characters, market name cannot be changed.', '區分大小寫，3-40字元，創建後不可更改', '区分大小写，3-40字元，创建后不可更改'),
     overviewDes: name('2000 characters to help new members get to know your market. Overview cannot be changed.', '簡單介紹你的項目，限2000個字元，巿場概要在創建巿場後無法更改', '简单介绍你的项目，限2000个字元，巿场概要在创建巿场后无法更改'),
+    detailDes: name('Details'),
     issuePriceDes: name('The issue price of the market token', '發行巿場代幣的首次購買價', '发行巿场代币的首次购买价'),
     issueUnitDes: name('The total amount of Martket Token is isussing', '發行巿場代幣的數量', '发行巿场代币的数量'),
     reserveRatioDes: name(`Reserve Part of the SmartUp for investors sell the token to the market. 

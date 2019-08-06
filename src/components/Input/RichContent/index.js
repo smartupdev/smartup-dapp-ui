@@ -26,6 +26,8 @@ import 'draft-js-focus-plugin/lib/plugin.css'
 // import createLinkifyPlugin from 'draft-js-linkify-plugin'
 // import 'draft-js-linkify-plugin/lib/plugin.css'
 
+import { InputWrapper } from '../Common'
+
 import Editor from 'draft-js-plugins-editor'
 import { SelectionState, convertFromRaw, convertToRaw, EditorState, CompositeDecorator, DefaultDraftBlockRenderMap } from 'draft-js'
 import Text, { A } from '../../Text'
@@ -119,35 +121,35 @@ export default
   ({ onChange, onBlur,
     isJs, editor, 
     value, children, disabled, 
+    label, error, description,
     ...rest
   }) => {
     const refEditor = useRef(null)
     const [editorState, setEditorState] = useState(emptyEditor)
-    const [error, setError] = useState(null)
-    // const [view, setView] = useState(false)
+    const [editorError, setError] = useState(null)
+    const displayError = editorError ? editorError.message : error
     useEffect( () => {
       setEditorState(toRich(value || children, isJs))
     }, [])
     return (
-      <>
-      <Box onClick={() => refEditor.current.focus()} {...rest} editor={editor}>
-        {editor && <StaticToolbar editorState={editorState} onChange={setEditorState} onError={setError} /> }
-        {/* <div onClick={() => setView(true)}>view</div> */}
-        <Editor
-          ref={refEditor}
-          editorState={editorState}
-          onChange={editorState => {(onChange || setEditorState)(editorState); setError(null)}}
-          onBlur={() => onBlur(toRaw(editorState, isJs))}
-          readOnly={disabled}
-          blockRenderMap={extendedBlockRenderMap}
-          // decorator={decorator}
-          plugins={plugins}
-        />
-        <AlignmentTool />
-        {/* <div onClick={() => setEditorState(toRich(value || children, isJs))} >{JSON.stringify(value)}</div> */}
-      </Box>
-      {error && <Text error>{error.message}</Text>}
-      </>
+      <InputWrapper label={label} error={displayError} description={description}>
+        <Box onClick={() => refEditor.current.focus()} {...rest} editor={editor}>
+          {editor && <StaticToolbar editorState={editorState} onChange={setEditorState} onError={setError} /> }
+          {/* <div onClick={() => setView(true)}>view</div> */}
+          <Editor
+            ref={refEditor}
+            editorState={editorState}
+            onChange={editorState => {(onChange || setEditorState)(editorState); setError(null)}}
+            onBlur={() => onBlur(toRaw(editorState, isJs))}
+            readOnly={disabled}
+            blockRenderMap={extendedBlockRenderMap}
+            // decorator={decorator}
+            plugins={plugins}
+          />
+          <AlignmentTool />
+          {/* <div onClick={() => setEditorState(toRich(value || children, isJs))} >{JSON.stringify(value)}</div> */}
+        </Box>
+      </InputWrapper>
     )
   }
 

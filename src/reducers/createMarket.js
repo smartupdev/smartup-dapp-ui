@@ -14,7 +14,8 @@ import {
 
   CREATE_MARKET_AVATAR_CHANGE_REQUESTED, CREATE_MARKET_AVATAR_CHANGE_SUCCEEDED, CREATE_MARKET_AVATAR_CHANGE_FAILED,
   CREATE_MARKET_COVER_CHANGE_REQUESTED, CREATE_MARKET_COVER_CHANGE_SUCCEEDED, CREATE_MARKET_COVER_CHANGE_FAILED,
-  CREATE_MARKET_PRICE, CREATE_MARKET_UNIT, CREATE_MARKET_RESERVE
+  CREATE_MARKET_PRICE, CREATE_MARKET_UNIT, CREATE_MARKET_RESERVE,
+  CREATE_MARKET_DETAIL_CHANGE
 } from '../actions/actionTypes';
 
 import { length } from '../lib/util'
@@ -26,6 +27,7 @@ export const initialState = {
   isReady: false,
   name: '',
   desc: '',
+  detail: '',
   avatarHash: '', avatarUploading: false,
   coverHash: '', coverUploading: false,
   unit: '',
@@ -36,6 +38,7 @@ export const initialState = {
     api: null,
     name: null,
     desc: null,
+    detail: null,
     coverHash: null,
     avatarHash: null,
     unit: null,
@@ -92,11 +95,11 @@ export default (state = initialState, action) => {
       let updates = initialState
       if(action.payload) {
         const { marketId, 
-          description: desc, name, status, photo: avatarHash, cover: coverHash, 
+          description: desc, detail, name, status, photo: avatarHash, cover: coverHash, 
           ctCount: unit, ctPrice: unitPrice, ctRecyclePrice: reserveRatio, } = action.payload
         updates = {
           marketId, 
-          desc, name, 
+          desc, name, detail, 
           avatarHash, coverHash,
           unit, unitPrice, reserveRatio,
           activeIndex: status === 'locked' ? -1 : 2
@@ -118,18 +121,13 @@ export default (state = initialState, action) => {
       return {
         ...state,
         isFetching: true,
-        error: {
-          ...state.error,
-          api: initialState.error.api,
-          ...action.meta && Object.keys(action.meta).reduce( (p, c) => ({
-            ...p, [c]: initialState.error[c]
-          }), {})
-        },
+        // error: initialState.error,
       }
     case CREATE_MARKET_CHECK_SUCCEEDED: 
       return {
         ...state,
         isFetching: false,
+        error: initialState.error,
       }
     case CREATE_MARKET_CHECK_FAILED: 
       return {
@@ -140,6 +138,7 @@ export default (state = initialState, action) => {
           ...action.payload.message ? { api: action.payload.message } : {
             name: action.payload.name,
             desc: action.payload.description,
+            detail: action.payload.detail,
             avatarHash: action.payload.photo,
             coverHash: action.payload.cover,
             unit: action.payload.ctCount,
@@ -193,6 +192,15 @@ export default (state = initialState, action) => {
         }
       }
     }
+    case CREATE_MARKET_DETAIL_CHANGE: 
+      return {
+        ...state,
+        detail: action.payload,
+        error: {
+          ...state.error,
+          detail: initialState.error.detail
+        }
+      }
     case CREATE_MARKET_PRICE: 
       return {
         ...state,
@@ -224,7 +232,7 @@ export default (state = initialState, action) => {
 
     case CREATE_MARKET_SET_TAB: {
        const blockChangeTab = 
-        state.activeIndex === 0 ? state.error.name || state.error.desc || state.error.avatarHash || state.error.coverHash || state.error.api :
+        state.activeIndex === 0 ? state.error.name || state.error.desc || state.error.detail || state.error.avatarHash || state.error.coverHash || state.error.api :
         state.activeIndex === 1 ? state.error.unit || state.error.unitPrice || state.error.reserveRatio || state.error.api :
         null
       return {
