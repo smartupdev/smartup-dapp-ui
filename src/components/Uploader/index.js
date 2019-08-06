@@ -6,7 +6,7 @@ import { noHandle } from '../../lib/util'
 const StyleHiddenFile = styled.input`
   display: none;
 `
-export default function({ onChoose, children, disabled, onError }) {
+export default function({ onChoose, children, disabled, onError, uploadApi = postIpfsImg }) {
   const inputRef = useRef(null)
   const openFinder =  () => inputRef.current.click()
 
@@ -17,7 +17,7 @@ export default function({ onChoose, children, disabled, onError }) {
     if(!files) return onChoose(null)
     try {
       setUploading(true)
-      const hash = await postIpfsImg(files[0])
+      const hash = await uploadApi(files[0])
       setUploading(false)
       setError(null)
       onChoose(hash)

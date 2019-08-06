@@ -14,9 +14,9 @@ export function onClickTnc() {
 export function postIpfsImg(file) {
   return new Promise((resolve, reject) => {
     const rawLang = getRawLang()
-    if(file.size > 5e+6) 
+    if(file.size > 5e+6) // TODO: Move to uploader
       return reject(new Error(rawLang.dragFile.fileSizeError))
-    if(!['image/png', 'image/x-png','image/gif','image/jpeg'].includes(file.type)) 
+    if(!['image/png', 'image/x-png','image/gif','image/jpeg'].includes(file.type)) // TODO
       return reject(new Error(rawLang.dragFile.fileTypeError))
     const blob = new Blob([file], { type: file.type });
     toBuffer(blob, (bufferError, buffer) => {
