@@ -9,6 +9,7 @@ export const ENV_MAP = {
     apiHost:  'https://node.smartup.global',  ipfsHost: 'https://ipfs.smartup.global/ipfs/', protocol: 'https',
     alphaUrl: 'https://www.smartup.global',   shareApi: '/node/share/medium?url=/', versionApi: '/node/get/ipfs/hash',
     smartupContractAddress: '0x184a3dad8912a81ab393b83892f2039ec0297132', networkVersion: '3',
+    txHashUrl: 'https://etherscan.io/tx/',
     gasWeiPrices: [5, 10, 20],
     logo: Logo, logoFull: LogoLarge
   }, 
@@ -17,6 +18,7 @@ export const ENV_MAP = {
     apiHost:  'https://node-beta.smartup.global', ipfsHost: 'https://ipfs.smartup.global/ipfs/', protocol: 'https',
     alphaUrl: 'https://www.smartup.global',       shareApi: '/node/share/medium?type=beta&url=/', versionApi: '/node/get/ipfs/hash?type=beta',
     smartupContractAddress: '0x184a3dad8912a81ab393b83892f2039ec0297132', networkVersion: '3',
+    txHashUrl: 'https://ropsten.etherscan.io/tx/',
     gasWeiPrices: [10, 30, 50],
     logo: Logo, logoFull: LogoLarge
   }, 
@@ -25,6 +27,7 @@ export const ENV_MAP = {
     apiHost:  'http://39.105.101.248:86', ipfsHost: 'https://ipfs.smartup.global/ipfs/', protocol: 'http',
     alphaUrl: 'http://39.105.101.248',    shareApi: '/node/share/medium?type=beta&url=/', versionApi: '/node/get/ipfs/hash?type=beta',
     smartupContractAddress: '0x184a3dad8912a81ab393b83892f2039ec0297132', networkVersion: '3',
+    txHashUrl: 'https://ropsten.etherscan.io/tx/',
     gasWeiPrices: [10, 30, 50],
     logo: LogoGif, logoFull: LogoLarge
   }, 
@@ -33,6 +36,7 @@ export const ENV_MAP = {
     apiHost:  'https://node-university.smartup.global', ipfsHost: 'https://ipfs.smartup.global/ipfs/', protocol: 'https',
     alphaUrl: 'https://www.smartup.global',       shareApi: '/node/share/medium?type=university&url=/', versionApi: '/node/get/ipfs/hash?type=university',
     smartupContractAddress: '0xfee003d3cac834b1a8d285252e22c8bb08563b8c', networkVersion: '4',
+    txHashUrl: 'https://ropsten.etherscan.io/tx/',
     gasWeiPrices: [10, 30, 50],
     logo: LogoGif, logoFull: LogoLarge
   }, 

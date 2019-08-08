@@ -17,6 +17,7 @@ import { useLang } from '../../../language'
 
 import { connect } from 'react-redux'
 import { getUserTransactionList, reset } from '../../../actions/personalCenter'
+import {ENV} from '../../../config'
 
 const STAGE = {
   pending: 'pending',
@@ -73,16 +74,16 @@ function Transaction({
             <Expand isOpen={expands[index]}>
               <Col backgroundColor={theme.bgColorDark} HL VM>
               {[
-                { label: inTransaction.txhash, value: txHash },
+                { label: inTransaction.txhash, value: txHash, onClick: () => window.open(ENV.txHashUrl + txHash) },
                 { label: inTransaction.type, value: inTransaction.typeLabel[type] },
                 { label: inTransaction.market, value: marketName ? `${marketName} ${marketAddress}` : 'N/A' },
                 { label: inTransaction.ct, value: ct || 'N/A' },
                 { label: inTransaction.createTime, value: toFullDate(createTime, weekdays, months) },
                 { label: inTransaction.lastUpdate, value: toFullDate(blockTime, weekdays, months) },
-              ].map( ({label, value}) => 
-                <Row key={label} VXS>
+              ].map( ({label, value, onClick}) => 
+                <Row key={label} VXS onClick={onClick}>
                   <Text width={['30%', '250px']}>{label}</Text>
-                  <Text>{value}</Text>
+                  <Text underline={onClick}>{value}</Text>
                 </Row>
               )}
               </Col>
