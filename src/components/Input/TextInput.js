@@ -50,12 +50,14 @@ const TextArea = styled.textarea`
   min-height: fit-content;
   resize: none;
 `
-function _onChange(onChange, number) {
+function _onChange(onChange, number, degit, decimal) {
   if(onChange) {
     return e => {
       const value = e.target.value
-      if(number) 
-        return /^\d{0,10}(\.\d{0,2})?$/.test(value) ? onChange(value) : undefined
+      if(number) {
+        const regex = new RegExp(`^\\d{0,${degit}}(\\.\\d{0,${decimal}}){0,${decimal ? 1 : 0}}$`)
+        return regex.test(value) ? onChange(value) : undefined
+      }
       return onChange(value)
     }
   } 
@@ -68,12 +70,12 @@ function shouldBlur(e) {
   }
 }
 
-export default ({ label, error, description, line, onChange, number, inputRef, ...rest}) =>  
+export default ({ label, error, description, line, onChange, number, digit = 10, decimal = 2, inputRef, ...rest}) =>  
   <InputWrapper label={label} error={error} description={description}>
     { line ?
-      <TextArea onChange={_onChange(onChange, number)} ref={inputRef} {...rest} rows={line} /> 
+      <TextArea onChange={_onChange(onChange, number, digit, decimal)} ref={inputRef} {...rest} rows={line} /> 
     : 
-      <TextInput onChange={_onChange(onChange, number)} onKeyDown={shouldBlur} ref={inputRef} {...rest} />
+      <TextInput onChange={_onChange(onChange, number, digit, decimal)} onKeyDown={shouldBlur} ref={inputRef} {...rest} />
     }
   </InputWrapper>
 

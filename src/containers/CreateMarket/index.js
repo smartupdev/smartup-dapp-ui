@@ -26,7 +26,7 @@ const CreateMarket = ({
   createMarketState: { 
     activeIndex, 
     name, desc, detail,
-    unitPrice, unit, reserveRatio,
+    symbol, period, unitPrice, unit, reserveRatio,
     error, isFetching, isReady, marketId, 
     avatarHash, avatarUploading,
     coverHash, coverUploading,
@@ -34,23 +34,24 @@ const CreateMarket = ({
   setActiveIndex, create, onChangeName, onChangeDesc, onChangeDetail, reset, get, 
   onChangeAvatar, onChangeCover,
   onChangePrice, onChangeUnit, onChangeReserveRatio, 
+  onChangeSymbol, onChangePeriod
 }) => {
   useEffect( () => {
     (!isReady || activeIndex < 0) && get()
     // return reset
   }, [])
-  const [lang] = useLang()
+  const [{ createMarket: createMarketText }] = useLang()
   if(!isReady) return <DonutLoader page />  
   function next() { setActiveIndex(activeIndex + 1) }
   function back() { setActiveIndex(activeIndex - 1) }
-  const Next = ({disabled}) =>  <Button label={lang.createMarket.next} primary extended onClick={next} disabled={disabled || isFetching} />
-  const Back = () =>  <Button label={lang.createMarket.back} primary extended onClick={back} disabled={isFetching} />
+  const Next = ({disabled}) =>  <Button label={createMarketText.next} primary extended onClick={next} disabled={disabled || isFetching} />
+  const Back = () =>  <Button label={createMarketText.back} primary extended onClick={back} disabled={isFetching} />
   const onChangeProgress = tab => setActiveIndex(tab)
-  const options = [lang.createMarket.tab.basicInfo, lang.createMarket.tab.equation, lang.createMarket.tab.deposit]
+  const options = [createMarketText.tab.basicInfo, createMarketText.tab.equation, createMarketText.tab.deposit]
     return (
     <Col flex={1}>
-      <Text hiddenMobile center BottomS TopS L>{lang.createMarket.createMarket}</Text>
-      <Header center><Text>{lang.createMarket.createMarket}</Text></Header>
+      <Text hiddenMobile center BottomS TopS L>{createMarketText.createMarket}</Text>
+      <Header center><Text>{createMarketText.createMarket}</Text></Header>
       <Hr />
       {
         activeIndex >= 0 && 
@@ -61,12 +62,12 @@ const CreateMarket = ({
       {
         activeIndex === 0 ? 
           <>
-            <Input background XL value={name} onChange={onChangeName} disabled={isFetching} label={lang.createMarket.marketName} error={error.name} description={lang.createMarket.nameDes}  />
-            <Input background L line={3} value={desc} onChange={onChangeDesc} disabled={isFetching} label={lang.createMarket.marketOverview} error={error.desc} description={lang.createMarket.overviewDes} />
-            <RichContent isJs editor value={detail} onBlur={onChangeDetail} label={lang.createMarket.marketDetail} error={error.detail} description={lang.createMarket.detailDes} />
-            <Label>{lang.createMarket.marketAvatar}</Label>
+            <Input background XL value={name} onChange={onChangeName} disabled={isFetching} label={createMarketText.marketName} error={error.name} description={createMarketText.nameDes}  />
+            <Input background L line={3} value={desc} onChange={onChangeDesc} disabled={isFetching} label={createMarketText.marketOverview} error={error.desc} description={createMarketText.overviewDes} />
+            <RichContent isJs editor value={detail} onBlur={onChangeDetail} label={createMarketText.marketDetail} error={error.detail} description={createMarketText.detailDes} />
+            <Label>{createMarketText.marketAvatar}</Label>
             <DropToUpload MarginBottomM onChoose={onChangeAvatar} isLoading={avatarUploading} error={error.avatarHash} value={avatarHash} imageHeight='100px' imageWidth='100px' />
-            <Label>{lang.createMarket.marketCover}</Label>
+            <Label>{createMarketText.marketCover}</Label>
             <DropToUpload MarginBottomM onChoose={onChangeCover} isLoading={coverUploading} error={error.coverHash} value={coverHash} imageHeight={['auto', '300px']} imageWidth={['100%', '450px']} />
             <Row spacingTopL right>
               <Next />
@@ -75,15 +76,11 @@ const CreateMarket = ({
         :
           activeIndex === 1 ? 
           <>
-            <Label>{lang.createMarket.issuePrice}</Label>
-            <Input number background L value={unitPrice} onChange={onChangePrice} disabled={isFetching} />
-            <Text S right error={error.unitPrice}>{error.unitPrice || lang.createMarket.issuePriceDes}</Text>
-            <Label>{lang.createMarket.issueUnit}</Label>
-            <Input number background L value={unit} onChange={onChangeUnit} disabled={isFetching} />
-            <Text S right error={error.unit}>{error.unit || lang.createMarket.issueUnitDes}</Text>
-            <Label>{lang.createMarket.reserveRatio}</Label>
-            <Input number background L value={reserveRatio} onChange={onChangeReserveRatio} disabled={isFetching} />
-            <Text S right error={error.reserveRatio}>{error.reserveRatio || lang.createMarket.reserveRatioDes}</Text>
+            <Input background L value={symbol} onChange={onChangeSymbol} disabled={isFetching} label={createMarketText.symbol} error={error.symbol} description={createMarketText.symbolDes} />
+            <Input number background L decimal={8} value={unitPrice} onChange={onChangePrice} disabled={isFetching} label={createMarketText.issuePrice} error={error.unitPrice} description={createMarketText.issuePriceDes} />
+            <Input number background L decimal={0} value={unit} onChange={onChangeUnit} disabled={isFetching} label={createMarketText.issueUnit} error={error.unit} description={createMarketText.issueUnitDes} />
+            <Input number background L value={reserveRatio} onChange={onChangeReserveRatio} disabled={isFetching} label={createMarketText.reserveRatio} error={error.reserveRatio} description={createMarketText.reserveRatioDes} />
+            <Input number background L decimal={0} value={period} onChange={onChangePeriod} disabled={isFetching} label={createMarketText.period} error={error.period} description={createMarketText.periodDes} />
             <Row spacingTopL spaceBetween>
               <Back />
               <Next />
@@ -92,7 +89,7 @@ const CreateMarket = ({
         :
           activeIndex === 2 ? 
           <>
-            <Label>{lang.createMarket.createDeposit}</Label>
+            <Label>{createMarketText.createDeposit}</Label>
             <Row centerVertical>
               <Image source={smartupIcon} M />
               <Col flex={1} spacingRightXS spacingLeftXS>
@@ -102,7 +99,7 @@ const CreateMarket = ({
             </Row>
             <Row spacingTopL spaceBetween>
               <Back />
-              <Button label={lang.createMarket.create} primary onClick={create} extended disabled={isFetching} />
+              <Button label={createMarketText.create} primary onClick={create} extended disabled={isFetching} />
             </Row>
           </>
         :
@@ -110,12 +107,12 @@ const CreateMarket = ({
             <Col center centerVertical flex={1}>
               <Image source={successImg} size={'150px'} />
               <Col spacingTopL spacingBottomL>
-                <Text XL wordSpaceL center> {lang.createMarket.creating} </Text>
+                <Text XL wordSpaceL center> {createMarketText.creating} </Text>
               </Col>
               <Link>
                 {
                   ({goto}) =>
-                <Button label={lang.createMarket.preview} primary onClick={()=>goto.trading({id: marketId})} extended />
+                <Button label={createMarketText.preview} primary onClick={()=>goto.trading({id: marketId})} extended />
                 }
               </Link>
             </Col>

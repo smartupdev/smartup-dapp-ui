@@ -15,7 +15,7 @@ import {
   CREATE_MARKET_AVATAR_CHANGE_REQUESTED, CREATE_MARKET_AVATAR_CHANGE_SUCCEEDED, CREATE_MARKET_AVATAR_CHANGE_FAILED,
   CREATE_MARKET_COVER_CHANGE_REQUESTED, CREATE_MARKET_COVER_CHANGE_SUCCEEDED, CREATE_MARKET_COVER_CHANGE_FAILED,
   CREATE_MARKET_PRICE, CREATE_MARKET_UNIT, CREATE_MARKET_RESERVE,
-  CREATE_MARKET_DETAIL_CHANGE
+  CREATE_MARKET_DETAIL_CHANGE, CREATE_MARKET_SYMBOL_CHANGE, CREATE_MARKET_PERIOD_CHANGE
 } from '../actions/actionTypes';
 
 import { length } from '../lib/util'
@@ -28,6 +28,8 @@ export const initialState = {
   name: '',
   desc: '',
   detail: '',
+  symbol: '',
+  period: 90,
   avatarHash: '', avatarUploading: false,
   coverHash: '', coverUploading: false,
   unit: '',
@@ -41,6 +43,8 @@ export const initialState = {
     detail: null,
     coverHash: null,
     avatarHash: null,
+    symbol: null,
+    period: null,
     unit: null,
     unitPrice: null,
     reserveRatio: null
@@ -95,13 +99,16 @@ export default (state = initialState, action) => {
       let updates = initialState
       if(action.payload) {
         const { marketId, 
-          description: desc, detail, name, status, photo: avatarHash, cover: coverHash, 
-          ctCount: unit, ctPrice: unitPrice, ctRecyclePrice: reserveRatio, } = action.payload
+          symbol,
+          description: desc, detail, name, status, photo: avatarHash, cover: coverHash, closingTime,
+          ctCount: unit, ctPrice: unitPrice, ctRecyclePrice, } = action.payload
         updates = {
           marketId, 
+          symbol,
+          period: Math.round((new Date(closingTime).getTime() - Date.now())/(1000 * 60 * 60 * 24)),
           desc, name, detail, 
           avatarHash, coverHash,
-          unit, unitPrice, reserveRatio,
+          unit, unitPrice, reserveRatio: ctRecyclePrice/unitPrice,
           activeIndex: status === 'locked' ? -1 : 2
         }
       }
@@ -139,6 +146,8 @@ export default (state = initialState, action) => {
             name: action.payload.name,
             desc: action.payload.description,
             detail: action.payload.detail,
+            symbol: action.payload.symbol,
+            period: action.payload.closingTime,
             avatarHash: action.payload.photo,
             coverHash: action.payload.cover,
             unit: action.payload.ctCount,
@@ -178,6 +187,28 @@ export default (state = initialState, action) => {
         error: {
           ...state.error,
           name: error
+        }
+      }
+    }
+    case CREATE_MARKET_SYMBOL_CHANGE: {
+      const symbol = action.payload.toUpperCase()
+      return {
+        ...state,
+        symbol,
+        error: {
+          ...state.error,
+          symbol: /^[0-9A-HJ-NPR-Z]{3,6}$/.test(symbol) ? initialState.error.symbol : getRawLang().createMarket.symbolError
+        }
+      }
+    }
+    case CREATE_MARKET_PERIOD_CHANGE: {
+      const periodNum = +action.payload
+      return {
+        ...state,
+        period: action.payload,
+        error: {
+          ...state.error,
+          period: periodNum < 1 || periodNum > 90 ? getRawLang().createMarket.periodError : initialState.error.period
         }
       }
     }
@@ -231,10 +262,15 @@ export default (state = initialState, action) => {
       }
 
     case CREATE_MARKET_SET_TAB: {
+      const blockPage0 = state.error.name || state.error.desc || state.error.detail || state.error.avatarHash || state.error.coverHash ||
+                         !state.name || !state.desc || !state.detail || !state.avatarHash || !state.coverHash
+      const blockPage1 = state.error.symbol || state.error.period || state.error.unit || state.error.unitPrice || state.error.reserveRatio || 
+                         !state.symbol || !state.period || !state.unit || !state.unitPrice || !state.reserveRatio
        const blockChangeTab = 
-        state.activeIndex === 0 ? state.error.name || state.error.desc || state.error.detail || state.error.avatarHash || state.error.coverHash || state.error.api :
-        state.activeIndex === 1 ? state.error.unit || state.error.unitPrice || state.error.reserveRatio || state.error.api :
-        null
+          action.payload > state.activeIndex ?
+            action.payload === 1 && blockPage0 ||
+            action.payload === 2 && (blockPage0 || blockPage1) 
+          : null
       return {
         ...state,
         activeIndex: blockChangeTab ? state.activeIndex : action.payload

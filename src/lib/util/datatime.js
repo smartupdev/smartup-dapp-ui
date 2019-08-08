@@ -7,6 +7,8 @@ const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', '
 const MIN = 1000 * 60
 const HOUR = MIN * 60
 const DAY = HOUR * 24
+const MONTH = DAY * 30
+const YEAR = 365
 
 const toDateObject = d => d instanceof Date ? d : new Date(d)
 
@@ -35,7 +37,12 @@ const toAgo = (date, nowText = 'now', minText = 'm ago', hourText = 'h ago', day
 }
 
 // TODO: addDay, addMonth, addYear
+const hourAfter = (hours, date = now()) => date + HOUR * hours
+const dayAfter = (days, date = now()) => date + DAY * days
+const monthAfter = (months, date = now()) => date + MONTH * months
+const yearAfter = (years, date = now()) => date + YEAR * years
 // TODO: subDay, subMonth, subYear
 export {
-  getYear, getMonth, getDate, getDay, getHour, getMinute, getSecond, now, toDate, toDateTime, toAgo, toFullDate
+  getYear, getMonth, getDate, getDay, getHour, getMinute, getSecond, now, toDate, toDateTime, toAgo, toFullDate,
+  hourAfter, dayAfter, monthAfter, yearAfter
 }

@@ -7,21 +7,23 @@ import {
   CREATE_MARKET_PAY_REQUESTED, CREATE_MARKET_PAY_SUCCEEDED, CREATE_MARKET_PAY_FAILED,
   CREATE_MARKET_AVATAR_CHANGE_REQUESTED, CREATE_MARKET_AVATAR_CHANGE_SUCCEEDED, CREATE_MARKET_AVATAR_CHANGE_FAILED,
   CREATE_MARKET_COVER_CHANGE_REQUESTED, CREATE_MARKET_COVER_CHANGE_SUCCEEDED, CREATE_MARKET_COVER_CHANGE_FAILED,
-  CREATE_MARKET_PRICE, CREATE_MARKET_UNIT, CREATE_MARKET_RESERVE, 
-  CREATE_MARKET_DETAIL_CHANGE
+  CREATE_MARKET_PRICE, CREATE_MARKET_UNIT, CREATE_MARKET_RESERVE, CREATE_MARKET_SYMBOL_CHANGE,
+  CREATE_MARKET_DETAIL_CHANGE, CREATE_MARKET_PERIOD_CHANGE
 } from './actionTypes';
 import { API_MARKET_CREATE_CHANGE_NAME, API_MARKET_CREATE_SAVE, API_MARKET_CREATE_LOCK } from './api'
 
-import { postIpfsImg } from './ipfs'
-import { action } from './actionHelper'
+import { ENV, createMarketGasLimit, marketDeposit } from '../config'
 
-import fetch from '../lib/util/fetch'
+import { action } from './actionHelper'
+import { fetch, dayAfter, hourAfter } from '../lib/util'
 import { 
   asyncFunction, 
   callbackFunction, getAccount, createMarketData, smartupWeb3,
   apiGetSavedMarket,
   apiCreateMarketCheckInput1, apiCreateMarketCheckInput2,
-  apiCreateMarket
+  apiCreateMarket, 
+  createMarketSign, apiGetNewMarketId,
+  bnMul
  } from '../integrator'
 
 export function get() {
@@ -29,6 +31,10 @@ export function get() {
     apiGetSavedMarket(),
     null, CREATE_MARKET_GET_SUCCEEDED, CREATE_MARKET_GET_FAILED,
   )
+}
+
+function period2Time(day) {
+  return ~~( hourAfter(day === '1' ? 1 : 0, dayAfter(day))/1000 ) // add one hour for 1 day as buffer
 }
 
 export function check(changeNumber) {
@@ -39,7 +45,7 @@ export function check(changeNumber) {
       asyncFunction(
         activeIndex === 0 ? 
           apiCreateMarketCheckInput1({name, desc, avatarHash, coverHash, detail}) 
-        : apiCreateMarketCheckInput2({unit, unitPrice, reserveRatio, symbol, period}),
+        : apiCreateMarketCheckInput2({unit, unitPrice, reserveRatio, symbol, closingTime: period2Time(period) }),
         CREATE_MARKET_CHECK_REQUESTED, CREATE_MARKET_CHECK_SUCCEEDED, CREATE_MARKET_CHECK_FAILED,
         // { meta: {activeIndex, name, desc, avatarHash, coverHash, unit, unitPrice, reserveRatio, detail, symbol, period} }
       )
@@ -47,18 +53,38 @@ export function check(changeNumber) {
   }
 }
 
+const gasLimit = createMarketGasLimit
+const gasPrice = ENV.gasWeiPrices[1]
+
 export function create() {
   return async (dispatch, getState) => {
-    const { name, desc: description, avatarHash, coverHash } = getState().createMarket
-    const [error] = await dispatch(
-      asyncFunction(
-        fetch.post,
-        CREATE_MARKET_SAVE_REQUESTED, CREATE_MARKET_SAVE_SUCCEEDED, CREATE_MARKET_SAVE_FAILED,
-        { params: API_MARKET_CREATE_SAVE, params2: { name, description, photo: avatarHash, cover: coverHash } }
-      )
-    )
-    if (!error)
-      dispatch(pay())
+    try {
+      dispatch(action(CREATE_MARKET_SAVE_REQUESTED))
+      const { name, desc: description, detail, avatarHash: photo, coverHash: cover, symbol, period, unit: ctCount, unitPrice: ctPrice, reserveRatio  } = getState().createMarket
+    
+      const marketId = await apiGetNewMarketId()()
+      const closingTime = period2Time(period)
+      const recyclePrice = bnMul(ctPrice, reserveRatio)
+      const hash = await createMarketSign(marketId, symbol, marketDeposit, ctCount, ctPrice, recyclePrice, closingTime, gasLimit, gasPrice )
+      const res = await apiCreateMarket({
+        marketId, name, description, detail, photo, cover, symbol, closingTime, ctCount, ctPrice, ctRecyclePrice: recyclePrice, gasLimit, gasPrice, hash
+      })()
+      dispatch(action(CREATE_MARKET_SAVE_SUCCEEDED, res))
+    }
+    catch(err) {
+      console.log('err', err)
+      dispatch(action(CREATE_MARKET_SAVE_FAILED, err))
+    }
+    // console.log(error, hash)
+    // const [error] = await dispatch(
+    //   asyncFunction(
+    //     fetch.post,
+    //     CREATE_MARKET_SAVE_REQUESTED, CREATE_MARKET_SAVE_SUCCEEDED, CREATE_MARKET_SAVE_FAILED,
+    //     { params: API_MARKET_CREATE_SAVE, params2: { name, description, photo: avatarHash, cover: coverHash } }
+    //   )
+    // )
+    // if (!error)
+    //   dispatch(pay())
   }
 }
 
@@ -109,6 +135,8 @@ export function onChangeDesc(text) { return action(CREATE_MARKET_DESC_CHANGE, te
 export function onChangeDetail(richText) { return action(CREATE_MARKET_DETAIL_CHANGE, richText) }
 export function onChangeAvatar(hash) { return action(CREATE_MARKET_AVATAR_CHANGE_SUCCEEDED, hash) }
 export function onChangeCover(hash) { return action(CREATE_MARKET_COVER_CHANGE_SUCCEEDED, hash) }
+export function onChangeSymbol(text) { return action(CREATE_MARKET_SYMBOL_CHANGE, text) } 
+export function onChangePeriod(v) { return action(CREATE_MARKET_PERIOD_CHANGE, v) } 
 export function onChangePrice(v) { return action(CREATE_MARKET_PRICE, v) }
 export function onChangeUnit(v) { return action(CREATE_MARKET_UNIT, v) }
 export function onChangeReserveRatio(v) { return action(CREATE_MARKET_RESERVE, v) }

@@ -1,15 +1,15 @@
-import Web3 from 'web3'
-import { ENV } from '../config'
-import {sutContractAddress, nttContractAddress, exchangeContractAddress} from '../config'
+import web3 from 'web3'
+import { ENV, sutContractAddress, nttContractAddress, exchangeContractAddress, createMarketGasLimit } from '../config'
 
-const { smartupContractAddress, networkVersion } = ENV 
+const { smartupContractAddress, networkVersion, gasWeiPrices } = ENV 
 const address0x0 = '0x0000000000000000000000000000000000000000'
 const bytes0x0 = '0x0000000000000000000000000000000000000000000000000000000000000000'
-const provider = Web3.givenProvider // || window.ethereum || window.web3 && window.web3.currentProvider
-export const smartupWeb3 = provider ? new Web3(provider) : null
+const provider = web3.givenProvider // || window.ethereum || window.web3 && window.web3.currentProvider
+export const smartupWeb3 = provider ? new web3(provider) : null
+const {toBN, soliditySha3} = smartupWeb3 ? smartupWeb3.utils : {}
 
 window.sut = smartupWeb3
-window.web9 = Web3
+window.web9 = web3
 
 export function getAccount() {
   if(smartupWeb3) {
@@ -25,8 +25,8 @@ export function formatToken(r) {
   return window.web3.fromWei(r)
 }
 
-export function toWei(r) {
-  return smartupWeb3 ? `${smartupWeb3.utils.toWei(r+'')}` : null
+export function toWei(r, unit) {
+  return smartupWeb3 ? `${smartupWeb3.utils.toWei(r+'', unit)}` : null
 }
 
 export function encodeParam(r) {
@@ -144,12 +144,6 @@ export function enableMetamask() {
   })
 }
 
-// Contract Method
-function toPromise(callback, ...params) {
-  return new Promise( (resolve, reject) => 
-    callback(...params, (error, response) => error ? reject(error) : resolve(response))
-  )
-}
 // deposit
 export async function depositSut(sut) {
   const sutWei = toWei(sut)
@@ -176,7 +170,6 @@ export async function depositSut(sut) {
 }
 
 export async function depositEth(eth) {
-  console.log(eth)
   const ethWei = toWei(eth)
 
   const data = smartupWeb3.eth.abi.encodeFunctionCall({
@@ -277,4 +270,56 @@ export function withdrawSut(sut) {
 
 export function withdrawEth(eth) {
   return withdrawToken(address0x0, eth)
+}
+
+export async function createMarketSign(marketId, marketSymbol, sut, ctCount, ctPrice, ctRecyclePrice, closingTime, gasLimit, gasPrice) {
+  const account = await getAccount()
+  
+  const sutWei = toWei(sut)
+  const ctCountWei = toWei(ctCount)
+  const ctPriceWei = toWei(ctPrice)
+  const ctRecyclePriceWei = toWei(ctRecyclePrice)
+  const gesFeeWei =  toBN(toWei(gasPrice, "gwei")).mul( toBN(gasLimit) )
+
+  const hash = soliditySha3(
+      account,
+      toBN(sutWei),
+      marketId, 
+      marketSymbol,
+      toBN(ctCountWei),
+      toBN(ctPriceWei),
+      toBN(ctRecyclePriceWei),
+      gesFeeWei,
+      closingTime
+  );
+
+  console.log('Request sign with the following message')
+  console.table([
+    ['account', account],
+    ['sutWei', sutWei],
+    ['marketId', marketId],
+    ['symbol', marketSymbol],
+    ['ctCountWei', ctCountWei],
+    ['ctPriceWei', ctPriceWei],
+    ['ctRecyclePriceWei', ctRecyclePriceWei],
+    ['gesFeeWei', gesFeeWei+''],
+    ['closingTime', closingTime],
+    ['hash', hash]
+  ])
+  return toPromise(
+    window.web3.personal.sign, 
+    hash, account
+  )
+}
+
+// Util
+export function toPromise(callback, ...params) {
+  return new Promise( (resolve, reject) => 
+    callback(...params, (error, response) => error ? reject(error) : resolve(response))
+  )
+}
+export function bnMul(base, times) {
+  return toBN ?
+    toBN(base).mul( toBN(times) ) + ''
+  : (base * times) + ''
 }
