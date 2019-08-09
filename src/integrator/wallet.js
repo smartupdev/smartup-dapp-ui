@@ -1,12 +1,12 @@
 import web3 from 'web3'
-import { ENV, sutContractAddress, nttContractAddress, exchangeContractAddress, createMarketGasLimit } from '../config'
-
+import { ENV, sutContractAddress, nttContractAddress, exchangeContractAddress, createMarketGasLimit, buyCtStage1GasLimit } from '../config'
+import { callbackFunction } from './index'
 const { smartupContractAddress, networkVersion, gasWeiPrices } = ENV 
 const address0x0 = '0x0000000000000000000000000000000000000000'
 const bytes0x0 = '0x0000000000000000000000000000000000000000000000000000000000000000'
 const provider = web3.givenProvider // || window.ethereum || window.web3 && window.web3.currentProvider
 export const smartupWeb3 = provider ? new web3(provider) : null
-const {toBN, soliditySha3} = smartupWeb3 ? smartupWeb3.utils : {}
+const {toBN, soliditySha3, sha3} = smartupWeb3 ? smartupWeb3.utils : {}
 
 window.sut = smartupWeb3
 window.web9 = web3
@@ -272,14 +272,14 @@ export function withdrawEth(eth) {
   return withdrawToken(address0x0, eth)
 }
 
-export async function createMarketSign(marketId, marketSymbol, sut, ctCount, ctPrice, ctRecyclePrice, closingTime, gasLimit, gasPrice) {
+export async function createMarketSign(marketId, marketSymbol, sut, ctCount, ctPrice, ctRecyclePrice, closingTime, gasPrice) {
   const account = await getAccount()
   
   const sutWei = toWei(sut)
   const ctCountWei = toWei(ctCount)
   const ctPriceWei = toWei(ctPrice)
   const ctRecyclePriceWei = toWei(ctRecyclePrice)
-  const gesFeeWei =  toBN(toWei(gasPrice, "gwei")).mul( toBN(gasLimit) )
+  const gesFeeWei =  getGasWei(createMarketGasLimit, gasPrice)
 
   const hash = soliditySha3(
       account,
@@ -312,7 +312,34 @@ export async function createMarketSign(marketId, marketSymbol, sut, ctCount, ctP
   )
 }
 
+export function getMarketCt(address) {
+  return toPromise(
+    smartupWeb3.eth.call,
+    { to: address }
+  ).then(decodeResult)
+}
+
+export async function butCtStage1(useAddress, marketAddress, ctCount, gasPrice, time) {
+  const ctCountWei = toWei(ctCount)
+  const feeWei = getGasWei(buyCtStage1GasLimit, gasPrice)
+  const timeHash = sha3(time)
+  const hash = soliditySha3(
+      marketAddress,
+      ctCountWei,
+      useAddress,
+      feeWei,
+      timeHash
+  );
+  return toPromise(
+    window.web3.personal.sign,
+    hash, await getAccount()  
+  )
+}
+
 // Util
+function getGasWei(gasLimit, gasPrice) {
+  return toBN(toWei(gasPrice, "gwei")).mul( toBN(gasLimit) )
+}
 export function toPromise(callback, ...params) {
   return new Promise( (resolve, reject) => 
     callback(...params, (error, response) => error ? reject(error) : resolve(response))

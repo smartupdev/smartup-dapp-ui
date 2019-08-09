@@ -179,16 +179,6 @@ function Trading({ loggedIn, market, gettingMarket, tradeState, setTab, onChange
           values={trades}
           hasMore={hasNextPage} loadMore={() => getTradeList(true)} isLoading={gettingTrades} noResultText={tradingText.transactionRecord} 
         />
-        {/* <ScrollLoader isButton/> */}
-        {/* {
-          (!trades || !trades.length) &&
-          <>
-            <Hr />
-            <Col center spacingTopS spacingBottomL>
-              <Text note>{tradingText.transactionRecord}</Text>
-            </Col>
-          </>
-        } */}
       </Col>
     </Col>
   )

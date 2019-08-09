@@ -1,5 +1,7 @@
 import fetch from '../lib/util/fetch'
-
+import {
+  createMarketGasLimit, buyCtStage1GasLimit
+} from '../config'
 /*
   params order:
     address > type > id > name > hash > asc > { pageNumb, pageSize, isLoadMore } 
@@ -51,17 +53,21 @@ export const apiUpdateUser =         (name, avatarIpfsHash) => () => fetch.post(
 export const transactionType = { depositSut: 'ChargeSut', depositEth: 'ChargeEth', withdrawSut: 'WithdrawSut', withdrawEth: 'WithdrawEth', createMarket: 'CreateMarket', buyCT: 'BuyCT', sellCT: 'SellCT' }
 export const apiGetTransactionList = ({ pageNumb = pageNumbDefault, pageSize = pageSizeDefault, type = '' }) => () => fetch.post('/api/user/transaction/list', { type, pageNumb, pageSize })
 export const apiAddTransaction =     ({ txHash, type, amount }) => () => fetch.post('/api/user/transaction/upload/tx/hash', { txHash, type, amount })
+
+export const apiBuyCtState1 = ({marketAddress, ctCount, gasPrice, timestamp, sign}) => () => fetch.post('/api/user/first/stage/buy', {marketAddress, ctCount, gasLimit: buyCtStage1GasLimit, gasPrice, timestamp, sign})
+// types: firstStageBuy/buy/sell
+export const apiTradeList = ({ types, states, pageNumb = pageNumbDefault, pageSize = pageSizeDefault }) => () => fetch('/api/user/trade/list', { types, states, pageNumb, pageSize })
 /* ====== Transaction ====== END */
 
 /* ====== Market ====== START */
 export const apiCreateMarketCheckInput1 = ({name, desc: description, detail, avatarHash: photo, coverHash: cover}) => () => fetch.post('/api/market/create/check/info', { name, description, photo, cover, detail })
 export const apiCreateMarketCheckInput2 = ({unit: ctCount, unitPrice: ctPrice, reserveRatio, symbol, closingTime}) => () => fetch.post('/api/market/create/check/setting', { ctCount, ctPrice, ctRecyclePrice: ctPrice * reserveRatio, symbol, closingTime }) // TODO: use BN
 export const apiGetNewMarketId = () => () => fetch.get('/api/market/create/generate/id')
-export const apiCreateMarket = ({marketId, name, description, detail, photo, cover, symbol, closingTime, ctCount, ctPrice, ctRecyclePrice, gasLimit, gasPrice, hash: sign}) => () => fetch.post('/api/user/market/create', { marketId, name, description, detail, photo, cover, symbol, closingTime, ctCount, ctPrice, ctRecyclePrice, gasLimit, gasPrice, sign })
+export const apiCreateMarket = ({marketId, name, description, detail, photo, cover, symbol, closingTime, ctCount, ctPrice, ctRecyclePrice, gasPrice, hash: sign}) => () => fetch.post('/api/user/market/create', { marketId, name, description, detail, photo, cover, symbol, closingTime, ctCount, ctPrice, ctRecyclePrice, gasLimit: createMarketGasLimit, gasPrice, sign })
 export const apiGetSavedMarket = () => () => fetch.get('/api/user/market/creating')
 
 export const apiGetMarket = (marketId) => () => fetch.get('/api/market/one', { marketId })
-/* ====== Transaction ====== END */
+/* ====== Market ====== END */
 
 //notification-controller
 export const API_USER_NOTIFICATION_LIST = '/api/user/notification/list';

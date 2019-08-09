@@ -51,6 +51,7 @@ export const exchangeContractAddress = '0x5674b8e69c366dc992a2a653966c8ce54402c5
 
 export const marketDeposit = 2500
 export const createMarketGasLimit = 2300000
+export const buyCtStage1GasLimit = 320000
 
 const processEnv = process.env.REACT_APP_ENV
 

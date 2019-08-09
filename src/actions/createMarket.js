@@ -53,7 +53,6 @@ export function check(changeNumber) {
   }
 }
 
-const gasLimit = createMarketGasLimit
 const gasPrice = ENV.gasWeiPrices[1]
 
 export function create() {
@@ -65,9 +64,9 @@ export function create() {
       const marketId = await apiGetNewMarketId()()
       const closingTime = period2Time(period)
       const recyclePrice = ctPrice * reserveRatio + '' // bnMul(ctPrice, reserveRatio) TODO
-      const hash = await createMarketSign(marketId, symbol, marketDeposit, ctCount, ctPrice, recyclePrice, closingTime, gasLimit, gasPrice )
+      const hash = await createMarketSign(marketId, symbol, marketDeposit, ctCount, ctPrice, recyclePrice, closingTime, gasPrice )
       const res = await apiCreateMarket({
-        marketId, name, description, detail, photo, cover, symbol, closingTime, ctCount, ctPrice, ctRecyclePrice: recyclePrice, gasLimit, gasPrice, hash
+        marketId, name, description, detail, photo, cover, symbol, closingTime, ctCount, ctPrice, ctRecyclePrice: recyclePrice, gasPrice, hash
       })()
       dispatch(action(CREATE_MARKET_SAVE_SUCCEEDED, res))
     }

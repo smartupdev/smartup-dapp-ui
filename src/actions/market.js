@@ -16,7 +16,7 @@ import {
   API_MARKET_SEARCH, API_MARKET_TOP
 } from './api'
 import fetch from '../lib/util/fetch'
-import { asyncFunction, callbackFunction, getBalance, getAccount, smartupWeb3, decodeResult, apiGetMarket } from '../integrator'
+import { asyncFunction, callbackFunction, getBalance, getAccount, getMarketCt, smartupWeb3, decodeResult, apiGetMarket } from '../integrator'
 import { addCollect, delCollect } from './bookmark'
 
 import { 
@@ -36,26 +36,16 @@ export function resetDetail() {
     type: MARKET_DETAIL_RESET
   }
 }
-// TODO
+
 export function getCtBalance() {
   return async (dispatch, getState) => 
     dispatch(
       callbackFunction(
-        smartupWeb3 && smartupWeb3.eth.call,
-        MARKET_DETAIL_GET_CT_REQUESTED, MARKET_DETAIL_GET_CT_SUCCEEDED, MARKET_DETAIL_GET_CT_FAILED,
-        {
-          isWeb3: true,
-          params: { 
-            // data:  getBalance( await getAccount() ), 
-            to: getState().market.currentMarket.address 
-          },
-          responsePayload: decodeResult
-        }
+        () => getMarketCt(getState().market.currentMarket.address),
+        MARKET_DETAIL_GET_CT_REQUESTED, MARKET_DETAIL_GET_CT_SUCCEEDED, MARKET_DETAIL_GET_CT_FAILED
       )
     )  
 }
-
-
 
 export function get(marketId) {
   return async (dispatch, getState) => {
