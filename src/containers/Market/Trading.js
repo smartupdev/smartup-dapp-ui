@@ -177,9 +177,10 @@ function Trading({ loggedIn, market, gettingMarket, tradeState, setTab, onChange
         <Table
           model={model}
           values={trades}
+          hasMore={hasNextPage} loadMore={() => getTradeList(true)} isLoading={gettingTrades} noResultText={tradingText.transactionRecord} 
         />
-        <ScrollLoader isButton hasMore={hasNextPage} loadMore={() => getTradeList(true)} isLoading={gettingTrades} />
-        {
+        {/* <ScrollLoader isButton/> */}
+        {/* {
           (!trades || !trades.length) &&
           <>
             <Hr />
@@ -187,7 +188,7 @@ function Trading({ loggedIn, market, gettingMarket, tradeState, setTab, onChange
               <Text note>{tradingText.transactionRecord}</Text>
             </Col>
           </>
-        }
+        } */}
       </Col>
     </Col>
   )

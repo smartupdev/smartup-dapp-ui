@@ -108,7 +108,7 @@ export default ({
   onClickHeader, onClick, 
   expandedRecords = emptyArr, expandComponent: ExpandComponent, 
   S, noBorderCol, 
-  hasMore, loadMore, isLoading
+  hasMore, loadMore, isLoading, noResultText,
 }) => {
   const tableRef = useRef()
   const tableWrapRef = useRef()
@@ -152,7 +152,7 @@ export default ({
             // !isLoading && <Text center note VS>{noResultText || noResult}</Text>
           }
       </Table>
-      <ScrollLoader target={tableWrapRef} hasMore={hasMore} loadMore={loadMore} isLoading={isLoading} noResult={!values.length} />
+      <ScrollLoader target={tableWrapRef} hasMore={hasMore} loadMore={loadMore} isLoading={isLoading} noResult={!values.length} noResultText={noResultText} />
     </TableWrapper>
 
   )

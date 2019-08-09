@@ -16,7 +16,7 @@ import {
   API_MARKET_SEARCH, API_MARKET_TOP
 } from './api'
 import fetch from '../lib/util/fetch'
-import { asyncFunction, callbackFunction, getBalance, getAccount, smartupWeb3, decodeResult } from '../integrator'
+import { asyncFunction, callbackFunction, getBalance, getAccount, smartupWeb3, decodeResult, apiGetMarket } from '../integrator'
 import { addCollect, delCollect } from './bookmark'
 
 import { 
@@ -61,9 +61,9 @@ export function get(marketId) {
   return async (dispatch, getState) => {
     const [error, result] = await dispatch(
       asyncFunction(
-        fetch.get,
+        apiGetMarket(marketId),
         GET_MARKET_DETAIL_REQUESTED, GET_MARKET_DETAIL_SUCCEEDED, GET_MARKET_DETAIL_FAILED,
-        { params: API_MARKET_DETAIL, params2: { marketId }, meta: { marketId } }
+        { meta: { marketId } }
       )
     )
     if(!error) dispatch(getCtBalance())
