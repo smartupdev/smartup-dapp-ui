@@ -64,7 +64,7 @@ export function create() {
     
       const marketId = await apiGetNewMarketId()()
       const closingTime = period2Time(period)
-      const recyclePrice = bnMul(ctPrice, reserveRatio)
+      const recyclePrice = ctPrice * reserveRatio + '' // bnMul(ctPrice, reserveRatio) TODO
       const hash = await createMarketSign(marketId, symbol, marketDeposit, ctCount, ctPrice, recyclePrice, closingTime, gasLimit, gasPrice )
       const res = await apiCreateMarket({
         marketId, name, description, detail, photo, cover, symbol, closingTime, ctCount, ctPrice, ctRecyclePrice: recyclePrice, gasLimit, gasPrice, hash

@@ -318,6 +318,11 @@ export function toPromise(callback, ...params) {
     callback(...params, (error, response) => error ? reject(error) : resolve(response))
   )
 }
+export function buDiv(base, divisor) {
+  return toBN ? 
+    toBN(base).divisor( toBN(divisor) )
+  : (base/divisor) + ''
+}
 export function bnMul(base, times) {
   return toBN ?
     toBN(base).mul( toBN(times) ) + ''

@@ -115,6 +115,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         ...updates,
+        error: initialState.error,
         isReady: true,
       }
     } 
