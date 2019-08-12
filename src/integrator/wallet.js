@@ -38,7 +38,7 @@ export function decodeResult(r){
 }
 
 export function createMarketData() {
-  return smartupWeb3 && smartupWeb3.eth.abi.encodeFunctionCall({
+  return encodeFunctionCall({
     name: 'approveAndCall',
     type: 'function',
     inputs: [
@@ -60,7 +60,7 @@ export function createMarketData() {
 }
 
 export function createBidCtData({ marketAddress, encodeCtPrice, encodeCtAmount }) {
-  return smartupWeb3.eth.abi.encodeFunctionCall({
+  return encodeFunctionCall({
     name: 'approveAndCall',
     type: 'function',
     inputs: [
@@ -81,7 +81,7 @@ export function createBidCtData({ marketAddress, encodeCtPrice, encodeCtAmount }
 }
 
 export function createBidQuoteData(encodeCtAmount) {
-  return smartupWeb3.eth.abi.encodeFunctionCall({
+  return encodeFunctionCall({
     name: 'bidQuote',
     type: 'function',
     inputs: [
@@ -94,7 +94,7 @@ export function createBidQuoteData(encodeCtAmount) {
 }
 
 export function createAskQuoteData(encodeCtAmount) {
-  return smartupWeb3.eth.abi.encodeFunctionCall({
+  return encodeFunctionCall({
     name: 'askQuote',
     type: 'function',
     inputs: [
@@ -107,7 +107,7 @@ export function createAskQuoteData(encodeCtAmount) {
 }
 
 export function createAskCtData(decodeCtAmount) {
-  return smartupWeb3.eth.abi.encodeFunctionCall({
+  return encodeFunctionCall({
     name: 'sell',
     type: 'function',
     inputs: [
@@ -148,7 +148,7 @@ export function enableMetamask() {
 export async function depositSut(sut) {
   const sutWei = toWei(sut)
 
-  const data = smartupWeb3.eth.abi.encodeFunctionCall({
+  const data = encodeFunctionCall({
     name: 'approveAndCall',
     type: 'function',
     inputs: [ 
@@ -172,7 +172,7 @@ export async function depositSut(sut) {
 export async function depositEth(eth) {
   const ethWei = toWei(eth)
 
-  const data = smartupWeb3.eth.abi.encodeFunctionCall({
+  const data = encodeFunctionCall({
     name: 'depositEther',
     type: 'function',
     inputs: []
@@ -188,7 +188,7 @@ export async function depositEth(eth) {
 
 // get
 async function getTokenBalance(address) {
-  const data = smartupWeb3.eth.abi.encodeFunctionCall({
+  const data = encodeFunctionCall({
     name: 'tokenBalance',
     type: 'function',
     inputs: [
@@ -219,7 +219,7 @@ export async function getWalletEth() {
   ).then(formatToken)
 }
 export async function getWalletSut() {
-  const data =  smartupWeb3.eth.abi.encodeFunctionCall({
+  const data =  encodeFunctionCall({
     name: 'balanceOf',
     type: 'function',
     inputs: [{ type: 'address' }]
@@ -231,7 +231,7 @@ export async function getWalletSut() {
   }).then(formatToken)
 }
 export async function getNtt() {
-  const data = smartupWeb3.eth.abi.encodeFunctionCall({
+  const data = encodeFunctionCall({
     name: 'checkCredit',
     type: 'function',
     inputs: [{ type: 'address' }]
@@ -239,13 +239,13 @@ export async function getNtt() {
 
   return toPromise(smartupWeb3.eth.call, {
     to: nttContractAddress, data
-  }).then(r => `${smartupWeb3.eth.abi.decodeParameter('uint256', r)}`)
+  }).then(r => `${decodeParameter('uint256', r)}`)
 }
 
 // withdraw
 async function withdrawToken(address, amount) {
   const wei = toWei(amount)
-  const data = smartupWeb3.eth.abi.encodeFunctionCall({
+  const data = encodeFunctionCall({
     name: 'withdraw',
     type: 'function',
     inputs: [
@@ -336,7 +336,28 @@ export async function butCtStage1(useAddress, marketAddress, ctCount, gasPrice, 
   )
 }
 
+export function getMarketStatus(marketAddress) {
+  const data = encodeFunctionCall({
+      name: 'isInFirstPeriod',
+      type: 'function',
+      inputs: []
+  }, []);
+
+  return toPromise(
+    smartupWeb3.eth.call,
+    { to: marketAddress, data }
+  ).then(res => decodeParameter('bool', res) ? 1 : 2 )
+}
+
 // Util
+function encodeFunctionCall(...p) {
+  if(!smartupWeb3) throw Error('No MetaMask')
+  return smartupWeb3.eth.abi.encodeFunctionCall(...p)
+} 
+function decodeParameter(...p) {
+  if(!smartupWeb3) throw Error('No MetaMask')
+  return smartupWeb3.eth.abi.decodeParameter(...p)
+} 
 function getGasWei(gasLimit, gasPrice) {
   return toBN(toWei(gasPrice, "gwei")).mul( toBN(gasLimit) )
 }

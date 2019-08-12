@@ -16,7 +16,7 @@ import {
   API_MARKET_SEARCH, API_MARKET_TOP
 } from './api'
 import fetch from '../lib/util/fetch'
-import { asyncFunction, callbackFunction, getBalance, getAccount, getMarketCt, smartupWeb3, decodeResult, apiGetMarket } from '../integrator'
+import { asyncFunction, callbackFunction, getBalance, getAccount, getMarketCt, smartupWeb3, decodeResult, apiGetMarket, getMarketStatus } from '../integrator'
 import { addCollect, delCollect } from './bookmark'
 
 import { 
@@ -37,14 +37,11 @@ export function resetDetail() {
   }
 }
 
-export function getCtBalance() {
-  return async (dispatch, getState) => 
-    dispatch(
-      callbackFunction(
-        () => getMarketCt(getState().market.currentMarket.address),
-        MARKET_DETAIL_GET_CT_REQUESTED, MARKET_DETAIL_GET_CT_SUCCEEDED, MARKET_DETAIL_GET_CT_FAILED
-      )
-    )  
+export function getCtBalance(marketAddress) {
+  return callbackFunction(
+    () => getMarketCt(marketAddress),
+    MARKET_DETAIL_GET_CT_REQUESTED, MARKET_DETAIL_GET_CT_SUCCEEDED, MARKET_DETAIL_GET_CT_FAILED
+  )
 }
 
 export function get(marketId) {
@@ -56,7 +53,13 @@ export function get(marketId) {
         { meta: { marketId } }
       )
     )
-    if(!error) dispatch(getCtBalance())
+    if(!error) {
+      const marketAddress = result.marketAddress
+      console.log('marketAddress')
+      console.log(marketAddress)
+      dispatch(getCtBalance(marketAddress))
+      getMarketStatus(marketAddress).then(console.log).catch(console.error)
+    }
     return [error, result]
   }
 }
