@@ -34,7 +34,7 @@ export const initialState = {
   coverHash: '', coverUploading: false,
   unit: '',
   unitPrice: '',
-  reserveRatio: '',
+  reserveRatio: .5,
   marketId: '',
   error: {
     api: null,

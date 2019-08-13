@@ -79,7 +79,8 @@ export default ({ onChange=console.log, value=40, max=100, displayTextFn=display
       changeRef.current = false
     }
   }), [])
-  const percent = (_value === null ? value : _value)/max*100 + '%'
+  const currentValue = _value === null ? value : _value
+  const percent = currentValue/max*100 + '%'
   return (
     <Col>
       <Bar ref={barRef} onMouseDown={onMouseDown}>
@@ -87,7 +88,7 @@ export default ({ onChange=console.log, value=40, max=100, displayTextFn=display
         <Dot value={percent} onMouseDown={onMouseDown} />
       </Bar>
       <Col right style={{ width: percent }}>
-        <Label percent={percent}>{displayTextFn(_value || value)}</Label>
+        <Label percent={percent}>{displayTextFn(currentValue)}</Label>
       </Col>
     </Col>
   )
