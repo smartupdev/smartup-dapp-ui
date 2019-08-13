@@ -41,6 +41,7 @@ const Flex = styled.div`
   ${props => props.fullWidth && css`width: 100%`};
   ${props => props.fullHeight && css`height: 100%`};
   ${props => props.maxWidth && css`max-width: ${props.maxWidth}`};
+  ${props => props.maxHeight && css`max-height: ${props.maxHeight}`};
 
   ${generalCss}
 `

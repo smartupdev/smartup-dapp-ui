@@ -30,7 +30,7 @@ function toPrice(number, decimal = 2) {
   : formatter.format(number).slice(0, decimal === 0 ? -3 : decimal === 1 ? -1 : undefined).replace('$', '')
 }
 
-function toToken(number, decimal = 4) {
+function toToken(number, decimal = 8) {
   if(number === null || number === undefined) return '-'
   const int = ~~number
   const dec = Math.round((number - int)*Math.pow(10, decimal))
@@ -40,4 +40,4 @@ function toToken(number, decimal = 4) {
   ).slice(1)
 }
 
-export { toPrice, toToken, toPercent, toShortNumber }
+export { toPrice, toToken, toPercent, toShortNumber, toShortNumberChi }
