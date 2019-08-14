@@ -10,7 +10,7 @@ import Hr from '../../components/Hr'
 import Button from '../../components/Button'
 import Image from '../../components/Image'
 import ProgressBar from '../../components/ProgressBar'
-import { Row, Col } from '../../components/Layout'
+import { Row, Col, Flex } from '../../components/Layout'
 import smartupIcon from '../../images/smartup.png'
 import successImg from '../../images/market_success.png'
 import Chart from './Chart'
@@ -98,13 +98,13 @@ const CreateMarket = ({
             {/* <Input number background L value={reserveRatio} onChange={onChangeReserveRatio} disabled={isFetching} label={createMarketText.reserveRatio} error={error.reserveRatio} description={createMarketText.reserveRatioDes} /> */}
             <Input number background L decimal={0} value={period} onChange={onChangePeriod} disabled={isFetching} label={createMarketText.period} error={error.period} description={createMarketText.periodDes} />
             <Label>{createMarketText.reserveRatio}</Label>
-            <Row BottomXL>
+            <Flex BottomXL directions={['column', 'row']}>
               <ColorTextBox title={toToken(totalAmount * reserveRatio)} subtitle="Basic Price" primary />
-              <Col width="20px" />
+              <Col width="20px" height="20px" />
               <ColorTextBox title={toToken(totalAmount * (1 - reserveRatio))} subtitle="Available Fund" secondary />
-              <Col width="20px" />
+              <Col width="20px" height="20px" />
               <ColorTextBox title={toToken(totalAmount)} subtitle="Total Amount" dark />
-            </Row>
+            </Flex>
             <Slider value={reserveRatio} max={1} onChange={onChangeReserveRatio} disabled={isFetching} displayTextFn={t => (+t*100).toFixed(2)+'%' } />
             <Row spacingTopL spaceBetween>
               <Back />
