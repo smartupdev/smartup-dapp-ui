@@ -12,6 +12,8 @@ import Main from '../../components/Main'
 import Hr from '../../components/Hr'
 import { Row } from '../../components/Layout'
 
+import ErrorBoundary from '../ErrorBoundary'
+
 import { connect } from 'react-redux'
 import { watchMetamask } from '../../actions/user'
 import { setOpen } from '../../actions/panel'
@@ -33,22 +35,24 @@ const App = ({ watchMetamask, panelOpened, setPanelOpen }) => {
   }, [])
   return (
     <Container>
-      <Header routes={mainRoutes} isOpen={menuOpened} close={() => setMenuOpen(false)} />
-      <Main
-        id={mainId}
-        header={
-          <MobileHeader
-            menuOpened={menuOpened}
-            setMenu={setMenuOpen}
-            panelOpened={panelOpened}
-            setPanel={setPanelOpen}
-          />
-        }
-      >
-        <MainRoutes />
-      </Main>
-      <Hr vertical />
-      <Panel isOpen={panelOpened} />
+      <ErrorBoundary>
+        <Header routes={mainRoutes} isOpen={menuOpened} close={() => setMenuOpen(false)} />
+        <Main
+          id={mainId}
+          header={
+            <MobileHeader
+              menuOpened={menuOpened}
+              setMenu={setMenuOpen}
+              panelOpened={panelOpened}
+              setPanel={setPanelOpen}
+            />
+          }
+        >
+          <MainRoutes />
+        </Main>
+        <Hr vertical />
+        <Panel isOpen={panelOpened} />
+      </ErrorBoundary>
     </Container>
   )
 }

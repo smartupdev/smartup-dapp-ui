@@ -97,6 +97,7 @@ export function postMassage(p) {
 }
 
 export function marketMassage(m) {
+  if(!m) throw new Error('Market doesn\'t exist. Please check the url and try again later.')
   return {
     ...m,
     ...m.data,

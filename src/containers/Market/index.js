@@ -13,6 +13,7 @@ import { Header } from '../../components/Header/MobileHeader'
 import { Dropdown } from '../../components/Input'
 import { Row, Col } from '../../components/Layout'
 import Tab from '../../components/Tab'
+import Text from '../../components/Text'
 import { Comment, CommunityMember, Bookmarked as BookmarkedIcon, Share as ShareIcon, Copy, Add } from '../../components/Icon'
 import Search from '../../components/Search'
 import Hr from '../../components/Hr'
@@ -28,16 +29,18 @@ import { share as copyShareLink } from '../../alphaWebService'
 import { useLang } from '../../language'
 
 const Market = ({ 
-  get, toggleSavedMarket, getting, location, market, getMarketPost, onChangeKeyword, postKeyword, resetDetail,
-  goto, addToast
+  get, toggleSavedMarket, getMarketPost, onChangeKeyword, resetDetail, // from action
+  market, postKeyword,  // from store
+  location, goto, 
+  addToast
 }) => {
-  const [lang] = useLang()
+  const [{ marketTab: marketTabText }] = useLang()
   const TABS = [
-    { label: lang.marketTab.trade, value: 'trading' },
-    { label: lang.marketTab.general, value: 'general' },
-    { label: lang.marketTab.discussion, value: 'discussion' },
-    { label: lang.marketTab.proposal, value: 'proposal' },
-    { label: lang.marketTab.flag, value: 'flag' },
+    { label: marketTabText.trade, value: 'trading' },
+    { label: marketTabText.general, value: 'general' },
+    { label: marketTabText.discussion, value: 'discussion' },
+    { label: marketTabText.proposal, value: 'proposal' },
+    { label: marketTabText.flag, value: 'flag' },
   ]
   const id = getUrlParams().id
   useEffect(() => {
@@ -45,16 +48,14 @@ const Market = ({
   }, [id])
   useEffect(() => {
     return resetDetail
-  }, [])
-  if(getting) return <DonutLoader page />
-  if (!market) return null
+  }, []) // id
 
   const activeIndex = TABS.findIndex(t => location.pathname.includes(t.value))
   
   function MarketName() {
     return (
       <Row centerVertical onClick={() => { addToast(`Market address copied to clipboard.`); copy(market.address) }}>
-        <Avatar long icon={market.avatar} username={`${market.name} (${market.id})`} />
+        <Avatar long icon={market.avatar} username={`${market.name} (${id})`} />
         <Copy S MarginLeftXS color='#fff' />
       </Row>
     )
@@ -81,9 +82,12 @@ const Market = ({
     return isDiscussion && <Search id={id} bgColor bottom='1px' top='1px' right='30px' value={postKeyword} onChange={onChangeKeyword} onSearch={() => getMarketPost()} />
   }
   
+  if(market.error) return <Text error spacingM center>{market.error.message}</Text>
+  if(market.getting) return <DonutLoader page />
+  // if (!id) return null
+
   return (
     <Col flex={1}>
-
       <Header>
         <MarketName />
       </Header>
@@ -130,8 +134,7 @@ const Market = ({
 }
 
 const mapStateToProps = state => ({
-  market: state.market.currentMarket,
-  getting: state.market.gettingMarket,
+  market: state.market,
   postKeyword: state.post.keyword,
 });
 

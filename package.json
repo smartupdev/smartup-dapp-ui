@@ -9,6 +9,7 @@
     "build-beta": "REACT_APP_ENV=beta REACT_APP_WEBSITE_NAME=\"SmartUp Incubator (Beta)\" react-scripts build",
     "build-dev": "REACT_APP_ENV=dev REACT_APP_WEBSITE_NAME=\"SmartUp Incubator (Dev)\" react-scripts build",
     "build-uni": "REACT_APP_ENV=uni REACT_APP_WEBSITE_NAME=\"SmartUp Incubator (University)\" react-scripts build",
+    "serve": "react-scripts build && serve -s build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "deploy": ". _private/deploy.sh"

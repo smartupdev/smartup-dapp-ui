@@ -1,223 +1,91 @@
 import {
   TRADE_RESET,
-  TRADE_SET_TAB,
-  TRADE_LIST_REQUESTED, TRADE_LIST_SUCCEEDED, TRADE_LIST_FAILED,
-  TRADE_DETAIL_REQUESTED, TRADE_DETAIL_SUCCEEDED, TRADE_DETAIL_FAILED,
-  TRADE_TOGGLE_IS_SELL, TRADE_TOGGLE_AGREE_TNC,
-  TRADE_CHANGE_CT, TRADE_CHANGE_SUT,
-  TRADE_GET_SUT_REQUESTED, TRADE_GET_SUT_SUCCEEDED, TRADE_GET_SUT_FAILED,
-  TRADE_REQUESTED, TRADE_SUCCEEDED, TRADE_FAILED, TRADE_SAVE_SUCCEEDED,
-  TRADE_KLINE_REQUESTED, TRADE_KLINE_SUCCEEDED, TRADE_KLINE_FAILED,
-  TRADE_HIGH_LOW_REQUESTED,TRADE_HIGH_LOW_SUCCEEDED,TRADE_HIGH_LOW_FAILED,
-} from '../actions/actionTypes';
-import fetch, {delay} from '../lib/util/fetch';
-import { getLang } from '../language'
-import language from '../lang'
-import {
-  API_MARKET_TRADE_LIST, API_USER_TRADE_DETAIL,API_KLINE_DATA, API_USER_TRADE_SAVE
-} from './api';
-import {
-  asyncFunction, toWei, encodeParam, smartupWeb3, callbackFunction, getAccount,
-  createBidCtData, createAskCtData, createBidQuoteData, createAskQuoteData, decodeResult,
-} from '../integrator'
+  TRADE_TOGGLE_AGREE_TNC,
+  TRADE_CHANGE_BUY_UNIT,
+  TRADE_CHANGE_BUY_PRICE,
+  TRADE_CHANGE_SELL_PRICE,
+  TRADE_REQUESTED, TRADE_SUCCEEDED, TRADE_FAILED, 
+  TRADE_GET_GAS_FEE_SUCCEEDED,
+} from '../actions/actionTypes'
+import { action } from './actionHelper'
 
-import { getYear, getMonth, getDate, getHour } from '../lib/util'
-export function reset() {
-  return { type: TRADE_RESET }
-}
+import { getRawLang } from '../language'
+import { apiGetGasFee, apiBuyCtState1, butCtStage1Sign } from '../integrator'
 
-export function setTab(index) {
-  return (dispatch, getState) => {
-    const { trade: { tabIndex } } = getState()
-    if(index !== tabIndex) {
-      dispatch({ type: TRADE_SET_TAB, payload: {index} })
-      dispatch(getKlineList())
-    }
-  }  
-}
+import { getYear, getMonth, getDate, getHour, DAY, MONTH, YEAR } from '../lib/util'
 
-export function toggleTnc() {
-  return {
-    type: TRADE_TOGGLE_AGREE_TNC,
+export function reset() { return action(TRADE_RESET) }
+export function toggleTnc() { return action(TRADE_TOGGLE_AGREE_TNC) }
+function getGasFee() {
+  return async (dispatch, getState) => {
+    const { buyUnit, buyPrice, estGasFee, estMatchedOrder } = getState().trade
+    const gasFee = await apiGetGasFee(buyPrice, buyUnit, {estGasFee, estMatchedOrder})()
+    return dispatch(action(TRADE_GET_GAS_FEE_SUCCEEDED, gasFee))
   }
 }
-
-export function toggleIsSell() {
+export function onChangeBuyUnit(v) { 
   return dispatch => {
-    dispatch({ type: TRADE_TOGGLE_IS_SELL })
-    dispatch(getSUT())    
+    dispatch(action(TRADE_CHANGE_BUY_UNIT, v)) 
+    dispatch(getGasFee())
   }
 }
-
-export function onChangeSUT(amount) {
+export function onChangeBuyPrice(v) { 
   return dispatch => {
-    dispatch({
-      type: TRADE_CHANGE_SUT,
-      payload: amount
-    })
-    dispatch(getCT())
+    dispatch(action(TRADE_CHANGE_BUY_PRICE, v))
+    dispatch(getGasFee())
   }
 }
-
-function getCT() { // TODO
-  // return (dispatch, getState) => {
-  //   const { isSell, sut } = getState().trade
-  //   if(!sut) 
-  //     return dispatch({
-  //       type: TRADE_GET_CT_SUCCEEDED,
-  //       payload: ''
-  //     })
-    
-  //   const encodeCtAmount = encodeParam(toWei(sut))
-  //   const data = isSell ? createBidQuoteData(encodeCtAmount) : createAskQuoteData(encodeCtAmount)
-  //   dispatch(callbackFunction(
-  //     smartupWeb3.eth.call,
-  //     TRADE_GET_CT_REQUESTED, TRADE_GET_CT_SUCCEEDED, TRADE_GET_CT_FAILED,
-  //     {
-  //       isWeb3: true,
-  //       params: {
-  //         to: marketAddress,
-  //         data,
-  //       },
-  //       responsePayload: decodeResult
-  //     }
-  //   ))
-  // }
-}
-
-export function onChangeCT(amount) {
-  return dispatch => {
-    dispatch({
-      type: TRADE_CHANGE_CT,
-      payload: amount
-    })
-    dispatch(getSUT())
-  }
-}
-
-function getSUT() {
-  return (dispatch, getState) => {
-    const { trade: {isSell, ct}, market: {currentMarket: {address}} } = getState()
-    const currentLang = getLang()
-    if(!ct) 
-      return dispatch({
-        type: TRADE_GET_SUT_SUCCEEDED,
-        payload: ''
-      })
-    if(!smartupWeb3)
-      return dispatch({
-        type: TRADE_GET_SUT_FAILED,
-        payload: new Error(language.panel.login.installMetamask[currentLang]),
-        error: true
-      })    
-    const encodeCtAmount = encodeParam(toWei(ct))
-    const data = isSell ? createAskQuoteData(encodeCtAmount) : createBidQuoteData(encodeCtAmount)
-    dispatch(callbackFunction(
-      smartupWeb3.eth.call,
-      TRADE_GET_SUT_REQUESTED, TRADE_GET_SUT_SUCCEEDED, TRADE_GET_SUT_FAILED,
-      {
-        isWeb3: true,
-        params: {
-          to: address,
-          data,
-        },
-        meta: { getSUTCount: Math.random() },
-        responsePayload: decodeResult
-      }
-    ))
-  }
-}
-
-function tradeError(errorText) {
-  return {
-    type: TRADE_FAILED,
-    payload: new Error(errorText),
-    error: true
-  }
-}
+export function onChangeSellPrice(v) { return action(TRADE_CHANGE_SELL_PRICE, v) }
 
 export function onTrade() {
   return async (dispatch, getState) => {
-    const { trade: {ct, sut, isSell}, market: { currentMarket: {id, address} } } = getState()
-    const currentLang = getLang()
-    
-    if(!smartupWeb3) return dispatch(tradeError(language.panel.login.installMetamask[currentLang]))
-    if(!ct || !sut) return dispatch(tradeError(language.trading.invalidTransaction[currentLang]))
-    if(!address) return dispatch(tradeError(language.trading.preview[currentLang]))
-    
-    const encodeCtPrice = toWei(sut);
-    const ctAmount = toWei(ct);
-    const encodeCtAmount = encodeParam(ctAmount);
-    
-    const [error, response] = await dispatch(callbackFunction(
-      smartupWeb3.eth.sendTransaction,
-      TRADE_REQUESTED, TRADE_SUCCEEDED, TRADE_FAILED,
-      {
-        isWeb3: true,
-        loginRequired: true,
-        params: {
-          from: await getAccount(),
-          // to: isSell ? address : sutContractAddress,
-          value: '0x0',
-          data: isSell ? createAskCtData(encodeCtAmount) : createBidCtData({ marketAddress: address, encodeCtPrice, encodeCtAmount })
-        }
-      }
-    ))
-    if(!error) {
-      dispatch(
-        asyncFunction(
-          () => fetch.post(API_USER_TRADE_SAVE, {txHash: response, type: isSell ? 'sell' : 'buy',  marketId: id, sut, ct}),
-          null, TRADE_SAVE_SUCCEEDED, null,
-          {
-            responsePayload: r => {
-              const { avatarHash, userName } = getState().user
-              return { ...r, user: { avatarIpfsHash: avatarHash, name: userName } }
-            }
-          }
-        )
-      )
+    try {
+      dispatch(action(TRADE_REQUESTED))
+      const rawLang = getRawLang()
+      const { trade: {buyUnit, buyPrice, sellPrice, agreeTnc}, market: {address}, user: {loggedIn} } = getState()
+      if(!agreeTnc) throw new Error('Click TNC')
+      if(!loggedIn) throw new Error(rawLang.error.notLogin)
+      if(!address) throw new Error(rawLang.trading.preview)
+      if(!buyUnit || !sellPrice) throw new Error(rawLang.trading.invalidTransaction) // TODO: Change message
+      const now = Date.now()
+      const hash = await butCtStage1Sign(address, buyUnit, 1, now)
+      const response = await apiBuyCtState1({ marketAddress: address, ctCount: buyUnit, timestamp: now, sign: hash, gasPriceLevel: 1 })()
+      dispatch(action(TRADE_SUCCEEDED, response))
     }
-  }
-}
-
-//get trade detail by txhash
-export function getTradeDetail(txHash) {
-  return (dispatch, getState) => {
-    dispatch(callbackFunction(
-      fetch.post,
-      TRADE_DETAIL_REQUESTED, TRADE_DETAIL_SUCCEEDED, TRADE_DETAIL_FAILED,
-      {
-        isWeb3: true,
-        params: API_USER_TRADE_DETAIL,
-        params2: {
-          txHash,
-        },
-      }
-    ));
+    catch(error) {
+      dispatch(action(TRADE_FAILED, error))
+    }
   }
 }
 
 //Market Trade List
-export function getTradeList(isLoadMore) {
-  return (dispatch, getState) => {
-    const { trade: {pageSize, pageNumb}, market: {currentMarket: {address}} } = getState()
-    dispatch(asyncFunction(
-      fetch.post,
-      TRADE_LIST_REQUESTED, TRADE_LIST_SUCCEEDED, TRADE_LIST_FAILED,
-      {
-        isWeb3: true,
-        params: API_MARKET_TRADE_LIST, 
-        params2: {marketAddress: address, pageSize, pageNumb: isLoadMore ? pageNumb + 1 : 1, asc: false},
-        meta: { isLoadMore }
-      }
-    ));
-  }
-}
+// export function getTradeList(isLoadMore) {
+//   return (dispatch, getState) => {
+//     const { trade: {pageSize, pageNumb}, market: {currentMarket: {address}} } = getState()
+//     dispatch(asyncFunction(
+//       fetch.post,
+//       TRADE_LIST_REQUESTED, TRADE_LIST_SUCCEEDED, TRADE_LIST_FAILED,
+//       {
+//         isWeb3: true,
+//         params: API_MARKET_TRADE_LIST, 
+//         params2: {marketAddress: address, pageSize, pageNumb: isLoadMore ? pageNumb + 1 : 1, asc: false},
+//         meta: { isLoadMore }
+//       }
+//     ));
+//   }
+// }
+
+// export function setTab(index) {
+//   return (dispatch, getState) => {
+//     const { trade: { tabIndex } } = getState()
+//     if(index !== tabIndex) {
+//       dispatch({ type: TRADE_SET_TAB, payload: {index} })
+//       dispatch(getKlineList())
+//     }
+//   }  
+// }
 
 // get kline list
-const DAY = 1000 * 60 * 60 * 24
-const MONTH = DAY * 30
-const YEAR = DAY * 365
 function getDateRange(tabIndex) {
   const now = Date.now()
   function getDateShort(d) { return `${getYear(d)}_${getMonth(d)}_${getDate(d)}` }
@@ -230,68 +98,64 @@ function getDateRange(tabIndex) {
   ][tabIndex]
 }
 
-export function getKlineList(){
-  return (dispatch, getState) => {
-    const { 
-      market: { currentMarket: {address: marketAddress} },
-      trade: { tabIndex }
-    } = getState()
-    let requestParams = {
-      marketAddress,
-      ...getDateRange(tabIndex)
-      // start:'2019_04_16',
-      // end:'2019_04_24',
-      // segment:'1day'
-    }
-    dispatch(asyncFunction(
-      fetch.post,
-      TRADE_KLINE_REQUESTED, TRADE_KLINE_SUCCEEDED, TRADE_KLINE_FAILED,
-      {
-        isWeb3: true,
-        params: API_KLINE_DATA,
-        params2:requestParams,
-      }
-    ));
-  }
-}
+// export function getKlineList(){
+//   return (dispatch, getState) => {
+//     const { 
+//       market: { currentMarket: {address: marketAddress} },
+//       trade: { tabIndex }
+//     } = getState()
+//     let requestParams = {
+//       marketAddress,
+//       ...getDateRange(tabIndex)
+//       // start:'2019_04_16',
+//       // end:'2019_04_24',
+//       // segment:'1day'
+//     }
+//     dispatch(asyncFunction(
+//       fetch.post,
+//       TRADE_KLINE_REQUESTED, TRADE_KLINE_SUCCEEDED, TRADE_KLINE_FAILED,
+//       {
+//         isWeb3: true,
+//         params: API_KLINE_DATA,
+//         params2:requestParams,
+//       }
+//     ));
+//   }
+// }
 
-export function getHighLowList(){
-  return (dispatch, getState) => {
-    const { 
-      market: { currentMarket: {address: marketAddress} },
-      // trade: { tabIndex }
-    } = getState()
-    let requestParams = {
-      marketAddress,
-      ...getDateRange(1)
-    }
-    dispatch(asyncFunction(
-      fetch.post,
-      TRADE_HIGH_LOW_REQUESTED,TRADE_HIGH_LOW_SUCCEEDED,TRADE_HIGH_LOW_FAILED,
-      {
-        isWeb3: true,
-        params: API_KLINE_DATA,
-        params2:requestParams,
-      }
-    ));
-  }
-}
+// export function getHighLowList(){
+//   return (dispatch, getState) => {
+//     const { 
+//       market: { currentMarket: {address: marketAddress} },
+//       // trade: { tabIndex }
+//     } = getState()
+//     let requestParams = {
+//       marketAddress,
+//       ...getDateRange(1)
+//     }
+//     dispatch(asyncFunction(
+//       fetch.post,
+//       TRADE_HIGH_LOW_REQUESTED,TRADE_HIGH_LOW_SUCCEEDED,TRADE_HIGH_LOW_FAILED,
+//       {
+//         isWeb3: true,
+//         params: API_KLINE_DATA,
+//         params2:requestParams,
+//       }
+//     ));
+//   }
+// }
 
 // TODO: don't loop if not in trading
-export function watchKline() {
-  return async (dispatch, getState) => {
-    while(true) {
-      const { market: {currentMarket}} = getState()
-      if(!currentMarket) break;
-      await Promise.all([
-        dispatch(getKlineList()),
-        dispatch(getHighLowList())
-      ]);
-      await delay(10000)
-    }
-  }
-}
-
-
-
-
+// export function watchKline() {
+//   return async (dispatch, getState) => {
+//     while(true) {
+//       const { market: {currentMarket}} = getState()
+//       if(!currentMarket) break;
+//       await Promise.all([
+//         dispatch(getKlineList()),
+//         dispatch(getHighLowList())
+//       ]);
+//       await delay(10000)
+//     }
+//   }
+// }

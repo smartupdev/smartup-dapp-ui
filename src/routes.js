@@ -131,7 +131,7 @@ export function getUrlParams() {
 
 // TODO add params checking
 const mapStateToProps = state => ({
-  marketId: state.market.currentMarketId,
+  marketId: state.market.id,
 });
 
 export const goto = routes.reduce( (p, c) => ({

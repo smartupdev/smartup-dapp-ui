@@ -1,6 +1,11 @@
 import { ENV, fetchTimeout } from '../../config'
 export const apiBaseUrl = ENV.apiHost
 
+export function fakeApi(delayMs, response) {
+  console.debug('Calling local fake api. Please fix this api later')
+  return delay(delayMs).then(() => response)
+}
+
 export function delay(ms = 1000) {
   return new Promise(resolve => setTimeout(resolve, ms))
 }

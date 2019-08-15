@@ -12,7 +12,7 @@ import {
 } from './actionTypes';
 import { API_MARKET_CREATE_CHANGE_NAME, API_MARKET_CREATE_SAVE, API_MARKET_CREATE_LOCK } from './api'
 
-import { ENV, createMarketGasLimit, marketDeposit } from '../config'
+import { marketDeposit } from '../config'
 
 import { action } from './actionHelper'
 import { fetch, dayAfter, hourAfter } from '../lib/util'
@@ -53,8 +53,6 @@ export function check(changeNumber) {
   }
 }
 
-const gasPrice = ENV.gasWeiPrices[1]
-
 export function create() {
   return async (dispatch, getState) => {
     try {
@@ -64,9 +62,9 @@ export function create() {
       const marketId = await apiGetNewMarketId()()
       const closingTime = period2Time(period)
       const recyclePrice = ctPrice * reserveRatio + '' // bnMul(ctPrice, reserveRatio) TODO
-      const hash = await createMarketSign(marketId, symbol, marketDeposit, ctCount, ctPrice, recyclePrice, closingTime, gasPrice )
+      const hash = await createMarketSign(marketId, symbol, marketDeposit, ctCount, ctPrice, recyclePrice, closingTime, 1 )
       const res = await apiCreateMarket({
-        marketId, name, description, detail, photo, cover, symbol, closingTime, ctCount, ctPrice, ctRecyclePrice: recyclePrice, gasPrice, hash
+        marketId, name, description, detail, photo, cover, symbol, closingTime, ctCount, ctPrice, ctRecyclePrice: recyclePrice, gasPriceLevel: 1, hash
       })()
       dispatch(action(CREATE_MARKET_SAVE_SUCCEEDED, res))
     }

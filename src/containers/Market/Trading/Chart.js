@@ -1,6 +1,6 @@
 import React, { Component, useRef, useEffect } from 'react'
-import theme from '../../theme'
-import { LangConsumer } from '../../language'
+import theme from 'theme'
+import { LangConsumer } from 'language'
 
 import { format } from "d3-format";
 import { timeFormat } from "d3-time-format";
@@ -27,7 +27,7 @@ import {
   // MovingAverageTooltip
 } from "react-stockcharts/lib/tooltip";
 
-import dumpData from './dumpData'
+import dumpData from '../dumpData'
 
 const MARGIN = { left: 20, right: 50, top: 10, bottom: 30 }
 const HEIGHT = 350

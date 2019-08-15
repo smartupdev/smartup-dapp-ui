@@ -57,9 +57,8 @@ const Title = ({ title }) => {
 }
 
 const General = ({ expandedInfo, expandedRule, expandedSub, toggleExpandedInfo, 
-  toggleExpandedRule, toggleExpandedSub,market,gettingMarket }) => {
+  toggleExpandedRule, toggleExpandedSub, market }) => {
   const [{general: generalText}] = useLang()
-  if(!market || gettingMarket) return null
   return (
     <Col>
       <Title title={generalText.info} />
@@ -93,8 +92,7 @@ const mapStateToProps = state => ({
   expandedInfo: state.general.expandedInfo,
   expandedRule: state.general.expandedRule,
   expandedSub: state.general.expandedSub,
-  market: state.market.currentMarket,
-  gettingMarket: state.market.gettingMarket,
+  market: state.market,
 });
 
 const mapDispatchToProps = {

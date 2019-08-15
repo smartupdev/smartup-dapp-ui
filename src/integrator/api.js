@@ -1,6 +1,6 @@
-import fetch from '../lib/util/fetch'
+import fetch, { delay, fakeApi } from '../lib/util/fetch'
 import {
-  createMarketGasLimit, buyCtStage1GasLimit
+  ENV, createMarketGasLimit, buyCtStage1GasLimit
 } from '../config'
 /*
   params order:
@@ -54,7 +54,29 @@ export const transactionType = { depositSut: 'ChargeSut', depositEth: 'ChargeEth
 export const apiGetTransactionList = ({ pageNumb = pageNumbDefault, pageSize = pageSizeDefault, type = '' }) => () => fetch.post('/api/user/transaction/list', { type, pageNumb, pageSize })
 export const apiAddTransaction =     ({ txHash, type, amount }) => () => fetch.post('/api/user/transaction/upload/tx/hash', { txHash, type, amount })
 
-export const apiBuyCtState1 = ({marketAddress, ctCount, gasPrice, timestamp, sign}) => () => fetch.post('/api/user/first/stage/buy', {marketAddress, ctCount, gasLimit: buyCtStage1GasLimit, gasPrice, timestamp, sign})
+// to make sure the output is from the most updated input
+let currentGettingGasFee = ''
+function checkOutdate(localKey) {
+  if(localKey !== currentGettingGasFee) throw new Error('Skip invalid/outdated data')
+}
+export const apiGetGasFee = (price, unit, currentValue) => async () => {
+  try {
+    const localKey = price + '/' + unit
+    currentGettingGasFee = localKey
+    if(!price || !unit) return null
+    await delay(500) // only call api when user idle certain ms
+    checkOutdate(localKey)
+    const r = await fakeApi(500, {gasFee: (+price * +unit)/10000, matchedOrder: unit}) // TODO
+    checkOutdate(localKey)
+    return r
+  }
+  catch(error) {
+    // do nothing, swallow error
+    console.debug(error.message)
+    return currentValue
+  }
+}
+export const apiBuyCtState1 = ({marketAddress, ctCount, gasPriceLevel, timestamp, sign}) => () => fetch.post('/api/user/first/stage/buy', {marketAddress, ctCount, gasLimit: buyCtStage1GasLimit, gasPrice: ENV.gasWeiPrices[gasPriceLevel], timestamp, sign})
 // types: firstStageBuy/buy/sell
 export const apiTradeList = ({ types, states, pageNumb = pageNumbDefault, pageSize = pageSizeDefault }) => () => fetch('/api/user/trade/list', { types, states, pageNumb, pageSize })
 /* ====== Transaction ====== END */
@@ -63,7 +85,7 @@ export const apiTradeList = ({ types, states, pageNumb = pageNumbDefault, pageSi
 export const apiCreateMarketCheckInput1 = ({name, desc: description, detail, avatarHash: photo, coverHash: cover}) => () => fetch.post('/api/market/create/check/info', { name, description, photo, cover, detail })
 export const apiCreateMarketCheckInput2 = ({unit: ctCount, unitPrice: ctPrice, reserveRatio, symbol, closingTime}) => () => fetch.post('/api/market/create/check/setting', { ctCount, ctPrice, ctRecyclePrice: ctPrice * reserveRatio, symbol, closingTime }) // TODO: use BN
 export const apiGetNewMarketId = () => () => fetch.get('/api/market/create/generate/id')
-export const apiCreateMarket = ({marketId, name, description, detail, photo, cover, symbol, closingTime, ctCount, ctPrice, ctRecyclePrice, gasPrice, hash: sign}) => () => fetch.post('/api/user/market/create', { marketId, name, description, detail, photo, cover, symbol, closingTime, ctCount, ctPrice, ctRecyclePrice, gasLimit: createMarketGasLimit, gasPrice, sign })
+export const apiCreateMarket = ({marketId, name, description, detail, photo, cover, symbol, closingTime, ctCount, ctPrice, ctRecyclePrice, gasPriceLevel, hash: sign}) => () => fetch.post('/api/user/market/create', { marketId, name, description, detail, photo, cover, symbol, closingTime, ctCount, ctPrice, ctRecyclePrice, gasLimit: createMarketGasLimit, gasPrice: ENV.gasWeiPrices[gasPriceLevel], sign })
 export const apiGetSavedMarket = () => () => fetch.get('/api/user/market/creating')
 
 export const apiGetMarket = (marketId) => () => fetch.get('/api/market/one', { marketId })

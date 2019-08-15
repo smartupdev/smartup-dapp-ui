@@ -23,7 +23,13 @@ export const Span = styled.span`
   ${fontCss}
 `
 
-export const Text = styled.div`
+export const Text = styled.div.attrs(p => ({
+  ...p.sectionTitle && {
+    VS: true, 
+    L: true,
+    center: true,
+  }
+}))`
   margin: 0;
   padding: 0;
   word-break: break-word;

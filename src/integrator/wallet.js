@@ -272,14 +272,14 @@ export function withdrawEth(eth) {
   return withdrawToken(address0x0, eth)
 }
 
-export async function createMarketSign(marketId, marketSymbol, sut, ctCount, ctPrice, ctRecyclePrice, closingTime, gasPrice) {
+export async function createMarketSign(marketId, marketSymbol, sut, ctCount, ctPrice, ctRecyclePrice, closingTime, gasPriceLevel) {
   const account = await getAccount()
   
   const sutWei = toWei(sut)
   const ctCountWei = toWei(ctCount)
   const ctPriceWei = toWei(ctPrice)
   const ctRecyclePriceWei = toWei(ctRecyclePrice)
-  const gesFeeWei =  getGasWei(createMarketGasLimit, gasPrice)
+  const gesFeeWei =  getGasWei(createMarketGasLimit, ENV.gasWeiPrices[gasPriceLevel])
 
   const hash = soliditySha3(
       account,
@@ -319,20 +319,21 @@ export function getMarketCt(address) {
   ).then(decodeResult)
 }
 
-export async function butCtStage1(useAddress, marketAddress, ctCount, gasPrice, time) {
+export async function butCtStage1Sign(marketAddress, ctCount, gasPriceLevel, time) {
   const ctCountWei = toWei(ctCount)
-  const feeWei = getGasWei(buyCtStage1GasLimit, gasPrice)
-  const timeHash = sha3(time)
+  const feeWei = getGasWei(buyCtStage1GasLimit, ENV.gasWeiPrices[gasPriceLevel])
+  const timeHash = sha3(time+'')
+  const account = await getAccount()
   const hash = soliditySha3(
       marketAddress,
       ctCountWei,
-      useAddress,
+      account,
       feeWei,
       timeHash
-  );
+  )
   return toPromise(
     window.web3.personal.sign,
-    hash, await getAccount()  
+    hash, account
   )
 }
 
@@ -363,7 +364,7 @@ function getGasWei(gasLimit, gasPrice) {
 }
 export function toPromise(callback, ...params) {
   return new Promise( (resolve, reject) => 
-    callback(...params, (error, response) => error ? reject(error) : resolve(response))
+    callback(...params, (error, response) => error ? reject(errorMassage(error)) : resolve(response))
   )
 }
 export function buDiv(base, divisor) {
@@ -375,4 +376,7 @@ export function bnMul(base, times) {
   return toBN ?
     toBN(base).mul( toBN(times) ) + ''
   : (base * times) + ''
+}
+export function errorMassage(e) {
+  return new Error(e.message.match(/^[^\n]+/g))
 }

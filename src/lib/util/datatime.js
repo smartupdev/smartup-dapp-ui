@@ -43,6 +43,7 @@ const monthAfter = (months, date = now()) => date + MONTH * months
 const yearAfter = (years, date = now()) => date + YEAR * years
 // TODO: subDay, subMonth, subYear
 export {
+  MIN, HOUR, DAY, MONTH, YEAR,
   getYear, getMonth, getDate, getDay, getHour, getMinute, getSecond, now, toDate, toDateTime, toAgo, toFullDate,
   hourAfter, dayAfter, monthAfter, yearAfter
 }

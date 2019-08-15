@@ -9,82 +9,66 @@ import {
 import { marketMassage } from '../integrator/massager'
 
 export const initialState = {
-
-  marketName: null,
-  marketDesc: null,
-
-  currentMarket: null,
-  currentMarketId: null,
-  gettingMarket: false,
+  id: null,
+  getting: true, // only show after getting done
+  error: null,
+  // lots of market details will be added to this store
 }
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    case MARKET_DETAIL_RESET:
+      return initialState
     case USER_NOTIFICATION_LIST_SUCCEEDED: {
       const { marketIndex, list } = action.payload
-      return marketIndex >= 0 && list[marketIndex].type === 'MarketCreateFinish' && list[marketIndex].content.isSuccess ?
+      const { type, content: {isSuccess, marketAddress} } = list[marketIndex]
+      return marketIndex >= 0 && type === 'MarketCreateFinish' && isSuccess ?
         {
           ...state,
-          currentMarket: {
-            ...state.currentMarket,
-            address: list[marketIndex].content.marketAddress,
-            marketAddress: list[marketIndex].content.marketAddress,
-          }
+          address: marketAddress,
+          marketAddress
         } 
       : state
     }
-    case MARKET_DETAIL_RESET:
-      return {
-        ...state,
-        currentMarket: initialState.currentMarket,
-        currentMarketId: initialState.currentMarketId,
-        gettingMarket: initialState.gettingMarket,      
-      }
     case POST_ADD_SUCCEEDED:
       return {
         ...state,
-        currentMarket: {
-          ...state.currentMarket,
-          numberOfComments: state.currentMarket.numberOfComments + 1
-        }
+        numberOfComments: state.numberOfComments + 1
       }
     case GET_MARKET_DETAIL_REQUESTED:
       return {
         ...state,
-        currentMarketId: action.meta.marketId,
-        gettingMarket: true
+        id: action.meta.marketId,
+        // getting: true,
+        error: initialState.error
       }
     case GET_MARKET_DETAIL_SUCCEEDED:
       return {
         ...state,
-        currentMarket: marketMassage(action.payload),
-        gettingMarket: false
+        ...marketMassage(action.payload),
+        getting: false,
+        error: initialState.error,
       }
     case GET_MARKET_DETAIL_FAILED:
       return {
         ...state,
-        gettingMarket: false
+        getting: false,
+        error: action.payload
       }
 
     case MARKET_ADD_SAVED_MARKET: 
-      if(state.currentMarket && state.currentMarket.id === action.payload.id) {
+      if(state.id === action.payload.id) {
         return {
           ...state,
-          currentMarket: {
-            ...state.currentMarket,
-            following: true
-          },
+          following: true
         }
       }
       return state
     case MARKET_DEL_SAVED_MARKET: 
-      if(state.currentMarket && state.currentMarket.id === action.payload.id) {
+      if(state.id === action.payload.id) {
         return {
           ...state,
-          currentMarket: {
-            ...state.currentMarket,
-            following: false
-          },
+          following: false
         }
       }
       return state

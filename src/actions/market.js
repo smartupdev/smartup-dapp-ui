@@ -11,17 +11,15 @@ import {
   // MARKET_SEARCH_REQUESTED, MARKET_SEARCH_SUCCEEDED, MARKET_SEARCH_FAILED,
   // MARKET_TOP_REQUESTED, MARKET_TOP_SUCCEEDED, MARKET_TOP_FAILED, HOME_SET_SORTING
 } from './actionTypes'
+import { action } from './actionHelper'
+
 import {
   API_MARKET_LIST, API_MARKET_DETAIL,
   API_MARKET_SEARCH, API_MARKET_TOP
 } from './api'
 import fetch from '../lib/util/fetch'
-import { asyncFunction, callbackFunction, getBalance, getAccount, getMarketCt, smartupWeb3, decodeResult, apiGetMarket, getMarketStatus } from '../integrator'
+import { apiGetTradedMarketCt, asyncFunction, callbackFunction, getBalance, getAccount, getMarketCt, smartupWeb3, decodeResult, apiGetMarket, getMarketStatus } from '../integrator'
 import { addCollect, delCollect } from './bookmark'
-
-import { 
-  apiGetTradedMarketCt, 
-} from '../integrator/api'
 
 const topIndexToValueMap = [
   null, 
@@ -46,21 +44,17 @@ export function getCtBalance(marketAddress) {
 
 export function get(marketId) {
   return async (dispatch, getState) => {
-    const [error, result] = await dispatch(
-      asyncFunction(
-        apiGetMarket(marketId),
-        GET_MARKET_DETAIL_REQUESTED, GET_MARKET_DETAIL_SUCCEEDED, GET_MARKET_DETAIL_FAILED,
-        { meta: { marketId } }
-      )
-    )
-    if(!error) {
-      const marketAddress = result.marketAddress
-      console.log('marketAddress')
-      console.log(marketAddress)
-      dispatch(getCtBalance(marketAddress))
-      getMarketStatus(marketAddress).then(console.log).catch(console.error)
+    try {
+      const meta = { marketId }
+      dispatch(action(GET_MARKET_DETAIL_REQUESTED, null, meta))
+      const market = await apiGetMarket(marketId)()
+      // dispatch(getCtBalance(market.marketAddress))
+      const stage = await getMarketStatus(market.marketAddress)
+      dispatch(action(GET_MARKET_DETAIL_SUCCEEDED, { ...market, stage }, meta))
     }
-    return [error, result]
+    catch (error) {
+      dispatch(action(GET_MARKET_DETAIL_FAILED, error))
+    }
   }
 }
 

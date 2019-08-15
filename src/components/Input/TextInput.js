@@ -50,12 +50,12 @@ const TextArea = styled.textarea`
   min-height: fit-content;
   resize: none;
 `
-function _onChange(onChange, number, degit, decimal) {
+function _onChange(onChange, number, digit, decimal) {
   if(onChange) {
     return e => {
       const value = e.target.value
       if(number) {
-        const regex = new RegExp(`^\\d{0,${degit}}(\\.\\d{0,${decimal}}){0,${decimal ? 1 : 0}}$`)
+        const regex = new RegExp(`^\\d{0,${digit}}(\\.\\d{0,${decimal}}){0,${decimal ? 1 : 0}}$`)
         return regex.test(value) ? onChange(value) : undefined
       }
       return onChange(value)
