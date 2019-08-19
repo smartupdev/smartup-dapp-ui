@@ -289,6 +289,7 @@ The buyback price will be the rock bottom price of the market token`,
   personalCentre: {
     inTransaction: {
       typeTitle: { // MUST match with type
+        FirstStageBuyCT: name((ct, sut) => `Buy ${ct} CT`),
         CreateMarket: name((ct, sut) => `Paid ${sut} SmartUp token to create a market`, (ct, sut) => `支付 ${sut} 個SmartUp幣創建巿場`, (ct, sut) => `支付 ${sut} 个SmartUp币创建巿场`),
         BuyCT: name((ct, sut) => `Bought ${ct} market token from ${toToken(sut)} SmartUp token`, (ct, sut) => `買入 ${ct} 巿場代幣，兌換了 ${toToken(sut)} SmartUp幣`, (ct, sut) => ` 买入 ${ct} 巿场代币，兑换了 ${toToken(sut)} SmartUp币`),
         SellCT: name((ct, sut) => `Sold ${ct} market token to ${toToken(sut)} SmartUp token`, (ct, sut) => `賣出 ${ct} 巿場代幣，兌換了 ${toToken(sut)} SmartUp幣`, (ct, sut) => `卖出 ${ct} 巿场代币，兑换了 ${toToken(sut)} SmartUp币`),
@@ -298,6 +299,7 @@ The buyback price will be the rock bottom price of the market token`,
         WithdrawEth: name( (ct, sut, eth) => `Withdraw ${eth}eth` ),
       },
       typeLabel: { // MUST match with type
+        FirstStageBuyCT: name('Buy CT'),
         CreateMarket: name('Market created', '創建巿場', '创建巿场'),
         BuyCT: name('Trade placed (Buy)', '交易(買入)', '交易（买入）'),
         SellCT: name('Trade placed (Sell)', '交易(賣出)', '交易（卖出）'),

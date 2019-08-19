@@ -56,13 +56,15 @@ function Transaction({
     <>
       {error && <Text TopS center error>{error.message}</Text>}
       {transactions.map( ({
-        txHash, type, detail: {ct, sut, eth, initSut}, marketName, marketAddress, createTime, stage, blockTime
+        txHash, type, detail: {ct, sut, eth, initSut, ctCount, ctPrice}, marketName, marketAddress, createTime, stage, blockTime
       }, index) => {
+        const displaySut = sut || initSut || ctPrice
+        const displayCt = ct || ctCount
         return (
           <Col key={txHash} fitHeight>
             <Row spacingM fitHeight onClick={() => onClickExpand(index)}>
               <Col flex={1}>
-                <Text BottomS L>{inTransaction.typeTitle[type](ct, sut || initSut, eth)}</Text>
+                <Text BottomS L>{inTransaction.typeTitle[type](displayCt, displaySut, eth)}</Text>
                 <Text BottomXS note>{marketName}</Text>
                 <Text note S>{toFullDate(createTime, weekdays, months)}</Text>
               </Col>
@@ -77,7 +79,7 @@ function Transaction({
                 { label: inTransaction.txhash, value: txHash, onClick: () => window.open(ENV.txHashUrl + txHash) },
                 { label: inTransaction.type, value: inTransaction.typeLabel[type] },
                 { label: inTransaction.market, value: marketName ? `${marketName} ${marketAddress}` : 'N/A' },
-                { label: inTransaction.ct, value: ct || 'N/A' },
+                { label: inTransaction.ct, value: displayCt || 'N/A' },
                 { label: inTransaction.createTime, value: toFullDate(createTime, weekdays, months) },
                 { label: inTransaction.lastUpdate, value: toFullDate(blockTime, weekdays, months) },
               ].map( ({label, value, onClick}) => 
