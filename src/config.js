@@ -47,7 +47,7 @@ export const TNC_HASH = 'QmUXE6LhAVCJKFYY3DsRYnxwopp5Ub94sAjVfgx73zp7zr'
 // smartupContractAddress in ENV_MAP
 export const sutContractAddress = '0xf1899c6eb6940021c1ae4e9c3a8e29ee93704b03'
 export const nttContractAddress = '0x846ce03199a759a183cccb35146124cd3f120548'
-export const exchangeContractAddress = '0x793b6d104b49fd376e276e3082358064034eb77d'
+export const exchangeContractAddress = '0x0756036d62b682531c3842b007618aa193a3c3f1'
 
 export const marketDeposit = 2500
 export const createMarketGasLimit = 2300000
