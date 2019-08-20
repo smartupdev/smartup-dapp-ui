@@ -6,7 +6,7 @@ import {
   TRADE_CHANGE_SELL_PRICE,
   TRADE_REQUESTED, TRADE_SUCCEEDED, TRADE_FAILED, 
   TRADE_GET_GAS_FEE_SUCCEEDED,
-} from '../actions/actionTypes'
+} from './actionTypes'
 import { action } from './actionHelper'
 
 import { getRawLang } from '../language'

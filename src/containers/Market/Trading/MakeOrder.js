@@ -36,7 +36,6 @@ function MakeOrder({
 }) {
   const [{ trading: tradingText }] = useLang()
   useEffect(() => reset, [])
-  window.eee = error
   return (
     <>
     <Col HS BottomS center>
@@ -69,6 +68,7 @@ function MakeOrder({
 
 const mapStateToProps = state => ({
   symbol: state.market.symbol,
+  // marketId: state.market.id,
   // GET user sut
   trade: state.trade
 })
@@ -76,38 +76,3 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = Actions
 
 export default connect(mapStateToProps, mapDispatchToProps)(MakeOrder)
-
-// <old>
-{/* <Row TopL>
-<Button onClick={isSell ? toggleIsSell : undefined} label={tradingText.table.buy} icon={Trade} backgroundColor={!isSell ? theme.green : undefined} color={isSell ? theme.green : undefined} width='100px' />
-<Button onClick={isSell ? undefined : toggleIsSell} label={tradingText.table.sell} icon={Trade} backgroundColor={isSell ? theme.red : undefined} color={!isSell ? theme.red : undefined} width='100px' MarginLeftS />
-</Row>
-
-<Text S center note VM>{tradingText.tradeText}</Text>
-
-<Col maxWidth='1000px' width='100%'>
-<Col center>
-  <Row BottomL>
-    <Avatar hiddenMobile icon={market.avatar} username={market.name} />
-    <Col spacingLeftS>
-      <Input background L center size='30' disabled={isTrading} value={ct} onChange={onChangeCT} number />
-      {notEnoughCt && <Text error XS>{tradingText.needMoreCT}</Text>}
-      {notEnoughSut && <Text error XS>{tradingText.needMoreSUT}</Text>}
-      {sutError && <Text error XS>{sutError.message}</Text>}
-      </Col>
-  </Row>
-</Col>
-<Text S center note BottomM>{`${isSell ? tradingText.toReceive : tradingText.cost} ${sut ? (+sut).toFixed(4) : 0} SMARTUP`}</Text>
-
-<Row spaceBetween>
-  <Row centerVertical>
-    <Checkbox checked={agreeTnc} onChange={toggleTnc} disabled={isTrading} label={<Text S note lineHeight> {tradingText.agreeTo} </Text>} />
-    <Text S note underline lineHeight onClick={onClickTnc}>{term}</Text>
-  </Row>
-  <Col right>
-    <Button label= {tradingText.tradeButton} icon={Trade} primary onClick={() => onTrade(market.id)} disabled={isTrading || !agreeTnc || !ct | notEnoughSut || notEnoughCt} />
-    {tradingError && <Text error XS>{tradingError.message}</Text>}
-  </Col>
-</Row>
-
-</Col> */}

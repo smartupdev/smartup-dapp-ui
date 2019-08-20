@@ -2,6 +2,21 @@ import fetch, { delay, fakeApi } from '../lib/util/fetch'
 import {
   ENV, createMarketGasLimit, buyCtStage1GasLimit
 } from '../config'
+
+const ORDER_STATE = {
+  active: 'active',
+  locked: 'locked',
+  fullyExecuted: 'fullyExecuted',
+  partiallyExecuted: 'partiallyExecuted',
+  notExecuted: 'notExecuted',
+  processing: 'processing',
+}
+const ORDER_SISE = { 
+  buy: 'buy',
+  sell: 'sell'
+ }
+
+
 /*
   params order:
     address > type > id > name > hash > asc > { pageNumb, pageSize, isLoadMore } 
@@ -14,11 +29,6 @@ function pageHelper(pageNumb, pageSize, isLoadMore) {
     pageSize
   }
 }
-
-// Bookmark <-> collect-controller
-export const API_USER_COLLECT_ADD = '/api/user/collect/add';
-export const API_USER_COLLECT_DEL = '/api/user/collect/del';
-export const API_USER_COLLECT_LIST = '/api/user/collect/list';
 
 export const apiGetGlobalMarket = () => () => fetch.get('/api/market/global/data') // return sutAmount, marketCount, latelyPostCount
 
@@ -51,7 +61,7 @@ export const apiUpdateUser =         (name, avatarIpfsHash) => () => fetch.post(
 
 /* ====== Transaction ====== START */
 export const transactionType = { depositSut: 'ChargeSut', depositEth: 'ChargeEth', withdrawSut: 'WithdrawSut', withdrawEth: 'WithdrawEth', createMarket: 'CreateMarket', buyCT: 'BuyCT', sellCT: 'SellCT' }
-export const apiGetTransactionList = ({ pageNumb = pageNumbDefault, pageSize = pageSizeDefault, type = '' }) => () => fetch.post('/api/user/transaction/list', { type, pageNumb, pageSize })
+export const apiGetTransactionList = ({ type = '', pageNumb = pageNumbDefault, pageSize = pageSizeDefault, isLoadMore = false }) => () => fetch.post('/api/user/transaction/list', { type, ...pageHelper(pageNumb, pageSize, isLoadMore) })
 export const apiAddTransaction =     ({ txHash, type, amount }) => () => fetch.post('/api/user/transaction/upload/tx/hash', { txHash, type, amount })
 
 // to make sure the output is from the most updated input
@@ -78,8 +88,63 @@ export const apiGetGasFee = (price, unit, currentValue) => async () => {
 }
 export const apiBuyCtState1 = ({marketAddress, ctCount, gasPriceLevel, timestamp, sign}) => () => fetch.post('/api/user/first/stage/buy', {marketAddress, ctCount, gasLimit: buyCtStage1GasLimit, gasPrice: ENV.gasWeiPrices[gasPriceLevel], timestamp, sign})
 // types: firstStageBuy/buy/sell
-export const apiTradeList = ({ types, states, pageNumb = pageNumbDefault, pageSize = pageSizeDefault }) => () => fetch('/api/user/trade/list', { types, states, pageNumb, pageSize })
+export const apiTradeList = ({ types, states, pageNumb = pageNumbDefault, pageSize = pageSizeDefault, isLoadMore = false }) => () => fetch('/api/user/trade/list', { types, states, ...pageHelper(pageNumb, pageSize, isLoadMore) })
 /* ====== Transaction ====== END */
+
+/* ========== My Order ========= */
+const myOrder = {
+  list: [ // sort by: createdTime(newest to oldest)
+    {
+      orderId: 'vbtres',
+      createdTime: Date, // string
+      side: 'buy', // or sell
+      state: 'active',
+      totalAmount: 50,
+      filledAmount: 20,
+      buyingPrice: 40.41, // only for buy
+      sellingPrice: 50.11, // buy and sell
+      avgTradedPrice: 40.51,
+    }
+  ],  
+  hasNextPage: false,
+  pageNumb: 1,
+  pageSize: 20,
+  pageCount: 1,
+  rowCount: 1,
+}
+export const apiGetUserOrder = ({ marketId, side, states, orderBy, pageNumb = pageNumbDefault, pageSize = pageSizeDefault, isLoadMore = false }) => async () => {
+  await delay(1000)
+  return myOrder
+}
+/* ========== My Order ========= END */ 
+
+/* ========== Order Book ========= */
+const orderBookRes = {
+  hasNextPage: false,
+  pageNumb: 1,
+  pageSize: 20,
+  pageCount: 1,
+  rowCount: 1,
+  list: [
+    { price: 30, amount: 1000 },
+    { price: 29.99, amount: 900 },
+    { price: 29.98, amount: 500 },
+  ]
+}
+
+export const apiGetBuyOrderBook = (marketId, pageNumb = pageNumbDefault, pageSize = pageSizeDefault, isLoadMore = false) => async () => {
+  await delay(500)
+  return orderBookRes 
+  // fetch('/api/user/trade/list', { marketId, pageNumb, pageSize })
+}
+export const apiGetSellOrderBook = (marketId, pageNumb = pageNumbDefault, pageSize = pageSizeDefault, isLoadMore = false) => async () => {
+  await delay(500)
+  return orderBookRes 
+  // fetch('/api/user/trade/list', { marketId, pageNumb, pageSize })
+}
+/* ========== Order Book ========== END */ 
+
+
 
 /* ====== Market ====== START */
 export const apiCreateMarketCheckInput1 = ({name, desc: description, detail, avatarHash: photo, coverHash: cover}) => () => fetch.post('/api/market/create/check/info', { name, description, photo, cover, detail })
@@ -144,3 +209,8 @@ export const API_USER_PROPOSAL_SUGGEST_EDITING = '/api/user/proposal/suggest/edi
 export const API_USER_PROPOSAL_SUGGEST_SAVE = '/api/user/proposal/suggest/save';
 export const API_USER_PROPOSAL_SUT_EDITING = '/api/user/proposal/sut/editing';
 export const API_USER_PROPOSAL_SUT_SAVE = '/api/user/proposal/sut/save';
+
+// Bookmark <-> collect-controller
+export const API_USER_COLLECT_ADD = '/api/user/collect/add';
+export const API_USER_COLLECT_DEL = '/api/user/collect/del';
+export const API_USER_COLLECT_LIST = '/api/user/collect/list';

@@ -10,6 +10,7 @@ import Text from 'components/Text'
 import TradingInfo from './TradingInfo'
 import Transaction from './Transaction'
 import MakeOrder from './MakeOrder'
+import OrderBook from './OrderBook'
 
 function Trading({ stage }) {
   return (
@@ -17,6 +18,7 @@ function Trading({ stage }) {
       <Col fitHeight>
         {/* <TradingInfo tabIndex={tabIndex} klineData={klineData} setTab={setTab} highLowData={highLowData} market={market} /> */}
         <MakeOrder />
+        <OrderBook />
         {/* <Transaction gettingTrades={gettingTrades} getTradeList={getTradeList} trades={trades} hasNextPage={hasNextPage} /> */}
       </Col>
     :
