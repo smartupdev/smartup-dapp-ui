@@ -17,6 +17,7 @@ function OrderBook({ values }) {
   const model = [
     { label: 'Amount', value: 'amount', layoutStyle: { right: true, flex: 1 } },
     { label: 'Price', value: 'price', layoutStyle: { right: true, flex: 1 } },
+    { label: 'Total', value: 'price', layoutStyle: { right: true, flex: 1 }, component: ({ record }) => <Text>{record.amount * record.price}</Text> },
   ]  
   return (
     <Table
@@ -38,7 +39,9 @@ function OrderBookGroup({
     return reset
   }, [marketId])
   return (
-    <Col spacingLeftM spacingRightM>
+    <Col HM>
+      <Text sectionTitle>Orders Book</Text>
+      <Hr />
       <OrderBook values={buyOrders} />
       {/* <Hr /> */}
       <Text center spacingM>Price: 12.33</Text>

@@ -3,7 +3,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 // import { setTab, onChangeCT, onChangeSUT, onTrade, toggleIsSell, toggleTnc, reset, getTradeList, watchKline,getKlineList, getHighLowList,} from 'actions/trade'
 
-import { Col } from 'components/Layout'
+import { Col, Row } from 'components/Layout'
 import Text from 'components/Text'
 // import Hr from 'components/Hr'
 
@@ -19,8 +19,14 @@ function Trading({ stage }) {
       <Col fitHeight>
         {/* <TradingInfo tabIndex={tabIndex} klineData={klineData} setTab={setTab} highLowData={highLowData} market={market} /> */}
         <FundRaising />
-        <MakeOrder />
-        <OrderBook />
+        <Row>
+          <Col flex={1}>
+            <MakeOrder />
+          </Col>
+          <Col flex={1}>
+            <OrderBook />
+          </Col>
+        </Row>
         {/* <Transaction gettingTrades={gettingTrades} getTradeList={getTradeList} trades={trades} hasNextPage={hasNextPage} /> */}
       </Col>
     // :

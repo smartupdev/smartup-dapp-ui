@@ -1,12 +1,13 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
-import { spacingCss, fontCss, onClickCss } from '../Theme'
+import { spacingCss, fontCss, onClickCss, responsiveCss } from '../Theme'
 import { InputWrapper } from './Common'
 
 export const TextStyle = css`
   ${onClickCss}
   ${fontCss}
   ${spacingCss}
+  ${responsiveCss}
 
   transition: width 0.25s ease-in;
   border: 0px;
