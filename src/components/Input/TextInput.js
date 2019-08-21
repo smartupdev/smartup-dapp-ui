@@ -12,6 +12,7 @@ export const TextStyle = css`
   border: 0px;
   box-shadow: 0;
   padding: 8px 12px;
+  ${p => p.H0 && css`padding-right: 0; padding-left: 0;`}
   ::placeholder {
     color: ${p => p.theme.colorSecondary};
     opacity: 0.5;
@@ -25,6 +26,7 @@ export const TextStyle = css`
 
 
   ${p => p.center && css`text-align: center`};
+  ${p => p.right && css`text-align: right`};
 
   color: ${p => p.theme.colorSecondary};
   :focus {

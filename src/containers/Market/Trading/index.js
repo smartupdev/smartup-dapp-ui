@@ -9,20 +9,22 @@ import Text from 'components/Text'
 
 import TradingInfo from './TradingInfo'
 import Transaction from './Transaction'
+import FundRaising from './FundRaising'
 import MakeOrder from './MakeOrder'
 import OrderBook from './OrderBook'
 
 function Trading({ stage }) {
   return (
-    stage === 1 ?
+    // stage === 1 ?
       <Col fitHeight>
         {/* <TradingInfo tabIndex={tabIndex} klineData={klineData} setTab={setTab} highLowData={highLowData} market={market} /> */}
+        <FundRaising />
         <MakeOrder />
         <OrderBook />
         {/* <Transaction gettingTrades={gettingTrades} getTradeList={getTradeList} trades={trades} hasNextPage={hasNextPage} /> */}
       </Col>
-    :
-      <Text center spacingM>Under development</Text>
+    // :
+    //   <Text center spacingM>Under development</Text>
   )
 }
 

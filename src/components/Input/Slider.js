@@ -1,8 +1,9 @@
 // Note: Don't use input type=range because cannot set two colors in the track in chrome
 import React, { useState, useRef, useEffect } from 'react'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import Text from '../Text'
-import { Col } from '../Layout'
+import TextInput from '../Input'
+import { Col, Row } from '../Layout'
 import eventListener from '../../lib/react'
 import { within } from '../../lib/util'
 
@@ -19,26 +20,25 @@ const Bar = styled(Col).attrs(p => ({
   borderRadius: '2px'  
 }))``
 
-const Label = styled(Text).attrs(p => ({
-  HS: true, 
-  VBase: true, 
-  bgLight: true, 
+const Label = styled(Row).attrs(p => ({
+  bgLight: !p.disabled, 
   note: true, 
   S: true, 
-  MarginTopBase: true,
+  MarginRightBase: true,
   nowrap: true,
-  percent: +p.percent.slice(0, -1)
+  centerVertical: true,
 }))`
-  transform: translateX(${p => 100 - p.percent}%);
+  // transform: translateX(${p => 100 - p.percent}%);
+  position: relative;
   &::after {
     content: " ";
     position: absolute;
-    bottom: 100%; 
-    left: ${p => p.percent}%;
-    margin-left: -5px;
+    top: 50%;
+    left: 100%;
+    margin-top: -5px;
     border-width: 5px;
     border-style: solid;
-    border-color: transparent transparent ${p => p.theme.bgColorLight} transparent;
+    border-color: transparent transparent transparent ${p => p.bgLight && p.theme.bgColorLight};
   }
 `
 
@@ -47,16 +47,16 @@ const Dot = styled.div.attrs(p => ({ style: {marginLeft: p.value} }))`
   min-height: ${dotSize};
   border-radius: ${dotSize};
   transform: translateX(-50%);
-  background-color: ${p => p.theme.colorDark}
+  background-color: ${p => p.disabled ? p.theme.white : p.theme.colorDark}
   z-index: 1;
 `
 
-function displayTextFnDefault(t) { return (+t).toFixed(2) }
-
-export default ({ onChange=console.log, value=40, max=100, displayTextFn=displayTextFnDefault }) => {
+export default ({ onChange=console.log, value=.4, max=1, showScale, disabled }) => {
   const [_value, setValue] = useState(null) // for intermediate display value
   const barRef = useRef()
   const changeRef = useRef(false) // for instant change
+  
+  function _onChange(v) { onChange( Math.min(~~v/100, max)) }
 
   function getDotValue(e) {
     const { width, left } = barRef.current.getBoundingClientRect()
@@ -65,8 +65,10 @@ export default ({ onChange=console.log, value=40, max=100, displayTextFn=display
     return newValue
   }
   function onMouseDown(e) {
-    changeRef.current = true
-    setValue(getDotValue(e))
+    if(!disabled) {
+      changeRef.current = true
+      setValue(getDotValue(e))
+    }
   }
   useEffect(() => eventListener('mousemove', e => {
     changeRef.current && setValue(getDotValue(e))
@@ -82,14 +84,23 @@ export default ({ onChange=console.log, value=40, max=100, displayTextFn=display
   const currentValue = _value === null ? value : _value
   const percent = currentValue/max*100 + '%'
   return (
-    <Col>
+    <Row centerVertical>
+      <Label disabled={disabled} HXS>
+        <TextInput number decimal={0} digit={3} size='2' value={~~(currentValue*100)} onChange={_onChange} right H0 />
+        <Text note>%</Text>
+      </Label>
       <Bar ref={barRef} onMouseDown={onMouseDown}>
-        <Col height={barSize} bgPrimary absolute borderRadius='2px' style={{ width: percent }} />
-        <Dot value={percent} onMouseDown={onMouseDown} />
+        <Col height={barSize} bgPrimary={!disabled} bgWhite={disabled} absolute borderRadius='2px' style={{ width: percent }} />
+        <Dot value={percent} onMouseDown={onMouseDown} disabled={disabled} />
+        {showScale &&
+          <Row absolute width='101%' absLeft='-.5%' spaceBetween TopXL>
+            {[0, 25, 50, 75, 100].map( v =>
+              <Text center={v===50} right={v > 50} nowrap key={v} width='20px' onClick={() => onChange(v/100)}>{v}</Text>
+            )}
+          </Row>
+        }
       </Bar>
-      <Col right style={{ width: percent }}>
-        <Label percent={percent}>{displayTextFn(currentValue)}</Label>
-      </Col>
-    </Col>
+        
+    </Row>
   )
 }
