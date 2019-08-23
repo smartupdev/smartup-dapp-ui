@@ -10,6 +10,7 @@ export function name(en, tc, sc) {
 }
 
 const main = {
+  sutSymbol: name('SmartUp'),
   error: {
     notLogin: name('You had not logged in yet.', '請先登入', '请先登入'),
     noAccount: name('Please connect to MetaMask.', '請連結到MetaMask'),

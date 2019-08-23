@@ -57,7 +57,7 @@ function Box({ value, text }) {
 } 
 
 function FundRaising({ }) {
-  // const [{ trading: tradingText }] = useLang()
+  const [{ sutSymbol }] = useLang()
   return (
     <Col bgDark HL>
       <Text sectionTitle>Token Offering Phase</Text>
@@ -66,17 +66,17 @@ function FundRaising({ }) {
         <Col flex={1} MarginRightXL>
           <Row TopS BottomBase bottom>
             <Text XL nowrap wordSpaceM>Fund Raised : {toToken(500000)}</Text>
-            <Text S nowrap>SmartUp</Text>
+            <Text S nowrap>{sutSymbol}</Text>
           </Row>
           <Text note wordSpaceS>Target: {toToken(1000000)}</Text>
           <SliderBox>
             <Slider value={0.3} disabled />
           </SliderBox>
           <Row wrap='true'>
-            <Box text='Offering Price(in SmartUp)' value={10} />
+            <Box text={`Offering Price(${sutSymbol})`} value={10} />
             <Box text='Total CT is issuing' value={100000} />
             <Box text='Number of users joined' value={323} />
-            <Box text='Offering Price(in SmartUp)' value={10} />
+            <Box text={`Offering Price(${sutSymbol})`} value={10} />
             <Box text='Total CT is issuing' value={100000} />
           </Row>
         </Col>
