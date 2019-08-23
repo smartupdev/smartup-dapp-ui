@@ -25,7 +25,7 @@ function Trading({ stage }) {
           </Col>
           <Hr vertical />
           <Col flex={1}>
-            <OrderBook />
+            {/* <OrderBook /> */}
           </Col>
         </Row>
         <Hr />

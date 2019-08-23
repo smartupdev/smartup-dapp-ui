@@ -36,10 +36,11 @@ export function resetDetail() {
 }
 
 export function getCtBalance(marketAddress) {
-  return (dispatch, getState) => 
-  callbackFunction(
-    () => getMarketCt(marketAddress || getState().market.address),
-    MARKET_DETAIL_GET_CT_REQUESTED, MARKET_DETAIL_GET_CT_SUCCEEDED, MARKET_DETAIL_GET_CT_FAILED
+  return (dispatch, getState) => dispatch(
+    asyncFunction(
+      () => getMarketCt(marketAddress || getState().market.address),
+      MARKET_DETAIL_GET_CT_REQUESTED, MARKET_DETAIL_GET_CT_SUCCEEDED, MARKET_DETAIL_GET_CT_FAILED
+    )
   )
 }
 

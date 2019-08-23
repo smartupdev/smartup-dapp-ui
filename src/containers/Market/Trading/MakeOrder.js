@@ -40,7 +40,7 @@ function InputBlock({ title, subtitle, symbol, icon, noipfs, value, onChange }) 
           <Text S note>{subtitle}</Text>
         </Col>
       </Row>
-      <Row centerVertical VS>
+      <Row centerVertical TopS BottomBase>
         <Avatar icon={icon} noipfs={noipfs} />
         <Col flex={1}>
           <Input background number decimal={0} value={value} onChange={onChange} />
@@ -63,14 +63,14 @@ function MakeOrder({
     isTrading, error,
     buyUnit, buyPrice, sellPrice, 
     estGasFee, estMatchedOrder },
-  symbol, marketAvatar, marketId, userCt
+  symbol, marketAvatar, marketId, userCt, userSut
 }) {
   const [{ trading: tradingText, sutSymbol }] = useLang()
   useEffect(() => {
     getCtBalance()
     return reset
   }, [marketId])
-  console.log(sellPrice, buyPrice, buyUnit)
+  const totalReqSut = buyUnit*buyPrice
   return (
     <Col HS BottomS>
       <Text sectionTitle>{tradingText.tradeTitle}</Text>
@@ -85,9 +85,11 @@ function MakeOrder({
       <Row>
         <LeftBlock />
         <Col flex={1}>
-          <Slider showScale value={buyUnit/100} onChange={onChangeBuyUnit} />
-          <Text S note TopS>~$6,000 USD</Text>
-          <Text S note>~10,000 {sutSymbol}</Text>
+          <Col BottomS>
+            <Slider showScale value={totalReqSut/userSut} onChange={percent => onChangeBuyUnit(+(userSut*percent).toFixed(7))} />
+          </Col>
+          {/* <Text S note TopS>~$6,000 USD</Text> */}
+          <Text S note>Est. {toToken(totalReqSut)} {sutSymbol}</Text>
           <Text S note>Est. gas fee: {estGasFee || '-'} ETH</Text>
         </Col>
       </Row>
@@ -95,7 +97,7 @@ function MakeOrder({
       <InputBlock title='Pre-set Sell Order' subtitle={`Price per ${symbol}`} icon={ENV.logo} noipfs value={sellPrice} onChange={onChangeSellPrice} symbol={sutSymbol} />
       <Row>
         <LeftBlock />
-        <Text S note>Revenue ~{(sellPrice-buyPrice)*buyUnit} {sutSymbol}</Text>
+        <Text S note>Revenue Est. {(sellPrice-buyPrice)*buyUnit} {sutSymbol}</Text>
       </Row>
 
       <Row spaceBetween TopXL>
@@ -112,7 +114,7 @@ const mapStateToProps = state => ({
   marketAvatar: state.market.avatar,
   marketId: state.market.id,
   userCt: state.market.userCt,
-  // GET user sut
+  userSut: state.wallet.sut,
   trade: state.trade
 })
 

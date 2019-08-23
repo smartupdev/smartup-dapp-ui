@@ -13,6 +13,7 @@ export const initialState = {
   id: null,
   getting: true, // only show after getting done
   error: null,
+  userCt: null,
   // lots of market details will be added to this store
 }
 

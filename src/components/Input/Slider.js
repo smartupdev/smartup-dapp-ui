@@ -56,7 +56,7 @@ export default ({ onChange=console.log, value=.4, max=1, showScale, disabled }) 
   const barRef = useRef()
   const changeRef = useRef(false) // for instant change
   
-  function _onChange(v) { onChange( Math.min(~~v/100, max)) }
+  function _onChange(v) { onChange( Math.min(Math.round(v)/100, max)) }
 
   function getDotValue(e) {
     const { width, left } = barRef.current.getBoundingClientRect()
@@ -81,12 +81,13 @@ export default ({ onChange=console.log, value=.4, max=1, showScale, disabled }) 
       changeRef.current = false
     }
   }), [])
-  const currentValue = _value === null ? value : _value
+  const currentValue = Math.min( _value === null ? value : _value, 1)
   const percent = currentValue/max*100 + '%'
   return (
     <Row centerVertical>
       <Label disabled={disabled} HXS>
-        <TextInput number decimal={0} digit={3} size='2' value={~~(currentValue*100)} onChange={_onChange} right H0 />
+        { value > max && <Text note>></Text> }
+        <TextInput number decimal={0} digit={3} size='2' value={Math.round(currentValue*100)} onChange={_onChange} right H0 />
         <Text note>%</Text>
       </Label>
       <Bar ref={barRef} onMouseDown={onMouseDown}>
