@@ -15,7 +15,7 @@ import { Trade } from 'components/Icon'
 import { useLang } from 'language'
 import theme from 'theme'
 import styled from 'styled-components'
-import { getDate, getHour, getMinute, getSecond, toToken, dateDif } from '../../../lib/util'
+import { getDate, getHour, getMinute, getSecond, toToken, dateDif, getMonth } from '../../../lib/util'
 import { useInterval } from '../../../lib/react'
 
 const clockCircleSize = 50
@@ -85,7 +85,7 @@ function FundRaising({ market: { ctPrice, ctCount, ctRecyclePrice, symbol, numbe
           </Row>
         </Col>
         <Col width='280px' right VS>
-          <Clock date={closingTime} />
+          <Clock date={`2019-${getMonth(Date.now())}-${getDate(Date.now())} 18:00` || closingTime} />
           <Text right note S>This project will only be funded if it reaches its goal by {closingTime}</Text>
         </Col>
       </Row>
