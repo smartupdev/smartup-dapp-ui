@@ -17,7 +17,7 @@ function OrderBook({ values }) {
   const model = [
     { label: 'Amount', value: 'amount', layoutStyle: { right: true, flex: 1 } },
     { label: 'Price', value: 'price', layoutStyle: { right: true, flex: 1 } },
-    { label: 'Total', value: 'price', layoutStyle: { right: true, flex: 1 }, component: ({ record }) => <Text>{record.amount * record.price}</Text> },
+    { label: 'Total', value: 'total', layoutStyle: { right: true, flex: 1 }, component: ({ record }) => <Text>{record.amount * record.price}</Text> },
   ]  
   return (
     <Table
