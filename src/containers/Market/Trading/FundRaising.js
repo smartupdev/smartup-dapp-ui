@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { connect } from 'react-redux'
 import { onClickTnc } from 'actions/ipfs'
@@ -15,7 +15,8 @@ import { Trade } from 'components/Icon'
 import { useLang } from 'language'
 import theme from 'theme'
 import styled from 'styled-components'
-import { getDate, getHour, getMinute, getSecond, toToken } from '../../../lib/util';
+import { getDate, getHour, getMinute, getSecond, toToken, dateDif } from '../../../lib/util'
+import { useInterval } from '../../../lib/react'
 
 const clockCircleSize = 50
 const Circle = styled(Col)`
@@ -30,16 +31,19 @@ const SliderBox = styled(Col)`
   margin-left: -${p => p.theme.spacingM}
 `
 function Clock({ date }) {
+  function updateDate() { return dateDif(Date.now(), date) }
+  const [{s, m, h, d}, setDate] = useState(updateDate())
+  useInterval(() => setDate(updateDate()), 1000)
   return (
     <Row BottomS>
       {[
-        { label: 'DAY', fn: getDate },
-        { label: 'HOUR', fn: getHour },
-        { label: 'MIN', fn: getMinute },
-        { label: 'SECOND', fn: getSecond },
-      ].map( ({ fn, label }) => 
+        { label: 'DAY', value: d },
+        { label: 'HOUR', value: h },
+        { label: 'MIN', value: m },
+        { label: 'SECOND', value: s },
+      ].map( ({ value, label }) => 
         <Col center LeftS key={label}>
-          <Circle center centerVertical><Text L note>{fn(date)}</Text></Circle>
+          <Circle center centerVertical><Text L note>{value}</Text></Circle>
           <Text S note>{label}</Text>
         </Col>
       )}
@@ -56,7 +60,7 @@ function Box({ value, text }) {
   )
 } 
 
-function FundRaising({ }) {
+function FundRaising({ market: { ctPrice, ctCount, ctRecyclePrice, symbol, numberOfSub, closingTime } }) {
   const [{ sutSymbol }] = useLang()
   return (
     <Col bgDark HL>
@@ -65,24 +69,24 @@ function FundRaising({ }) {
       <Row>
         <Col flex={1} MarginRightXL>
           <Row TopS BottomBase bottom>
-            <Text XL nowrap wordSpaceM>Fund Raised : {toToken(500000)}</Text>
+            <Text XL nowrap wordSpaceM>Fund Raised : {'????' || toToken(500000)}</Text>
             <Text S nowrap>{sutSymbol}</Text>
           </Row>
-          <Text note wordSpaceS>Target: {toToken(1000000)}</Text>
+          <Text note wordSpaceS>Target: {toToken(ctPrice * ctCount)}</Text>
           <SliderBox>
             <Slider value={0.3} disabled />
           </SliderBox>
           <Row wrap='true'>
-            <Box text={`Offering Price(${sutSymbol})`} value={10} />
-            <Box text='Total CT is issuing' value={100000} />
-            <Box text='Number of users joined' value={323} />
-            <Box text={`Offering Price(${sutSymbol})`} value={10} />
-            <Box text='Total CT is issuing' value={100000} />
+            <Box text={`Offering Price(${sutSymbol})`} value={toToken(ctPrice)} />
+            <Box text={`Total ${symbol}`} value={toToken(ctCount)} />
+            <Box text='Joined Users' value={numberOfSub} />
+            <Box text={`Recycle Price(${sutSymbol})`} value={toToken(ctRecyclePrice)} />
+            <Box text='Available Investment Fund' value={toToken((ctPrice-ctRecyclePrice) * ctCount)} />
           </Row>
         </Col>
         <Col width='280px' right VS>
-          <Clock date={Date.now()} />
-          <Text right note S>This project will only be funded if it reaches its goal by August 31 2019 2:59 PM HKT</Text>
+          <Clock date={closingTime} />
+          <Text right note S>This project will only be funded if it reaches its goal by {closingTime}</Text>
         </Col>
       </Row>
     </Col>
@@ -90,6 +94,7 @@ function FundRaising({ }) {
 }
 
 const mapStateToProps = state => ({
+  market: state.market
   // symbol: state.market.symbol,
   // trade: state.trade
 })

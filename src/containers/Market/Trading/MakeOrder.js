@@ -5,6 +5,7 @@ import { ENV } from 'config'
 import { connect } from 'react-redux'
 import { onClickTnc } from 'actions/ipfs'
 import * as Actions from 'actions/trade'
+import { getCtBalance } from 'actions/market'
 import { ipfsHost } from 'actions/ipfs'
 
 import Input, { Checkbox, Slider } from 'components/Input'
@@ -55,25 +56,29 @@ const LeftBlock = styled(Col).attrs(p => ({ MarginRightXS: true }))`
 `
 
 function MakeOrder({ 
-  toggleTnc, reset, onChangeBuyUnit, onChangeSellPrice, onTrade,
+  toggleTnc, reset, onChangeBuyUnit, onChangeSellPrice, onTrade, 
+  getCtBalance,
   trade: { 
     agreeTnc, 
     isTrading, error,
     buyUnit, buyPrice, sellPrice, 
     estGasFee, estMatchedOrder },
-  symbol, marketAvatar
+  symbol, marketAvatar, marketId, userCt
 }) {
   const [{ trading: tradingText, sutSymbol }] = useLang()
-  useEffect(() => reset, [])
+  useEffect(() => {
+    getCtBalance()
+    return reset
+  }, [marketId])
+  console.log(sellPrice, buyPrice, buyUnit)
   return (
-    <>
     <Col HS BottomS>
       <Text sectionTitle>{tradingText.tradeTitle}</Text>
       <Hr />
       <Row right width='100%' TopS>
         <Text>Your wallet: </Text>
-        <Text primary bold>{toToken(500000)}</Text>
-        <Text> CT</Text>
+        <Text primary bold HBase>{toToken(userCt)}</Text>
+        <Text>{symbol}</Text>
       </Row>
 
       <InputBlock title='Buy Order' subtitle='Amount to Buy' icon={marketAvatar} value={buyUnit} onChange={onChangeBuyUnit} symbol={symbol} />
@@ -90,7 +95,7 @@ function MakeOrder({
       <InputBlock title='Pre-set Sell Order' subtitle={`Price per ${symbol}`} icon={ENV.logo} noipfs value={sellPrice} onChange={onChangeSellPrice} symbol={sutSymbol} />
       <Row>
         <LeftBlock />
-        <Text S note>Revenue 20,000 {sutSymbol}</Text>
+        <Text S note>Revenue ~{(sellPrice-buyPrice)*buyUnit} {sutSymbol}</Text>
       </Row>
 
       <Row spaceBetween TopXL>
@@ -99,18 +104,21 @@ function MakeOrder({
       </Row>
       {error && <Text error S right>{error.message}</Text>}
     </Col>
-    <Hr />
-    </>
   )
 }
 
 const mapStateToProps = state => ({
   symbol: state.market.symbol,
   marketAvatar: state.market.avatar,
+  marketId: state.market.id,
+  userCt: state.market.userCt,
   // GET user sut
   trade: state.trade
 })
 
-const mapDispatchToProps = Actions
+const mapDispatchToProps = {
+  ...Actions,
+  getCtBalance
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(MakeOrder)

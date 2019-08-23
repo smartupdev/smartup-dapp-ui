@@ -4,6 +4,7 @@ import {
   POST_ADD_SUCCEEDED,
   GET_MARKET_DETAIL_REQUESTED, GET_MARKET_DETAIL_SUCCEEDED, GET_MARKET_DETAIL_FAILED,
   USER_NOTIFICATION_LIST_SUCCEEDED,
+  MARKET_DETAIL_GET_CT_SUCCEEDED,
 } from '../actions/actionTypes';
 
 import { marketMassage } from '../integrator/massager'
@@ -30,6 +31,11 @@ export default (state = initialState, action) => {
         } 
       : state
     }
+    case MARKET_DETAIL_GET_CT_SUCCEEDED: 
+      return {
+        ...state,
+        userCt: +action.payload
+      }
     case POST_ADD_SUCCEEDED:
       return {
         ...state,

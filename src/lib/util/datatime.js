@@ -36,6 +36,19 @@ const toAgo = (date, nowText = 'now', minText = 'm ago', hourText = 'h ago', day
     ~~(timeAgo/DAY) + dayText
 }
 
+const dateDif = (date1, date2) => {
+  let ms = new Date(date2).getTime() - new Date(date1).getTime()
+  const d = Math.floor(ms/DAY)
+  ms -= d * DAY
+  const h = Math.floor(ms/HOUR)
+  ms -= h * HOUR
+  const m = Math.floor(ms/MIN)
+  ms -= m * 1000 * 60
+  const s = Math.floor(ms/1000);
+  ms -= s * 1000;
+  return { ms, s, m, h, d }
+}
+
 // TODO: addDay, addMonth, addYear
 const hourAfter = (hours, date = now()) => date + HOUR * hours
 const dayAfter = (days, date = now()) => date + DAY * days
@@ -45,5 +58,6 @@ const yearAfter = (years, date = now()) => date + YEAR * years
 export {
   MIN, HOUR, DAY, MONTH, YEAR,
   getYear, getMonth, getDate, getDay, getHour, getMinute, getSecond, now, toDate, toDateTime, toAgo, toFullDate,
-  hourAfter, dayAfter, monthAfter, yearAfter
+  hourAfter, dayAfter, monthAfter, yearAfter,
+  dateDif
 }

@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 
 import { Col, Row } from 'components/Layout'
 import Text from 'components/Text'
-// import Hr from 'components/Hr'
+import Hr from 'components/Hr'
 
 import TradingInfo from './TradingInfo'
 import Transaction from './Transaction'
@@ -23,10 +23,12 @@ function Trading({ stage }) {
           <Col flex={1}>
             <MakeOrder />
           </Col>
+          <Hr vertical />
           <Col flex={1}>
             <OrderBook />
           </Col>
         </Row>
+        <Hr />
         {/* <Transaction gettingTrades={gettingTrades} getTradeList={getTradeList} trades={trades} hasNextPage={hasNextPage} /> */}
       </Col>
     // :

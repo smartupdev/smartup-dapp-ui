@@ -36,8 +36,9 @@ export function resetDetail() {
 }
 
 export function getCtBalance(marketAddress) {
-  return callbackFunction(
-    () => getMarketCt(marketAddress),
+  return (dispatch, getState) => 
+  callbackFunction(
+    () => getMarketCt(marketAddress || getState().market.address),
     MARKET_DETAIL_GET_CT_REQUESTED, MARKET_DETAIL_GET_CT_SUCCEEDED, MARKET_DETAIL_GET_CT_FAILED
   )
 }
