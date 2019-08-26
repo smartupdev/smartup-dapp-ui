@@ -76,6 +76,7 @@ export const fontCss = css`
 export const generalCss = css`
   ${p => css`
     ${p.borderRadius && `border-radius: ${p.borderRadius}`}
+    ${p.opacity && `opacity: ${p.opacity}`}
     ${colorCss}
     ${onClickCss}
     ${spacingCss}
@@ -86,6 +87,7 @@ export const generalCss = css`
 export const colorCss = css`
   ${p => css`
     ${p.color && `color: ${p.color}`}
+    ${p.customBgColor && `background-color: ${p.customBgColor}`}
     ${!!p.primary && `color: ${p.theme.colorPrimary}`}
     ${!!p.secondary && `color: ${p.theme.colorSecondary}`}
     ${!!p.bgPrimary && `background-color: ${p.theme.colorPrimary}`}
@@ -94,6 +96,8 @@ export const colorCss = css`
     ${!!p.bgDark && `background-color: ${p.theme.bgColorDark}`}
     ${!!p.bgLight && `background-color: ${p.theme.bgColorLight}`}
     ${!!p.bgWhite && `background-color: ${p.theme.white}`}
+    ${!!p.bgRed && `background-color: ${p.theme.red}`}
+    ${!!p.bgGreen && `background-color: ${p.theme.green}`}
   `}
 `
 export const onClickCss = css`

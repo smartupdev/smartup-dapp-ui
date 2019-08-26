@@ -46,4 +46,10 @@
 			"export default connect(mapStateToProps, mapDispatchToProps)($3)"
 		]
 	},
+	"htmlSpace": {
+		"prefix": "xxspaceHtml",
+		"body": [
+			"&nbsp;"
+		]
+	},
 }

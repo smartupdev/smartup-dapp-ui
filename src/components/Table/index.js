@@ -21,7 +21,9 @@ const Table = styled(Col)`
 `
 
 const TableWrapper = styled(Col)`
-  overflow: auto;
+  ${p => !p.noScroll && css`
+    overflow: auto;
+  `}
   position: relative;
   -webkit-overflow-scrolling: touch;
 `
@@ -29,8 +31,10 @@ const TableWrapper = styled(Col)`
 const TD = styled(Col)`
   ${p => p.header && css`color: ${p => p.theme.colorDark}`}
   ${p => p.isExpanded && css`background-color: ${p.theme.bgColorDark}`}
-  padding-bottom: ${p => p.theme.spacingXS}
-  padding-top: ${p => p.theme.spacingXS}
+  ${p => !p.condensed && css`
+    padding-bottom: ${p.theme.spacingXS}
+    padding-top: ${p.theme.spacingXS}
+  `}
   ${p => p.highlight && css`color: ${p => p.theme.colorPrimary}`}
   ${p => p.fixed && css`
     position: sticky;
@@ -62,13 +66,13 @@ const TableRecordBox = styled(Col)`
 `
 
 const TableRecord = memo(
-  ({ record, index, isExpanded , noBorderCol, model, S, onClick, ExpandComponent, backgroundColor, fixedCol }) => {
+  ({ record, index, isExpanded , noBorderCol, model, S, onClick, ExpandComponent, backgroundColor, fixedCol, condensed }) => {
     return (
       <TableRecordBox isExpanded={isExpanded} hasBorder={!noBorderCol} fitWidth>
         <Row>
           {
             model.map(({ value: key, component: Component, layoutStyle = { flex: 1 } }, j) =>
-              <TD key={j} fixed={j < fixedCol} backgroundColor={!j && backgroundColor} isExpanded={isExpanded} {...layoutStyle} borderTop centerVertical onClick={onClick && (() => onClick({ record, key, index, isExpanded }))}>
+              <TD key={j} fixed={j < fixedCol} backgroundColor={!j && backgroundColor} condensed={condensed} isExpanded={isExpanded} {...layoutStyle} borderTop centerVertical onClick={onClick && (() => onClick({ record, key, index, isExpanded }))}>
                 {
                   Component ?
                     <Component record={record} value={record[key]} index={index} isExpanded={isExpanded} />
@@ -102,6 +106,7 @@ const TableRecord = memo(
 export default ({ 
   backgroundColor = theme.bgColor,
   fixedHeader, fixedCol,
+  noHeader,
   recordKey = 'id' , 
   model, values, language,
   sortBy, orderBy, 
@@ -109,6 +114,7 @@ export default ({
   expandedRecords = emptyArr, expandComponent: ExpandComponent, 
   S, noBorderCol, 
   hasMore, loadMore, isLoading, noResultText,
+  noScroll, condensed
 }) => {
   const tableRef = useRef()
   const tableWrapRef = useRef()
@@ -121,8 +127,9 @@ export default ({
     }
   }, [sortBy, orderBy, values[0]])
   return (
-    <TableWrapper ref={tableWrapRef}>
+    <TableWrapper ref={tableWrapRef} noScroll={noScroll}>
       <Table ref={tableRef}>
+        {!noHeader &&
         <TableTitle backgroundColor={fixedHeader && backgroundColor} fixedHeader={fixedHeader}>
           {
             model.map(({ value, label, layoutStyle = { flex: 1 }, sortable }, index) =>
@@ -132,12 +139,14 @@ export default ({
             )
           }
         </TableTitle>
+        }
         {
           values && values[0] ? 
             values.map((record, index) =>
                 <TableRecord
                   fixedCol={fixedCol}
                   backgroundColor={fixedCol && backgroundColor}
+                  condensed={condensed}
                   key={record[recordKey]} 
                   record={record} 
                   index={index} 

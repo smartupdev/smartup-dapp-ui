@@ -4,9 +4,23 @@ import {
   ORDER_BOOK_SELL_REQUESTED, ORDER_BOOK_SELL_SUCCEEDED, ORDER_BOOK_SELL_FAILED,  
 } from '../actions/actionTypes'
 
+import { numberOfOrderBookRecord } from '../config'
+
+const DEFAULT_ORDER = new Array(numberOfOrderBookRecord).fill(null).map( (v, i) => ({ key: -i }))
+function orderMassage(orders) {
+  return {
+    orders: [
+      ...orders.map(order => ({ ...order, key: order.price, total: order.price * order.amount })),
+      ...DEFAULT_ORDER
+    ],
+    max: Math.max(...orders.map(o => o.amount))
+  }
+}
+
 export const initialState = {
   buyOrder: {
-    orders: [],
+    max: 0,
+    orders: DEFAULT_ORDER,
     error: null,
     // fetching: false,
     hasNextPage: false,
@@ -15,7 +29,8 @@ export const initialState = {
   },
   
   sellOrder: {
-    orders: [],
+    max: 0,
+    orders: DEFAULT_ORDER,
     error: null,
     // fetching: false,
     hasNextPage: false,
@@ -36,7 +51,8 @@ export default (state = initialState, action) => {
         buyOrder: {
           ...state.buyOrder,
           error: null,
-          orders, hasNextPage, pageNumb, pageSize
+          ...orderMassage(orders), 
+          hasNextPage, pageNumb, pageSize
         }
       }
     }
@@ -57,7 +73,8 @@ export default (state = initialState, action) => {
         sellOrder: {
           ...state.sellOrder,
           error: null,
-          orders, hasNextPage, pageNumb, pageSize
+          ...orderMassage(orders), 
+          hasNextPage, pageNumb, pageSize
         }
       }
     }

@@ -53,6 +53,8 @@ export const marketDeposit = 2500
 export const createMarketGasLimit = 2300000
 export const buyCtStage1GasLimit = 320000
 
+export const numberOfOrderBookRecord = 10 
+
 const processEnv = process.env.REACT_APP_ENV
 
 export const ENV =  ENV_MAP[processEnv] || ENV_MAP.dev

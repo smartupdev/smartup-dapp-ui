@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef } from 'react'
 
 import { connect } from 'react-redux'
 // import { setTab, onChangeCT, onChangeSUT, onTrade, toggleIsSell, toggleTnc, reset, getTradeList, watchKline,getKlineList, getHighLowList,} from 'actions/trade'
@@ -14,18 +14,20 @@ import MakeOrder from './MakeOrder'
 import OrderBook from './OrderBook'
 
 function Trading({ stage }) {
+  const MakeOrderRef = useRef()
+  const orderHeight = MakeOrderRef.current ? MakeOrderRef.current.getBoundingClientRect().height : 400
   return (
     // stage === 1 ?
       <Col fitHeight>
         {/* <TradingInfo tabIndex={tabIndex} klineData={klineData} setTab={setTab} highLowData={highLowData} market={market} /> */}
         <FundRaising />
         <Row>
-          <Col flex={1}>
+          <Col flex={1} fitHeight ref={MakeOrderRef}>
             <MakeOrder />
           </Col>
           <Hr vertical />
-          <Col flex={1}>
-            {/* <OrderBook /> */}
+          <Col flex={1} height={orderHeight+'px'}>
+            <OrderBook height={orderHeight} />
           </Col>
         </Row>
         <Hr />

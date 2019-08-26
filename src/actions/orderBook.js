@@ -28,7 +28,7 @@ function orderLoop(api, successAction, failAction) {
       catch (error) {
         dispatch(action(failAction, error))
       }
-      await delay(1000)
+      await delay(1000000)
     }
   }
 }

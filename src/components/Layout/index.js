@@ -37,7 +37,7 @@ const Flex = styled.div`
   )};
   ${props => props.height && css`height: ${props.height}; min-height: ${props.height}`};
   ${p => p.fitWidth && css`min-width: fit-content;`}
-  ${p => p.fitHeight && css`min-height: fit-content;`}
+  ${p => p.fitHeight && css`height: fit-content; min-height: fit-content;`}
   ${props => props.fullWidth && css`width: 100%`};
   ${props => props.fullHeight && css`height: 100%`};
   ${props => props.maxWidth && css`max-width: ${props.maxWidth}`};
