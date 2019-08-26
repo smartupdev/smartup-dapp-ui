@@ -86,8 +86,8 @@ function OrderBookGroup({
         <OrderBook color={theme.red} values={buyOrders} reverse max={buyMax} />
         <Hr />
         <Row HS centerVertical>
-          <Text code VBase red L>12.33</Text>
-          <Text code VBase HS primary S>USD$12.33</Text>
+          <Text code VBase green L bold>12.33</Text>
+          <Text code VBase HS S note>USD$12.33</Text>
         </Row>
         <Hr />
         <OrderBook color={theme.green} values={sellOrders} max={sellMax} />
