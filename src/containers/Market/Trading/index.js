@@ -19,15 +19,15 @@ import UserHistory from './UserHistory'
 import MarketTransaction from './MarketTransaction'
 
 const FILTERS = [
-  { label: 'My Sell Order', value: 'sell', component: UserSellOrder },
   { label: 'My Buy Order', value: 'buy', component: UserBuyOrder },
+  { label: 'My Sell Order', value: 'sell', component: UserSellOrder },
   { label: 'My Order History', value: 'history', component: UserHistory },
   { label: 'Market Transaction', value: 'market', component: MarketTransaction },
 ]
 const emptyObj = {}
 
 function Trading({ stage }) {
-  const [tab, setTab] = useState(0)
+  const [tab, setTab] = useState(1)
   function onTabChange(index) { setTab(index) }
   const MakeOrderRef = useRef()
   const orderHeight = MakeOrderRef.current ? MakeOrderRef.current.getBoundingClientRect().height : 400
