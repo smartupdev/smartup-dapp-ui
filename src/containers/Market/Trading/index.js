@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 
 import { connect } from 'react-redux'
 // import { setTab, onChangeCT, onChangeSUT, onTrade, toggleIsSell, toggleTnc, reset, getTradeList, watchKline,getKlineList, getHighLowList,} from 'actions/trade'
@@ -6,14 +6,29 @@ import { connect } from 'react-redux'
 import { Col, Row } from 'components/Layout'
 import Text from 'components/Text'
 import Hr from 'components/Hr'
+import Tab from 'components/Tab'
 
 import TradingInfo from './TradingInfo'
 import Transaction from './Transaction'
 import FundRaising from './FundRaising'
 import MakeOrder from './MakeOrder'
 import OrderBook from './OrderBook'
+import UserSellOrder from './UserSellOrder'
+import UserBuyOrder from './UserBuyOrder'
+import UserHistory from './UserHistory'
+import MarketTransaction from './MarketTransaction'
+
+const FILTERS = [
+  { label: 'My Sell Order', value: 'sell', component: UserSellOrder },
+  { label: 'My Buy Order', value: 'buy', component: UserBuyOrder },
+  { label: 'My Order History', value: 'history', component: UserHistory },
+  { label: 'Market Transaction', value: 'market', component: MarketTransaction },
+]
+const emptyObj = {}
 
 function Trading({ stage }) {
+  const [tab, setTab] = useState(0)
+  function onTabChange(index) { setTab(index) }
   const MakeOrderRef = useRef()
   const orderHeight = MakeOrderRef.current ? MakeOrderRef.current.getBoundingClientRect().height : 400
   return (
@@ -31,6 +46,8 @@ function Trading({ stage }) {
           </Col>
         </Row>
         <Hr />
+        <Tab activeIndex={tab} width='130px' tabs={FILTERS} onClick={onTabChange} type='simple' />
+        {FILTERS[tab].component(emptyObj)}
         {/* <Transaction gettingTrades={gettingTrades} getTradeList={getTradeList} trades={trades} hasNextPage={hasNextPage} /> */}
       </Col>
     // :
