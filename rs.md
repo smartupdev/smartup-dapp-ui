@@ -138,22 +138,23 @@ JV: Voted J
 | TT0 | X Dissolve | +D               | A1: -D, A2: -D           | J1: JT share D, J2: JT share D, J3: --         | 
 
 ### Juror
-- Not member, not flagger, not doer, >7d login
+- Not member, not flagger, not doer, <7d login
 - Not repeated in the whole process
-- More NTT and SUT in platform wallet, high chance. Formula: (TBC)
+- NTT > 100
+<!-- - More NTT and SUT in platform wallet, high chance. Formula: (TBC) -->
 - Notification ~~+ email~~ for juror
 - Jurors are confidential
 - 10 Juror + Dummy (TBC)
 - Within the whole process, max 30 jurors
 - Reward
-  - Draw or < 3: voted jurors get 250 SUT (Deposit/10)
+  - Draw or < 3(TBC): voted jurors get 250 SUT (Deposit/10)
   - 0 vote: refunded
 
 ### Stage1 - Create Flag/Collect Flag Deposit
 - Type: 
   - Type1: Market dissolve
-  - Type2: Proposal doer flag
-  - Type3: Proposal members flag
+  - Type2: Proposal doer flag(TBC)
+  - Type3: Proposal members flag(TBC)
 
 - Flagger
   - Type1: 
