@@ -5,16 +5,23 @@ import {
   ORDER_USER_GET_HISTORY_REQUESTED, ORDER_USER_GET_HISTORY_SUCCEEDED, ORDER_USER_GET_HISTORY_FAILED,
 } from '../actions/actionTypes'
 
+function sellOrderMassage(orders) {
+  return orders.map(o => ({
+    ...o,
+    total: o.avgTradedPrice * o.sellingPrice
+  }))
+} 
+
 export const initialState = {
-  buyOrders: {
+  buyOrder: {
     orders: [],
     error: null,
   },
-  sellOrders: {
+  sellOrder: {
     orders: [],
     error: null,
   },
-  historyOrders: {
+  historyOrder: {
     orders: [],
     error: null,
     fetching: false,
@@ -32,56 +39,56 @@ export default (state = initialState, action) => {
     case ORDER_USER_GET_BUY_REQUESTED: 
       return {
         ...state,
-        buyOrders: {
-          ...state.buyOrders,
+        buyOrder: {
+          ...state.buyOrder,
           error: null
         }
       }
     case ORDER_USER_GET_BUY_SUCCEEDED: 
       return {
         ...state,
-        buyOrders: {
-          ...state.buyOrders,
+        buyOrder: {
+          ...state.buyOrder,
           orders: action.payload.list
         }
       }
     case ORDER_USER_GET_BUY_FAILED: 
       return {
         ...state,
-        buyOrders: {
-          ...state.buyOrders,
+        buyOrder: {
+          ...state.buyOrder,
           error: action.payload
         }
       }
     case ORDER_USER_GET_SELL_REQUESTED: 
       return {
         ...state,
-        sellOrders: {
-          ...state.sellOrders,
+        sellOrder: {
+          ...state.sellOrder,
           error: null
         }
       }
     case ORDER_USER_GET_SELL_SUCCEEDED: 
       return {
         ...state,
-        sellOrders: {
-          ...state.sellOrders,
-          orders: action.payload.list
+        sellOrder: {
+          ...state.sellOrder,
+          orders: sellOrderMassage(action.payload.list)
         }
       }
     case ORDER_USER_GET_SELL_FAILED: 
       return {
         ...state,
-        sellOrders: {
-          ...state.sellOrders,
+        sellOrder: {
+          ...state.sellOrder,
           error: action.payload
         }
       }
     case ORDER_USER_GET_HISTORY_REQUESTED: 
       return {
         ...state,
-        historyOrders: {
-          ...state.historyOrders,
+        historyOrder: {
+          ...state.historyOrder,
           error: action.payload,
           fetching: true
         }
@@ -90,8 +97,8 @@ export default (state = initialState, action) => {
       const { list: orders, hasNextPage, pageNumb, pageSize } = action.payload
       return {
         ...state,
-        historyOrders: {
-          ...state.historyOrders,
+        historyOrder: {
+          ...state.historyOrder,
           orders, hasNextPage, pageNumb, pageSize,
           fetching: false
         }
@@ -100,8 +107,8 @@ export default (state = initialState, action) => {
     case ORDER_USER_GET_HISTORY_FAILED: 
       return {
         ...state,
-        historyOrders: {
-          ...state.historyOrders,
+        historyOrder: {
+          ...state.historyOrder,
           error: action.payload,
           fetching: false
         }

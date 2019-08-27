@@ -24,11 +24,11 @@ const FILTERS = [
   { label: 'My Order History', value: 'history', component: UserHistory },
   { label: 'Market Transaction', value: 'market', component: MarketTransaction },
 ]
-const emptyObj = {}
 
 function Trading({ stage }) {
   const [tab, setTab] = useState(1)
   function onTabChange(index) { setTab(index) }
+  const TabComponent = FILTERS[tab].component
   const MakeOrderRef = useRef()
   const orderHeight = MakeOrderRef.current ? MakeOrderRef.current.getBoundingClientRect().height : 400
   return (
@@ -47,7 +47,8 @@ function Trading({ stage }) {
         </Row>
         <Hr />
         <Tab activeIndex={tab} width='130px' tabs={FILTERS} onClick={onTabChange} type='simple' />
-        {FILTERS[tab].component(emptyObj)}
+        <Hr />
+        <TabComponent />
         {/* <Transaction gettingTrades={gettingTrades} getTradeList={getTradeList} trades={trades} hasNextPage={hasNextPage} /> */}
       </Col>
     // :
@@ -59,4 +60,4 @@ const mapStateToProps = state => ({
   stage: state.market.stage,
 })
 
-export default connect(mapStateToProps)(Trading);
+export default connect(mapStateToProps)(Trading)

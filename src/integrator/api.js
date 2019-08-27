@@ -3,15 +3,26 @@ import {
   ENV, createMarketGasLimit, buyCtStage1GasLimit
 } from '../config'
 
-const ORDER_STATE = {
+export const ORDER_STATE = {
   active: 'active',
   locked: 'locked',
   fullyExecuted: 'fullyExecuted',
   partiallyExecuted: 'partiallyExecuted',
   notExecuted: 'notExecuted',
   processing: 'processing',
+  onHold: 'onHold'
 }
-const ORDER_SISE = { 
+export const ORDER_STATE_DISPLAY = {
+  [ORDER_STATE.active]: 'Active',
+  [ORDER_STATE.locked]: 'Locked',
+  [ORDER_STATE.fullyExecuted]: 'Fully Executed',
+  [ORDER_STATE.partiallyExecuted]: 'Partially Executed',
+  [ORDER_STATE.notExecuted]: 'Not Executed',
+  [ORDER_STATE.processing]: 'Processing',
+  [ORDER_STATE.onHold]: 'On Hold'
+}
+
+export const ORDER_SIDE = { 
   buy: 'buy',
   sell: 'sell'
  }
@@ -96,8 +107,19 @@ const myOrder = {
   list: [ // sort by: createdTime(newest to oldest)
     {
       orderId: 'vbtres',
-      createdTime: Date, // string
-      side: 'buy', // or sell
+      createdTime: '2019-06-04 11:03:14', // string
+      side: ORDER_SIDE.sell, // or sell
+      state: 'active',
+      totalAmount: 50,
+      filledAmount: 20,
+      buyingPrice: 40.41, // only for buy
+      sellingPrice: 50.11, // buy and sell
+      avgTradedPrice: 40.51,
+    },
+    {
+      orderId: 'g43edvf',
+      createdTime: '2019-06-01 11:03:14', // string
+      side: ORDER_SIDE.buy, // or sell
       state: 'active',
       totalAmount: 50,
       filledAmount: 20,
@@ -164,8 +186,6 @@ export const apiGetSellOrderBook = (marketId, pageNumb = pageNumbDefault, pageSi
   // fetch('/api/user/trade/list', { marketId, pageNumb, pageSize })
 }
 /* ========== Order Book ========== END */ 
-
-
 
 /* ====== Market ====== START */
 export const apiCreateMarketCheckInput1 = ({name, desc: description, detail, avatarHash: photo, coverHash: cover}) => () => fetch.post('/api/market/create/check/info', { name, description, photo, cover, detail })
