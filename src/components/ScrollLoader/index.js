@@ -19,7 +19,7 @@ export default ({ target, hasMore, loadMore, isLoading, isButton, noResult, noRe
   const [lang] = useLang()
   const [ref, {top}, {bottom}] = useScroll(target)
   useEffect( () => {
-    if(!isLoading && top && bottom && top < bottom) {
+    if(!isLoading && top && bottom && top < bottom && loadMore) {
       loadMore(true)
     }  
   }, [isLoading, top, bottom])

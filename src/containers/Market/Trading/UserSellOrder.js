@@ -66,8 +66,7 @@ function UserSellOrder({
         model={model}
         values={[...addedOrders, ...orders]}
         isLoading={fetching}
-        // hasMore={hasNextPage} loadMore={() => getTradeList(true)} isLoading={gettingTrades} 
-        // noResultText={tradingText.transactionRecord} 
+        hasMore={fetching}
       />
       {
         inEditMode && 
