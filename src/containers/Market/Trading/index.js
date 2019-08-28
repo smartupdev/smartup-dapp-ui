@@ -29,20 +29,20 @@ function Trading({ stage }) {
   const [tab, setTab] = useState(1)
   function onTabChange(index) { setTab(index) }
   const TabComponent = FILTERS[tab].component
-  const MakeOrderRef = useRef()
-  const orderHeight = MakeOrderRef.current ? MakeOrderRef.current.getBoundingClientRect().height : 400
+  const makeOrderRef = useRef()
+  const orderHeight = makeOrderRef.current ? makeOrderRef.current.getBoundingClientRect().height : 400
   return (
     // stage === 1 ?
       <Col fitHeight>
         {/* <TradingInfo tabIndex={tabIndex} klineData={klineData} setTab={setTab} highLowData={highLowData} market={market} /> */}
         <FundRaising />
         <Row>
-          <Col flex={1} fitHeight ref={MakeOrderRef}>
+          <Col flex={1} fitHeight ref={makeOrderRef}>
             <MakeOrder />
           </Col>
           <Hr vertical />
           <Col flex={1} height={orderHeight+'px'}>
-            <OrderBook height={orderHeight} />
+            <OrderBook />
           </Col>
         </Row>
         <Hr />

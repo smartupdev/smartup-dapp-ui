@@ -10,7 +10,8 @@ export const ORDER_STATE = {
   partiallyExecuted: 'partiallyExecuted',
   notExecuted: 'notExecuted',
   processing: 'processing',
-  onHold: 'onHold'
+  onHold: 'onHold',
+  newAdded: 'new', // only for FE
 }
 export const ORDER_STATE_DISPLAY = {
   [ORDER_STATE.active]: 'Active',
@@ -19,7 +20,8 @@ export const ORDER_STATE_DISPLAY = {
   [ORDER_STATE.partiallyExecuted]: 'Partially Executed',
   [ORDER_STATE.notExecuted]: 'Not Executed',
   [ORDER_STATE.processing]: 'Processing',
-  [ORDER_STATE.onHold]: 'On Hold'
+  [ORDER_STATE.onHold]: 'On Hold',
+  [ORDER_STATE.newAdded]: 'New',
 }
 
 export const ORDER_SIDE = { 
@@ -137,6 +139,10 @@ const myOrder = {
 export const apiGetUserOrder = ({ marketId, side, states, orderBy, pageNumb = pageNumbDefault, pageSize = pageSizeDefault, isLoadMore = false }) => async () => {
   await delay(1000)
   return myOrder
+}
+export const apiEditSellOrder = ({ marketId, cancelledOrderIds, unlockedOrderIds, addedOrders: list, sign, }) => async () => {
+  await delay(2000)
+  return {}
 }
 /* ========== My Order ========= END */ 
 

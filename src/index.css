@@ -1,3 +1,9 @@
+@font-face {
+  font-family: 'code';
+  src: url('chinese.msyh.woff') format('woff'), /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+   url('chinese.msyh.ttf') format('truetype'); /* Chrome 4+, Firefox 3.5, Opera 10+, Safari 3—5 */
+}
+
 body {
   margin: 0px;
 }

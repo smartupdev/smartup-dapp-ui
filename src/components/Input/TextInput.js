@@ -9,6 +9,8 @@ export const TextStyle = css`
   ${spacingCss}
   ${responsiveCss}
 
+  box-sizing: border-box;
+
   transition: width 0.25s ease-in;
   border: 0px;
   box-shadow: 0;

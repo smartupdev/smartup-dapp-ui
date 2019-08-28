@@ -26,14 +26,14 @@ function OrderBookTitle() {
 }
 
 function RenderToken({value}) {
-  return <Text code>{toToken(value, { defaultValue: '' })}</Text>
+  return <Text code S>{toToken(value, { defaultValue: '' })}</Text>
 }
 
 function PriceAndBar({ color, value, record, max }) {
   return (
     <>
-    <Col absolute width={`calc( ${record.amount/max* 100}% + 24px );`} height='18px' customBgColor={color} opacity='.1' absLeft='-12px'></Col>
-    <Text color={color} code>{value && value.toFixed(2)}&nbsp;</Text> 
+    <Col absolute width={`calc( ${record.amount/max* 100}% + 24px );`} height='16px' customBgColor={color} opacity='.1' absLeft='-12px'></Col>
+    <Text color={color} code S>{value && value.toFixed(2)}&nbsp;</Text> 
     </>
   )
 }

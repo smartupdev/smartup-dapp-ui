@@ -33,9 +33,9 @@ const Button = styled.button`
   ${onClickCss}
 `
 
-export default ({ label, icon: Icon, primary, light, condensed, extended, outline, verticalMargin, iconSize, textProps, ...rest }) => {
+export default ({ label, icon: Icon, primary, light, condensed, extended, outline, verticalMargin, iconSize, textProps, buttonRef, ...rest }) => {
   return (
-    <Button primary={primary} light={light} condensed={condensed} VBase={extended} HL={extended} outline={outline} verticalMargin={verticalMargin} {...rest}>
+    <Button primary={primary} light={light} condensed={condensed} VBase={extended} HL={extended} outline={outline} verticalMargin={verticalMargin} ref={buttonRef} {...rest}>
       {/* <DonutLoader size={12} /> */}
       { Icon && <Icon XS RightBase={label !== null && label !== undefined} size={iconSize} />}
       { label && <Text nowrap {...textProps}>{label}</Text>}

@@ -51,7 +51,7 @@ export const Text = styled.div.attrs(p => ({
   ${p => p.wordSpaceXS && css`letter-spacing: ${p => p.theme.fontSpacingXS}`}
   
   ${p => p.code && css`
-    font-family: 'IBM Plex Mono', monospace;
+    font-family: 'code';
   `}
 
   ${p => p.nowrap && css`white-space: nowrap;`}

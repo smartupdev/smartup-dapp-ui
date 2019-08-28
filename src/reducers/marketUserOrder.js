@@ -8,7 +8,8 @@ import {
 function sellOrderMassage(orders) {
   return orders.map(o => ({
     ...o,
-    total: o.avgTradedPrice * o.sellingPrice
+    total: o.avgTradedPrice * o.sellingPrice,
+    remaining: o.totalAmount - o.filledAmount
   }))
 } 
 
@@ -16,15 +17,17 @@ export const initialState = {
   buyOrder: {
     orders: [],
     error: null,
+    fetching: true
   },
   sellOrder: {
     orders: [],
     error: null,
+    fetching: true
   },
   historyOrder: {
     orders: [],
     error: null,
-    fetching: false,
+    fetching: true,
     hasNextPage: false,
     pageNumb: 1,
     pageSize: 20,
@@ -49,6 +52,7 @@ export default (state = initialState, action) => {
         ...state,
         buyOrder: {
           ...state.buyOrder,
+          fetching: false,
           orders: action.payload.list
         }
       }
@@ -57,6 +61,7 @@ export default (state = initialState, action) => {
         ...state,
         buyOrder: {
           ...state.buyOrder,
+          fetching: false,
           error: action.payload
         }
       }
@@ -73,6 +78,7 @@ export default (state = initialState, action) => {
         ...state,
         sellOrder: {
           ...state.sellOrder,
+          fetching: false,
           orders: sellOrderMassage(action.payload.list)
         }
       }
@@ -81,6 +87,7 @@ export default (state = initialState, action) => {
         ...state,
         sellOrder: {
           ...state.sellOrder,
+          fetching: false,
           error: action.payload
         }
       }
@@ -90,7 +97,7 @@ export default (state = initialState, action) => {
         historyOrder: {
           ...state.historyOrder,
           error: action.payload,
-          fetching: true
+          // fetching: true
         }
       }
     case ORDER_USER_GET_HISTORY_SUCCEEDED: {

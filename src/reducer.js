@@ -11,6 +11,7 @@ import user from './reducers/user'
 
 import wallet from './reducers/wallet'
 
+import marketEditingSellOrder from './reducers/marketEditingSellOrder'
 import marketUserOrder from './reducers/marketUserOrder'
 import orderBook from './reducers/orderBook'
 import globalInfo from './reducers/globalInfo'
@@ -29,6 +30,7 @@ import userTransaction from './reducers/userTransaction'
 import { combineReducers } from 'redux';
 
 export default combineReducers({
+    marketEditingSellOrder,
     marketUserOrder,
     orderBook,
     globalInfo,
