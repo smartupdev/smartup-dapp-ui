@@ -35,7 +35,6 @@ function Market({
         loading={gettingCreatedMarmkets}
         header={lang.personalCentre.inMarket.created}
         body={<MarketTable markets={createdMarkets} hasMore={createdMarketsHasNextPage} loadMore={getCreatedMarkets} isLoading={gettingCreatedMarmkets} />} />
-      {expandCreated && <Hr />}
       <Panel
         expandedDark
         expanded={expandSaved}
@@ -44,7 +43,6 @@ function Market({
         loading={gettingCollectedMarmkets}
         header={lang.personalCentre.inMarket.saved}
         body={<MarketTable markets={collectedMarkets} hasMore={collectedMarketsHasNextPage} loadMore={getCollectedMarkets} isLoading={gettingCollectedMarmkets} />} />
-      {expandSaved && <Hr />}
       <Panel
         expandedDark
         expanded={expandTraded}
