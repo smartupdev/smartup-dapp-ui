@@ -11,6 +11,13 @@ import DiscussionItem from './Item'
 import { connect } from 'react-redux'
 import { getMarketPost } from '../../../actions/post'
 import { useLang } from '../../../language'
+import { withLink } from 'routes'
+import theme from 'theme'
+
+export const AddDiscussion = connect(state => ({ marketAddress: state.market.address }))(withLink( 
+  ({ marketAddress, goto }) => 
+    <Add primary={!!marketAddress} S color={marketAddress ? undefined : theme.colorSecondary} disabled={!marketAddress} onClick={() => marketAddress && goto.discussionCreate()} />
+))
 
 function Discussion({ getMarketPost, post, market }) {
   const { posts, gettingPost, getPostError, keyword, hasNextPage, } = post
@@ -29,9 +36,9 @@ function Discussion({ getMarketPost, post, market }) {
             <Text>{lang.discussion.noResult}</Text> 
           : 
             <>
-              <Text>{lang.discussion.create.click}</Text>
-              <Add primary LeftS RightS S />
-              <Text>{lang.discussion.create.newPost}</Text>
+              <Text RightS>{lang.discussion.create.click}</Text>
+              <AddDiscussion />
+              <Text LeftS>{lang.discussion.create.newPost}</Text>
             </>
         }
       </Row>
@@ -58,7 +65,7 @@ function Discussion({ getMarketPost, post, market }) {
 
 const mapStateToProps = state => ({
   post: state.post,
-  market: state.market.currentMarket,
+  market: state.market,
 });
 const mapDispatchToProps = {
   getMarketPost

@@ -21,6 +21,8 @@ import Button from '../../components/Button'
 import ButtonMore from '../../components/ButtonMore'
 import Avatar from '../../components/Avatar'
 
+import {AddDiscussion} from './Discussion'
+
 import { withToast } from '../../components/Toast'
 import { copy } from '../../lib/util'
 import { share as copyShareLink } from '../../alphaWebService'
@@ -65,16 +67,13 @@ const Market = ({
   function Share() { 
     return (
       <ShareIcon S color={theme.white} onClick={() => {
-        copyShareLink({id: market.id}, routeMap.trading.path);
+        copyShareLink({id: market.id}, routeMap.trading.path)
         addToast(`Link copied to clipboard.`)
       }} />
     )
   }
   function Bookmarked(props) {
     return <BookmarkedIcon S onClick={() => toggleSavedMarket(market)} checked={market.following} {...props} />
-  }
-  function AddDiscussion() {
-    return <Add primary={!!market.address} S color={market.address ? undefined : theme.colorSecondary} disabled={!market.address} onClick={() => market.address && goto.discussionCreate()} />
   }
 
   const isDiscussion = getPath() === routeMap.discussion.path
