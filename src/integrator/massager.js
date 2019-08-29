@@ -111,7 +111,7 @@ export function marketMassage(m) {
     numberOfSub: m.data ? m.data.userCount || 0 : '-',
     lately_volume: m.data && m.data.latelyVolume,
     lately_change: m.data && m.data.latelyChange,
-    priceIn7d: m.sevenDayNode,
+    priceIn7d: m.sevenDayNode || [],
     following: m.isCollected,
     overview: m.description,
     icon: null,
