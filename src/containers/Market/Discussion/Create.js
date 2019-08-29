@@ -4,7 +4,6 @@ import Text from '../../../components/Text'
 import TextInput from '../../../components/Input'
 import DropToUpload from '../../../components/DropToUpload'
 import Button from '../../../components/Button'
-import { postIpfsImg } from '../../../actions/ipfs'
 
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
@@ -15,20 +14,8 @@ function DiscussionCreate({ addApi, history }) {
   const [title, setTitle] = useState('')
   const [text, setText] = useState('')
   const [photo, setPhoto] = useState(null)
-  const [photoError, setPhotoError] = useState(null)
   const [error, setError] = useState(null)
   const [loading, setLoading] = useState(false)
-  async function uploadPhoto(files) {
-    setPhotoError(null)
-    if(!files) return setPhoto(null)
-    try {
-      const hash = await postIpfsImg(files[0])
-      setPhoto(hash)
-    } 
-    catch(error) {
-      setPhotoError(error)
-    }
-  }
   async function add() {
     setLoading(true)
     const [e] = await addApi(title, text, photo)
@@ -44,7 +31,7 @@ function DiscussionCreate({ addApi, history }) {
       <Text TopS BottomBase> {lang.discussion.create.text} </Text>
       <TextInput background line={5} disabled={loading} value={text} onChange={setText} />
       <Text TopS BottomBase> {lang.discussion.create.photo} </Text>
-      <DropToUpload actualSize disabled={loading} value={photo || null} error={photoError} onChoose={uploadPhoto} />
+      <DropToUpload actualSize disabled={loading} value={photo || null} onChoose={setPhoto} />
       <Row right TopXL>
         <Button primary HL label= {lang.discussion.create.submit} disabled={loading} onClick={add} />
         <Button HL label= {lang.discussion.create.cancel} disabled={loading} onClick={history.goBack} />

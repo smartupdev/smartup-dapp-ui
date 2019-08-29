@@ -146,7 +146,7 @@ requestParam: type(root=系统讨论区, market=市场讨论区), marketAddress(
 export function addMarketPost(title, text, photo) {
   return (dispatch, getState) =>
     dispatch(
-      addPost({ type: 'market', marketId: getState().market.currentMarketId, title, description: text, photo })
+      addPost({ type: 'market', marketId: getState().market.id, title, description: text, photo })
     )
 
 }

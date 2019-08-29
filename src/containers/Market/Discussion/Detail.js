@@ -70,7 +70,7 @@ const mapStateToProps = state => {
     detail: post, gettingDetail, getDetailError, 
     replyHasMore,
   } = state.post
-  const { loggedIn, userName: username, userAvatar } = state.user
+  const { loggedIn, displayName: username, avatarHash: userAvatar } = state.user
   return {
     newComment, replying, replyError,
     replys, gettingReply, getReplyError,
