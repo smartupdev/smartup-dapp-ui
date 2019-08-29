@@ -60,8 +60,8 @@ const CreateMarket = ({
   if(!isReady) return <DonutLoader page />  
   function next() { setActiveIndex(activeIndex + 1) }
   function back() { setActiveIndex(activeIndex - 1) }
-  const Next = ({disabled}) =>  <Button width={buttonWidth} label={createMarketText.next} primary extended onClick={next} disabled={disabled || isFetching} />
-  const Back = () =>  <Button width={buttonWidth} MarginHS label={createMarketText.back} primary extended onClick={back} disabled={isFetching} />
+  const Next = ({disabled}) =>  <Button width={buttonWidth} label={createMarketText.next} primary onClick={next} disabled={disabled || isFetching} />
+  const Back = () =>  <Button width={buttonWidth} MarginHS label={createMarketText.back} onClick={back} disabled={isFetching} />
   const onChangeProgress = tab => setActiveIndex(tab)
   const options = [createMarketText.tab.basicInfo, createMarketText.tab.equation, createMarketText.tab.deposit]
   const totalAmount = unitPrice * unit
@@ -79,7 +79,7 @@ const CreateMarket = ({
       {
         activeIndex === 0 ? 
           <>
-            <Input background XL value={name} onChange={onChangeName} disabled={isFetching} label={createMarketText.marketName} error={error.name} description={createMarketText.nameDes}  />
+            <Input background L value={name} onChange={onChangeName} disabled={isFetching} label={createMarketText.marketName} error={error.name} description={createMarketText.nameDes}  />
             <Input background L line={3} value={desc} onChange={onChangeDesc} disabled={isFetching} label={createMarketText.marketOverview} error={error.desc} description={createMarketText.overviewDes} />
             <RichContent isJs editor value={detail} onBlur={onChangeDetail} label={createMarketText.marketDetail} error={error.detail} description={createMarketText.detailDes} />
             <Label>{createMarketText.marketAvatar}</Label>
