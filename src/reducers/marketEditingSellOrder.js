@@ -1,4 +1,6 @@
 import {
+  ORDER_USER_RESET,
+
   ORDER_USER_SELL_ORDER_UNLOCK,
   ORDER_USER_SELL_DELETE,
   ORDER_USER_SELL_DELETE_UNDO,
@@ -24,6 +26,8 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    case ORDER_USER_RESET:
+      return initialState
     case ORDER_USER_SELL_ORDER_UNLOCK:
       return {
         ...state,

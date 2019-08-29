@@ -66,7 +66,7 @@ const TableRecordBox = styled(Col)`
 `
 
 const TableRecord = memo(
-  ({ record, index, isExpanded , noBorderCol, model, S, onClick, ExpandComponent, backgroundColor, fixedCol, condensed }) => {
+  ({ record, index, isExpanded, noBorderCol, model, S, onClick, ExpandComponent, backgroundColor, fixedCol, condensed }) => {
     return (
       <TableRecordBox isExpanded={isExpanded} hasBorder={!noBorderCol} fitWidth>
         <Row>
@@ -114,7 +114,7 @@ export default ({
   expandedRecords = emptyArr, expandComponent: ExpandComponent, 
   S, noBorderCol, 
   hasMore, loadMore, isLoading, noResultText,
-  noScroll, condensed
+  noScroll, condensed, titleStyle
 }) => {
   const tableRef = useRef()
   const tableWrapRef = useRef()
@@ -134,7 +134,7 @@ export default ({
           {
             model.map(({ value, label, layoutStyle = { flex: 1 }, sortable }, index) =>
               <TD key={value} fixed={index < fixedCol} backgroundColor={fixedCol && !index && backgroundColor} {...layoutStyle} header centerVertical highlight={value === sortBy} onClick={sortable && onClickHeader ? (() => onClickHeader(value, index)) : null}>
-                <Text S={S}>{label instanceof Function ? label(language) : label}{value === sortBy ? orderBy === ORDER_BY.asc ? ' ↑' : orderBy === ORDER_BY.desc && ' ↓' : ''}</Text>
+                <Text S={S} {...titleStyle}>{label instanceof Function ? label(language) : label}{value === sortBy ? orderBy === ORDER_BY.asc ? ' ↑' : orderBy === ORDER_BY.desc && ' ↓' : ''}</Text>
               </TD>
             )
           }

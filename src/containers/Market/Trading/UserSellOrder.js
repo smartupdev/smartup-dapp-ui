@@ -18,7 +18,7 @@ import { useLang } from 'language'
 import { ORDER_STATE_DISPLAY } from 'integrator'
 
 const layoutStyle = { center: true, flex: 1 }
-
+const titleStyle = { newline: true, center: true }
 function UserSellOrder({ 
   symbol, marketId,
   sellOrder: { orders, fetching },
@@ -28,7 +28,7 @@ function UserSellOrder({
   const inEditMode = !!(addedOrders.length || removedOrderIds.length || unlockOrders.length)
   const [{ trading: tradingText, sutSymbol }] = useLang()
   function TableTokenText(p) {
-    return <TokenText note={removedOrderIds.includes(p.record.orderId)} {...p} />
+    return <TokenText note={removedOrderIds.includes(p.record.orderId)} value={p.value} />
   }
   function TableStatus({ value, record }) {
     const removed = removedOrderIds.includes(record.orderId)
@@ -44,11 +44,11 @@ function UserSellOrder({
   }, [marketId])
   const model = [
     { label: 'Time', value: 'createdTime', layoutStyle, component: p => <DateText note={removedOrderIds.includes(p.record.orderId)} {...p} /> },
-    { label: `Amount(${symbol})`, value: 'totalAmount', layoutStyle, component: TableTokenText },
-    { label: `Remained ${symbol}`, value: 'remaining', layoutStyle, component: TableTokenText },
-    { label: `Sell Price(${sutSymbol})`, value: 'sellingPrice', layoutStyle, component: TableTokenText },
-    { label: `Avg Executed Price(${sutSymbol})`, value: 'avgTradedPrice', layoutStyle, component: TableTokenText },
-    { label: `Est. Total(${sutSymbol})`, value: 'total', layoutStyle, component: TableTokenText },
+    { label: `Amount\n(${symbol})`, value: 'totalAmount', layoutStyle, component: TableTokenText },
+    { label: `Remained \n${symbol}`, value: 'remaining', layoutStyle, component: TableTokenText },
+    { label: `Sell Price\n(${sutSymbol})`, value: 'sellingPrice', layoutStyle, component: TableTokenText },
+    { label: `Executed Price\n(${sutSymbol})`, value: 'avgTradedPrice', layoutStyle, component: TableTokenText },
+    { label: `Est. Total\n(${sutSymbol})`, value: 'total', layoutStyle, component: TableTokenText },
     { label: 'Status', value: 'state', layoutStyle, component: TableStatus },
     { label: 'Action', value: 'action', layoutStyle, component: ({ record: {orderId} }) => 
       removedOrderIds.includes(orderId) ?
@@ -67,6 +67,7 @@ function UserSellOrder({
         values={[...addedOrders, ...orders]}
         isLoading={fetching}
         hasMore={fetching}
+        titleStyle={titleStyle}
       />
       {
         inEditMode && 
