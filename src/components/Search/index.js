@@ -45,7 +45,7 @@ const Container = styled.div`
 const Dump = styled.div`
   height: ${p => p.theme.imageSizeL};
   ${media(p => `width: ${p.theme.imageSizeL};`, 'width: 70px;')}
-` // margic number
+` // magic number
 
 // MUST set relative outside
 export default ({ id = '', backgroundColor, value, onChange, onSearch, top, bottom, right }) => {

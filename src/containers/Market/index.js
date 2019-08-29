@@ -78,7 +78,7 @@ const Market = ({
 
   const isDiscussion = getPath() === routeMap.discussion.path
   const DiscussionSearch = id => { // please use this by DiscussionSearch(), don't use <DiscussionSearch />. 
-    return isDiscussion && <Search id={id} bgColor bottom='1px' top='1px' right='30px' value={postKeyword} onChange={onChangeKeyword} onSearch={() => getMarketPost()} />
+    return isDiscussion && <Search id={id} bgColor bottom='1px' top='1px' right='30px' value={postKeyword} backgroundColor={theme.bgColor} onChange={onChangeKeyword} onSearch={() => getMarketPost()} />
   }
   
   if(market.error) return <Text error spacingM center>{market.error.message}</Text>
