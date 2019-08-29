@@ -22,6 +22,8 @@ import * as actions from '../../actions/createMarket'
 import { toToken } from '../../lib/util'
 // import { createMarket } from '../../actions/market'
 
+const buttonWidth = '80px'
+
 function ColorTextBox({ title, subtitle, primary, secondary, dark }) {
   return (
     <Col flex={1} bgDark borderRadius="4px" overflowHidden>
@@ -59,8 +61,8 @@ const CreateMarket = ({
   if(!isReady) return <DonutLoader page />  
   function next() { setActiveIndex(activeIndex + 1) }
   function back() { setActiveIndex(activeIndex - 1) }
-  const Next = ({disabled}) =>  <Button label={createMarketText.next} primary extended onClick={next} disabled={disabled || isFetching} />
-  const Back = () =>  <Button label={createMarketText.back} primary extended onClick={back} disabled={isFetching} />
+  const Next = ({disabled}) =>  <Button width={buttonWidth} label={createMarketText.next} primary extended onClick={next} disabled={disabled || isFetching} />
+  const Back = () =>  <Button width={buttonWidth} MarginHS label={createMarketText.back} primary extended onClick={back} disabled={isFetching} />
   const onChangeProgress = tab => setActiveIndex(tab)
   const options = [createMarketText.tab.basicInfo, createMarketText.tab.equation, createMarketText.tab.deposit]
   const totalAmount = unitPrice * unit
@@ -106,7 +108,7 @@ const CreateMarket = ({
               <ColorTextBox title={toToken(totalAmount)} subtitle="Total Amount" dark />
             </Flex>
             <Slider value={reserveRatio} max={1} onChange={onChangeReserveRatio} disabled={isFetching} displayTextFn={t => (+t*100).toFixed(2)+'%' } />
-            <Row spacingTopL spaceBetween>
+            <Row spacingTopL right>
               <Back />
               <Next />
             </Row>
@@ -122,7 +124,7 @@ const CreateMarket = ({
               </Col>
               <Text rightText>SmartUp</Text>
             </Row>
-            <Row spacingTopL spaceBetween>
+            <Row spacingTopL right>
               <Back />
               <Button label={createMarketText.create} primary onClick={create} extended disabled={isFetching} />
             </Row>
