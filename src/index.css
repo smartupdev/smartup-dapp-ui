@@ -8,22 +8,22 @@ body {
   margin: 0px;
 }
 
-/* width */
 /* ::-webkit-scrollbar {
-  width: 111px;
+  width: 0px;
+  height: 0px;
 } */
 
-/* Track */
-::-webkit-scrollbar-track {
-  background: #2d3c47; 
-}
- 
-/* Handle */
+/* ::-webkit-scrollbar-track-piece  {
+  background-color: #2d3c47;
+} */
+
 ::-webkit-scrollbar-thumb {
-  background: #1b242b; 
+  /* height: 30px; */
+  /* background: #586671; */
+  /* background-color: #1b242b; */
 }
 
-/* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #27343e;
+  /* background: #45525c; */
+  /* background: #27343e; */
 }
