@@ -37,11 +37,11 @@ const Setting = ({
         label={lang.panel.setting.userName} description={name ? lang.panel.setting.nameLock : lang.panel.setting.nameReq} />
       <Label>{lang.panel.setting.avatar}</Label>
       <DropToUpload MarginHXS onChoose={_setAvatarHash} value={_avatarHash} disabled={userInfoUpdating} imageHeight='100px' imageWidth='100px' />
-      <Row center VS>
-        <Button primary HM label={lang.panel.setting.submit} onClick={() => updateUser(!name && _name, _avatarHash)} disabled={userInfoUpdating || !didEdit} />
+      <Row right VS>
         { didEdit &&
-          <Button MarginLeftXS HM label={lang.panel.setting.cancel} onClick={reset} disabled={userInfoUpdating} />
+          <Button MarginRightXS HM label={lang.panel.setting.cancel} onClick={reset} disabled={userInfoUpdating} />
         }
+        <Button primary HM label={lang.panel.setting.submit} onClick={() => updateUser(!name && _name, _avatarHash)} disabled={userInfoUpdating || !didEdit} />
       </Row>
       { userInfoError && <Text error S right>{userInfoError.message}</Text> }
       <Col TopXL>
