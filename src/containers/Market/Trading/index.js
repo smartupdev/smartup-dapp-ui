@@ -38,7 +38,7 @@ function Trading({ stage }) {
         <FundRaising />
         <Row>
           <Col flex={1} fitHeight ref={makeOrderRef}>
-            <MakeOrder />
+            <MakeOrder stage={stage} />
           </Col>
           <Hr vertical />
           <Col flex={1} height={orderHeight+'px'}>

@@ -30,17 +30,23 @@ function Tnc({ agreeTnc, toggleTnc, disabled }) {
   )
 }
 
-function InputBlock({ title, subtitle, symbol, icon, noipfs, value, onChange }) {
+function Title({ children }) {
   return (
-    <Col TopXL>
+    <Row TopXL>
+      <LeftBlock />
+      <Text>{children}</Text>
+    </Row>
+  )
+}
+
+function InputBlock({ label, symbol, icon, noipfs, value, onChange }) {
+  return (
+    <Col>
       <Row>
         <LeftBlock />
-        <Col>
-          <Text>{title}</Text>
-          <Text S note>{subtitle}</Text>
-        </Col>
+        <Text S note>{label}</Text>
       </Row>
-      <Row centerVertical TopS BottomBase>
+      <Row centerVertical VBase>
         <Avatar icon={icon} noipfs={noipfs} />
         <Col flex={1}>
           <Input background number decimal={0} value={value} onChange={onChange} />
@@ -56,6 +62,7 @@ const LeftBlock = styled(Col).attrs(p => ({ MarginRightXS: true }))`
 `
 
 function MakeOrder({ 
+  stage,
   toggleTnc, reset, onChangeBuyUnit, onChangeSellPrice, onTrade, 
   getCtBalance,
   trade: { 
@@ -81,7 +88,9 @@ function MakeOrder({
         <Text>{symbol}</Text>
       </Row>
 
-      <InputBlock title='Buy Order' subtitle='Amount to Buy' icon={marketAvatar} value={buyUnit} onChange={onChangeBuyUnit} symbol={symbol} />
+      <Title>Buy Order</Title>
+      {stage !== 1 && <InputBlock label='Price' icon={marketAvatar} value={buyUnit} onChange={onChangeBuyUnit} symbol={symbol} />}
+      <InputBlock label='Amount to Buy' icon={marketAvatar} value={buyUnit} onChange={onChangeBuyUnit} symbol={symbol} />
       <Row>
         <LeftBlock />
         <Col flex={1}>
@@ -94,7 +103,8 @@ function MakeOrder({
         </Col>
       </Row>
 
-      <InputBlock title='Pre-set Sell Order' subtitle={`Price per ${symbol}`} icon={ENV.logo} noipfs value={sellPrice} onChange={onChangeSellPrice} symbol={sutSymbol} />
+      <Title>Pre-set Sell Order</Title>
+      <InputBlock label={`Price per ${symbol}`} icon={ENV.logo} noipfs value={sellPrice} onChange={onChangeSellPrice} symbol={sutSymbol} />
       <Row>
         <LeftBlock />
         <Text S note>Revenue Est. {(sellPrice-buyPrice)*buyUnit} {sutSymbol}</Text>
