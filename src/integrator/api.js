@@ -51,6 +51,8 @@ export const apiDelCollect =         (type, id) => () => fetch.post('/api/user/c
 export const apiAddCollect =         (type, id) => () => fetch.post('/api/user/collect/add', { type, objectMark: id })
 
 /* ====== GET PERSONAL CENTER DATA ====== START */
+export const apiUserUpdate = (username, avatarHash) => () => fetch.post('/api/user/update', { name: username || null, avatarIpfsHash: avatarHash || '' })
+
 export const apiGetCreatedMarket =   ({pageNumb = pageNumbDefault, pageSize = pageSizeDefault, isLoadMore = false}) => () => fetch.get('/api/user/market/created',      pageHelper(pageNumb, pageSize, isLoadMore) ) // return list of details markets
 export const apiGetCollectedMarket = ({pageNumb = pageNumbDefault, pageSize = pageSizeDefault, isLoadMore = false}) => () => fetch.get('/api/user/market/collected',    pageHelper(pageNumb, pageSize, isLoadMore) ) // return list of details markets
 export const apiGetTradedMarket =    ({pageNumb = pageNumbDefault, pageSize = pageSizeDefault, isLoadMore = false}) => () => fetch.get('/api/user/market/traded',       pageHelper(pageNumb, pageSize, isLoadMore) ) // return list of details markets

@@ -12,12 +12,14 @@ export function tradeMassage(trade) {
 
 export function userMassage(user) {
   return {
+    name: user.name || '',
+    displayName: user.name || user.userAddress,
     avatarHash: user.avatarIpfsHash,
-    userAvatar: user.avatarIpfsHash,
-    userAddress: user.userAddress,
-    userName: user.name ? user.name : user.userAddress,
-    realUserName: user.name || '',
-    nameHasChanged: !!user.name,
+    // userAvatar: user.avatarIpfsHash,
+    // userAddress: user.userAddress,
+    // userName: user.name ? user.name : user.userAddress,
+    // realUserName: user.name || '',
+    // nameHasChanged: !!user.name,
   }
 }
 

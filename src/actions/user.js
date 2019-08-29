@@ -6,23 +6,16 @@ import {
   USER_PERSON_SIGN_REQUESTED, USER_PERSON_SIGN_SUCCEEDED, USER_PERSON_SIGN_FAILED,
   USER_AUTH_SMARTUP_REQUESTED, USER_AUTH_SMARTUP_SUCCEEDED, USER_AUTH_SMARTUP_FAILED,
 
-  USER_AVATAR_CHANGE_REQUESTED, USER_AVATAR_CHANGE_SUCCEEDED, USER_AVATAR_CHANGE_FAIL,
-  USER_UPDATE_AVATAR_REQUESTED, USER_UPDATE_AVATAR_SUCCEEDED, USER_UPDATE_AVATAR_FAIL,
-  USER_UPDATE_NAME_REQUESTED, USER_UPDATE_NAME_SUCCEEDED, USER_UPDATE_NAME_FAIL,
-  USER_NAME_CHANGE, USER_NAME_SUBMITTING,
+  USER_UPDATE_REQUESTED, USER_UPDATE_SUCCEEDED, USER_UPDATE_FAIL,
 } from './actionTypes'
+// import { action } from './actionHelper'
 import {
+  apiLogin, apiAuth, apiGetUser, apiUserUpdate,
   asyncFunction, callbackFunction, 
-  getAccount,
+  getAccount, 
   metamaskListener, getMetamaskInfo, 
   enableMetamask,
 } from '../integrator'
-
-import { apiLogin, apiAuth, apiGetUser } from '../integrator/api'
-
-import { API_USER_UPDATE } from './api';
-import fetch, { delay } from '../lib/util/fetch';
-import { postIpfsImg } from './ipfs'
 import { getAllBalance } from './wallet'
 
 const STORAGE_KEY_TOKEN = 'token'
@@ -158,62 +151,12 @@ function getUserInfo(signature) {
   }
 }
 
-//upload image
-export function onChangeAvatar(files) {
-  if (!files) return {
-    type: USER_AVATAR_CHANGE_SUCCEEDED,
-  }
+export function updateUser(username, avatarHash) {
   return asyncFunction(
-    () => postIpfsImg(files[0]),
-    USER_AVATAR_CHANGE_REQUESTED, USER_AVATAR_CHANGE_SUCCEEDED, USER_AVATAR_CHANGE_FAIL,
+    apiUserUpdate(username, avatarHash),
+    USER_UPDATE_REQUESTED, USER_UPDATE_SUCCEEDED, USER_UPDATE_FAIL,
+    { 
+      meta: { username, avatarHash }
+    }
   )
 }
-
-//update user avatar
-export function updateUserAvatar() {
-  return (dispatch, getState) => {
-    const requestParams = {
-      avatarIpfsHash: getState().user.avatarHash,
-    }
-    return dispatch(
-      asyncFunction(
-        fetch.post,
-        USER_UPDATE_AVATAR_REQUESTED, USER_UPDATE_AVATAR_SUCCEEDED, USER_UPDATE_AVATAR_FAIL,
-        { params: API_USER_UPDATE, params2: requestParams }
-      )
-    )
-  }
-}
-
-//update user name
-export function updateUserName() {
-  return (dispatch, getState) => {
-    const requestParams = {
-      name: getState().user.realUserName,
-    }
-    return dispatch(
-      asyncFunction(
-        fetch.post,
-        USER_UPDATE_NAME_REQUESTED, USER_UPDATE_NAME_SUCCEEDED, USER_UPDATE_NAME_FAIL,
-        { params: API_USER_UPDATE, params2: requestParams }
-      )
-    )
-  }
-}
-
-export function onChangeName(name) {
-  return {
-    type: USER_NAME_CHANGE,
-    payload: name,
-  }
-}
-
-export function onChangeNameSubmit(submitting) {
-  return {
-    type: USER_NAME_SUBMITTING,
-    payload: submitting,
-  }
-}
-
-
-

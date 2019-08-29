@@ -45,8 +45,7 @@ const CreateMarket = ({
     name, desc, detail,
     symbol, period, unitPrice, unit, reserveRatio,
     error, isFetching, isReady, marketId, 
-    avatarHash, avatarUploading,
-    coverHash, coverUploading,
+    avatarHash, coverHash, 
   }, 
   setActiveIndex, create, onChangeName, onChangeDesc, onChangeDetail, reset, get, 
   onChangeAvatar, onChangeCover,
@@ -84,9 +83,9 @@ const CreateMarket = ({
             <Input background L line={3} value={desc} onChange={onChangeDesc} disabled={isFetching} label={createMarketText.marketOverview} error={error.desc} description={createMarketText.overviewDes} />
             <RichContent isJs editor value={detail} onBlur={onChangeDetail} label={createMarketText.marketDetail} error={error.detail} description={createMarketText.detailDes} />
             <Label>{createMarketText.marketAvatar}</Label>
-            <DropToUpload MarginBottomM onChoose={onChangeAvatar} isLoading={avatarUploading} error={error.avatarHash} value={avatarHash} imageHeight='100px' imageWidth='100px' />
+            <DropToUpload MarginBottomM onChoose={onChangeAvatar} error={error.avatarHash} value={avatarHash} disabled={isFetching} imageHeight='100px' imageWidth='100px' />
             <Label>{createMarketText.marketCover}</Label>
-            <DropToUpload MarginBottomM onChoose={onChangeCover} isLoading={coverUploading} error={error.coverHash} value={coverHash} imageHeight={['auto', '300px']} imageWidth={['100%', '450px']} />
+            <DropToUpload MarginBottomM onChoose={onChangeCover} error={error.coverHash} value={coverHash} disabled={isFetching} imageHeight={['auto', '300px']} imageWidth={['100%', '450px']} />
             <Row spacingTopL right>
               <Next />
             </Row>

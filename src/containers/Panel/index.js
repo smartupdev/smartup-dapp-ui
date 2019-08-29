@@ -77,10 +77,10 @@ const networkName = {
 
 const Panel = ({ 
   setOpen, isOpen,
-  metamask,
-  nttBalance,
-  metaMaskHint, account, 
-  userAvatar, userName, loginMetaMask, 
+  metamask, metaMaskHint, 
+  address, avatarHash, displayName, 
+  ntt,
+  loginMetaMask, 
   loggedIn, isLoading, loginError,
   setActiveTab, activeTabIndex,
   watchNotification, unreadCount }) => {
@@ -104,11 +104,11 @@ const Panel = ({
       {loggedIn ?
         <>
           <Top centerVertical spaceBetween>
-            <Avatar icon={userAvatar} username={userName} />
+            <Avatar icon={avatarHash} username={displayName} />
             <Col>
-              <Text S note>{shorten(account)}</Text>
+              <Text S note>{shorten(address)}</Text>
               {/* <Text right S note>200 honours</Text> */}
-              <Text right S note>{nttBalance} NTT</Text>
+              <Text right S note>{ntt} NTT</Text>
             </Col>
           </Top>
           <Tab tabs={TABS} activeIndex={activeTabIndex} onClick={setActiveTab} fullWidth />
@@ -137,12 +137,13 @@ const mapStateToProps = state => ({
   loggedIn: state.user.loggedIn,
   isLoading: state.user.isLoading,
   loginError: state.user.loginError,
-  account: state.user.account,
-  nttBalance: state.wallet.ntt,
-  
-  userName: state.user.userName,
-  userAvatar: state.user.userAvatar,
 
+  address: state.user.address,  
+  displayName: state.user.displayName,
+  avatarHash: state.user.avatarHash,
+
+  ntt: state.wallet.ntt,
+  
   activeTabIndex: state.panel.activeTabIndex,
   unreadCount: state.notification.unreadCount
 });

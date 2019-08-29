@@ -12,8 +12,8 @@ import {
   // CREATE_MARKET_PAY_REQUESTED, 
   CREATE_MARKET_PAY_SUCCEEDED, CREATE_MARKET_PAY_FAILED,
 
-  CREATE_MARKET_AVATAR_CHANGE_REQUESTED, CREATE_MARKET_AVATAR_CHANGE_SUCCEEDED, CREATE_MARKET_AVATAR_CHANGE_FAILED,
-  CREATE_MARKET_COVER_CHANGE_REQUESTED, CREATE_MARKET_COVER_CHANGE_SUCCEEDED, CREATE_MARKET_COVER_CHANGE_FAILED,
+  CREATE_MARKET_AVATAR_CHANGE_SUCCEEDED, 
+  CREATE_MARKET_COVER_CHANGE_SUCCEEDED, 
   CREATE_MARKET_PRICE, CREATE_MARKET_UNIT, CREATE_MARKET_RESERVE,
   CREATE_MARKET_DETAIL_CHANGE, CREATE_MARKET_SYMBOL_CHANGE, CREATE_MARKET_PERIOD_CHANGE
 } from '../actions/actionTypes';
@@ -30,8 +30,8 @@ export const initialState = {
   detail: '',
   symbol: '',
   period: 90,
-  avatarHash: '', avatarUploading: false,
-  coverHash: '', coverUploading: false,
+  avatarHash: '', 
+  coverHash: '', 
   unit: '',
   unitPrice: '',
   reserveRatio: .5,
@@ -53,42 +53,18 @@ export const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case CREATE_MARKET_COVER_CHANGE_REQUESTED:
-      return {
-        ...state,
-        coverUploading: true,
-      } 
     case CREATE_MARKET_COVER_CHANGE_SUCCEEDED:
       return {
         ...state,
-        coverUploading: false,
         coverHash: action.payload,
         error: { ...state.error, coverHash: initialState.error.coverHash }
       } 
-    case CREATE_MARKET_COVER_CHANGE_FAILED:
-      return {
-        ...state,
-        coverUploading: false,
-        error: { ...state.error, coverHash: action.payload }
-      }
 
-    case CREATE_MARKET_AVATAR_CHANGE_REQUESTED:
-      return {
-        ...state,
-        avatarUploading: true,
-      }
     case CREATE_MARKET_AVATAR_CHANGE_SUCCEEDED:
       return {
         ...state,
-        avatarUploading: false,
         avatarHash: action.payload,
         error: { ...state.error, avatarHash: initialState.error.avatarHash }
-      }
-    case CREATE_MARKET_AVATAR_CHANGE_FAILED:
-      return {
-        ...state,
-        avatarUploading: false,
-        error: { ...state.error, avatarHash: action.payload }
       }
 
     case CREATE_MARKET_SAVE_SUCCEEDED: 
