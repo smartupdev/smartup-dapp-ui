@@ -53,7 +53,7 @@ export default ({ options, onChange, selectedIndex, disabled, width = '30vw', ..
   useClickOutside(ref, () => setOpen(false))
   return (
     <Box ref={ref} relative fitHeight width={width} maxTextLength={options.reduce((p, c) => Math.max(p, length(c.label)) , 0)} onClick={() => setOpen(!didOpen)} {...rest}>
-      <Text note VS center nowrap>{options[selectedIndex].label}</Text>
+      <Text note VS center nowrap>{(options[selectedIndex] || {}).label}</Text>
       <OptionList open={didOpen}>
         { options.map( ({label, value}, index) =>
           <Text note VS center nowrap key={label} onClick={() => onChange(index)}>{label}</Text>
