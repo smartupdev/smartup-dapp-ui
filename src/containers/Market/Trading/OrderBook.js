@@ -38,7 +38,7 @@ function PriceAndBar({ color, value, record, max }) {
   )
 }
 
-function OrderBook({ values, color, reverse, max }) {
+function OrderBook({ tableRef, values, color, reverse, max, stage }) {
   // const [{ trading: tradingText }] = useLang()
   const model = [
     { label: 'Price', value: 'price', layoutStyle: { left: true, flex: 1 }, component: p => <PriceAndBar color={color} max={max} {...p} />},
@@ -46,7 +46,7 @@ function OrderBook({ values, color, reverse, max }) {
     { label: 'Total', value: 'total', layoutStyle: { right: true, flex: 1 }, component: RenderToken },
   ]  
   return (
-    <Col HS>
+    <Col HS flex={1} bottom={reverse} ref={tableRef} height='50%'>
       <Table
         noScroll
         noBorderCol
@@ -55,6 +55,7 @@ function OrderBook({ values, color, reverse, max }) {
         backgroundColor={theme.bgColor}
         recordKey={'key'}
         model={model}
+        noResultText={stage === 1 ? 'Available after this phase' : ''}
         values={reverse ? [...values].reverse() : values}
       />
     </Col>
@@ -62,8 +63,8 @@ function OrderBook({ values, color, reverse, max }) {
 }
 
 function OrderBookGroup({ 
-  orderBook: { buyOrder: { orders: buyOrders, max: buyMax }, sellOrder: { orders: sellOrders, max: sellMax } },
-  marketId,
+  orderBook: { buyOrder: { orders: buyOrders, max: buyMax, didFetch: didFetchBuy }, sellOrder: { orders: sellOrders, max: sellMax, didFetch: didFetchSell } },
+  marketId, stage,
   getBuyOrder, getSellOrder, reset,
   height,
  }) {
@@ -73,24 +74,33 @@ function OrderBookGroup({
     return reset
   }, [marketId])
   const contentRef = useRef()
+  const topRef = useRef()
+  const didScroll = useRef()
   useEffect(() => {
-    contentRef.current.scrollTo(0, (contentRef.current.scrollHeight - contentRef.current.getBoundingClientRect().height)/2 )
-  }, [buyOrders.length, sellOrders.length])
+    if(!didScroll.current) {
+      if(didFetchBuy && didFetchSell) didScroll.current = true
+      const contentHeight = contentRef.current.offsetHeight
+      const topRefHeight = topRef.current.getBoundingClientRect().height
+      contentRef.current.scrollTo(0, 
+        topRefHeight - contentHeight/2 + 20
+      )
+    }
+  }, [didFetchBuy, didFetchSell])
   return (
     <>
       <Text sectionTitle>Orders Book</Text>
       <Hr inset />
       <OrderBookTitle />
       <Hr inset />
-      <Col overflowAuto ref={contentRef}>
-        <OrderBook color={theme.red} values={buyOrders} reverse max={buyMax} />
+      <Col overflowAuto ref={contentRef} flex={1}>
+        <OrderBook tableRef={topRef} color={theme.red} values={buyOrders} reverse max={buyMax} />
         <Hr />
         <Row HS centerVertical>
           <Text code VBase green L bold>12.33</Text>
           <Text code VBase HS S note>USD$12.33</Text>
         </Row>
         <Hr />
-        <OrderBook color={theme.green} values={sellOrders} max={sellMax} />
+        <OrderBook color={theme.green} values={sellOrders} max={sellMax} stage={stage} />
       </Col>
     </>
   )
@@ -98,7 +108,8 @@ function OrderBookGroup({
 
 const mapStateToProps = state => ({
   orderBook: state.orderBook,
-  marketId: state.market.id
+  marketId: state.market.id,
+  stage: state.market.stage
 })
 
 const mapDispatchToProps = Actions

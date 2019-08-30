@@ -164,16 +164,16 @@ const orderBookRes = {
     { price: 25.98, amount: 500 },
     { price: 24.98, amount: 500 },
     { price: 23.98, amount: 500 },
-    // { price: 22.98, amount: 500 },
-    // { price: 21.98, amount: 500 },
-    // { price: 21.97, amount: 500 },
-    // { price: 21.96, amount: 500 },
-    // { price: 21.95, amount: 500 },
-    // { price: 21.94, amount: 500 },
-    // { price: 21.93, amount: 500 },
-    // { price: 21.92, amount: 500 },
-    // { price: 21.91, amount: 500 },
-    // { price: 21.90, amount: 500 },
+    { price: 22.98, amount: 500 },
+    { price: 21.98, amount: 500 },
+    { price: 21.97, amount: 500 },
+    { price: 21.96, amount: 500 },
+    { price: 21.95, amount: 500 },
+    { price: 21.94, amount: 500 },
+    { price: 21.93, amount: 500 },
+    { price: 21.92, amount: 500 },
+    { price: 21.91, amount: 500 },
+    { price: 21.90, amount: 500 },
     // { price: 21.89, amount: 500 },
     // { price: 21.88, amount: 500 },
     // { price: 21.86, amount: 500 },
@@ -189,8 +189,8 @@ export const apiGetBuyOrderBook = (marketId, pageNumb = pageNumbDefault, pageSiz
   // fetch('/api/user/trade/list', { marketId, pageNumb, pageSize })
 }
 export const apiGetSellOrderBook = (marketId, pageNumb = pageNumbDefault, pageSize = pageSizeDefault, isLoadMore = false) => async () => {
-  await delay(500)
-  return orderBookRes 
+  await delay(5000)
+  return [] //orderBookRes 
   // fetch('/api/user/trade/list', { marketId, pageNumb, pageSize })
 }
 /* ========== Order Book ========== END */ 

@@ -4,15 +4,12 @@ import {
   ORDER_BOOK_SELL_REQUESTED, ORDER_BOOK_SELL_SUCCEEDED, ORDER_BOOK_SELL_FAILED,  
 } from '../actions/actionTypes'
 
-import { numberOfOrderBookRecord } from '../config'
+// import { numberOfOrderBookRecord } from '../config'
 
-const DEFAULT_ORDER = new Array(numberOfOrderBookRecord).fill(null).map( (v, i) => ({ key: -i }))
+// const DEFAULT_ORDER = new Array(numberOfOrderBookRecord).fill(null).map( (v, i) => ({ key: -i }))
 function orderMassage(orders) {
   return {
-    orders: [
-      ...orders.map(order => ({ ...order, key: order.price, total: order.price * order.amount })),
-      ...DEFAULT_ORDER
-    ],
+    orders: orders.map(order => ({ ...order, key: order.price, total: order.price * order.amount })),
     max: Math.max(...orders.map(o => o.amount))
   }
 }
@@ -20,9 +17,9 @@ function orderMassage(orders) {
 export const initialState = {
   buyOrder: {
     max: 0,
-    orders: DEFAULT_ORDER,
+    orders: [],
     error: null,
-    // fetching: false,
+    didFetch: false,
     hasNextPage: false,
     pageNumb: 1,
     pageSize: 100,
@@ -30,9 +27,9 @@ export const initialState = {
   
   sellOrder: {
     max: 0,
-    orders: DEFAULT_ORDER,
+    orders: [],
     error: null,
-    // fetching: false,
+    didFetch: false,
     hasNextPage: false,
     pageNumb: 1,
     pageSize: 100,
@@ -51,6 +48,7 @@ export default (state = initialState, action) => {
         buyOrder: {
           ...state.buyOrder,
           error: null,
+          didFetch: true,
           ...orderMassage(orders), 
           hasNextPage, pageNumb, pageSize
         }
@@ -62,6 +60,7 @@ export default (state = initialState, action) => {
         ...state,
         buyOrder: {
           ...state.buyOrder,
+          didFetch: true,
           error: action.payload
         }
       }
@@ -73,6 +72,7 @@ export default (state = initialState, action) => {
         sellOrder: {
           ...state.sellOrder,
           error: null,
+          didFetch: true,
           ...orderMassage(orders), 
           hasNextPage, pageNumb, pageSize
         }
@@ -84,6 +84,7 @@ export default (state = initialState, action) => {
         ...state,
         sellOrder: {
           ...state.sellOrder,
+          didFetch: true,
           error: action.payload
         }
       }
