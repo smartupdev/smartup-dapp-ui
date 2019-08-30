@@ -38,7 +38,7 @@ function PriceAndBar({ color, value, record, max }) {
   )
 }
 
-function OrderBook({ tableRef, values, color, reverse, max, stage }) {
+function OrderBook({ tableRef, values, color, reverse, max, stage, height }) {
   // const [{ trading: tradingText }] = useLang()
   const model = [
     { label: 'Price', value: 'price', layoutStyle: { left: true, flex: 1 }, component: p => <PriceAndBar color={color} max={max} {...p} />},
@@ -46,7 +46,7 @@ function OrderBook({ tableRef, values, color, reverse, max, stage }) {
     { label: 'Total', value: 'total', layoutStyle: { right: true, flex: 1 }, component: RenderToken },
   ]  
   return (
-    <Col HS flex={1} bottom={reverse} ref={tableRef} height='50%'>
+    <Col HS flex={1} bottom={reverse} ref={tableRef}>
       <Table
         noScroll
         noBorderCol
@@ -69,20 +69,22 @@ function OrderBookGroup({
   height,
  }) {
   useEffect( () => {
-    getBuyOrder()
+    if(stage !== 1) getBuyOrder()
     getSellOrder()
     return reset
   }, [marketId])
   const contentRef = useRef()
   const topRef = useRef()
+  const priceRef = useRef()
   const didScroll = useRef()
+  const priceHeight = priceRef.current && priceRef.current.getBoundingClientRect().height
+  const contentHeight = contentRef.current && contentRef.current.offsetHeight
   useEffect(() => {
     if(!didScroll.current) {
       if(didFetchBuy && didFetchSell) didScroll.current = true
-      const contentHeight = contentRef.current.offsetHeight
       const topRefHeight = topRef.current.getBoundingClientRect().height
       contentRef.current.scrollTo(0, 
-        topRefHeight - contentHeight/2 + 20
+        topRefHeight - contentHeight/2 + priceHeight/2
       )
     }
   }, [didFetchBuy, didFetchSell])
@@ -93,14 +95,14 @@ function OrderBookGroup({
       <OrderBookTitle />
       <Hr inset />
       <Col overflowAuto ref={contentRef} flex={1}>
-        <OrderBook tableRef={topRef} color={theme.red} values={buyOrders} reverse max={buyMax} />
+        <OrderBook tableRef={topRef} color={theme.red} reverse values={sellOrders} max={sellMax} height={contentHeight/2} />
         <Hr />
-        <Row HS centerVertical>
+        <Row HS centerVertical ref={priceRef}>
           <Text code VBase green L bold>12.33</Text>
           <Text code VBase HS S note>USD$12.33</Text>
         </Row>
         <Hr />
-        <OrderBook color={theme.green} values={sellOrders} max={sellMax} stage={stage} />
+        <OrderBook color={theme.green} values={buyOrders} max={buyMax} height={contentHeight/2} stage={stage} />
       </Col>
     </>
   )

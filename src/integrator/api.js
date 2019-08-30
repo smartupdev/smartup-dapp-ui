@@ -189,8 +189,8 @@ export const apiGetBuyOrderBook = (marketId, pageNumb = pageNumbDefault, pageSiz
   // fetch('/api/user/trade/list', { marketId, pageNumb, pageSize })
 }
 export const apiGetSellOrderBook = (marketId, pageNumb = pageNumbDefault, pageSize = pageSizeDefault, isLoadMore = false) => async () => {
-  await delay(5000)
-  return [] //orderBookRes 
+  await delay(500)
+  return orderBookRes 
   // fetch('/api/user/trade/list', { marketId, pageNumb, pageSize })
 }
 /* ========== Order Book ========== END */ 
