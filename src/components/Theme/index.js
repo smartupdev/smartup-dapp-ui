@@ -109,6 +109,7 @@ export const onClickCss = css`
 export const spacingCss = css`
   ${p => 
     [
+      { key: 'XXS', value: 'XXS', cssKey: 'padding' },
       { key: 'Base', value: 'Base', cssKey: 'padding' },
       { key: 'XS', value: 'XS', cssKey: 'padding' },
       { key: 'S', value: 'S', cssKey: 'padding' },
@@ -116,6 +117,7 @@ export const spacingCss = css`
       { key: 'L', value: 'L', cssKey: 'padding' },
       { key: 'XL', value: 'XL', cssKey: 'padding' },
 
+      { key: 'XXS', value: 'XXS', cssKey: 'margin', prefix: 'Margin' },
       { key: 'Base', value: 'Base', cssKey: 'margin', prefix: 'Margin' },
       { key: 'XS', value: 'XS', cssKey: 'margin', prefix: 'Margin' },
       { key: 'S', value: 'S', cssKey: 'margin', prefix: 'Margin' },

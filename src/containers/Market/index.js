@@ -37,13 +37,15 @@ const Market = ({
   addToast
 }) => {
   const [{ marketTab: marketTabText }] = useLang()
-  const TABS = [
+  let TABS = [
     { label: marketTabText.trade, value: 'trading' },
     { label: marketTabText.general, value: 'general' },
     { label: marketTabText.discussion, value: 'discussion' },
     { label: marketTabText.proposal, value: 'proposal' },
     { label: marketTabText.flag, value: 'flag' },
   ]
+  if(market.stage === -1) 
+    TABS.push({ label: 'Dissolve', value: 'dissolve', dot: true })
   const id = getUrlParams().id
   useEffect(() => {
     get(id)

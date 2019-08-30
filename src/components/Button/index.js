@@ -12,7 +12,7 @@ const Button = styled.button`
   min-height: fit-content;
   ${p => p.width && css`width: ${p.width}`}
   border-radius: ${p => p.theme.borderRadius}
-  padding: ${p => p.theme.spacingXXS} ${p => p.theme.spacingXS}
+  padding: ${p => p.theme.spacingBase} ${p => p.theme.spacingXS}
   ${p => p.condensed && css`padding: 2px ${p => p.theme.spacingXS}; border-radius: 2px;`}
   // ${p => p.extended && css`padding: ${p.theme.spacingXXS} ${p.theme.spacingL};`}
   display: flex;

@@ -22,6 +22,7 @@ const CreateMarket = lazy(() => import('./containers/CreateMarket'))
 const Market = lazy(() => import('./containers/Market'))
 const Trading = lazy(() => import('./containers/Market/Trading'))
 const General = lazy(() => import('./containers/Market/General'))
+const Dissolve = lazy(() => import('./containers/Market/Dissolve'))
 const Discussion = lazy(() => import('./containers/Market/Discussion'))
 const DiscussionDetail = lazy(() => import('./containers/Market/Discussion/Detail'))
 const DiscussionCreate = lazy(() => import('./containers/Market/Discussion/Create'))
@@ -54,6 +55,7 @@ let mainRoutes = [ // main routes, exclusive, using switch
 ]
 
 let marketRoutes = [
+  { id: 'dissolve', path: '/market/dissolve', component: Dissolve, from: 'home' },
   { id: 'trading', path: '/market/trading', component: Trading, from: 'home' },
   { id: 'general', path: '/market/general', component: General, from: 'home' },
   { id: 'discussion', path: '/market/discussion', component: Discussion, from: 'home', exact: true },
