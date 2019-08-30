@@ -8,10 +8,10 @@ import theme from '../../theme'
 import { ipfsHost } from '../../actions/ipfs'
 import { shorten } from '../../lib/util'
 
-export default ({ icon, username, vertical, noMargin, long, hiddenMobile, noipfs, ...rest }) => { // size
+export default ({ icon, username, vertical, noMargin, long, hiddenMobile, noipfs, onClick, ...rest }) => { // size
   const Flex = vertical ? Col : Row
   return (
-    <Flex centerVertical center hiddenMobile={hiddenMobile}>
+    <Flex centerVertical center hiddenMobile={hiddenMobile} onClick={onClick}>
       {
         icon ? 
         <Image source={noipfs ? icon : ipfsHost + icon} round cover MarginRightXS={!noMargin && !vertical} MarginTopXS={vertical} {...rest} /> : 

@@ -104,7 +104,7 @@ const Panel = ({
       {loggedIn ?
         <>
           <Top centerVertical spaceBetween>
-            <Avatar icon={avatarHash} username={displayName} />
+            <Avatar icon={avatarHash} username={displayName} onClick={() => setActiveTab(2)} />
             <Col>
               <Text S note>{shorten(address)}</Text>
               {/* <Text right S note>200 honours</Text> */}
