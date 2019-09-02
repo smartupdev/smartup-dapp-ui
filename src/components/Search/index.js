@@ -48,7 +48,7 @@ const Dump = styled(Text).attrs(() => ({
   S: true,
 }))`
   visibility: hidden;
-  height: ${p => p.theme.imageSizeS};
+  height: ${p => p.theme.imageSizeL};
   min-width: 30px;
   margin-right: ${p => p.theme.imageSizeS};
 ` // magic number
