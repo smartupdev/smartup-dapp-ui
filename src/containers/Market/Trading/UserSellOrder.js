@@ -15,7 +15,6 @@ import Button from 'components/Button'
 
 import { toPrice, toAgo } from 'lib/util'
 import { useLang } from 'language'
-import { ORDER_STATE_DISPLAY } from 'integrator'
 
 const layoutStyle = { center: true, flex: 1 }
 const titleStyle = { newline: true, center: true }
@@ -26,13 +25,13 @@ function UserSellOrder({
   getSellOrder, reset, deleteSellOrder, undoDeleteSellOrder, onChangePrice, onChangeAmount, addSellOrder, unlockOrder, confirmChange
  }) {
   const inEditMode = !!(addedOrders.length || removedOrderIds.length || unlockOrders.length)
-  const [{ trading: tradingText, sutSymbol }] = useLang()
+  const [{ trading: tradingText, sutSymbol, api: { orderState } }] = useLang()
   function TableTokenText(p) {
     return <TokenText note={removedOrderIds.includes(p.record.orderId)} value={p.value} />
   }
   function TableStatus({ value, record }) {
     const removed = removedOrderIds.includes(record.orderId)
-    return <Text center note={removed}>{removed ? 'Cancelled' : ORDER_STATE_DISPLAY[value]}</Text>
+    return <Text center note={removed}>{removed ? 'Cancelled' : orderState[value]}</Text>
   }
   const confirmButtonRef = useRef(null)
   useEffect(() => {

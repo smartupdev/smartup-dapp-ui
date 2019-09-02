@@ -13,29 +13,25 @@ export const ORDER_STATE = {
   onHold: 'onHold',
   newAdded: 'new', // only for FE
 }
-export const ORDER_STATE_DISPLAY = {
-  [ORDER_STATE.active]: 'Active',
-  [ORDER_STATE.locked]: 'Locked',
-  [ORDER_STATE.fullyExecuted]: 'Fully Executed',
-  [ORDER_STATE.partiallyExecuted]: 'Partially Executed',
-  [ORDER_STATE.notExecuted]: 'Not Executed',
-  [ORDER_STATE.processing]: 'Processing',
-  [ORDER_STATE.onHold]: 'On Hold',
-  [ORDER_STATE.newAdded]: 'New',
-}
 
 export const ORDER_SIDE = { 
   buy: 'buy',
   sell: 'sell'
  }
 
+export const MARKET_FILTER_TYPE = {
+  all: 'all', 
+  hot: 'hot',
+  new: 'new',
+  pop: 'pop',
+  rich: 'rich',
+}
 
 /*
   params order:
     address > type > id > name > hash > asc > { pageNumb, pageSize, isLoadMore } 
 */
 const pageNumbDefault = 1, pageSizeDefault = 20 // default at the end of the query
-
 function pageHelper(pageNumb, pageSize, isLoadMore) {
   return {
     pageNumb: isLoadMore ? pageNumb + 1 : 1,
@@ -50,9 +46,14 @@ export const apiGetGlobalMarket = () => () => fetch.get('/api/market/global/data
 export const apiDelCollect =         (type, id) => () => fetch.post('/api/user/collect/del', { type, objectMark: id })
 export const apiAddCollect =         (type, id) => () => fetch.post('/api/user/collect/add', { type, objectMark: id })
 
-/* ====== GET PERSONAL CENTER DATA ====== START */
+/* ====== USER AUTH ====== START */
+export const apiLogin =              (address) =>              () => fetch.post('/api/login',       { address }) // return code
+export const apiAuth =               (address, signature) =>   () => fetch.post('/api/auth',        { address, signature }) // return { token, user }
+export const apiGetUser =            () =>                     () => fetch.get('/api/user/current') // return { address, name, avatarIpfsHash, createTime }
 export const apiUserUpdate = (username, avatarHash) => () => fetch.post('/api/user/update', { name: username || null, avatarIpfsHash: avatarHash || '' })
+/* ====== USER AUTH ====== END */
 
+/* ====== Personal Center ====== START */
 export const apiGetCreatedMarket =   ({pageNumb = pageNumbDefault, pageSize = pageSizeDefault, isLoadMore = false}) => () => fetch.get('/api/user/market/created',      pageHelper(pageNumb, pageSize, isLoadMore) ) // return list of details markets
 export const apiGetCollectedMarket = ({pageNumb = pageNumbDefault, pageSize = pageSizeDefault, isLoadMore = false}) => () => fetch.get('/api/user/market/collected',    pageHelper(pageNumb, pageSize, isLoadMore) ) // return list of details markets
 export const apiGetTradedMarket =    ({pageNumb = pageNumbDefault, pageSize = pageSizeDefault, isLoadMore = false}) => () => fetch.get('/api/user/market/traded',       pageHelper(pageNumb, pageSize, isLoadMore) ) // return list of details markets
@@ -65,14 +66,7 @@ export const apiGetCreatedReply =    ({pageNumb = pageNumbDefault, pageSize = pa
 export const apiGetCollectedReply =  ({pageNumb = pageNumbDefault, pageSize = pageSizeDefault, isLoadMore = false}) => () => fetch.get('/api/user/reply/collected',  pageHelper(pageNumb, pageSize, isLoadMore) )
 
 export const apiGetTransaction =     ({pageNumb = pageNumbDefault, pageSize = pageSizeDefault, isLoadMore = false}) => () => fetch.get('/api/user/transaction/list', pageHelper(pageNumb, pageSize, isLoadMore) )
-/* ====== GET PERSONAL CENTER DATA ====== END */
-
-/* ====== USER AUTH ====== START */
-export const apiLogin =              (address) =>              () => fetch.post('/api/login',       { address }) // return code
-export const apiAuth =               (address, signature) =>   () => fetch.post('/api/auth',        { address, signature }) // return { token, user }
-export const apiGetUser =            () =>                     () => fetch.get('/api/user/current') // return { address, name, avatarIpfsHash, createTime }
-export const apiUpdateUser =         (name, avatarIpfsHash) => () => fetch.post('/api/user/update',  { name, avatarIpfsHash })
-/* ====== USER AUTH ====== END */
+/* ====== Personal Center ====== END */
 
 /* ====== Transaction ====== START */
 export const transactionType = { depositSut: 'ChargeSut', depositEth: 'ChargeEth', withdrawSut: 'WithdrawSut', withdrawEth: 'WithdrawEth', createMarket: 'CreateMarket', buyCT: 'BuyCT', sellCT: 'SellCT' }
@@ -204,6 +198,13 @@ export const apiGetSavedMarket = () => () => fetch.get('/api/user/market/creatin
 
 export const apiGetMarket = (marketId) => () => fetch.get('/api/market/one', { marketId })
 /* ====== Market ====== END */
+
+
+
+
+/*
+  TODO: The followings should be removed
+*/
 
 //notification-controller
 export const API_USER_NOTIFICATION_LIST = '/api/user/notification/list';

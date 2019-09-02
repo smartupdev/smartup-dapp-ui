@@ -13,7 +13,6 @@ import { DateText, TokenText } from 'containers/Common'
 
 import { toPrice, toAgo } from 'lib/util'
 import { useLang } from 'language'
-import { ORDER_STATE_DISPLAY } from 'integrator'
 
 const layoutStyle = { center: true, flex: 1 }
 
@@ -22,7 +21,7 @@ function UserBuyOrder({
   buyOrder: { orders },
   getBuyOrder, reset
  }) {
-  const [{ trading: tradingText, sutSymbol }] = useLang()
+  const [{ trading: tradingText, sutSymbol, api: { orderState } }] = useLang()
   useEffect(() => {
     getBuyOrder(marketId)
     return reset
@@ -35,7 +34,7 @@ function UserBuyOrder({
     { label: `Sell Price(${sutSymbol})`, value: 'sellingPrice', layoutStyle, component: TokenText },
     { label: `Avg Executed Price(${sutSymbol})`, value: 'avgTradedPrice', layoutStyle, component: TokenText },
     { label: `Est. Total(${sutSymbol})`, value: 'total', layoutStyle, component: TokenText },
-    { label: 'Status', value: 'state', layoutStyle, component: ({ value }) => <Text center>{ORDER_STATE_DISPLAY[value]}</Text> },
+    { label: 'Status', value: 'state', layoutStyle, component: ({ value }) => <Text center>{orderState[value]}</Text> },
     { label: 'Action', value: 'action', layoutStyle, component: () => <CloseWithCircle primary S /> },
   ]
 

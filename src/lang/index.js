@@ -1,5 +1,6 @@
 import { toToken, clone } from '../lib/util'
 import userGuide from './userGuide'
+import api from './integratorRelated'
 
 export function name(en, tc, sc) {
   return {
@@ -10,6 +11,8 @@ export function name(en, tc, sc) {
 }
 
 const main = {
+  userGuide,
+  api,
   sutSymbol: name('SmartUp'),
   error: {
     notLogin: name('You had not logged in yet.', '請先登入', '请先登入'),
@@ -21,7 +24,6 @@ const main = {
     notExist: name('Looks like the page you are trying to visit does not exists.', '你所瀏覽的頁面不存在', '你所浏览的页面不存在'),
     tryAgain: name('Please check the URL and try again. May the Force be with you.', '請檢查網址再嘗試吧！', '請检查网址再尝试吧！')
   },
-  userGuide,
   dispute: {
     notReady: name('Dispute function is under development, coming soon in later 2019!', '檢舉功能正在開發中，將於2019年底推出。', '检举功能正在开发中，将于2019年底推出。'),
   },
@@ -50,13 +52,13 @@ const main = {
   },
 
   home: {
-    tab: {
-      all: name('All', '全部'),
-      hot: name('Hottest', '最熱門', '最热门'),
-      new: name('Newest', '最新'),
-      pop: name('Populous', '最人氣', '最人气'),
-      rich: name('Richest', '最富有'),
-    },
+    // tab: {
+    //   all: name('All', '全部'),
+    //   hot: name('Hottest', '最熱門', '最热门'),
+    //   new: name('Newest', '最新'),
+    //   pop: name('Populous', '最人氣', '最人气'),
+    //   rich: name('Richest', '最富有'),
+    // },
     table: {
       name: name('NAME', '名稱', '名称'),
       change: name('24H CHANGE', '24小時漲跌', '24小时涨跌'),
