@@ -44,11 +44,12 @@ const Container = styled.div`
 `
 const Dump = styled(Text).attrs(() => ({
   MarginLeftXS: true,
+  VS: true,
   RightBase: true,
   S: true,
 }))`
   visibility: hidden;
-  height: ${p => p.theme.imageSizeL};
+  height: ${p => p.theme.imageSizeS};
   min-width: 30px;
   margin-right: ${p => p.theme.imageSizeS};
 ` // magic number
