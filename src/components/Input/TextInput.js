@@ -75,7 +75,7 @@ function shouldBlur(e) {
   }
 }
 
-export default ({ label, error, description, line, onChange, number, digit = 10, decimal = 2, inputRef, ...rest}) =>  
+export default ({ label, error, description, line, onChange, number, digit = 10, decimal = 2, inputRef, ...rest}) => 
   <InputWrapper label={label} error={error} description={description}>
     { line ?
       <TextArea onChange={_onChange(onChange, number, digit, decimal)} ref={inputRef} {...rest} rows={line} /> 
@@ -83,4 +83,3 @@ export default ({ label, error, description, line, onChange, number, digit = 10,
       <TextInput onChange={_onChange(onChange, number, digit, decimal)} onKeyDown={shouldBlur} ref={inputRef} {...rest} />
     }
   </InputWrapper>
-
