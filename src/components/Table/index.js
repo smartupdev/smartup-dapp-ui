@@ -4,9 +4,9 @@ import { Row, Col } from '../Layout'
 import Text from '../Text'
 import Expand from '../Expand'
 import ScrollLoader from '../ScrollLoader'
+import { fadeIn } from '../Theme'
 import { usePrevious } from '../../lib/react'
 import theme from '../../theme'
-import { useLang } from '../../language'
 
 const emptyArr = []
 
@@ -63,12 +63,13 @@ const TableRecordBox = styled(Col)`
   // padding-left: ${p => p.inset ? p.theme.spacingXS : 0}
   // padding-right: ${p => p.inset ? p.theme.spacingS : 0}
   min-height: fit-content;
+  ${p => p.animated && fadeIn(1)}
 `
 
 const TableRecord = memo(
-  ({ record, index, isExpanded, noBorderCol, model, S, onClick, ExpandComponent, backgroundColor, fixedCol, condensed }) => {
+  ({ record, index, isExpanded, noBorderCol, model, S, onClick, ExpandComponent, backgroundColor, fixedCol, condensed, animated }) => {
     return (
-      <TableRecordBox isExpanded={isExpanded} hasBorder={!noBorderCol} fitWidth>
+      <TableRecordBox isExpanded={isExpanded} hasBorder={!noBorderCol} fitWidth animated={animated}>
         <Row>
           {
             model.map(({ value: key, component: Component, layoutStyle = { flex: 1 } }, j) =>
@@ -114,7 +115,7 @@ export default ({
   expandedRecords = emptyArr, expandComponent: ExpandComponent, 
   S, noBorderCol, 
   hasMore, loadMore, isLoading, noResultText,
-  noScroll, condensed, titleStyle
+  noScroll, condensed, titleStyle, animated = false
 }) => {
   const tableRef = useRef()
   const tableWrapRef = useRef()
@@ -143,6 +144,7 @@ export default ({
           values && values[0] ? 
             values.map((record, index) =>
                 <TableRecord
+                  animated={animated}
                   fixedCol={fixedCol}
                   backgroundColor={fixedCol && backgroundColor}
                   condensed={condensed}

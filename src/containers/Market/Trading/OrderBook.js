@@ -52,6 +52,7 @@ function OrderBook({ tableRef, values, color, reverse, max, stage, height }) {
         noBorderCol
         noHeader
         condensed
+        animated
         backgroundColor={theme.bgColor}
         recordKey={'key'}
         model={model}

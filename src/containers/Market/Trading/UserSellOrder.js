@@ -57,12 +57,20 @@ function UserSellOrder({
     },
   ]
 
+  function onKeyDown(e) {
+    if (e.keyCode === 13) { // enter
+      e.target.blur()
+      addSellOrder()
+    }
+  }
+  
   return (
     <Col HS>
       <Table
         noBorderCol
         recordKey='orderId'
         model={model}
+        animated
         values={[...addedOrders, ...orders]}
         isLoading={fetching}
         hasMore={fetching}
@@ -81,7 +89,7 @@ function UserSellOrder({
               <Input background width='100%' number value={editingAmount} onChange={onChangeAmount} />
             </Col>
             <Col flex={1} HBase>
-              <Input background width='100%' number value={editingPrice} onChange={onChangePrice} />
+              <Input background width='100%' number value={editingPrice} onChange={onChangePrice} onKeyDown={onKeyDown} />
             </Col>
             <Col flex={3}></Col>
             <Col flex={1} center centerVertical>
