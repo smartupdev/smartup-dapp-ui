@@ -44,7 +44,7 @@ export default ({ activeIndex, activeValue = -999, tabs, fullWidth, onClick, wid
   {type === TYPE.border  && <Hr />}
   <Row {...rest}>
     {tabs.map( ({ label, value, dot }, index) =>
-      <Tab relative key={index} first={!index} end={tabs.length === index + 1} center active={activeIndex === index || activeValue === value} type={type} width={width} flex={fullWidth && 1} onClick={() => onClick(index, value)}>
+      <Tab relative key={index} first={!index} end={tabs.length === index + 1 ? 'true' : undefined} center active={activeIndex === index || activeValue === value} type={type} width={width} flex={fullWidth && 1} onClick={() => onClick(index, value)}>
         <Text S>{label}</Text>
         { dot && <Dot /> }
       </Tab>
