@@ -3,35 +3,46 @@ import TableExpand from './TableExpand'
 import Table from '../../../components/Table'
 import { More } from '../../../components/Icon'
 import Text from '../../../components/Text'
+import { Slider } from '../../../components/Input'
 import SimpleLineChart from '../../../components/SimpleLineChart'
 import Avatar from '../../../components/Avatar'
 import { Col } from '../../../components/Layout'
 import { useLang } from '../../../language'
 import theme from '../../../theme'
-import { toPrice, toAgo, toPercent } from '../../../lib/util'
-
+import { toPrice, toPercent } from '../../../lib/util'
+import { MARKET_STAGE } from '../../../integrator'
+import { DateAgoText } from '../../Common'
 
 const colWidth = '130px'
+const colSliderWidth = '200px'
 const minColWidth = '70px'
 
 //TODO field match
 const _Icon = ({ value }) => <Avatar icon={value} />
 const _More = ({ isExpanded }) => <More reverse={isExpanded} XS color={theme.white} />
-const _Name = ({ value, record }) => {
-  const [{ time: { now, min, hour, day } }] = useLang()
-  return (
-    <Col>
-      <Text>{value}</Text>
-      <Text note S>{toAgo(record.createTime, now, min, hour, day)}</Text>
-    </Col>
-  )
-}
+const _Name = ({ value, record }) => 
+  <Col>
+    <Text>{value}</Text>
+    <DateAgoText S note value={record.createTime} />
+  </Col>
 const _Percent = ({ value }) => <Text>{toPercent(value)}</Text>
 const _Price = ({ value }) => <Text price>{toPrice(value)}</Text>
 const _Volume = ({ value }) => <Text primary>{toPrice(value)}</Text>
 const _Cap = ({ value }) => <Text>{toPrice(value)}</Text>
+const _Slider = ({ value }) => <Col width={colSliderWidth} RightS><Slider value={value} disabled /></Col>
 
-const TableName = [
+const offeringModel = [
+  { label: '',            value: 'avatar',        sortable: false,  component: _Icon,           layoutStyle: { width: `calc( ${theme.iconSizeM} + 15px )`, center: true, LeftXS: true } },
+  { label: l => l.name,   value: 'name',          sortable: false,  component: _Name,           layoutStyle: { flex: 1, width: colWidth } },
+  { label: 'Finished',    value: 'Finished',      sortable: true,   component: _Slider,         layoutStyle: { flex: 1, width: colSliderWidth, center: true } },
+  { label: l => l.price,  value: 'last',          sortable: true,   component: _Price,          layoutStyle: { flex: 1, width: colWidth } },
+  { label: 'Time',        value: 'time',          sortable: true,   component: DateAgoText,     layoutStyle: { flex: 1, width: colWidth } },
+  { label: 'Fund Raised', value: 'Fund Raised',   sortable: true,   component: _Price,          layoutStyle: { flex: 1, width: colWidth } },
+  { label: 'Target',      value: 'Target',        sortable: true,   component: _Price,          layoutStyle: { flex: 1, width: colWidth } },
+  { label: '',            value: 'action',        sortable: false,  component: _More,           layoutStyle: { width: `calc( ${theme.iconSizeM} + 15px )`, right: true, RightXS: true } },
+]
+
+const exchangeModel = [
   { label: '',            value: 'avatar',        sortable: false,  component: _Icon,           layoutStyle: { width: `calc( ${theme.iconSizeM} + 15px )`, center: true, LeftXS: true } },
   { label: l => l.name,   value: 'name',          sortable: false,  component: _Name,           layoutStyle: { flex: 1, width: colWidth } },
   { label: l => l.change, value: 'lately_change', sortable: true,   component: _Percent,        layoutStyle: { width: minColWidth, right: true } },
@@ -47,7 +58,8 @@ export default function({
   sortBy, orderBy, 
   onClickHeader, onClick, 
   expandedRecords, noExpand,
-  hasMore, loadMore, isLoading
+  hasMore, loadMore, isLoading,
+  marketStage = MARKET_STAGE.exchange
   }) {
   const [{ home: {table: tableLang} }] = useLang()
   return (
@@ -60,7 +72,11 @@ export default function({
         isLoading={isLoading}
         onClickHeader={onClickHeader}
         onClick={onClick}
-        model={noExpand ? TableName.slice(0, -1) : TableName}
+        model={
+          marketStage === MARKET_STAGE.offering ? 
+            offeringModel 
+          : noExpand ? exchangeModel.slice(0, -1) : exchangeModel
+        }
         language={tableLang}
         values={markets}
         sortBy={sortBy}

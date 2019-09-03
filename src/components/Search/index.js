@@ -3,19 +3,15 @@ import { Search } from '../../components/Icon'
 import Text from '../../components/Text'
 import Input from '../../components/Input'
 import { Row } from '../../components/Layout'
-import { media } from '../../components/Theme'
+import { media, colorCss } from '../../components/Theme'
 import { useLang } from '../../language'
 import { length, noHandle } from '../../lib/util'
 import styled, { css } from 'styled-components'
 
 const Container = styled.div`
+  ${colorCss}
   position: absolute;
   cursor: pointer;
-  ${p => p.backgroundColor &&
-    p.backgroundColor instanceof Array ?
-    media(`background-color: ${p.backgroundColor[0]}`, `background-color: ${p.backgroundColor[1]}`) :
-    css`background-color: ${p.backgroundColor}`
-  };
   right: 0;
   max-width: 100%;
   transition: 0.3s;
@@ -43,19 +39,21 @@ const Container = styled.div`
   }
 `
 const Dump = styled(Text).attrs(() => ({
-  MarginLeftXS: true,
+  MarginLeftM: true,
   VS: true,
   RightBase: true,
   S: true,
 }))`
   visibility: hidden;
   height: ${p => p.theme.imageSizeS};
-  min-width: 30px;
+  ${media(null, p => `
+    min-width: ${p.size * 6 + 6 + 2}px;
+  `)}
   margin-right: ${p => p.theme.imageSizeS};
-` // magic number
+`
 
 // MUST set relative outside
-export default ({ backgroundColor, value, onChange, onSearch, top, bottom, right }) => {
+export default ({ customBgColor, value, onChange, onSearch, top, bottom, right }) => {
   const [{ search: searchText }] = useLang()
   const inputRef = useRef(null)
   const size = Math.min( Math.max(length(searchText), length(value)), 20 )
@@ -66,10 +64,10 @@ export default ({ backgroundColor, value, onChange, onSearch, top, bottom, right
   }
   return (
     <>
-      <Dump>{value && value.slice(0, 20)}</Dump>
-      <Container backgroundColor={backgroundColor} top={top} bottom={bottom} right={right}>
+      <Dump size={size}>{value && value.slice(0, 20)}</Dump>
+      <Container customBgColor={customBgColor} top={top} bottom={bottom} right={right}>
         <Row centerVertical fullHeight spaceBetween>
-          <Input inputRef={inputRef} value={value} size={size} placeholder={searchText} onChange={onChange} onBlur={onSearch} S backgroundColor={backgroundColor} />
+          <Input inputRef={inputRef} value={value} size={size} placeholder={searchText} onChange={onChange} onBlur={onSearch} S />
           <Search S RightXS onMouseDown={onClickIcon} />
         </Row>
       </Container>

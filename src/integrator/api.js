@@ -27,6 +27,12 @@ export const MARKET_FILTER_TYPE = {
   rich: 'rich',
 }
 
+export const MARKET_STAGE = {
+  offering: '1',
+  exchange: '2', 
+  closed: '-1' 
+}
+
 /*
   params order:
     address > type > id > name > hash > asc > { pageNumb, pageSize, isLoadMore } 
@@ -197,6 +203,45 @@ export const apiCreateMarket = ({marketId, name, description, detail, photo, cov
 export const apiGetSavedMarket = () => () => fetch.get('/api/user/market/creating')
 
 export const apiGetMarket = (marketId) => () => fetch.get('/api/market/one', { marketId })
+
+// /api/market/list   Get all markets
+// /api/market/search Get market by filter
+// /api/market/top    Get filtered markets, e.g. hottest
+let _filteredMarketList = [] // To cache the latest market list and do sorting and keyword search locally
+function _marketListResponse(markets) {
+  return {list: markets, pageNumb: 1, hasNextPage: false, rowCount: markets.length}
+}
+export const apiGetMarketList = ({
+  sortBy, orderBy, keyword, 
+  filterType, marketStage,
+  pageNumb = pageNumbDefault, pageSize = pageSizeDefault, isLoadMore = false}) => async () => {
+    const isAll = filterType === MARKET_FILTER_TYPE.all
+    const asc = orderBy === 'asc'
+    if(isAll)
+      return keyword ? 
+        fetch.get('/api/market/search', {orderBy: sortBy, asc, ...pageHelper(pageNumb, pageSize, isLoadMore), name: keyword })
+      : fetch.get('/api/market/list', {orderBy: sortBy, asc, ...pageHelper(pageNumb, pageSize, isLoadMore) })
+    else 
+      if(keyword || sortBy) {
+        const marketList = sortBy ? 
+            [..._filteredMarketList].sort( (a, b) => {
+              const A = a[sortBy], B = b[sortBy]
+              if(A === null) return 1
+              if(B === null) return -1
+              return (orderBy === 'asc' ? 1 : -1) *
+              (typeof A === 'string' || typeof B === 'string' ?
+              A.localeCompare(B) :
+              A - B)
+            }) 
+          : _filteredMarketList
+        return _marketListResponse(marketList.filter(m => m.name.toLowerCase().includes(keyword.toLowerCase()) )) 
+      }
+      else {
+        _filteredMarketList = await fetch.get('/api/market/top', { type: filterType })
+        return _marketListResponse(_filteredMarketList)
+      }
+}
+
 /* ====== Market ====== END */
 
 

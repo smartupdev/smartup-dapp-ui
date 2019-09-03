@@ -12,8 +12,8 @@ import {
   // CREATE_MARKET_PAY_REQUESTED, 
   CREATE_MARKET_PAY_SUCCEEDED, CREATE_MARKET_PAY_FAILED,
 
-  CREATE_MARKET_AVATAR_CHANGE_SUCCEEDED, 
-  CREATE_MARKET_COVER_CHANGE_SUCCEEDED, 
+  CREATE_MARKET_AVATAR_CHANGE, 
+  CREATE_MARKET_COVER_CHANGE, 
   CREATE_MARKET_PRICE, CREATE_MARKET_UNIT, CREATE_MARKET_RESERVE,
   CREATE_MARKET_DETAIL_CHANGE, CREATE_MARKET_SYMBOL_CHANGE, CREATE_MARKET_PERIOD_CHANGE
 } from '../actions/actionTypes';
@@ -53,14 +53,14 @@ export const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case CREATE_MARKET_COVER_CHANGE_SUCCEEDED:
+    case CREATE_MARKET_COVER_CHANGE:
       return {
         ...state,
         coverHash: action.payload,
         error: { ...state.error, coverHash: initialState.error.coverHash }
       } 
 
-    case CREATE_MARKET_AVATAR_CHANGE_SUCCEEDED:
+    case CREATE_MARKET_AVATAR_CHANGE:
       return {
         ...state,
         avatarHash: action.payload,

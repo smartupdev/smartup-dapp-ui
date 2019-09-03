@@ -87,7 +87,11 @@ export const generalCss = css`
 export const colorCss = css`
   ${p => css`
     ${p.color && `color: ${p.color}`}
-    ${p.customBgColor && `background-color: ${p.customBgColor}`}
+    ${p => p.customBgColor &&
+      p.customBgColor instanceof Array ?
+      media(`background-color: ${p.customBgColor[0]}`, `background-color: ${p.customBgColor[1]}`) :
+      css`background-color: ${p.customBgColor}`
+    };  
     ${!!p.primary && `color: ${p.theme.colorPrimary}`}
     ${!!p.secondary && `color: ${p.theme.colorSecondary}`}
     ${!!p.bgPrimary && `background-color: ${p.theme.colorPrimary}`}

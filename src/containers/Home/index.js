@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react'
 import styled from 'styled-components'
-import { media } from '../../components/Theme'
 
 import MarketTable from '../Market/Table'
 import Tab from '../../components/Tab'
@@ -12,36 +11,28 @@ import { Dropdown } from '../../components/Input'
 import theme from '../../theme'
 import { useLang } from '../../language'
 import { connect } from 'react-redux'
-import { reset, setExpandedRecords, setActiveTab, onTableHeaderClick, onSearchChange } from '../../actions/home'
-import { getList } from '../../actions/market'
+import * as Actions from '../../actions/home'
 
-const Box = styled(Col)`
-  max-height: 100%
-`
+import { MARKET_FILTER_TYPE as MFT, MARKET_STAGE as MS } from '../../integrator'
 
-const Top = styled(Row)`
-  padding: 0 ${p => p.theme.spacingS}
-  min-height: fit-content;
-  ${p => media(`background-color: ${p.theme.bgColor}`, `background-color: ${p.theme.bgColorLight}`)}
-`
+import ExchangeList from './ExchangeList'
+import OfferingList from './OfferingList'
 
+const Box = styled(Col)`max-height: 100%`
 
 const Home = ({ 
-  markets, 
-  totalResults, 
-  gettingMarketList,
+  home: {
+    count,
+    filterType, marketStage,
 
-  sortBy, orderBy, 
-  hasNextPage,
-
-  onTableHeaderClick, 
-  // moreMarketClick,
-
-  expandedRecords, setExpandedRecords,
-  activeTabIndex, setActiveTab,
-  searchContent, onSearchChange, 
+    searchContent,
+  },
 
   reset,
+  onTableHeaderClick, 
+  setExpandedRecords,
+  onChangeFilter, onChangeStage,
+  onSearchChange, 
   getList,
  }) => {
   useEffect(() => {
@@ -49,65 +40,45 @@ const Home = ({
     return reset
   }, [])
 
-  const filteredMarket = markets.filter(m => activeTabIndex ? m.name.toLowerCase().includes(searchContent.toLowerCase()) : true )
-  const [lang] = useLang()
-  const FILTERS = [
-    { label: lang.home.tab.all, value: null },
-    { label: lang.home.tab.hot, value: 'hottest' },
-    { label: lang.home.tab.new, value: 'newest' },
-    { label: lang.home.tab.pop, value: 'populous' },
-    { label: lang.home.tab.rich, value: 'richest' },
+  const [{ result: resultText, api: { marketFilterType: filterText, marketStage: marketStageText } }] = useLang()
+  const filterOptions = [
+    { label: filterText[MFT.all], value: MFT.all },
+    { label: filterText[MFT.hot], value: MFT.hot },
+    { label: filterText[MFT.new], value: MFT.new },
+    { label: filterText[MFT.pop], value: MFT.pop },
+    { label: filterText[MFT.rich], value: MFT.rich },
   ]
+  const marketStageOptions = [
+    { label: marketStageText[MS.offering], value: MS.offering },
+    { label: marketStageText[MS.exchange], value: MS.exchange },
+    { label: marketStageText[MS.closed], value: MS.closed },
+  ]  
+  const filterIndex = filterOptions.findIndex(f => f.value === filterType)
+  const marketStageIndex = marketStageOptions.findIndex(f => f.value === marketStage)
   return (
     <Box>
-      <Top flex={1} spaceBetween relative>
-        <Tab activeIndex={activeTabIndex} tabs={FILTERS} onClick={setActiveTab} type='simple' hiddenMobile />
-        <Row centerVertical flex={[1, 0]} spaceBetween>
-          <Text S note nowrap>{activeTabIndex ? filteredMarket.length : totalResults} {lang.result}</Text>
-          <Dropdown options={FILTERS} selectedIndex={activeTabIndex} onChange={setActiveTab} hiddenDesktop />
-          <Search backgroundColor={[theme.bgColor, theme.bgColorLight]} id='home' value={searchContent} onChange={onSearchChange} onSearch={() => getList()} />
+      <Row centerVertical spaceBetween relative flex={1} customBgColor={[theme.bgColor, theme.bgColorLight]}>
+        <Row>
+          <Dropdown options={marketStageOptions} selectedIndex={marketStageIndex} onChange={onChangeStage} />
+          <Dropdown options={filterOptions} selectedIndex={filterIndex} onChange={onChangeFilter} />
         </Row>
-      </Top>
-      <MarketTable
-        onClickHeader={onTableHeaderClick}
-        onClick={setExpandedRecords}
-        markets={filteredMarket}
-        sortBy={sortBy}
-        orderBy={orderBy}
-        expandedRecords={expandedRecords}
-
-        hasMore={hasNextPage}
-        loadMore={getList}
-        isLoading={gettingMarketList}
-      />
-      {/* <ScrollLoader id='Home-Table' hasMore={hasNextPage} loadMore={getList} isLoading={gettingMarketList} /> */}
+        <Row centerVertical spaceBetween>
+          <Text S note nowrap>{count} {resultText}</Text>
+          <Search customBgColor={[theme.bgColor, theme.bgColorLight]} value={searchContent} onChange={onSearchChange} onSearch={() => getList()} />
+        </Row>
+      </Row>
+      {
+        marketStage === MS.exchange ?
+        <ExchangeList /> :
+        <OfferingList />
+      }
     </Box>
   )
 }
 
 const mapStateToProps = state => ({
-  markets: state.home.markets,
-  gettingMarketList: state.home.gettingMarketList,
-  marketListError: state.home.marketListError,
-  totalResults: state.home.totalResults,
-  pageSize: state.home.pageSize,
-  pageNumb: state.home.pageNumb,
-  hasNextPage: state.home.hasNextPage,
+  home: state.home
+})
+const mapDispatchToProps = Actions
 
-  expandedRecords: state.home.expandedRecords,
-  activeTabIndex: state.home.activeTabIndex,
-  sortBy: state.home.sortBy,
-  orderBy: state.home.orderBy,
-  searchContent: state.home.searchContent,
-});
-const mapDispatchToProps = {
-  reset,
-  getList,
-  setExpandedRecords,
-  setActiveTab,
-  onTableHeaderClick,
-  onSearchChange,
-  // moreMarketClick,
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default connect(mapStateToProps, mapDispatchToProps)(Home)

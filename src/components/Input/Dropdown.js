@@ -1,6 +1,8 @@
 import React, { useState, useRef } from 'react'
 import styled from 'styled-components'
 import theme from '../../theme'
+import { media } from '../Theme'
+
 // import { fontCss } from '../Theme'
 import { Col } from '../Layout'
 import Text from '../Text'
@@ -23,15 +25,15 @@ import { useClickOutside } from '../../lib/react'
 
 const MoreIcon = styled(More)`
   position: absolute;
-  right: ${p => p.theme.spacingS};
+  right: 0;
   margin: auto 0;
   top: 0;
   bottom: 0;
 `
 
 const Box = styled(Col)`
-  min-width: calc( ${p => p.maxTextLength/2 + 4}em  + ${p => p.theme.imageSizeXS} * 2); 
-  width: ${p => p.width};
+  padding: 0 calc( ${p => p.theme.imageSizeXS} + 8px );
+  width: ${p => p.width}
 `
 const OptionList = styled(Col)`
   position: absolute;
@@ -47,16 +49,23 @@ const OptionList = styled(Col)`
   display: ${p => p.open ? 'flex' : 'none' }
 `
 
-export default ({ options, onChange, selectedIndex, disabled, width = '30vw', ...rest }) => { // TODO
+const TextDump = styled(Text)`
+  height: 0;
+  visibility: hidden;
+`
+
+export default ({ options, onChange, selectedIndex, disabled, width, ...rest }) => { // TODO
   const [didOpen, setOpen] = useState(false)
   const ref = useRef('dropdown')
+  const maxText = options.reduce((p, c) => p.length > c.label.length ? p : c.label, '')
   useClickOutside(ref, () => setOpen(false))
   return (
-    <Box ref={ref} relative fitHeight width={width} maxTextLength={options.reduce((p, c) => Math.max(p, length(c.label)) , 0)} onClick={() => setOpen(!didOpen)} {...rest}>
+    <Box ref={ref} relative fitHeight width={width} onClick={() => setOpen(!didOpen)} {...rest}>
+      <TextDump nowrap>{maxText}</TextDump>
       <Text note VS center nowrap>{(options[selectedIndex] || {}).label}</Text>
       <OptionList open={didOpen}>
         { options.map( ({label, value}, index) =>
-          <Text note VS center nowrap key={label} onClick={() => onChange(index)}>{label}</Text>
+          <Text note VS center nowrap key={label} onClick={() => onChange(index, value)}>{label}</Text>
         ) }
       </OptionList>
       <MoreIcon color={theme.colorSecondary} XS reverse={didOpen} />

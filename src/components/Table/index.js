@@ -10,7 +10,7 @@ import { useLang } from '../../language'
 
 const emptyArr = []
 
-const ORDER_BY = {
+export const ORDER_BY = {
   asc: 'asc',
   desc: 'desc'
 }
@@ -119,7 +119,6 @@ export default ({
   const tableRef = useRef()
   const tableWrapRef = useRef()
   const prev0 = usePrevious(values[0])
-
   useEffect( () => {
     if(values[0] !== prev0) {
       tableRef.current.scrollTo(0, 0)

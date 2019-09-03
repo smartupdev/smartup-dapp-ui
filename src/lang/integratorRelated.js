@@ -1,5 +1,5 @@
 import { name } from './index'
-import { ORDER_STATE, MARKET_FILTER_TYPE } from '../integrator'
+import { ORDER_STATE, MARKET_FILTER_TYPE, MARKET_STAGE } from '../integrator'
 
 export default {
   orderState: {
@@ -18,5 +18,10 @@ export default {
     [MARKET_FILTER_TYPE.new]: name('Newest', '最新'),
     [MARKET_FILTER_TYPE.pop]: name('Populous', '最人氣', '最人气'),
     [MARKET_FILTER_TYPE.rich]: name('Richest', '最富有'),
+  },
+  marketStage: {
+    [MARKET_STAGE.offering]: name('Phase 1'),
+    [MARKET_STAGE.exchange]: name('Phase 2'),
+    [MARKET_STAGE.closed]: name('Closed'),
   }
 }

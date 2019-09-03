@@ -1,29 +1,32 @@
 import {
-  HOME_RESET,
-  // HOME_PAGE_LOADED, 
-  SET_EXPANDED_RECORDS, SET_ACTIVE_TAB, HOME_SET_SORTING, SEARCH_CONTENT_CHANGE,
-
   MARKET_ADD_SAVED_MARKET, MARKET_DEL_SAVED_MARKET,
-
-  GET_MARKET_LIST_REQUESTED, GET_MARKET_LIST_SUCCEEDED, GET_MARKET_LIST_FAILED,
-  // MARKET_SEARCH_REQUESTED, MARKET_SEARCH_SUCCEEDED, MARKET_SEARCH_FAILED,
-  // MARKET_TOP_REQUESTED, MARKET_TOP_SUCCEEDED, MARKET_TOP_FAILED,MARKET_TOP_SORT,
+  HOME_RESET,
+  HOME_SET_MARKET_STAGE, HOME_SET_MARKET_FILTER,
+  // SET_ACTIVE_TAB, 
+  HOME_SET_EXPANDED_RECORDS, 
+  HOME_SEARCH_CONTENT_CHANGE,
+  HOME_SET_SORTING, 
+  HOME_GET_MARKET_LIST_REQUESTED, HOME_GET_MARKET_LIST_SUCCEEDED, HOME_GET_MARKET_LIST_FAILED
 } from '../actions/actionTypes';
 
 import { marketMassage, updateLoadMore } from '../integrator/massager'
 import { changeArrayById } from '../lib/util/reducerHelper'
+import { MARKET_FILTER_TYPE, MARKET_STAGE } from '../integrator'
+import { ORDER_BY } from '../components/Table'
 
 export const initialState = {
   expandedRecords: [], // ids
-  activeTabIndex: 0,
+  filterType: MARKET_FILTER_TYPE.all,
+  marketStage: MARKET_STAGE.offering,
+
   sortBy: 'last',
-  orderBy: 'desc',
+  orderBy: ORDER_BY.desc,
   searchContent: '',
 
   markets: [],
-  gettingMarketList: false,
-  marketListError: null,
-  totalResults: 0,
+  getting: false,
+  getError: null,
+  count: 0,
   pageSize: 20, // fixed
   pageNumb: 1,
   hasNextPage: false,
@@ -33,11 +36,6 @@ export default (state = initialState, action) => {
   switch (action.type) {
     case HOME_RESET: 
       return initialState
-    // case HOME_PAGE_LOADED:
-    //   return {
-    //     ...state,
-    //     tags: action.payload[0].tags
-    //   }
     case MARKET_ADD_SAVED_MARKET: 
       return {
         ...state,
@@ -49,74 +47,67 @@ export default (state = initialState, action) => {
         markets: changeArrayById(state.markets, action.payload.id, () => ({ following: false }))
       }
 
-    case SET_EXPANDED_RECORDS: {
-      const { record: { id }, isExpanded } = action.payload;
+    case HOME_SET_EXPANDED_RECORDS: {
       return {
         ...state,
-        expandedRecords: isExpanded ?
-          state.expandedRecords.filter(r => r !== id) 
-        : [...state.expandedRecords, id]
+        expandedRecords: action.payload.isExpanded ?
+          state.expandedRecords.filter(r => r !== action.payload.id) 
+        : [...state.expandedRecords, action.payload.id]
       }
     }
     case HOME_SET_SORTING: {
-      const orderBy =  state.sortBy === action.payload.sortBy && state.orderBy === initialState.orderBy  ? 'asc' : initialState.orderBy
+      const orderBy =  state.sortBy === action.payload && state.orderBy === initialState.orderBy  ? 'asc' : initialState.orderBy
       return {
         ...state,
-        sortBy: action.payload.sortBy,
+        sortBy: action.payload,
         orderBy,
         pageNumb: initialState.pageNumb
       }
     }
-    case SEARCH_CONTENT_CHANGE:
+    case HOME_SEARCH_CONTENT_CHANGE:
       return {
         ...state,
         searchContent: action.payload,
       }
-    case SET_ACTIVE_TAB: {
-      if(state.activeTabIndex === action.payload) return state
+    case HOME_SET_MARKET_STAGE:
+      if(state.marketStage === action.payload.value) return state
       return {
-        ...state,
-        activeTabIndex: action.payload,
-        ...action.payload ? 
-          {
-            sortBy: '',
-            orderBy: ''
-          }
-        :
-          {
-            sortBy: initialState.sortBy,
-            orderBy: initialState.orderBy
-          },
-        expandedRecords: [],
-        searchContent: initialState.searchContent
+        ...initialState,
+        marketStage: action.payload.value
       }
-    } 
+    case HOME_SET_MARKET_FILTER: 
+      if(state.filterType === action.payload.value) return state
+      return {
+        ...initialState,
+        marketStage: state.marketStage,
+        filterType: action.payload.value,
+        sortBy: !action.payload.index && initialState.sortBy,
+        orderBy: !action.payload.index && initialState.orderBy,
+      }
   
-    case GET_MARKET_LIST_REQUESTED:
+    case HOME_GET_MARKET_LIST_REQUESTED:
       return {
         ...state,
-        gettingMarketList: true,
-      };
-    case GET_MARKET_LIST_SUCCEEDED: {
-      const {list, pageNumb, hasNextPage, rowCount} = action.payload;
+        getting: true,
+      }
+    case HOME_GET_MARKET_LIST_SUCCEEDED: {
+      const {list, pageNumb, hasNextPage, rowCount: count} = action.payload;
       return {
         ...state,
-        gettingMarketList: false,
-        marketListError: initialState.marketListError,
-        markets: updateLoadMore(state.markets, list.map(marketMassage), action.meta && action.meta.isLoadMore),
-        totalResults: rowCount || list.length,
-        hasNextPage: hasNextPage || false,
-        pageNumb: pageNumb || 1,
-      };
+        getting: false,
+        getError: initialState.getError,
+        markets: updateLoadMore(state.markets, list.map(marketMassage), action.meta.isLoadMore),
+        count, hasNextPage, pageNumb,
+      }
     }
-    case GET_MARKET_LIST_FAILED:
+    case HOME_GET_MARKET_LIST_FAILED:
       return {
         ...state,
-        gettingMarketList: false,
-        marketListError: action.payload,
-      };
+        getting: false,
+        getError: action.payload,
+      }
 
     default:
-      return state;
+      return state
   }
 }

@@ -5,8 +5,7 @@ import {
   CREATE_MARKET_SAVE_REQUESTED, CREATE_MARKET_SAVE_SUCCEEDED, CREATE_MARKET_SAVE_FAILED,
   CREATE_MARKET_LOCK_REQUESTED, CREATE_MARKET_LOCK_SUCCEEDED, CREATE_MARKET_LOCK_FAILED,
   CREATE_MARKET_PAY_REQUESTED, CREATE_MARKET_PAY_SUCCEEDED, CREATE_MARKET_PAY_FAILED,
-  CREATE_MARKET_AVATAR_CHANGE_REQUESTED, CREATE_MARKET_AVATAR_CHANGE_SUCCEEDED, CREATE_MARKET_AVATAR_CHANGE_FAILED,
-  CREATE_MARKET_COVER_CHANGE_REQUESTED, CREATE_MARKET_COVER_CHANGE_SUCCEEDED, CREATE_MARKET_COVER_CHANGE_FAILED,
+  CREATE_MARKET_AVATAR_CHANGE, CREATE_MARKET_COVER_CHANGE,
   CREATE_MARKET_PRICE, CREATE_MARKET_UNIT, CREATE_MARKET_RESERVE, CREATE_MARKET_SYMBOL_CHANGE,
   CREATE_MARKET_DETAIL_CHANGE, CREATE_MARKET_PERIOD_CHANGE
 } from './actionTypes';
@@ -130,8 +129,8 @@ export function setActiveIndex(changeNumber) {
 export function onChangeName(text) { return action(CREATE_MARKET_NAME_CHANGE, text) }
 export function onChangeDesc(text) { return action(CREATE_MARKET_DESC_CHANGE, text) }
 export function onChangeDetail(richText) { return action(CREATE_MARKET_DETAIL_CHANGE, richText) }
-export function onChangeAvatar(hash) { return action(CREATE_MARKET_AVATAR_CHANGE_SUCCEEDED, hash) }
-export function onChangeCover(hash) { return action(CREATE_MARKET_COVER_CHANGE_SUCCEEDED, hash) }
+export function onChangeAvatar(hash) { return action(CREATE_MARKET_AVATAR_CHANGE, hash) }
+export function onChangeCover(hash) { return action(CREATE_MARKET_COVER_CHANGE, hash) }
 export function onChangeSymbol(text) { return action(CREATE_MARKET_SYMBOL_CHANGE, text) } 
 export function onChangePeriod(v) { return action(CREATE_MARKET_PERIOD_CHANGE, v) } 
 export function onChangePrice(v) { return action(CREATE_MARKET_PRICE, v) }

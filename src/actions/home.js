@@ -1,87 +1,57 @@
 import {
-  SET_EXPANDED_RECORDS, SET_ACTIVE_TAB, HOME_SET_SORTING, SEARCH_CONTENT_CHANGE, // MARKET_TOP_SORT,
   HOME_RESET,
-} from './actionTypes';
+  HOME_SET_MARKET_STAGE, HOME_SET_MARKET_FILTER,
+  HOME_SET_EXPANDED_RECORDS, 
+  HOME_SET_SORTING, HOME_SEARCH_CONTENT_CHANGE, 
+  HOME_GET_MARKET_LIST_REQUESTED, HOME_GET_MARKET_LIST_SUCCEEDED, HOME_GET_MARKET_LIST_FAILED
+} from './actionTypes'
+import { action } from './actionHelper'
 
-import {  getList } from '../actions/market';
+import { apiGetMarketList } from '../integrator'
 
-export function reset() {
-  return {
-    type: HOME_RESET
-  }
-}
-
-export function setExpandedRecords(recordData) {
-  return (dispatch, getState) => {
-    dispatch({
-      type: SET_EXPANDED_RECORDS,
-      payload: recordData,
-    });
-  }
+export function reset() { return action(HOME_RESET) }
+export function setExpandedRecords({ record: { id }, isExpanded }) {
+  return action(HOME_SET_EXPANDED_RECORDS, { id, isExpanded })
 }
 
 export function onTableHeaderClick(headerName) {
-  return (dispatch, getState) => {
-    dispatch({
-      type: HOME_SET_SORTING,
-      payload: { sortBy: headerName },
-    });
-    dispatch(getList());
+  return dispatch => {
+    dispatch(action(HOME_SET_SORTING, headerName))
+    dispatch(getList())
   }
 }
 
-export function setActiveTab(activeTabIndex) {
-  return (dispatch, getState) => {
-    dispatch({
-      type: SET_ACTIVE_TAB,
-      payload: activeTabIndex
-    });
-    dispatch(getList());
+export function onChangeFilter(index, value) {
+  return dispatch => {
+    dispatch(action(HOME_SET_MARKET_FILTER, {index, value}))
+    dispatch(getList())
+  }
+}
+
+export function onChangeStage(index, value) {
+  return dispatch => {
+    dispatch(action(HOME_SET_MARKET_STAGE, {index, value}))
+    dispatch(getList())
   }
 }
 
 export function onSearchChange(content) {
-  return {
-    type: SEARCH_CONTENT_CHANGE,
-    payload: content,
-  }
+  return action(HOME_SEARCH_CONTENT_CHANGE, content)
 }
 
-// export function moreMarketClick() {
-//   return (dispatch, getState) => {
-//   //   let sortBy = getState().home.sortBy;
-//   //   let orderBy = getState().home.orderBy;
-//   //   orderBy = orderBy === 'desc' ? 'asc' : 'desc';
-//   //   let name = getState().home.searchContent;
-//   //   let activeTabIndex = getState().home.activeTabIndex;
-
-//   //   let pageNumb = getState().market.pageNumb + 1;
-//   //   let pageSize = getState().market.pageSize;
-
-//   //   const requestParams = {
-//   //     orderBy: sortBy,
-//   //     asc: orderBy === 'asc',
-//   //     pageNumb,
-//   //     pageSize,
-//   //   }
-
-//   //   if (activeTabIndex === 0) {
-//   //     if (!!name) {
-//   //       requestParams.name = name;
-//   //       // dispatch(markerSearch(requestParams));
-//   //     } else {
-//   //       // dispatch(getMarketList(requestParams));
-//   //     }
-//   //   } else {
-//   //     dispatch({
-//   //       type: MARKET_TOP_SORT,
-//   //       payload: {
-//   //         sortBy,
-//   //         orderBy
-//   //       }
-//   //     });
-//   //   }
-//   }
-// }
-
-
+export function getList(isLoadMore) {
+  return async (dispatch, getState) => {
+    dispatch(action(HOME_GET_MARKET_LIST_REQUESTED))
+    try {
+      const {sortBy, orderBy, searchContent: keyword, filterType, pageNumb, pageSize} = getState().home;
+      return dispatch(action(HOME_GET_MARKET_LIST_SUCCEEDED, await apiGetMarketList({
+        sortBy, orderBy, keyword, 
+        filterType,
+        pageNumb, pageSize, isLoadMore
+      })(), { isLoadMore }))
+    }
+    catch (error) {
+      return dispatch(action(HOME_GET_MARKET_LIST_FAILED, error))
+    }
+  }
+}
