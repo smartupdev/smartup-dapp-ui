@@ -91,7 +91,10 @@ const Token = ({
             <Text note S>{label}</Text>
           </Row>
           <Row center TopS>
-            <Button icon={Trade} textProps={{S: true}} primary disabled={isBuy ? depositStatus : withdrawStatus} label={isBuy ? depositStatus === 2 ? 'Processing' : 'Deposit' : withdrawStatus === 2 ? 'Processing' : 'Withdraw'} onClick={isBuy ? onDeposit : onWithdraw} />
+            <Button icon={Trade} textProps={{S: true}} primary 
+              loading={isBuy ? depositStatus : withdrawStatus}
+              label={isBuy ? depositStatus === 2 ? 'Processing' : 'Deposit' : withdrawStatus === 2 ? 'Processing' : 'Withdraw'} 
+              onClick={isBuy ? onDeposit : onWithdraw} />
           </Row>
           {(isBuy ? depositStatus === 1 : withdrawStatus === 1) && <Text error center S>Please check MetaMask</Text>}
         </Col>
