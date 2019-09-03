@@ -5,7 +5,10 @@
 }
 
 body {
-  margin: 0px;
+  margin: 0px auto;
+  max-width: 1400px;
+  background-color: #2d3c47;
+  min-height: 400px;
 }
 
 /* ::-webkit-scrollbar {

@@ -24,12 +24,12 @@ const Shadow = styled.div`
 `
 
 const StyledLink = styled(Link)`
-  background-color: ${p => p.selected ? p.theme.bgColor : p.theme.bgColorDark }
+  // background-color: ${p => !p.selected ? p.theme.bgColor : p.theme.bgColorDark }
 `
 
 const Header = styled.header`
   position: relative;
-  background-color: ${p => p.theme.bgColorDark};
+  // background-color: ${p => p.theme.bgColorDark};
   color: ${p => p.theme.colorSecondary};
   ${p => media(
     `width: ${p.isOpen ? p.theme.headerExpandedWidth: 0}; overflow: hidden;`, 

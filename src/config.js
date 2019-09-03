@@ -29,7 +29,7 @@ export const ENV_MAP = {
     smartupContractAddress: '0x184a3dad8912a81ab393b83892f2039ec0297132', networkVersion: '3',
     txHashUrl: 'https://ropsten.etherscan.io/tx/',
     gasWeiPrices: [10, 30, 50],
-    logo: LogoGif, logoFull: LogoLarge
+    logo: Logo, logoFull: LogoLarge
   }, 
   uni: { 
     id: 'uni', 

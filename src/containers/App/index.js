@@ -52,6 +52,7 @@ const App = ({ watchMetamask, panelOpened, setPanelOpen }) => {
         </Main>
         <Hr vertical />
         <Panel isOpen={panelOpened} />
+        <Hr vertical />
       </ErrorBoundary>
     </Container>
   )

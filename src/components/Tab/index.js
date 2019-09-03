@@ -21,6 +21,7 @@ const Tab = styled(Row)`
     border-right: solid 1px ${p => p.theme.borderColor};
     border-left: 0px;
     ${props => props.first && css`border-left: 1px`}
+    ${props => props.end && props.flex && css`border-right: 0`}
     ${props => props.active && css`background-color: ${p => p.theme.bgColorDark}`}
   `}
   ${p => p.type === TYPE.simple && css`
@@ -43,7 +44,7 @@ export default ({ activeIndex, activeValue = -999, tabs, fullWidth, onClick, wid
   {type === TYPE.border  && <Hr />}
   <Row {...rest}>
     {tabs.map( ({ label, value, dot }, index) =>
-      <Tab relative key={index} first={!index} center active={activeIndex === index || activeValue === value} type={type} width={width} flex={fullWidth && 1} onClick={() => onClick(index, value)}>
+      <Tab relative key={index} first={!index} end={tabs.length === index + 1} center active={activeIndex === index || activeValue === value} type={type} width={width} flex={fullWidth && 1} onClick={() => onClick(index, value)}>
         <Text S>{label}</Text>
         { dot && <Dot /> }
       </Tab>
