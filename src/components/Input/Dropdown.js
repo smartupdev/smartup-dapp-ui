@@ -54,15 +54,16 @@ const TextDump = styled(Text)`
   visibility: hidden;
 `
 
-export default ({ options, onChange, selectedIndex, disabled, width, ...rest }) => { // TODO
+export default ({ options, onChange, selectedIndex, value, disabled, width, ...rest }) => { // TODO
   const [didOpen, setOpen] = useState(false)
   const ref = useRef('dropdown')
   const maxText = options.reduce((p, c) => p.length > c.label.length ? p : c.label, '')
+  const selectedLabel = options[selectedIndex] ? options[selectedIndex].label : (options.find(o => o.value === value) || {}).label
   useClickOutside(ref, () => setOpen(false))
   return (
     <Box ref={ref} relative fitHeight width={width} onClick={() => setOpen(!didOpen)} {...rest}>
       <TextDump nowrap>{maxText}</TextDump>
-      <Text note VS center nowrap>{(options[selectedIndex] || {}).label}</Text>
+      <Text note VS center nowrap>{selectedLabel}</Text>
       <OptionList open={didOpen}>
         { options.map( ({label, value}, index) =>
           <Text note VS center nowrap key={label} onClick={() => onChange(index, value)}>{label}</Text>
