@@ -56,14 +56,14 @@ function UserSellOrder({
         <CloseWithCircle primary S onClick={() => deleteSellOrder(orderId)} /> 
     },
   ]
-
+  const remaining =  removedOrderIds.reduce((p, id) => p + orders.find(o => o.orderId === id).remaining, 0) - addedOrders.reduce((p, {remaining}) => p + +remaining, 0)
+  const disabledInput = remaining <= 0
   function onKeyDown(e) {
-    if (e.keyCode === 13) { // enter
+    if (e.keyCode === 13 && editingAmount && editingPrice) { // enter
       e.target.blur()
       addSellOrder()
     }
   }
-  
   return (
     <Col HS>
       <Table
@@ -83,17 +83,17 @@ function UserSellOrder({
         <Col>
           <Row VS note>
             <Col flex={2} centerVertical>
-              <Text note>Remaining {symbol} for allocation: { removedOrderIds.reduce((p, id) => p + orders.find(o => o.orderId === id).remaining, 0) - addedOrders.reduce((p, {remaining}) => p + +remaining, 0) }</Text>
+              <Text note={!remaining}>Remaining {symbol} for allocation: {remaining}</Text>
             </Col>
             <Col flex={1} HBase>
-              <Input background width='100%' number value={editingAmount} onChange={onChangeAmount} />
+              <Input background width='100%' number value={editingAmount} onChange={v => onChangeAmount(v > remaining ? remaining : v)} disabled={disabledInput} />
             </Col>
             <Col flex={1} HBase>
-              <Input background width='100%' number value={editingPrice} onChange={onChangePrice} onKeyDown={onKeyDown} />
+              <Input background width='100%' number value={editingPrice} onChange={onChangePrice} onKeyDown={onKeyDown} disabled={disabledInput} />
             </Col>
             <Col flex={3}></Col>
             <Col flex={1} center centerVertical>
-              <Add primary S onClick={addSellOrder} />
+              <Add primary S onClick={addSellOrder} disabled={!editingAmount || !editingPrice} />
             </Col>
           </Row>
           <Row right bottom VS>
