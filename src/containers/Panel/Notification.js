@@ -29,7 +29,7 @@ const TYPES = {
 function noop() {}
 const Notification = ({
   setOpen,
-  notification: { notifications, showUnreadOnly, unreadCount, gettingNotifications, keyword, hasNextPage, notificationsError },
+  notification: { notifications, showUnreadOnly, gettingNotifications, keyword, hasNextPage, notificationsError },
   getList,
   read,
   goto,
@@ -43,8 +43,9 @@ const Notification = ({
   useEffect(() => {
     getList()
   }, [showUnreadOnly, lang])
+  const hasUnread = notifications.some(n => !n.isRead)
   const disabled = gettingNotifications
-  const readAllDisabled = !unreadCount || disabled
+  const readAllDisabled = !hasUnread || disabled
   const onClick = useCallback( n => {
     if(n.marketId) goto.trading({id: n.marketId})
     else if(n.txHash) goto.accountTransaction({ txHash: n.txHash })
