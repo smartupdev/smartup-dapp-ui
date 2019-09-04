@@ -48,6 +48,7 @@ const Dot = styled.div.attrs(p => ({ style: {marginLeft: p.value} }))`
   border-radius: ${dotSize};
   transform: translateX(-50%);
   background-color: ${p => p.disabled ? p.theme.white : p.theme.colorDark}
+  ${p => p.disabled && css`display: none;`}
   z-index: 1;
 `
 
