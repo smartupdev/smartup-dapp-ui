@@ -34,9 +34,10 @@ function toToken(number, {decimal = 8, defaultValue = '-', fixed = false} ={ } )
   if(number === null || number === undefined) return defaultValue
   const int = ~~number
   const dec = Math.round((number - int)*Math.pow(10, decimal))
+  const decText = dec.toString().padStart(decimal, 0)
   return (
     formatter.format(int).slice(0, -3) 
-    + (dec ? '.' + (fixed ? dec.toString().padStart(decimal, 0) : dec.toString().replace(/0*$/, '')) : '')
+    + (dec ? '.' + (fixed ? decText : decText.replace(/0*$/, '')) : '')
   ).slice(1)
 }
 
