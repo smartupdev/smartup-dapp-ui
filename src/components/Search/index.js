@@ -45,7 +45,7 @@ const Dump = styled(Text).attrs(() => ({
   S: true,
 }))`
   visibility: hidden;
-  height: ${p => p.theme.imageSizeS};
+  height: ${p => p.theme.imageSizeXS};
   ${media(null, p => `
     min-width: ${p.size * 6 + 6 + 2}px;
   `)}

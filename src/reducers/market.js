@@ -23,8 +23,9 @@ export default (state = initialState, action) => {
       return initialState
     case USER_NOTIFICATION_LIST_SUCCEEDED: {
       const { marketIndex, list } = action.payload
+      if(marketIndex < 0) return state
       const { type, content: {isSuccess, marketAddress} } = list[marketIndex]
-      return marketIndex >= 0 && type === 'MarketCreateFinish' && isSuccess ?
+      return type === 'MarketCreateFinish' && isSuccess ?
         {
           ...state,
           address: marketAddress,
