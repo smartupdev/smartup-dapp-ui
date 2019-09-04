@@ -44,7 +44,7 @@ const Setting = ({
         <Button primary HM label={lang.panel.setting.submit} onClick={() => updateUser(!name && _name, _avatarHash)} disabled={userInfoUpdating || !didEdit} />
       </Row>
       { userInfoError && <Text error S right>{userInfoError.message}</Text> }
-      <Col TopXL>
+      {/* <Col TopXL>
         <Hr />
         <Label> { lang.panel.setting.languages } </Label>
         <Row spaceAround TopS>
@@ -62,7 +62,7 @@ const Setting = ({
           )
         }
         </Row>
-      </Col>
+      </Col> */}
     </Col>
   )
 }
