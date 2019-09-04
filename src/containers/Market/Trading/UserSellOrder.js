@@ -6,7 +6,7 @@ import * as Actions from 'actions/marketUserOrder'
 import Avatar from 'components/Avatar'
 import Text from 'components/Text'
 import Input from 'components/Input'
-import { CloseWithCircle, Tick, Add } from 'components/Icon'
+import { CloseWithCircle, Tick, Add, Undo } from 'components/Icon'
 import { Col, Row } from 'components/Layout'
 import Hr from 'components/Hr'
 import Table from 'components/Table'
@@ -51,7 +51,7 @@ function UserSellOrder({
     { label: 'Status', value: 'state', layoutStyle, component: TableStatus },
     { label: 'Action', value: 'action', layoutStyle, component: ({ record: {orderId} }) => 
       removedOrderIds.includes(orderId) ?
-        <Tick primary S onClick={() => undoDeleteSellOrder(orderId)} />
+        <Undo primary S onClick={() => undoDeleteSellOrder(orderId)} />
       :
         <CloseWithCircle primary S onClick={() => deleteSellOrder(orderId)} /> 
     },
