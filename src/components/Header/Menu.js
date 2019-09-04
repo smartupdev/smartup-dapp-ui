@@ -16,7 +16,7 @@ const Link = styled(Col)`
   width: ${p => p.theme.headerWidth};
   height: ${p => p.theme.headerWidth};
   position: relative;
-  ${props => props.fixed && media("display: none")};
+  ${props => props.fixed && media("display: none", `background: ${props.theme.white}`)};
   ${props =>
     props.expanded &&
     media(`width: ${props.theme.headerExpandedWidth}`, "display: none")};
@@ -51,7 +51,7 @@ const LabelBox = styled(Col)`
 
 const Label = styled(Col)`
   height: ${p => p.theme.headerWidth};
-  ${p => media(null, `background-color: ${p.selected ? p.theme.bgColor : p.theme.bgColor}`)}
+  ${p => media(null, `background-color: ${p.selected ? p.theme.bgColorDark : p.theme.bgColor}`)}
   ${p =>
     p.width &&
     css`

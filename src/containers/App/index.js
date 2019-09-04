@@ -36,6 +36,7 @@ const App = ({ watchMetamask, panelOpened, setPanelOpen }) => {
   return (
     <Container>
       <ErrorBoundary>
+        <Hr vertical />        
         <Header routes={mainRoutes} isOpen={menuOpened} close={() => setMenuOpen(false)} />
         <Main
           id={mainId}

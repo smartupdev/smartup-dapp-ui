@@ -24,7 +24,7 @@ const Shadow = styled.div`
 `
 
 const StyledLink = styled(Link)`
-  // background-color: ${p => !p.selected ? p.theme.bgColor : p.theme.bgColorDark }
+  background-color: ${p => !p.selected ? p.theme.bgColor : p.theme.bgColorDark }
 `
 
 const Header = styled.header`
