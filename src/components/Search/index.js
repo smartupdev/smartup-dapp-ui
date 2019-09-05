@@ -40,12 +40,12 @@ const Container = styled.div`
 `
 const Dump = styled(Text).attrs(() => ({
   MarginLeftM: true,
-  VS: true,
+  VXS: true,
   RightBase: true,
   S: true,
 }))`
   visibility: hidden;
-  height: ${p => p.theme.imageSizeXS};
+  // height: ${p => p.theme.imageSizeXS};
   ${media(null, p => `
     min-width: ${p.size * 6 + 6 + 2}px;
   `)}
@@ -64,7 +64,7 @@ export default ({ customBgColor, value, onChange, onSearch, top, bottom, right }
   }
   return (
     <>
-      <Dump size={size}>{value && value.slice(0, 20)}</Dump>
+      <Dump size={size}>{value.slice(0, 20) || searchText}</Dump>
       <Container customBgColor={customBgColor} top={top} bottom={bottom} right={right}>
         <Row centerVertical fullHeight spaceBetween>
           <Input inputRef={inputRef} value={value} size={size} placeholder={searchText} onChange={onChange} onBlur={onSearch} S />
