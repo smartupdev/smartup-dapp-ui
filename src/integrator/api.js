@@ -3,6 +3,17 @@ import {
   ENV, createMarketGasLimit, buyCtStage1GasLimit
 } from '../config'
 
+export const PROPOSAL_STATE = {
+  all: 'all',
+  save: 'save',
+  draft: 'draft',
+  adminVote: 'adminVote',
+  publicVote: 'publicVote',
+  ongoing: 'ongoing',
+  review: 'review',
+  closed: 'closed'
+}
+
 export const ORDER_STATE = {
   active: 'active',
   locked: 'locked',

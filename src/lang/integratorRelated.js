@@ -1,5 +1,5 @@
 import { name } from './index'
-import { ORDER_STATE, MARKET_FILTER_TYPE, MARKET_STAGE } from '../integrator'
+import { ORDER_STATE, MARKET_FILTER_TYPE, MARKET_STAGE, PROPOSAL_STATE } from '../integrator'
 
 export default {
   orderState: {
@@ -23,5 +23,15 @@ export default {
     [MARKET_STAGE.offering]: name('Phase 1'),
     [MARKET_STAGE.exchange]: name('Phase 2'),
     [MARKET_STAGE.closed]: name('Closed'),
+  },
+  proposalState: {
+    [PROPOSAL_STATE.all]: name('All'),
+    [PROPOSAL_STATE.save]: name('Save'),
+    [PROPOSAL_STATE.draft]: name('Draft'),
+    [PROPOSAL_STATE.adminVote]: name('Admin Vote'),
+    [PROPOSAL_STATE.publicVote]: name('Public Vote'),
+    [PROPOSAL_STATE.ongoing]: name('Ongoing'),
+    [PROPOSAL_STATE.review]: name('Review'),
+    [PROPOSAL_STATE.closed]: name('Closed'),
   }
 }

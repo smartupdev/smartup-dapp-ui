@@ -27,6 +27,8 @@ const Discussion = lazy(() => import('./containers/Market/Discussion'))
 const DiscussionDetail = lazy(() => import('./containers/Market/Discussion/Detail'))
 const DiscussionCreate = lazy(() => import('./containers/Market/Discussion/Create'))
 const Proposal = lazy(() => import('./containers/Market/Proposal'))
+const ProposalDetail = lazy(() => import('./containers/Market/Proposal/Detail'))
+const ProposalCreate = lazy(() => import('./containers/Market/Proposal/Create'))
 const Flag = lazy(() => import('./containers/Market/Flag'))
 const Account = lazy(() => import('./containers/Account'))
 const AccountTransaction = lazy(() => import('./containers/Account/Transaction'))
@@ -61,7 +63,9 @@ let marketRoutes = [
   { id: 'discussion', path: '/market/discussion', component: Discussion, from: 'home', exact: true },
   { id: 'discussionDetail', path: '/market/discussion/details', component: DiscussionDetail, from: 'home' },
   { id: 'discussionCreate', path: '/market/discussion/create', component: DiscussionCreate, from: 'home' },
-  { id: 'proposal', path: '/market/proposal', component: Proposal, from: 'home' },
+  { id: 'proposal', path: '/market/proposal', component: Proposal, from: 'home', exact: true },
+  { id: 'proposalDetail', path: '/market/proposal/details', component: ProposalDetail, from: 'home' },
+  { id: 'proposalCreate', path: '/market/proposal/create', component: ProposalCreate, from: 'home' },
   { id: 'flag', path: '/market/flag', component: Flag, from: 'home' },
 ]
 
