@@ -33,7 +33,7 @@ function Trading({ stage }) {
   const orderHeight = makeOrderRef.current ? makeOrderRef.current.getBoundingClientRect().height : 400
   return (
     // stage === 1 ?
-      <Col fitHeight>
+      <Col overflowAuto>
         {/* <TradingInfo tabIndex={tabIndex} klineData={klineData} setTab={setTab} highLowData={highLowData} market={market} /> */}
         <FundRaising />
         <Row>
