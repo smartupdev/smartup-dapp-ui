@@ -118,12 +118,12 @@ export function marketMassage(m) {
   }
 }
 
-export function updateLoadMore(currentList, newList, isLoadMore, key = 'id') {
-  return isLoadMore ? 
+export function updateLoadMore(currentList, newList, isLoadMore, key = 'id', appendToTop = false) {
+  return appendToTop || isLoadMore ? 
   newList.reduce((currentArray, newRecord) => {
     // check if the record already exists. If yes, update thd old one. If no, append to the end.
     const existIndex = currentArray.findIndex(a => a[key] === newRecord[key])  
-    return existIndex < 0 ? [...currentArray, newRecord] : changeArrayByIndex(currentArray, existIndex, () => newRecord)
+    return existIndex < 0 ? appendToTop ? [newRecord, ...currentArray] : [...currentArray, newRecord] : changeArrayByIndex(currentArray, existIndex, () => newRecord)
   }, currentList)
   : newList
 }

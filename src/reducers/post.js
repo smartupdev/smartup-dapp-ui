@@ -145,7 +145,7 @@ export default (state = initialState, action) => {
       const posts = postList.map(postMassage)
       return {
         ...state,
-        posts: updateLoadMore(state.posts, posts, action.meta.isLoadMore, 'postId'),
+        posts: updateLoadMore(state.posts, posts, action.meta.isLoadMore, 'postId', action.meta.isPolling),
         pageNumb,
         pageSize,
         hasNextPage,
@@ -204,7 +204,7 @@ export default (state = initialState, action) => {
     case POST_REPLY_LIST_SUCCEEDED:
       return {
         ...state,
-        replys: updateLoadMore(state.replys, action.payload.list.map(replyMassage), action.meta.isLoadMore, 'replyId'),
+        replys: updateLoadMore(state.replys, action.payload.list.map(replyMassage), action.meta.isLoadMore, 'replyId', action.meta.isPolling),
         pageNumbReply: action.payload.pageNumb,
         replyHasMore: action.payload.hasNextPage,
         gettingReply: false,

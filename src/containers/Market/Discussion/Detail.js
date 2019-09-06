@@ -11,6 +11,8 @@ import { DonutLoader } from '../../../components/Loader'
 
 import ScrollLoader from '../../../components/ScrollLoader'
 
+import { usePolling } from '../../../lib/react'
+
 import { getUrlParams } from '../../../routes'
 import { connect } from 'react-redux'
 import { getPost, onChangeNewComment, reply, getReplyList, } from '../../../actions/post'
@@ -27,8 +29,8 @@ function DiscussionDetail({
   const { postId } = getUrlParams()
   useEffect( () => {
     getPost(postId)
-    getReplyList(postId)
   }, [])
+  usePolling((_, first) => getReplyList(postId, false, first), 30000)
   const [lang] = useLang()
   const ref = useRef()
   if(getDetailError) return <Text>{getDetailError.message}</Text>
@@ -40,7 +42,7 @@ function DiscussionDetail({
       {
         loggedIn ? 
           <Row directions={['column', 'row']}>
-            <Col top TopS RightS>
+            <Col top TopS RightS left>
               <Avatar icon={userAvatar} username={username} />
             </Col>
             <Col flex={1} TopS>

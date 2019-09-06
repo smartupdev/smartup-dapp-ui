@@ -49,9 +49,9 @@ export const MARKET_STAGE = {
     address > type > id > name > hash > asc > { pageNumb, pageSize, isLoadMore } 
 */
 const pageNumbDefault = 1, pageSizeDefault = 20 // default at the end of the query
-function pageHelper(pageNumb, pageSize, isLoadMore) {
+function pageHelper(pageNumb, pageSize, isLoadMore, isPolling) {
   return {
-    pageNumb: isLoadMore ? pageNumb + 1 : 1,
+    pageNumb: !isPolling && isLoadMore ? pageNumb + 1 : 1,
     pageSize
   }
 }
@@ -256,7 +256,19 @@ export const apiGetMarketList = ({
 /* ====== Market ====== END */
 
 
+/* ======== Discussion ======= Start */
+export const apiGetPostList = ({ marketId, keyword, autoFetch, pageNumb = pageNumbDefault, pageSize = pageSizeDefault, isLoadMore = false }) => () => fetch.get('/api/post/list', {
+  type: marketId ? 'market' : 'root',
+  marketId,
+  query: keyword,
+  ...pageHelper(pageNumb, pageSize, isLoadMore, autoFetch),
+})
+export const apiGetReplyList = ({ postId, isPolling, pageNumb = pageNumbDefault, pageSize = pageSizeDefault, isLoadMore = false }) => () => fetch.get('/api/post/reply/list', {
+  postId, 
+  ...pageHelper(pageNumb, pageSize, isLoadMore, isPolling)
+})
 
+/* ======== Discussion ======= END */
 
 /*
   TODO: The followings should be removed
@@ -271,7 +283,6 @@ export const API_USER_NOTIFICATION_UNREAD = '/api/user/notification/unread';
 export const API_POST_LIST = '/api/post/list';
 export const API_POST_ONE = '/api/post/one';
 export const API_POST_REPLY_CHILDREN_LIST = '/api/post/reply/children/list';
-export const API_POST_REPLY_LIST = '/api/post/reply/list';
 export const API_POST_REPLY_ONE = '/api/post/reply/one';
 export const API_POST_LIKE = '/api/user/post/like';
 export const API_USER_POST_ADD = '/api/user/post/add';

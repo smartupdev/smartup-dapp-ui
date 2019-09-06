@@ -88,7 +88,7 @@ const Market = ({
   // if (!id) return null
 
   return (
-    <Col flex={1}>
+    <Col flex={1} height='100%'>
       <Header>
         <MarketName />
       </Header>

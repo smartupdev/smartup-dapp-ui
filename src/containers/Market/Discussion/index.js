@@ -14,6 +14,7 @@ import { useLang } from '../../../language'
 import { withLink } from 'routes'
 import theme from 'theme'
 
+import { usePolling } from '../../../lib/react'
 export const AddDiscussion = connect(state => ({ marketAddress: state.market.address }))(withLink( 
   ({ marketAddress, goto }) => 
     <Add primary={!!marketAddress} S color={marketAddress ? undefined : theme.colorSecondary} disabled={!marketAddress} onClick={() => marketAddress && goto.discussionCreate()} />
@@ -21,9 +22,10 @@ export const AddDiscussion = connect(state => ({ marketAddress: state.market.add
 
 function Discussion({ getMarketPost, post, market }) {
   const { posts, gettingPost, getPostError, keyword, hasNextPage, } = post
-  useEffect( () => {
-    getMarketPost()
-  }, [])
+  // useEffect( () => {
+  //   getMarketPost()
+  // }, [])
+  usePolling(getMarketPost, 30000)
   const [lang] = useLang()
   const ref = useRef()
   // if(gettingPost) return <DonutLoader page />

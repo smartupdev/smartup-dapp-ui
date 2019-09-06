@@ -1,5 +1,29 @@
 import { useState, useEffect, useRef } from 'react'
 
+// 1. Similar to useInterval, but the delay will start counting when callback response
+// 2. We won't update the callback after ini because we use many arrow function as callback, it will create new timeout each time
+// 3. We call the callback in timeout as callback(false, true), which false is isLoadMore, true is Polling.
+//    When LoadMore is true, new record append to bottom. 
+//    When Polling is true, new record append to top.
+//    When Both not true, which mean first load, so will clear all data and use new record only.
+//    This approach is to clearly separate first load data, polling data or load more data
+export function usePolling(callback, delay) {
+  const timeoutRef = useRef()
+  async function loop(firstTime) {
+    await callback(false, !firstTime)
+    if(firstTime || timeoutRef.current)
+      timeoutRef.current = setTimeout(loop, delay)
+  }
+  useEffect(() => {
+    loop(true)
+    return () => {
+      console.debug('Clear polling of ' + callback.name)
+      clearTimeout(timeoutRef.current)
+      timeoutRef.current = null
+    }
+  }, [delay]) // please refer to 2
+}
+
 export function useInterval(callback, delay) {
   const savedCallback = useRef();
 
