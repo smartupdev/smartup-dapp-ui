@@ -372,6 +372,7 @@ export const apiGetProposalList = ({ marketId, state, sort, pageNumb = pageNumbD
 }
 /* ======== Proposal ======= END */
 
+export const apiGetNotificationUnread = () => () => fetch.get('/api/user/notification/unread')
 
 
 /*
@@ -382,7 +383,7 @@ export const apiGetProposalList = ({ marketId, state, sort, pageNumb = pageNumbD
 export const API_USER_NOTIFICATION_LIST = '/api/user/notification/list';
 export const API_USER_NOTIFICATION_SEARCH = '/api/user/notification/search';
 export const API_USER_NOTIFICATION_SET_READ = '/api/user/notification/set/read';
-export const API_USER_NOTIFICATION_UNREAD = '/api/user/notification/unread';
+// export const API_USER_NOTIFICATION_UNREAD = '/api/user/notification/unread';
 //post-controller
 export const API_POST_LIST = '/api/post/list';
 export const API_POST_ONE = '/api/post/one';

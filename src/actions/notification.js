@@ -4,27 +4,9 @@ import {
   USER_NOTIFICATION_READ_REQUESTED, USER_NOTIFICATION_READ_SUCCEEDED, USER_NOTIFICATION_READ_FAILED,
   USER_NOTIFICATION_UNREAD_REQUESTED, USER_NOTIFICATION_UNREAD_SUCCEEDED, USER_NOTIFICATION_UNREAD_FAILED
 } from './actionTypes';
-import { API_USER_NOTIFICATION_LIST, API_USER_NOTIFICATION_SEARCH, API_USER_NOTIFICATION_SET_READ, API_USER_NOTIFICATION_UNREAD } from './api';
-import fetch, {delay} from '../lib/util/fetch';
-import { asyncFunction } from '../integrator'
-
-/*
-=> toggle among type, fetch new data
-=> unreadCount changed, fetch new unread message
-  => add to list if match criteria
-*/
-export function watch() {
-  return async (dispatch, getState) => {
-    while(true) {
-      const { notification: {unreadCount}, user: { loggedIn } } = getState()
-      if(loggedIn) {
-        const [error, response] = await dispatch(getUnread())
-        if(!error && response && response.count !== unreadCount) dispatch(getList(false, true))
-      }
-      await delay(10000)
-    }
-  }
-}
+import { action } from './actionHelper'
+import fetch from '../lib/util/fetch'
+import { asyncFunction, API_USER_NOTIFICATION_LIST, API_USER_NOTIFICATION_SEARCH, API_USER_NOTIFICATION_SET_READ, apiGetNotificationUnread } from '../integrator'
 
 export function onChangeKeyword(value) {
   return {
@@ -90,11 +72,18 @@ export function readApi(notificationIds) {
 
 //未读通知
 export function getUnread() {
-  return asyncFunction(
-    fetch.post,
-    USER_NOTIFICATION_UNREAD_REQUESTED, USER_NOTIFICATION_UNREAD_SUCCEEDED, USER_NOTIFICATION_UNREAD_FAILED,
-    {
-      params: API_USER_NOTIFICATION_UNREAD,
+  return async (dispatch, getState) => {
+    try {
+      const { unreadCount } = getState().notification
+      const response = await apiGetNotificationUnread()()
+      if(response && response.count !== unreadCount) {
+        dispatch(action(USER_NOTIFICATION_UNREAD_SUCCEEDED, response))
+        dispatch(getList(false, true))
+      } 
+      else console.debug('Notification unread count no change')
     }
-  )
+    catch (error) {
+      console.debug(error)
+    }
+  }  
 }

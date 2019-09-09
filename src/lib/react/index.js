@@ -7,7 +7,7 @@ import { useState, useEffect, useRef } from 'react'
 //    When Polling is true, new record append to top.
 //    When Both not true, which mean first load, so will clear all data and use new record only.
 //    This approach is to clearly separate first load data, polling data or load more data
-export function usePolling(callback, delay) {
+export function usePolling(callback, delay, dependencies) {
   const timeoutRef = useRef()
   async function loop(firstTime) {
     await callback(false, !firstTime)
@@ -21,7 +21,7 @@ export function usePolling(callback, delay) {
       clearTimeout(timeoutRef.current)
       timeoutRef.current = null
     }
-  }, [delay]) // please refer to 2
+  }, dependencies || [delay]) // please refer to 2
 }
 
 export function useInterval(callback, delay) {

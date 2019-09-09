@@ -18,13 +18,14 @@ import { Col, Row } from '../../components/Layout'
 import { useLang } from '../../language'
 import { ENV } from '../../config'
 import { shorten } from '../../lib/util'
+import { usePolling } from '../../lib/react'
 
 import { connect } from 'react-redux'
 import { LOGIN_METAMASK_FAILED, USER_PERSON_SIGN_FAILED } from '../../actions/actionTypes'
 import { setActiveTab, setOpen } from '../../actions/panel'
 import { loginMetaMask } from '../../actions/user'
 import { onClickTnc } from '../../actions/ipfs'
-import { watch as watchNotification } from '../../actions/notification'
+import { getUnread } from '../../actions/notification'
 
 const PANEL_WIDTH = 300
 
@@ -83,12 +84,10 @@ const Panel = ({
   loginMetaMask, 
   loggedIn, isLoading, loginError,
   setActiveTab, activeTabIndex,
-  watchNotification, unreadCount }) => {
+  getUnread, unreadCount }) => {
   const TABS = getTabs(unreadCount)
   const Main = TABS[activeTabIndex].component
-  useEffect(() => {
-    watchNotification()
-  }, [])
+  usePolling(loggedIn ? getUnread : ()=>{}, 10000, [loggedIn])
   const [lang] = useLang()
   const metamaskError = 
       metamask.isEnabled === undefined ? <Text error S>{lang.panel.login.installMetamask} <A XS error href='https://metamask.io/' target="_blank">Metamask.io</A></Text> 
@@ -152,7 +151,7 @@ const mapDispatchToProps = {
   loginMetaMask,
   setActiveTab,
   setOpen,
-  watchNotification
+  getUnread
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Panel);
