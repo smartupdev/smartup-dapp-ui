@@ -5,13 +5,23 @@ import {
 
 export const PROPOSAL_STATE = {
   all: 'all',
-  save: 'save',
   draft: 'draft',
+  revision: 'revision',
   adminVote: 'adminVote',
   publicVote: 'publicVote',
   ongoing: 'ongoing',
   review: 'review',
   closed: 'closed'
+}
+
+export const PROPOSAL_SORT = {
+  startTime: 'startTime',
+  totalVotes: 'totalVotes',
+  yesVotes: 'yesVotes',
+  noVotes: 'noVotes',
+  currentWithdrawAmount: 'currentWithdrawAmount',
+  totalWithdrawAmount: 'totalWithdrawAmount', 
+  createdTime: 'createdTime'
 }
 
 export const ORDER_STATE = {
@@ -269,6 +279,100 @@ export const apiGetReplyList = ({ postId, isPolling, pageNumb = pageNumbDefault,
 })
 
 /* ======== Discussion ======= END */
+
+
+/* ======== Proposal ======= Start */
+const proposalList = [
+  {
+    id: 1,
+    state: 'draft',
+    createdTime: Date.now(),
+    title: 'Promote market',
+    description: 'XXXXXXXXXXX', 
+    receiver: 'addressxxxx', 
+    withdrawAmount: 1234565432,
+    adminVote: {
+      endTime: Date.now(),
+      yesVotes: 30,
+      NoVotes: 30,
+      totalVotes: 60,
+      totalCt: 100
+    },
+    publicVote: {
+      endTime: Date.now(),
+      yesVotes: 30,
+      NoVotes: 30,
+      totalVotes: 60,
+      totalCt: 100
+    },
+    milestones: [
+      {
+        title: 'Design',
+        description: 'XXXXXXXX', 
+        receiver: 'addressxxxx',
+        withdrawAmount: 1234565432,
+        ongoingPeriod: 123,
+        endTime: Date.now(),
+        yesVotes: 30,
+        NoVotes: 30,
+        totalVotes: 60,
+        totalCt: 100
+        }
+    ]
+  },
+  {
+    id: 2,
+    state: 'draft',
+    createdTime: Date.now(),
+    title: 'Promote market',
+    description: 'XXXXXXXXXXX', 
+    receiver: 'addressxxxx', 
+    withdrawAmount: 1234565432,
+    adminVote: {
+      endTime: Date.now(),
+      yesVotes: 30,
+      NoVotes: 30,
+      totalVotes: 60,
+      totalCt: 100
+    },
+    publicVote: {
+      endTime: Date.now(),
+      yesVotes: 30,
+      NoVotes: 30,
+      totalVotes: 60,
+      totalCt: 100
+    },
+    milestones: [
+      {
+        title: 'Design',
+        description: 'XXXXXXXX', 
+        receiver: 'addressxxxx',
+        withdrawAmount: 1234565432,
+        ongoingPeriod: 123,
+        endTime: Date.now(),
+        yesVotes: 30,
+        NoVotes: 30,
+        totalVotes: 60,
+        totalCt: 100
+        }
+    ]
+  }  
+]
+export const apiGetProposalList = ({ marketId, state, sort, pageNumb = pageNumbDefault, pageSize = pageSizeDefault, isLoadMore = false }) => async () => {
+  await delay(1000)
+  return {
+    hasNextPage: false,
+    pageNumb: 1,
+    pageSize: 20,
+    pageCount: 1,
+    rowCount: 1,
+    list: proposalList
+  }
+  
+}
+/* ======== Proposal ======= END */
+
+
 
 /*
   TODO: The followings should be removed
