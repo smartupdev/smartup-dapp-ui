@@ -1,7 +1,5 @@
 import {
   MARKET_DETAIL_RESET,
-  HOME_GET_MARKET_LIST_REQUESTED, HOME_GET_MARKET_LIST_SUCCEEDED, HOME_GET_MARKET_LIST_FAILED,
-
   MARKET_GET_TRADED_MARKET_WITH_CT_REQUESTED, MARKET_GET_TRADED_MARKET_WITH_CT_SUCCEEDED, MARKET_GET_TRADED_MARKET_WITH_CT_FAILED,
 
   MARKET_ADD_SAVED_MARKET, MARKET_DEL_SAVED_MARKET,
@@ -10,12 +8,6 @@ import {
   MARKET_DETAIL_GET_CT_REQUESTED, MARKET_DETAIL_GET_CT_SUCCEEDED, MARKET_DETAIL_GET_CT_FAILED,
 } from './actionTypes'
 import { action } from './actionHelper'
-
-import {
-  API_MARKET_LIST, API_MARKET_DETAIL,
-  API_MARKET_SEARCH, API_MARKET_TOP
-} from './api'
-import fetch from '../lib/util/fetch'
 import { apiGetTradedMarketCt, asyncFunction, callbackFunction, getBalance, getAccount, getMarketCt, smartupWeb3, decodeResult, apiGetMarket, getMarketStatus } from '../integrator'
 import { addCollect, delCollect } from './bookmark'
 
@@ -41,8 +33,8 @@ export function get(marketId) {
       dispatch(action(GET_MARKET_DETAIL_REQUESTED, null, meta))
       const market = await apiGetMarket(marketId)()
       // dispatch(getCtBalance(market.marketAddress))
-      const stage = await getMarketStatus(market.marketAddress)
-      dispatch(action(GET_MARKET_DETAIL_SUCCEEDED, { ...market, stage }, meta))
+      // const stage = await getMarketStatus(market.marketAddress)
+      dispatch(action(GET_MARKET_DETAIL_SUCCEEDED, { ...market, stage: 1 }, meta))
     }
     catch (error) {
       dispatch(action(GET_MARKET_DETAIL_FAILED, error))
