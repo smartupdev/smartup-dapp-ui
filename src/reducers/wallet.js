@@ -106,9 +106,9 @@ export default (state = initialState, action) => {
       return {
         ...state,
         ...ethDepositUpdated && { eth: +state.eth + +state.ethInputDeposit + '', ethWallet: +state.ethWallet - +state.ethInputDeposit + '', ethDepositTxHash: initialState.ethDepositTxHash, ethDepositStatus: initialState.ethDepositStatus, ethInputDeposit: initialState.ethInputDeposit },
-        ...sutDepositUpdated && { sut: +state.sut + +state.sutInputDeposit + '', ethWallet: +state.sutWallet - +state.sutInputDeposit + '', sutDepositTxHash: initialState.sutDepositTxHash, sutDepositStatus: initialState.sutDepositStatus, sutInputDeposit: initialState.sutInputDeposit },
+        ...sutDepositUpdated && { sut: +state.sut + +state.sutInputDeposit + '', sutWallet: +state.sutWallet - +state.sutInputDeposit + '', sutDepositTxHash: initialState.sutDepositTxHash, sutDepositStatus: initialState.sutDepositStatus, sutInputDeposit: initialState.sutInputDeposit },
         ...ethWithdrawUpdated && { eth: +state.eth - state.ethInputWithdraw + '', ethWallet: +state.ethWallet + +state.ethInputWithdraw + '', ethWithdrawTxHash: initialState.ethWithdrawTxHash, ethWithdrawStatus: initialState.ethWithdrawStatus, ethInputWithdraw: initialState.ethInputWithdraw },
-        ...sutWithdrawUpdated && { sut: +state.sut - state.sutInputWithdraw + '', ethWallet: +state.sutWallet + +state.sutInputWithdraw + '', sutWithdrawTxHash: initialState.sutWithdrawTxHash, sutWithdrawStatus: initialState.sutWithdrawStatus, sutInputWithdraw: initialState.sutInputWithdraw },
+        ...sutWithdrawUpdated && { sut: +state.sut - state.sutInputWithdraw + '', sutWallet: +state.sutWallet + +state.sutInputWithdraw + '', sutWithdrawTxHash: initialState.sutWithdrawTxHash, sutWithdrawStatus: initialState.sutWithdrawStatus, sutInputWithdraw: initialState.sutInputWithdraw },
       }
     default:
       return state
