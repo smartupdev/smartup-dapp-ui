@@ -41,11 +41,11 @@ export default (state = initialState, action) => {
     case USER_LOGIN_SMARTUP_FAILED:
     case USER_PERSON_SIGN_FAILED:
     case USER_AUTH_SMARTUP_FAILED:
-      return {
+      return { 
         ...state,
         isLoading: false,
         loginError: action.type
-      };
+      }
     case USER_AUTH_SMARTUP_SUCCEEDED:
       return {
         ...state,

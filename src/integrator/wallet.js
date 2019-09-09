@@ -1,6 +1,6 @@
 import web3 from 'web3'
 import { ENV, sutContractAddress, nttContractAddress, exchangeContractAddress, createMarketGasLimit, buyCtStage1GasLimit } from '../config'
-import { callbackFunction } from './index'
+import { checkAuth } from './index'
 const { smartupContractAddress, networkVersion, gasWeiPrices } = ENV 
 const address0x0 = '0x0000000000000000000000000000000000000000'
 const bytes0x0 = '0x0000000000000000000000000000000000000000000000000000000000000000'
@@ -273,8 +273,8 @@ export function withdrawEth(eth) {
 }
 
 export async function createMarketSign(marketId, marketSymbol, sut, ctCount, ctPrice, ctRecyclePrice, closingTime, gasPriceLevel) {
+  await checkAuth()
   const account = await getAccount()
-  
   const sutWei = toWei(sut)
   const ctCountWei = toWei(ctCount)
   const ctPriceWei = toWei(ctPrice)

@@ -57,7 +57,6 @@ export function create() {
     try {
       dispatch(action(CREATE_MARKET_SAVE_REQUESTED))
       const { name, desc: description, detail, avatarHash: photo, coverHash: cover, symbol, period, unit: ctCount, unitPrice: ctPrice, reserveRatio  } = getState().createMarket
-    
       const marketId = await apiGetNewMarketId()()
       const closingTime = period2Time(period)
       const recyclePrice = ctPrice * reserveRatio + '' // bnMul(ctPrice, reserveRatio) TODO
@@ -71,16 +70,6 @@ export function create() {
       console.log('err', err)
       dispatch(action(CREATE_MARKET_SAVE_FAILED, err))
     }
-    // console.log(error, hash)
-    // const [error] = await dispatch(
-    //   asyncFunction(
-    //     fetch.post,
-    //     CREATE_MARKET_SAVE_REQUESTED, CREATE_MARKET_SAVE_SUCCEEDED, CREATE_MARKET_SAVE_FAILED,
-    //     { params: API_MARKET_CREATE_SAVE, params2: { name, description, photo: avatarHash, cover: coverHash } }
-    //   )
-    // )
-    // if (!error)
-    //   dispatch(pay())
   }
 }
 

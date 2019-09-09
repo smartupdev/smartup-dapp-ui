@@ -1,9 +1,15 @@
 import { getAccount, checkIsSupportWeb3 } from './wallet'
-import { getRawLang } from '../language'
-import { NOT_LOGIN, get } from '../lib/util/fetch'
+// import { getRawLang } from '../language'
 import { USER_PERSON_SIGN_FAILED } from '../actions/actionTypes'
 
-const NO_ACCOUNT = 'Please connect to metamask.'
+export const NOT_LOGIN = 'notLogin'
+export const NO_WALLET = 'noWallet'
+export const NO_ACCOUNT = 'noAccount'
+
+export async function checkAuth() {
+  if(!checkIsSupportWeb3()) throw new Error(NO_WALLET)
+  else if(!await getAccount()) throw new Error(NO_ACCOUNT)
+}
 
 export function asyncFunction(
   func,
@@ -11,11 +17,10 @@ export function asyncFunction(
   options = {} // isWeb3, params, responsePayload, meta
 ) {
   return async dispatch => {
-    const lang = getRawLang()
     requestType && dispatch({ type: requestType, meta: options.meta })
     try {
-      if (options.isWeb3 && !checkIsSupportWeb3()) throw new Error('Web3 or ethereum is not supported.')
-      if(options.loginRequired && !await getAccount()) throw new Error(lang.error.noAccount)
+      if (options.isWeb3 && !checkIsSupportWeb3()) throw new Error(NO_WALLET)
+      if(options.loginRequired && !await getAccount()) throw new Error(NOT_LOGIN)
       let response = await func(...[options.params, options.params2])
       response = options.responsePayload ? options.responsePayload(response) : response
       responseType && dispatch({
@@ -27,14 +32,6 @@ export function asyncFunction(
     }
     catch (error) {
       console.error(error, options.params)
-      if(error.message === NOT_LOGIN || error.message === NO_ACCOUNT) 
-        if(error.message === NOT_LOGIN) error.message = lang.error.notLogin // Update error msg to other language
-        dispatch({ 
-          type: USER_PERSON_SIGN_FAILED, 
-          meta: options.meta, 
-          payload: error, 
-          error: true
-        })
       errorType && dispatch({
         type: errorType,
         payload: error, //error.message.include('{"') ? new Error(JSON.parse(error.message.match(/{.+}/g)[0]).message) : error,

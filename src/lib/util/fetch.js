@@ -1,4 +1,5 @@
 import { ENV, fetchTimeout } from '../../config'
+import { NOT_LOGIN } from '../../integrator'
 export const apiBaseUrl = ENV.apiHost
 
 export function fakeApi(delayMs, response) {
@@ -44,8 +45,6 @@ function timeoutWrapper (promise, timeout = fetchTimeout) {
       )
   ]);
 }
-
-export const NOT_LOGIN = 'You had not logged in yet.'
 
 async function cmFetch(method, api, params, host) {
   const r = await timeoutWrapper( () => fetch((host || apiBaseUrl) + (api[0] === '/' ? api : '/'+api), getOptions(method, params)) )

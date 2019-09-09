@@ -16,6 +16,7 @@ const main = {
   sutSymbol: name('SmartUp'),
   error: {
     notLogin: name('You had not logged in yet.', '請先登入', '请先登入'),
+    noWallet: name('Web3 or Ethereum is not supported. Please install MetaMask'),
     noAccount: name('Please connect to MetaMask.', '請連結到MetaMask'),
     requiredPhoto: name('This is required', '必須上載圖片', '必须上载图片')
   },
