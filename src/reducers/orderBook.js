@@ -18,7 +18,7 @@ export const initialState = {
     orders: [],
   },
   currentPrice: null,
-  lastPrice: null, 
+  changePercent: null, 
 }
 
 export default (state = initialState, action) => {
@@ -34,6 +34,8 @@ export default (state = initialState, action) => {
         didFetch: true,
         buyOrder, 
         sellOrder,
+        currentPrice,
+        changePercent: lastPrice && (currentPrice - lastPrice) / lastPrice 
       }
     }
 

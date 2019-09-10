@@ -64,7 +64,7 @@ function OrderBook({ tableRef, values, color, reverse, max, stage, height }) {
 }
 
 function OrderBookGroup({ 
-  orderBook: { didFetch, buyOrder: { orders: buyOrders, max: buyMax }, sellOrder: { orders: sellOrders, max: sellMax } },
+  orderBook: { didFetch, currentPrice, changePercent, buyOrder: { orders: buyOrders, max: buyMax }, sellOrder: { orders: sellOrders, max: sellMax } },
   marketId, stage,
   getOrder, reset,
   height,
@@ -96,8 +96,8 @@ function OrderBookGroup({
         <OrderBook tableRef={topRef} color={theme.red} reverse values={sellOrders} max={sellMax} height={contentHeight/2} />
         <Hr />
         <Row HS centerVertical ref={priceRef}>
-          <Text code VBase green L bold>12.33</Text>
-          <Text code VBase HS S note>USD$12.33</Text>
+          <Text code VBase green={changePercent > 0} red={changePercent < 0} L bold>{currentPrice ? toToken(currentPrice) : '-'}</Text>
+          {/* <Text code VBase HS S note>USD$12.33</Text> */}
         </Row>
         <Hr />
         <OrderBook color={theme.green} values={buyOrders} max={buyMax} height={contentHeight/2} stage={stage} />
