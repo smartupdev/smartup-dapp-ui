@@ -118,6 +118,13 @@ export function marketMassage(m) {
   }
 }
 
+export function orderMassage(orders) {
+  return {
+    orders: orders.map(order => ({ ...order, key: order.price, amount: order.volume, total: order.price * order.volume })),
+    max: Math.max(...orders.map(o => o.amount))
+  }
+}
+
 export function updateLoadMore(currentList, newList, isLoadMore, key = 'id', appendToTop = false) {
   return appendToTop || isLoadMore ? 
   newList.reduce((currentArray, newRecord) => {

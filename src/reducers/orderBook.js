@@ -1,39 +1,24 @@
 import {
   ORDER_BOOK_RESET,
-  ORDER_BOOK_BUY_REQUESTED, ORDER_BOOK_BUY_SUCCEEDED, ORDER_BOOK_BUY_FAILED,
-  ORDER_BOOK_SELL_REQUESTED, ORDER_BOOK_SELL_SUCCEEDED, ORDER_BOOK_SELL_FAILED,  
+  ORDER_BOOK_SUCCEEDED, ORDER_BOOK_FAILED
 } from '../actions/actionTypes'
 
-// import { numberOfOrderBookRecord } from '../config'
-
-// const DEFAULT_ORDER = new Array(numberOfOrderBookRecord).fill(null).map( (v, i) => ({ key: -i }))
-function orderMassage(orders) {
-  return {
-    orders: orders.map(order => ({ ...order, key: order.price, total: order.price * order.amount })),
-    max: Math.max(...orders.map(o => o.amount))
-  }
-}
-
 export const initialState = {
+  error: null,
+  didFetch: false,
+  // hasNextPage: false,
+  // pageNumb: 1,
+  // pageSize: 100,
   buyOrder: {
     max: 0,
     orders: [],
-    error: null,
-    didFetch: false,
-    hasNextPage: false,
-    pageNumb: 1,
-    pageSize: 100,
   },
-  
   sellOrder: {
     max: 0,
     orders: [],
-    error: null,
-    didFetch: false,
-    hasNextPage: false,
-    pageNumb: 1,
-    pageSize: 100,
-  }
+  },
+  currentPrice: null,
+  lastPrice: null, 
 }
 
 export default (state = initialState, action) => {
@@ -41,52 +26,22 @@ export default (state = initialState, action) => {
     case ORDER_BOOK_RESET:
       return initialState
 
-    case ORDER_BOOK_BUY_SUCCEEDED: {
-      const { hasNextPage, list: orders, pageNumb, pageSize } = action.payload
+    case ORDER_BOOK_SUCCEEDED: {
+      const { sellOrder, buyOrder, lastPrice, currentPrice } = action.payload
       return {
         ...state,
-        buyOrder: {
-          ...state.buyOrder,
-          error: null,
-          didFetch: true,
-          ...orderMassage(orders), 
-          hasNextPage, pageNumb, pageSize
-        }
+        error: null,
+        didFetch: true,
+        buyOrder, 
+        sellOrder,
       }
     }
 
-    case ORDER_BOOK_BUY_FAILED: 
+    case ORDER_BOOK_FAILED: 
       return {
         ...state,
-        buyOrder: {
-          ...state.buyOrder,
-          didFetch: true,
-          error: action.payload
-        }
-      }
-
-    case ORDER_BOOK_SELL_SUCCEEDED: {
-      const { hasNextPage, list: orders, pageNumb, pageSize } = action.payload
-      return {
-        ...state,
-        sellOrder: {
-          ...state.sellOrder,
-          error: null,
-          didFetch: true,
-          ...orderMassage(orders), 
-          hasNextPage, pageNumb, pageSize
-        }
-      }
-    }
-
-    case ORDER_BOOK_SELL_FAILED: 
-      return {
-        ...state,
-        sellOrder: {
-          ...state.sellOrder,
-          didFetch: true,
-          error: action.payload
-        }
+        didFetch: true,
+        error: action.payload
       }
 
     default:

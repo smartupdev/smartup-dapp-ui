@@ -2,7 +2,7 @@ import fetch, { delay, fakeApi } from '../lib/util/fetch'
 import {
   ENV, createMarketGasLimit, buyCtStage1GasLimit
 } from '../config'
-
+import { orderMassage } from './massager'
 export const PROPOSAL_STATE = {
   all: 'all',
   draft: 'draft',
@@ -204,16 +204,9 @@ const orderBookRes = {
   ]
 }
 
-export const apiGetBuyOrderBook = (marketId, pageNumb = pageNumbDefault, pageSize = pageSizeDefault, isLoadMore = false) => async () => {
-  await delay(500)
-  return orderBookRes 
-  // fetch('/api/user/trade/list', { marketId, pageNumb, pageSize })
-}
-export const apiGetSellOrderBook = (marketId, pageNumb = pageNumbDefault, pageSize = pageSizeDefault, isLoadMore = false) => async () => {
-  await delay(500)
-  return orderBookRes 
-  // fetch('/api/user/trade/list', { marketId, pageNumb, pageSize })
-}
+export const apiGetOrderBook = (marketId, numberOfBook = 30, numberOfTransaction = 100) => () => 
+  fetch.get('/api/trade/order/book', { marketId, topOfBook: numberOfBook, topOfOrder: numberOfTransaction })
+    .then(r => ({ ...r, sellOrder: orderMassage(r.sellBook), buyOrder: orderMassage(r.buyBook) }))
 /* ========== Order Book ========== END */ 
 
 /* ====== Market ====== START */

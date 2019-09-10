@@ -3,13 +3,13 @@ import React, { useEffect, useRef } from 'react'
 import { connect } from 'react-redux'
 import * as Actions from 'actions/orderBook'
 
-import Avatar from 'components/Avatar'
 import Text from 'components/Text'
 import { Col, Row } from 'components/Layout'
 import Hr from 'components/Hr'
 import Table from 'components/Table'
 
 import { toPrice, toAgo, toToken } from 'lib/util'
+import { usePolling } from 'lib/react'
 import { useLang } from 'language'
 import theme from 'theme'
 
@@ -64,16 +64,13 @@ function OrderBook({ tableRef, values, color, reverse, max, stage, height }) {
 }
 
 function OrderBookGroup({ 
-  orderBook: { buyOrder: { orders: buyOrders, max: buyMax, didFetch: didFetchBuy }, sellOrder: { orders: sellOrders, max: sellMax, didFetch: didFetchSell } },
+  orderBook: { didFetch, buyOrder: { orders: buyOrders, max: buyMax }, sellOrder: { orders: sellOrders, max: sellMax } },
   marketId, stage,
-  getBuyOrder, getSellOrder, reset,
+  getOrder, reset,
   height,
  }) {
-  useEffect( () => {
-    if(stage !== 1) getBuyOrder()
-    getSellOrder()
-    return reset
-  }, [marketId])
+  usePolling( () => getOrder(marketId), 2000, marketId)
+  useEffect(() => reset, [])
   const contentRef = useRef()
   const topRef = useRef()
   const priceRef = useRef()
@@ -82,13 +79,13 @@ function OrderBookGroup({
   const contentHeight = contentRef.current && contentRef.current.offsetHeight
   useEffect(() => {
     if(!didScroll.current) {
-      if(didFetchBuy && didFetchSell) didScroll.current = true
+      if(didFetch && didFetch) didScroll.current = true
       const topRefHeight = topRef.current.getBoundingClientRect().height
       contentRef.current.scrollTo(0, 
         topRefHeight - contentHeight/2 + priceHeight/2
       )
     }
-  }, [didFetchBuy, didFetchSell])
+  }, [didFetch])
   return (
     <>
       <Text sectionTitle>Orders Book</Text>
