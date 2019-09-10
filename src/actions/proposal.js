@@ -9,8 +9,11 @@ export function getProposalList(isLoadMore) {
   return (dispatch, getState) => {
     const { market: { id: marketId }, proposal: { filterState, sortBy, pageSize, pageNumb } } = getState()
     dispatch(
-      asyncFunction( apiGetProposalList({marketId, state: filterState, sortBy, pageNumb, pageSize, isLoadMore}) ),
-      PROPOSAL_GET_LIST_REQUESTED, PROPOSAL_GET_LIST_SUCCEEDED, PROPOSAL_GET_LIST_FAILED
+      asyncFunction( 
+        apiGetProposalList({marketId, state: filterState, sortBy, pageNumb, pageSize, isLoadMore}),
+        PROPOSAL_GET_LIST_REQUESTED, PROPOSAL_GET_LIST_SUCCEEDED, PROPOSAL_GET_LIST_FAILED,
+        { meta: {isLoadMore} }
+      )
     )
   }
 }

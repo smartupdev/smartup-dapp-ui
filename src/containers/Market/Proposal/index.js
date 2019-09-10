@@ -34,13 +34,13 @@ function Proposal({
         <Dropdown options={stateOptions} value={filterState} onChange={onChangeState} />
       </Row>
       <Hr />
-      <Panel 
+      {/* <Panel 
         headerLeft
         header='#1 Withdraw money for hiring a Marketing Manager'
         body
         expanded={true} 
         onClick
-        bottomLine />
+        bottomLine /> */}
     </Col>
   )  
 }
