@@ -73,7 +73,7 @@ export default ({ onChange=console.log, value=.4, max=1, showScale, disabled }) 
   }
   useEffect(() => eventListener('mousemove', e => {
     changeRef.current && setValue(getDotValue(e))
-  }), [])
+  }), [onChange])
   useEffect(() => eventListener('mouseup', e => {
     const newValue = getDotValue(e)
     if(changeRef.current) {
@@ -81,7 +81,7 @@ export default ({ onChange=console.log, value=.4, max=1, showScale, disabled }) 
       setValue(null)
       changeRef.current = false
     }
-  }), [])
+  }), [onChange])
   const currentValue = Math.min( _value === null ? value : _value, 1)
   const percent = currentValue/max*100 + '%'
   return (
@@ -97,7 +97,7 @@ export default ({ onChange=console.log, value=.4, max=1, showScale, disabled }) 
         {showScale &&
           <Row absolute width='101%' absLeft='-.5%' spaceBetween TopXL>
             {[0, 25, 50, 75, 100].map( v =>
-              <Text center={v===50} right={v > 50} nowrap key={v} width='20px' onClick={() => onChange(v/100)}>{v}</Text>
+              <Text noSelect center={v===50} right={v > 50} nowrap key={v} width='20px' onClick={() => onChange(v/100)}>{v}</Text>
             )}
           </Row>
         }

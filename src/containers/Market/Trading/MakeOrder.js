@@ -95,7 +95,7 @@ function MakeOrder({
         <LeftBlock />
         <Col flex={1}>
           <Col BottomS>
-            <Slider showScale value={+userSut ? totalReqSut/userSut : ''} onChange={percent => onChangeBuyUnit(+(userSut*percent).toFixed(7))} />
+            <Slider showScale value={+userSut ? totalReqSut/userSut : ''} onChange={percent => onChangeBuyUnit(+(userSut*percent/buyPrice).toFixed(7))} />
           </Col>
           {/* <Text S note TopS>~$6,000 USD</Text> */}
           <Text S note>Est. {toToken(totalReqSut)} {sutSymbol}</Text>
