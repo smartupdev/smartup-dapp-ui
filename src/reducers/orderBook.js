@@ -1,5 +1,7 @@
 import {
+  GET_MARKET_DETAIL_SUCCEEDED,
   ORDER_BOOK_RESET,
+  MARKET_DETAIL_RESET,
   ORDER_BOOK_SUCCEEDED, ORDER_BOOK_FAILED
 } from '../actions/actionTypes'
 
@@ -23,8 +25,13 @@ export const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case ORDER_BOOK_RESET:
+    case MARKET_DETAIL_RESET:
       return initialState
+
+    case GET_MARKET_DETAIL_SUCCEEDED:
+      return {
+        ...state, currentPrice: action.payload.ctPrice
+      }
 
     case ORDER_BOOK_SUCCEEDED: {
       const { sellOrder, buyOrder, lastPrice, currentPrice } = action.payload
@@ -34,7 +41,7 @@ export default (state = initialState, action) => {
         didFetch: true,
         buyOrder, 
         sellOrder,
-        currentPrice,
+        currentPrice: currentPrice || state.currentPrice,
         changePercent: lastPrice && (currentPrice - lastPrice) / lastPrice 
       }
     }

@@ -61,7 +61,7 @@ const LeftBlock = styled(Col).attrs(p => ({ MarginRightXS: true }))`
 
 function MakeOrder({ 
   stage,
-  toggleTnc, reset, onChangeBuyUnit, onChangeSellPrice, onTrade, 
+  toggleTnc, reset, onChangeBuyUnit, onChangeSellPrice, onChangeBuyPrice, onTrade, 
   getCtBalance,
   trade: { 
     agreeTnc, 
@@ -87,7 +87,7 @@ function MakeOrder({
       </Row>
 
       <Title>Buy Order</Title>
-      {stage !== 1 && <InputBlock label='Price' icon={marketAvatar} value={buyUnit} onChange={onChangeBuyUnit} symbol={symbol} />}
+      {stage !== 1 && <InputBlock label='Price' icon={ENV.logo} noipfs value={buyPrice} onChange={onChangeBuyPrice} symbol={sutSymbol} />}
       <InputBlock label='Amount to Buy' icon={marketAvatar} value={buyUnit} onChange={onChangeBuyUnit} symbol={symbol} />
       <Row>
         <LeftBlock />

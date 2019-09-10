@@ -3,6 +3,7 @@ import {
   ENV, createMarketGasLimit, buyCtStage1GasLimit
 } from '../config'
 import { orderMassage } from './massager'
+import { log } from '../lib/util'
 export const PROPOSAL_STATE = {
   all: 'all',
   draft: 'draft',
@@ -24,12 +25,13 @@ export const PROPOSAL_SORT = {
   createdTime: 'createdTime'
 }
 
+// trading/cancel/cancelPart/done
 export const ORDER_STATE = {
-  active: 'active',
+  active: 'trading',
   locked: 'locked',
-  fullyExecuted: 'fullyExecuted',
-  partiallyExecuted: 'partiallyExecuted',
-  notExecuted: 'notExecuted',
+  fullyExecuted: 'done',
+  partiallyExecuted: 'cancelPart',
+  notExecuted: 'cancel',
   processing: 'processing',
   onHold: 'onHold',
   newAdded: 'new', // only for FE
@@ -67,7 +69,7 @@ function pageHelper(pageNumb, pageSize, isLoadMore, isPolling) {
 }
 
 export const apiGetGlobalMarket = () => () => fetch.get('/api/market/global/data') // return sutAmount, marketCount, latelyPostCount
-
+export const apiGetSutValue = () => () => window.fetch('http://api.coinbene.com/v1/market/ticker?symbol=SMARTUPUSDT').then(r => r.json()).then(r => ({ usd: +r.ticker[0].last }))
 // type: market | post | reply
 // id: marketId | postId | replyId
 export const apiDelCollect =         (type, id) => () => fetch.post('/api/user/collect/del', { type, objectMark: id })
@@ -105,25 +107,29 @@ let currentGettingGasFee = ''
 function checkOutdate(localKey) {
   if(localKey !== currentGettingGasFee) throw new Error('Skip invalid/outdated data')
 }
-export const apiGetGasFee = (price, unit, currentValue) => async () => {
+export const apiGetGasFee = (marketId, price, unit) => async () => {
   try {
-    const localKey = price + '/' + unit
+    const localKey = {}
     currentGettingGasFee = localKey
     if(!price || !unit) return null
     await delay(500) // only call api when user idle certain ms
     checkOutdate(localKey)
-    const r = await fakeApi(500, {gasFee: (+price * +unit)/10000, matchedOrder: unit}) // TODO
+    const r = await fetch.get('/api/user/trade/test/match', { marketId, type: 'buy', price, volume: unit })
     checkOutdate(localKey)
-    return r
+    // limit = times * Step + [times/10 + (times%10>0 ? 1 : 0)] * Base
+    // Step = 10_0000;
+    // Base = 20_0000;
+    return {...r, gasFee: r.limit * ENV.gasWeiPrices[1]}
   }
   catch(error) {
     // do nothing, swallow error
-    console.debug(error.message)
-    return currentValue
+    log.casual(error.message)
+    return
   }
 }
+// reSellPrice
 export const apiBuyCtState1 = ({marketAddress, ctCount, gasPriceLevel, timestamp, sign}) => () => fetch.post('/api/user/first/stage/buy', {marketAddress, ctCount, gasLimit: buyCtStage1GasLimit, gasPrice: ENV.gasWeiPrices[gasPriceLevel], timestamp, sign})
-// types: firstStageBuy/buy/sell
+export const apiBuyCtState2 = ({marketId, buyPrice, sellPrice, unit, times, sign}) => () => fetch.post('/api/user/trade/add', {marketId, type: 'buy', price: buyPrice, volume: unit, times, gasPrice: ENV.gasWeiPrices[1], sign})
 export const apiTradeList = ({ types, states, pageNumb = pageNumbDefault, pageSize = pageSizeDefault, isLoadMore = false }) => () => fetch('/api/user/trade/list', { types, states, ...pageHelper(pageNumb, pageSize, isLoadMore) })
 /* ====== Transaction ====== END */
 
@@ -159,10 +165,9 @@ const myOrder = {
   pageCount: 1,
   rowCount: 1,
 }
-export const apiGetUserOrder = ({ marketId, side, states, orderBy, pageNumb = pageNumbDefault, pageSize = pageSizeDefault, isLoadMore = false }) => async () => {
-  await delay(1000)
-  return myOrder
-}
+export const apiGetUserOrder = ({ marketId, side, states, orderBy, pageNumb = pageNumbDefault, pageSize = pageSizeDefault, isLoadMore = false }) => () => 
+  fetch.get('/api/user/trade/list', { marketId, types: [side], states, ...pageHelper(pageNumb, pageSize, isLoadMore) })
+
 export const apiEditSellOrder = ({ marketId, cancelledOrderIds, unlockedOrderIds, addedOrders: list, sign, }) => async () => {
   await delay(2000)
   return {}

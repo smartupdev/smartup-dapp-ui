@@ -34,7 +34,7 @@ export default (state = initialState, action) => {
     case GET_MARKET_DETAIL_SUCCEEDED:
       return {
         ...state,
-        buyPrice: action.payload.ctPrice
+        buyPrice: action.payload.state === 1 ? action.payload.ctPrice : state.buyPrice
       }
 
     case TRADE_TOGGLE_AGREE_TNC:
@@ -60,7 +60,7 @@ export default (state = initialState, action) => {
       }    
 
     case TRADE_GET_GAS_FEE_SUCCEEDED:
-      const { gasFee: estGasFee = state.estGasFee, matchedOrder: estMatchedOrder = state.estMatchedOrder } = (action.payload || {})
+      const { gasFee: estGasFee = state.estGasFee, times: estMatchedOrder = state.estMatchedOrder } = (action.payload || {})
       return {
         ...state,
         estGasFee,

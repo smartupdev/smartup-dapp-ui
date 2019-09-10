@@ -17,6 +17,7 @@ import ErrorBoundary from '../ErrorBoundary'
 import { connect } from 'react-redux'
 import { watchMetamask } from '../../actions/user'
 import { setOpen } from '../../actions/panel'
+import { getSutValue } from '../../actions/globalInfo'
 
 export const mainId = 'main'
 
@@ -27,11 +28,12 @@ const Container = styled(Row)`
   height: -webkit-fill-available;
 `
 
-const App = ({ watchMetamask, panelOpened, setPanelOpen }) => {
+const App = ({ watchMetamask, panelOpened, setPanelOpen, getSutValue }) => {
   const [menuOpened, setMenuOpen] = useState(false)
   useEffect(() => {
     checkVersion()
     watchMetamask()
+    getSutValue()
   }, [])
   return (
     <Container>
@@ -66,6 +68,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   watchMetamask,
   setPanelOpen: setOpen,
+  getSutValue
 }
 
 export default connect(

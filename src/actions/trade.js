@@ -10,7 +10,7 @@ import {
 import { action } from './actionHelper'
 
 import { getRawLang } from '../language'
-import { apiGetGasFee, apiBuyCtState1, butCtStage1Sign } from '../integrator'
+import { apiGetGasFee, apiBuyCtState1, butCtStage1Sign, apiBuyCtState2 } from '../integrator'
 
 import { getYear, getMonth, getDate, getHour, DAY, MONTH, YEAR } from '../lib/util'
 
@@ -18,8 +18,8 @@ export function reset() { return action(TRADE_RESET) }
 export function toggleTnc() { return action(TRADE_TOGGLE_AGREE_TNC) }
 function getGasFee() {
   return async (dispatch, getState) => {
-    const { buyUnit, buyPrice, estGasFee, estMatchedOrder } = getState().trade
-    const gasFee = await apiGetGasFee(buyPrice, buyUnit, {estGasFee, estMatchedOrder})()
+    const { trade: {buyUnit, buyPrice}, market: { id: marketId } } = getState()
+    const gasFee = await apiGetGasFee(marketId, buyPrice, buyUnit)()
     return dispatch(action(TRADE_GET_GAS_FEE_SUCCEEDED, gasFee))
   }
 }
@@ -42,14 +42,27 @@ export function onTrade() {
     try {
       dispatch(action(TRADE_REQUESTED))
       const rawLang = getRawLang()
-      const { trade: {buyUnit, buyPrice, sellPrice, agreeTnc}, market: {address}, user: {loggedIn} } = getState()
+      const { trade: {buyUnit, buyPrice, sellPrice, agreeTnc, times}, market: {address, stage, id: marketId}, user: {loggedIn} } = getState()
       if(!agreeTnc) throw new Error('Click TNC')
       if(!loggedIn) throw new Error(rawLang.error.notLogin)
       if(!address) throw new Error(rawLang.trading.preview)
-      if(!buyUnit || !sellPrice) throw new Error(rawLang.trading.invalidTransaction) // TODO: Change message
-      const now = Date.now()
-      const hash = await butCtStage1Sign(address, buyUnit, 1, now)
-      const response = await apiBuyCtState1({ marketAddress: address, ctCount: buyUnit, timestamp: now, sign: hash, gasPriceLevel: 1 })()
+      if(!buyUnit || !sellPrice || stage === 2 && !buyPrice) throw new Error(rawLang.trading.invalidTransaction) // TODO: Change message
+      let response
+      if(stage === 1) {
+        const now = Date.now()
+        const hash = await butCtStage1Sign(address, buyUnit, 1, now)
+        response = await apiBuyCtState1({ marketAddress: address, ctCount: buyUnit, timestamp: now, sign: hash, gasPriceLevel: 1 })()
+      } else {
+        response = await apiBuyCtState2({ marketId, buyPrice, sellPrice, unit: buyUnit, times })()
+        console.log(response)
+        // entrustPrice: 4
+        // entrustVolume: 10
+        // orderId: "fz7ddnyrxfk"
+        // times: 0
+        // type: "Buy"
+        // unfilledVolume: 10
+        // userAddress: 
+      }
       dispatch(action(TRADE_SUCCEEDED, response))
     }
     catch(error) {
@@ -86,17 +99,17 @@ export function onTrade() {
 // }
 
 // get kline list
-function getDateRange(tabIndex) {
-  const now = Date.now()
-  function getDateShort(d) { return `${getYear(d)}_${getMonth(d)}_${getDate(d)}` }
-  function getDateLong(d) { return `${getYear(d)}_${getMonth(d)}_${getDate(d)}_${getHour(d)}` }
-  const end = getDateShort(now)
-  return [
-    { start: getDateLong(now - DAY), end: getDateLong(now), segment: '1hour'}, // 1d
-    { start: getDateShort(now - MONTH), end, segment: '1day'}, // 1m
-    { start: getDateShort(now - YEAR), end, segment: '1week'}, // 1y
-  ][tabIndex]
-}
+// function getDateRange(tabIndex) {
+//   const now = Date.now()
+//   function getDateShort(d) { return `${getYear(d)}_${getMonth(d)}_${getDate(d)}` }
+//   function getDateLong(d) { return `${getYear(d)}_${getMonth(d)}_${getDate(d)}_${getHour(d)}` }
+//   const end = getDateShort(now)
+//   return [
+//     { start: getDateLong(now - DAY), end: getDateLong(now), segment: '1hour'}, // 1d
+//     { start: getDateShort(now - MONTH), end, segment: '1day'}, // 1m
+//     { start: getDateShort(now - YEAR), end, segment: '1week'}, // 1y
+//   ][tabIndex]
+// }
 
 // export function getKlineList(){
 //   return (dispatch, getState) => {
