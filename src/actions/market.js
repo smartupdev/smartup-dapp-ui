@@ -34,7 +34,7 @@ export function get(marketId) {
       const market = await apiGetMarket(marketId)()
       // dispatch(getCtBalance(market.marketAddress))
       // const stage = await getMarketStatus(market.marketAddress)
-      dispatch(action(GET_MARKET_DETAIL_SUCCEEDED, { ...market, stage: 1 }, meta))
+      dispatch(action(GET_MARKET_DETAIL_SUCCEEDED, { ...market, stage: 2 }, meta))
     }
     catch (error) {
       dispatch(action(GET_MARKET_DETAIL_FAILED, error))
