@@ -1,9 +1,10 @@
 import { ENV, fetchTimeout } from '../../config'
 import { NOT_LOGIN } from '../../integrator'
+import { log } from './index'
 export const apiBaseUrl = ENV.apiHost
 
 export function fakeApi(delayMs, response) {
-  console.debug('Calling local fake api. Please fix this api later')
+  log.casual('Calling local fake api. Please fix this api later')
   return delay(delayMs).then(() => response)
 }
 
@@ -81,6 +82,5 @@ function getOptions(method = 'GET', params) {
   if(params) {
     r.body = toParams(params).slice(1)
   }
-  // console.log(r)
   return r
 }

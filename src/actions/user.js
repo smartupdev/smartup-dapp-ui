@@ -17,6 +17,7 @@ import {
   enableMetamask,
 } from '../integrator'
 import { getAllBalance } from './wallet'
+import { log } from '../lib/util'
 
 const STORAGE_KEY_TOKEN = 'token'
 const STORAGE_KEY_ACC = 'acc'
@@ -29,11 +30,11 @@ function clearAccountAndToken() {
 function setStorageToken(token, account) {
   window.localStorage.setItem(STORAGE_KEY_TOKEN, token)
   window.localStorage.setItem(STORAGE_KEY_ACC, account)
-  console.debug(`Saved to token as ${token} with account(${account})`)
+  log.info(`Saved to token as ${token} with account(${account})`)
 }
 function getStorageToken() {
   const r = window.localStorage.getItem(STORAGE_KEY_TOKEN)
-  console.debug('------------ token', r);
+  log.casual('------------ token', r);
   return r === 'undefined' ? undefined : r
 }
 function getStorageAccount() {
@@ -68,7 +69,7 @@ export function watchMetamask() {
       const storedAccount = getStorageAccount()
       const currentAccount = info.selectedAddress
       if((!currentAccount && storedAccount) || (currentAccount !== storedAccount && storedAccount)) {
-        console.debug('clear storage because of logout or change ac1 to ac2')
+        log.casual('clear storage because of logout or change ac1 to ac2')
         clearAccountAndToken()
         window.location.reload()
       }

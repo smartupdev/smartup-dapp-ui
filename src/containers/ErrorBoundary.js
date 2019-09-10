@@ -4,14 +4,14 @@ import Text from '../components/Text'
 import { Col } from '../components/Layout'
 import PageImage from '../images/error.png'
 import { LangConsumer } from '../language.js'
-
+import { log } from '../lib/util'
 export default class ErrorBoundary extends Component {
   state = { error: null }
 
   componentDidCatch(error, errorInfo) {
-    console.error('Unexpected Error')
-    console.error(error)
-    console.error(errorInfo)
+    log.error('Unexpected Error')
+    log.error(error)
+    log.error(errorInfo)
     this.setState({ error })
     // TODO: send error to server
   }

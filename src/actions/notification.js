@@ -6,6 +6,7 @@ import {
 } from './actionTypes';
 import { action } from './actionHelper'
 import fetch from '../lib/util/fetch'
+import { log } from '../lib/util'
 import { asyncFunction, API_USER_NOTIFICATION_LIST, API_USER_NOTIFICATION_SEARCH, API_USER_NOTIFICATION_SET_READ, apiGetNotificationUnread } from '../integrator'
 
 export function onChangeKeyword(value) {
@@ -80,10 +81,10 @@ export function getUnread() {
         dispatch(action(USER_NOTIFICATION_UNREAD_SUCCEEDED, response))
         dispatch(getList(false, true))
       } 
-      else console.debug('Notification unread count no change')
+      else log.casual('Notification unread count no change')
     }
     catch (error) {
-      console.debug(error)
+      log.casual(error)
     }
   }  
 }

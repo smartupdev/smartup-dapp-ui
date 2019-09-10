@@ -30,6 +30,7 @@ import {
 
 import { transactionType, apiGetTransactionList, apiAddTransaction } from '../integrator/api'
 import { action } from './actionHelper'
+import { log } from '../lib/util'
 
 export function getAllBalance() {
   return dispatch => {
@@ -56,7 +57,7 @@ function transaction(getAmount, metamaskFunction, req, res, err, apiType ) {
       )
     )
     .then( ([ error, txHash ]) => !error && apiAddTransaction({ type: apiType, txHash, amount })() )
-    .catch(console.error)
+    .catch(log.error)
   }
 }
 

@@ -1,5 +1,6 @@
 import web3 from 'web3'
 import { ENV, sutContractAddress, nttContractAddress, exchangeContractAddress, createMarketGasLimit, buyCtStage1GasLimit } from '../config'
+import { log } from '../lib/util'
 import { checkAuth } from './index'
 const { smartupContractAddress, networkVersion, gasWeiPrices } = ENV 
 const address0x0 = '0x0000000000000000000000000000000000000000'
@@ -293,8 +294,8 @@ export async function createMarketSign(marketId, marketSymbol, sut, ctCount, ctP
       closingTime
   );
 
-  console.log('Request sign with the following message')
-  console.table([
+  log.casual('Request sign with the following message')
+  log.table([
     ['account', account],
     ['sutWei', sutWei],
     ['marketId', marketId],

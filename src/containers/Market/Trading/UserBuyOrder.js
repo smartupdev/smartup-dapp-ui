@@ -26,7 +26,7 @@ function UserBuyOrder({
     getBuyOrder(marketId)
     return reset
   }, [marketId])
-  console.log(orders)
+  // console.log(orders)
   const model = [
     { label: 'Time', value: 'createdTime', layoutStyle, component: DateText },
     { label: `Amount(${symbol})`, value: 'totalAmount', layoutStyle, component: TokenText },

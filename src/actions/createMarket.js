@@ -14,7 +14,7 @@ import { API_MARKET_CREATE_CHANGE_NAME, API_MARKET_CREATE_SAVE, API_MARKET_CREAT
 import { marketDeposit } from '../config'
 
 import { action } from './actionHelper'
-import { fetch, dayAfter, hourAfter } from '../lib/util'
+import { fetch, dayAfter, hourAfter, log } from '../lib/util'
 import { 
   asyncFunction, 
   callbackFunction, getAccount, createMarketData, smartupWeb3,
@@ -67,7 +67,7 @@ export function create() {
       dispatch(action(CREATE_MARKET_SAVE_SUCCEEDED, res))
     }
     catch(err) {
-      console.log('err', err)
+      log.error('err', err)
       dispatch(action(CREATE_MARKET_SAVE_FAILED, err))
     }
   }

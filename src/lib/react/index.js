@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-
+import { log } from '../util'
 // 1. Similar to useInterval, but the delay will start counting when callback response
 // 2. We won't update the callback after ini because we use many arrow function as callback, it will create new timeout each time
 // 3. We call the callback in timeout as callback(false, true), which false is isLoadMore, true is Polling.
@@ -17,7 +17,7 @@ export function usePolling(callback, delay, dependencies) {
   useEffect(() => {
     loop(true)
     return () => {
-      console.debug('Clear polling of ' + callback.name)
+      log.casual('Clear polling of ' + callback.name)
       clearTimeout(timeoutRef.current)
       timeoutRef.current = null
     }

@@ -50,7 +50,7 @@ export const nttContractAddress = '0x846ce03199a759a183cccb35146124cd3f120548'
 export const exchangeContractAddress = '0x411ac193fead621dd8adde236ff7d7e568cacc87'
 
 export const marketDeposit = 2500
-export const createMarketGasLimit = 2300000
+export const createMarketGasLimit = 3000000
 export const buyCtStage1GasLimit = 320000
 
 export const numberOfOrderBookRecord = 10 

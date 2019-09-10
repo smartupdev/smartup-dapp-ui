@@ -1,7 +1,7 @@
 import { getAccount, checkIsSupportWeb3 } from './wallet'
 // import { getRawLang } from '../language'
 import { USER_PERSON_SIGN_FAILED } from '../actions/actionTypes'
-
+import { log } from '../lib/util'
 export const NOT_LOGIN = 'notLogin'
 export const NO_WALLET = 'noWallet'
 export const NO_ACCOUNT = 'noAccount'
@@ -31,7 +31,7 @@ export function asyncFunction(
       return [null, response]
     }
     catch (error) {
-      console.error(error, options.params)
+      log.error(error, options.params)
       errorType && dispatch({
         type: errorType,
         payload: error, //error.message.include('{"') ? new Error(JSON.parse(error.message.match(/{.+}/g)[0]).message) : error,
