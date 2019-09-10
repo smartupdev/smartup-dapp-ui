@@ -1,5 +1,6 @@
 import {
   GET_MARKET_DETAIL_SUCCEEDED,
+  MARKET_DETAIL_RESET,
 
   TRADE_RESET,
   TRADE_TOGGLE_AGREE_TNC,
@@ -26,9 +27,10 @@ export const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case TRADE_RESET:
+    case MARKET_DETAIL_RESET: 
       return initialState
-
+    // case TRADE_RESET:
+    //   return {...initialState, buyPrice: state.buyPrice}
     case GET_MARKET_DETAIL_SUCCEEDED:
       return {
         ...state,
