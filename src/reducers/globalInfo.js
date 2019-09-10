@@ -1,5 +1,5 @@
 import { 
-  GLOBAL_GET_MARKET_REQUESTED, GLOBAL_GET_MARKET_SUCCEEDED, GLOBAL_GET_MARKET_FAILED,
+  GLOBAL_GET_MARKET_REQUESTED, GLOBAL_GET_MARKET_SUCCEEDED, GLOBAL_GET_MARKET_FAILED, GLOBAL_GET_SUT_VALUE,
 } from '../actions/actionTypes'
 
 export const initialState = {
@@ -9,11 +9,17 @@ export const initialState = {
     sutAmount: null, 
     marketCount: null, 
     latelyPostCount: null
-  }
+  },
+  sut2usd: null
 }
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    case GLOBAL_GET_SUT_VALUE:
+      return {
+        ...state,
+        sut2usd: action.payload.usd
+      }
     case GLOBAL_GET_MARKET_REQUESTED:
       return {
         ...state,

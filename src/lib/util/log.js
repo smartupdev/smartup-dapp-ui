@@ -15,6 +15,6 @@ const log = {
   table: (table) => console.table(table)
 }
 
-// window.l = log
+window.log = log
 
 export { log }
