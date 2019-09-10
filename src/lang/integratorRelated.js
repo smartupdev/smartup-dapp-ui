@@ -3,14 +3,14 @@ import { ORDER_STATE, MARKET_FILTER_TYPE, MARKET_STAGE, PROPOSAL_STATE } from '.
 
 export default {
   orderState: {
-    [ORDER_STATE.active]: name('Active'),
-    [ORDER_STATE.locked]: name('Locked'),
-    [ORDER_STATE.fullyExecuted]: name('Fully Executed'),
-    [ORDER_STATE.partiallyExecuted]: name('Partially Executed'),
-    [ORDER_STATE.notExecuted]: name('Not Executed'),
-    [ORDER_STATE.processing]: name('Processing'),
-    [ORDER_STATE.onHold]: name('On Hold'),
-    [ORDER_STATE.newAdded]: name('New'), 
+    [ORDER_STATE.active]: name('Active', '掛單中', '挂单中'),
+    [ORDER_STATE.locked]: name('Locked', '已鎖定', '已锁定'),
+    [ORDER_STATE.fullyExecuted]: name('Fully Executed', '全數成交', '全数成交'),
+    [ORDER_STATE.partiallyExecuted]: name('Partially Executed', '部份成交'),
+    [ORDER_STATE.notExecuted]: name('Not Executed', '未成交'),
+    [ORDER_STATE.processing]: name('Pending', '處理中', '处理中'),
+    [ORDER_STATE.onHold]: name('Unlock Required', '需解鎖', '需解锁'),
+    [ORDER_STATE.newAdded]: name('New', '新單', '新单'), 
   },
   marketFilterType: {
     [MARKET_FILTER_TYPE.all]: name('All', '全部'),
@@ -20,9 +20,9 @@ export default {
     [MARKET_FILTER_TYPE.rich]: name('Richest', '最富有'),
   },
   marketStage: {
-    [MARKET_STAGE.offering]: name('Phase 1'),
-    [MARKET_STAGE.exchange]: name('Phase 2'),
-    [MARKET_STAGE.closed]: name('Closed'),
+    [MARKET_STAGE.offering]: name('Token Offering', '代幣認購階段', '代币认购阶段'),
+    [MARKET_STAGE.exchange]: name('Main Board Trading', '主板交易', ''),
+    [MARKET_STAGE.closed]: name('Archive', '封存'),
   },
   proposalState: {
     [PROPOSAL_STATE.all]: name('All'),
