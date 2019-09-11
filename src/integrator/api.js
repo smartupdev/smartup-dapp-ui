@@ -289,17 +289,20 @@ const proposalList = [
     description: 'XXXXXXXXXXX', 
     receiver: 'addressxxxx', 
     withdrawAmount: 1234565432,
+    creator: {
+      name: 'CM'
+    },
     adminVote: {
-      endTime: Date.now(),
+      endTime: Date.now() + 50000,
       yesVotes: 30,
-      NoVotes: 30,
+      noVotes: 30,
       totalVotes: 60,
       totalCt: 100
     },
     publicVote: {
-      endTime: Date.now(),
+      endTime: Date.now() + 50000,
       yesVotes: 30,
-      NoVotes: 30,
+      noVotes: 30,
       totalVotes: 60,
       totalCt: 100
     },
@@ -310,9 +313,9 @@ const proposalList = [
         receiver: 'addressxxxx',
         withdrawAmount: 1234565432,
         ongoingPeriod: 123,
-        endTime: Date.now(),
+        endTime: Date.now() + 50000,
         yesVotes: 30,
-        NoVotes: 30,
+        noVotes: 30,
         totalVotes: 60,
         totalCt: 100
         }
@@ -326,17 +329,20 @@ const proposalList = [
     description: 'XXXXXXXXXXX', 
     receiver: 'addressxxxx', 
     withdrawAmount: 1234565432,
+    creator: {
+      name: 'CM'
+    },
     adminVote: {
       endTime: Date.now(),
       yesVotes: 30,
-      NoVotes: 30,
+      noVotes: 30,
       totalVotes: 60,
       totalCt: 100
     },
     publicVote: {
       endTime: Date.now(),
       yesVotes: 30,
-      NoVotes: 30,
+      noVotes: 30,
       totalVotes: 60,
       totalCt: 100
     },
@@ -349,7 +355,7 @@ const proposalList = [
         ongoingPeriod: 123,
         endTime: Date.now(),
         yesVotes: 30,
-        NoVotes: 30,
+        noVotes: 30,
         totalVotes: 60,
         totalCt: 100
         }
@@ -364,7 +370,15 @@ export const apiGetProposalList = ({ marketId, state, sort, pageNumb = pageNumbD
     pageSize: 20,
     pageCount: 1,
     rowCount: 1,
-    list: proposalList
+    list: proposalList.map(p => ({
+      ...p,
+      endTime: p.adminVote.endTime,
+      yesVotes: p.adminVote.yesVotes,
+      noVotes: p.adminVote.noVotes,
+      totalVotes: p.adminVote.totalVotes,
+      totalCt: p.adminVote.totalCt,
+      })
+    ),
   }
   
 }

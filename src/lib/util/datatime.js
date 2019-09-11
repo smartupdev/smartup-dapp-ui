@@ -36,6 +36,7 @@ const toAgo = (date, nowText = 'now', minText = 'm ago', hourText = 'h ago', day
     ~~(timeAgo/DAY) + dayText
 }
 
+const pad2 = d => (d+'').padStart(2, '0') 
 const dateDif = (date1, date2) => {
   let ms = new Date(date2).getTime() - new Date(date1).getTime()
   const d = Math.floor(ms/DAY)
@@ -46,7 +47,7 @@ const dateDif = (date1, date2) => {
   ms -= m * 1000 * 60
   const s = Math.floor(ms/1000);
   ms -= s * 1000;
-  return { ms, s, m, h, d }
+  return { ms, s, m, h, d, s2: pad2(s), m2: pad2(m), h2: pad2(h), d2: pad2(d) }
 }
 
 // TODO: addDay, addMonth, addYear
