@@ -2,49 +2,37 @@ import React from 'react'
 import styled, { css } from 'styled-components'
 import { spacingCss, media, colorCss } from '../Theme'
 
+function setSize(prop, size) {
+  return prop && css`
+    height: ${size};
+    width: ${size};
+    min-height: ${size};
+    min-width: ${size};
+  `
+}
+
 const Image =  styled.img`
   ${spacingCss}
   ${colorCss}
   # background-color: tomato
-  height: ${p => p.theme.imageSizeM};
-  width: ${p => p.theme.imageSizeM};
-  min-height: ${p => p.theme.imageSizeM};
-  min-width: ${p => p.theme.imageSizeM};
   ${p => p.rightText && css`margin-right: ${p.theme.fontSizeXS}`};
   ${p => p.leftText && css`margin-left: ${p.theme.fontSizeXS}`};
-  ${p => p.XS && css`
-    height: ${p => p.theme.imageSizeXS};
-    width: ${p => p.theme.imageSizeXS};
-    min-height: ${p => p.theme.imageSizeXS};
-    min-width: ${p => p.theme.imageSizeXS};
-    `}
-  ${p => p.S && css`
-    height: ${p => p.theme.imageSizeS};
-    width: ${p => p.theme.imageSizeS};
-    min-height: ${p => p.theme.imageSizeS};
-    min-width: ${p => p.theme.imageSizeS};  
-  `}
-  ${p => p.L && css`
-    height: ${p => p.theme.imageSizeL};
-    width: ${p => p.theme.imageSizeL};
-    min-height: ${p => p.theme.imageSizeL};
-    min-width: ${p => p.theme.imageSizeL};
-  `}
-  ${p => p.XL && css`
-    height: ${p => p.theme.imageSizeXL};
-    width: ${p => p.theme.imageSizeXL};
-    min-height: ${p => p.theme.imageSizeXL};
-    min-width: ${p => p.theme.imageSizeXL};  
-  `}
+  ${p => setSize(true, p.theme.imageSizeM)}
+  ${p => setSize(p.XS, p.theme.imageSizeXS)}
+  ${p => setSize(p.S, p.theme.imageSizeS)}
+  ${p => setSize(p.L, p.theme.imageSizeL)}
+  ${p => setSize(p.XL, p.theme.imageSizeXL)}
+
+  ${p => setSize(p.iconXS, p.theme.iconSizeXS)}
+  ${p => setSize(p.iconS, p.theme.iconSizeS)}
+  ${p => setSize(p.iconM, p.theme.iconSizeM)}
+  ${p => setSize(p.iconL, p.theme.iconSizeL)}
+  ${p => setSize(p.iconXL, p.theme.iconSizeXL)}
+
+  ${p => setSize(p.size, p.size)}
   ${p => p.photo && css`
     height: ${p => p.theme.photoSizeHM};
     width: ${p => p.theme.photoSizeWM};
-  `}
-  ${p => p.size && css`
-    height: ${p => p.size};
-    width: ${p => p.size};
-    min-height: ${p => p.size};
-    min-width: ${p => p.size};  
   `}
   ${p => p.height && 
     (p.height instanceof Array ? 

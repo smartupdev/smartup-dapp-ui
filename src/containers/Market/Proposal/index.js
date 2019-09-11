@@ -4,19 +4,11 @@ import Hr from 'components/Hr'
 import { Col, Row } from 'components/Layout'
 import Panel from 'components/Panel'
 import { Dropdown } from 'components/Input'
-import Button from 'components/Button'
-import Avatar from 'components/Avatar'
-import { SimplePieChart } from 'components/Graph'
 import { useLang } from 'language'
 import { PROPOSAL_STATE } from 'integrator'
 
 import { connect } from 'react-redux'
 import * as Actions from 'actions/proposal'
-import { Link } from 'routes'
-import { toToken, dateDif } from 'lib/util'
-import { useInterval } from 'lib/react'
-
-import { ENV } from 'config'
 
 import Item from './Item'
 

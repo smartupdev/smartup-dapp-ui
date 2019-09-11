@@ -9,26 +9,28 @@ import {
 } from '../actions/actionTypes'
 
 export const initialState = {
-  getting: false,
+  getting: true,
   getError: null,
   updating: false,
-  updateError: null
+  updateError: null,
+  milestones: []
 }
 
 export default (state = initialState, action) => {
   switch (action.type) {
     case PROPOSAL_RESET: 
       return initialState
-    case PROPOSAL_GET_DETAIL_REQUESTED: 
-      return {
-        ...state,
-        getting: true,
-        getError: initialState.getError
-      }
+    // case PROPOSAL_GET_DETAIL_REQUESTED: 
+    //   return {
+    //     ...state,
+    //     getting: true,
+    //     getError: initialState.getError
+    //   }
     case PROPOSAL_GET_DETAIL_SUCCEEDED: 
       return {
         ...state,
         getting: false,
+        getError: initialState.getError,
         ...action.payload
       }
     case PROPOSAL_GET_DETAIL_FAILED: 

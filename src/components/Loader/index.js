@@ -100,3 +100,5 @@ export const DcLoader = () =>
      </path>
   </svg>
 </DcStyle>
+
+export default DonutLoader
