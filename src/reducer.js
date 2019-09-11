@@ -6,6 +6,7 @@ import notification from './reducers/notification'
 import panel from './reducers/panel'
 import post from './reducers/post'
 import proposal from './reducers/proposal'
+import proposalDetail from './reducers/proposalDetail'
 import trade from './reducers/trade'
 import user from './reducers/user'
 
@@ -50,6 +51,7 @@ export default combineReducers({
     home,
     market,
     proposal,
+    proposalDetail,
     general,
     post,
     notification,

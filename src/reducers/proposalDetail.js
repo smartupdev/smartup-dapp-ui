@@ -1,4 +1,5 @@
 import {
+  PROPOSAL_RESET,
   PROPOSAL_GET_DETAIL_REQUESTED, PROPOSAL_GET_DETAIL_SUCCEEDED, PROPOSAL_GET_DETAIL_FAILED, 
   PROPOSAL_SAVE_REQUESTED, PROPOSAL_SAVE_SUCCEEDED, PROPOSAL_SAVE_FAILED, 
   PROPOSAL_PUBLISH_REQUESTED, PROPOSAL_PUBLISH_SUCCEEDED, PROPOSAL_PUBLISH_FAILED,
@@ -16,11 +17,13 @@ export const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    case PROPOSAL_RESET: 
+      return initialState
     case PROPOSAL_GET_DETAIL_REQUESTED: 
       return {
         ...state,
         getting: true,
-        getError: state.initialState.getError
+        getError: initialState.getError
       }
     case PROPOSAL_GET_DETAIL_SUCCEEDED: 
       return {
@@ -42,7 +45,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         updating: true,
-        updateError: state.initialState.updateError
+        updateError: initialState.updateError
       }
     case PROPOSAL_PUBLISH_SUCCEEDED: 
     case PROPOSAL_SAVE_SUCCEEDED: 

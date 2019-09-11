@@ -66,12 +66,12 @@ const IconBox = styled.div`
   justify-content: center;
   align-items: center;
 
-  height: ${p => p.theme.iconSizeM};
-  width: ${p => p.theme.iconSizeM};
-  border-radius: ${p => p.theme.iconSizeM};
+  height: ${p => p.theme.iconSizeXL};
+  width: ${p => p.theme.iconSizeXL};
+  border-radius: ${p => p.theme.iconSizeXL};
   background-color: ${p => p.theme.bgColor};
 
-  top: ${p => p.open ? `calc( (${p.theme.iconSizeM} + 8px) * ${p.index + 1} )` : 0};
+  top: ${p => p.open ? `calc( (${p.theme.iconSizeXL} + 8px) * ${p.index + 1} )` : 0};
   & > svg {
     fill: ${p => p.theme.colorSecondary}
   }

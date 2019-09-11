@@ -289,7 +289,7 @@ const proposalList = [
     description: 'XXXXXXXXXXX', 
     receiver: 'addressxxxx', 
     withdrawAmount: 1234565432,
-    creator: {
+    owner: {
       name: 'CM'
     },
     adminVote: {
@@ -329,7 +329,7 @@ const proposalList = [
     description: 'XXXXXXXXXXX', 
     receiver: 'addressxxxx', 
     withdrawAmount: 1234565432,
-    creator: {
+    owner: {
       name: 'CM'
     },
     adminVote: {
@@ -361,7 +361,15 @@ const proposalList = [
         }
     ]
   }  
-]
+].map(p => ({
+  ...p,
+  endTime: p.adminVote.endTime,
+  yesVotes: p.adminVote.yesVotes,
+  noVotes: p.adminVote.noVotes,
+  totalVotes: p.adminVote.totalVotes,
+  totalCt: p.adminVote.totalCt,
+  })
+)
 export const apiGetProposalList = ({ marketId, state, sort, pageNumb = pageNumbDefault, pageSize = pageSizeDefault, isLoadMore = false }) => async () => {
   await delay(1000)
   return {
@@ -370,17 +378,12 @@ export const apiGetProposalList = ({ marketId, state, sort, pageNumb = pageNumbD
     pageSize: 20,
     pageCount: 1,
     rowCount: 1,
-    list: proposalList.map(p => ({
-      ...p,
-      endTime: p.adminVote.endTime,
-      yesVotes: p.adminVote.yesVotes,
-      noVotes: p.adminVote.noVotes,
-      totalVotes: p.adminVote.totalVotes,
-      totalCt: p.adminVote.totalCt,
-      })
-    ),
-  }
-  
+    list: proposalList,
+  } 
+}
+export const apiGetProposalDetails = ({ marketId, proposalId }) => async () => {
+  await delay(500)
+  return proposalList[0]
 }
 /* ======== Proposal ======= END */
 

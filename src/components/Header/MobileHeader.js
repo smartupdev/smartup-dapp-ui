@@ -59,8 +59,8 @@ const Line = styled.div`
 `
 
 const MenuBox = styled(Col)`
-  width: ${p => p.theme.iconSizeM};
-  height: ${p => p.theme.iconSizeM};
+  width: ${p => p.theme.iconSizeXL};
+  height: ${p => p.theme.iconSizeXL};
 `
 
 function MenuIcon(props) {
@@ -76,7 +76,7 @@ function MenuIcon(props) {
 const Dump = styled.div`
   ${p => media(`
     background-color: ${p.theme.bgColor};
-    min-height: ${p.theme.iconSizeM};
+    min-height: ${p.theme.iconSizeXL};
     margin: ${p.theme.spacingS} 0;
     width: 100%;
   `)}
@@ -142,8 +142,8 @@ const Cover = styled.div`
 const PanelBox = styled(Col)`
   z-index: 10;
   position: absolute;
-  right: ${p => p.theme.iconSizeM};
-  top: ${p => `calc( ${p.theme.iconSizeM}/2 + ${p.theme.spacingS} )`};
+  right: ${p => p.theme.iconSizeXL};
+  top: ${p => `calc( ${p.theme.iconSizeXL}/2 + ${p.theme.spacingS} )`};
   display: flex;
   align-items: center;
   justify-content: center;
@@ -182,9 +182,9 @@ export const Header = styled(Row)`
   position: absolute;
   top: ${p => p.theme.spacingS};
   padding: 0 ${p => p.theme.spacingS};
-  left: calc( ${p => `${p.theme.iconSizeM} + ${p.theme.spacingS} * 2`} );
-  right: calc( ${p => `${p.theme.iconSizeM} + ${p.theme.spacingS} * 2`} );
-  height: ${p => p.theme.iconSizeM}
+  left: calc( ${p => `${p.theme.iconSizeXL} + ${p.theme.spacingS} * 2`} );
+  right: calc( ${p => `${p.theme.iconSizeXL} + ${p.theme.spacingS} * 2`} );
+  height: ${p => p.theme.iconSizeXL}
   align-items: center;
   overflow: auto;
   ${media(null, 'display: none')};

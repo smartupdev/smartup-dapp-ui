@@ -32,25 +32,25 @@ const _Cap = ({ value }) => <Text>{toPrice(value)}</Text>
 const _Slider = ({ value }) => <Col width={colSliderWidth} RightS><Slider value={value} disabled /></Col>
 
 const offeringModel = [
-  { label: '',            value: 'avatar',        sortable: false,  component: _Icon,           layoutStyle: { width: `calc( ${theme.iconSizeM} + 15px )`, center: true, LeftXS: true } },
+  { label: '',            value: 'avatar',        sortable: false,  component: _Icon,           layoutStyle: { width: `calc( ${theme.iconSizeXL} + 15px )`, center: true, LeftXS: true } },
   { label: l => l.name,   value: 'name',          sortable: false,  component: _Name,           layoutStyle: { flex: 1, width: colWidth } },
   { label: 'Finished',    value: 'Finished',      sortable: true,   component: _Slider,         layoutStyle: { flex: 1, width: colSliderWidth, center: true } },
   { label: l => l.price,  value: 'last',          sortable: true,   component: _Price,          layoutStyle: { flex: 1, width: colWidth } },
   { label: 'Time',        value: 'time',          sortable: true,   component: DateAgoText,     layoutStyle: { flex: 1, width: colWidth } },
   { label: 'Fund Raised', value: 'Fund Raised',   sortable: true,   component: _Price,          layoutStyle: { flex: 1, width: colWidth } },
   { label: 'Target',      value: 'Target',        sortable: true,   component: _Price,          layoutStyle: { flex: 1, width: colWidth } },
-  { label: '',            value: 'action',        sortable: false,  component: _More,           layoutStyle: { width: `calc( ${theme.iconSizeM} + 15px )`, right: true, RightXS: true } },
+  { label: '',            value: 'action',        sortable: false,  component: _More,           layoutStyle: { width: `calc( ${theme.iconSizeXL} + 15px )`, right: true, RightXS: true } },
 ]
 
 const exchangeModel = [
-  { label: '',            value: 'avatar',        sortable: false,  component: _Icon,           layoutStyle: { width: `calc( ${theme.iconSizeM} + 15px )`, center: true, LeftXS: true } },
+  { label: '',            value: 'avatar',        sortable: false,  component: _Icon,           layoutStyle: { width: `calc( ${theme.iconSizeXL} + 15px )`, center: true, LeftXS: true } },
   { label: l => l.name,   value: 'name',          sortable: false,  component: _Name,           layoutStyle: { flex: 1, width: colWidth } },
   { label: l => l.change, value: 'lately_change', sortable: true,   component: _Percent,        layoutStyle: { width: minColWidth, right: true } },
   { label: l => l.price,  value: 'last',          sortable: true,   component: _Price,          layoutStyle: { width: colWidth, right: true } },
   { label: l => l.volume, value: 'lately_volume', sortable: true,   component: _Volume,         layoutStyle: { width: colWidth, right: true } },
   { label: l => l.cap,    value: 'amount',        sortable: true,   component: _Cap,            layoutStyle: { width: colWidth, right: true } },
   { label: l => l.graph,  value: 'priceIn7d',     sortable: false,  component: SimpleLineChart, layoutStyle: { width: '200px', center: true, MarginLeftL: true } },
-  { label: '',            value: 'action',        sortable: false,  component: _More,           layoutStyle: { width: `calc( ${theme.iconSizeM} + 15px )`, right: true, RightXS: true } },
+  { label: '',            value: 'action',        sortable: false,  component: _More,           layoutStyle: { width: `calc( ${theme.iconSizeXL} + 15px )`, right: true, RightXS: true } },
 ]
 
 export default function({ 
