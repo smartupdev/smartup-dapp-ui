@@ -12,6 +12,7 @@ import { PROPOSAL_STATE } from 'integrator'
 
 import { connect } from 'react-redux'
 import * as Actions from 'actions/proposal'
+import { Link } from 'routes'
 import { toToken, dateDif } from 'lib/util'
 import { useInterval } from 'lib/react'
 
@@ -90,7 +91,11 @@ function Proposal({
                   </Col>
                 </Col>
                 <Row>
-                  <Button label='View More' primary HM />
+                  <Link>
+                    {( ({ goto }) =>
+                      <Button label='View More' primary HM onClick={() => goto.proposalDetail({proposalId: id})} />
+                    )}
+                  </Link>
                 </Row>
               </Col>
             </Row>
