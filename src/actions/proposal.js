@@ -1,6 +1,6 @@
 import {
   PROPOSAL_RESET,
-  PROPOSAL_CHANGE_STATE,
+  PROPOSAL_CHANGE_STATE, PROPOSAL_CHANGE_SORT, 
   PROPOSAL_GET_LIST_REQUESTED, PROPOSAL_GET_LIST_SUCCEEDED, PROPOSAL_GET_LIST_FAILED,
   PROPOSAL_GET_DETAIL_REQUESTED, PROPOSAL_GET_DETAIL_SUCCEEDED, PROPOSAL_GET_DETAIL_FAILED,
 
@@ -28,7 +28,8 @@ export function getProposalList(isLoadMore) {
   }
 }
 
-export function onChangeState(state) { return action(PROPOSAL_CHANGE_STATE, state) }
+export function onChangeState(index, value) { return action(PROPOSAL_CHANGE_STATE, value) }
+export function onChangeSort(index, value) { return action(PROPOSAL_CHANGE_SORT, value) }
 
 export function getProposalDetails(marketId, proposalId) {
   return asyncFunction(

@@ -1,5 +1,5 @@
 import {
-  PROPOSAL_CHANGE_STATE,
+  PROPOSAL_CHANGE_STATE, PROPOSAL_CHANGE_SORT, 
   PROPOSAL_GET_LIST_REQUESTED, PROPOSAL_GET_LIST_SUCCEEDED, PROPOSAL_GET_LIST_FAILED
 } from '../actions/actionTypes'
 import { updateLoadMore } from '../integrator/massager'
@@ -22,6 +22,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         filterState: action.payload
+      }
+    case PROPOSAL_CHANGE_SORT:
+      return {
+        ...state,
+        sortBy: action.payload
       }
     case PROPOSAL_GET_LIST_REQUESTED: 
       return {

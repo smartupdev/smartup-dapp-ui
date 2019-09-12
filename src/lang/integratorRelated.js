@@ -1,5 +1,5 @@
 import { name } from './index'
-import { ORDER_STATE, MARKET_FILTER_TYPE, MARKET_STAGE, PROPOSAL_STATE } from '../integrator'
+import { ORDER_STATE, MARKET_FILTER_TYPE, MARKET_STAGE, PROPOSAL_STATE, PROPOSAL_SORT } from '../integrator'
 
 export default {
   orderState: {
@@ -33,5 +33,14 @@ export default {
     [PROPOSAL_STATE.ongoing]: name('Ongoing'),
     [PROPOSAL_STATE.review]: name('Review'),
     [PROPOSAL_STATE.closed]: name('Closed'),
+  },
+  proposalSort: {
+    [PROPOSAL_SORT.startTime]: name('startTime'),
+    [PROPOSAL_SORT.totalVotes]: name('totalVotes'),
+    [PROPOSAL_SORT.yesVotes]: name('yesVotes'),
+    [PROPOSAL_SORT.noVotes]: name('noVotes'),
+    [PROPOSAL_SORT.currentWithdrawAmount]: name('currentWithdrawAmount'),
+    [PROPOSAL_SORT.totalWithdrawAmount]: name('totalWithdrawAmount'),
+    [PROPOSAL_SORT.createdTime]: name('createdTime'),
   }
 }

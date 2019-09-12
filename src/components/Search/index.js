@@ -53,7 +53,7 @@ const Dump = styled(Text).attrs(() => ({
 `
 
 // MUST set relative outside
-export default ({ customBgColor, value, onChange, onSearch, top, bottom, right }) => {
+export default ({ customBgColor, value, onChange, onSearch, top, bottom, right, ...rest }) => {
   const [{ search: searchText }] = useLang()
   const inputRef = useRef(null)
   const size = Math.min( Math.max(length(searchText), length(value)), 20 )
@@ -65,7 +65,7 @@ export default ({ customBgColor, value, onChange, onSearch, top, bottom, right }
   return (
     <>
       <Dump size={size}>{value.slice(0, 20) || searchText}</Dump>
-      <Container customBgColor={customBgColor} top={top} bottom={bottom} right={right}>
+      <Container customBgColor={customBgColor} top={top} bottom={bottom} right={right} {...rest}>
         <Row centerVertical fullHeight spaceBetween>
           <Input inputRef={inputRef} value={value} size={size} placeholder={searchText} onChange={onChange} onBlur={onSearch} S />
           <Search S RightXS onMouseDown={onClickIcon} />
