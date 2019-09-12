@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react'
+import Button from 'components/Button'
 import Text from 'components/Text'
 import Hr from 'components/Hr'
 import { Col, Row } from 'components/Layout'
 import { Dropdown } from 'components/Input'
 import Panel from 'components/Panel'
+import { LineDiagram } from 'components/Graph'
 import Loader from 'components/Loader'
 import ProgressBar from 'components/ProgressBar'
 import { useLang } from 'language'
@@ -19,6 +21,7 @@ import { toToken } from '../../../lib/util'
 
 function Detail({
   proposal,
+  symbol,
   getProposalDetails, reset
 }) {
   const [{ api: { proposalState } }] = useLang()
@@ -27,40 +30,38 @@ function Detail({
     getProposalDetails(id, proposalId)
     return reset
   }, [id, proposalId])
-  const [mainOpen, setMainOpen] = useState(true)
+  const [mainOpen, setMainOpen] = useState([])
+  function toggleOpen(index, setTrue) {
+    let newOpen = [...mainOpen]
+    newOpen[index] = setTrue || !newOpen[index]
+    setMainOpen(newOpen)
+  }
   const progressList = [
-    'Draft', 'Publish', 'Admin Vote', 'Public Vote',
-    ...proposal.milestones.map( (m, i) => [`M${i+1} ongoing`, `M${i+1} Review`] ),
-    'Fund successful'
+    'Preparation',
+    ...proposal.milestones.map( (m, i) => i ? `Milestone ${i}` : 'Starting Fund' ),
+    'Archive'
   ]
   return (
     proposal.getting ? <Loader page /> : 
-    <Col flex={1}>
-      <Panel headerLeft header={`#${proposal.id} ${proposal.title}`}
-        body={
-          <Col>
-            <Item {...proposal} noButton />
-            <Text S note HM>Progress Overview</Text>
-            <ProgressBar activeIndex={1} options={progressList} />
-          </Col>
-        }
-        expanded={mainOpen} 
-        onClick={() => setMainOpen(!mainOpen)}
-        bottomLine />
+    <Col flex={1} overflowAuto>
+      <Text HM VS XL>{`#${proposal.id} ${proposal.name}`}</Text>
+      <ProgressBar activeIndex={1} options={progressList} onClick={i => i && toggleOpen(i-1, true)} />
+      <Item {...proposal} noChart />
+      <Col HM>
+        <LineDiagram value={[proposal.publicVote.yesVotes, proposal.publicVote.noVotes]} maxValue={proposal.publicVote.totalCt} threshold={.5} symbol={symbol} />
+      </Col>
+      <Row VS HM right>
+        <Button label='Decline' HS secondary MarginRightS />
+        <Button label='Approve' HS primary />
+      </Row>
+      <Hr />
       {
         proposal.milestones.map( (m, i) =>
           <Panel key={i} 
-            headerLeft header={`Milestone ${i+1} - ${m.title}`}
-            body={
-              <Col HM VS>
-                <LabelText label='Description' text={m.description} />
-                <LabelText label='Ongoing period' text={m.ongoingPeriod + ' days'} />
-                <LabelText label='Withdraw amount' text={toToken(m.withdrawAmount)} />
-                <LabelText label='Receiver' text={m.receiver} />
-              </Col>
-            }
-            expanded={mainOpen} 
-            onClick={() => setMainOpen(!mainOpen)}
+            header={`${progressList[i+1]}`}
+            body={<Item {...m} noButton />}
+            expanded={mainOpen[i]} 
+            onClick={() => toggleOpen(i)}
             bottomLine />
         ) 
       }
@@ -69,6 +70,7 @@ function Detail({
 }
 
 const mapStateToProps = state => ({
+  symbol: state.market.symbol,
   proposal: state.proposalDetail
 })
 const mapDispatchToProps = Actions

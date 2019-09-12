@@ -58,7 +58,7 @@ const theme = {
   fontSizeS: '12px',
   fontSizeM: '14px',
   fontSizeL: '16px',
-  fontSizeXL: '20px',
+  fontSizeXL: '24px',
 
   fontSpacingXS: '1px',
   fontSpacingS: '2px',

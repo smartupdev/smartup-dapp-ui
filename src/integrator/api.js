@@ -280,96 +280,50 @@ export const apiGetReplyList = ({ postId, isPolling, pageNumb = pageNumbDefault,
 
 
 /* ======== Proposal ======= Start */
+const voteObj = {
+  endTime: Date.now() + 5000000,
+  yesVotes: 30,
+  noVotes: 30,
+  totalVotes: 60,
+  totalCt: 100
+}
+const milestone = {
+  title: 'Design',
+  description: 'XXXXXXXX', 
+  receiver: 'addressxxxx',
+  withdrawAmount: 1234565432,
+  publicVote: voteObj,
+  adminVote: voteObj, // only hv in the first milestone
+  ongoingPeriod: 123, // only hv except first milestone
+}
+
 const proposalList = [
   {
     id: 1,
-    state: 'draft',
+    state: PROPOSAL_STATE.draft,
+    name: 'Promote market',
     createdTime: Date.now(),
-    title: 'Promote market',
-    description: 'XXXXXXXXXXX', 
-    receiver: 'addressxxxx', 
-    withdrawAmount: 1234565432,
+    lastUpdateTime: Date.now(),
     owner: {
       name: 'CM'
     },
-    adminVote: {
-      endTime: Date.now() + 50000,
-      yesVotes: 30,
-      noVotes: 30,
-      totalVotes: 60,
-      totalCt: 100
-    },
-    publicVote: {
-      endTime: Date.now() + 50000,
-      yesVotes: 30,
-      noVotes: 30,
-      totalVotes: 60,
-      totalCt: 100
-    },
-    milestones: [
-      {
-        title: 'Design',
-        description: 'XXXXXXXX', 
-        receiver: 'addressxxxx',
-        withdrawAmount: 1234565432,
-        ongoingPeriod: 123,
-        endTime: Date.now() + 50000,
-        yesVotes: 30,
-        noVotes: 30,
-        totalVotes: 60,
-        totalCt: 100
-        }
-    ]
+    milestones: [ milestone, milestone ]
   },
   {
     id: 2,
-    state: 'draft',
+    state: PROPOSAL_STATE.publicVote,
+    name: 'Promote market',
     createdTime: Date.now(),
-    title: 'Promote market',
-    description: 'XXXXXXXXXXX', 
-    receiver: 'addressxxxx', 
-    withdrawAmount: 1234565432,
+    lastUpdateTime: Date.now(),
     owner: {
       name: 'CM'
     },
-    adminVote: {
-      endTime: Date.now(),
-      yesVotes: 30,
-      noVotes: 30,
-      totalVotes: 60,
-      totalCt: 100
-    },
-    publicVote: {
-      endTime: Date.now(),
-      yesVotes: 30,
-      noVotes: 30,
-      totalVotes: 60,
-      totalCt: 100
-    },
-    milestones: [
-      {
-        title: 'Design',
-        description: 'XXXXXXXX', 
-        receiver: 'addressxxxx',
-        withdrawAmount: 1234565432,
-        ongoingPeriod: 123,
-        endTime: Date.now(),
-        yesVotes: 30,
-        noVotes: 30,
-        totalVotes: 60,
-        totalCt: 100
-        }
-    ]
+    milestones: [ milestone, milestone ]
   }  
 ].map(p => ({
   ...p,
-  endTime: p.adminVote.endTime,
-  yesVotes: p.adminVote.yesVotes,
-  noVotes: p.adminVote.noVotes,
-  totalVotes: p.adminVote.totalVotes,
-  totalCt: p.adminVote.totalCt,
-  })
-)
+  ...p.milestones[0]
+}))
 export const apiGetProposalList = ({ marketId, state, sort, pageNumb = pageNumbDefault, pageSize = pageSizeDefault, isLoadMore = false }) => async () => {
   await delay(1000)
   return {

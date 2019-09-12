@@ -7,6 +7,9 @@ import { Dropdown } from 'components/Input'
 import { useLang } from 'language'
 import { PROPOSAL_STATE } from 'integrator'
 
+import Button from 'components/Button'
+import { withLink } from 'routes'
+
 import { connect } from 'react-redux'
 import * as Actions from 'actions/proposal'
 
@@ -15,6 +18,7 @@ import Item from './Item'
 function Proposal({ 
   proposal: { filterState, sortBy, proposals, getting, error, hasNextPage },
   getProposalList, onChangeState, 
+  goto,
  }) {
   const [{ api: { proposalState } }] = useLang()
   const stateOptions = [
@@ -47,8 +51,8 @@ function Proposal({
         <Panel 
           key={proposal.id}
           headerLeft
-          header={`#${proposal.id} ${proposal.title}`}
-          body={<Item {...proposal} />}
+          header={`#${proposal.id} ${proposal.name}`}
+          body={<Item {...proposal} buttons={[<Button label='View More' primary HM onClick={() => goto.proposalDetail({proposalId: proposal.id})} />]} />}
           expanded={opened[index]} 
           onClick={() => toggleOpened(index)}
           bottomLine />
@@ -61,4 +65,4 @@ const mapStateToProps = state => ({
   proposal: state.proposal
 })
 const mapDispatchToProps = Actions
-export default connect(mapStateToProps, mapDispatchToProps)(Proposal)
+export default connect(mapStateToProps, mapDispatchToProps)(withLink(Proposal))

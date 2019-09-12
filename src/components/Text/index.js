@@ -42,8 +42,9 @@ export const Text = styled.div.attrs(p => ({
   ${p => p.inline && css`display: inline`};
   ${p => p.lineHeight && css`line-height: 1.5`};
 
-  ${p => p.right && css`text-align: right`};
   ${p => p.center && css`text-align: center`};
+  ${p => p.right && css`text-align: right`};
+  ${p => p.left && css`text-align: left`};
 
   ${p => p.wordSpaceL && css`letter-spacing: ${p => p.theme.fontSpacingL}`}
   ${p => p.wordSpaceM && css`letter-spacing: ${p => p.theme.fontSpacingM}`}

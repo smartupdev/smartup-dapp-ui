@@ -22,6 +22,7 @@ const Button = styled.button`
   cursor: pointer;
   ${p => p.verticalMargin && css`margin-top: ${p.theme.spacingXS}; margin-bottom: ${p.theme.spacingXS}`}  
   ${p => p.primary && css`background-color: ${p.theme.colorPrimary}; color: ${p.theme.colorDark}; fill: ${p.theme.colorDark}; stroke: ${p.theme.colorDark}`}  
+  ${p => p.secondary && css`background-color: ${p.theme.colorSecondary}; color: ${p.theme.colorDark}; fill: ${p.theme.colorDark}; stroke: ${p.theme.colorDark}`}  
   ${p => p.light && css`color: ${p.theme.white}; fill: ${p.theme.white};`}  
   ${p => p.primary && p.outline && css`background-color: transparent; color: ${p.theme.colorPrimary}; border: 1px solid ${p.theme.colorPrimary}`}  
   
@@ -34,10 +35,10 @@ const Button = styled.button`
   ${onClickCss}
 `
 
-export default ({ label, icon, primary, light, condensed, extended, outline, verticalMargin, iconSize, textProps, buttonRef, loading, disabled, ...rest }) => {
+export default ({ label, icon, primary, secondary, light, condensed, extended, outline, verticalMargin, iconSize, textProps, buttonRef, loading, disabled, ...rest }) => {
   const Icon = loading ? Loader : icon
   return (
-    <Button primary={primary} light={light} condensed={condensed} VBase={extended} HL={extended} outline={outline} verticalMargin={verticalMargin} ref={buttonRef} disabled={disabled || loading} {...rest}>
+    <Button primary={primary} secondary={secondary} light={light} condensed={condensed} VBase={extended} HL={extended} outline={outline} verticalMargin={verticalMargin} ref={buttonRef} disabled={disabled || loading} {...rest}>
       { Icon && <Icon XS RightBase={label !== null && label !== undefined} size={iconSize} />}
       { label && <Text nowrap {...textProps}>{label}</Text>}
     </Button>
