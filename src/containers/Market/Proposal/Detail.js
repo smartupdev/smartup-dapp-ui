@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Button from 'components/Button'
 import Text from 'components/Text'
 import Hr from 'components/Hr'
+import { Add } from 'components/Icon'
 import { Col, Row } from 'components/Layout'
 import { Dropdown } from 'components/Input'
 import Panel from 'components/Panel'
@@ -65,6 +66,11 @@ function Detail({
             bottomLine />
         ) 
       }
+      <Col relative>
+        <Text sectionTitle>Discussion</Text>
+        <Add primary S absolute right='12px' top='0' bottom='0' marginAuto />
+      </Col>
+      <Hr />
     </Col>
   )  
 }

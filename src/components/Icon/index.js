@@ -8,42 +8,36 @@ export const Path = styled.path`
   ${p => p.passive && css`fill: ${p.theme.colorSecondary};`}
 `
 
+function setSize(prop, size) {
+  return prop && css`
+    height: ${size};
+    width: ${size};
+    min-width: ${size};
+  `
+}
+
 export const SVG = ({onClick, disabled, ...rest}) => <StyledSvg onClick={disabled ? undefined : onClick} disabled={disabled} {...rest} />
 const StyledSvg = styled.svg`
   display: block;
-  width: ${p => 
-    p.size ? p.size :
-    p.XS ? p.theme.imageSizeXS :
-    p.S ? p.theme.imageSizeS :
-    p.L ? p.theme.imageSizeL :
-    p.XL ? p.theme.imageSizeXL :
-    p.theme.imageSizeM
-  };
-  min-width: ${p => 
-    p.size ? p.size :
-    p.XS ? p.theme.imageSizeXS :
-    p.S ? p.theme.imageSizeS :
-    p.L ? p.theme.imageSizeL :
-    p.XL ? p.theme.imageSizeXL :
-    p.theme.imageSizeM
-  };
-  height: ${p => 
-    p.size ? p.size :
-    p.XS ? p.theme.imageSizeXS :
-    p.S ? p.theme.imageSizeS :
-    p.L ? p.theme.imageSizeL :
-    p.XL ? p.theme.imageSizeXL :
-    p.theme.imageSizeM
-  };
+  ${p => setSize(true, p.theme.iconSizeXL)}
+  ${p => setSize(p.size, p.size)}
+  ${p => setSize(p.XXS, p.theme.iconSizeXXS)}
+  ${p => setSize(p.XS, p.theme.iconSizeXS)}
+  ${p => setSize(p.S, p.theme.iconSizeS)}
+  ${p => setSize(p.L, p.theme.iconSizeL)}
+  ${p => setSize(p.XL, p.theme.iconSizeXL)}
+  ${p => setSize(p.XXL, p.theme.iconSizeXXL)}
   fill: ${p => p.color};
   ${p => p.round && css`
     border: 1px ${p.color || p.theme.white} solid;
     border-radius: ${
-      p.XS ? p.theme.imageSizeXS :
-      p.S ? p.theme.imageSizeS :
-      p.L ? p.theme.imageSizeL :
-      p.XL ? p.theme.imageSizeXL :
-      p.theme.imageSizeM
+      p.XXS ? p.theme.iconSizeXXS :
+      p.XS ? p.theme.iconSizeXS :
+      p.S ? p.theme.iconSizeS :
+      p.L ? p.theme.iconSizeL :
+      p.XL ? p.theme.iconSizeXL :
+      p.XXL ? p.theme.iconSizeXXL :
+      p.theme.iconSizeM
     }
   `}
   transition: transform .3s ease-in-out;
@@ -58,6 +52,7 @@ const StyledSvg = styled.svg`
   ${p => p.bottom && css`bottom: ${p.bottom};`}
   ${p => p.right && css`right: ${p.right};`}
   ${p => p.left && css`left: ${p.left};`}
+  ${p => p.marginAuto && css`margin: auto;`}
 `
 
 export { default as Menu1 } from './Menu1' 

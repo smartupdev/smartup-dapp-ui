@@ -65,11 +65,13 @@ const theme = {
   fontSpacingM: '4px',
   fontSpacingL: '6px',
 
+  iconSizeXXS: '12px',
   iconSizeXS: '14px',
   iconSizeS: '16px',
   iconSizeM: '20px',
   iconSizeL: '24px',
   iconSizeXL: '30px',
+  iconSizeXXL: '35px',
 
   imageSizeXS: '12px',
   imageSizeS: '14px',
