@@ -17,8 +17,9 @@ import { getUrlParams } from 'routes'
 import { connect } from 'react-redux'
 import * as Actions from 'actions/proposal'
 
-import Item, {LabelText} from './Item'
-import { toToken } from '../../../lib/util'
+import Item, { LabelText } from './Item'
+import { getPanelList } from './index'
+import { toToken } from 'lib/util'
 
 function Detail({
   proposal,
@@ -37,11 +38,7 @@ function Detail({
     newOpen[index] = setTrue || !newOpen[index]
     setMainOpen(newOpen)
   }
-  const progressList = [
-    'Preparation',
-    ...proposal.milestones.map( (m, i) => i ? `Milestone ${i}` : 'Starting Fund' ),
-    'Archive'
-  ]
+  const progressList = getPanelList(proposal.milestones, true)
   return (
     proposal.getting ? <Loader page /> : 
     <Col flex={1} overflowAuto>

@@ -17,6 +17,15 @@ import * as Actions from 'actions/proposal'
 
 import Item from './Item'
 
+export function getPanelList(milestones, includeManyThanMilestone) {
+  const milestonesText = milestones.map( (m, i) => i ? `Milestone ${i}` : 'Starting Fund' )
+  return includeManyThanMilestone ? [
+    'Preparation',
+    milestonesText,
+    'Archive'
+  ] : milestonesText
+}
+
 function Proposal({ 
   proposal: { filterState, sortBy, proposals, getting, error, hasNextPage },
   getProposalList, onChangeState, onChangeSort, 
