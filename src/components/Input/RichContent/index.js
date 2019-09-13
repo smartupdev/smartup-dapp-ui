@@ -128,8 +128,13 @@ export default
     const [editorState, setEditorState] = useState(emptyEditor)
     const [editorError, setError] = useState(null)
     const displayError = editorError ? editorError.message : error
+    window.r = refEditor
     useEffect( () => {
       setEditorState(toRich(value || children, isJs))
+      const elms = document.getElementsByClassName('draftJsEmojiPlugin__button__qi1gf')
+      if (elms.length) 
+        for (let index = 0; index < elms.length; index++) 
+          elms[index].setAttribute('tabindex', -1)
     }, [])
     return (
       <InputWrapper label={label} error={displayError} description={description}>
@@ -143,6 +148,7 @@ export default
             onBlur={() => onBlur(toRaw(editorState, isJs))}
             readOnly={disabled}
             blockRenderMap={extendedBlockRenderMap}
+            // onTab={console.log}
             // decorator={decorator}
             plugins={plugins}
           />
