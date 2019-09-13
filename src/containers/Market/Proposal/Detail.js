@@ -12,7 +12,7 @@ import ProgressBar from 'components/ProgressBar'
 import { useLang } from 'language'
 import { PROPOSAL_STATE } from 'integrator'
 
-import { getUrlParams } from 'routes'
+import { getUrlParams, withLink } from 'routes'
 
 import { connect } from 'react-redux'
 import * as Actions from 'actions/proposal'
@@ -24,6 +24,7 @@ import { toToken } from 'lib/util'
 function Detail({
   proposal,
   symbol,
+  goto,
   getProposalDetails, reset
 }) {
   const [{ api: { proposalState } }] = useLang()
@@ -50,7 +51,7 @@ function Detail({
       </Col>
       <Row VS HM right>
         <Button label='Decline' HS secondary MarginRightS />
-        <Button label='Approve' HS primary />
+        <Button label='Approve' HS primary onClick={() => goto.proposalEdit({ proposalId })} />
       </Row>
       <Hr />
       {
@@ -77,4 +78,4 @@ const mapStateToProps = state => ({
   proposal: state.proposalDetail
 })
 const mapDispatchToProps = Actions
-export default connect(mapStateToProps, mapDispatchToProps)(Detail)
+export default connect(mapStateToProps, mapDispatchToProps)(withLink(Detail))

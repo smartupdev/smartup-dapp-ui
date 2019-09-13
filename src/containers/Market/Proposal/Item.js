@@ -24,7 +24,7 @@ function Timer({ date }) {
   return <Text wordSpaceS>{ typeof d === 'undefined' ? '-' : d ? `${d} day${d === 1 ? '' : 's'}` : `${h2}:${m2}:${s2}`}</Text> 
 }
 
-export default function({state, owner, title, description, receiver, withdrawAmount, ongoingPeriod, publicVote: {endTime, yesVotes, totalCt, noVotes}, buttons, noChart}) {
+export default function({state, owner, title, description, receiver, withdrawAmount, ongoingPeriod, publicVote: {endTime, yesVotes, totalCt, noVotes}, button, noChart}) {
   return (
     <Row HM VS>
       <Col flex={1}>
@@ -55,7 +55,7 @@ export default function({state, owner, title, description, receiver, withdrawAmo
         }
         <Col bottom flex={1}>
           <Row>
-            {buttons}
+            {button}
           </Row>
         </Col>
       </Col>

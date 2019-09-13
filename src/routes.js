@@ -66,6 +66,7 @@ let marketRoutes = [
   { id: 'proposal', path: '/market/proposal', component: Proposal, from: 'home', exact: true },
   { id: 'proposalDetail', path: '/market/proposal/details', component: ProposalDetail, from: 'home' },
   { id: 'proposalCreate', path: '/market/proposal/create', component: ProposalCreate, from: 'home' },
+  { id: 'proposalEdit', path: '/market/proposal/edit', component: ProposalCreate, from: 'home' },
   { id: 'flag', path: '/market/flag', component: Flag, from: 'home' },
 ]
 

@@ -21,7 +21,7 @@ export function getPanelList(milestones, includeManyThanMilestone) {
   const milestonesText = milestones.map( (m, i) => i ? `Milestone ${i}` : 'Starting Fund' )
   return includeManyThanMilestone ? [
     'Preparation',
-    milestonesText,
+    ...milestonesText,
     'Archive'
   ] : milestonesText
 }
@@ -79,7 +79,7 @@ function Proposal({
           key={proposal.id}
           headerLeft
           header={`#${proposal.id} ${proposal.name}`}
-          body={<Item {...proposal} buttons={[<Button label='View More' primary HM onClick={() => goto.proposalDetail({proposalId: proposal.id})} />]} />}
+          body={<Item {...proposal} button={<Button label='View More' primary HM onClick={() => goto.proposalDetail({proposalId: proposal.id})} />} />}
           expanded={opened[index]} 
           onClick={() => toggleOpened(index)}
           bottomLine />
