@@ -34,7 +34,6 @@ const milestoneDefaultInput = {
 export default function() {
   const [{ api: { proposalState }, sutSymbol }] = useLang()
   const [milestones, setMilestones] = useState([milestoneDefaultInput])
-  console.log(milestones)
   const panelList = getPanelList(milestones)
   function addMilestone() { setMilestones(milestones.concat(milestoneDefaultInput) ) }
   function removeMilestone(index) { setMilestones([...milestones.slice(0, index), ...milestones.slice(index+1)]) }
