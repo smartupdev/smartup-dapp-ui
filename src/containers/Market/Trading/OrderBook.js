@@ -68,6 +68,7 @@ function OrderBookGroup({
   marketId, stage,
   getOrder, reset,
   height,
+  sut2usd,
  }) {
   usePolling( () => getOrder(marketId), 2000, marketId)
   useEffect(() => reset, [])
@@ -97,7 +98,7 @@ function OrderBookGroup({
         <Hr />
         <Row HS centerVertical ref={priceRef}>
           <Text code VBase green={changePercent > 0} red={changePercent < 0} L bold>{currentPrice ? toToken(currentPrice) : '-'}</Text>
-          {/* <Text code VBase HS S note>USD$12.33</Text> */}
+          { sut2usd && <Text code VBase HS S note>USD${toToken(currentPrice * sut2usd)}</Text>}
         </Row>
         <Hr />
         <OrderBook color={theme.green} values={buyOrders} max={buyMax} height={contentHeight/2} stage={stage} />
@@ -109,7 +110,8 @@ function OrderBookGroup({
 const mapStateToProps = state => ({
   orderBook: state.orderBook,
   marketId: state.market.id,
-  stage: state.market.stage
+  stage: state.market.stage,
+  sut2usd: state.globalInfo.sut2usd
 })
 
 const mapDispatchToProps = Actions
