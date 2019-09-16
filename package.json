@@ -1,7 +1,7 @@
 {
   "name": "smartup-dapp-ui",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
   "homepage": ".",
   "scripts": {
     "start": "react-scripts start",
@@ -41,7 +41,7 @@
     "react-dom": "^16.8.5",
     "react-redux": "^6.0.1",
     "react-router-dom": "^5.0.0",
-    "react-scripts": "2.1.8",
+    "react-scripts": "^2.1.8",
     "react-stockcharts": "0.7.8",
     "react-toast-notifications": "^1.4.0",
     "redux": "^4.0.1",
