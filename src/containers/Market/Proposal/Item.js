@@ -3,19 +3,11 @@ import Text from 'components/Text'
 import { Col, Row } from 'components/Layout'
 import Avatar from 'components/Avatar'
 import { SimplePieChart } from 'components/Graph'
+import { LabelText } from 'containers/Common'
 import { toToken, dateDif } from 'lib/util'
 import { useInterval } from 'lib/react'
 
 import smartupIcon from 'images/rocket_icon.png'
-
-export function LabelText({ label, text, width, right }) {
-  return (
-    <Col BottomS width={width} right={right}>
-      <Text S note BottomXXS>{label}</Text>
-      <Text>{text}</Text>
-    </Col>
-  )
-}
 
 function Timer({ date }) {
   function updateDate() { const d = dateDif(Date.now(), date); return d.d < 0 ? {} : d }

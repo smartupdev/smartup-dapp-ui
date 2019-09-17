@@ -1,5 +1,6 @@
 import React from 'react'
 import Text from 'components/Text'
+import { Col } from 'components/Layout'
 import { toDateTime, toToken, toAgo } from '../../lib/util'
 import { useLang } from '../../language'
 
@@ -14,4 +15,13 @@ export function TokenText({ value, ...rest }) {
 export function DateAgoText({ value, ...rest }) {
   const [{ time: { now, min, hour, day } }] = useLang()
   return <Text {...rest}>{toAgo(value, now, min, hour, day)}</Text>
+}
+
+export function LabelText({ label, text, width, right, sut, ...rest }) {
+  return (
+    <Col BottomS width={width} right={right} {...rest}>
+      <Text S note BottomXXS>{label}</Text>
+      <Text sut={sut}>{text}</Text>
+    </Col>
+  )
 }

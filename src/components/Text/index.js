@@ -82,6 +82,14 @@ export const Text = styled.div.attrs(p => ({
       margin-right: 4px;
     }    
   `}
+
+  ${p => p.sut && css`
+    :after {
+      content: "${p.sut}";
+      font-size: ${p.theme.fontSizeS};
+      padding-left: 4px;
+    }
+  `}
 `
 
 export default Text

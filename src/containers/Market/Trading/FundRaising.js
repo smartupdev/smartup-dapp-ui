@@ -1,55 +1,22 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 
 import { connect } from 'react-redux'
-import { onClickTnc } from 'actions/ipfs'
 import * as Actions from 'actions/trade'
 
-import Input, { Checkbox, Slider } from 'components/Input'
-import Avatar from 'components/Avatar'
+import { Slider } from 'components/Input'
 import { Row, Col } from 'components/Layout'
 import Text from 'components/Text'
-import Button from 'components/Button'
+import Clock from 'components/Clock'
 import Hr from 'components/Hr'
-import { Trade } from 'components/Icon'
 
 import { useLang } from 'language'
-import theme from 'theme'
 import styled from 'styled-components'
-import { getDate, getHour, getMinute, getSecond, toToken, dateDif, getMonth } from '../../../lib/util'
-import { useInterval } from '../../../lib/react'
+import { getDate, toToken, getMonth } from '../../../lib/util'
 
-const clockCircleSize = 50
-const Circle = styled(Col)`
-  width: ${clockCircleSize}px;
-  height: ${clockCircleSize}px;
-  background-color: ${p => p.theme.bgColorLight};
-  border-radius: ${clockCircleSize}px;
-  margin-bottom: 4px;
-`
 const SliderBox = styled(Col)`
   margin-top: ${p => p.theme.spacingBase}
   margin-left: -${p => p.theme.spacingM}
 `
-function Clock({ date }) {
-  function updateDate() { return dateDif(Date.now(), date) }
-  const [{s, m, h, d}, setDate] = useState(updateDate())
-  useInterval(() => setDate(updateDate()), 1000)
-  return (
-    <Row BottomS>
-      {[
-        { label: 'DAY', value: d },
-        { label: 'HOUR', value: h },
-        { label: 'MIN', value: m },
-        { label: 'SECOND', value: s },
-      ].map( ({ value, label }) => 
-        <Col center LeftS key={label}>
-          <Circle center centerVertical><Text L note>{value}</Text></Circle>
-          <Text S note>{label}</Text>
-        </Col>
-      )}
-    </Row>
-  )
-}
 
 function Box({ value, text }) {
   return (
@@ -85,7 +52,7 @@ function FundRaising({ market: { ctPrice, ctCount, ctRecyclePrice, symbol, numbe
           </Row>
         </Col>
         <Col width='280px' right VS>
-          <Clock date={`2019-${getMonth(Date.now())}-${getDate(Date.now())} 18:00` || closingTime} />
+          <Clock endDate={closingTime} />
           <Text right note S>This project will only be funded if it reaches its goal by {closingTime}</Text>
         </Col>
       </Row>
