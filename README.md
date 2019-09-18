@@ -3,7 +3,7 @@ Format: `https://ipfs.smartup.global/ipfs/<hash>/`
 Production: Not ready yet  
 Beta: [Link](https://ipfs.smartup.global/ipfs/QmXR4x6snQ9EME6SNLNMcGmTje4sYzMeJb7xRHTHB1Jiqi/#/)  
 University: [Link](https://ipfs.smartup.global/ipfs/QmViQ3WYh6MbRpFvUepAzxXHRKaPv5B32NHBTDp8Bspk5s)  
-Dev: [Link](http://ipfs.smartup.global/ipfs/QmSPcnTGQkEv7mM26L6ustntBNRyMsr9Kav9YrWBZMzKrs/#/)
+Dev: [Link](https://smartup.netlify.com/#/) - need to enable insecure script(http)
 
 # Development
 The app is under development.  
