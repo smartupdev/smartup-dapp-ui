@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { More } from 'components/Icon'
 import Table from 'components/Table'
 import Panel from 'components/Panel'
 import Image from 'components/Image'
@@ -16,6 +15,11 @@ import theme from 'theme'
 import { withLink } from 'routes'
 import { toToken, toFullDate, getSimpleText } from 'lib/util'
 import { marketDeposit } from 'config'
+
+import Supporter from './Supporter'
+import Discussion from './Discussion'
+import History from './History'
+import Flag from './Flag'
 
 import PageNotFoundImage from 'images/404.png'
 
@@ -42,80 +46,10 @@ import PageNotFoundImage from 'images/404.png'
   where is discussion
 */
 
-const historyStyle = { center: true, flex: 1 }
-
-function History() {
-  const [open, setOpen] = useState(false)
-  return (
-    <Panel 
-      expanded={open}
-      onClick={() => setOpen(!open)}
-      header='Flag History'
-      body={
-        <Table model={[
-          { label: 'Time', value: 'createTime', layoutStyle: historyStyle },
-          { label: 'Flag Creator', value: 'creator', layoutStyle: historyStyle },
-          { label: 'Result', value: 'result', layoutStyle: historyStyle },
-          { label: 'Outcome', value: 'outcome', layoutStyle: historyStyle }
-        ]} values={[]} />
-      }
-    />
-  )
-}
-
-const _More = ({ isExpanded }) => <More reverse={isExpanded} XS HS color={theme.white} />
-
-function Supporter({ values }) {
-  const [open, setOpen] = useState(true)
-  const [expanded, setExpanded] = useState([])
-  function onClickTable({ isExpanded, record: {createTime} }) { 
-    if(isExpanded) setExpanded(expanded.filter(e => e.createTime === createTime))
-    else setExpanded([...expanded, createTime])
-  }
-  return (
-    <Panel 
-      expanded={open}
-      onClick={() => setOpen(!open)}
-      header='Deposit Records'
-      body={
-        <Table recordKey='createTime'
-          model={[
-          { label: 'Name', value: 'name', layoutStyle: historyStyle, component: AvatarTable },
-          { label: 'Joined Date', value: 'createTime', layoutStyle: historyStyle, component: DateAgoText },
-          { label: 'Deposited AMT', value: 'amount', layoutStyle: historyStyle, component: TokenText },
-          { label: 'Title', value: 'title', layoutStyle: historyStyle },
-          { label: ' ', value: 'content', layoutStyle: { right: true, width: '50px' }, component: _More },
-        ]} 
-        values={values} 
-        onClick={onClickTable}
-        expandedRecords={expanded}
-        expandComponent={({ record }) => 
-          <Col VS HM>
-            <Text note S>{record.content}</Text>
-          </Col>
-        }/>
-      }
-    />
-  )  
-}
-
-function Discussion() {
-  const [open, setOpen] = useState(false)
-  return (
-    <Panel 
-      bottomLine
-      expanded={open}
-      onClick={() => setOpen(!open)}
-      header='Discussion'
-      body={<Text center note VS>Will release soon</Text>}
-    />
-  )
-}
-
 const fakeProp = {
   id: '114',
-  createTime: Date.now(),
-  creator: 'Peter Chan',
+  // createTime: Date.now(),
+  // creator: 'Peter Chan',
   flagStage: {
     status: 'collectDeposit', // collectDeposit || voting
     requiredSut: 2500,
@@ -145,9 +79,9 @@ const fakeProp = {
   canAppeal: false,
 }
 
-function Flag({
+function Index({
   marketName,
-  flag: { id, createTime, creator, flagStage } = fakeProp,
+  flag: { id, flagStage } = fakeProp,
   goto
 }) {
   const [{ sutSymbol, ...lang }] = useLang()
@@ -158,32 +92,7 @@ function Flag({
           <>
             <Text sectionTitle>Prosecution: {flagStage.supports[0].title}</Text>
             <Hr />
-            <Col HM VS>
-              <Row>
-                <Col flex={1}>
-                  <Row>
-                    <Col>
-                      <LabelText RightL label='Total deposit required' text={toToken(marketDeposit)} sut={sutSymbol} />
-                      <LabelText RightL label='Creator' text={creator} />
-                    </Col>
-                    <Col>
-                      <LabelText label='Remaining deposit' text='1,400' sut={sutSymbol} />
-                      <LabelText label='Creation Time' text={toFullDate(createTime)} />
-                    </Col>
-                  </Row>
-                </Col>
-                <Col>
-                  <Text right note S BottomXS>Remaining Time for collecting deposit</Text>
-                  <Clock endDate={Date.now()} /> 
-                </Col>
-              </Row>
-              <Col>
-                <Text newline note>{getSimpleText(5000)}</Text>
-              </Col>
-              <Row right>
-                <Button primary HM label='Support' />
-              </Row>
-            </Col>
+            <Flag flagStage={flagStage} />
             <Hr />
             <Supporter values={flagStage.supports} />
             <Discussion />
@@ -221,4 +130,4 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   
 }
-export default connect(mapStateToProps, mapDispatchToProps)(withLink(Flag))
+export default connect(mapStateToProps, mapDispatchToProps)(withLink(Index))
