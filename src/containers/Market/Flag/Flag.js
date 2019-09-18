@@ -1,11 +1,10 @@
 import React, { useState } from 'react'
 
-import Panel from 'components/Panel'
-import Table from 'components/Table'
 import { Col, Row } from 'components/Layout'
 import Text from 'components/Text'
 import Clock from 'components/Clock'
 import Button from 'components/Button'
+import TextInput, { RichContent } from 'components/Input'
 
 import { LabelText } from 'containers/Common'
 import { toToken, toFullDate, getSimpleText } from 'lib/util'
@@ -15,6 +14,10 @@ import { marketDeposit } from 'config'
 export default function({ flagStage: { supports: [{ createTime, username }] } }) {
   const [{ sutSymbol, ...lang }] = useLang()
   const [showInput, setShowInput] = useState(false)
+  const [text, setText] = useState(null)
+  const [deposit, setDeposit] = useState('')
+  function changeDeposit(t) { setDeposit(t > marketDeposit ? marketDeposit : t) }
+  const loading = false
   return (
     <Col HM VS>
       <Row>
@@ -40,14 +43,20 @@ export default function({ flagStage: { supports: [{ createTime, username }] } })
       </Col>
       {
         showInput ?
-        <Row right>
-          123
-        </Row>
+          <Col>
+            <Text BottomBase TopS>Description/Evidence</Text>
+            <RichContent editor background disabled={loading} value={text} onBlur={setText} />
+            <Text BottomBase TopS>Deposit({sutSymbol})</Text>
+            <TextInput background disabled={loading} value={deposit} onChange={changeDeposit} number decimal={0} placeholder='250 to 2500'></TextInput>
+            <Row right TopXL>
+              <Button MarginRightL label='Cancel' onClick={() => setShowInput(false)} />
+              <Button primary label='Support' />
+            </Row>
+          </Col>
         :
-
-        <Row right>
-          <Button primary HM label='I agree with this Prosecution' onClick={() => setShowInput(true)} />
-        </Row>
+          <Row right>
+            <Button primary HM label='Support the Prosecution' onClick={() => setShowInput(true)} />
+          </Row>
       }
     </Col>
   )
