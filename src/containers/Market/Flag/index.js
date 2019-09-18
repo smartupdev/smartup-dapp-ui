@@ -11,6 +11,7 @@ import { LabelText } from 'containers/Common'
 
 import { connect } from 'react-redux'
 import { useLang } from 'language'
+import { withLink } from 'routes'
 
 import PageNotFoundImage from 'images/404.png'
 
@@ -88,7 +89,8 @@ const fakeProp = {
 
 function Flag({
   marketName,
-  flag: { id } = fakeProp
+  flag: { id } = fakeProp,
+  goto
 }) {
   const [{ sutSymbol, ...lang }] = useLang()
   return (
@@ -127,7 +129,7 @@ function Flag({
                 <Text newline>{`Did you think this is an improper market which Xxxxxxxxx. \nCreate a Flag to messages are used for personal, family, business and social purposes.`}</Text>
               </Col>
               <Col bottom>
-                <Button primary label='Create a Flag' />
+                <Button primary label='Create a Flag' onClick={() => goto.flagCreate()} />
               </Col>
             </Row>
             <Hr />
@@ -151,4 +153,4 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   
 }
-export default connect(mapStateToProps, mapDispatchToProps)(Flag)
+export default connect(mapStateToProps, mapDispatchToProps)(withLink(Flag))
