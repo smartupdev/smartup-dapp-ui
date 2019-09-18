@@ -12,8 +12,10 @@ import { toToken, toFullDate, getSimpleText } from 'lib/util'
 import { useLang } from 'language'
 import { marketDeposit } from 'config'
 import { FLAG_STATUS } from 'integrator'
+import { withLink } from 'routes'
 
-export default function({ 
+function Flag({ 
+  goto,
   stage: { 
     status, 
     supports: [{ createTime, username, title }], 
@@ -26,6 +28,7 @@ export default function({
   const [deposit, setDeposit] = useState('')
   function changeDeposit(t) { setDeposit(t > marketDeposit ? marketDeposit : t) }
   const loading = false
+  const _isCreator = true
   const 
     _typeText = isAppeal ? 'Appeal' : 'Prosecution',
     _isVoting = status === FLAG_STATUS.voting,
@@ -50,9 +53,14 @@ export default function({
           </Row>
         </Col>
         {
-          _isCollecting || _isVoting ? 
+          _isCollecting ? 
             <Col>
               <Text right note S BottomXS>Remaining Time for collecting deposit</Text>
+              <Clock endDate={Date.now()} /> 
+            </Col>
+          : _isVoting ?
+            <Col>
+              <Text right note S BottomXS>Remaining Time for jury voting</Text>
               <Clock endDate={Date.now()} /> 
             </Col>
           : 
@@ -73,7 +81,11 @@ export default function({
       <Col BottomS>
         <Text newline note>{getSimpleText(5000)}</Text>
       </Col>
-      {_isCollecting ? 
+      {_isCreator ? 
+        <Row right>
+          <Button primary HM label={'Edit'} onClick={() => goto.flagEdit()} />
+        </Row>
+      : _isCollecting ? 
         showInput ?
           <Col>
             <Text BottomBase TopS>Description/Evidence</Text>
@@ -101,3 +113,5 @@ export default function({
     </>
   )
 }
+
+export default withLink(Flag)

@@ -31,6 +31,7 @@ const ProposalDetail = lazy(() => import('./containers/Market/Proposal/Detail'))
 const ProposalCreate = lazy(() => import('./containers/Market/Proposal/Create'))
 const Flag = lazy(() => import('./containers/Market/Flag'))
 const FlagCreate = lazy(() => import('./containers/Market/Flag/Create'))
+const FlagEdit = lazy(() => import('./containers/Market/Flag/Edit'))
 const Account = lazy(() => import('./containers/Account'))
 const AccountTransaction = lazy(() => import('./containers/Account/Transaction'))
 const AccountMarket = lazy(() => import('./containers/Account/Market'))
@@ -70,6 +71,7 @@ let marketRoutes = [
   { id: 'proposalEdit', path: '/market/proposal/edit', component: ProposalCreate, from: 'home' },
   { id: 'flag', path: '/market/flag', component: Flag, from: 'home', exact: true },
   { id: 'flagCreate', path: '/market/flag/create', component: FlagCreate, from: 'home', exact: true },
+  { id: 'flagEdit', path: '/market/flag/edit', component: FlagEdit, from: 'home', exact: true },
 ]
 
 let accountRoutes = [
