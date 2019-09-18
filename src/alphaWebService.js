@@ -6,7 +6,7 @@ const webUrl = ENV.alphaUrl
 const shareUrl = ENV.shareApi
 
 export function checkVersion() {
-  if(process.env.NODE_ENV === 'production') {
+  if(process.env.NODE_ENV === 'production' && process.env.REACT_APP_ENV !== 'dev') {
     fetch.get(ENV.versionApi, {}, webUrl)
     .then(r => 
       !window.location.pathname.includes(r) && 
