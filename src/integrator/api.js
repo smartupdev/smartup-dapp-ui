@@ -4,6 +4,13 @@ import {
 } from '../config'
 import { orderMassage } from './massager'
 import { log } from '../lib/util'
+
+export const FLAG_STATUS = {
+  collecting: 'collectDeposit',
+  voting: 'voting',
+  finished: 'finished'
+}
+
 export const PROPOSAL_STATE = {
   all: 'all',
   draft: 'draft',

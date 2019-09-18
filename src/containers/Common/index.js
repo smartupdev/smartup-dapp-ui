@@ -22,11 +22,11 @@ export function DateAgoText({ value, ...rest }) {
   return <Text {...rest}>{toAgo(value, now, min, hour, day)}</Text>
 }
 
-export function LabelText({ label, text, width, right, sut, ...rest }) {
+export function LabelText({ label, text, width, right, sut, red, green, ...rest }) {
   return (
     <Col BottomS width={width} right={right} {...rest}>
       <Text S note BottomXXS>{label}</Text>
-      <Text sut={sut}>{text}</Text>
+      <Text sut={sut} red={red} green={green}>{text}</Text>
     </Col>
   )
 }

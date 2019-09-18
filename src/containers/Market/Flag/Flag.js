@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 
 import { Col, Row } from 'components/Layout'
+import Hr from 'components/Hr'
 import Text from 'components/Text'
 import Clock from 'components/Clock'
 import Button from 'components/Button'
@@ -10,15 +11,30 @@ import { LabelText } from 'containers/Common'
 import { toToken, toFullDate, getSimpleText } from 'lib/util'
 import { useLang } from 'language'
 import { marketDeposit } from 'config'
+import { FLAG_STATUS } from 'integrator'
 
-export default function({ flagStage: { supports: [{ createTime, username }] } }) {
+export default function({ 
+  stage: { 
+    status, 
+    supports: [{ createTime, username, title }], 
+    yesVotes, noVotes, absVotes,
+    guilty 
+  }, isAppeal }) {
   const [{ sutSymbol, ...lang }] = useLang()
   const [showInput, setShowInput] = useState(false)
   const [text, setText] = useState(null)
   const [deposit, setDeposit] = useState('')
   function changeDeposit(t) { setDeposit(t > marketDeposit ? marketDeposit : t) }
   const loading = false
+  const 
+    _typeText = isAppeal ? 'Appeal' : 'Prosecution',
+    _isVoting = status === FLAG_STATUS.voting,
+    _isCollecting = status === FLAG_STATUS.collecting,
+    _isFinished = status === FLAG_STATUS.finished
   return (
+    <>
+    <Text sectionTitle>{_typeText}: {title}</Text>
+    <Hr />
     <Col HM VS>
       <Row>
         <Col flex={1}>
@@ -33,15 +49,31 @@ export default function({ flagStage: { supports: [{ createTime, username }] } })
             </Col>
           </Row>
         </Col>
-        <Col>
-          <Text right note S BottomXS>Remaining Time for collecting deposit</Text>
-          <Clock endDate={Date.now()} /> 
-        </Col>
+        {
+          _isCollecting || _isVoting ? 
+            <Col>
+              <Text right note S BottomXS>Remaining Time for collecting deposit</Text>
+              <Clock endDate={Date.now()} /> 
+            </Col>
+          : 
+          <Col>
+            <Row>
+              <LabelText RightL label='Convict' text={yesVotes} red />
+              <LabelText RightL label='Acquit' text={noVotes} green />
+              <LabelText label='Absent' text={absVotes} />
+            </Row>
+            {guilty ?
+              <LabelText label='Result' text={'Guilty'} red />
+            :
+              <LabelText label='Result' text={'Not Guilty'} green />
+            }
+          </Col>
+        }
       </Row>
-      <Col VS>
+      <Col BottomS>
         <Text newline note>{getSimpleText(5000)}</Text>
       </Col>
-      {
+      {_isCollecting ? 
         showInput ?
           <Col>
             <Text BottomBase TopS>Description/Evidence</Text>
@@ -55,9 +87,17 @@ export default function({ flagStage: { supports: [{ createTime, username }] } })
           </Col>
         :
           <Row right>
-            <Button primary HM label='Support the Prosecution' onClick={() => setShowInput(true)} />
+            <Button primary HM label={`Support the ${_typeText}`}  onClick={() => setShowInput(true)} />
           </Row>
+        : _isVoting ?
+          <Row right>
+            <Button red HM MarginRightS label={'Convict'} />
+            <Button green HM label={'Acquit'} />
+          </Row>
+        : null
       }
     </Col>
+    <Hr />
+    </>
   )
 }

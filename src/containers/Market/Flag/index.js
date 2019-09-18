@@ -48,15 +48,14 @@ import PageNotFoundImage from 'images/404.png'
 
 const fakeProp = {
   id: '114',
-  // createTime: Date.now(),
-  // creator: 'Peter Chan',
   flagStage: {
-    status: 'collectDeposit', // collectDeposit || voting
+    status: 'finished', // collectDeposit || voting || finished
     requiredSut: 2500,
     remainingSut: 1000,
     endTime: Date.now() + 500000, // can be deposit end time or voting end time
     yesVotes: 4, // only after voting
     noVotes: 3, // only after voting
+    absVotes: 10, // only after voting
     guilty: true, // or false
     supports: [  // list of people who deposited, 
       {
@@ -73,6 +72,27 @@ const fakeProp = {
     ]
   },
   appealStages: [{
+    status: 'voting', // collectDeposit || voting || finished
+    requiredSut: 2500,
+    remainingSut: 1000,
+    endTime: Date.now() + 500000, // can be deposit end time or voting end time
+    yesVotes: 4, // only after voting
+    noVotes: 3, // only after voting
+    absVotes: 10, // only after voting
+    guilty: true, // or false
+    supports: [  // list of people who deposited, 
+      {
+        title: 'I am a Title', // text, editable
+        content: 'XXX', // rich content, editable
+        amount: 2200,
+        createTime: Date.now(),
+        userAvatar: '', // not in BE
+        username: 'CM', // not in BE
+        creator: {
+        　address: '', name: '', avatarIpfsHash: '', createTime: '', // same as api/user/current
+        }
+      }
+    ]
     // same as flagStage, should be max. only two elements
   }],
   canVote: true,
@@ -81,7 +101,7 @@ const fakeProp = {
 
 function Index({
   marketName,
-  flag: { id, flagStage } = fakeProp,
+  flag: { id, flagStage, appealStages } = fakeProp,
   goto
 }) {
   const [{ sutSymbol, ...lang }] = useLang()
@@ -90,10 +110,10 @@ function Index({
       {
         id ?
           <>
-            <Text sectionTitle>Prosecution: {flagStage.supports[0].title}</Text>
-            <Hr />
-            <Flag flagStage={flagStage} />
-            <Hr />
+            {appealStages.map( (appealStage, index) => 
+              <Flag key={index} stage={appealStage} isAppeal />
+            )}
+            <Flag stage={flagStage} />
             <Supporter values={flagStage.supports} />
             <Discussion />
             <History />
