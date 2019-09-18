@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { More } from 'components/Icon'
 import Table from 'components/Table'
 import Panel from 'components/Panel'
 import Image from 'components/Image'
@@ -7,11 +8,14 @@ import Hr from 'components/Hr'
 import Clock from 'components/Clock'
 import Button from 'components/Button'
 import { Col, Row } from 'components/Layout'
-import { LabelText } from 'containers/Common'
+import { LabelText, DateAgoText, TokenText, AvatarTable } from 'containers/Common'
 
 import { connect } from 'react-redux'
 import { useLang } from 'language'
+import theme from 'theme'
 import { withLink } from 'routes'
+import { toToken, toFullDate, getSimpleText } from 'lib/util'
+import { marketDeposit } from 'config'
 
 import PageNotFoundImage from 'images/404.png'
 
@@ -59,8 +63,59 @@ function History() {
   )
 }
 
+const _More = ({ isExpanded }) => <More reverse={isExpanded} XS HS color={theme.white} />
+
+function Supporter({ values }) {
+  const [open, setOpen] = useState(true)
+  const [expanded, setExpanded] = useState([])
+  function onClickTable({ isExpanded, record: {createTime} }) { 
+    if(isExpanded) setExpanded(expanded.filter(e => e.createTime === createTime))
+    else setExpanded([...expanded, createTime])
+  }
+  return (
+    <Panel 
+      expanded={open}
+      onClick={() => setOpen(!open)}
+      header='Deposit Records'
+      body={
+        <Table recordKey='createTime'
+          model={[
+          { label: 'Name', value: 'name', layoutStyle: historyStyle, component: AvatarTable },
+          { label: 'Joined Date', value: 'createTime', layoutStyle: historyStyle, component: DateAgoText },
+          { label: 'Deposited AMT', value: 'amount', layoutStyle: historyStyle, component: TokenText },
+          { label: 'Title', value: 'title', layoutStyle: historyStyle },
+          { label: ' ', value: 'content', layoutStyle: { right: true, width: '50px' }, component: _More },
+        ]} 
+        values={values} 
+        onClick={onClickTable}
+        expandedRecords={expanded}
+        expandComponent={({ record }) => 
+          <Col VS HM>
+            <Text note S>{record.content}</Text>
+          </Col>
+        }/>
+      }
+    />
+  )  
+}
+
+function Discussion() {
+  const [open, setOpen] = useState(false)
+  return (
+    <Panel 
+      bottomLine
+      expanded={open}
+      onClick={() => setOpen(!open)}
+      header='Discussion'
+      body={<Text center note VS>Will release soon</Text>}
+    />
+  )
+}
+
 const fakeProp = {
-  // id: '114',
+  id: '114',
+  createTime: Date.now(),
+  creator: 'Peter Chan',
   flagStage: {
     status: 'collectDeposit', // collectDeposit || voting
     requiredSut: 2500,
@@ -71,9 +126,12 @@ const fakeProp = {
     guilty: true, // or false
     supports: [  // list of people who deposited, 
       {
-        title: '', // text, editable
-        content: '', // rich content, editable
-        createTime: '',
+        title: 'I am a Title', // text, editable
+        content: 'XXX', // rich content, editable
+        amount: 2200,
+        createTime: Date.now(),
+        userAvatar: '', // not in BE
+        username: 'CM', // not in BE
         creator: {
         　address: '', name: '', avatarIpfsHash: '', createTime: '', // same as api/user/current
         }
@@ -89,7 +147,7 @@ const fakeProp = {
 
 function Flag({
   marketName,
-  flag: { id } = fakeProp,
+  flag: { id, createTime, creator, flagStage } = fakeProp,
   goto
 }) {
   const [{ sutSymbol, ...lang }] = useLang()
@@ -98,28 +156,38 @@ function Flag({
       {
         id ?
           <>
-            <Text sectionTitle>You are accusing {marketName} as an improper idea</Text>
+            <Text sectionTitle>Prosecution: {flagStage.supports[0].title}</Text>
             <Hr />
-            <Row HM VS>
-              <Col flex={1}>
-                <Text BottomS>PUT UP TO 4,467 {sutSymbol} TO PARTICIPATE THIS DISPUTE ACTION.</Text>
-                <LabelText label='Total deposit required' text='10,000' sut={sutSymbol} />
-                <Row>
-                  <LabelText RightL label='Raised deposit' text='5.533' sut={sutSymbol} />
-                  <LabelText RightL label='Remaining deposit' text='5.533' sut={sutSymbol} />
-                  <LabelText RightL label='Number of joiners' text='103' />
-                </Row>
-              </Col>
+            <Col HM VS>
+              <Row>
+                <Col flex={1}>
+                  <Row>
+                    <Col>
+                      <LabelText RightL label='Total deposit required' text={toToken(marketDeposit)} sut={sutSymbol} />
+                      <LabelText RightL label='Creator' text={creator} />
+                    </Col>
+                    <Col>
+                      <LabelText label='Remaining deposit' text='1,400' sut={sutSymbol} />
+                      <LabelText label='Creation Time' text={toFullDate(createTime)} />
+                    </Col>
+                  </Row>
+                </Col>
+                <Col>
+                  <Text right note S BottomXS>Remaining Time for collecting deposit</Text>
+                  <Clock endDate={Date.now()} /> 
+                </Col>
+              </Row>
               <Col>
-                <Clock endDate={Date.now()} /> 
+                <Text newline note>{getSimpleText(5000)}</Text>
               </Col>
-            </Row>
+              <Row right>
+                <Button primary HM label='Support' />
+              </Row>
+            </Col>
             <Hr />
-
-
-            <Text sectionTitle>Discussion</Text>
-            <Hr />
-            <Text center VS note>Will release soon</Text>
+            <Supporter values={flagStage.supports} />
+            <Discussion />
+            <History />
           </>
         :
           <>

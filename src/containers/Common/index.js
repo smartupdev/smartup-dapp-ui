@@ -1,8 +1,13 @@
 import React from 'react'
 import Text from 'components/Text'
+import Avatar from 'components/Avatar'
 import { Col } from 'components/Layout'
 import { toDateTime, toToken, toAgo } from '../../lib/util'
 import { useLang } from '../../language'
+
+export function AvatarTable({ record, ...rest }) {
+  return <Avatar icon={record.userAvatar} username={record.username}  {...rest} />
+}
 
 export function DateText({ value, ...rest }) {
   return <Text center {...rest}>{toDateTime(value)}</Text>

@@ -151,7 +151,7 @@ export default ({
                   key={record[recordKey]} 
                   record={record} 
                   index={index} 
-                  isExpanded={expandedRecords.includes(record.id)} 
+                  isExpanded={expandedRecords.includes(record[recordKey])} 
                   noBorderCol={noBorderCol} 
                   model={model} 
                   S={S} 
