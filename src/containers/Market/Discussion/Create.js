@@ -26,9 +26,9 @@ function DiscussionCreate({ addApi, history }) {
   const [lang] = useLang()
   return (
     <Col spacingM>
-      <Text BottomBase> {lang.discussion.create.title} </Text>
+      <Text BottomBase>{lang.discussion.create.title} </Text>
       <TextInput background disabled={loading} value={title} onChange={setTitle} />
-      <Text BottomBase> {lang.discussion.create.text} </Text>
+      <Text BottomBase TopS>{lang.discussion.create.text} </Text>
       <RichContent editor background disabled={loading} value={text} onBlur={setText} />
       {/* <Text TopS BottomBase> {lang.discussion.create.text} </Text>
       <TextInput background line={5} disabled={loading} value={text} onChange={setText} />

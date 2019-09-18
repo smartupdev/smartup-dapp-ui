@@ -61,9 +61,9 @@ export default function() {
       }
       <Title text='Add New Milestone' action={addMilestone} icon={Add} />
       <Row right HS VS>
-        <Button label='Cancel' MarginRightS />
+        <Button primary label='Public' HL MarginRightS />
         <Button label='Save' MarginRightS />
-        <Button primary label='Public' HL />
+        <Button label='Cancel' />
       </Row>
     </Col>
     </>

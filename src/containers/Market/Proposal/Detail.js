@@ -50,8 +50,8 @@ function Detail({
         <LineDiagram value={[proposal.publicVote.yesVotes, proposal.publicVote.noVotes]} maxValue={proposal.publicVote.totalCt} threshold={.5} symbol={symbol} />
       </Col>
       <Row VS HM right>
-        <Button label='Decline' HS secondary MarginRightS />
         <Button label='Approve' HS primary onClick={() => goto.proposalEdit({ proposalId })} />
+        <Button label='Decline' HS secondary MarginRightS />
       </Row>
       <Hr />
       {
