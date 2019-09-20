@@ -13,10 +13,13 @@ import { log } from './lib/util'
 const errorHandlingMiddleware = ({ getState, dispatch }) => next => action => {
   if(action.error) {
     if(action.meta && action.meta._didUpdated) return
+    const message = action.payload.message
     const error = // Update error msg to other language
-      action.payload.message === NOT_LOGIN ? action.payload = new Error(getRawLang().error.notLogin) 
-    : action.payload.message === NO_ACCOUNT ? action.payload = new Error(getRawLang().error.noAccount)
-    : action.payload.message === NO_WALLET ? action.payload = new Error(getRawLang().error.noWallet)
+      message === NOT_LOGIN ? action.payload = new Error(getRawLang().error.notLogin) 
+    : message === NO_ACCOUNT ? action.payload = new Error(getRawLang().error.noAccount)
+    : message === NO_WALLET ? action.payload = new Error(getRawLang().error.noWallet)
+    : ['MarketNotExist', 'MarketIsCreating', 'MarketIdError', 'MarketIdRepeat', 'GasPriceError', 'NetWorkError', 'GasPriceError', 'EthNotEnough', 'SutNotEnough', 'SignError'].includes(message) ?
+      getRawLang().error[message]
     : null
     if(error) dispatch(actionHelper(USER_PERSON_SIGN_FAILED, action.payload, {...action.meta, _didUpdated: true}))
   }

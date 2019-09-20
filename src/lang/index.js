@@ -18,7 +18,18 @@ const main = {
     notLogin: name('You had not logged in yet.', '請先登入', '请先登入'),
     noWallet: name('Web3 or Ethereum is not supported. Please install MetaMask', '不支援Web3或Etherum，請安裝MetaMask' ,'不支援Web3或Etherum，请安装MetaMask'),
     noAccount: name('Please connect to MetaMask.', '請連結到MetaMask', '请连结到MetaMask'),
-    requiredPhoto: name('This is required', '必須上載圖片', '必须上载图片')
+    requiredPhoto: name('This is required', '必須上載圖片', '必须上载图片'),
+    // The following keys are map BE response. DON'T CHANGE!
+    MarketNotExist: name('Market Not Exist'), 
+    MarketIsCreating: name('Market Is Creating'), 
+    MarketIdError: name('Market Id Error'), 
+    MarketIdRepeat: name('Market Id Repeat'), 
+    GasPriceError: name('Gas Price Error'), 
+    NetWorkError: name('NetWork Error'),
+    GasPriceError: name('Gas Price Error'), 
+    EthNotEnough: name('Eth Not Enough'), 
+    SutNotEnough: name('Sut Not Enough'),
+    SignError: name('Sign Error'),
   },
   notFound: {
     omg: name('OH MY GOSH! YOU FOUND IT!!!', '來自星際的神秘信號：你在找不明飛行物體嗎？', '噢！你被UFO带到404号星球了！'),
