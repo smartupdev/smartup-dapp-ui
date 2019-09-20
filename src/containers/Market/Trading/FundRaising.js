@@ -27,7 +27,7 @@ function Box({ value, text }) {
   )
 } 
 
-function FundRaising({ market: { ctPrice, ctCount, ctRecyclePrice, symbol, numberOfSub, closingTime } }) {
+function FundRaising({ market: { ctPrice, ctCount, ctRecyclePrice, symbol, numberOfSub, closingTime, ctRest } }) {
   const [{ sutSymbol }] = useLang()
   return (
     <Col bgDark HL>
@@ -35,14 +35,9 @@ function FundRaising({ market: { ctPrice, ctCount, ctRecyclePrice, symbol, numbe
       <Hr />
       <Row>
         <Col flex={1} MarginRightXL>
-          <Row TopS BottomBase bottom>
-            <Text XL nowrap wordSpaceM>Fund Raised : {'????' || toToken(500000)}</Text>
-            <Text S nowrap>{sutSymbol}</Text>
-          </Row>
-          <Text note wordSpaceS>Target: {toToken(ctPrice * ctCount)}</Text>
-          <SliderBox>
-            <Slider value={0.3} disabled />
-          </SliderBox>
+          <Text TopS BottomBase bottom XL nowrap wordSpaceS sut={sutSymbol}>Fund Raised : {toToken(ctPrice * (ctCount - ctRest))}</Text>
+          <Text note wordSpaceS sut={sutSymbol}>Target: {toToken(ctPrice * ctCount)}</Text>
+          <SliderBox><Slider value={(ctRest-ctCount)/ctCount} disabled /></SliderBox>
           <Row wrap='true'>
             <Box text={`Offering Price(${sutSymbol})`} value={toToken(ctPrice)} />
             <Box text={`Total ${symbol}`} value={toToken(ctCount)} />
