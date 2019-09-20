@@ -121,7 +121,7 @@ export const apiGetGasFee = (marketId, price, unit) => async () => {
     if(!price || !unit) return null
     await delay(500) // only call api when user idle certain ms
     checkOutdate(localKey)
-    const r = await fetch.get('/api/user/trade/test/match', { marketId, type: 'buy', price, volume: unit })
+    const r = await fetch.get('/api/user/trade/add/buy/reckon', { marketId, type: 'buy', price, volume: unit })
     checkOutdate(localKey)
     // limit = times * Step + [times/10 + (times%10>0 ? 1 : 0)] * Base
     // Step = 10_0000;

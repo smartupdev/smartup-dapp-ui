@@ -105,7 +105,7 @@ function MakeOrder({
       <InputBlock label={`Price per ${symbol}`} icon={ENV.logo} noipfs value={sellPrice} onChange={onChangeSellPrice} symbol={sutSymbol} />
       <Row>
         <LeftBlock />
-        <Text S note>{`Revenue Est. ${buyPrice && sellPrice ? (sellPrice-buyPrice)*buyUnit : '-'} ${sutSymbol}`}</Text>
+        <Text S note red={sellPrice && sellPrice < buyPrice}>{`Revenue Est. ${buyPrice && sellPrice ? (sellPrice-buyPrice)*buyUnit : '-'} ${sutSymbol}`}</Text>
       </Row>
 
       <Row spaceBetween TopXL>

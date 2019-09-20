@@ -25,7 +25,7 @@ export default (state = initialState, action) => {
       const { marketIndex, list } = action.payload
       if(marketIndex < 0) return state
       const { type, content: {isSuccess, marketAddress} } = list[marketIndex]
-      return type === 'MarketCreateFinish' && isSuccess ?
+      return !state.marketAddress && type === 'MarketCreateFinish' && isSuccess ?
         {
           ...state,
           address: marketAddress,

@@ -338,6 +338,79 @@ export async function butCtStage1Sign(marketAddress, ctCount, gasPriceLevel, tim
   )
 }
 
+export async function makeSign(type, marketAddress, price, volume, timestamp) { // buy or sell
+  const 
+    volumeWei = toWei(volume),
+    priceWei = toWei(price),
+    account = await getAccount(),
+    hash = type === 'sell' ? 
+      soliditySha3(
+        {type: "uint256", value: volumeWei},
+        {type: "uint256", value: priceWei},
+        {type: "uint256", value: timestamp},
+        {type: "address", value: marketAddress},
+        {type: "address", value: sutContractAddress},
+        {type: "address", value: account},
+      ) 
+    : soliditySha3(
+        {type: "uint256", value: volumeWei},
+        {type: "uint256", value: priceWei},
+        {type: "uint256", value: timestamp},
+        {type: "address", value: sutContractAddress},
+        {type: "address", value: marketAddress},
+        {type: "address", value: account},
+      )
+
+  log.debug('volumeWei = ', volumeWei)
+  log.debug('priceWei = ', priceWei)
+  log.debug('account = ', window.account)
+  log.debug('hash = ', hash)
+
+  return toPromise(
+    window.web3.personal.sign,
+    hash, account
+  )
+}
+
+export async function takeSign(type, volume, price, time, fee, marketAddress) {
+  const
+    volumeWei = toWei(volume),
+    priceWei = toWei(price),
+    feeWei = toWei(fee, 'gwei'),
+    account = await getAccount(),
+    hash = type === 'sell' ?
+      soliditySha3(
+        {type: "uint256", value: volumeWei},
+        {type: "uint256", value: priceWei},
+        {type: "uint256", value: time},
+        {type: "uint256", value: feeWei},
+        {type: "address", value: marketAddress},
+        {type: "address", value: sutContractAddress},
+        {type: "address", value: account},
+      )
+    : soliditySha3(
+      {type: "uint256", value: volumeWei},
+      {type: "uint256", value: priceWei},
+      {type: "uint256", value: time},
+      {type: "uint256", value: feeWei},
+      {type: "address", value: sutContractAddress},
+      {type: "address", value: marketAddress},
+      {type: "address", value: account},
+    )
+
+  log.debug('volumeWei = ', volumeWei)
+  log.debug('priceWei = ', priceWei)
+  log.debug('time = ', time)
+  log.debug('feeWei = ', feeWei)
+  log.debug('marketAddress = ', marketAddress)
+
+  return toPromise(
+    window.web3.personal.sign,
+    hash, account
+  )
+};
+
+
 export function getMarketStatus(marketAddress) {
   const data = encodeFunctionCall({
       name: 'isInFirstPeriod',

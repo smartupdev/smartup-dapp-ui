@@ -34,7 +34,7 @@ export default (state = initialState, action) => {
     case GET_MARKET_DETAIL_SUCCEEDED:
       return {
         ...state,
-        buyPrice: action.payload.state === 1 ? action.payload.ctPrice : state.buyPrice
+        buyPrice: action.payload.stage === 1 ? action.payload.ctPrice : state.buyPrice
       }
 
     case TRADE_TOGGLE_AGREE_TNC:
