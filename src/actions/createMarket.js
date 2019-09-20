@@ -56,8 +56,8 @@ export function create() {
   return async (dispatch, getState) => {
     try {
       dispatch(action(CREATE_MARKET_SAVE_REQUESTED))
-      const { name, desc: description, detail, avatarHash: photo, coverHash: cover, symbol, period, unit: ctCount, unitPrice: ctPrice, reserveRatio  } = getState().createMarket
-      const marketId = await apiGetNewMarketId()()
+      const { name, desc: description, detail, avatarHash: photo, coverHash: cover, symbol, period, unit: ctCount, unitPrice: ctPrice, reserveRatio, marketId: storeMarketId } = getState().createMarket
+      const marketId = storeMarketId || await apiGetNewMarketId()()
       const closingTime = period2Time(period)
       const recyclePrice = ctPrice * reserveRatio + '' // bnMul(ctPrice, reserveRatio) TODO
       const hash = await createMarketSign(marketId, symbol, marketDeposit, ctCount, ctPrice, recyclePrice, closingTime, 1 )
