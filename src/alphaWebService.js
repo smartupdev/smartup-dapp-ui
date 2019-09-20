@@ -1,17 +1,18 @@
 import fetch, {toParams} from './lib/util/fetch'
-import { copy } from './lib/util'
+import { copy, log } from './lib/util'
 import { ENV } from './config'
 
 const webUrl = ENV.alphaUrl
 const shareUrl = ENV.shareApi
 
 export function checkVersion() {
-  if(process.env.NODE_ENV === 'production' && process.env.REACT_APP_ENV !== 'dev') {
+  if(ENV.autoUpdate) {
+    log.info('Checking new version and auto redirect to new version if any')
     fetch.get(ENV.versionApi, {}, webUrl)
-    .then(r => 
-      !window.location.pathname.includes(r) && 
-      (window.location.href = `${webUrl}${shareUrl}#/`)
-    )
+    .then(r => {
+      if(!window.location.pathname.includes(r))
+        window.location.href = `${webUrl}${shareUrl}#/`
+    })
   }
 }
 

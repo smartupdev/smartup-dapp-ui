@@ -11,7 +11,9 @@ export const ENV_MAP = {
     smartupContractAddress: '0x184a3dad8912a81ab393b83892f2039ec0297132', networkVersion: '3',
     txHashUrl: 'https://etherscan.io/tx/',
     gasWeiPrices: [5, 10, 20],
-    logo: Logo, logoFull: LogoLarge
+    logo: Logo, logoFull: LogoLarge,
+    showRedux: false,
+    autoUpdate: true,
   }, 
   beta: { 
     id: 'beta', 
@@ -20,7 +22,9 @@ export const ENV_MAP = {
     smartupContractAddress: '0x184a3dad8912a81ab393b83892f2039ec0297132', networkVersion: '3',
     txHashUrl: 'https://ropsten.etherscan.io/tx/',
     gasWeiPrices: [10, 30, 50],
-    logo: Logo, logoFull: LogoLarge
+    logo: Logo, logoFull: LogoLarge,
+    showRedux: true,
+    autoUpdate: true,
   }, 
   dev: { 
     id: 'dev', 
@@ -29,7 +33,9 @@ export const ENV_MAP = {
     smartupContractAddress: '0x184a3dad8912a81ab393b83892f2039ec0297132', networkVersion: '3',
     txHashUrl: 'https://ropsten.etherscan.io/tx/',
     gasWeiPrices: [10, 30, 50],
-    logo: Logo, logoFull: LogoLarge
+    logo: Logo, logoFull: LogoLarge,
+    showRedux: true,
+    autoUpdate: false,
   }, 
   uni: { 
     id: 'uni', 
@@ -38,7 +44,9 @@ export const ENV_MAP = {
     smartupContractAddress: '0xfee003d3cac834b1a8d285252e22c8bb08563b8c', networkVersion: '4',
     txHashUrl: 'https://ropsten.etherscan.io/tx/',
     gasWeiPrices: [10, 30, 50],
-    logo: LogoGif, logoFull: LogoLarge
+    logo: LogoGif, logoFull: LogoLarge,
+    showRedux: false,
+    autoUpdate: true,
   }, 
 }
 

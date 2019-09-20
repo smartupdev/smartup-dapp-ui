@@ -7,6 +7,8 @@ import { getRawLang } from './language'
 import { NOT_LOGIN, NO_ACCOUNT, NO_WALLET } from './integrator'
 import { action as actionHelper } from './actions/actionHelper'
 import { USER_PERSON_SIGN_FAILED } from './actions/actionTypes'
+import { ENV } from './config'
+import { log } from './lib/util'
 
 const errorHandlingMiddleware = ({ getState, dispatch }) => next => action => {
   if(action.error) {
@@ -26,6 +28,10 @@ const getMiddleware = () => {
     applyMiddleware(thunk, errorHandlingMiddleware)
     :	
     composeWithDevTools(applyMiddleware(thunk, errorHandlingMiddleware))	
-};
+}
 
-export const store = createStore(reducer, getMiddleware());
+export const store = createStore(reducer, getMiddleware())
+if(ENV.showRedux) {
+  log.info('Store info in window.store')
+  window.store = store
+}
