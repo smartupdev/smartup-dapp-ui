@@ -24,7 +24,9 @@ function getGasFee() {
   }
 }
 export function onChangeBuyUnit(v) { 
-  return dispatch => {
+  return (dispatch, getState) => {
+    const ctRest = getState().market.ctRest
+    if(v > ctRest) v = ctRest
     dispatch(action(TRADE_CHANGE_BUY_UNIT, v)) 
     dispatch(getGasFee())
   }
