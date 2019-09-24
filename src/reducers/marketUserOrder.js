@@ -3,15 +3,9 @@ import {
   ORDER_USER_GET_BUY_REQUESTED, ORDER_USER_GET_BUY_SUCCEEDED, ORDER_USER_GET_BUY_FAILED,
   ORDER_USER_GET_SELL_REQUESTED, ORDER_USER_GET_SELL_SUCCEEDED, ORDER_USER_GET_SELL_FAILED,
   ORDER_USER_GET_HISTORY_REQUESTED, ORDER_USER_GET_HISTORY_SUCCEEDED, ORDER_USER_GET_HISTORY_FAILED,
+  TRADE_SUCCEEDED
 } from '../actions/actionTypes'
-
-function sellOrderMassage(orders) {
-  return orders.map(o => ({
-    ...o,
-    total: o.avgTradedPrice * o.sellingPrice,
-    remaining: o.totalAmount - o.filledAmount
-  }))
-} 
+import { sellOrderMassage } from '../integrator'
 
 export const initialState = {
   buyOrder: {
@@ -79,7 +73,7 @@ export default (state = initialState, action) => {
         sellOrder: {
           ...state.sellOrder,
           fetching: false,
-          orders: sellOrderMassage(action.payload.list)
+          orders: action.payload.list.map(sellOrderMassage)
         }
       }
     case ORDER_USER_GET_SELL_FAILED: 
@@ -89,6 +83,21 @@ export default (state = initialState, action) => {
           ...state.sellOrder,
           fetching: false,
           error: action.payload
+        }
+      }
+    case TRADE_SUCCEEDED:
+      if(action.meta.stage !== 1) return state
+      return {
+        ...state,
+        sellOrder: {
+          ...state.sellOrder,
+          orders: [
+            {
+              ...sellOrderMassage(action.payload),
+              avgTradedPrice: null,
+            },
+            ...state.sellOrder.orders
+          ]
         }
       }
     case ORDER_USER_GET_HISTORY_REQUESTED: 

@@ -7,6 +7,7 @@ function logColor(color, messages) {
 
 const log = {
   casual: (...messages) => null && logColor('gray', messages),
+  debug: (...messages) => logColor('gray', messages),
   info: (...messages) => logColor('black', messages),
   success: (...messages) => logColor('green', messages),
   warning: (...messages) => logColor('orange', messages),

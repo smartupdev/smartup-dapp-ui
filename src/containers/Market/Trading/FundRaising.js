@@ -37,7 +37,7 @@ function FundRaising({ market: { ctPrice, ctCount, ctRecyclePrice, symbol, numbe
         <Col flex={1} MarginRightXL>
           <Text TopS BottomBase bottom XL nowrap wordSpaceS sut={sutSymbol}>Fund Raised : {toToken(ctPrice * (ctCount - ctRest))}</Text>
           <Text note wordSpaceS sut={sutSymbol}>Target: {toToken(ctPrice * ctCount)}</Text>
-          <SliderBox><Slider value={(ctRest-ctCount)/ctCount} disabled /></SliderBox>
+          <SliderBox><Slider value={(ctCount - ctRest)/ctCount} disabled /></SliderBox>
           <Row wrap='true'>
             <Box text={`Offering Price(${sutSymbol})`} value={toToken(ctPrice)} />
             <Box text={`Total ${symbol}`} value={toToken(ctCount)} />

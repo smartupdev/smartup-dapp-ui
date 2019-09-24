@@ -5,6 +5,7 @@ import {
   GET_MARKET_DETAIL_REQUESTED, GET_MARKET_DETAIL_SUCCEEDED, GET_MARKET_DETAIL_FAILED,
   USER_NOTIFICATION_LIST_SUCCEEDED,
   MARKET_DETAIL_GET_CT_SUCCEEDED,
+  TRADE_SUCCEEDED,
 } from '../actions/actionTypes';
 
 import { marketMassage } from '../integrator/massager'
@@ -21,6 +22,12 @@ export default (state = initialState, action) => {
   switch (action.type) {
     case MARKET_DETAIL_RESET:
       return initialState
+    case TRADE_SUCCEEDED: 
+      if(action.meta.stage !== 1) return state
+      return {
+        ...state,
+        ctRest: state.ctRest - action.payload.entrustVolume
+      }
     case USER_NOTIFICATION_LIST_SUCCEEDED: {
       const { marketIndex, list } = action.payload
       if(marketIndex < 0) return state

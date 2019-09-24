@@ -1,7 +1,7 @@
 import {  
   getYear, getMonth, getDate, getDay, getHour, getMinute, getSecond, now, 
   toDate, toDateTime
-} from './datatime'
+} from './datetime'
 
 const dataString = '2018-11-12 01:02:03'
 const d = new Date(dataString)

@@ -3,7 +3,7 @@ import { Row, Col } from '../Layout'
 import Text from '../Text'
 import Avatar from '../Avatar'
 // import theme from '../../theme'
-import { toAgo } from '../../lib/util/datatime'
+import { toAgo } from '../../lib/util'
 import { useLang } from '../../language'
 import styled, { css } from 'styled-components'
 

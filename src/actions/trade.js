@@ -10,7 +10,7 @@ import {
 import { action } from './actionHelper'
 
 import { getRawLang } from '../language'
-import { apiGetGasFee, apiBuyCtState1, butCtStage1Sign, apiBuyCtState2 } from '../integrator'
+import { apiGetGasFee, apiBuyCtState1, butCtStage1Sign, apiBuyCtState2, makeSign } from '../integrator'
 
 import { getYear, getMonth, getDate, getHour, DAY, MONTH, YEAR } from '../lib/util'
 
@@ -51,7 +51,8 @@ export function onTrade() {
       if(stage === 1) {
         const now = Date.now()
         const hash = await butCtStage1Sign(address, buyUnit, 1, now)
-        response = await apiBuyCtState1({ marketAddress: address, ctCount: buyUnit, timestamp: now, sign: hash, gasPriceLevel: 1 })()
+        const sellSign = await makeSign('sell', address, sellPrice, buyUnit, now)
+        response = await apiBuyCtState1({ marketId, ctCount: buyUnit, timestamp: now, sign: hash, gasPriceLevel: 1, sellPrice, sellSign })()
       } else {
         response = await apiBuyCtState2({ marketId, buyPrice, sellPrice, unit: buyUnit, times })()
         console.log(response)
@@ -63,7 +64,7 @@ export function onTrade() {
         // unfilledVolume: 10
         // userAddress: 
       }
-      dispatch(action(TRADE_SUCCEEDED, response))
+      dispatch(action(TRADE_SUCCEEDED, response, {stage, address, marketId}))
     }
     catch(error) {
       dispatch(action(TRADE_FAILED, error))

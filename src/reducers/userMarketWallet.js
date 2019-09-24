@@ -1,8 +1,10 @@
 import { 
   MARKET_GET_TRADED_MARKET_WITH_CT_REQUESTED, MARKET_GET_TRADED_MARKET_WITH_CT_SUCCEEDED, MARKET_GET_TRADED_MARKET_WITH_CT_FAILED,
+  TRADE_SUCCEEDED,
 } from '../actions/actionTypes'
 
 import { updateLoadMore } from '../integrator/massager'
+import { changeArrayById } from '../lib/util/reducerHelper'
 
 export const initialState = {
   getting: false,
@@ -32,6 +34,11 @@ export default (state = initialState, action) => {
         markets: updateLoadMore(state.markets, list.map(m => ({ ...m, id: m.marketId })), action.meta.isLoadMore)
       };
     }
+    case TRADE_SUCCEEDED:
+      return {
+        ...state,
+        markets: changeArrayById(state.markets, action.meta.marketId, m => ({ ...m, ctAmount: m.ctAmount + action.payload.entrustVolume }))
+      }
     case MARKET_GET_TRADED_MARKET_WITH_CT_FAILED:
       return {
         ...state,

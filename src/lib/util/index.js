@@ -1,7 +1,7 @@
 export { default as fetch } from './fetch' 
 export * from './string'
 export * from './object'
-export * from './datatime'
+export * from './datetime'
 export * from './number'
 export * from './format'
 export * from './webHelper'

@@ -125,6 +125,20 @@ export function orderMassage(orders) {
   }
 }
 
+export function sellOrderMassage(o) {
+  return {
+    ...o,
+    orderId: o.tradeId,
+    side: 'sell',
+    totalAmount: o.entrustVolume,
+    filledAmount: o.filledVolume,
+    sellingPrice: o.entrustPrice,
+    avgTradedPrice: o.avgPrice,
+    total: o.avgPrice * o.entrustVolume,
+    remaining: o.entrustVolume - o.filledVolume
+  }
+}
+
 export function updateLoadMore(currentList, newList, isLoadMore, key = 'id', appendToTop = false) {
   return appendToTop || isLoadMore ? 
   newList.reduce((currentArray, newRecord) => {
