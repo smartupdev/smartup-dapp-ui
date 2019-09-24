@@ -77,7 +77,11 @@ const main = {
       price: name('SPOT PRICE', '現貨價格', '现货价格'),
       volume: name('24H VOLUME', '24小時成交量', '24小时成交量'),
       cap: name('FUNDING POOL', '總資金量', '总资金量'),
-      graph: name('7D GRAPH', '7天圖表', '7天图表')
+      graph: name('7D GRAPH', '7天圖表', '7天图表'),
+      raisedRate: name('FUND RAISED(%)', '已集資(%)', '已集资(%)'),
+      time: name('REMINDING TIME', '淨餘時間', '净余时间'),
+      fundRasied: name('FUND RASIED', '已集資', '已集资'),
+      target:name('TARGET FUNDING POOL', '目標總資金', '目标总资金')
     }
   },
 

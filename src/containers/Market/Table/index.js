@@ -34,11 +34,11 @@ const _Slider = ({ value }) => <Col width={colSliderWidth} RightS><Slider value=
 const offeringModel = [
   { label: '',            value: 'avatar',        sortable: false,  component: _Icon,           layoutStyle: { width: `calc( ${theme.iconSizeXL} + 15px )`, center: true, LeftXS: true } },
   { label: l => l.name,   value: 'name',          sortable: false,  component: _Name,           layoutStyle: { flex: 1, width: colWidth } },
-  { label: 'Finished',    value: 'Finished',      sortable: true,   component: _Slider,         layoutStyle: { flex: 1, width: colSliderWidth, center: true } },
+  { label: l => l.rasiedRate,    value: 'Finished',      sortable: true,   component: _Slider,         layoutStyle: { flex: 1, width: colSliderWidth, center: true } },
   { label: l => l.price,  value: 'last',          sortable: true,   component: _Price,          layoutStyle: { flex: 1, width: colWidth } },
-  { label: 'Time',        value: 'time',          sortable: true,   component: DateAgoText,     layoutStyle: { flex: 1, width: colWidth } },
-  { label: 'Fund Raised', value: 'Fund Raised',   sortable: true,   component: _Price,          layoutStyle: { flex: 1, width: colWidth } },
-  { label: 'Target',      value: 'Target',        sortable: true,   component: _Price,          layoutStyle: { flex: 1, width: colWidth } },
+  { label: l => l.time,   value: 'time',          sortable: true,   component: DateAgoText,     layoutStyle: { flex: 1, width: colWidth } },
+  { label: l => l.fundRaised, value: 'Fund Raised',   sortable: true,   component: _Price,          layoutStyle: { flex: 1, width: colWidth } },
+  { label: l => l.target, value: 'Target',        sortable: true,   component: _Price,          layoutStyle: { flex: 1, width: colWidth } },
   { label: '',            value: 'action',        sortable: false,  component: _More,           layoutStyle: { width: `calc( ${theme.iconSizeXL} + 15px )`, right: true, RightXS: true } },
 ]
 
