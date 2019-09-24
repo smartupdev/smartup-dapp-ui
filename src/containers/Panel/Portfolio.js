@@ -127,7 +127,7 @@ const Portfolio = ({
   const [lang] = useLang()
   const portfolioText = lang.panel.portfolio
   const TableName = [ // TODO
-    { label: '', value: 'marketPhoto', layoutStyle: { width: '18px' }, component: ({ value }) => <Avatar XS icon={value} /> },
+    { label: '', value: 'marketPhoto', layoutStyle: { width: '18px' }, component: ({ value }) => <Avatar XS icon={value} noMargin /> },
     { label: portfolioText.wallet.id, value: 'marketName', layoutStyle: { width: '80px', flex: 1 }, component: ({value}) => <Text S textOverflow>{value}</Text> },
     { label: portfolioText.wallet.ct, value: 'ctAmount' },
     {
