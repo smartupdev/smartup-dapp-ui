@@ -25,7 +25,7 @@ const Button = styled.button`
   ${p => p.secondary && css`background-color: ${p.theme.colorSecondary}; color: ${p.theme.colorDark}; fill: ${p.theme.colorDark}; stroke: ${p.theme.colorDark}`}  
   ${p => p.red && css`background-color: ${p.theme.red}; color: ${p.theme.colorDark}; fill: ${p.theme.colorDark}; stroke: ${p.theme.colorDark}`}  
   ${p => p.green && css`background-color: ${p.theme.green}; color: ${p.theme.colorDark}; fill: ${p.theme.colorDark}; stroke: ${p.theme.colorDark}`}  
-  ${p => p.light && css`color: ${p.theme.white}; fill: ${p.theme.white};`}  
+  ${p => p.light && css`color: ${p.theme.white}; fill: ${p.theme.white}; stroke: ${p.theme.white}`}  
   ${p => p.primary && p.outline && css`background-color: transparent; color: ${p.theme.colorPrimary}; border: 1px solid ${p.theme.colorPrimary}`}  
   
   ${p => p.backgroundColor && css`background-color: ${p.backgroundColor};`}  
