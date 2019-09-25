@@ -9,7 +9,7 @@ import Hr from 'components/Hr'
 import Tab from 'components/Tab'
 
 import TradingInfo from './TradingInfo'
-import Transaction from './Transaction'
+// import Transaction from './Transaction'
 import FundRaising from './FundRaising'
 import MakeOrder from './MakeOrder'
 import OrderBook from './OrderBook'

@@ -19,6 +19,7 @@ export const initialState = {
     max: 0,
     orders: [],
   },
+  orders: [],
   currentPrice: null,
   changePercent: null, 
 }
@@ -34,13 +35,14 @@ export default (state = initialState, action) => {
       }
 
     case ORDER_BOOK_SUCCEEDED: {
-      const { sellOrder, buyOrder, lastPrice, currentPrice } = action.payload
+      const { sellOrder, buyOrder, orders, lastPrice, currentPrice } = action.payload
       return {
         ...state,
         error: null,
         didFetch: true,
         buyOrder, 
         sellOrder,
+        orders: orders.map(o => ({ ...o, total: o.price * o.volume })),
         currentPrice: currentPrice || state.currentPrice,
         changePercent: lastPrice && (currentPrice - lastPrice) / lastPrice 
       }
