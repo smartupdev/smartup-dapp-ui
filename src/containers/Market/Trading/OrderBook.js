@@ -14,9 +14,10 @@ import { useLang } from 'language'
 import theme from 'theme'
 
 function OrderBookTitle() {
+  const [{ trading: tradingText }] = useLang()
   return (
     <Row VS HS>
-      {['Price', 'Amount', 'Total'].map( (text, index) =>
+      {[tradingText.price, tradingText.amount, tradingText.total].map( (text, index) =>
         <Col key={text} flex={1} right={index}>
           <Text note>{text}</Text>
         </Col>
@@ -39,11 +40,11 @@ function PriceAndBar({ color, value, record, max }) {
 }
 
 function OrderBook({ tableRef, values, color, reverse, max, stage, height }) {
-  // const [{ trading: tradingText }] = useLang()
+  const [{ trading: tradingText }] = useLang()
   const model = [
-    { label: 'Price', value: 'price', layoutStyle: { left: true, flex: 1 }, component: p => <PriceAndBar color={color} max={max} {...p} />},
-    { label: 'Amount', value: 'amount', layoutStyle: { right: true, flex: 1 }, component: RenderToken },
-    { label: 'Total', value: 'total', layoutStyle: { right: true, flex: 1 }, component: RenderToken },
+    { label: 'price', value: 'price', layoutStyle: { left: true, flex: 1 }, component: p => <PriceAndBar color={color} max={max} {...p} />},
+    { label: 'amount', value: 'amount', layoutStyle: { right: true, flex: 1 }, component: RenderToken },
+    { label: 'total', value: 'total', layoutStyle: { right: true, flex: 1 }, component: RenderToken },
   ]  
   return (
     <Col HS flex={1} bottom={reverse} ref={tableRef}>
@@ -56,7 +57,7 @@ function OrderBook({ tableRef, values, color, reverse, max, stage, height }) {
         backgroundColor={theme.bgColor}
         recordKey={'key'}
         model={model}
-        noResultText={stage === 1 ? 'Available after this phase' : ''}
+        noResultText={stage === 1 ? tradingText.buyOrderAvaliability : ''}
         values={reverse ? [...values].reverse() : values}
       />
     </Col>

@@ -17,15 +17,16 @@ import UserSellOrder from './UserSellOrder'
 import UserBuyOrder from './UserBuyOrder'
 import UserHistory from './UserHistory'
 import MarketTransaction from './MarketTransaction'
-
-const FILTERS = [
-  { label: 'My Buy Order', value: 'buy', component: UserBuyOrder },
-  { label: 'My Sell Order', value: 'sell', component: UserSellOrder },
-  { label: 'My Order History', value: 'history', component: UserHistory },
-  { label: 'Market Transaction', value: 'market', component: MarketTransaction },
-]
+import { useLang } from '../../../language'
 
 function Trading({ stage }) {
+  const [lang] = useLang()
+  const FILTERS = [
+    { label: lang.trading.myOrderBook.myBuyOrder , value: 'buy', component: UserBuyOrder },
+    { label: lang.trading.myOrderBook.mySellOrder, value: 'sell', component: UserSellOrder },
+    { label: lang.trading.myOrderBook.orderHistory, value: 'history', component: UserHistory },
+    { label: lang.trading.myOrderBook.marketTransaction, value: 'market', component: MarketTransaction },
+  ]
   const [tab, setTab] = useState(1)
   function onTabChange(index) { setTab(index) }
   const TabComponent = FILTERS[tab].component
@@ -33,7 +34,7 @@ function Trading({ stage }) {
   const orderHeight = makeOrderRef.current ? makeOrderRef.current.getBoundingClientRect().height : 400
   return (
     // stage === 1 ?
-      <Col overflowAuto>
+      <Col overflowAuto >
         {/* <TradingInfo tabIndex={tabIndex} klineData={klineData} setTab={setTab} highLowData={highLowData} market={market} /> */}
         <FundRaising />
         <Row>

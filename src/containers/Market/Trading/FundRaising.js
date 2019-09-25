@@ -28,27 +28,28 @@ function Box({ value, text }) {
 } 
 
 function FundRaising({ market: { ctPrice, ctCount, ctRecyclePrice, symbol, numberOfSub, closingTime, ctRest } }) {
-  const [{ sutSymbol }] = useLang()
+  const [{ sutSymbol, ...lang }] = useLang()
   return (
     <Col bgDark HL>
-      <Text sectionTitle>Token Offering Phase</Text>
+      <Text sectionTitle> {lang.trading.phaseOne.tokenOffering} </Text>
       <Hr />
       <Row>
         <Col flex={1} MarginRightXL>
-          <Text TopS BottomBase bottom XL nowrap wordSpaceS sut={sutSymbol}>Fund Raised : {toToken(ctPrice * (ctCount - ctRest))}</Text>
-          <Text note wordSpaceS sut={sutSymbol}>Target: {toToken(ctPrice * ctCount)}</Text>
+          <Text TopS BottomBase bottom XL nowrap wordSpaceS sut={sutSymbol}>{lang.trading.phaseOne.raised}{toToken(ctPrice * (ctCount - ctRest))}</Text>
+          <Text note wordSpaceS sut={sutSymbol}> {lang.trading.phaseOne.targetFundingPool} {toToken(ctPrice * ctCount)}</Text>
           <SliderBox><Slider value={(ctCount - ctRest)/ctCount} disabled /></SliderBox>
           <Row wrap='true'>
-            <Box text={`Offering Price(${sutSymbol})`} value={toToken(ctPrice)} />
-            <Box text={`Total ${symbol}`} value={toToken(ctCount)} />
-            <Box text='Joined Users' value={numberOfSub} />
-            <Box text={`Recycle Price(${sutSymbol})`} value={toToken(ctRecyclePrice)} />
-            <Box text='Available Investment Fund' value={toToken((ctPrice-ctRecyclePrice) * ctCount)} />
+            <Box text={`${lang.trading.phaseOne.offeringPrice}(${sutSymbol})`} value={toToken(ctPrice)} />
+            <Box text={`${lang.trading.phaseOne.totalCT} (${symbol})`} value={toToken(ctCount)} />
+            <Box text={lang.trading.phaseOne.communityMember} value={numberOfSub} />
+            <Box text={`${lang.trading.phaseOne.floorPrice}(${sutSymbol})`} value={toToken(ctRecyclePrice)} />
+            <Box text={lang.trading.phaseOne.withdrawableFunding} value={toToken((ctPrice-ctRecyclePrice) * ctCount)} />
           </Row>
         </Col>
         <Col width='280px' right VS>
           <Clock endDate={closingTime} />
-          <Text right note S>This project will only be funded if it reaches its goal by {closingTime}</Text>
+  <Text right note S> {lang.trading.phaseOne.hints} {closingTime}</Text>
+  <Text right note S> {lang.trading.phaseOne.hintsTwo} </Text>
         </Col>
       </Row>
     </Col>

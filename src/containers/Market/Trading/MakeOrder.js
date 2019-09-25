@@ -70,7 +70,7 @@ function MakeOrder({
     estGasFee, estMatchedOrder },
   symbol, marketAvatar, marketId, userCt, userSut
 }) {
-  const [{ trading: tradingText, sutSymbol }] = useLang()
+  const [{ trading: tradingText, sutSymbol, lang }] = useLang()
   useEffect(() => {
     getCtBalance()
     return reset
@@ -81,14 +81,14 @@ function MakeOrder({
       <Text sectionTitle>{tradingText.tradeTitle}</Text>
       <Hr />
       <Row right width='100%' TopS>
-        <Text>Your wallet: </Text>
+        <Text> {tradingText.yourWallet} </Text>
         <Text primary bold HBase>{toToken(userCt)}</Text>
         <Text>{symbol}</Text>
       </Row>
 
-      <Title>Buy Order</Title>
-      {stage !== 1 && <InputBlock label='Price' icon={ENV.logo} noipfs value={buyPrice} onChange={onChangeBuyPrice} symbol={sutSymbol} />}
-      <InputBlock label='Amount to Buy' icon={marketAvatar} value={buyUnit} onChange={onChangeBuyUnit} symbol={symbol} />
+      <Title>{tradingText.buyOrder}</Title>
+      {stage !== 1 && <InputBlock label={tradingText.buyOrder} icon={ENV.logo} noipfs value={buyPrice} onChange={onChangeBuyPrice} symbol={sutSymbol} />}
+      <InputBlock label= {tradingText.buyAmount} icon={marketAvatar} value={buyUnit} onChange={onChangeBuyUnit} symbol={symbol} />
       <Row>
         <LeftBlock />
         <Col flex={1}>
@@ -96,16 +96,16 @@ function MakeOrder({
             <Slider showScale value={+userSut ? totalReqSut/userSut : ''} onChange={percent => onChangeBuyUnit(+(userSut*percent/buyPrice).toFixed(7))} />
           </Col>
           {/* <Text S note TopS>~$6,000 USD</Text> */}
-          <Text S note>Est. {toToken(totalReqSut)} {sutSymbol}</Text>
-          <Text S note>Est. gas fee: {estGasFee || '-'} ETH</Text>
+          <Text S note> {tradingText.est} {toToken(totalReqSut)} {sutSymbol}</Text>
+          <Text S note>{tradingText.estGasFee} {estGasFee || '-'} ETH</Text>
         </Col>
       </Row>
 
-      <Title>Pre-set Sell Order</Title>
-      <InputBlock label={`Price per ${symbol}`} icon={ENV.logo} noipfs value={sellPrice} onChange={onChangeSellPrice} symbol={sutSymbol} />
+      <Title>{tradingText.presetSellOrder}</Title>
+      <InputBlock label={`${tradingText.sellPrice} ${symbol}`} icon={ENV.logo} noipfs value={sellPrice} onChange={onChangeSellPrice} symbol={sutSymbol} />
       <Row>
         <LeftBlock />
-        <Text S note red={sellPrice && sellPrice < buyPrice}>{`Revenue Est. ${buyPrice && sellPrice ? (sellPrice-buyPrice)*buyUnit : '-'} ${sutSymbol}`}</Text>
+        <Text S note red={sellPrice && sellPrice < buyPrice}>{`${tradingText.est} ${buyPrice && sellPrice ? (sellPrice-buyPrice)*buyUnit : '-'} ${sutSymbol}`}</Text>
       </Row>
 
       <Row spaceBetween TopXL>
