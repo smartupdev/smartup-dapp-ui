@@ -40,17 +40,16 @@ function History({
   ]
 
   return (
-    <Col HS>
-      <Table
-        recordKey='orderId'        
-        model={model}
-        values={orders}
-        noResultText={error ? error.message : undefined}
-        hasMore={hasNextPage} loadMore={getHistoryOrder} isLoading={fetching}
-        titleStyle={titleStyle}
-        // LoadMore issue. Keep getting new result no matter in which position
-      />
-    </Col>
+    <Table
+      recordKey='orderId'        
+      model={model}
+      values={orders}
+      fixedHeader
+      noResultText={error ? error.message : undefined}
+      hasMore={hasNextPage} loadMore={getHistoryOrder} isLoading={fetching}
+      titleStyle={titleStyle}
+      // LoadMore issue. Keep getting new result no matter in which position
+    />
   )
 }
 

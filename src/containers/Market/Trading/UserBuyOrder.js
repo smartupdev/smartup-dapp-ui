@@ -38,15 +38,14 @@ function UserBuyOrder({
   ]
 
   return (
-    <Col HS>
-      <Table
-        recordKey='orderId'
-        model={model}
-        values={orders}
-        noResultText={error ? error.message : undefined}
-        titleStyle={titleStyle}
-      />
-    </Col>
+    <Table
+      recordKey='orderId'
+      fixedHeader
+      model={model}
+      values={orders}
+      noResultText={error ? error.message : undefined}
+      titleStyle={titleStyle}
+    />
   )
 }
 

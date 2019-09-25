@@ -67,13 +67,13 @@ const TableRecordBox = styled(Col)`
 `
 
 const TableRecord = memo(
-  ({ record, index, isExpanded, noBorderCol, model, S, onClick, ExpandComponent, backgroundColor, fixedCol, condensed, animated }) => {
+  ({ record, index, isExpanded, noBorderCol, model, S, onClick, ExpandComponent, bgColor, fixedCol, condensed, animated }) => {
     return (
       <TableRecordBox isExpanded={isExpanded} hasBorder={!noBorderCol} fitWidth animated={animated}>
         <Row>
           {
             model.map(({ value: key, component: Component, layoutStyle = { flex: 1 } }, j) =>
-              <TD key={j} fixed={j < fixedCol} backgroundColor={!j && backgroundColor} condensed={condensed} isExpanded={isExpanded} {...layoutStyle} borderTop centerVertical onClick={onClick && (() => onClick({ record, key, index, isExpanded }))}>
+              <TD key={j} fixed={j < fixedCol} bgColor={!j && bgColor} condensed={condensed} isExpanded={isExpanded} {...layoutStyle} borderTop centerVertical onClick={onClick && (() => onClick({ record, key, index, isExpanded }))}>
                 {
                   Component ?
                     <Component record={record} value={record[key]} index={index} isExpanded={isExpanded} />
@@ -130,10 +130,10 @@ export default ({
     <TableWrapper ref={tableWrapRef} noScroll={noScroll}>
       <Table ref={tableRef}>
         {!noHeader &&
-        <TableTitle backgroundColor={fixedHeader && backgroundColor} fixedHeader={fixedHeader}>
+        <TableTitle bgColor={fixedHeader && backgroundColor} fixedHeader={fixedHeader}>
           {
             model.map(({ value, label, layoutStyle = { flex: 1 }, sortable }, index) =>
-              <TD key={value} fixed={index < fixedCol} backgroundColor={fixedCol && !index && backgroundColor} {...layoutStyle} header centerVertical highlight={value === sortBy} onClick={sortable && onClickHeader ? (() => onClickHeader(value, index)) : null}>
+              <TD key={value} fixed={index < fixedCol} bgColor={fixedCol && !index && backgroundColor} {...layoutStyle} header centerVertical highlight={value === sortBy} onClick={sortable && onClickHeader ? (() => onClickHeader(value, index)) : null}>
                 <Text S={S} {...titleStyle}>{label instanceof Function ? label(language) : label}{value === sortBy ? orderBy === ORDER_BY.asc ? ' ↑' : orderBy === ORDER_BY.desc && ' ↓' : ''}</Text>
               </TD>
             )
@@ -146,7 +146,7 @@ export default ({
                 <TableRecord
                   animated={animated}
                   fixedCol={fixedCol}
-                  backgroundColor={fixedCol && backgroundColor}
+                  bgColor={fixedCol && backgroundColor}
                   condensed={condensed}
                   key={record[recordKey]} 
                   record={record} 

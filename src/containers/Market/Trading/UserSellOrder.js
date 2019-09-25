@@ -66,9 +66,10 @@ function UserSellOrder({
     }
   }
   return (
-    <Col HS>
+    <>
       <Table
         noBorderCol
+        fixedHeader
         recordKey='orderId'
         model={model}
         animated
@@ -105,7 +106,7 @@ function UserSellOrder({
         </Col>
         </>
       }
-    </Col>
+    </>
   )
 }
 
