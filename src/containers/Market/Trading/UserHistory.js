@@ -35,7 +35,7 @@ function History({
     { label: `Filled ${symbol}`, value: 'filledAmount', layoutStyle, component: TokenText },
     { label: `Entrust Price\n(${sutSymbol})`, value: 'entrustPrice', layoutStyle, component: TokenText },
     { label: `Executed Price\n(${sutSymbol})`, value: 'avgTradedPrice', layoutStyle, component: TokenText },
-    { label: `Total\n(${sutSymbol})`, value: 'total', layoutStyle, component: TokenText },
+    { label: `Est. Total\n(${sutSymbol})`, value: 'total', layoutStyle, component: TokenText },
     { label: 'Status', value: 'state', layoutStyle, component: OrderStateTable },
   ]
 
