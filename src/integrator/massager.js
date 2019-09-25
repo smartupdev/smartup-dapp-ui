@@ -147,7 +147,7 @@ export function sellOrderMassage(o) {
     filledAmount: o.filledVolume,
     sellingPrice: o.entrustPrice,
     avgTradedPrice: o.avgPrice,
-    total: o.avgPrice * o.entrustVolume,
+    total: (o.avgPrice || o.entrustPrice) * o.entrustVolume,
     remaining: o.entrustVolume - o.filledVolume
   }
 }

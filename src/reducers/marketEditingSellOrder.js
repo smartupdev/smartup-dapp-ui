@@ -66,7 +66,7 @@ export default (state = initialState, action) => {
           { 
             orderId: -(state.addedOrders.length + 1),
             sellingPrice: state.editingPrice,
-            avgTradedPrice: state.editingPrice,
+            // avgTradedPrice: state.editingPrice,
             totalAmount: state.editingAmount,
             remaining: state.editingAmount,
             state: ORDER_STATE.newAdded,
