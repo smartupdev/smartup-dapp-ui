@@ -125,6 +125,19 @@ export function orderMassage(orders) {
   }
 }
 
+export function historyOrderMassage(o) {
+  return {
+    ...o,
+    orderId: o.tradeId,
+    totalAmount: o.entrustVolume,
+    filledAmount: o.filledVolume,
+    sellingPrice: o.entrustPrice,
+    avgTradedPrice: o.avgPrice,
+    total: o.avgPrice * o.entrustVolume,
+    remaining: o.entrustVolume - o.filledVolume
+  }
+}
+
 export function sellOrderMassage(o) {
   return {
     ...o,

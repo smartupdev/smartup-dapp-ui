@@ -5,7 +5,7 @@ import {
   ORDER_USER_GET_HISTORY_REQUESTED, ORDER_USER_GET_HISTORY_SUCCEEDED, ORDER_USER_GET_HISTORY_FAILED,
   TRADE_SUCCEEDED
 } from '../actions/actionTypes'
-import { sellOrderMassage } from '../integrator'
+import { sellOrderMassage, historyOrderMassage, updateLoadMore } from '../integrator'
 
 export const initialState = {
   buyOrder: {
@@ -106,7 +106,7 @@ export default (state = initialState, action) => {
         historyOrder: {
           ...state.historyOrder,
           error: action.payload,
-          // fetching: true
+          fetching: true
         }
       }
     case ORDER_USER_GET_HISTORY_SUCCEEDED: {
@@ -115,7 +115,8 @@ export default (state = initialState, action) => {
         ...state,
         historyOrder: {
           ...state.historyOrder,
-          orders, hasNextPage, pageNumb, pageSize,
+          orders: updateLoadMore(state.historyOrder.orders, orders.map(historyOrderMassage), action.meta.isLoadMore, 'orderId'), 
+          hasNextPage, pageNumb, pageSize,
           fetching: false
         }
       }

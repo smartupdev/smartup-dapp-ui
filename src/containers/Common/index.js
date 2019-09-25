@@ -30,3 +30,8 @@ export function LabelText({ label, text, width, right, sut, red, green, ...rest 
     </Col>
   )
 }
+
+export function OrderStateTable({ value, note }) {
+  const [{ api: { orderState } }] = useLang()
+  return <Text center note={note}>{orderState[value] || value}</Text>
+}

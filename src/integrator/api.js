@@ -46,7 +46,8 @@ export const ORDER_STATE = {
 
 export const ORDER_SIDE = { 
   buy: 'buy',
-  sell: 'sell'
+  sell: 'sell',
+  firstStageBuy: 'firstStageBuy'
  }
 
 export const MARKET_FILTER_TYPE = {
