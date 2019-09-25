@@ -1,5 +1,5 @@
 import { name } from './index'
-import { ORDER_STATE, MARKET_FILTER_TYPE, MARKET_STAGE, PROPOSAL_STATE, PROPOSAL_SORT } from '../integrator'
+import { ORDER_STATE, MARKET_FILTER_TYPE, MARKET_STAGE, PROPOSAL_STATE, PROPOSAL_SORT, ORDER_SIDE } from '../integrator'
 
 export default {
   orderState: {
@@ -42,5 +42,10 @@ export default {
     [PROPOSAL_SORT.currentWithdrawAmount]: name('Current Withdraw Amount', '本次提取額', '本次提取额'),
     [PROPOSAL_SORT.totalWithdrawAmount]: name('Total Withdraw Amount', '總提取額', '总提取额'),
     [PROPOSAL_SORT.createdTime]: name('Create Time', '創建時間', '创建时间'),
+  },
+  orderSize: {
+    [ORDER_SIDE.buy]: name('buy'),
+    [ORDER_SIDE.sell]: name('sell'),
+    [ORDER_SIDE.firstStageBuy]: name('firstStageBuy'),
   }
 }
