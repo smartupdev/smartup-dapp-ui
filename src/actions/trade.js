@@ -57,7 +57,6 @@ export function onTrade() {
         response = await apiBuyCtState1({ marketId, ctCount: buyUnit, timestamp: now, sign: hash, gasPriceLevel: 1, sellPrice, sellSign })()
       } else {
         response = await apiBuyCtState2({ marketId, buyPrice, sellPrice, unit: buyUnit, times })()
-        console.log(response)
         // entrustPrice: 4
         // entrustVolume: 10
         // orderId: "fz7ddnyrxfk"

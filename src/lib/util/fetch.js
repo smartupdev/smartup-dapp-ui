@@ -24,8 +24,8 @@ export function get(api, params, host) {
   return cmFetch('GET', api + toParams(params), null, host)
 }
 
-export function post(api, params, host) {
-  return cmFetch('POST', api, params, host)
+export function post(api, params, host, contentType) {
+  return cmFetch('POST', api, params, host, contentType)
 }
 
 export function put(api, params, host) {
@@ -47,8 +47,8 @@ function timeoutWrapper (promise, timeout = fetchTimeout) {
   ]);
 }
 
-async function cmFetch(method, api, params, host) {
-  const r = await timeoutWrapper( () => fetch((host || apiBaseUrl) + (api[0] === '/' ? api : '/'+api), getOptions(method, params)) )
+async function cmFetch(method, api, params, host, contentType) {
+  const r = await timeoutWrapper( () => fetch((host || apiBaseUrl) + (api[0] === '/' ? api : '/'+api), getOptions(method, params, contentType)) )
   if(!r.ok) throw new Error(r.status)
   const json = await r.json()
   if(json.code === '1') throw new Error('System Error')
@@ -64,12 +64,12 @@ const langMap = {
   tc: 'zh-TW',
   sc: 'zh-CN',
 }
-function getOptions(method = 'GET', params) {
+function getOptions(method = 'GET', params, contentType) {
   const r =  {
     method,
     headers: {
       'Accept': 'application/json',
-      'Content-Type': 'application/x-www-form-urlencoded',
+      'Content-Type': contentType === 'json' ? 'application/json' : 'application/x-www-form-urlencoded',
       // Origin: 'http://localhost:3000',
       // baseURL: apiBaseUrl,
       // import { useLang, getLang } from '../../language'
@@ -81,7 +81,9 @@ function getOptions(method = 'GET', params) {
     // cache: 'no-cache',
   }
   if(params) {
-    r.body = toParams(params).slice(1)
+    r.body = contentType === 'json' ? 
+      JSON.stringify(params)
+    : toParams(params).slice(1)
   }
   return r
 }

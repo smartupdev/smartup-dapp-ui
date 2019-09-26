@@ -51,7 +51,13 @@ export function deleteSellOrder(id) { return action(ORDER_USER_SELL_DELETE, id) 
 export function undoDeleteSellOrder(id) { return action(ORDER_USER_SELL_DELETE_UNDO, id) }
 export function onChangePrice(v) { return action(ORDER_USER_SELL_EDIT_PRICE, v) }
 export function onChangeAmount(v) { return action(ORDER_USER_SELL_EDIT_AMOUNT, v) }
-export function addSellOrder() { return action(ORDER_USER_SELL_ADD) }
+export function addSellOrder() { 
+  return (dispatch, getState) => {
+    // const { editingAmount, editingPrice } = getState().marketEditingSellOrder
+    dispatch(action(ORDER_USER_SELL_ADD))
+  }
+  
+}
 export function unlockOrder(ids) { return action(ORDER_USER_SELL_ORDER_UNLOCK, ids) }
 
 export function confirmChange() {

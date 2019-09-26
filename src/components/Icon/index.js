@@ -53,6 +53,7 @@ const StyledSvg = styled.svg`
   ${p => p.right && css`right: ${p.right};`}
   ${p => p.left && css`left: ${p.left};`}
   ${p => p.marginAuto && css`margin: auto;`}
+  ${p => p.disabled && css`opacity: .3`}
 `
 
 export { default as Menu1 } from './Menu1' 

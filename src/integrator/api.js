@@ -176,12 +176,18 @@ const myOrder = {
 export const apiGetUserOrder = ({ marketId, side, states, orderBy, pageNumb = pageNumbDefault, pageSize = pageSizeDefault, isLoadMore = false }) => () => 
   fetch.get('/api/user/trade/list', { marketId, types: [side], states, ...pageHelper(pageNumb, pageSize, isLoadMore) })
 
-export const apiEditSellOrder = ({ marketId, cancelledOrderIds, unlockedOrderIds, addedOrders: list, sign, }) => async () => {
-  await delay(2000)
-  return {}
-}
+export const apiEditSellOrder = ({ marketId, cancelledOrderIds, unlockedOrderIds, addedOrders: list, sign, timestamp }) => () => 
+  fetch.post('api/user/trade/update/sell/reckon', { marketId, cancelledOrderIds, lockedOrderIds: unlockedOrderIds, newOrders: list.map( l => ({
+    price: l.sellingPrice,
+    volume: l.totalAmount,
+    // times,
+    // makeSign,
+    // takeSign,
+    timestamp,
+  })) }, null, 'json')
 /* ========== My Order ========= END */ 
-
+// /api/user/trade/update/sell/reckon
+// api/user/trade/update/sell
 /* ========== Order Book ========= */
 const orderBookRes = {
   hasNextPage: false,

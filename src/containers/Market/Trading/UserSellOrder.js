@@ -65,6 +65,7 @@ function UserSellOrder({
       addSellOrder()
     }
   }
+  const disabledAdd = !editingAmount || !editingPrice
   return (
     <>
       <Table
@@ -96,12 +97,12 @@ function UserSellOrder({
             </Col>
             <Col flex={3}></Col>
             <Col flex={1} center centerVertical>
-              <Add primary S onClick={addSellOrder} disabled={!editingAmount || !editingPrice} />
+              <Add primary S onClick={addSellOrder} disabled={disabledAdd} />
             </Col>
           </Row>
           <Row right bottom VS>
             {gasFee && <Text S note HS>Est. gas fee: {gasFee} ETH</Text>}
-            <Button label='Confirm' icon={Tick} primary width='100px' buttonRef={confirmButtonRef} />
+            <Button label='Sign and Confirm' icon={Tick} primary width='100px' buttonRef={confirmButtonRef} onClick={confirmChange} />
           </Row>
         </Col>
         </>
