@@ -49,7 +49,7 @@ function Trading({ stage }) {
         <Hr />
         <Tab activeIndex={tab} width='130px' tabs={FILTERS} onClick={onTabChange} type='simple' />
         <Hr />
-        <Col HS VS maxHeight='500px'>
+        <Col HS maxHeight='500px'>
           <TabComponent />
         </Col>
         {/* <Transaction gettingTrades={gettingTrades} getTradeList={getTradeList} trades={trades} hasNextPage={hasNextPage} /> */}
