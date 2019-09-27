@@ -4,6 +4,7 @@ import {
   TRADE_CHANGE_BUY_UNIT,
   TRADE_CHANGE_BUY_PRICE,
   TRADE_CHANGE_SELL_PRICE,
+  TRADE_SIGN_ORDER,
   TRADE_REQUESTED, TRADE_SUCCEEDED, TRADE_FAILED, 
   TRADE_GET_GAS_FEE_SUCCEEDED,
 } from './actionTypes'
@@ -53,14 +54,26 @@ export function onTrade() {
       let response
       if(stage === 1) {
         const now = Date.now()
+        const total = 2
+        dispatch(action(TRADE_SIGN_ORDER, { make: true, buy: true, total, current: 1 }))
         const hash = await butCtStage1Sign(address, buyUnit, 1, now)
+        dispatch(action(TRADE_SIGN_ORDER, { make: true, sell: true, total, current: 2 }))
         const sellSign = await makeSign('sell', address, sellPrice, buyUnit, now)
+        dispatch(action(TRADE_SIGN_ORDER, null))
         response = await apiBuyCtStage1({ marketId, ctCount: buyUnit, timestamp: now, sign: hash, gasPriceLevel: 1, sellPrice, sellSign })()
       } else {
         const now = Date.now()
+        const total = estMatchedOrder ? 3 : 2
+        dispatch(action(TRADE_SIGN_ORDER, { make: true, buy: true, total, current: 1 }))
         const makeOrderSign = await makeSign('buy', address, sellPrice, buyUnit, now)
-        const takeOrderSign = estMatchedOrder ? await takeSign('sell', address, sellPrice, buyUnit, estMatchedOrder) : null
+        let takeOrderSign = null
+        if(estMatchedOrder) {
+          dispatch(action(TRADE_SIGN_ORDER, { take: true, sell: true, total, current: 2 }))
+          takeOrderSign = await takeSign('sell', address, sellPrice, buyUnit, now)
+        }
+        dispatch(action(TRADE_SIGN_ORDER, { make: true, sell: true, total, current: 3 }))
         const sellOrderSign = await makeSign('sell', address, sellPrice, buyUnit, now)
+        dispatch(action(TRADE_SIGN_ORDER, null))
         response = await apiBuyCtStage2({ marketId, buyPrice, sellPrice, unit: buyUnit, times: estMatchedOrder, timestamp: now, makeSign: makeOrderSign, takeSign: takeOrderSign, sellSign: sellOrderSign })()
         // response = await apiBuyCtState2({ marketId, buyPrice, sellPrice, unit: buyUnit, times })()
         // entrustPrice: 4

@@ -3,6 +3,7 @@ import {
   MARKET_DETAIL_RESET,
 
   TRADE_RESET,
+  TRADE_SIGN_ORDER,
   TRADE_TOGGLE_AGREE_TNC,
   TRADE_CHANGE_BUY_UNIT,
   TRADE_CHANGE_BUY_PRICE,
@@ -22,6 +23,7 @@ export const initialState = {
   estMatchedOrder: 0,
 
   isTrading: false,
+  signing: null, // { make<boolean>, take<boolean>, buy<boolean>, sell<boolean> }
   error: null,
 }
 
@@ -67,10 +69,17 @@ export default (state = initialState, action) => {
         estMatchedOrder
       }
 
+    case TRADE_SIGN_ORDER:
+      return {
+        ...state,
+        signing: action.payload
+      }
+
     case TRADE_REQUESTED:
       return {
         ...state,
-        isTrading: true
+        isTrading: true,
+        error: initialState.error
       }
     case TRADE_SUCCEEDED: 
       return initialState
@@ -78,6 +87,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         isTrading: false,
+        signing: initialState.signing,
         error: action.payload
       }
 

@@ -66,12 +66,12 @@ function MakeOrder({
   getCtBalance,
   trade: { 
     agreeTnc, 
-    isTrading, error,
+    signing, isTrading, error,
     buyUnit, buyPrice, sellPrice, 
     estGasFee, estMatchedOrder },
   symbol, marketAvatar, marketId, userCt, userSut
 }) {
-  const [{ trading: tradingText, sutSymbol, lang }] = useLang()
+  const [{ trading: tradingText, sutSymbol }] = useLang()
   useEffect(() => {
     getCtBalance()
     return reset
@@ -111,8 +111,9 @@ function MakeOrder({
 
       <Row spaceBetween TopXL>
         <Tnc agreeTnc={agreeTnc} toggleTnc={toggleTnc} disabled={isTrading} />
-        <Button label='Buy' primary width='80px' onClick={onTrade} />
+        <Button label='Buy' primary HM onClick={onTrade} disabled={isTrading} loading={isTrading} />
       </Row>
+      {signing && <Text note S right>{`[${signing.current}/${signing.total}] Sign MetaMask for ${signing.take ? 'taking' : 'making'} ${signing.buy ? 'buy' : 'sell'} order`}</Text>}
       {error && <Text error S right>{error.message}</Text>}
     </Col>
   )

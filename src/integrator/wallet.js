@@ -324,10 +324,10 @@ export function getMarketCt(address) {
   ).then(decodeResult)
 }
 
-export async function butCtStage1Sign(marketAddress, ctCount, gasPriceLevel, time) {
+export async function butCtStage1Sign(marketAddress, ctCount, gasPriceLevel, timestamp) {
   const ctCountWei = toWei(ctCount)
   const feeWei = getGasWei(buyCtStage1GasLimit, ENV.gasWeiPrices[gasPriceLevel])
-  const timeHash = sha3(time+'')
+  const timeHash = sha3(timestamp+'')
   const account = await getAccount()
   const hash = soliditySha3(
     {type: "address", value: marketAddress},
@@ -347,10 +347,11 @@ export async function makeSign(type, marketAddress, price, volume, timestamp) { 
     volumeWei = toWei(volume),
     priceWei = toWei(price),
     account = await getAccount(),
+    timeHash = sha3(timestamp+''),
     hash = soliditySha3(
       {type: "uint256", value: volumeWei},
       {type: "uint256", value: priceWei},
-      {type: "uint256", value: timestamp},
+      {type: "uint256", value: timeHash},
       ...reverse([
         {type: "address", value: marketAddress},
         {type: "address", value: sutContractAddress},
@@ -374,16 +375,18 @@ export async function makeSign(type, marketAddress, price, volume, timestamp) { 
   )
 }
 
-export async function takeSign(type, marketAddress, price, volume, time) {
+// timestamp
+export async function takeSign(type, marketAddress, price, volume, timestamp) {
   const
     volumeWei = toWei(volume),
     priceWei = toWei(price),
     feeWei = toWei(buyCtStage2GasLimit, 'gwei'),
     account = await getAccount(),
+    timeHash = sha3(timestamp+''),
     hash = soliditySha3(
       {type: "uint256", value: volumeWei},
       {type: "uint256", value: priceWei},
-      {type: "uint256", value: time},
+      {type: "uint256", value: timeHash},
       {type: "uint256", value: feeWei},
       ...reverse([
         {type: "address", value: marketAddress},
@@ -396,7 +399,7 @@ export async function takeSign(type, marketAddress, price, volume, time) {
   log.table([
     ['volumeWei', volumeWei],
     ['priceWei', priceWei],
-    ['time', time],
+    ['timestamp', timestamp],
     ['feeWei', feeWei],
     ['marketAddress', marketAddress],
     ['sutContractAddress', sutContractAddress],
