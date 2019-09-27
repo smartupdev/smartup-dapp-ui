@@ -8,20 +8,20 @@ import { log } from '../util'
 //    When Both not true, which mean first load, so will clear all data and use new record only.
 //    This approach is to clearly separate first load data, polling data or load more data
 export function usePolling(callback, delay, dependencies) {
-  // const timeoutRef = useRef()
-  // async function loop(firstTime) {
-  //   await callback(false, !firstTime)
-  //   if(firstTime || timeoutRef.current)
-  //     timeoutRef.current = setTimeout(loop, delay)
-  // }
-  // useEffect(() => {
-  //   loop(true)
-  //   return () => {
-  //     log.casual('Clear polling of ' + callback.name)
-  //     clearTimeout(timeoutRef.current)
-  //     timeoutRef.current = null
-  //   }
-  // }, dependencies || [delay]) // please refer to 2
+  const timeoutRef = useRef()
+  async function loop(firstTime) {
+    await callback(false, !firstTime)
+    if(firstTime || timeoutRef.current)
+      timeoutRef.current = setTimeout(loop, delay)
+  }
+  useEffect(() => {
+    loop(true)
+    return () => {
+      log.casual('Clear polling of ' + callback.name)
+      clearTimeout(timeoutRef.current)
+      timeoutRef.current = null
+    }
+  }, dependencies || [delay]) // please refer to point 2 the above
 }
 
 export function useInterval(callback, delay) {

@@ -3,6 +3,7 @@ import {
   MARKET_ADD_SAVED_MARKET, MARKET_DEL_SAVED_MARKET,
   POST_ADD_SUCCEEDED,
   GET_MARKET_DETAIL_REQUESTED, GET_MARKET_DETAIL_SUCCEEDED, GET_MARKET_DETAIL_FAILED,
+  TRADE_HIGH_LOW_REQUESTED, TRADE_HIGH_LOW_SUCCEEDED, TRADE_HIGH_LOW_FAILED,
   USER_NOTIFICATION_LIST_SUCCEEDED,
   MARKET_DETAIL_GET_CT_SUCCEEDED,
   TRADE_SUCCEEDED,
@@ -15,6 +16,7 @@ export const initialState = {
   getting: true, // only show after getting done
   error: null,
   userCt: null,
+  details: {}
   // lots of market details will be added to this store
 }
 
@@ -22,6 +24,23 @@ export default (state = initialState, action) => {
   switch (action.type) {
     case MARKET_DETAIL_RESET:
       return initialState
+    // case TRADE_HIGH_LOW_REQUESTED:
+    //   return {
+    //     ...state,
+    //     getting: true,
+    //     error: initialState.error
+    //   }
+    case TRADE_HIGH_LOW_SUCCEEDED:
+      return {
+        ...state,
+        details: action.payload[0] || {}
+      }
+    // case TRADE_HIGH_LOW_FAILED:
+    //   return {
+    //     ...state,
+    //     getting: false,
+    //     error: action.payload
+    //   }
     case TRADE_SUCCEEDED: 
       if(action.meta.stage !== 1) return state
       return {

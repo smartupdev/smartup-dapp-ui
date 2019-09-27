@@ -3,7 +3,7 @@ import {
   ENV, createMarketGasLimit, buyCtStage1GasLimit
 } from '../config'
 import { orderMassage } from './massager'
-import { log } from '../lib/util'
+import { log, getYear, getMonth, getDate, getHour, DAY, MONTH, YEAR } from '../lib/util'
 
 export const FLAG_STATUS = {
   collecting: 'collectDeposit',
@@ -237,6 +237,19 @@ export const apiGetSavedMarket = () => () => fetch.get('/api/user/market/creatin
 
 export const apiGetMarket = (marketId) => () => fetch.get('/api/market/one', { marketId })
 
+function getDateRange(tabIndex) {
+  const now = Date.now()
+  function getDateShort(d) { return `${getYear(d)}_${getMonth(d)}_${getDate(d)}` }
+  function getDateLong(d) { return `${getYear(d)}_${getMonth(d)}_${getDate(d)}_${getHour(d)}` }
+  const end = getDateShort(now)
+  return [
+    { start: getDateLong(now - DAY), end: getDateLong(now), segment: '1hour'}, // 1d
+    { start: getDateShort(now - MONTH), end, segment: '1day'}, // 1m
+    { start: getDateShort(now - YEAR), end, segment: '1week'}, // 1y
+  ][tabIndex]
+}
+export const apiGetKline = (marketAddress, segmentIndex) => () => fetch.get('/api/kline/data', { marketAddress, ...getDateRange(segmentIndex) })
+
 // /api/market/list   Get all markets
 // /api/market/search Get market by filter
 // /api/market/top    Get filtered markets, e.g. hottest
@@ -405,7 +418,6 @@ export const API_MARKET_TRADE_LIST = '/api/market/trade/list';
 export const API_USER_TRADE_LIST = '/api/user/trade/list';
 export const API_USER_TRADE_DETAIL = '/api/user/trade/one';
 export const API_USER_TRADE_SAVE = '/api/user/trade/save';
-export const API_KLINE_DATA = '/api/kline/data';
 //proposal-controller
 export const API_MARKET_PROPOSAL_LIST = '/api/market/proposal/list';
 export const API_PROPOSAL_ONE = '/api/proposal/one';

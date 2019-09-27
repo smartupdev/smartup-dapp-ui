@@ -35,8 +35,11 @@ function Trading({ stage }) {
   return (
     // stage === 1 ?
       <Col overflowAuto >
-        {/* <TradingInfo tabIndex={tabIndex} klineData={klineData} setTab={setTab} highLowData={highLowData} market={market} /> */}
-        <FundRaising />
+        {
+          stage === 1 ?
+            <FundRaising />
+          : <TradingInfo />
+        }
         <Row>
           <Col flex={1} fitHeight ref={makeOrderRef}>
             <MakeOrder stage={stage} />
