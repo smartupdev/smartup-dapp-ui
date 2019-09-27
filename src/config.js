@@ -60,6 +60,7 @@ export const exchangeContractAddress = '0xabaed2d6b739cd7b9c54c818300520592344fd
 export const marketDeposit = 2500
 export const createMarketGasLimit = 3000000
 export const buyCtStage1GasLimit = 320000
+export const buyCtStage2GasLimit = 320000 // TODO: fake value atm
 
 const processEnv = process.env.REACT_APP_ENV
 

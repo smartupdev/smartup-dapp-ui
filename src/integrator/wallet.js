@@ -1,6 +1,6 @@
 import web3 from 'web3'
-import { ENV, sutContractAddress, nttContractAddress, exchangeContractAddress, createMarketGasLimit, buyCtStage1GasLimit } from '../config'
-import { log } from '../lib/util'
+import { ENV, sutContractAddress, nttContractAddress, exchangeContractAddress, createMarketGasLimit, buyCtStage1GasLimit, buyCtStage2GasLimit } from '../config'
+import { log, reverse } from '../lib/util'
 import { checkAuth } from './index'
 const { smartupContractAddress, networkVersion, gasWeiPrices } = ENV 
 const address0x0 = '0x0000000000000000000000000000000000000000'
@@ -24,6 +24,10 @@ export function checkIsSupportWeb3() {
 }
 export function formatToken(r) {
   return window.web3.fromWei(r)
+}
+
+export function weiToEth(wei) {
+  return wei/10**9
 }
 
 export function toWei(r, unit) {
@@ -283,16 +287,16 @@ export async function createMarketSign(marketId, marketSymbol, sut, ctCount, ctP
   const gesFeeWei =  getGasWei(createMarketGasLimit, ENV.gasWeiPrices[gasPriceLevel])
 
   const hash = soliditySha3(
-      account,
-      toBN(sutWei),
-      marketId, 
-      marketSymbol,
-      toBN(ctCountWei),
-      toBN(ctPriceWei),
-      toBN(ctRecyclePriceWei),
-      gesFeeWei,
-      closingTime
-  );
+    {type: 'address', value: account},
+    {type: 'uint256', value: sutWei},
+    {type: 'string', value: marketId},
+    {type: 'string', value: marketSymbol},
+    {type: 'uint256', value: ctCountWei},
+    {type: 'uint256', value: ctPriceWei},
+    {type: 'uint256', value: ctRecyclePriceWei},
+    {type: 'uint256', value: gesFeeWei},
+    {type: 'uint256', value: closingTime}
+  )
 
   log.casual('Request sign with the following message')
   log.table([
@@ -326,11 +330,11 @@ export async function butCtStage1Sign(marketAddress, ctCount, gasPriceLevel, tim
   const timeHash = sha3(time+'')
   const account = await getAccount()
   const hash = soliditySha3(
-      marketAddress,
-      ctCountWei,
-      account,
-      feeWei,
-      timeHash
+    {type: "address", value: marketAddress},
+    {type: "uint256", value: ctCountWei},
+    {type: "address", value: account},
+    {type: "uint256", value: feeWei},
+    {type: "bytes32", value: timeHash}
   )
   return toPromise(
     window.web3.personal.sign,
@@ -343,66 +347,61 @@ export async function makeSign(type, marketAddress, price, volume, timestamp) { 
     volumeWei = toWei(volume),
     priceWei = toWei(price),
     account = await getAccount(),
-    hash = type === 'sell' ? 
-      soliditySha3(
-        {type: "uint256", value: volumeWei},
-        {type: "uint256", value: priceWei},
-        {type: "uint256", value: timestamp},
+    hash = soliditySha3(
+      {type: "uint256", value: volumeWei},
+      {type: "uint256", value: priceWei},
+      {type: "uint256", value: timestamp},
+      ...reverse([
         {type: "address", value: marketAddress},
         {type: "address", value: sutContractAddress},
-        {type: "address", value: account},
-      ) 
-    : soliditySha3(
-        {type: "uint256", value: volumeWei},
-        {type: "uint256", value: priceWei},
-        {type: "uint256", value: timestamp},
-        {type: "address", value: sutContractAddress},
-        {type: "address", value: marketAddress},
-        {type: "address", value: account},
-      )
+      ], type !== 'sell'),
+      {type: "address", value: account},
+    ) 
 
-  log.debug('volumeWei = ', volumeWei)
-  log.debug('priceWei = ', priceWei)
-  log.debug('account = ', window.account)
-  log.debug('hash = ', hash)
-
+  log.info(`Creating a sign for making ${type} order`)
+  log.table([
+    ['volumeWei', volumeWei],
+    ['priceWei', priceWei],
+    ['timestamp', timestamp],
+    ['sutContractAddress', sutContractAddress],
+    ['marketAddress', marketAddress],
+    ['account', account],
+  ])
+    
   return toPromise(
     window.web3.personal.sign,
     hash, account
   )
 }
 
-export async function takeSign(type, volume, price, time, fee, marketAddress) {
+export async function takeSign(type, marketAddress, price, volume, time) {
   const
     volumeWei = toWei(volume),
     priceWei = toWei(price),
-    feeWei = toWei(fee, 'gwei'),
+    feeWei = toWei(buyCtStage2GasLimit, 'gwei'),
     account = await getAccount(),
-    hash = type === 'sell' ?
-      soliditySha3(
-        {type: "uint256", value: volumeWei},
-        {type: "uint256", value: priceWei},
-        {type: "uint256", value: time},
-        {type: "uint256", value: feeWei},
-        {type: "address", value: marketAddress},
-        {type: "address", value: sutContractAddress},
-        {type: "address", value: account},
-      )
-    : soliditySha3(
+    hash = soliditySha3(
       {type: "uint256", value: volumeWei},
       {type: "uint256", value: priceWei},
       {type: "uint256", value: time},
       {type: "uint256", value: feeWei},
-      {type: "address", value: sutContractAddress},
-      {type: "address", value: marketAddress},
+      ...reverse([
+        {type: "address", value: marketAddress},
+        {type: "address", value: sutContractAddress},
+      ], type !== 'sell'),
       {type: "address", value: account},
     )
 
-  log.debug('volumeWei = ', volumeWei)
-  log.debug('priceWei = ', priceWei)
-  log.debug('time = ', time)
-  log.debug('feeWei = ', feeWei)
-  log.debug('marketAddress = ', marketAddress)
+  log.info(`Creating a sign for taking ${type} order`)
+  log.table([
+    ['volumeWei', volumeWei],
+    ['priceWei', priceWei],
+    ['time', time],
+    ['feeWei', feeWei],
+    ['marketAddress', marketAddress],
+    ['sutContractAddress', sutContractAddress],
+    ['account', account],
+  ])  
 
   return toPromise(
     window.web3.personal.sign,

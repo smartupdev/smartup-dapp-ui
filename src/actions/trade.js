@@ -10,7 +10,7 @@ import {
 import { action } from './actionHelper'
 
 import { getRawLang } from '../language'
-import { apiGetGasFee, apiBuyCtState1, butCtStage1Sign, apiBuyCtState2, makeSign } from '../integrator'
+import { apiGetGasFee, apiBuyCtStage1, butCtStage1Sign, apiBuyCtStage2, makeSign, takeSign } from '../integrator'
 
 import { getYear, getMonth, getDate, getHour, DAY, MONTH, YEAR } from '../lib/util'
 
@@ -25,8 +25,9 @@ function getGasFee() {
 }
 export function onChangeBuyUnit(v) { 
   return (dispatch, getState) => {
-    const ctRest = getState().market.ctRest
-    if(v > ctRest) v = ctRest
+    const { ctRest, ctCount, stage } = getState().market
+    if(stage === 1 && v > ctRest) v = ctRest
+    else if(stage === 2 && v > ctCount) v = ctCount
     dispatch(action(TRADE_CHANGE_BUY_UNIT, v)) 
     dispatch(getGasFee())
   }
@@ -44,7 +45,7 @@ export function onTrade() {
     try {
       dispatch(action(TRADE_REQUESTED))
       const rawLang = getRawLang()
-      const { trade: {buyUnit, buyPrice, sellPrice, agreeTnc, times}, market: {address, stage, id: marketId}, user: {loggedIn} } = getState()
+      const { trade: {buyUnit, buyPrice, sellPrice, agreeTnc, estMatchedOrder}, market: {address, stage, id: marketId}, user: {loggedIn} } = getState()
       if(!agreeTnc) throw new Error('Click TNC')
       if(!loggedIn) throw new Error(rawLang.error.notLogin)
       if(!address) throw new Error(rawLang.trading.preview)
@@ -54,9 +55,14 @@ export function onTrade() {
         const now = Date.now()
         const hash = await butCtStage1Sign(address, buyUnit, 1, now)
         const sellSign = await makeSign('sell', address, sellPrice, buyUnit, now)
-        response = await apiBuyCtState1({ marketId, ctCount: buyUnit, timestamp: now, sign: hash, gasPriceLevel: 1, sellPrice, sellSign })()
+        response = await apiBuyCtStage1({ marketId, ctCount: buyUnit, timestamp: now, sign: hash, gasPriceLevel: 1, sellPrice, sellSign })()
       } else {
-        response = await apiBuyCtState2({ marketId, buyPrice, sellPrice, unit: buyUnit, times })()
+        const now = Date.now()
+        const makeOrderSign = await makeSign('buy', address, sellPrice, buyUnit, now)
+        const takeOrderSign = estMatchedOrder ? await takeSign('sell', address, sellPrice, buyUnit, estMatchedOrder) : null
+        const sellOrderSign = await makeSign('sell', address, sellPrice, buyUnit, now)
+        response = await apiBuyCtStage2({ marketId, buyPrice, sellPrice, unit: buyUnit, times: estMatchedOrder, timestamp: now, makeSign: makeOrderSign, takeSign: takeOrderSign, sellSign: sellOrderSign })()
+        // response = await apiBuyCtState2({ marketId, buyPrice, sellPrice, unit: buyUnit, times })()
         // entrustPrice: 4
         // entrustVolume: 10
         // orderId: "fz7ddnyrxfk"

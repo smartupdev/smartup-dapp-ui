@@ -51,4 +51,7 @@ const merge = (obj1, obj2) => {
   )
   return r
 }
-export { clone, merge, map }
+
+const reverse = (array, condition = true) => condition ? [...array].reverse() : array
+
+export { clone, merge, map, reverse }

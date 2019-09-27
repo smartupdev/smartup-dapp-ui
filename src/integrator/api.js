@@ -135,9 +135,9 @@ export const apiGetGasFee = (marketId, price, unit) => async () => {
     return
   }
 }
-// reSellPrice
-export const apiBuyCtState1 = ({marketId, ctCount, gasPriceLevel, timestamp, sign, sellPrice, sellSign}) => () => fetch.post('/api/user/first/stage/buy', {marketId, ctCount, gasLimit: buyCtStage1GasLimit, gasPrice: ENV.gasWeiPrices[gasPriceLevel], timestamp, sign, sellPrice, sellSign})
-export const apiBuyCtState2 = ({marketId, buyPrice, sellPrice, unit, times, sign}) => () => fetch.post('/api/user/trade/add', {marketId, type: 'buy', price: buyPrice, volume: unit, times, gasPrice: ENV.gasWeiPrices[1], sign})
+
+export const apiBuyCtStage1 = ({marketId, ctCount, gasPriceLevel, timestamp, sign, sellPrice, sellSign}) => () => fetch.post('/api/user/first/stage/buy', {marketId, ctCount, gasLimit: buyCtStage1GasLimit, gasPrice: ENV.gasWeiPrices[gasPriceLevel], timestamp, sign, sellPrice, sellSign})
+export const apiBuyCtStage2 = ({marketId, buyPrice, sellPrice, unit, times, timestamp, makeSign, takeSign, sellSign}) => () => fetch.post('/api/user/trade/add/buy', {marketId, price: buyPrice, volume: unit, sellPrice, times, timestamp, makeSign, takeSign, sellSign})
 export const apiTradeList = ({ types, states, pageNumb = pageNumbDefault, pageSize = pageSizeDefault, isLoadMore = false }) => () => fetch('/api/user/trade/list', { types, states, ...pageHelper(pageNumb, pageSize, isLoadMore) })
 /* ====== Transaction ====== END */
 

@@ -16,6 +16,7 @@ import Hr from 'components/Hr'
 
 import { useLang } from 'language'
 import { toToken } from 'lib/util'
+import { weiToEth } from 'integrator'
 import styled from 'styled-components'
 
 function Tnc({ agreeTnc, toggleTnc, disabled }) {
@@ -97,7 +98,7 @@ function MakeOrder({
           </Col>
           {/* <Text S note TopS>~$6,000 USD</Text> */}
           <Text S note> {tradingText.est} {toToken(totalReqSut)} {sutSymbol}</Text>
-          <Text S note>{tradingText.estGasFee} {estGasFee || '-'} ETH</Text>
+          <Text S note>{tradingText.estGasFee} {weiToEth(estGasFee) || '-'} ETH</Text>
         </Col>
       </Row>
 
@@ -105,7 +106,7 @@ function MakeOrder({
       <InputBlock label={`${tradingText.sellPrice} ${symbol}`} icon={ENV.logo} noipfs value={sellPrice} onChange={onChangeSellPrice} symbol={sutSymbol} />
       <Row>
         <LeftBlock />
-        <Text S note red={sellPrice && sellPrice < buyPrice}>{`${tradingText.est} ${buyPrice && sellPrice ? (sellPrice-buyPrice)*buyUnit : '-'} ${sutSymbol}`}</Text>
+        <Text S note red={sellPrice && +sellPrice < +buyPrice}>{`${tradingText.est} ${buyPrice && sellPrice ? (sellPrice-buyPrice)*buyUnit : '-'} ${sutSymbol}`}</Text>
       </Row>
 
       <Row spaceBetween TopXL>
