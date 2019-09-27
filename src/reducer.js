@@ -12,6 +12,7 @@ import user from './reducers/user'
 
 import wallet from './reducers/wallet'
 
+import kline from './reducers/kline'
 import marketEditingSellOrder from './reducers/marketEditingSellOrder'
 import marketUserOrder from './reducers/marketUserOrder'
 import orderBook from './reducers/orderBook'
@@ -31,6 +32,7 @@ import userTransaction from './reducers/userTransaction'
 import { combineReducers } from 'redux';
 
 export default combineReducers({
+    kline,
     marketEditingSellOrder,
     marketUserOrder,
     orderBook,
