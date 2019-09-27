@@ -274,7 +274,15 @@ The buyback price will be the rock bottom price of the market token`,
         myBuyOrder: name('My Buy Order', '我的買單', '我的买单'),
         mySellOrder: name('My Sell Order', '我的賣單', '我的卖单'),
         orderHistory: name('My Order History', '我的訂單紀錄', '我的订单纪录'),
-        marketTransaction: name('Market Transaction', '巿場交易紀錄', '巿场交易纪录')
+        marketTransaction: name('Market Transaction', '巿場交易紀錄', '巿场交易纪录'),
+        time: name('Time', '時間', '时间'),
+        amount: name('Amount', '數量', '数量'),
+        remained: name('Remainded', '淨餘', '净余'),
+        sellPrice: name('Sell Price', '賣價','卖价'),
+        executedPrice: name('Avg. Executed Price', '平均成交價', '平均成交价'),
+        estTotal: name('Est. Total', '預計總值', '预计总值'),
+        status: name('Status', '狀態', '状态'),
+        action: name('Action', '操作')
     }
   },
 
