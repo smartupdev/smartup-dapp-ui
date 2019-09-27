@@ -282,7 +282,11 @@ The buyback price will be the rock bottom price of the market token`,
         executedPrice: name('Avg. Executed Price', '平均成交價', '平均成交价'),
         estTotal: name('Est. Total', '預計總值', '预计总值'),
         status: name('Status', '狀態', '状态'),
-        action: name('Action', '操作')
+        action: name('Action', '操作'),
+        type: name('Type', '種類', '种类'),
+        filled: name('Filled', '已成交'),
+        price: name('Price', '價格', '价格'), 
+        total: name('Total', '總值', '总值')
     }
   },
 

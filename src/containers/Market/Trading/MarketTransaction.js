@@ -16,12 +16,12 @@ const layoutStyle = { center: true, flex: 1 }
 const titleStyle = { newline: true, center: true }
 
 function Transaction({ orders }) {
-  const [{ sutSymbol }] = useLang()
+  const [lang] = useLang()
   const model = [
-    { label: 'Time', value: 'time', layoutStyle, component: DateText },
-    { label: `Amount`, value: 'volume', layoutStyle, component: TokenText },
-    { label: `Price(${sutSymbol})`, value: 'price', layoutStyle, component: TokenText },
-    { label: `Total(${sutSymbol})`, value: 'total', layoutStyle, component: TokenText }
+    { label: l => l.trading.myOrderBook.time, value: 'time', layoutStyle, component: DateText },
+    { label: l => l.trading.myOrderBook.amount, value: 'volume', layoutStyle, component: TokenText },
+    { label: l => `${l.trading.myOrderBook.price}(${l.sutSymbol})`, value: 'price', layoutStyle, component: TokenText },
+    { label: l => `${l.trading.myOrderBook.total}(${l.sutSymbol})`, value: 'total', layoutStyle, component: TokenText }
   ]
   return (
     <Table
@@ -29,6 +29,7 @@ function Transaction({ orders }) {
       recordKey='time'
       model={model}
       values={orders}
+      language={lang}
       // hasMore={hasNextPage} loadMore={() => getTradeList(true)} isLoading={gettingTrades} noResultText={tradingText.transactionRecord} 
     />
   )

@@ -88,9 +88,10 @@ function OrderBookGroup({
       )
     }
   }, [didFetch])
+  const [{ trading: tradingText }] = useLang()
   return (
     <>
-      <Text sectionTitle>Orders Book</Text>
+      <Text sectionTitle>{tradingText.orderBook}</Text>
       <Hr inset />
       <OrderBookTitle />
       <Hr inset />

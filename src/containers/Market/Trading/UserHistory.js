@@ -23,20 +23,20 @@ function History({
   },
   getHistoryOrder, reset, 
 }) {
-  const [{ sutSymbol }] = useLang()
+  const [lang] = useLang()
   useEffect(() => {
     getHistoryOrder()
     return reset
   }, [marketId, loggedIn])
   const model = [
-    { label: 'Time', value: 'createTime', component: DateText, layoutStyle },
-    { label: 'Side', value: 'type', layoutStyle }, // TODO: remove and add color
-    { label: `Amount\n(${symbol})`, value: 'entrustVolume', layoutStyle, component: TokenText },
-    { label: `Filled ${symbol}`, value: 'filledAmount', layoutStyle, component: TokenText },
-    { label: `Entrust Price\n(${sutSymbol})`, value: 'entrustPrice', layoutStyle, component: TokenText },
-    { label: `Executed Price\n(${sutSymbol})`, value: 'avgTradedPrice', layoutStyle, component: TokenText },
-    { label: `Est. Total\n(${sutSymbol})`, value: 'total', layoutStyle, component: TokenText },
-    { label: 'Status', value: 'state', layoutStyle, component: OrderStateTable },
+    { label: l => l.trading.myOrderBook.time, value: 'createTime', component: DateText, layoutStyle },
+    { label: l => l.trading.myOrderBook.type, value: 'type', layoutStyle }, // TODO: remove and add color
+    { label: l => `${l.trading.myOrderBook.amount}\n(${symbol})`, value: 'entrustVolume', layoutStyle, component: TokenText },
+    { label: l => `${l.trading.myOrderBook.filled} ${symbol}`, value: 'filledAmount', layoutStyle, component: TokenText },
+    { label: l => `${l.trading.myOrderBook.price}\n(${l.sutSymbol})`, value: 'entrustPrice', layoutStyle, component: TokenText },
+    { label: l => `${l.trading.myOrderBook.executedPrice}\n(${l.sutSymbol})`, value: 'avgTradedPrice', layoutStyle, component: TokenText },
+    { label: l => `${l.trading.myOrderBook.estTotal}\n(${l.sutSymbol})`, value: 'total', layoutStyle, component: TokenText },
+    { label: l => l.trading.myOrderBook.status, value: 'state', layoutStyle, component: OrderStateTable },
   ]
 
   return (
@@ -48,6 +48,7 @@ function History({
       noResultText={error ? error.message : undefined}
       hasMore={hasNextPage} loadMore={getHistoryOrder} isLoading={fetching}
       titleStyle={titleStyle}
+      language={lang}
       // LoadMore issue. Keep getting new result no matter in which position
     />
   )

@@ -21,20 +21,20 @@ function UserBuyOrder({
   buyOrder: { orders, error },
   getBuyOrder, reset
  }) {
-  const [{ sutSymbol }] = useLang()
+  const [lang] = useLang()
   useEffect(() => {
     getBuyOrder()
     return reset
   }, [marketId, loggedIn])
   const model = [
-    { label: 'Time', value: 'createdTime', layoutStyle, component: DateText },
-    { label: `Amount\n(${symbol})`, value: 'totalAmount', layoutStyle, component: TokenText },
-    { label: `Remained ${symbol}`, value: 'filledAmount', layoutStyle, component: TokenText },
-    { label: `Sell Price\n(${sutSymbol})`, value: 'sellingPrice', layoutStyle, component: TokenText },
-    { label: `Executed Price\n(${sutSymbol})`, value: 'avgTradedPrice', layoutStyle, component: TokenText },
-    { label: `Est. Total\n(${sutSymbol})`, value: 'total', layoutStyle, component: TokenText },
-    { label: 'Status', value: 'state', layoutStyle, component: OrderStateTable },
-    { label: 'Action', value: 'action', layoutStyle, component: () => <CloseWithCircle primary S /> },
+    { label: l => l.trading.myOrderBook.time, value: 'createdTime', layoutStyle, component: DateText },
+    { label: l => `${l.trading.myOrderBook.amount} \n(${symbol})`, value: 'totalAmount', layoutStyle, component: TokenText },
+    { label: l => `${l.trading.myOrderBook.remained} \n${symbol}`, value: 'filledAmount', layoutStyle, component: TokenText },
+    { label: l => `${l.trading.myOrderBook.sellPrice}\n(${l.sutSymbol})`, value: 'sellingPrice', layoutStyle, component: TokenText },
+    { label: l => `${l.trading.myOrderBook.executedPrice}\n(${l.sutSymbol})`, value: 'avgTradedPrice', layoutStyle, component: TokenText },
+    { label: l => `${l.trading.myOrderBook.estTotal}\n(${l.sutSymbol})`, value: 'total', layoutStyle, component: TokenText },
+    { label: l => l.trading.myOrderBook.status, value: 'state', layoutStyle, component: OrderStateTable },
+    { label: l => l.trading.myOrderBook.action, value: 'action', layoutStyle, component: () => <CloseWithCircle primary S /> },
   ]
 
   return (
@@ -45,6 +45,7 @@ function UserBuyOrder({
       values={orders}
       noResultText={error ? error.message : undefined}
       titleStyle={titleStyle}
+      language={lang}
     />
   )
 }

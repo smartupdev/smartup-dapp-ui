@@ -19,6 +19,9 @@ import { useLang } from 'language'
 
 const layoutStyle = { center: true, flex: 1 }
 const titleStyle = { newline: true, center: true }
+
+
+
 function UserSellOrder({ 
   symbol, marketId, loggedIn,
   sellOrder: { orders, fetching, error },
@@ -42,15 +45,17 @@ function UserSellOrder({
     getSellOrder()
     return reset
   }, [marketId, loggedIn])
+  
+  const [lang] = useLang()
   const model = [
-    { label: 'Time', value: 'createTime', layoutStyle, component: p => <DateText note={removedOrderIds.includes(p.record.orderId)} {...p} /> },
-    { label: `Amount\n(${symbol})`, value: 'totalAmount', layoutStyle, component: TableTokenText },
-    { label: `Remained \n${symbol}`, value: 'remaining', layoutStyle, component: TableTokenText },
-    { label: `Sell Price\n(${sutSymbol})`, value: 'sellingPrice', layoutStyle, component: TableTokenText },
-    { label: `Executed Price\n(${sutSymbol})`, value: 'avgTradedPrice', layoutStyle, component: TableTokenText },
-    { label: `Est. Total\n(${sutSymbol})`, value: 'total', layoutStyle, component: TableTokenText },
-    { label: 'Status', value: 'state', layoutStyle, component: TableStatus },
-    { label: 'Action', value: 'action', layoutStyle, component: ({ record: {orderId} }) => 
+    { label: l => l.trading.myOrderBook.time, value: 'createTime', layoutStyle, component: p => <DateText note={removedOrderIds.includes(p.record.orderId)} {...p} /> },
+    { label: l => `${l.trading.myOrderBook.amount} \n(${symbol})`, value: 'totalAmount', layoutStyle, component: TableTokenText },
+    { label: l => `${l.trading.myOrderBook.remained} \n${symbol}`, value: 'remaining', layoutStyle, component: TableTokenText },
+    { label: l => `${l.trading.myOrderBook.sellPrice}\n(${l.sutSymbol})`, value: 'sellingPrice', layoutStyle, component: TableTokenText },
+    { label: l => `${l.trading.myOrderBook.executedPrice}\n(${l.sutSymbol})`, value: 'avgTradedPrice', layoutStyle, component: TableTokenText },
+    { label: l => `${l.trading.myOrderBook.estTotal}\n(${l.sutSymbol})`, value: 'total', layoutStyle, component: TableTokenText },
+    { label: l => l.trading.myOrderBook.status, value: 'state', layoutStyle, component: TableStatus },
+    { label: l => l.trading.myOrderBook.action, value: 'action', layoutStyle, component: ({ record: {orderId} }) => 
       removedOrderIds.includes(orderId) ?
         <Undo primary S onClick={() => undoDeleteSellOrder(orderId)} />
       :
@@ -78,6 +83,7 @@ function UserSellOrder({
         isLoading={fetching}
         hasMore={fetching}
         titleStyle={titleStyle}
+        language={lang}
         noResultText={error ? error.message : undefined}
       />
       {
