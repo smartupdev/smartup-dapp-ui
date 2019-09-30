@@ -150,7 +150,7 @@ const main = {
     reserveRatio: name('Token Reserve Ratio', '代幣儲備率', '代币储备率'),
     nameDes: name('Capital sensitive, 3-40 characters, market name cannot be changed.', '區分大小寫，3-40字元，創建後不可更改', '区分大小写，3-40字元，创建后不可更改'),
     overviewDes: name('2000 characters to help new members get to know your market. Overview cannot be changed.', '簡單介紹你的項目，限2000個字元，巿場概要在創建巿場後無法更改', '简单介绍你的项目，限2000个字元，巿场概要在创建巿场后无法更改'),
-    detailDes: name('Details Description'), 
+    detailDes: name('Describe you project in details, inculding plans, timeline, fund allocation, etc.', '詳細解釋你的項目，包括計劃、時間、資金分配等。', '详细解释你的项目，包括计划、时间、资金分配等。'), 
     symbolDes: name('Set a unique token symbol for the issued token. For example, BTC as Bitcoin, ETH as Ethereum, etc.', 'Set a unique token symbol for the issued token. For example, BTC as Bitcoin, ETH as Ethereum, etc.	為發行之代幣設定代幣代碼，如比特幣代碼為BTC、以太幣代碼ETH', '为发行之代币设定代币代码，如比特币代码为BTC、以太币代码ETH'),
     periodDes: name('Set up how many days for offering period', '設定認購期的日數', '设定认购期的日数'),
     issuePriceDes: name('The issue price of the market token', '發行巿場代幣的首次購買價', '发行巿场代币的首次购买价'),
