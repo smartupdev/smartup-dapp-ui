@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import * as Actions from 'actions/marketUserOrder'
 
@@ -11,6 +11,7 @@ import Table from 'components/Table'
 import { DateText, TokenText,  OrderStateTable } from 'containers/Common'
 
 import { toPrice, toAgo } from 'lib/util'
+import { useValue } from 'lib/react'
 import { useLang } from 'language'
 
 const layoutStyle = { center: true, flex: 1 }
@@ -21,21 +22,22 @@ function UserBuyOrder({
   buyOrder: { orders, error },
   getBuyOrder, reset
  }) {
-  const [lang] = useLang()
+  const [{ trading: { myOrderBook: myOrderBookText }, sutSymbol }] = useLang()
+  const model = useValue([
+    { label: myOrderBookText.time, value: 'createdTime', layoutStyle, component: DateText },
+    { label: `${myOrderBookText.amount} \n(${symbol})`, value: 'totalAmount', layoutStyle, component: TokenText },
+    { label: `${myOrderBookText.remained} \n${symbol}`, value: 'filledAmount', layoutStyle, component: TokenText },
+    { label: `${myOrderBookText.buyPrice}\n(${sutSymbol})`, value: 'buyPrice', layoutStyle, component: TokenText },
+    { label: `${myOrderBookText.executedPrice}\n(${sutSymbol})`, value: 'avgTradedPrice', layoutStyle, component: TokenText },
+    { label: `${myOrderBookText.estTotal}\n(${sutSymbol})`, value: 'total', layoutStyle, component: TokenText },
+    { label: myOrderBookText.status, value: 'state', layoutStyle, component: OrderStateTable },
+    { label: `${myOrderBookText.sellPrice}\n(${sutSymbol})`, value: 'sellingPrice', layoutStyle, component: TokenText },
+    { label: myOrderBookText.action, value: 'action', layoutStyle, component: () => <CloseWithCircle primary S /> },
+  ], [symbol, myOrderBookText, sutSymbol])
   useEffect(() => {
     getBuyOrder()
     return reset
   }, [marketId, loggedIn])
-  const model = [
-    { label: l => l.trading.myOrderBook.time, value: 'createdTime', layoutStyle, component: DateText },
-    { label: l => `${l.trading.myOrderBook.amount} \n(${symbol})`, value: 'totalAmount', layoutStyle, component: TokenText },
-    { label: l => `${l.trading.myOrderBook.remained} \n${symbol}`, value: 'filledAmount', layoutStyle, component: TokenText },
-    { label: l => `${l.trading.myOrderBook.sellPrice}\n(${l.sutSymbol})`, value: 'sellingPrice', layoutStyle, component: TokenText },
-    { label: l => `${l.trading.myOrderBook.executedPrice}\n(${l.sutSymbol})`, value: 'avgTradedPrice', layoutStyle, component: TokenText },
-    { label: l => `${l.trading.myOrderBook.estTotal}\n(${l.sutSymbol})`, value: 'total', layoutStyle, component: TokenText },
-    { label: l => l.trading.myOrderBook.status, value: 'state', layoutStyle, component: OrderStateTable },
-    { label: l => l.trading.myOrderBook.action, value: 'action', layoutStyle, component: () => <CloseWithCircle primary S /> },
-  ]
 
   return (
     <Table
@@ -45,7 +47,7 @@ function UserBuyOrder({
       values={orders}
       noResultText={error ? error.message : undefined}
       titleStyle={titleStyle}
-      language={lang}
+      // language={lang}
     />
   )
 }

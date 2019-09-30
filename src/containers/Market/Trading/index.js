@@ -27,38 +27,30 @@ function Trading({ stage }) {
     { label: lang.trading.myOrderBook.orderHistory, value: 'history', component: UserHistory },
     { label: lang.trading.myOrderBook.marketTransaction, value: 'market', component: MarketTransaction },
   ]
-  const [tab, setTab] = useState(1)
+  const [tab, setTab] = useState(stage === 1 ? 1 : 0)
   function onTabChange(index) { setTab(index) }
   const TabComponent = FILTERS[tab].component
   const makeOrderRef = useRef()
   const orderHeight = makeOrderRef.current ? makeOrderRef.current.getBoundingClientRect().height : 400
   return (
-    // stage === 1 ?
-      <Col overflowAuto >
-        {
-          stage === 1 ?
-            <FundRaising />
-          : <TradingInfo />
-        }
-        <Row>
-          <Col flex={1} fitHeight ref={makeOrderRef}>
-            <MakeOrder stage={stage} />
-          </Col>
-          <Hr vertical />
-          <Col flex={1} height={orderHeight+'px'}>
-            <OrderBook />
-          </Col>
-        </Row>
-        <Hr />
-        <Tab activeIndex={tab} width='130px' tabs={FILTERS} onClick={onTabChange} type='simple' />
-        <Hr />
-        <Col HS maxHeight='500px'>
-          <TabComponent />
+    <Col overflowAuto >
+      { stage === 1 ? <FundRaising /> : <TradingInfo /> }
+      <Row>
+        <Col flex={1} fitHeight ref={makeOrderRef}>
+          <MakeOrder stage={stage} />
         </Col>
-        {/* <Transaction gettingTrades={gettingTrades} getTradeList={getTradeList} trades={trades} hasNextPage={hasNextPage} /> */}
+        <Hr vertical />
+        <Col flex={1} height={orderHeight+'px'}>
+          <OrderBook />
+        </Col>
+      </Row>
+      <Hr />
+      <Tab activeIndex={tab} width='130px' tabs={FILTERS} onClick={onTabChange} type='simple' />
+      <Hr />
+      <Col HS maxHeight='500px'>
+        <TabComponent />
       </Col>
-    // :
-    //   <Text center spacingM>Under development</Text>
+    </Col>
   )
 }
 

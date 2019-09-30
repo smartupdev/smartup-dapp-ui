@@ -1,5 +1,15 @@
 import { useState, useEffect, useRef } from 'react'
 import { log } from '../util'
+
+// mainly for object and array to prevent creating new array/object whenever render
+export function useValue(value, dependencies) {
+  const [_value, setValue] = useState(value)
+  useEffect(() => {
+    setValue(value)
+  }, dependencies || value)
+  return _value
+}
+
 // 1. Similar to useInterval, but the delay will start counting when callback response
 // 2. We won't update the callback after ini because we use many arrow function as callback, it will create new timeout each time
 // 3. We call the callback in timeout as callback(false, true), which false is isLoadMore, true is Polling.
