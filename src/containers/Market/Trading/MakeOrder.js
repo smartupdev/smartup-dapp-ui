@@ -111,7 +111,7 @@ function MakeOrder({
 
       <Row spaceBetween TopXL>
         <Tnc agreeTnc={agreeTnc} toggleTnc={toggleTnc} disabled={isTrading} />
-        <Button label='Buy' primary HM onClick={onTrade} disabled={isTrading} loading={isTrading} />
+        <Button label={tradingText.buy} primary HM onClick={onTrade} disabled={isTrading} loading={isTrading} />
       </Row>
       {signing && <Text note S right>{`[${signing.current}/${signing.total}] Sign MetaMask for ${signing.take ? 'taking' : 'making'} ${signing.buy ? 'buy' : 'sell'} order`}</Text>}
       {error && <Text error S right>{error.message}</Text>}
