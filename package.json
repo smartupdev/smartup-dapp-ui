@@ -25,7 +25,7 @@
   ],
   "dependencies": {
     "blob-to-buffer": "^1.2.8",
-    "chart.js": "^2.8.0",
+    "chart.js": "^2.9.4",
     "draft-js": "^0.10.5",
     "draft-js-alignment-plugin": "^2.0.5",
     "draft-js-drag-n-drop-plugin": "^2.0.3",
